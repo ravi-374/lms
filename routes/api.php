@@ -22,5 +22,5 @@ Route::post('/login', 'AuthAPIController@login');
 
 Route::group(['middleware' => 'jwt.auth'], function () {
 
-    // authenticated APIs
+    include 'api/v1.php';
 });

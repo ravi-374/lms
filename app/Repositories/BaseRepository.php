@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class BaseRepository
 {
@@ -189,5 +189,24 @@ abstract class BaseRepository
         $model = $query->findOrFail($id);
 
         return $model->delete();
+    }
+
+    /**
+     * @param  int  $id
+     * @param  array  $with
+     * @return mixed
+     */
+    public function findOrFail($id, $with = [])
+    {
+        if (!empty($with)) {
+            $record = $this->model::with($with)->find($id);
+        } else {
+            $record = $this->model::find($id);
+        }
+        if (empty($record)) {
+            throw new ModelNotFoundException(class_basename($this->model)." not found.");
+        }
+
+        return $record;
     }
 }

@@ -3,7 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Response;
 
 class Handler extends ExceptionHandler
 {
@@ -31,6 +34,7 @@ class Handler extends ExceptionHandler
      *
      * @param  \Exception  $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -42,10 +46,33 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
+        $code = $exception->getCode();
+        if ($code < 100 || $code >= 600) {
+            $code = \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        if ($request->expectsJson() or $request->isXmlHttpRequest()) {
+            if ($exception instanceof ValidationException) {
+                $validator = $exception->validator;
+                $message = $validator->errors()->first();
+                $code = \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY;
+            }
+
+            if ($exception instanceof ModelNotFoundException) {
+                $message = $exception->getMessage();
+                $code = \Illuminate\Http\Response::HTTP_NOT_FOUND;
+            }
+
+            return Response::json([
+                'success' => false,
+                'message' => empty($message) ? 'Unknown error' : $message,
+            ], $code);
+        }
+
         return parent::render($request, $exception);
     }
 }
