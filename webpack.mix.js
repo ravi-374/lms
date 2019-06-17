@@ -11,23 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.webpackConfig({
-    resolve: {
-        extensions: ['.js', '.vue'],
-        alias: {
-            '@': __dirname + 'resources'
-        }
-    }
-});
-
-// webpack.mix.js
-mix.setPublicPath('public');
-mix.webpackConfig({
-    output: {
-        chunkFilename: 'js/chunks/[name].js',
-    },
-});
-
-
-// used to run app using vuejs
-mix.js('resources/lms/src/index.js', 'public/js/app.js');
+mix.js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css');
