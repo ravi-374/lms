@@ -3,7 +3,10 @@
 
 namespace App\Repositories\Contracts;
 
-
+/**
+ * Interface GenreRepositoryInterface
+ * @package App\Repositories\Contracts
+ */
 interface GenreRepositoryInterface
 {
     /**

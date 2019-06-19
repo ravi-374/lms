@@ -3,7 +3,10 @@
 
 namespace App\Repositories\Contracts;
 
-
+/**
+ * Interface TagRepositoryInterface
+ * @package App\Repositories\Contracts
+ */
 interface TagRepositoryInterface
 {
     /**
