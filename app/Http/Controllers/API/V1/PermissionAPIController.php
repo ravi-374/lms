@@ -88,7 +88,6 @@ class PermissionAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        /** @var Permission $permission */
         $this->permissionRepository->findOrFail($id);
 
         $permission = $this->permissionRepository->update($input, $id);
