@@ -11,7 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use Response;
 
 /**
- * Class TagApiController
+ * Class TagAPIController
  * @package App\Http\Controllers\API
  */
 class TagAPIController extends AppBaseController

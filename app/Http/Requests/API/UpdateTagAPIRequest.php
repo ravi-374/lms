@@ -24,7 +24,6 @@ class UpdateTagAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Tag::$rules;
         $rules['name'] = 'required|unique:tags,name,'.$this->route('tag');
 
         return $rules;

@@ -19,7 +19,7 @@ class Publisher extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:publishers',
+        'name' => 'required|unique:publishers,name',
     ];
     public $table = 'publishers';
     public $fillable = [

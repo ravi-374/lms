@@ -24,7 +24,6 @@ class UpdateGenreAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Genre::$rules;
         $rules['name'] = 'required|unique:genres,name,'.$this->route('genre');
         return $rules;
     }

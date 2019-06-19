@@ -20,7 +20,7 @@ class Tag extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:tags',
+        'name' => 'required|unique:tags,name',
     ];
     public $table = 'tags';
     public $fillable = [
