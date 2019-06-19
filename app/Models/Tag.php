@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Tag extends Model
 {
-
     /**
      * Validation rules
      *
@@ -35,6 +34,4 @@ class Tag extends Model
         'id'   => 'integer',
         'name' => 'string',
     ];
-
-
 }

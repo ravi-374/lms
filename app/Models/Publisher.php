@@ -21,10 +21,12 @@ class Publisher extends Model
     public static $rules = [
         'name' => 'required|unique:publishers,name',
     ];
+
     public $table = 'publishers';
     public $fillable = [
         'name',
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

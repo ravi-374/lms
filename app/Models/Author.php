@@ -27,7 +27,6 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Author extends Model
 {
-
     /**
      * Validation rules
      *
@@ -36,12 +35,14 @@ class Author extends Model
     public static $rules = [
         'first_name' => 'required'
     ];
+
     public $table = 'authors';
     public $fillable = [
         'first_name',
         'last_name',
         'description'
     ];
+
     /**
      * The attributes that should be casted to native types.
      *
