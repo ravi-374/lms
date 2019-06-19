@@ -3,7 +3,10 @@
 
 namespace App\Repositories\Contracts;
 
-
+/**
+ * Interface PublisherRepositoryInterface
+ * @package App\Repositories\Contracts
+ */
 interface PublisherRepositoryInterface
 {
     /**
