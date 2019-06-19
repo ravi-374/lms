@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Publisher extends Model
 {
-
     /**
      * Validation rules
      *
@@ -35,5 +34,4 @@ class Publisher extends Model
         'id'   => 'integer',
         'name' => 'string',
     ];
-
 }

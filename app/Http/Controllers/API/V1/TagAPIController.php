@@ -11,7 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use Response;
 
 /**
- * Class TagController
+ * Class TagApiController
  * @package App\Http\Controllers\API
  */
 class TagAPIController extends AppBaseController
@@ -70,11 +70,7 @@ class TagAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Tag $tag */
-        $tag = $this->tagRepository->find($id);
-
-        if (empty($tag)) {
-            return $this->sendError('Tag not found');
-        }
+        $tag = $this->tagRepository->findOrFail($id);
 
         return $this->sendResponse($tag->toArray(), 'Tag retrieved successfully');
     }
@@ -92,12 +88,7 @@ class TagAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        /** @var Tag $tag */
-        $tag = $this->tagRepository->find($id);
-
-        if (empty($tag)) {
-            return $this->sendError('Tag not found');
-        }
+        $this->tagRepository->findOrFail($id);
 
         $tag = $this->tagRepository->update($input, $id);
 
@@ -117,11 +108,7 @@ class TagAPIController extends AppBaseController
     public function destroy($id)
     {
         /** @var Tag $tag */
-        $tag = $this->tagRepository->find($id);
-
-        if (empty($tag)) {
-            return $this->sendError('Tag not found');
-        }
+        $tag = $this->tagRepository->findOrFail($id);
 
         $tag->delete();
 

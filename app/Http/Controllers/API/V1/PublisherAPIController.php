@@ -11,7 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use Response;
 
 /**
- * Class PublisherController
+ * Class PublisherAPIController
  * @package App\Http\Controllers\API
  */
 class PublisherAPIController extends AppBaseController
@@ -70,11 +70,7 @@ class PublisherAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Publisher $publisher */
-        $publisher = $this->publisherRepository->find($id);
-
-        if (empty($publisher)) {
-            return $this->sendError('Publisher not found');
-        }
+        $publisher = $this->publisherRepository->findOrFail($id);
 
         return $this->sendResponse($publisher->toArray(), 'Publisher retrieved successfully');
     }
@@ -92,12 +88,7 @@ class PublisherAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        /** @var Publisher $publisher */
-        $publisher = $this->publisherRepository->find($id);
-
-        if (empty($publisher)) {
-            return $this->sendError('Publisher not found');
-        }
+        $this->publisherRepository->findOrFail($id);
 
         $publisher = $this->publisherRepository->update($input, $id);
 
@@ -117,11 +108,7 @@ class PublisherAPIController extends AppBaseController
     public function destroy($id)
     {
         /** @var Publisher $publisher */
-        $publisher = $this->publisherRepository->find($id);
-
-        if (empty($publisher)) {
-            return $this->sendError('Publisher not found');
-        }
+        $publisher = $this->publisherRepository->findOrFail($id);
 
         $publisher->delete();
 

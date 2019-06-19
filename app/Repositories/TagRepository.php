@@ -4,13 +4,14 @@ namespace App\Repositories;
 
 use App\Models\Tag;
 use App\Repositories\BaseRepository;
+use App\Repositories\Contracts\TagRepositoryInterface;
 
 /**
  * Class TagRepository
  * @package App\Repositories
  * @version June 19, 2019, 6:00 am UTC
  */
-class TagRepository extends BaseRepository
+class TagRepository extends BaseRepository implements TagRepositoryInterface
 {
     /**
      * @var array
