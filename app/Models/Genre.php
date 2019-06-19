@@ -31,13 +31,15 @@ class Genre extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:genres'
+        'name' => 'required|unique:genres,name'
     ];
+
     public $table = 'genres';
     public $fillable = [
         'name',
         'description'
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

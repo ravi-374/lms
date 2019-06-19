@@ -4,7 +4,7 @@
 namespace App\Repositories\Contracts;
 
 
-interface GenreRepositoryInterface
+interface TagRepositoryInterface
 {
     /**
      * @return array

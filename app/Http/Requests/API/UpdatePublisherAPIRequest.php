@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\Genre;
+use App\Models\Publisher;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateGenreAPIRequest extends APIRequest
+class UpdatePublisherAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class UpdateGenreAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['name'] = 'required|unique:genres,name,'.$this->route('genre');
+        $rules['name'] = 'required|unique:publishers,name,'.$this->route('publisher');
+
         return $rules;
     }
 }

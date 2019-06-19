@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Response;
 
 /**
- * Class GenreController
+ * Class GenreAPIController
  * @package App\Http\Controllers\API
  */
 class GenreAPIController extends AppBaseController

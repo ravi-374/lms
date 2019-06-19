@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Response;
 
 /**
- * Class AuthorController
+ * Class AuthorAPIController
  * @package App\Http\Controllers\API
  */
 class AuthorAPIController extends AppBaseController
