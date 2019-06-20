@@ -16,14 +16,20 @@ use Zizaco\Entrust\EntrustRole;
  */
 class Role extends EntrustRole
 {
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'name' => 'required|unique:roles,name',
+    ];
     public $table = 'roles';
-
     public $fillable = [
         'name',
         'display_name',
         'description',
     ];
-
     /**
      * The attributes that should be casted to native types.
      *
@@ -34,14 +40,5 @@ class Role extends EntrustRole
         'name'         => 'string',
         'display_name' => 'string',
         'description'  => 'string',
-    ];
-
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'name' => 'required|unique:roles,name',
     ];
 }

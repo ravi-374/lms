@@ -12,6 +12,9 @@ Route::resource('publishers', 'PublisherAPIController');
 // Tags Routes
 Route::resource('tags', 'TagAPIController');
 
+// Book Language Routes
+Route::resource('book-languages', 'BookLanguageAPIController');
+
 // Roles
 Route::resource('roles', 'RoleAPIController');
 
