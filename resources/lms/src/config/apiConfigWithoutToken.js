@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://local.lms.com/api/v1/'
+    baseURL: 'http://local.lms.com/api/'
 });

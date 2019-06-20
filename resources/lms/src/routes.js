@@ -29,5 +29,5 @@ export default [
         exact: true,
         name: 'Genres',
         component: Genres
-    },
+    }
 ];
