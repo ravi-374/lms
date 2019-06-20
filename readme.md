@@ -9,6 +9,6 @@ Clone a Project
 - **Composer Install**
 - **Setup .env file**
 - **Setup .env file**
-- **Create virtual host with name `local.lms-backend.com`**
+- **Create virtual host with name `local.lms.com`**
 - **npm install**
 - **npm run dev**
