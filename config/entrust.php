@@ -19,7 +19,7 @@ return [
     | the role if it is in a different namespace.
     |
     */
-    'role' => 'App\Models\Role',
+    'role'                   => 'App\Models\Role',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     | This is the roles table used by Entrust to save roles to the database.
     |
     */
-    'roles_table' => 'roles',
+    'roles_table'            => 'roles',
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     | relation between permissions and roles & roles and users
     |
     */
-    'role_foreign_key' => 'role_id',
+    'role_foreign_key'       => 'role_id',
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     | Update the User if it is in a different namespace.
     |
     */
-    'user' => 'App\User',
+    'user'                   => 'App\User',
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return [
     | database.
     |
     */
-    'users_table' => 'users',
+    'users_table'            => 'users',
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ return [
     | database.
     |
     */
-    'role_user_table' => 'role_user',
+    'role_user_table'        => 'role_user',
 
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +84,7 @@ return [
     | relation between roles and users
     |
     */
-    'user_foreign_key' => 'user_id',
+    'user_foreign_key'       => 'user_id',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     | Update the permission if it is in a different namespace.
     |
     */
-    'permission' => 'App\Models\Permission',
+    'permission'             => 'App\Models\Permission',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return [
     | database.
     |
     */
-    'permissions_table' => 'permissions',
+    'permissions_table'      => 'permissions',
 
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +117,7 @@ return [
     | between permissions and roles to the database.
     |
     */
-    'permission_role_table' => 'permission_role',
+    'permission_role_table'  => 'permission_role',
 
     /*
     |--------------------------------------------------------------------------

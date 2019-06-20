@@ -17,7 +17,7 @@
         "appointer/swaggervel": "dev-master",
         "laravelcollective/html": "^5.8.0",
         "tymon/jwt-auth": "dev-develop",
-        "zizaco/entrust": "5.2.x-dev"
+      "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

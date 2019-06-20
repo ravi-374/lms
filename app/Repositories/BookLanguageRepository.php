@@ -2,22 +2,22 @@
 
 namespace App\Repositories;
 
-use App\Models\Role;
-use App\Repositories\BaseRepository;
-use App\Repositories\Contracts\RoleRepositoryInterface;
+use App\Models\BookLanguage;
+use App\Repositories\Contracts\BookLanguageInterface;
 
 /**
- * Class RoleRepository
+ * Class BookLanguageRepository
  * @package App\Repositories
- * @version June 19, 2019, 10:01 am UTC
+ * @version June 19, 2019, 9:49 am UTC
  */
-class RoleRepository extends BaseRepository implements RoleRepositoryInterface
+class BookLanguageRepository extends BaseRepository implements BookLanguageInterface
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'name',
+        'language_name',
+        'language_code',
     ];
 
     /**
@@ -35,6 +35,6 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      **/
     public function model()
     {
-        return Role::class;
+        return BookLanguage::class;
     }
 }
