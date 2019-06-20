@@ -8,4 +8,5 @@ const Footer = () => {
         </Fragment>
     );
 };
+
 export default Footer;

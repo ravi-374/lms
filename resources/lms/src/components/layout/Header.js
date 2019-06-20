@@ -11,7 +11,8 @@ const Header = (props) => {
         // }
     }
     const goToUserProfile = () => {
-        props.history.push('/app/user-profile');
+        props.history.push('/');
+
     };
     return (
         <Fragment>
@@ -29,8 +30,8 @@ const Header = (props) => {
                     </DropdownToggle>
                     <DropdownMenu right style={{right: 'auto'}}>
                         <DropdownItem onClick={goToUserProfile}><i className="fa fa-cog"/>Profile</DropdownItem>
-                        <DropdownItem onClick={e => props.onLogout(e)}><i
-                            className="fa fa-lock"/> Logout</DropdownItem>
+                        <DropdownItem onClick={e => props.onLogout(e)}>
+                            <i className="fa fa-lock"/> Logout</DropdownItem>
                     </DropdownMenu>
                 </AppHeaderDropdown>
             </Nav>
