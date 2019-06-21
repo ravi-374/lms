@@ -9,12 +9,14 @@ import modalReducer from './modalReducer';
 import tagReducer from './tagReducer';
 import authorReducer from './authorReducer';
 import bookLanguageReducer from './bookLanguageReducer';
+import publisherReducer from './publisherReducer';
 
 export default combineReducers({
     genres:genreReducer,
     tags:tagReducer,
     authors:authorReducer,
     bookLanguages:bookLanguageReducer,
+    publishers:publisherReducer,
     isLoading: progressReduce,
     form: formReducer,
     searchText: searchReducer,

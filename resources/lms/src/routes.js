@@ -7,6 +7,7 @@ const Genres = React.lazy(() => import('./components/genres/Genres'));
 const Tags = React.lazy(() => import('./components/tags/Tags'));
 const Authors = React.lazy(() => import('./components/authors/Authors'));
 const BookLanguages = React.lazy(() => import('./components/book-languages/BookLanguages'));
+const Publishers = React.lazy(() => import('./components/publishers/Publishers'));
 
 export default [
     {
@@ -50,5 +51,11 @@ export default [
         exact: true,
         name: 'BookLanguages',
         component: BookLanguages
+    },
+    {
+        path: '/app/publishers',
+        exact: true,
+        name: 'Publishers',
+        component: Publishers
     }
 ];
