@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import routes from '../../routes';
 import {
+    AppBreadcrumb,
     AppFooter,
     AppHeader,
     AppSidebar,
@@ -13,6 +14,8 @@ import {
     AppSidebarNav,
 } from '@coreui/react';
 import navigation from '../../config/navbarConfig';
+import ProgressBar from '../../shared/progress-bar/ProgressBar';
+import Toasts from '../../shared/toast/Toasts';
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
@@ -39,7 +42,9 @@ const renderAppHeader = (props) => {
     };
     return (
         <AppHeader fixed>
-            <Header history={props.history} onLogout={e => signOut(e)}/>
+            <Suspense fallback={<ProgressBar/>}>
+                <Header history={props.history} onLogout={e => signOut(e)}/>
+            </Suspense>
         </AppHeader>
     );
 };
@@ -49,7 +54,9 @@ const renderAppSidebar = (props) => {
         <AppSidebar fixed display="lg">
             <AppSidebarHeader/>
             <AppSidebarForm/>
-            <AppSidebarNav navConfig={navigation} {...props} />
+            <Suspense>
+                <AppSidebarNav navConfig={navigation} {...props} />
+            </Suspense>
             <AppSidebarFooter/>
             <AppSidebarMinimizer/>
         </AppSidebar>
@@ -60,11 +67,14 @@ const renderMainSection = () => {
     return (
         <main className="main mt-4">
             <Container fluid>
-                <Switch>
-                    {renderRoutes()}
-                    <Redirect from="/" to="/app/dashboard"/>
-                </Switch>
+                <Suspense fallback={<ProgressBar/>}>
+                    <Switch>
+                        {renderRoutes()}
+                        <Redirect from="/" to="/app/dashboard"/>
+                    </Switch>
+                </Suspense>
             </Container>
+            <Toasts/>
         </main>
     )
 };
@@ -87,7 +97,9 @@ const renderRoutes = () => {
 const renderAppFooter = () => {
     return (
         <AppFooter>
-            <Footer/>
+            <Suspense fallback={<ProgressBar/>}>
+                <Footer/>
+            </Suspense>
         </AppFooter>
     );
 };
