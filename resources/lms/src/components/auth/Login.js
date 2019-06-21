@@ -35,7 +35,7 @@ const Login = (props) => {
             localStorage.setItem('user', JSON.stringify(response.data.data.user));
             props.history.push('/');
         }).catch(({response}) =>
-            props.addToast({text: response.data.message, color: 'red'})
+            props.addToast({text: response.data.message, type: 'error'})
         );
     };
     const {handleSubmit, pristine, submitting} = props;
@@ -43,12 +43,14 @@ const Login = (props) => {
         <div className="app flex-row align-items-center">
             <Container>
                 <Row className="justify-content-center">
+
                     <Col md="4">
                         <Card className="p-3">
                             <CardBody>
                                 <Form onSubmit={handleSubmit(onLogin)}>
                                     <h1>Login</h1>
                                     <p className="text-muted">Sign In to your account</p>
+
                                     <Field name="email" type="email" groupText="icon-user"
                                            component={CustomInputGroup}/>
                                     <Field name="password" type="password" groupText="icon-lock"
