@@ -8,9 +8,9 @@
     text-align: center;
     border-radius: 10px;
     position: fixed;
-    z-index: 1;
-    top: 50%;
-    left: 50%;
+    z-index: 11111;
+    bottom: 10%;
+    right: 1%;
     white-space: nowrap;
     background-color: rgba(161, 169, 171, 0.5);
 
@@ -45,23 +45,12 @@
     animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s;
 }
 
-@keyframes fadein {
-    from {
-        top: 0;
-        opacity: 0;
-    }
-    to {
-        bottom: 44%;
-        opacity: 1;
-    }
-}
-
 @-webkit-keyframes expand {
     from {
         min-width: 50px
     }
     to {
-        min-width: 300px
+        min-width: 350px
     }
 }
 
@@ -70,25 +59,25 @@
         min-width: 50px
     }
     to {
-        min-width: 300px
+        min-width: 350px
     }
 }
 
 @-webkit-keyframes stay {
     from {
-        min-width: 300px
+        min-width: 350px
     }
     to {
-        min-width: 300px
+        min-width: 350px
     }
 }
 
 @keyframes stay {
     from {
-        min-width: 300px
+        min-width: 350px
     }
     to {
-        min-width: 300px
+        min-width: 350px
     }
 }
 
@@ -103,7 +92,7 @@
 
 @keyframes shrink {
     from {
-        min-width: 300px;
+        min-width: 350px;
     }
     to {
         min-width: 50px;

@@ -3,7 +3,7 @@ import apiConfig from '../../config/apiConfigWithoutToken';
 import {Field, reduxForm} from 'redux-form';
 import CustomInputGroup from '../../shared/components/CustomInputGroup';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
-import validateLoginForm from './loginFormValidate';
+import loginFormValidate from './loginFormValidate';
 import CheckBox from '../../shared/components/CheckBox';
 import {addToast} from '../../store/actions/toastAction';
 import Toasts from '../../shared/toast/Toasts';
@@ -78,6 +78,6 @@ const Login = (props) => {
     );
 };
 
-const form = reduxForm({form: 'loginForm', validate: validateLoginForm})(Login);
+const form = reduxForm({form: 'loginForm', validate: loginFormValidate})(Login);
 
 export default connect(null, {addToast})(form);
