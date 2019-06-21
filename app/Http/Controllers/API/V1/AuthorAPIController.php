@@ -39,7 +39,7 @@ class AuthorAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($authors->toArray(), 'Authors retrieved successfully');
+        return $this->sendResponse($authors->toArray(), 'Authors retrieved successfully.');
     }
 
     /**
@@ -56,7 +56,7 @@ class AuthorAPIController extends AppBaseController
 
         $author = $this->authorRepository->create($input);
 
-        return $this->sendResponse($author->toArray(), 'Author saved successfully');
+        return $this->sendResponse($author->toArray(), 'Author saved successfully.');
     }
 
     /**
@@ -72,7 +72,7 @@ class AuthorAPIController extends AppBaseController
         /** @var Author $author */
         $author = $this->authorRepository->findOrFail($id);
 
-        return $this->sendResponse($author->toArray(), 'Author retrieved successfully');
+        return $this->sendResponse($author->toArray(), 'Author retrieved successfully.');
     }
 
     /**
@@ -91,7 +91,7 @@ class AuthorAPIController extends AppBaseController
 
         $author = $this->authorRepository->update($input, $id);
 
-        return $this->sendResponse($author->toArray(), 'Author updated successfully');
+        return $this->sendResponse($author->toArray(), 'Author updated successfully.');
     }
 
     /**
@@ -111,6 +111,6 @@ class AuthorAPIController extends AppBaseController
 
         $author->delete();
 
-        return $this->sendResponse($id, 'Author deleted successfully');
+        return $this->sendResponse($id, 'Author deleted successfully.');
     }
 }

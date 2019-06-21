@@ -39,7 +39,7 @@ class GenreAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($genres->toArray(), 'Genres retrieved successfully');
+        return $this->sendResponse($genres->toArray(), 'Genres retrieved successfully.');
     }
 
     /**
@@ -56,7 +56,7 @@ class GenreAPIController extends AppBaseController
 
         $genre = $this->genreRepository->create($input);
 
-        return $this->sendResponse($genre->toArray(), 'Genre saved successfully');
+        return $this->sendResponse($genre->toArray(), 'Genre saved successfully.');
     }
 
     /**
@@ -72,7 +72,7 @@ class GenreAPIController extends AppBaseController
         /** @var Genre $genre */
         $genre = $this->genreRepository->findOrFail($id);
 
-        return $this->sendResponse($genre->toArray(), 'Genre retrieved successfully');
+        return $this->sendResponse($genre->toArray(), 'Genre retrieved successfully.');
     }
 
     /**
@@ -92,7 +92,7 @@ class GenreAPIController extends AppBaseController
 
         $genre = $this->genreRepository->update($input, $id);
 
-        return $this->sendResponse($genre->toArray(), 'Genre updated successfully');
+        return $this->sendResponse($genre->toArray(), 'Genre updated successfully.');
     }
 
     /**
@@ -112,6 +112,6 @@ class GenreAPIController extends AppBaseController
 
         $genre->delete();
 
-        return $this->sendResponse($id, 'Genre deleted successfully');
+        return $this->sendResponse($id, 'Genre deleted successfully.');
     }
 }
