@@ -39,7 +39,7 @@ class TagAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($tags->toArray(), 'Tags retrieved successfully');
+        return $this->sendResponse($tags->toArray(), 'Tags retrieved successfully.');
     }
 
     /**
@@ -56,7 +56,7 @@ class TagAPIController extends AppBaseController
 
         $tag = $this->tagRepository->create($input);
 
-        return $this->sendResponse($tag->toArray(), 'Tag saved successfully');
+        return $this->sendResponse($tag->toArray(), 'Tag saved successfully.');
     }
 
     /**
@@ -72,7 +72,7 @@ class TagAPIController extends AppBaseController
         /** @var Tag $tag */
         $tag = $this->tagRepository->findOrFail($id);
 
-        return $this->sendResponse($tag->toArray(), 'Tag retrieved successfully');
+        return $this->sendResponse($tag->toArray(), 'Tag retrieved successfully.');
     }
 
     /**
@@ -92,7 +92,7 @@ class TagAPIController extends AppBaseController
 
         $tag = $this->tagRepository->update($input, $id);
 
-        return $this->sendResponse($tag->toArray(), 'Tag updated successfully');
+        return $this->sendResponse($tag->toArray(), 'Tag updated successfully.');
     }
 
     /**
@@ -112,6 +112,6 @@ class TagAPIController extends AppBaseController
 
         $tag->delete();
 
-        return $this->sendResponse($id, 'Tag deleted successfully');
+        return $this->sendResponse($id, 'Tag deleted successfully.');
     }
 }

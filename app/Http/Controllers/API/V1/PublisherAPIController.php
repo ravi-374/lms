@@ -39,7 +39,7 @@ class PublisherAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($publishers->toArray(), 'Publishers retrieved successfully');
+        return $this->sendResponse($publishers->toArray(), 'Publishers retrieved successfully.');
     }
 
     /**
@@ -56,7 +56,7 @@ class PublisherAPIController extends AppBaseController
 
         $publisher = $this->publisherRepository->create($input);
 
-        return $this->sendResponse($publisher->toArray(), 'Publisher saved successfully');
+        return $this->sendResponse($publisher->toArray(), 'Publisher saved successfully.');
     }
 
     /**
@@ -72,7 +72,7 @@ class PublisherAPIController extends AppBaseController
         /** @var Publisher $publisher */
         $publisher = $this->publisherRepository->findOrFail($id);
 
-        return $this->sendResponse($publisher->toArray(), 'Publisher retrieved successfully');
+        return $this->sendResponse($publisher->toArray(), 'Publisher retrieved successfully.');
     }
 
     /**
@@ -92,7 +92,7 @@ class PublisherAPIController extends AppBaseController
 
         $publisher = $this->publisherRepository->update($input, $id);
 
-        return $this->sendResponse($publisher->toArray(), 'Publisher updated successfully');
+        return $this->sendResponse($publisher->toArray(), 'Publisher updated successfully.');
     }
 
     /**
@@ -112,6 +112,6 @@ class PublisherAPIController extends AppBaseController
 
         $publisher->delete();
 
-        return $this->sendResponse($id, 'Publisher deleted successfully');
+        return $this->sendResponse($id, 'Publisher deleted successfully.');
     }
 }
