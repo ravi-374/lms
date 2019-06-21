@@ -5,6 +5,7 @@ const Users = React.lazy(() => import('./components/users/Users'));
 const Books = React.lazy(() => import('./components/books/Books'));
 const Genres = React.lazy(() => import('./components/genres/Genres'));
 const Tags = React.lazy(() => import('./components/tags/Tags'));
+const Authors = React.lazy(() => import('./components/authors/Authors'));
 
 export default [
     {
@@ -36,5 +37,11 @@ export default [
         exact: true,
         name: 'Tags',
         component: Tags
+    },
+    {
+        path: '/app/authors',
+        exact: true,
+        name: 'Authors',
+        component: Authors
     }
 ];

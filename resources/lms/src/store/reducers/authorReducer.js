@@ -1,15 +1,15 @@
-import {tagActionType} from '../../constants';
+import {authorActionType} from '../../constants';
 import _ from 'lodash';
 
 export default (state = {}, action) => {
     switch (action.type) {
-        case tagActionType.FETCH_TAGS:
+        case authorActionType.FETCH_AUTHORS:
             return {...state, ..._.mapKeys(action.payload, 'id')};
-        case tagActionType.FETCH_TAG:
-        case tagActionType.EDIT_TAG:
-        case tagActionType.ADD_TAG:
+        case authorActionType.FETCH_AUTHOR:
+        case authorActionType.EDIT_AUTHOR:
+        case authorActionType.ADD_AUTHOR:
             return {...state, [action.payload.id]: action.payload};
-        case tagActionType.DELETE_TAG:
+        case authorActionType.DELETE_AUTHOR:
             return _.omit(state, action.payload);
         default:
             return state;

@@ -43,7 +43,6 @@ const Login = (props) => {
         <div className="app flex-row align-items-center">
             <Container>
                 <Row className="justify-content-center">
-
                     <Col md="4">
                         <Card className="p-3">
                             <CardBody>
