@@ -39,7 +39,7 @@ class PermissionAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($permissions->toArray(), 'Permissions retrieved successfully');
+        return $this->sendResponse($permissions->toArray(), 'Permissions retrieved successfully.');
     }
 
     /**
@@ -56,7 +56,7 @@ class PermissionAPIController extends AppBaseController
 
         $permission = $this->permissionRepository->create($input);
 
-        return $this->sendResponse($permission->toArray(), 'Permission saved successfully');
+        return $this->sendResponse($permission->toArray(), 'Permission saved successfully.');
     }
 
     /**
@@ -72,7 +72,7 @@ class PermissionAPIController extends AppBaseController
         /** @var Permission $permission */
         $permission = $this->permissionRepository->findOrFail($id);
 
-        return $this->sendResponse($permission->toArray(), 'Permission retrieved successfully');
+        return $this->sendResponse($permission->toArray(), 'Permission retrieved successfully.');
     }
 
     /**
@@ -92,7 +92,7 @@ class PermissionAPIController extends AppBaseController
 
         $permission = $this->permissionRepository->update($input, $id);
 
-        return $this->sendResponse($permission->toArray(), 'Permission updated successfully');
+        return $this->sendResponse($permission->toArray(), 'Permission updated successfully.');
     }
 
     /**
@@ -112,6 +112,6 @@ class PermissionAPIController extends AppBaseController
 
         $permission->delete();
 
-        return $this->sendResponse($id, 'Permission deleted successfully');
+        return $this->sendResponse($id, 'Permission deleted successfully.');
     }
 }
