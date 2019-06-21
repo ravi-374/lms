@@ -1,14 +1,14 @@
-import {genreActionType} from '../../constants';
+import {tagActionType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {setLoading} from './progressBarAction';
 import {addToast} from './toastAction';
 import {toggleModal} from './modalAction';
 
-export const fetchGenres = () => async (dispatch) => {
+export const fetchTags = () => async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConfig.get('genres')
+    await apiConfig.get('tags')
         .then((response) => {
-            dispatch({type: genreActionType.FETCH_GENRES, payload: response.data.data});
+            dispatch({type: tagActionType.FETCH_TAGS, payload: response.data.data});
             dispatch(setLoading(false));
         })
         .catch(({response}) => {
@@ -16,13 +16,13 @@ export const fetchGenres = () => async (dispatch) => {
         });
 };
 
-export const addGenre = (genre) => async (dispatch) => {
+export const addTag = (tag) => async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConfig.post('genres', genre)
+    await apiConfig.post('tags', tag)
         .then((response) => {
-            dispatch({type: genreActionType.ADD_GENRE, payload: response.data.data});
+            dispatch({type: tagActionType.ADD_TAG, payload: response.data.data});
             dispatch(setLoading(false));
-            dispatch(addToast({text: 'Genre Saved !'}));
+            dispatch(addToast({text: 'Tag Saved !'}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -30,13 +30,13 @@ export const addGenre = (genre) => async (dispatch) => {
         });
 };
 
-export const editGenre = (genreId, genre) => async (dispatch) => {
+export const editTag = (tagId, tag) => async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConfig.put(`genres/${genreId}`, genre)
+    await apiConfig.put(`tags/${tagId}`, tag)
         .then((response) => {
-            dispatch({type: genreActionType.EDIT_GENRE, payload: response.data.data});
+            dispatch({type: tagActionType.EDIT_TAG, payload: response.data.data});
             dispatch(setLoading(false));
-            dispatch(addToast({text: 'Genre Updated !'}));
+            dispatch(addToast({text: 'Tag Updated !'}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -44,11 +44,11 @@ export const editGenre = (genreId, genre) => async (dispatch) => {
         });
 };
 
-export const deleteGenre = (genreId) => async (dispatch) => {
-    await apiConfig.delete(`genres/${genreId}`)
+export const deleteTag = (tagId) => async (dispatch) => {
+    await apiConfig.delete(`tags/${tagId}`)
         .then(() => {
-            dispatch({type: genreActionType.DELETE_GENRE, payload: genreId});
-            dispatch(addToast({text: 'Genre Deleted !'}));
+            dispatch({type: tagActionType.DELETE_TAG, payload: tagId});
+            dispatch(addToast({text: 'Tag Deleted !'}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {

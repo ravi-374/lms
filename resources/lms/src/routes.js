@@ -4,6 +4,7 @@ const Dashboard = React.lazy(() => import('./components/dashboard/Dashboard'));
 const Users = React.lazy(() => import('./components/users/Users'));
 const Books = React.lazy(() => import('./components/books/Books'));
 const Genres = React.lazy(() => import('./components/genres/Genres'));
+const Tags = React.lazy(() => import('./components/tags/Tags'));
 
 export default [
     {
@@ -29,5 +30,11 @@ export default [
         exact: true,
         name: 'Genres',
         component: Genres
+    },
+    {
+        path: '/app/tags',
+        exact: true,
+        name: 'Tags',
+        component: Tags
     }
 ];

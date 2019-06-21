@@ -16,3 +16,11 @@ export const genreActionType = {
     EDIT_GENRE: 'EDIT_GENRE',
     DELETE_GENRE: 'DELETE_GENRE',
 };
+
+export const tagActionType = {
+    FETCH_TAGS: 'FETCH_TAGS',
+    FETCH_TAG: 'FETCH_TAG',
+    ADD_TAG: 'ADD_TAG',
+    EDIT_TAG: 'EDIT_TAG',
+    DELETE_TAG: 'DELETE_TAG',
+};
