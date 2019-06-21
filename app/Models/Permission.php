@@ -1,18 +1,26 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model as Model;
 use Zizaco\Entrust\EntrustPermission;
-
 /**
- * Class Permission
- * @package App\Models
- * @version June 19, 2019, 10:10 am UTC
+ * App\Models\Permission
  *
- * @property string name
- * @property string display_name
- * @property string description
+ * @property int $id
+ * @property string $name
+ * @property string|null $display_name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Permission extends EntrustPermission
 {
