@@ -20,7 +20,7 @@ export const addBookLanguage = (language) => async (dispatch) => {
     await apiConfig.post('book-languages', language)
         .then((response) => {
             dispatch({type: bookLanguageActionType.ADD_BOOK_LANGUAGE, payload: response.data.data});
-            dispatch(addToast({text: 'Language Saved !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -32,7 +32,7 @@ export const editBookLanguage = (bookLanguageId, language) => async (dispatch) =
     await apiConfig.put(`book-languages/${bookLanguageId}`, language)
         .then((response) => {
             dispatch({type: bookLanguageActionType.EDIT_BOOK_LANGUAGE, payload: response.data.data});
-            dispatch(addToast({text: 'Language Updated !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -42,10 +42,9 @@ export const editBookLanguage = (bookLanguageId, language) => async (dispatch) =
 
 export const deleteBookLanguage = (bookLanguageId) => async (dispatch) => {
     await apiConfig.delete(`book-languages/${bookLanguageId}`)
-        .then(() => {
+        .then((response) => {
             dispatch({type: bookLanguageActionType.DELETE_BOOK_LANGUAGE, payload: bookLanguageId});
-            dispatch(setLoading(false));
-            dispatch(addToast({text: 'Language Deleted !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {

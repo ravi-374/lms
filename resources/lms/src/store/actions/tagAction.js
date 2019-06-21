@@ -17,12 +17,10 @@ export const fetchTags = () => async (dispatch) => {
 };
 
 export const addTag = (tag) => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfig.post('tags', tag)
         .then((response) => {
             dispatch({type: tagActionType.ADD_TAG, payload: response.data.data});
-            dispatch(setLoading(false));
-            dispatch(addToast({text: 'Tag Saved !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -31,12 +29,10 @@ export const addTag = (tag) => async (dispatch) => {
 };
 
 export const editTag = (tagId, tag) => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfig.put(`tags/${tagId}`, tag)
         .then((response) => {
             dispatch({type: tagActionType.EDIT_TAG, payload: response.data.data});
-            dispatch(setLoading(false));
-            dispatch(addToast({text: 'Tag Updated !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -46,9 +42,9 @@ export const editTag = (tagId, tag) => async (dispatch) => {
 
 export const deleteTag = (tagId) => async (dispatch) => {
     await apiConfig.delete(`tags/${tagId}`)
-        .then(() => {
+        .then((response) => {
             dispatch({type: tagActionType.DELETE_TAG, payload: tagId});
-            dispatch(addToast({text: 'Tag Deleted !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {

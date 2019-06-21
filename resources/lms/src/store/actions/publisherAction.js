@@ -20,7 +20,7 @@ export const addPublisher = (Publisher) => async (dispatch) => {
     await apiConfig.post('publishers', Publisher)
         .then((response) => {
             dispatch({type: publisherActionType.ADD_PUBLISHER, payload: response.data.data});
-            dispatch(addToast({text: 'Publisher Saved !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -32,7 +32,7 @@ export const editPublisher = (publisherId, publisher) => async (dispatch) => {
     await apiConfig.put(`publishers/${publisherId}`, publisher)
         .then((response) => {
             dispatch({type: publisherActionType.EDIT_PUBLISHER, payload: response.data.data});
-            dispatch(addToast({text: 'Publisher Updated !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -42,9 +42,9 @@ export const editPublisher = (publisherId, publisher) => async (dispatch) => {
 
 export const deletePublisher = (publisherId) => async (dispatch) => {
     await apiConfig.delete(`publishers/${publisherId}`)
-        .then(() => {
+        .then((response) => {
             dispatch({type: publisherActionType.DELETE_PUBLISHER, payload: publisherId});
-            dispatch(addToast({text: 'Publisher Deleted !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
