@@ -24,3 +24,11 @@ export const tagActionType = {
     EDIT_TAG: 'EDIT_TAG',
     DELETE_TAG: 'DELETE_TAG',
 };
+
+export const authorActionType = {
+    FETCH_AUTHORS: 'FETCH_AUTHORS',
+    FETCH_AUTHOR: 'FETCH_AUTHOR',
+    ADD_AUTHOR: 'ADD_AUTHOR',
+    EDIT_AUTHOR: 'EDIT_AUTHOR',
+    DELETE_AUTHOR: 'DELETE_AUTHOR',
+};

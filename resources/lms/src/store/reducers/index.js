@@ -7,10 +7,12 @@ import genreReducer from './genreReducer';
 import toastReducer from './toastReducer';
 import modalReducer from './modalReducer';
 import tagReducer from './tagReducer';
+import authorReducer from './authorReducer';
 
 export default combineReducers({
     genres: genreReducer,
     tags: tagReducer,
+    authors: authorReducer,
     isLoading: progressReduce,
     form: formReducer,
     searchText: searchReducer,
