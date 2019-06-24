@@ -17,12 +17,10 @@ export const fetchAuthors = () => async (dispatch) => {
 };
 
 export const addAuthor = (author) => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfig.post('authors', author)
         .then((response) => {
             dispatch({type: authorActionType.ADD_AUTHOR, payload: response.data.data});
-            dispatch(setLoading(false));
-            dispatch(addToast({text: 'Author Saved !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -31,12 +29,10 @@ export const addAuthor = (author) => async (dispatch) => {
 };
 
 export const editAuthor = (authorId, author) => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfig.put(`authors/${authorId}`, author)
         .then((response) => {
             dispatch({type: authorActionType.EDIT_AUTHOR, payload: response.data.data});
-            dispatch(setLoading(false));
-            dispatch(addToast({text: 'Author Updated !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
@@ -46,9 +42,9 @@ export const editAuthor = (authorId, author) => async (dispatch) => {
 
 export const deleteAuthor = (authorId) => async (dispatch) => {
     await apiConfig.delete(`authors/${authorId}`)
-        .then(() => {
+        .then((response) => {
             dispatch({type: authorActionType.DELETE_AUTHOR, payload: authorId});
-            dispatch(addToast({text: 'Author Deleted !'}));
+            dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {

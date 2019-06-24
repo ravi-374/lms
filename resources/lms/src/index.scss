@@ -74,9 +74,9 @@ input[type="checkbox"] {
 }
 
 .form-group .control-label:after {
-    content:"*";
+    content: "*";
     margin-left: 3px;
-    color:$red;
+    color: $red;
 }
 
 .modal-header .close {
@@ -143,4 +143,11 @@ input[type="checkbox"] {
     background-color: $white;
     padding: 33px 33px 20px 33px;
     z-index: 1;
+}
+
+.brand-minimized {
+
+    .infy-logo {
+        display: none;
+    }
 }
