@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Repositories\AuthorRepository;
 use App\Repositories\BookLanguageRepository;
+use App\Repositories\BookRepository;
 use App\Repositories\Contracts\AuthorRepositoryInterface;
 use App\Repositories\Contracts\BookLanguageInterface;
+use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Repositories\Contracts\GenreRepositoryInterface;
 use App\Repositories\Contracts\PublisherRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
@@ -29,6 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PublisherRepositoryInterface::class, PublisherRepository::class);
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
         $this->app->bind(BookLanguageInterface::class, BookLanguageRepository::class);
+        $this->app->bind(BookRepositoryInterface::class, BookRepository::class);
     }
 
     /**

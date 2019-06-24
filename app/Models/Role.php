@@ -28,7 +28,7 @@ class Role extends EntrustRole
 {
     const ROLE_ADMIN = 'admin';
     const ROLE_LIBRARIAN = 'librarian';
-
+    
     /**
      * Validation rules
      *

@@ -51,6 +51,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         $code = $exception->getCode();
+        $message = $exception->getMessage();
         if ($code < 100 || $code >= 600) {
             $code = \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR;
         }
@@ -63,7 +64,6 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception instanceof ModelNotFoundException) {
-                $message = $exception->getMessage();
                 $code = \Illuminate\Http\Response::HTTP_NOT_FOUND;
             }
 
