@@ -6,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\User;
 use DB;
 use Exception;
+use Hash;
 
 /**
  * Class UserRepository
@@ -85,6 +86,7 @@ class UserRepository extends BaseRepository
         try {
             DB::beginTransaction();
 
+            $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             if (!empty($input['roles'])) {
                 $user->roles()->sync($input['roles']);
@@ -116,6 +118,10 @@ class UserRepository extends BaseRepository
     {
         try {
             DB::beginTransaction();
+
+            if (!empty($input['password'])) {
+                $input['password'] = Hash::make($input['password']);
+            }
 
             $image = (!empty($input['image'])) ? $input['image'] : null;
             unset($input['image']);
