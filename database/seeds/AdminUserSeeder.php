@@ -12,7 +12,8 @@ class AdminUserSeeder extends Seeder
     public function run()
     {
         $input = [
-            'name' => 'LMS Admin',
+            'first_name' => 'LMS',
+            'last_name' => 'Admin',
             'email' => 'admin@lms.local',
             'password' => Hash::make('lms@12345')
         ];
