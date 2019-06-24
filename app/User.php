@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Address;
 use App\Traits\ImageTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -107,11 +108,11 @@ class User extends Authenticatable implements JWTSubject
         'last_name'  => 'required',
         'email'      => 'required|unique:users,email',
         'password'   => 'required',
-        'roles'      => 'required|array',
+      //  'roles'      => 'required|array',
     ];
 
     public static $messages = [
-        'roles.required' => 'User must have at least one role.',
+     //   'roles.required' => 'User must have at least one role.',
     ];
 
     public static $updateRules = [
@@ -150,5 +151,14 @@ class User extends Authenticatable implements JWTSubject
     public function deleteUserImage()
     {
         self::deleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image); // thumbnail
+    }
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'owner');
     }
 }

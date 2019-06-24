@@ -18,13 +18,36 @@ use Response;
  */
 class AppBaseController extends Controller
 {
+    /**
+     * @param  array|mixed  $result
+     * @param  string  $message
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sendResponse($result, $message)
     {
         return Response::json(ResponseUtil::makeResponse($message, $result));
     }
 
-    public function sendError($error, $code = 404)
+    /**
+     * @param  string  $error
+     * @param  int  $code
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendError($error, $code = 500)
     {
         return Response::json(ResponseUtil::makeError($error), $code);
     }
+
+    /**
+     * @param  string  $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendSuccess($message)
+    {
+        return Response::json([
+            'success' => true,
+            'message' => $message
+        ], 200);
+    }
+
 }
