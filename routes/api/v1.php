@@ -20,3 +20,9 @@ Route::resource('roles', 'RoleAPIController');
 
 // Permissions
 Route::resource('permissions', 'PermissionAPIController');
+
+// Book API Routes
+Route::resource('books', 'BookAPIController');
+
+Route::post('books/{id}', 'BookAPIController@update');
+
