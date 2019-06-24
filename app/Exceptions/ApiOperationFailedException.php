@@ -2,13 +2,14 @@
 /**
  * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
  *
- * User: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 6/21/2019
- * Time: 12:16 PM
+ * User: Ajay Makwana
+ * Email: ajay.makwana@infyom.com
+ * Date: 24/06/2019
+ * Time: 11:18 AM
  */
 
 namespace App\Exceptions;
+
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
