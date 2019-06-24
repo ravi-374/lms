@@ -23,6 +23,8 @@ Route::resource('permissions', 'PermissionAPIController');
 
 // Book API Routes
 Route::resource('books', 'BookAPIController');
-
 Route::post('books/{id}', 'BookAPIController@update');
 
+// Users
+Route::resource('users', 'UserAPIController');
+Route::post('users/{user_id}', 'UserAPIController@update');

@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait ImageTrait
 {
     /**
-     * @param  string  $file
+     * @param string $file
      * @return bool
      */
     public static function deleteImage($file)
@@ -34,13 +34,14 @@ trait ImageTrait
 
             return true;
         }
+
         return false;
     }
 
 
     /**
-     * @param  UploadedFile  $file
-     * @param  string  $path
+     * @param UploadedFile $file
+     * @param string $path
      *
      * @return string
      * @throws ApiOperationFailedException
@@ -68,7 +69,7 @@ trait ImageTrait
     }
 
     /**
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     public function imageUrl($path)
@@ -77,18 +78,55 @@ trait ImageTrait
     }
 
     /**
-     * @param  string  $url
+     * @param string $url
      *
      * @return mixed
      */
     function urlEncoding($url)
     {
         $entities = array(
-            '%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F',
-            '%25', '%23', '%5B', '%5D', '%5C'
+            '%21',
+            '%2A',
+            '%27',
+            '%28',
+            '%29',
+            '%3B',
+            '%3A',
+            '%40',
+            '%26',
+            '%3D',
+            '%2B',
+            '%24',
+            '%2C',
+            '%2F',
+            '%3F',
+            '%25',
+            '%23',
+            '%5B',
+            '%5D',
+            '%5C',
         );
         $replacements = array(
-            '!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]", "/"
+            '!',
+            '*',
+            "'",
+            "(",
+            ")",
+            ";",
+            ":",
+            "@",
+            "&",
+            "=",
+            "+",
+            "$",
+            ",",
+            "/",
+            "?",
+            "%",
+            "#",
+            "[",
+            "]",
+            "/",
         );
 
         return str_replace($entities, $replacements, urlencode($url));
