@@ -70,7 +70,7 @@ class BookAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Book $book */
-        $book = $this->bookRepository->findOrFail($id, ['tags', 'genres']);
+        $book = $this->bookRepository->findOrFail($id, ['tags', 'genres', 'items']);
 
         return $this->sendResponse($book->toArray(), 'Book retrieved successfully.');
     }
