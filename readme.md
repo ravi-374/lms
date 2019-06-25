@@ -6,9 +6,12 @@
 
 Clone a Project
 
+- **Checkout `frontend`  branch**
 - **Composer Install**
 - **Setup .env file**
-- **Setup .env file**
+- **Run migration `php artisan migrate`**
+- **Run seeder `php artisan db:seed`**
 - **Create virtual host with name `local.lms.com`**
 - **npm install**
 - **npm run dev**
+- **Run `local.lms.com`**
