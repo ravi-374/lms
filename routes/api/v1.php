@@ -28,10 +28,3 @@ Route::post('books/{id}', 'BookAPIController@update');
 // Users
 Route::resource('users', 'UserAPIController');
 Route::post('users/{user_id}', 'UserAPIController@update');
-
-// Membership Plans
-Route::resource('membership-plans', 'MembershipPlanAPIController');
-
-// Members
-Route::resource('members', 'MemberAPIController');
-Route::post('members/{member_id}', 'MemberAPIController@update');
