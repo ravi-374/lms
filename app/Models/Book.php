@@ -26,6 +26,7 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BookItem[] $items
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book query()
@@ -139,5 +140,13 @@ class Book extends Model
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'book_genres', 'book_id', 'genre_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany(BookItem::class, 'book_id', 'id');
     }
 }
