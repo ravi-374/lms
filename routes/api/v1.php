@@ -25,6 +25,9 @@ Route::resource('permissions', 'PermissionAPIController');
 Route::resource('books', 'BookAPIController');
 Route::post('books/{id}', 'BookAPIController@update');
 
+// add book items
+Route::post('books/{book_id}/items', 'BookAPIController@addItems');
+
 // Users
 Route::resource('users', 'UserAPIController');
 Route::post('users/{user_id}', 'UserAPIController@update');

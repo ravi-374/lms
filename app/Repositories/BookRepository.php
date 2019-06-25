@@ -11,6 +11,7 @@ use Arr;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
  * Class BookRepository
@@ -77,7 +78,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function store($input)
     {
-
         $this->validateInput($input);
         try {
             DB::beginTransaction();
@@ -109,15 +109,15 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param  array  $input
      * @param  int  $id
-     *
      * @return \Illuminate\Http\JsonResponse|mixed
-     *
+     * @throws Exception
      * @throws ApiOperationFailedException
      */
     public function update($input, $id)
     {
         /** @var Book $book */
         $book = $this->findOrFail($id);
+        unset($input['items']);
         $this->validateInput($input);
         $oldImageName = '';
 
@@ -134,10 +134,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             }
             $book->update($input);
             $this->attachTagsAndGenres($book, $input);
-
-            if (isset($input['items'])) {
-                $this->createOrUpdateBookItems($book, $input['items']);
-            }
 
             DB::commit();
         } catch (Exception $e) {
@@ -170,17 +166,35 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         if (isset($input['items'])) {
-            foreach ($input['items'] as $item) {
-                if (isset($item['status'])) {
-                    if (!in_array($item['status'], BookItem::STATUS_ARRAY)) {
-                        throw new Exception('Invalid Book status', 422);
-                    }
-                }
+            $this->validateItems($input['items']);
+        }
 
-                if (isset($item['format'])) {
-                    if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
-                        throw new Exception('Invalid Book Format', 422);
-                    }
+        return true;
+    }
+
+    /**
+     * @param  array  $items
+     * @return bool
+     * @throws Exception
+     */
+    public function validateItems($items)
+    {
+        foreach ($items as $item) {
+            if (isset($item['status'])) {
+                if (!in_array($item['status'], BookItem::STATUS_ARRAY)) {
+                    throw new Exception('Invalid Book status', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+                }
+            }
+
+            if (isset($item['format'])) {
+                if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
+                    throw new Exception('Invalid Book Format', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+                }
+            }
+
+            if (isset($item['book_item_id'])) {
+                if (BookItem::whereBookItemId($item['book_item_id'])->exists()) {
+                    throw new Exception('Given book_item_id already exist.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
                 }
             }
         }
@@ -210,7 +224,27 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  Book  $book
+     * @param  array  $items
+     * @return Book
+     * @throws Exception
+     */
+    public function addBookItems($book, $items)
+    {
+        $this->validateItems($items);
+
+        $this->createOrUpdateBookItems($book, $items);
+
+        /** @var Book $book */
+        $book = $this->findOrFail($book->id, ['items']);
+
+        return $book;
+    }
+
+    /**
+     * @param  Book  $book
      * @param  array  $bookItems
+     * @return bool
+     * @throws Exception
      * @throws ApiOperationFailedException
      */
     public function createOrUpdateBookItems($book, $bookItems)
@@ -227,15 +261,13 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     $item = BookItem::findOrFail($bookItem['id']);
                 } else {
                     $item = new BookItem();
-                    $item->book_item_id = $this->generateItemId();
+                    $item->book_item_id = isset($bookItem['book_item_id']) ? $bookItem['book_item_id'] : $this->generateItemId();
+                    $item->status = BookItem::STATUS_AVAILABLE;
                 }
 
                 $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
                 $item->format = isset($bookItem['format']) ? $bookItem['format'] : null;
                 $item->location = isset($bookItem['location']) ? $bookItem['location'] : '';
-                if (isset($bookItem['status'])) {
-                    $item->status = $bookItem['status'];
-                }
 
                 $book->items()->save($item);
             }
@@ -243,8 +275,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         } catch (Exception $e) {
             DB::rollBack();
 
-            throw new ApiOperationFailedException('Unable to update Invoice Items: '.$e->getMessage());
+            throw new ApiOperationFailedException('Unable to update Book Items: '.$e->getMessage());
         }
+
+        return true;
     }
 
     /**
@@ -252,13 +286,15 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function generateItemId()
     {
-        //todo: will change format for
-        $uniqId = uniqid();
+        //todo: later will change format
         $rand = rand(10000, 99999);
-        $pos = rand(1, 7);
-
-        // replace random number at random position in uniqid
-        $itemId = substr($uniqId, 0, $pos).$rand.substr($uniqId, $pos + strlen($rand));
+        $itemId = $rand;
+        while (true) {
+            if (!BookItem::whereBookItemId($itemId)->exists()) {
+                break;
+            }
+            $itemId = rand(10000, 99999);
+        }
 
         return $itemId;
     }
