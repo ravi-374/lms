@@ -79,7 +79,7 @@ class UserRepository extends BaseRepository
      * @param array $input
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws Exception
      * @return User|\Illuminate\Database\Eloquent\Model
      */
     public function store($input)
@@ -94,6 +94,11 @@ class UserRepository extends BaseRepository
             }
 
             if (!empty($input['address'])) {
+                $rules = Address::$rules;
+                $messages = $this->validateRules($input['address'], $rules);
+                if (!empty($messages)) {
+                   throw new Exception($messages[0],422);
+                }
                 $address = new Address($input['address']);
                 $user->address()->save($address);
             }
@@ -103,8 +108,7 @@ class UserRepository extends BaseRepository
                 $user->update(['image' => $imagePath]);
             }
             DB::commit();
-
-            return $user;
+            return User::with('address')->findOrFail($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -117,7 +121,7 @@ class UserRepository extends BaseRepository
      * @param int $id
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws Exception
      * @return User
      */
     public function update($input, $id)
@@ -147,13 +151,17 @@ class UserRepository extends BaseRepository
             }
 
             if (!empty($input['address'])) {
-                $address = new Address($input['address']);
-                $user->address()->save($address);
+                $rules = Address::$rules;
+                $messages = $this->validateRules($input['address'], $rules);
+                if (!empty($messages)) {
+                    throw new Exception($messages[0],422);
+                }
+                $user->address()->update($input['address']);
             }
 
             DB::commit();
 
-            return $user;
+            return User::with('address')->findOrFail($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 

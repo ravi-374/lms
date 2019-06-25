@@ -48,7 +48,7 @@ class UserAPIController extends AppBaseController
      * @param CreateUserAPIRequest $request
      *
      * @throws \App\Exceptions\ApiOperationFailedException
-     *
+     * @throws \Exception
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateUserAPIRequest $request)
@@ -83,7 +83,7 @@ class UserAPIController extends AppBaseController
      * @param UpdateUserAPIRequest $request
      *
      * @throws \App\Exceptions\ApiOperationFailedException
-     *
+     * @throws \Exception
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, UpdateUserAPIRequest $request)

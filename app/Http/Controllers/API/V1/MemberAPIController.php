@@ -31,7 +31,7 @@ class MemberAPIController extends AppBaseController
      * GET|HEAD /members
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -50,7 +50,7 @@ class MemberAPIController extends AppBaseController
      * @param CreateMemberAPIRequest $request
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws \Exception
      * @return JsonResponse
      */
     public function store(CreateMemberAPIRequest $request)
@@ -68,7 +68,7 @@ class MemberAPIController extends AppBaseController
      *
      * @param int $id
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -85,9 +85,9 @@ class MemberAPIController extends AppBaseController
      * @param int $id
      * @param UpdateMemberAPIRequest $request
      *
-     * @return JsonResponse
      * @throws ApiOperationFailedException
-     *
+     * @throws \Exception
+     * @return JsonResponse
      */
     public function update($id, UpdateMemberAPIRequest $request)
     {
@@ -106,8 +106,7 @@ class MemberAPIController extends AppBaseController
      * @param int $id
      *
      * @throws \Exception
-     *
-     * @return Response
+     * @return JsonResponse
      */
     public function destroy($id)
     {

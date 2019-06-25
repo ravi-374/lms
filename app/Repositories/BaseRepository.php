@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Validator;
 
 abstract class BaseRepository
 {
@@ -208,5 +209,22 @@ abstract class BaseRepository
         }
 
         return $record;
+    }
+
+    /**
+     * @param $request
+     * @param $rules
+     *
+     * @param array $ruleMessage
+     * @return array|null
+     */
+    public function validateRules($request, $rules, $ruleMessage = [])
+    {
+        $validator = Validator::make($request, $rules, $ruleMessage);
+        if ($validator->fails()) {
+            return $validator->messages()->all();
+        }
+
+        return null;
     }
 }
