@@ -24,3 +24,5 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     include 'api/v1.php';
 });
+
+Route::resource('series_books', 'SeriesBookAPIController');
