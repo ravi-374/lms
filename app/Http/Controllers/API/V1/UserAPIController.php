@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class UserController
@@ -30,7 +29,7 @@ class UserAPIController extends AppBaseController
      * GET|HEAD /users
      *
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
@@ -67,7 +66,7 @@ class UserAPIController extends AppBaseController
      *
      * @param int $id
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -102,9 +101,7 @@ class UserAPIController extends AppBaseController
      *
      * @param int $id
      *
-     * @throws \Exception
-     *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
