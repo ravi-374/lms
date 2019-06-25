@@ -3,9 +3,9 @@
 namespace App\Http\Requests\API;
 
 use App\User;
-use Illuminate\Foundation\Http\FormRequest;
+use InfyOm\Generator\Request\APIRequest;
 
-class CreateUserAPIRequest extends FormRequest
+class CreateUserAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

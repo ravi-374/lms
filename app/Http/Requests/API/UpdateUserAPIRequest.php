@@ -6,7 +6,7 @@ use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateUserAPIRequest extends FormRequest
+class UpdateUserAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

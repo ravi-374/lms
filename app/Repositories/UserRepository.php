@@ -23,13 +23,7 @@ class UserRepository extends BaseRepository
     protected $fieldSearchable = [
         'first_name',
         'last_name',
-        'email',
-        'password',
-        'phone',
-        'address',
-        'role',
-        'profile_picture',
-        'is_active'
+        'email'
     ];
 
     /**
@@ -99,8 +93,8 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            $address = new Address($input['address']);
             if (!empty($input['address'])) {
+                $address = new Address($input['address']);
                 $user->address()->save($address);
             }
 
@@ -152,8 +146,8 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            $address = new Address($input['address']);
             if (!empty($input['address'])) {
+                $address = new Address($input['address']);
                 $user->address()->save($address);
             }
 

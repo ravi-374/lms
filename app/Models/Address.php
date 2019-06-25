@@ -18,10 +18,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Address extends Model
 {
-
     public $table = 'addresses';
-    
-
 
     public $fillable = [
         'address_1',

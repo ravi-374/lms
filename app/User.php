@@ -72,12 +72,6 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'phone',
-        'address1',
-        'address2',
-        'city',
-        'state',
-        'country',
-        'zip',
         'image',
         'is_active',
     ];
@@ -108,11 +102,11 @@ class User extends Authenticatable implements JWTSubject
         'last_name'  => 'required',
         'email'      => 'required|unique:users,email',
         'password'   => 'required',
-      //  'roles'      => 'required|array',
+        'roles'      => 'required|array',
     ];
 
     public static $messages = [
-     //   'roles.required' => 'User must have at least one role.',
+        'roles.required' => 'User must have at least one role.',
     ];
 
     public static $updateRules = [
