@@ -70,7 +70,7 @@ const renderMainSection = () => {
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
                         {renderRoutes()}
-                        <Redirect from="/" to="/app/dashboard"/>
+                        <Redirect from="/" to="/app/genres"/>
                     </Switch>
                 </Suspense>
             </Container>
