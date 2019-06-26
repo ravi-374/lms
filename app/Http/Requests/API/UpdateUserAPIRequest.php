@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API;
 
 use App\User;
+use Illuminate\Foundation\Http\FormRequest;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateUserAPIRequest extends APIRequest
