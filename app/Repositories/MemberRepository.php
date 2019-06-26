@@ -83,15 +83,9 @@ class MemberRepository extends BaseRepository
                 $member->update(['image' => $imagePath]);
             }
 
-            if (!empty($input['address'])) {
-                $rules = Address::$rules;
-                $messages = $this->validateRules($input['address'], $rules);
-                if (!empty($messages)) {
-                    throw new Exception($messages[0], 422);
-                }
-                $address = new Address($input['address']);
-                $member->address()->save($address);
-            }
+            $address = new Address($input['address']);
+            $member->address()->save($address);
+
             DB::commit();
 
             return Member::with('address')->findOrFail($member->id);
@@ -124,7 +118,7 @@ class MemberRepository extends BaseRepository
      */
     public function update($input, $id)
     {
-        MembershipPlan::findOrFail($input['membership_plan_id']);
+       // MembershipPlan::findOrFail($input['membership_plan_id']);
 
         try {
             if (!empty($input['password'])) {
@@ -143,14 +137,7 @@ class MemberRepository extends BaseRepository
                 $member->update(['image' => $imagePath]);
             }
 
-            if (!empty($input['address'])) {
-                $rules = Address::$rules;
-                $messages = $this->validateRules($input['address'], $rules);
-                if (!empty($messages)) {
-                    throw new Exception($messages[0], 422);
-                }
-                $member->address()->update($input['address']);
-            }
+            $member->address()->update($input['address']);
             DB::commit();
 
             return Member::with('address')->findOrFail($member->id);

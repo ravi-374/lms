@@ -93,21 +93,15 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            if (!empty($input['address'])) {
-                $rules = Address::$rules;
-                $messages = $this->validateRules($input['address'], $rules);
-                if (!empty($messages)) {
-                   throw new Exception($messages[0],422);
-                }
-                $address = new Address($input['address']);
-                $user->address()->save($address);
-            }
+            $address = new Address($input['address']);
+            $user->address()->save($address);
 
             if (!empty($input['image'])) {
-                $imagePath = User::makeImage($input['image' ], User::IMAGE_PATH);
+                $imagePath = User::makeImage($input['image'], User::IMAGE_PATH);
                 $user->update(['image' => $imagePath]);
             }
             DB::commit();
+
             return User::with('address')->findOrFail($user->id);
         } catch (Exception $e) {
             DB::rollBack();
@@ -150,14 +144,7 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            if (!empty($input['address'])) {
-                $rules = Address::$rules;
-                $messages = $this->validateRules($input['address'], $rules);
-                if (!empty($messages)) {
-                    throw new Exception($messages[0],422);
-                }
-                $user->address()->update($input['address']);
-            }
+            $user->address()->update($input['address']);
 
             DB::commit();
 
@@ -166,6 +153,22 @@ class UserRepository extends BaseRepository
             DB::rollBack();
 
             throw  new ApiOperationFailedException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param array $input
+     *
+     * @throws Exception
+     */
+    public function validateAddress($input)
+    {
+        if (!empty($input['address'])) {
+            $rules = Address::$rules;
+            $messages = $this->validateRules($input['address'], $rules);
+            if (!empty($messages)) {
+                throw new Exception($messages, 422);
+            }
         }
     }
 }

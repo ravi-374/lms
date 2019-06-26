@@ -216,13 +216,13 @@ abstract class BaseRepository
      * @param $rules
      *
      * @param array $ruleMessage
-     * @return array|null
+     * @return string
      */
     public function validateRules($request, $rules, $ruleMessage = [])
     {
         $validator = Validator::make($request, $rules, $ruleMessage);
         if ($validator->fails()) {
-            return $validator->messages()->all();
+            return $validator->messages()->first();
         }
 
         return null;
