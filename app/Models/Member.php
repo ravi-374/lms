@@ -84,7 +84,7 @@ class Member extends Model
         'last_name'          => 'required',
         'email'              => 'required|unique:members,email',
         'password'           => 'required',
-       // 'membership_plan_id' => 'required',
+        'membership_plan_id' => 'required',
     ];
 
     public static function boot()
