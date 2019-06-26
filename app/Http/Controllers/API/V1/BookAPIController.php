@@ -115,4 +115,20 @@ class BookAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Book deleted successfully.');
     }
+
+    /**
+     * @param  int  $bookId
+     * @param  Request  $request
+     * @return Book
+     * @throws \Exception
+     */
+    public function addItems($bookId, Request $request)
+    {
+        $request->validate(['items' => 'required']);
+
+        $book = $this->bookRepository->findOrFail($bookId);
+        $items = $request->get('items');
+
+        return $this->bookRepository->addBookItems($book, $items);
+    }
 }
