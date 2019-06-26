@@ -64,6 +64,9 @@ class MemberRepository extends BaseRepository
         MembershipPlan::findOrFail($input['membership_plan_id']);
 
         $input['password'] = Hash::make($input['password']);
+
+        isset($input['member_id']) ? $input['member_id'] : $input['member_id'] = $this->generateMemberId();
+
         $member = Member::create($input);
         if (!empty($input['image'])) {
             $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
@@ -91,6 +94,10 @@ class MemberRepository extends BaseRepository
         $image = (!empty($input['image'])) ? $input['image'] : null;
         unset($input['image']);
 
+        if (isset($input['member_id'])) {
+            unset($input['member_id']);
+        }
+
         /** @var Member $member */
         $member = $this->findOrFail($id);
         $member->update($input);
@@ -102,5 +109,24 @@ class MemberRepository extends BaseRepository
         }
 
         return $member;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function generateMemberId()
+    {
+        //todo: later will change format
+        $rand = rand(10000, 99999);
+        $memberId = $rand;
+        while (true) {
+            if (!Member::whereMemberId($memberId)->exists()) {
+                break;
+            }
+            $memberId = rand(10000, 99999);
+        }
+
+        return $memberId;
     }
 }

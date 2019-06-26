@@ -60,6 +60,8 @@ class MembershipPlanRepository extends BaseRepository
     {
         $this->validateMembershipPlan($input);
 
+        isset($input['membership_plan_id']) ? $input['membership_plan_id'] : $input['membership_plan_id'] = $this->generateMembershipPlanId();
+
         $membershipPlan = MembershipPlan::create($input);
 
         return $membershipPlan;
@@ -75,6 +77,9 @@ class MembershipPlanRepository extends BaseRepository
     {
         $this->validateMembershipPlan($input);
 
+        if (isset($input['membership_plan_id'])) {
+            unset($input['membership_plan_id']);
+        }
         /** @var MembershipPlan $membershipPlan */
         $membershipPlan = $this->findOrFail($id);
         $membershipPlan->update($input);
@@ -94,5 +99,23 @@ class MembershipPlanRepository extends BaseRepository
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function generateMembershipPlanId()
+    {
+        //todo: later will change format
+        $rand = rand(10000, 99999);
+        $memberId = $rand;
+        while (true) {
+            if (!MembershipPlan::whereMembershipPlanId($memberId)->exists()) {
+                break;
+            }
+            $memberId = rand(10000, 99999);
+        }
+
+        return $memberId;
     }
 }

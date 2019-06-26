@@ -28,6 +28,7 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereStripePlanId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereMembershipPlanId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereUpdatedAt($value)
  * @mixin \Eloquent
  */

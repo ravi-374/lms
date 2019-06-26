@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMembershipPlanId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMemberId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereState($value)
