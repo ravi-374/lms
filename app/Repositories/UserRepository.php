@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
+use App\Models\Address;
 use App\User;
 use DB;
 use Exception;
@@ -11,18 +12,18 @@ use Hash;
 /**
  * Class UserRepository
  * @package App\Repositories
- * @version June 22, 2019, 11:04 am UTC
- */
+ * @version June 20, 2019, 7:52 am UTC
+*/
+
 class UserRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'email',
         'first_name',
         'last_name',
-        'phone',
+        'email'
     ];
 
     /**
@@ -53,7 +54,7 @@ class UserRepository extends BaseRepository
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('roles');
+        $query = $this->allQuery($search, $skip, $limit)->with('roles','address');
 
         /** @var User[] $users */
         $users = $query->orderByDesc('id')->get();
@@ -69,7 +70,7 @@ class UserRepository extends BaseRepository
      */
     public function find($id, $columns = ['*'])
     {
-        $user = $this->findOrFail($id, ['roles']);
+        $user = $this->findOrFail($id, ['roles','address']);
 
         return $user;
     }
@@ -92,8 +93,13 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
+            if (!empty($input['address'])) {
+                $address = new Address($input['address']);
+                $user->address()->save($address);
+            }
+
             if (!empty($input['image'])) {
-                $imagePath = User::makeImage($input['image'], User::IMAGE_PATH);
+                $imagePath = User::makeImage($input['image' ], User::IMAGE_PATH);
                 $user->update(['image' => $imagePath]);
             }
             DB::commit();
@@ -139,6 +145,12 @@ class UserRepository extends BaseRepository
             if (!empty($input['roles'])) {
                 $user->roles()->sync($input['roles']);
             }
+
+            if (!empty($input['address'])) {
+                $address = new Address($input['address']);
+                $user->address()->save($address);
+            }
+
             DB::commit();
 
             return $user;

@@ -11,9 +11,11 @@ use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Repositories\Contracts\GenreRepositoryInterface;
 use App\Repositories\Contracts\PublisherRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\GenreRepository;
 use App\Repositories\PublisherRepository;
 use App\Repositories\TagRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -32,6 +34,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
         $this->app->bind(BookLanguageInterface::class, BookLanguageRepository::class);
         $this->app->bind(BookRepositoryInterface::class, BookRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**
