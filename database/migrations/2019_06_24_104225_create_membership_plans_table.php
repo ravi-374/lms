@@ -14,16 +14,15 @@ class CreateMembershipPlansTable extends Migration
     public function up()
     {
         Schema::create('membership_plans', function (Blueprint $table) {
-            $table->string('id');
+            $table->increments('id');
             $table->string('name');
+            $table->string('membership_plan_id')->unique();
             $table->float('price');
             $table->text('description');
             $table->integer('frequency');
             $table->string('slug');
             $table->string('stripe_plan_id');
             $table->timestamps();
-
-            $table->unique(['id']);
         });
     }
 

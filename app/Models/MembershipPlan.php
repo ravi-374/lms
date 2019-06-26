@@ -38,10 +38,8 @@ class MembershipPlan extends Model
 
     public $table = 'membership_plans';
 
-    protected $primaryKey = 'id';
-    public $incrementing = false;
-
     public $fillable = [
+        'membership_plan_id',
         'name',
         'price',
         'description',
@@ -56,13 +54,14 @@ class MembershipPlan extends Model
      * @var array
      */
     protected $casts = [
-        'id'             => 'string',
-        'name'           => 'string',
-        'price'          => 'float',
-        'description'    => 'string',
-        'frequency'      => 'integer',
-        'slug'           => 'string',
-        'stripe_plan_id' => 'string',
+        'id'                 => 'integer',
+        'membership_plan_id' => 'string',
+        'name'               => 'string',
+        'price'              => 'float',
+        'description'        => 'string',
+        'frequency'          => 'integer',
+        'slug'               => 'string',
+        'stripe_plan_id'     => 'string',
     ];
 
     /**
@@ -82,7 +81,6 @@ class MembershipPlan extends Model
         parent::boot();
 
         self::creating(function (MembershipPlan $model) {
-            $model->id = uniqid();
             $model->slug = Str::slug($model->name);
         });
     }
