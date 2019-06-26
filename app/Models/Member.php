@@ -56,11 +56,8 @@ class Member extends Model
 
     public $table = 'members';
 
-    protected $primaryKey = 'id';
-    public $incrementing = false;
-
-
     public $fillable = [
+        'member_id',
         'first_name',
         'last_name',
         'email',
@@ -83,7 +80,8 @@ class Member extends Model
      * @var array
      */
     protected $casts = [
-        'id'                 => 'string',
+        'id'                 => 'integer',
+        'member_id'          => 'string',
         'first_name'         => 'string',
         'last_name'          => 'string',
         'email'              => 'string',
@@ -111,15 +109,6 @@ class Member extends Model
         'password'           => 'required',
         'membership_plan_id' => 'required',
     ];
-
-    public static function boot()
-    {
-        parent::boot();
-
-        self::creating(function (Member $member) {
-            $member->id = uniqid();
-        });
-    }
 
     public function deleteMemberImage()
     {
