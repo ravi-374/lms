@@ -56,7 +56,7 @@ class MemberRepository extends BaseRepository
      * @param array $input
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws Exception
      * @return Member
      */
     public function store($input)
@@ -65,9 +65,17 @@ class MemberRepository extends BaseRepository
 
         $input['password'] = Hash::make($input['password']);
 
-        isset($input['member_id']) ? $input['member_id'] : $input['member_id'] = $this->generateMemberId();
+        if (!empty($input['member_id'])) {
+            $member = Member::whereMemberId($input['member_id'])->first();
+            if (!empty($member)) {
+                throw new Exception('Member with same id already exist.');
+            }
 
-        $member = Member::create($input);
+        } else {
+            $input['membership_plan_id'] = $this->generateMemberId();
+        }
+
+            $member = Member::create($input);
         if (!empty($input['image'])) {
             $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
             $member->update(['image' => $imagePath]);
@@ -114,15 +122,6 @@ class MemberRepository extends BaseRepository
      */
     public function generateMemberId()
     {
-        $rand = rand(10000, 99999);
-        $memberId = $rand;
-        while (true) {
-            if (!Member::whereMemberId($memberId)->exists()) {
-                break;
-            }
-            $memberId = rand(10000, 99999);
-        }
-
-        return $memberId;
+        return rand(10000, 99999);
     }
 }

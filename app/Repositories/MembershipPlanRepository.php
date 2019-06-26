@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\MembershipPlan;
+use Exception;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -54,13 +55,22 @@ class MembershipPlanRepository extends BaseRepository
     /**
      * @param array $input
      *
+     * @throws Exception
      * @return MembershipPlan
      */
     public function store($input)
     {
         $this->validateMembershipPlan($input);
 
-        isset($input['membership_plan_id']) ? $input['membership_plan_id'] : $input['membership_plan_id'] = $this->generateMembershipPlanId();
+        if (!empty($input['membership_plan_id'])) {
+            $membershipPlan = MembershipPlan::whereMembershipPlanId($input['membership_plan_id'])->first();
+            if (!empty($membershipPlan)) {
+                throw new Exception('Membership plan with same id already exist.');
+            }
+
+        } else {
+            $input['membership_plan_id'] = $this->generateMembershipPlanId();
+        }
 
         $membershipPlan = MembershipPlan::create($input);
 
@@ -104,15 +114,6 @@ class MembershipPlanRepository extends BaseRepository
      */
     public function generateMembershipPlanId()
     {
-        $rand = rand(10000, 99999);
-        $memberId = $rand;
-        while (true) {
-            if (!MembershipPlan::whereMembershipPlanId($memberId)->exists()) {
-                break;
-            }
-            $memberId = rand(10000, 99999);
-        }
-
-        return $memberId;
+        return rand(10000, 99999);
     }
 }
