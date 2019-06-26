@@ -1,10 +1,10 @@
 export default formValues => {
     const errors = {};
-    if (!formValues.name) {
-        errors.name = 'Language name must be required.';
+    if (!formValues.language_name) {
+        errors.language_name = 'Language name must be required.';
     }
-    if (!formValues.code) {
-        errors.code = 'Language code must be required.';
+    if (!formValues.language_code) {
+        errors.language_code = 'Language code must be required.';
     }
     return errors;
 };

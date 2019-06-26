@@ -24,8 +24,8 @@ export default ({input, label, type = "text", required, readOnly, groupText, cus
                     </InputGroupAddon>
                     : null
                 }
-                <Input type={type} {...input} required={required} className={className} placeholder={label}
-                       autoComplete="off"/>
+                <Input type={type} {...input} readOnly={readOnly} required={required} className={className}
+                       placeholder={label} autoComplete="off"/>
                 {touched && ((error && <FormFeedback>{error}</FormFeedback>))}
             </InputGroup>
         </FormGroup>
