@@ -76,10 +76,8 @@ class MembershipPlanRepository extends BaseRepository
     public function update($input, $id)
     {
         $this->validateMembershipPlan($input);
+        unset($input['membership_plan_id']);
 
-        if (isset($input['membership_plan_id'])) {
-            unset($input['membership_plan_id']);
-        }
         /** @var MembershipPlan $membershipPlan */
         $membershipPlan = $this->findOrFail($id);
         $membershipPlan->update($input);
@@ -106,7 +104,6 @@ class MembershipPlanRepository extends BaseRepository
      */
     public function generateMembershipPlanId()
     {
-        //todo: later will change format
         $rand = rand(10000, 99999);
         $memberId = $rand;
         while (true) {

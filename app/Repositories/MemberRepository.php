@@ -93,10 +93,7 @@ class MemberRepository extends BaseRepository
         }
         $image = (!empty($input['image'])) ? $input['image'] : null;
         unset($input['image']);
-
-        if (isset($input['member_id'])) {
-            unset($input['member_id']);
-        }
+        unset($input['member_id']);
 
         /** @var Member $member */
         $member = $this->findOrFail($id);
@@ -117,7 +114,6 @@ class MemberRepository extends BaseRepository
      */
     public function generateMemberId()
     {
-        //todo: later will change format
         $rand = rand(10000, 99999);
         $memberId = $rand;
         while (true) {
