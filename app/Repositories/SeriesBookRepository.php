@@ -7,18 +7,20 @@ use App\Models\SeriesBook;
 
 
 /**
- * Class BookSeriesRepository
+ * Class SeriesBookRepository
  * @package App\Repositories
  * @version June 25, 2019, 10:36 am UTC
 */
 
-class BookSeriesRepository extends BaseRepository
+class SeriesBookRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'title'
+        'series_id',
+        'book_id',
+        'sequence'
     ];
 
     /**
@@ -36,7 +38,7 @@ class BookSeriesRepository extends BaseRepository
      **/
     public function model()
     {
-        return BookSeries::class;
+        return SeriesBook::class;
     }
 
 }

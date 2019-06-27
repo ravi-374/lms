@@ -33,7 +33,7 @@ class BookSeriesAPIController extends AppBaseController
      * GET|HEAD /bookSeries
      *
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
@@ -52,7 +52,7 @@ class BookSeriesAPIController extends AppBaseController
      *
      * @param CreateBookSeriesAPIRequest $request
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateBookSeriesAPIRequest $request)
     {
@@ -69,7 +69,7 @@ class BookSeriesAPIController extends AppBaseController
      *
      * @param int $id
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -86,7 +86,7 @@ class BookSeriesAPIController extends AppBaseController
      * @param int $id
      * @param UpdateBookSeriesAPIRequest $request
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, UpdateBookSeriesAPIRequest $request)
     {
@@ -106,8 +106,7 @@ class BookSeriesAPIController extends AppBaseController
      * @param int $id
      *
      * @throws \Exception
-     *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
@@ -117,46 +116,5 @@ class BookSeriesAPIController extends AppBaseController
         $bookSeries->delete();
 
         return $this->sendResponse($id, 'Book Series deleted successfully.');
-    }
-
-    /**
-     * Store a newly created SeriesBook in storage.
-     * POST /series-books
-     *
-     * @param CreateSeriesBookAPIRequest $request
-     *
-     * @return Response
-     */
-    public function addSeriesBook(CreateSeriesBookAPIRequest $request)
-    {
-        $input = $request->all();
-
-        $seriesBook = $this->bookSeriesRepository->addSeriesBook($input);
-
-        return $this->sendResponse($seriesBook->toArray(), 'Series book saved successfully.');
-    }
-
-    /**
-     * Remove the specified BookSeries from storage.
-     * DELETE /series-books/{id}
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-    public function deleteSeriesBook($id)
-    {
-        /** @var SeriesBook $seriesBook */
-        $seriesBook = SeriesBook::find($id);
-
-        if (empty($seriesBook)) {
-            throw new ModelNotFoundException("series book not found with this id.");
-        }
-
-        $seriesBook->delete();
-
-        return $this->sendResponse($id, 'Series book deleted successfully.');
     }
 }

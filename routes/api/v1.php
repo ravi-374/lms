@@ -39,11 +39,10 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('members/{member_id}', 'MemberAPIController@update');
 
     // book series routes
-    Route::resource('book_series', 'BookSeriesAPIController');
+    Route::resource('book-series', 'BookSeriesAPIController');
 
     // series book routes
-    Route::post('series-books', 'BookSeriesAPIController@addSeriesBook');
-    Route::delete('series-books/{series_book_id}','BookSeriesAPIController@deleteSeriesBook');
+    Route::resource('series-books', 'SeriesBookAPIController');
 
     // Membership Plans
     Route::resource('membership-plans', 'MembershipPlanAPIController');
