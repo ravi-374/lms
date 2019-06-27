@@ -66,7 +66,7 @@ class MemberRepository extends BaseRepository
         $input['password'] = Hash::make($input['password']);
 
         if (!empty($input['member_id'])) {
-            $member = Member::whereMemberId($input['member_id'])->first();
+            $member = Member::whereMemberId($input['member_id'])->exists();
             if ($member) {
                 throw new Exception('Member with same id already exist.');
             }
