@@ -70,12 +70,11 @@ class MemberRepository extends BaseRepository
             if (!empty($member)) {
                 throw new Exception('Member with same id already exist.');
             }
-
         } else {
             $input['membership_plan_id'] = $this->generateMemberId();
         }
 
-            $member = Member::create($input);
+        $member = Member::create($input);
         if (!empty($input['image'])) {
             $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
             $member->update(['image' => $imagePath]);

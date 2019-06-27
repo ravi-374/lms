@@ -67,7 +67,6 @@ class MembershipPlanRepository extends BaseRepository
             if (!empty($membershipPlan)) {
                 throw new Exception('Membership plan with same id already exist.');
             }
-
         } else {
             $input['membership_plan_id'] = $this->generateMembershipPlanId();
         }
