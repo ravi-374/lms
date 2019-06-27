@@ -193,15 +193,20 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             }
 
             if (isset($item['book_item_id'])) {
-                if (BookItem::whereBookItemId($item['book_item_id'])->exists()) {
-                    throw new Exception('Given book_item_id already exist.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+                $bookItem = BookItem::whereBookItemId($item['book_item_id']);
+
+                if (isset($item['id'])) {
+                    $bookItem->where('id', '!=', $item['id']);
+                }
+                if ($bookItem->exists()) {
+                    throw new Exception('Given book_item_id already exist.',
+                        HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
                 }
             }
         }
 
         return true;
     }
-
     /**
      * @param  Book  $book
      * @param  array  $input
