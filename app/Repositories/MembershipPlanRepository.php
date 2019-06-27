@@ -64,7 +64,7 @@ class MembershipPlanRepository extends BaseRepository
 
         if (!empty($input['membership_plan_id'])) {
             $membershipPlan = MembershipPlan::whereMembershipPlanId($input['membership_plan_id'])->first();
-            if (!empty($membershipPlan)) {
+            if ($membershipPlan) {
                 throw new Exception('Membership plan with same id already exist.');
             }
         } else {

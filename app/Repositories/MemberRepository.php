@@ -67,11 +67,11 @@ class MemberRepository extends BaseRepository
 
         if (!empty($input['member_id'])) {
             $member = Member::whereMemberId($input['member_id'])->first();
-            if (!empty($member)) {
+            if ($member) {
                 throw new Exception('Member with same id already exist.');
             }
         } else {
-            $input['membership_plan_id'] = $this->generateMemberId();
+            $input['member_id'] = $this->generateMemberId();
         }
 
         $member = Member::create($input);
