@@ -46,9 +46,6 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     // Membership Plans
     Route::resource('membership-plans', 'MembershipPlanAPIController');
-
-    // Members
-    Route::resource('members', 'MemberAPIController');
-    Route::post('members/{member_id}', 'MemberAPIController@update');
+    
 });
 
