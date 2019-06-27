@@ -2,56 +2,42 @@
 
 namespace App;
 
+use App\Models\Address;
 use App\Traits\ImageTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Storage;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+
 
 /**
  * App\User
  *
  * @property int $id
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password
- * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $first_name
  * @property string $last_name
- * @property string|null $phone
- * @property string|null $address1
- * @property string|null $address2
- * @property string|null $city
- * @property string|null $state
- * @property string|null $country
- * @property string|null $zip
- * @property string|null $image
+ * @property string $email
+ * @property string $password
+ * @property float $phone
  * @property int $is_active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Address $address
+ * @property-read mixed $image_path
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereAddress1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereAddress2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereZip($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements JWTSubject
@@ -71,12 +57,6 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'phone',
-        'address1',
-        'address2',
-        'city',
-        'state',
-        'country',
-        'zip',
         'image',
         'is_active',
     ];
@@ -150,5 +130,14 @@ class User extends Authenticatable implements JWTSubject
     public function deleteUserImage()
     {
         self::deleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image); // thumbnail
+    }
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'owner');
     }
 }
