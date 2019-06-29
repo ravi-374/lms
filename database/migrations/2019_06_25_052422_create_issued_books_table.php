@@ -16,7 +16,7 @@ class CreateIssuedBooksTable extends Migration
     {
         Schema::create('issued_books', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('book_id')->unsigned();
+            $table->integer('book_item_id')->unsigned();
             $table->integer('member_id')->unsigned();
             $table->dateTime('reserve_date');
             $table->dateTime('issued_on')->default(Carbon::now());
@@ -26,8 +26,8 @@ class CreateIssuedBooksTable extends Migration
             $table->integer('status');
             $table->timestamps();
 
-            $table->foreign('book_id')
-                ->references('id')->on('books')
+            $table->foreign('book_item_id')
+                ->references('id')->on('book_items')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 

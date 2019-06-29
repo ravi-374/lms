@@ -21,7 +21,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @var array
      */
     protected $fieldSearchable = [
-        'book_id',
+        'book_item_id',
         'member_id',
         'reserve_date',
         'issued_on',
@@ -59,7 +59,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('book');
+        $query = $this->allQuery($search, $skip, $limit)->with('bookItem');
 
         $query->when(!empty($search['due_date']), function (Builder $query) use($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
@@ -89,7 +89,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @return bool
      */
     public function validateBook($input) {
-        $issueBook = IssuedBook::whereBookId($input['book_id'])
+        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->exists();
 
@@ -110,7 +110,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         $statusMessage = [2 => 'issued', 3 => 'returned'];
         /** @var IssuedBook $issueBook */
-        $issueBook = IssuedBook::whereBookId($input['book_id'])
+        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
             ->where('status','!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
@@ -126,7 +126,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             // if status if issue it means, book is already reserved and member want to issue it
             if ($status == IssuedBook::STATUS_ISSUED) {
                 $issueBook->update([
-                    'book_id'         => $input['book_id'],
+                    'book_item_id'         => $input['book_item_id'],
                     'member_id'       => $input['member_id'],
                     'issued_on'       => Carbon::now(),
                     'return_due_date' => Carbon::now()->addDays(15),
@@ -145,7 +145,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             }
             // if book record is not there it means book is available
             $input = [
-                'book_id'         => $input['book_id'],
+                'book_item_id'         => $input['book_item_id'],
                 'member_id'       => $input['member_id'],
                 'issued_on'       => Carbon::now(),
                 'return_due_date' => Carbon::now()->addDays(15),

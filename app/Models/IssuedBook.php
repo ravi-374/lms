@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * App\Models\IssuedBook
  *
  * @property int $id
- * @property int $book_id
+ * @property int $book_item_id
  * @property int $member_id
  * @property string $reserve_date
  * @property string $issued_on
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereBookId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereBookItemId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereIssuedOn($value)
@@ -50,7 +50,7 @@ class IssuedBook extends Model
     ];
     public $table = 'issued_books';
     public $fillable = [
-        'book_id',
+        'book_item_id',
         'member_id',
         'reserve_date',
         'issued_on',
@@ -66,7 +66,7 @@ class IssuedBook extends Model
      */
     protected $casts = [
         'id'           => 'integer',
-        'book_id'      => 'integer',
+        'book_item_id'      => 'integer',
         'member_id'    => 'integer',
         'reserve_date' => 'datetime',
         'issued_on'    => 'datetime',
@@ -78,8 +78,8 @@ class IssuedBook extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function book()
+    public function bookItem()
     {
-        return $this->belongsTo(Book::class, 'book_id');
+        return $this->belongsTo(BookItem::class, 'book_item_id');
     }
 }

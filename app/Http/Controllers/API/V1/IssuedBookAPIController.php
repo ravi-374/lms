@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateIssuedBookAPIRequest;
 use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
+use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Repositories\BookRepository;
 use App\Repositories\IssuedBookRepository;
@@ -49,18 +50,18 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $bookId
+     * @param int $bookItemId
      * @param Request $request
      *
      * @return JsonResponse
      * @throws Exception
      *
      */
-    public function issueBook($bookId, Request $request)
+    public function issueBook($bookItemId, Request $request)
     {
         $input = $request->all();
-        $input['book_id'] = $bookId;
-        $this->bookRepository->findOrFail($bookId);
+        $input['book_item_id'] = $bookItemId;
+        BookItem::findOrFail($bookItemId);
 
         $issuedBook = $this->issuedBookRepository->updateStatus($input, IssuedBook::STATUS_ISSUED);
 
@@ -68,18 +69,18 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $bookId
+     * @param int $bookItemId
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function reserveBook($bookId, Request $request)
+    public function reserveBook($bookItemId, Request $request)
     {
-        $this->bookRepository->findOrFail($bookId);
+        BookItem::findOrFail($bookItemId);
 
         $input = $request->all();
         $input['status'] = IssuedBook::STATUS_RESERVED;
-        $input['book_id'] = $bookId;
+        $input['book_item_id'] = $bookItemId;
 
         $reservedBook = $this->issuedBookRepository->store($input);
 
@@ -87,19 +88,18 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $bookId
+     * @param int $bookItemId
      * @param Request $request
      *
-     * @throws Exception
-     *
      * @return JsonResponse
+     *@throws Exception
+     *
      */
-    public function returnBook($bookId, Request $request)
+    public function returnBook($bookItemId, Request $request)
     {
-        $this->bookRepository->findOrFail($bookId);
+        BookItem::findOrFail($bookItemId);
         $input = $request->all();
-        $input['book_id'] = $bookId;
-        $this->bookRepository->findOrFail($bookId);
+        $input['book_item_id'] = $bookItemId;
 
         $issuedBook = $this->issuedBookRepository->updateStatus($input, IssuedBook::STATUS_RETURNED);
 
