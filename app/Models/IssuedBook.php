@@ -45,11 +45,8 @@ class IssuedBook extends Model
      * @var array
      */
     public static $rules = [
-        'member_id' => 'required|numeric',
-        'issued_on' => 'required',
-        'return_due_date' => 'required',
-        'return_date' => 'required',
-        'status' => 'required|numeric'
+        'member_id'       => 'required|numeric',
+        'status'          => 'required|numeric',
     ];
     public $table = 'issued_books';
     public $fillable = [
@@ -60,7 +57,7 @@ class IssuedBook extends Model
         'return_due_date',
         'note',
         'return_date',
-        'status'
+        'status',
     ];
     /**
      * The attributes that should be casted to native types.
@@ -68,13 +65,21 @@ class IssuedBook extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'book_id' => 'integer',
-        'member_id' => 'integer',
-        'reserve_date' => 'string',
-        'issued_on' => 'string',
-        'note' => 'string',
-        'return_date' => 'string',
-        'status' => 'integer'
+        'id'           => 'integer',
+        'book_id'      => 'integer',
+        'member_id'    => 'integer',
+        'reserve_date' => 'datetime',
+        'issued_on'    => 'datetime',
+        'note'         => 'string',
+        'return_date'  => 'datetime',
+        'status'       => 'integer',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'book_id');
+    }
 }

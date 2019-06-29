@@ -8,6 +8,9 @@ use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
 use App\Models\IssuedBook;
 use App\Repositories\BookRepository;
 use App\Repositories\IssuedBookRepository;
+use Auth;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Response;
 
@@ -30,11 +33,9 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * Display a listing of the IssuedBook.
-     * GET|HEAD /issuedBooks
+     * @param Request $request
      *
-     * @param  Request  $request
-     * @return Response
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -48,49 +49,67 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * POST /issuedBooks
+     * @param int $bookId
+     * @param Request $request
      *
-     * @param  int  $reservedBookId
-     * @return Response
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
+     *
      */
-    public function issueBook($reservedBookId)
+    public function issueBook($bookId, Request $request)
     {
-        $issuedBook = $this->issuedBookRepository->updateStatus($reservedBookId, IssuedBook::STATUS_ISSUED);
+        $input = $request->all();
+        $input['book_id'] = $bookId;
+        $this->bookRepository->findOrFail($bookId);
+
+        $issuedBook = $this->issuedBookRepository->updateStatus($input, IssuedBook::STATUS_ISSUED);
 
         return $this->sendResponse($issuedBook->toArray(), 'Book issued successfully.');
     }
 
     /**
-     * Store a newly created IssuedBook in storage.
-     * POST /issuedBooks
+     * @param int $bookId
+     * @param Request $request
      *
-     * @param  int  $bookId
-     * @param  CreateIssuedBookAPIRequest  $request
-     *
-     * @return Response
+     * @return JsonResponse
      */
-    public function reserveBook($bookId, CreateIssuedBookAPIRequest $request)
+    public function reserveBook($bookId, Request $request)
     {
         $this->bookRepository->findOrFail($bookId);
 
         $input = $request->all();
-
         $input['status'] = IssuedBook::STATUS_RESERVED;
         $input['book_id'] = $bookId;
 
         $reservedBook = $this->issuedBookRepository->store($input);
 
-        return $this->sendResponse($reservedBook->toArray(), 'Book reserved saved successfully');
+        return $this->sendResponse($reservedBook->toArray(), 'Book reserved successfully.');
     }
 
     /**
-     * Display the specified IssuedBook.
-     * GET|HEAD /issuedBooks/{id}
+     * @param int $bookId
+     * @param Request $request
      *
-     * @param  int  $id
+     * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
+     */
+    public function returnBook($bookId, Request $request)
+    {
+        $this->bookRepository->findOrFail($bookId);
+        $input = $request->all();
+        $input['book_id'] = $bookId;
+        $this->bookRepository->findOrFail($bookId);
+
+        $issuedBook = $this->issuedBookRepository->updateStatus($input, IssuedBook::STATUS_RETURNED);
+
+        return $this->sendResponse($issuedBook->toArray(), 'Book return successfully.');
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -101,13 +120,10 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * Update the specified IssuedBook in storage.
-     * PUT/PATCH /issuedBooks/{id}
+     * @param int $id
+     * @param UpdateIssuedBookAPIRequest $request
      *
-     * @param  int  $id
-     * @param  UpdateIssuedBookAPIRequest  $request
-     *
-     * @return Response
+     * @return JsonResponse
      */
     public function update($id, UpdateIssuedBookAPIRequest $request)
     {
@@ -121,13 +137,11 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * Remove the specified IssuedBook from storage.
-     * DELETE /issuedBooks/{id}
+     * @param int$id
      *
-     * @param  int  $id
+     * @throws Exception
      *
-     * @return Response
-     * @throws \Exception
+     * @return JsonResponse
      *
      */
     public function destroy($id)
@@ -138,5 +152,25 @@ class IssuedBookAPIController extends AppBaseController
         $issuedBook->delete();
 
         return $this->sendResponse($id, 'Issued Book deleted successfully');
+    }
+
+    /**
+     * @param int $memberId
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function memberBooksHistory($memberId, Request $request)
+    {
+        $search = $request->all();
+        $search['member_id'] = $memberId;
+
+        $records = $this->issuedBookRepository->all(
+            $search,
+            $request->get('skip', null),
+            $request->get('limit', null)
+        );
+
+        return $this->sendResponse($records->toArray(), 'Books history retrieved successfully.');
     }
 }
