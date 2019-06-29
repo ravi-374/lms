@@ -48,3 +48,7 @@ export const publisherActionType = {
     EDIT_PUBLISHER: 'EDIT_PUBLISHER',
     DELETE_PUBLISHER: 'DELETE_PUBLISHER',
 };
+
+export const errorMessage = {
+  TOKEN_NOT_PROVIDED: 'Token not provided'
+};
