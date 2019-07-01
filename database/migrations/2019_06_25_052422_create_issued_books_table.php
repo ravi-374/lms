@@ -18,9 +18,9 @@ class CreateIssuedBooksTable extends Migration
             $table->increments('id');
             $table->integer('book_item_id')->unsigned();
             $table->integer('member_id')->unsigned();
-            $table->dateTime('reserve_date');
-            $table->dateTime('issued_on')->default(Carbon::now());
-            $table->dateTime('return_due_date');
+            $table->dateTime('reserve_date')->nullable();
+            $table->dateTime('issued_on')->nullable();
+            $table->dateTime('return_due_date')->nullable();
             $table->text('note')->nullable();
             $table->dateTime('return_date')->nullable();
             $table->integer('status');

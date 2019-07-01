@@ -3,17 +3,14 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateIssuedBookAPIRequest;
 use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Repositories\BookRepository;
 use App\Repositories\IssuedBookRepository;
-use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Response;
 
 /**
  * Class IssuedBookController
@@ -63,9 +60,9 @@ class IssuedBookAPIController extends AppBaseController
         $input['book_item_id'] = $bookItemId;
         BookItem::findOrFail($bookItemId);
 
-        $issuedBook = $this->issuedBookRepository->updateStatus($input, IssuedBook::STATUS_ISSUED);
+        $this->issuedBookRepository->issueBook($input);
 
-        return $this->sendResponse($issuedBook->toArray(), 'Book issued successfully.');
+        return $this->sendSuccess('Book issued successfully.');
     }
 
     /**
@@ -82,9 +79,9 @@ class IssuedBookAPIController extends AppBaseController
         $input['status'] = IssuedBook::STATUS_RESERVED;
         $input['book_item_id'] = $bookItemId;
 
-        $reservedBook = $this->issuedBookRepository->store($input);
+        $this->issuedBookRepository->reserveBook($input);
 
-        return $this->sendResponse($reservedBook->toArray(), 'Book reserved successfully.');
+        return $this->sendSuccess('Book reserved successfully.');
     }
 
     /**
@@ -101,9 +98,9 @@ class IssuedBookAPIController extends AppBaseController
         $input = $request->all();
         $input['book_item_id'] = $bookItemId;
 
-        $issuedBook = $this->issuedBookRepository->updateStatus($input, IssuedBook::STATUS_RETURNED);
+        $this->issuedBookRepository->returnBook($input);
 
-        return $this->sendResponse($issuedBook->toArray(), 'Book return successfully.');
+        return $this->sendSuccess('Book return successfully.');
     }
 
     /**

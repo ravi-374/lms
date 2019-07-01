@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\IssuedBook;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -61,7 +60,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         $query = $this->allQuery($search, $skip, $limit)->with('bookItem');
 
-        $query->when(!empty($search['due_date']), function (Builder $query) use($search) {
+        $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
         });
         $bookRecords = $query->orderByDesc('id')->get();
@@ -88,7 +87,8 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      *
      * @return bool
      */
-    public function validateBook($input) {
+    public function validateBook($input)
+    {
         $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->exists();
@@ -102,59 +102,90 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
     /**
      * @param array $input
-     * @param int $status
-     * @return IssuedBook
-     * @throws \Exception
+     *
+     * @return bool
      */
-    public function updateStatus($input, $status)
+    public function issueBook($input)
     {
-        $statusMessage = [2 => 'issued', 3 => 'returned'];
         /** @var IssuedBook $issueBook */
         $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
-            ->where('status','!=', IssuedBook::STATUS_RETURNED)
+            ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
-        // if book records is there, then may be book is reserved or issued
+        $input = [
+            'book_item_id'    => $input['book_item_id'],
+            'member_id'       => $input['member_id'],
+            'issued_on'       => Carbon::now(),
+            'return_due_date' => Carbon::now()->addDays(15),
+            'note'            => !empty($input['note']) ? $input['note'] : null,
+            'status'          => IssuedBook::STATUS_ISSUED,
+        ];
         if (!empty($issueBook)) {
-            // reserved book are not allow to issue by another member
             if ($issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id != $input['member_id']) {
-                throw new UnprocessableEntityHttpException('Book is already reserved by another member');
-            } else if ($issueBook->status == $status) {
-                throw new UnprocessableEntityHttpException('Book is already '.$statusMessage[$status]);
+                throw new UnprocessableEntityHttpException('Book is already reserved by another member.');
+            }
+            if ($issueBook->status == IssuedBook::STATUS_ISSUED) {
+                throw new UnprocessableEntityHttpException('Book is already issued.');
             }
 
-            // if status if issue it means, book is already reserved and member want to issue it
-            if ($status == IssuedBook::STATUS_ISSUED) {
-                $issueBook->update([
-                    'book_item_id'         => $input['book_item_id'],
-                    'member_id'       => $input['member_id'],
-                    'issued_on'       => Carbon::now(),
-                    'return_due_date' => Carbon::now()->addDays(15),
-                    'note'            => !empty($input['note']) ? $input['note'] : null,
-                    'status'          => IssuedBook::STATUS_ISSUED,
-                ]);
-            } else {
-                // return book
-                $issueBook->status = $status;
-                $issueBook->return_date = Carbon::now();
-                $issueBook->save();
-            }
-        } else {
-            if ($status == IssuedBook::STATUS_RETURNED) {
-                throw new UnprocessableEntityHttpException('Book should not be return without issuing it.');
-            }
-            // if book record is not there it means book is available
-            $input = [
-                'book_item_id'         => $input['book_item_id'],
-                'member_id'       => $input['member_id'],
-                'issued_on'       => Carbon::now(),
-                'return_due_date' => Carbon::now()->addDays(15),
-                'note'            => !empty($input['note']) ? $input['note'] : null,
-                'status'          => IssuedBook::STATUS_ISSUED,
-            ];
-            $issueBook = $this->store($input);
+            $issueBook->update($input);
+
+            return true;
         }
 
-        return $issueBook;
+        IssuedBook::create($input);
+
+        return true;
+    }
+
+    /**
+     * @param array $input
+     *
+     * @return bool
+     */
+    public function reserveBook($input)
+    {
+        /** @var IssuedBook $issueBook */
+        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
+            ->where('status', '!=', IssuedBook::STATUS_RETURNED)
+            ->first();
+
+        if (!empty($issueBook)) {
+            throw new UnprocessableEntityHttpException('Book is not available.');
+        }
+
+        IssuedBook::create([
+            'book_item_id'    => $input['book_item_id'],
+            'member_id'       => $input['member_id'],
+            'note'            => !empty($input['note']) ? $input['note'] : null,
+            'status'          => IssuedBook::STATUS_RESERVED,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * @param array $input
+     *
+     * @return bool
+     */
+    public function returnBook($input)
+    {
+        /** @var IssuedBook $issueBook */
+        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
+            ->where('status', '!=', IssuedBook::STATUS_RETURNED)
+            ->first();
+
+        if (empty($issueBook)) {
+            throw new UnprocessableEntityHttpException('Book must be issued before returning it.');
+        }
+
+        $issueBook->update([
+            'return_date' => Carbon::now(),
+            'note'        => !empty($input['note']) ? $input['note'] : null,
+            'status'      => IssuedBook::STATUS_RETURNED,
+        ]);
+
+        return true;
     }
 }
