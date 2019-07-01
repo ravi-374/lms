@@ -25,7 +25,7 @@ export default {
         );
 
         const errorHandler = (error) => {
-            if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED) {
+            if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
                 window.location.href = 'http://local.lms.com/#/app/login';
             }
             return Promise.reject({...error})

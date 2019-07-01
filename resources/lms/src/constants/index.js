@@ -50,5 +50,6 @@ export const publisherActionType = {
 };
 
 export const errorMessage = {
-  TOKEN_NOT_PROVIDED: 'Token not provided'
+    TOKEN_NOT_PROVIDED: 'Token not provided',
+    TOKEN_EXPIRED: 'Token has expired'
 };
