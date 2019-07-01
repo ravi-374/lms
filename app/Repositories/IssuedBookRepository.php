@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -112,6 +114,9 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
+        /** @var BookItem $bookItem */
+        $bookItem = BookItem::findOrFail($input['book_item_id']);
+
         $input = [
             'book_item_id'    => $input['book_item_id'],
             'member_id'       => $input['member_id'],
@@ -134,6 +139,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         IssuedBook::create($input);
+        $bookItem->update(['is_available' => false]);
 
         return true;
     }
@@ -150,7 +156,9 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
-        if (!empty($issueBook)) {
+        /** @var BookItem $bookItem */
+        $bookItem = BookItem::findOrFail($input['book_item_id']);
+        if (!empty($issueBook) || !$bookItem->is_available) {
             throw new UnprocessableEntityHttpException('Book is not available.');
         }
 
@@ -160,6 +168,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'note'            => !empty($input['note']) ? $input['note'] : null,
             'status'          => IssuedBook::STATUS_RESERVED,
         ]);
+        $bookItem->update(['is_available' => false]);
 
         return true;
     }
@@ -176,6 +185,9 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
+        /** @var BookItem $bookItem */
+        $bookItem = BookItem::findOrFail($input['book_item_id']);
+
         if (empty($issueBook)) {
             throw new UnprocessableEntityHttpException('Book must be issued before returning it.');
         }
@@ -185,6 +197,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'note'        => !empty($input['note']) ? $input['note'] : null,
             'status'      => IssuedBook::STATUS_RETURNED,
         ]);
+        $bookItem->update(['is_available' => true]);
 
         return true;
     }

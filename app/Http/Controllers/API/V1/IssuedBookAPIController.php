@@ -6,6 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
+use App\Repositories\BookItemRepository;
 use App\Repositories\BookRepository;
 use App\Repositories\IssuedBookRepository;
 use Exception;
@@ -21,13 +22,13 @@ class IssuedBookAPIController extends AppBaseController
     /** @var  IssuedBookRepository */
     private $issuedBookRepository;
 
-    /** @var BookRepository */
-    private $bookRepository;
+    /** @var BookItemRepository */
+    private $bookItemRepo;
 
-    public function __construct(IssuedBookRepository $issuedBookRepo, BookRepository $bookRepository)
+    public function __construct(IssuedBookRepository $issuedBookRepo, BookItemRepository $bookItemRepo)
     {
         $this->issuedBookRepository = $issuedBookRepo;
-        $this->bookRepository = $bookRepository;
+        $this->bookItemRepo = $bookItemRepo;
     }
 
     /**
@@ -56,9 +57,9 @@ class IssuedBookAPIController extends AppBaseController
      */
     public function issueBook($bookItemId, Request $request)
     {
+        $this->bookItemRepo->findOrFail($bookItemId);
         $input = $request->all();
         $input['book_item_id'] = $bookItemId;
-        BookItem::findOrFail($bookItemId);
 
         $this->issuedBookRepository->issueBook($input);
 
@@ -73,7 +74,7 @@ class IssuedBookAPIController extends AppBaseController
      */
     public function reserveBook($bookItemId, Request $request)
     {
-        BookItem::findOrFail($bookItemId);
+        $this->bookItemRepo->findOrFail($bookItemId);
 
         $input = $request->all();
         $input['status'] = IssuedBook::STATUS_RESERVED;
@@ -94,7 +95,7 @@ class IssuedBookAPIController extends AppBaseController
      */
     public function returnBook($bookItemId, Request $request)
     {
-        BookItem::findOrFail($bookItemId);
+        $this->bookItemRepo->findOrFail($bookItemId);
         $input = $request->all();
         $input['book_item_id'] = $bookItemId;
 

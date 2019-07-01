@@ -39,6 +39,8 @@ class IssuedBook extends Model
     const STATUS_RESERVED = 1;
     const STATUS_ISSUED = 2;
     const STATUS_RETURNED = 3;
+    const STATUS_LOST = 4;
+    const STATUS_DAMAGED = 5;
     /**
      * Validation rules
      *
