@@ -158,20 +158,4 @@ class UserRepository extends BaseRepository
             throw  new ApiOperationFailedException($e->getMessage());
         }
     }
-
-    /**
-     * @param array $input
-     *
-     * @throws Exception
-     */
-    public function validateAddress($input)
-    {
-        if (!empty($input['address'])) {
-            $rules = Address::$rules;
-            $messages = $this->validateRules($input['address'], $rules);
-            if (!empty($messages)) {
-                throw new Exception($messages, 422);
-            }
-        }
-    }
 }

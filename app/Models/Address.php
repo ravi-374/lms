@@ -45,19 +45,6 @@ class Address extends Model
     ];
 
     /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'address_1' => 'required',
-        'city'      => 'required',
-        'state'     => 'required',
-        'zip'       => 'required',
-        'country'   => 'required',
-    ];
-
-    /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */

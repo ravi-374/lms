@@ -56,7 +56,6 @@ class UserAPIController extends AppBaseController
     public function store(CreateUserAPIRequest $request)
     {
         $input = $request->all();
-        $this->userRepository->validateAddress($input);
         $user = $this->userRepository->store($input);
 
         return $this->sendResponse($user->toArray(), 'User saved successfully.');
@@ -91,7 +90,6 @@ class UserAPIController extends AppBaseController
     public function update($id, UpdateUserAPIRequest $request)
     {
         $input = $request->all();
-        $this->userRepository->validateAddress($input);
         $user = $this->userRepository->update($input, $id);
 
         return $this->sendResponse($user->toArray(), 'User updated successfully.');

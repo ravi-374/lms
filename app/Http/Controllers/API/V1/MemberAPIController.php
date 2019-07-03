@@ -3,17 +3,14 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMemberAPIRequest;
 use App\Http\Requests\API\UpdateMemberAPIRequest;
-use App\Models\Address;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
 use App\Repositories\UserRepository;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class MemberController
@@ -64,8 +61,6 @@ class MemberAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $this->userRepository->validateAddress($input);
-
         $member = $this->memberRepository->store($input);
 
         return $this->sendResponse($member->toArray(), 'Member saved successfully.');
@@ -102,7 +97,6 @@ class MemberAPIController extends AppBaseController
     {
         $input = $request->all();
         $this->memberRepository->findOrFail($id);
-        $this->userRepository->validateAddress($input);
 
         $member = $this->memberRepository->update($input, $id);
 
