@@ -97,7 +97,7 @@ class UserRepository extends BaseRepository
             $user->address()->save($address);
 
             if (!empty($input['image'])) {
-                $imagePath = User::makeImage($input['image'], User::IMAGE_PATH);
+                $imagePath = User::makeImage($input['image' ], User::IMAGE_PATH);
                 $user->update(['image' => $imagePath]);
             }
             DB::commit();
@@ -144,7 +144,10 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            $user->address()->update($input['address']);
+            if (!empty($input['address'])) {
+                $address = new Address($input['address']);
+                $user->address()->save($address);
+            }
 
             DB::commit();
 
