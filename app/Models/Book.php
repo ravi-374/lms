@@ -45,6 +45,7 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUrl($value)
  * @mixin \Eloquent
+ * @property-read string $image_path
  */
 class Book extends Model
 {

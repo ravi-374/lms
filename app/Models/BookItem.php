@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Book $book
  */
 class BookItem extends Model
 {
