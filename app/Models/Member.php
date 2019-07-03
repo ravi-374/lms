@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\ImageTrait;
 use Illuminate\Database\Eloquent\Model as Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * App\Models\Member
@@ -38,7 +39,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMemberId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMembershipPlanId($value)
  */
-class Member extends Model
+class Member extends Model implements JWTSubject
 {
     use ImageTrait;
     const SUSPENDED = 0;
@@ -97,6 +98,26 @@ class Member extends Model
         'password'           => 'required',
         'membership_plan_id' => 'required',
     ];
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     public function deleteMemberImage()
     {
