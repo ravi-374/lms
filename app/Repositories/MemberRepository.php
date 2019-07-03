@@ -77,14 +77,25 @@ class MemberRepository extends BaseRepository
         try {
             DB::beginTransaction();
             $input['password'] = Hash::make($input['password']);
+            $input['member_id'] = $this->generateMemberId();
             $member = Member::create($input);
             if (!empty($input['image'])) {
                 $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
                 $member->update(['image' => $imagePath]);
             }
 
-            $address = new Address($input['address']);
-            $member->address()->save($address);
+            if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) || !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])) {
+                $addressArr = [
+                    'address_1' => !empty($input['address_1']) ? $input['address_1'] : '',
+                    'address_2' => !empty($input['address_2']) ? $input['address_2'] : '',
+                    'city' => !empty($input['city']) ? $input['city'] : '',
+                    'state' => !empty($input['state']) ? $input['state'] : '',
+                    'zip' => !empty($input['zip']) ? $input['zip'] : '',
+                    'country' => !empty($input['country']) ? $input['country'] : '',
+                ];
+                $address = new Address($addressArr);
+                $member->address()->save($address);
+            }
 
             DB::commit();
 
@@ -145,5 +156,23 @@ class MemberRepository extends BaseRepository
             DB::rollBack();
             throw  new ApiOperationFailedException($e->getMessage());
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function generateMemberId()
+    {
+        //todo: later will change format
+        $rand = rand(10000, 99999);
+        $memberId = $rand;
+        while (true) {
+            if (!Member::whereMemberId($memberId)->exists()) {
+                break;
+            }
+            $memberId = rand(10000, 99999);
+        }
+
+        return $memberId;
     }
 }
