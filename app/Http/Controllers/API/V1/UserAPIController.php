@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
+use App\Models\Address;
 use App\Repositories\UserRepository;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 
 /**
@@ -48,13 +50,12 @@ class UserAPIController extends AppBaseController
      * @param CreateUserAPIRequest $request
      *
      * @throws \App\Exceptions\ApiOperationFailedException
-     *
+     * @throws \Exception
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateUserAPIRequest $request)
     {
         $input = $request->all();
-
         $user = $this->userRepository->store($input);
 
         return $this->sendResponse($user->toArray(), 'User saved successfully.');
@@ -83,13 +84,12 @@ class UserAPIController extends AppBaseController
      * @param UpdateUserAPIRequest $request
      *
      * @throws \App\Exceptions\ApiOperationFailedException
-     *
+     * @throws \Exception
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id, UpdateUserAPIRequest $request)
     {
         $input = $request->all();
-
         $user = $this->userRepository->update($input, $id);
 
         return $this->sendResponse($user->toArray(), 'User updated successfully.');
