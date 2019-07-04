@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Hash;
 use JWTAuth;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class MemberController
@@ -142,7 +143,7 @@ class MemberAPIController extends AppBaseController
         /** @var Member $member */
         $member = Member::whereRaw('lower(email) = ?', [$email])->first();
         if (empty($member)) {
-            return $this->sendError('Invalid email or password', 422);
+            return $this->sendError('Invalid email or password', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         if (!Hash::check($password, $member->password)) {
