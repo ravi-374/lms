@@ -146,7 +146,7 @@ class MemberAPIController extends AppBaseController
         }
 
         if (!Hash::check($password, $member->password)) {
-            return $this->sendError('Invalid email or password', 422);
+            return $this->sendError('Invalid email or password.', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $token = JWTAuth::fromUser($member);
