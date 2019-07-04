@@ -93,15 +93,8 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) || !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])) {
-                $addressArr = [
-                    'address_1' => !empty($input['address_1']) ? $input['address_1'] : '',
-                    'address_2' => !empty($input['address_2']) ? $input['address_2'] : '',
-                    'city' => !empty($input['city']) ? $input['city'] : '',
-                    'state' => !empty($input['state']) ? $input['state'] : '',
-                    'zip' => !empty($input['zip']) ? $input['zip'] : '',
-                    'country' => !empty($input['country']) ? $input['country'] : '',
-                ];
+            $addressArr = $this->makeAddressArray($input);
+            if(!empty($addressArr)) {
                 $address = new Address($addressArr);
                 $user->address()->save($address);
             }
@@ -118,6 +111,25 @@ class UserRepository extends BaseRepository
 
             throw  new ApiOperationFailedException($e->getMessage());
         }
+    }
+
+    /**
+     * @param $input
+     * @return array
+     */
+    public function makeAddressArray($input){
+        if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) || !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])) {
+            $addressArr = [
+                'address_1' => !empty($input['address_1']) ? $input['address_1'] : '',
+                'address_2' => !empty($input['address_2']) ? $input['address_2'] : '',
+                'city' => !empty($input['city']) ? $input['city'] : '',
+                'state' => !empty($input['state']) ? $input['state'] : '',
+                'zip' => !empty($input['zip']) ? $input['zip'] : '',
+                'country' => !empty($input['country']) ? $input['country'] : '',
+            ];
+            return $addressArr;
+        }
+        return [];
     }
 
     /**
