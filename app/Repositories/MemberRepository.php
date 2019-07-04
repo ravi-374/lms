@@ -84,15 +84,10 @@ class MemberRepository extends BaseRepository
                 $member->update(['image' => $imagePath]);
             }
 
-            if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) || !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])) {
-                $addressArr = [
-                    'address_1' => !empty($input['address_1']) ? $input['address_1'] : '',
-                    'address_2' => !empty($input['address_2']) ? $input['address_2'] : '',
-                    'city' => !empty($input['city']) ? $input['city'] : '',
-                    'state' => !empty($input['state']) ? $input['state'] : '',
-                    'zip' => !empty($input['zip']) ? $input['zip'] : '',
-                    'country' => !empty($input['country']) ? $input['country'] : '',
-                ];
+            /** @var UserRepository $userRepo */
+            $userRepo = app(UserRepository::class);
+            $addressArr = $userRepo->makeAddressArray($input);
+            if(!empty($addressArr)) {
                 $address = new Address($addressArr);
                 $member->address()->save($address);
             }
@@ -164,8 +159,7 @@ class MemberRepository extends BaseRepository
     public function generateMemberId()
     {
         //todo: later will change format
-        $rand = rand(10000, 99999);
-        $memberId = $rand;
+        $memberId = rand(10000, 99999);
         while (true) {
             if (!Member::whereMemberId($memberId)->exists()) {
                 break;
