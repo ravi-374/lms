@@ -40,4 +40,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('members', 'MemberAPIController');
     Route::post('members/{member_id}', 'MemberAPIController@update');
 });
-Route::post('member/login', 'MemberAPIController@login');
+
+Route::post('member/login', 'MemberAuthController@login');
+Route::post('member/register', 'MemberAuthController@register');
+Route::get('member/activate', 'MemberAuthController@verifyAccount');

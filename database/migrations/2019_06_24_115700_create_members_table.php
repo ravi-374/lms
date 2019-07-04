@@ -24,6 +24,7 @@ class CreateMembersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->string('activation_code')->nullable();
             $table->timestamps();
         });
     }
