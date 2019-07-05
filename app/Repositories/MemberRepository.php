@@ -95,7 +95,6 @@ class MemberRepository extends BaseRepository
                 $address = new Address($addressArr);
                 $member->address()->save($address);
             }
-
             DB::commit();
 
             return Member::with('address')->findOrFail($member->id);

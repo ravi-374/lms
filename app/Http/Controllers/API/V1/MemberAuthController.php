@@ -107,7 +107,7 @@ class MemberAuthController extends AppBaseController
         $token = \Request::get('token', null);
         if (empty($token)) {
             Session::flash('error', 'token not found.');
-            //To do:: add proper redirect once all set up eg. return redirect('login');
+            //Todo: add proper redirect once all set up eg. return redirect('login');
             return $this->sendError('token not found.');
         }
         try {
@@ -115,14 +115,14 @@ class MemberAuthController extends AppBaseController
             list($memberId, $activationCode) = $result = explode('|', $token);
             if (count($result) < 2) {
                 Session::flash('error', 'token not found.');
-                //To do:: add proper redirect once all set up eg. return redirect('login');
+                //Todo: add proper redirect once all set up eg. return redirect('login');
                 return $this->sendError('token not found.');
             }
             /** @var Member $member */
             $member = Member::whereActivationCode($activationCode)->findOrFail($memberId);
             if (empty($member)) {
                 Session::flash('msg', 'This account activation token is invalid.');
-                //To do:: add proper redirect once all set up eg. return redirect('login');
+                //Todo: add proper redirect once all set up eg. return redirect('login');
                 return $this->sendError('This account activation token is invalid.');
             }
             $member->is_active = 1;
@@ -131,7 +131,7 @@ class MemberAuthController extends AppBaseController
             return $this->sendSuccess('Your account has been activated successfully.');
         } catch (Exception $e) {
             Session::flash('msg', 'Something went wrong.');
-            //To do:: add proper redirect once all set up eg. return redirect('login');
+            //Todo: add proper redirect once all set up eg. return redirect('login');
             return $this->sendError('Something went wrong.');
         }
     }
