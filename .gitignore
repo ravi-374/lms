@@ -1,18 +1,12 @@
 /node_modules
 /public/hot
 /public/storage
-/public/images
+/public/images/vendor
 /public/js
 /public/css
-/public/images
 /public/fonts
 /storage/*.key
 /vendor
-/public/css/app.css
-/public/js/app.js
-/public/fonts
-/public/images
-/public/js
 .env
 .phpunit.result.cache
 Homestead.json
@@ -22,3 +16,4 @@ yarn-error.log
 /.idea
 /_ide_helper.php
 public/mix-manifest.json
+public/images

@@ -49,6 +49,35 @@ export const publisherActionType = {
     DELETE_PUBLISHER: 'DELETE_PUBLISHER',
 };
 
+export const bookActionType = {
+    FETCH_BOOKS: 'FETCH_BOOKS',
+    FETCH_BOOK: 'FETCH_BOOK',
+    ADD_BOOK: 'ADD_BOOK',
+    EDIT_BOOK: 'EDIT_BOOK',
+    DELETE_BOOK: 'DELETE_BOOK'
+};
+
+export const bookFormatConstant = {
+    FORMAT_HARDCOVER: 1,
+    FORMAT_PAPERBACK: 2
+};
+
+export const bookStatusConstant = {
+    STATUS_AVAILABLE: 1,
+    STATUS_NOT_AVAILABLE: 2,
+};
+
+export const bookFormatOptions = [
+    {id: 1, name: 'Hardcover'},
+    {id: 2, name: 'Paperback'}
+];
+
+export const bookStatusOptions = [
+    {id: 0, name: 'Select Status'},
+    {id: 1, name: 'Available'},
+    {id: 2, name: 'Not available'},
+];
+
 export const errorMessage = {
     TOKEN_NOT_PROVIDED: 'Token not provided',
     TOKEN_EXPIRED: 'Token has expired'

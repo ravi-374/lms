@@ -13,8 +13,14 @@ const TableHeader = (props, isAction = true) => {
             return <th style={{width: '100px', textAlign: 'center'}}>Action</th>;
         }
     };
+    const renderStaticColumn = () => {
+        if (props.staticField) {
+            return <th>{props.staticField}</th>;
+        }
+    };
     return (
         <tr className="table__row">
+            {renderStaticColumn()}
             {props.headers.map(header =>
                 (
                     <th key={header.id} onClick={() => sort(header.id)} className="table-header">

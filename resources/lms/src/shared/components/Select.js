@@ -6,18 +6,19 @@ import {
     Input, Label
 } from 'reactstrap';
 
-export default ({input, label, type = "select", disabled, isCustom, addOnType = "prepend", groupText, customGroupText = "", meta: {touched, error, warning}, options, defaultOption}) => {
-    const className = `${touched && error ? 'is-invalid' : ''} ${isCustom ? 'custom-select' : ' '}`;
+export default ({input, label, type = "select", required, disabled, isCustom, addOnType = "prepend", groupText, customGroupText = "", meta: {touched, error, warning}, options, defaultOption}) => {
+    const selectClass = `${touched && error ? 'is-invalid' : ''} ${isCustom ? 'custom-select' : ' '}`;
+    const labelClass = required ? 'control-label' : '';
     return (
         <FormGroup className={isCustom ? 'mb-0' : ''}>
-            {label ? <Label>{`${label} :`}</Label> : null}
+            {label ? <Label className={labelClass}>{label}</Label> : null}
             <InputGroup>
                 <InputGroupAddon addonType={addOnType}>
                     <InputGroupText>{customGroupText === '' ?
                         <i className={`fa fa-${groupText}`}/> : customGroupText}
                     </InputGroupText>
                 </InputGroupAddon>
-                <Input type={type} {...input} className={className} placeholder={label} disabled={disabled}
+                <Input type={type} {...input} className={selectClass} placeholder={label} disabled={disabled}
                        autoComplete="off">
                     <option value="">{defaultOption}</option>
                     {options.map((option, index) =>

@@ -9,13 +9,15 @@ import {
     Input
 } from 'reactstrap';
 
-export default ({input, label, type = "text", required, readOnly, groupText, customGroupText = '', addOnType = 'prepend', placeholder, meta: {touched, error}}) => {
-    const className = `${touched && error ? 'is-invalid' : ''}`;
+export default ({input, label, type = "text", min, max, required, readOnly, groupText, customGroupText = '', addOnType = 'prepend', placeholder, meta: {touched, error}}) => {
+    const inputClass = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
+    const displayLabel = !required ? label : null;
     return (
         <FormGroup>
             {type !== 'hidden' ? <Label className={labelClass}>{label}</Label> : null}
             <InputGroup>
+                <span className="input-placeholder">
                 {type !== 'hidden' ?
                     <InputGroupAddon addonType={addOnType}>
                         <InputGroupText>{customGroupText === '' ?
@@ -24,8 +26,11 @@ export default ({input, label, type = "text", required, readOnly, groupText, cus
                     </InputGroupAddon>
                     : null
                 }
-                <Input type={type} {...input} readOnly={readOnly} required={required} className={className}
-                       placeholder={label} autoComplete="off"/>
+                    <Input type={type} {...input} min={min} max={max} readOnly={readOnly} required={required} className={inputClass}
+                           placeholder={displayLabel}
+                           autoComplete="off"/>
+                    {!readOnly?<div className="placeholder">{label}{required ? <span>*</span> : null}</div>:null}
+                </span>
                 {touched && ((error && <FormFeedback>{error}</FormFeedback>))}
             </InputGroup>
         </FormGroup>

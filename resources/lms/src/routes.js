@@ -2,12 +2,14 @@ import React from 'react';
 
 const Dashboard = React.lazy(() => import('./components/dashboard/Dashboard'));
 const Users = React.lazy(() => import('./components/users/Users'));
-const Books = React.lazy(() => import('./components/books/Books'));
+const Books = React.lazy(() =>  import(/* webpackChunkName: "books" */'./components/books/Books'));
+const CreateBook = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/CreateBook'));
+const EditBook = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/EditBook'));
 const Genres = React.lazy(() => import('./components/genres/Genres'));
 const Tags = React.lazy(() => import('./components/tags/Tags'));
 const Authors = React.lazy(() => import('./components/authors/Authors'));
-const BookLanguages = React.lazy(() => import('./components/book-languages/BookLanguages'));
 const Publishers = React.lazy(() => import('./components/publishers/Publishers'));
+const BookLanguages = React.lazy(() => import('./components/book-languages/BookLanguages'));
 
 export default [
     {
@@ -29,6 +31,18 @@ export default [
         component: Books
     },
     {
+        path: '/app/books/new',
+        exact: true,
+        name: 'Add Book',
+        component: CreateBook
+    },
+    {
+        path: '/app/books/:id/edit',
+        exact: true,
+        name: 'Edit Book',
+        component: EditBook
+    },
+    {
         path: '/app/genres',
         exact: true,
         name: 'Genres',
@@ -47,15 +61,15 @@ export default [
         component: Authors
     },
     {
-        path: '/app/book-languages',
-        exact: true,
-        name: 'BookLanguages',
-        component: BookLanguages
-    },
-    {
         path: '/app/publishers',
         exact: true,
         name: 'Publishers',
         component: Publishers
+    },
+    {
+        path: '/app/book-languages',
+        exact: true,
+        name: 'BookLanguages',
+        component: BookLanguages
     }
 ];
