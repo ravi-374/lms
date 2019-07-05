@@ -79,7 +79,7 @@ class UserRepository extends BaseRepository
      * @param array $input
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws Exception
      * @return User|\Illuminate\Database\Eloquent\Model
      */
     public function store($input)
@@ -93,10 +93,8 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            if (!empty($input['address'])) {
-                $address = new Address($input['address']);
-                $user->address()->save($address);
-            }
+            $address = new Address($input['address']);
+            $user->address()->save($address);
 
             if (!empty($input['image'])) {
                 $imagePath = User::makeImage($input['image' ], User::IMAGE_PATH);
@@ -104,7 +102,7 @@ class UserRepository extends BaseRepository
             }
             DB::commit();
 
-            return $user;
+            return User::with('address')->findOrFail($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -117,7 +115,7 @@ class UserRepository extends BaseRepository
      * @param int $id
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws Exception
      * @return User
      */
     public function update($input, $id)
@@ -153,7 +151,7 @@ class UserRepository extends BaseRepository
 
             DB::commit();
 
-            return $user;
+            return User::with('address')->findOrFail($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 

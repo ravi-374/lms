@@ -18,7 +18,7 @@ class CreateAddressesTable extends Migration
             $table->integer('owner_id');
             $table->string('owner_type');
             $table->text('address_1');
-            $table->text('address_2');
+            $table->text('address_2')->nullable();
             $table->string('city');
             $table->string('state');
             $table->integer('zip');
