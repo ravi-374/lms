@@ -1,12 +1,11 @@
 import axios from 'axios';
+import axiosInterceptor from './axiosInterceptor';
 
-const token = localStorage.getItem('token');
-
-export default axios.create({
-
-    baseURL: 'http://local.lms.com/api/',
-    params: {
-        token: token
-    },
-    headers: {'Content-Type': 'multipart/form-data'}
+const wampServer = 'http://local.lms.com/api/v1/';
+const axiosApi = axios.create({
+    baseURL: wampServer,
 });
+
+axiosInterceptor.setupInterceptors(axiosApi, false, true);
+
+export default axiosApi;

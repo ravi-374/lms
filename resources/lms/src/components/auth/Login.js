@@ -31,14 +31,14 @@ const Login = (props) => {
                     localStorage.removeItem('currentUser');
                 }
             }
-            localStorage.setItem('token', response.data.data.token);
+            localStorage.setItem('authtoken', response.data.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.data.user));
             props.history.push('/');
         }).catch(({response}) =>
             props.addToast({text: response.data.message, type: 'error'})
         );
     };
-    const {handleSubmit, pristine, submitting} = props;
+    const {handleSubmit,invalid} = props;
     return (
         <div className="app flex-row align-items-center">
             <Container>
@@ -60,7 +60,7 @@ const Login = (props) => {
                                     </div>
                                     <Row>
                                         <Col xs="6">
-                                            <Button color="primary" disabled={pristine || submitting} className="px-4">Login
+                                            <Button color="primary" disabled={invalid} className="px-4">Login
                                             </Button>
                                         </Col>
                                         <Col xs="6" className="text-right">
