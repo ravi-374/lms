@@ -5,11 +5,11 @@ export default {
         //     url: '/app/users',
         //     icon: 'icon-user',
         // },
-        // {
-        //     name: 'Books',
-        //     url: '/app/books',
-        //     icon: 'icon-globe'
-        // },
+        {
+            name: 'Books',
+            url: '/app/books',
+            icon: 'icon-book-open'
+        },
         {
             name: 'Genres',
             url: '/app/genres',

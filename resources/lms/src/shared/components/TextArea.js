@@ -1,13 +1,16 @@
 import React from 'react';
 
-export default ({input, label, type, rows, cols, placeholder, meta: {touched, error, warning}}) => {
+export default ({input, label, required, rows, cols, placeholder, meta: {touched, error}}) => {
+    const className = `${touched && error ? 'form-control is-invalid' : 'form-control'}`;
+    const labelClass = required ? 'control-label' : ' ';
     return (
         <div className="form-group">
-            <label>{label}</label>
+            <label className={labelClass}>{label}</label>
             <div>
-                <textarea cols={cols} rows={rows} {...input} placeholder={`${label}`} className="form-control"
+                <textarea cols={cols} rows={rows} required={required} {...input} placeholder={`${label}`}
+                          className={className}
                           autoComplete="off"/>
-                {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+                {touched && ((error && <span className="text-danger" style={{fontSize: '80%'}}>{error}</span>))}
             </div>
         </div>
     );

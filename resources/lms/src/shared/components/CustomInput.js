@@ -5,7 +5,7 @@ import {
     InputGroupText,
 } from 'reactstrap';
 
-export default ({input, label, type, required, groupText, isCustom, customGroupText = '', addOnType = 'prepend', placeholder, readOnly, meta: {touched, error}}) => {
+export default ({input, label, type, min,max, required, groupText, isCustom, customGroupText = '', addOnType = 'prepend', placeholder, readOnly, meta: {touched, error}}) => {
     const className = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
     return (
@@ -22,7 +22,7 @@ export default ({input, label, type, required, groupText, isCustom, customGroupT
                                     <i className={`fa fa-${groupText}`}/> : customGroupText}
                                 </InputGroupText>
                             </InputGroupAddon>
-                            <Input type={type} {...input} className={className} placeholder={placeholder}
+                            <Input type={type} {...input} min={min} max={max} className={className} placeholder={placeholder}
                                    readOnly={readOnly}/>
                             {touched && ((error && <FormFeedback>{error}</FormFeedback>))}
                         </InputGroup>
