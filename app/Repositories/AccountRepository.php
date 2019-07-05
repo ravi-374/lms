@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repositories;
-
 
 use Exception;
 use Mail;
@@ -29,7 +27,7 @@ class AccountRepository
                 });
 
         } catch (\Exception $e) {
-            throw new Exception('Account created, but unable to send email');
+            throw new Exception('Account created, but unable to send email.');
         }
     }
 }

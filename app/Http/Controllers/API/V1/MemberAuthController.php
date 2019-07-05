@@ -42,17 +42,17 @@ class MemberAuthController extends AppBaseController
         $password = $request->get('password');
 
         if (empty($email) or empty($password)) {
-            return $this->sendError('email and password required', 422);
+            return $this->sendError('email and password required.', 422);
         }
 
         /** @var Member $member */
         $member = Member::whereRaw('lower(email) = ?', [$email])->first();
         if (empty($member)) {
-            return $this->sendError('Invalid email or password', 422);
+            return $this->sendError('Invalid email or password.', 422);
         }
 
         if (!Hash::check($password, $member->password)) {
-            return $this->sendError('Invalid email or password', 422);
+            return $this->sendError('Invalid email or password.', 422);
         }
 
         $token = JWTAuth::fromUser($member);
@@ -96,7 +96,7 @@ class MemberAuthController extends AppBaseController
             $code
         );
 
-        return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered in successfully.');
+        return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
     }
 
     /**
@@ -105,41 +105,34 @@ class MemberAuthController extends AppBaseController
     public function verifyAccount()
     {
         $token = \Request::get('token', null);
-
         if (empty($token)) {
-            Session::flash('error', 'token not found');
+            Session::flash('error', 'token not found.');
             //To do:: add proper redirect once all set up eg. return redirect('login');
-            return $this->sendError('token not found');
+            return $this->sendError('token not found.');
         }
-
         try {
             $token = Crypt::decrypt($token);
             list($memberId, $activationCode) = $result = explode('|', $token);
-
             if (count($result) < 2) {
-                Session::flash('error', 'token not found');
+                Session::flash('error', 'token not found.');
                 //To do:: add proper redirect once all set up eg. return redirect('login');
-                return $this->sendError('token not found');
+                return $this->sendError('token not found.');
             }
-
             /** @var Member $member */
             $member = Member::whereActivationCode($activationCode)->findOrFail($memberId);
-
             if (empty($member)) {
-                Session::flash('msg', 'This account activation token is invalid');
+                Session::flash('msg', 'This account activation token is invalid.');
                 //To do:: add proper redirect once all set up eg. return redirect('login');
-                return $this->sendError('This account activation token is invalid');
+                return $this->sendError('This account activation token is invalid.');
             }
-
             $member->is_active = 1;
             $member->save();
 
             return $this->sendSuccess('Your account has been activated successfully.');
         } catch (Exception $e) {
-            Session::flash('msg', 'Something went wrong');
+            Session::flash('msg', 'Something went wrong.');
             //To do:: add proper redirect once all set up eg. return redirect('login');
-            return $this->sendError('Something went wrong');
-
+            return $this->sendError('Something went wrong.');
         }
     }
 }
