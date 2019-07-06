@@ -6,11 +6,25 @@ use Illuminate\Database\Eloquent\Model as Model;
 
 /**
  * Class BookLanguage
+ *
  * @package App\Models
  * @version June 19, 2019, 9:49 am UTC
- *
  * @property string language_name
  * @property string language_code
+ * @property int $id
+ * @property string $language_name
+ * @property string $language_code
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage whereLanguageCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage whereLanguageName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class BookLanguage extends Model
 {

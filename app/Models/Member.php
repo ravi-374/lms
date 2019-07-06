@@ -34,6 +34,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUpdatedAt($value)
+ * @property string $member_id
+ * @property-read \App\Models\Address $address
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMemberId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMembershipPlanId($value)
  */
 class Member extends Model implements JWTSubject
 {
@@ -54,6 +58,15 @@ class Member extends Model implements JWTSubject
         'phone',
         'is_active',
         'image',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
     ];
 
     /**

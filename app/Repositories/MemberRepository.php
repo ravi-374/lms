@@ -77,14 +77,20 @@ class MemberRepository extends BaseRepository
         try {
             DB::beginTransaction();
             $input['password'] = Hash::make($input['password']);
+            $input['member_id'] = $this->generateMemberId();
             $member = Member::create($input);
             if (!empty($input['image'])) {
                 $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
                 $member->update(['image' => $imagePath]);
             }
 
-            $address = new Address($input['address']);
-            $member->address()->save($address);
+            /** @var UserRepository $userRepo */
+            $userRepo = app(UserRepository::class);
+            $addressArr = $userRepo->makeAddressArray($input);
+            if(!empty($addressArr)) {
+                $address = new Address($addressArr);
+                $member->address()->save($address);
+            }
 
             DB::commit();
 
@@ -145,5 +151,22 @@ class MemberRepository extends BaseRepository
             DB::rollBack();
             throw  new ApiOperationFailedException($e->getMessage());
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function generateMemberId()
+    {
+        //todo: later will change format
+        $memberId = rand(10000, 99999);
+        while (true) {
+            if (!Member::whereMemberId($memberId)->exists()) {
+                break;
+            }
+            $memberId = rand(10000, 99999);
+        }
+
+        return $memberId;
     }
 }

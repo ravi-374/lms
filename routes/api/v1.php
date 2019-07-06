@@ -39,5 +39,16 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     // Members
     Route::resource('members', 'MemberAPIController');
     Route::post('members/{member_id}', 'MemberAPIController@update');
+
+    // Issue Book
+    Route::post('books/{book_item_id}/issue-book', 'IssuedBookAPIController@issueBook');
+    // Reserve Book
+    Route::post('books/{book_item_id}/reserve-book', 'IssuedBookAPIController@reserveBook');
+    // Return Book
+    Route::post('books/{book_item_id}/return-book', 'IssuedBookAPIController@returnBook');
+    // books history
+    Route::get('members/{member_id}/books-history', 'IssuedBookAPIController@memberBooksHistory');
+    // get books history for admin users
+    Route::get('books-history', 'IssuedBookAPIController@index');
 });
 Route::post('member/login', 'MemberAPIController@login');
