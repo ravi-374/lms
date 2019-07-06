@@ -23,6 +23,8 @@ use Zizaco\Entrust\EntrustRole;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Permission[] $perms
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  */
 class Role extends EntrustRole
 {
