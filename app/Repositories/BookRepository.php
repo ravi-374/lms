@@ -180,12 +180,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     public function validateItems($items)
     {
         foreach ($items as $item) {
-            if (isset($item['status'])) {
-                if (!in_array($item['status'], BookItem::STATUS_ARRAY)) {
-                    throw new Exception('Invalid Book status', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
-                }
-            }
-
             if (isset($item['format'])) {
                 if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
                     throw new Exception('Invalid Book Format', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
@@ -267,7 +261,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 } else {
                     $item = new BookItem();
                     $item->book_item_id = isset($bookItem['book_item_id']) ? $bookItem['book_item_id'] : $this->generateItemId();
-                    $item->status = BookItem::STATUS_AVAILABLE;
+                    $item->is_available = BookItem::STATUS_AVAILABLE;
                 }
 
                 $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
