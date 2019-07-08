@@ -71,6 +71,17 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
+     * @param int $id
+     * @param array $columns
+     *
+     * @return IssuedBook
+     */
+    public function find($id, $columns = ['*'])
+    {
+        return $this->findOrFail($id, ['bookItem.book']);
+    }
+
+    /**
      * @param array $input
      *
      * @return IssuedBook
@@ -135,13 +146,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
             $issueBook->update($input);
 
-            return $issueBook;
+            return $this->find($issueBook->id);
         }
 
         $issueBook = IssuedBook::create($input);
         $bookItem->update(['is_available' => false]);
 
-        return $issueBook;
+        return $this->find($issueBook->id);
     }
 
     /**
@@ -170,7 +181,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         ]);
         $bookItem->update(['is_available' => false]);
 
-        return $issueBook;
+        return $this->find($issueBook->id);
     }
 
     /**
