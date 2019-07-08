@@ -166,9 +166,13 @@ class UserRepository extends BaseRepository
                 $user->roles()->sync($input['roles']);
             }
 
-            if (!empty($input['address'])) {
-                $address = new Address($input['address']);
-                $user->address()->save($address);
+            $addressArr = $this->makeAddressArray($input);
+            if(!empty($addressArr)) {
+                $isUpdate = $user->address()->update($addressArr);
+                if(!$isUpdate){
+                    $address = new Address($addressArr);
+                    $user->address()->save($address);
+                }
             }
 
             DB::commit();
