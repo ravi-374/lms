@@ -46,5 +46,4 @@ class SeriesBook extends Model
         'sequence' => 'required'
     ];
 
-    
 }

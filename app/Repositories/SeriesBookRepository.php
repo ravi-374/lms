@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
 
-
 /**
  * Class SeriesBookRepository
  * @package App\Repositories

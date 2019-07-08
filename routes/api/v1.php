@@ -40,9 +40,11 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     // book series routes
     Route::resource('book-series', 'BookSeriesAPIController');
+    Route::post('book-series/{id}', 'BookSeriesAPIController@update');
 
     // series book routes
     Route::resource('series-books', 'SeriesBookAPIController');
+    Route::post('series-books/{id}', 'SeriesBookAPIController@update');
 
     // Membership Plans
     Route::resource('membership-plans', 'MembershipPlanAPIController');
