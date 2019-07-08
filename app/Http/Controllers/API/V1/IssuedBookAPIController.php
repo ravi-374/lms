@@ -61,9 +61,9 @@ class IssuedBookAPIController extends AppBaseController
         $input = $request->all();
         $input['book_item_id'] = $bookItemId;
 
-        $this->issuedBookRepository->issueBook($input);
+        $result = $this->issuedBookRepository->issueBook($input);
 
-        return $this->sendSuccess('Book issued successfully.');
+        return $this->sendResponse($result, 'Book issued successfully.');
     }
 
     /**
@@ -80,9 +80,9 @@ class IssuedBookAPIController extends AppBaseController
         $input['status'] = IssuedBook::STATUS_RESERVED;
         $input['book_item_id'] = $bookItemId;
 
-        $this->issuedBookRepository->reserveBook($input);
+        $result = $this->issuedBookRepository->reserveBook($input);
 
-        return $this->sendSuccess('Book reserved successfully.');
+        return $this->sendResponse($result, 'Book reserved successfully.');
     }
 
     /**

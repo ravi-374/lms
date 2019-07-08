@@ -105,7 +105,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     /**
      * @param array $input
      *
-     * @return bool
+     * @return IssuedBook
      */
     public function issueBook($input)
     {
@@ -138,16 +138,16 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             return true;
         }
 
-        IssuedBook::create($input);
+        $issueBook = IssuedBook::create($input);
         $bookItem->update(['is_available' => false]);
 
-        return true;
+        return $issueBook;
     }
 
     /**
      * @param array $input
      *
-     * @return bool
+     * @return IssuedBook
      */
     public function reserveBook($input)
     {
@@ -162,7 +162,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             throw new UnprocessableEntityHttpException('Book is not available.');
         }
 
-        IssuedBook::create([
+        $issueBook = IssuedBook::create([
             'book_item_id'    => $input['book_item_id'],
             'member_id'       => $input['member_id'],
             'note'            => !empty($input['note']) ? $input['note'] : null,
@@ -170,7 +170,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         ]);
         $bookItem->update(['is_available' => false]);
 
-        return true;
+        return $issueBook;
     }
 
     /**
