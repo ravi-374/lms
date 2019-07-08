@@ -16,7 +16,7 @@ class AccountRepository
      */
     public function sendConfirmEmail($username, $email, $activateCode)
     {
-        $data['link'] = URL::to('/api/v1/member/activate?token='.$activateCode);
+        $data['link'] = URL::to('/api/v1/members/activate?token='.$activateCode);
         $data['username'] = $username;
 
         try {
