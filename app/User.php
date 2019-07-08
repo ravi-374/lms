@@ -94,7 +94,7 @@ class User extends Authenticatable implements JWTSubject
         'last_name'  => 'required',
         'email'      => 'required|unique:users,email',
         'password'   => 'required',
-        'role_id'    => 'required',
+        'role_id'    => 'required|integer',
     ];
 
     public static $messages = [
@@ -105,6 +105,7 @@ class User extends Authenticatable implements JWTSubject
         'first_name' => 'required',
         'last_name'  => 'required',
         'email'      => 'required|unique:users,email',
+        'role_id'    => 'nullable|integer',
     ];
 
     /**
