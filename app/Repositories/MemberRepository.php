@@ -146,7 +146,16 @@ class MemberRepository extends BaseRepository
                 $member->update(['image' => $imagePath]);
             }
 
-            $member->address()->update($input['address']);
+            /** @var UserRepository $userRepo */
+            $userRepo = app(UserRepository::class);
+            $addressArr = $userRepo->makeAddressArray($input);
+            if(!empty($addressArr)) {
+                $isUpdate = $member->address()->update($addressArr);
+                if(!$isUpdate){
+                    $address = new Address($addressArr);
+                    $member->address()->save($address);
+                }
+            }
             DB::commit();
 
             return Member::with('address')->findOrFail($member->id);
