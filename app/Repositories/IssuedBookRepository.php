@@ -135,7 +135,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
             $issueBook->update($input);
 
-            return true;
+            return $issueBook;
         }
 
         $issueBook = IssuedBook::create($input);
