@@ -51,4 +51,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     // get books history for admin users
     Route::get('books-history', 'IssuedBookAPIController@index');
 });
-Route::post('member/login', 'MemberAPIController@login');
+
+Route::post('members/login', 'MemberAuthController@login');
+Route::post('members/register', 'MemberAuthController@register');
+Route::get('members/activate', 'MemberAuthController@verifyAccount');

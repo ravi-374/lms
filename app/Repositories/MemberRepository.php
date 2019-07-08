@@ -74,6 +74,10 @@ class MemberRepository extends BaseRepository
     {
         MembershipPlan::findOrFail($input['membership_plan_id']);
 
+        return $this->storeMember($input);
+    }
+
+    public function storeMember($input){
         try {
             DB::beginTransaction();
             $input['password'] = Hash::make($input['password']);
@@ -91,7 +95,6 @@ class MemberRepository extends BaseRepository
                 $address = new Address($addressArr);
                 $member->address()->save($address);
             }
-
             DB::commit();
 
             return Member::with('address')->findOrFail($member->id);

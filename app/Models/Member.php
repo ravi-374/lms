@@ -38,6 +38,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read \App\Models\Address $address
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMemberId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMembershipPlanId($value)
+ * @property string|null $activation_code
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereActivationCode($value)
  */
 class Member extends Model implements JWTSubject
 {
@@ -58,6 +60,7 @@ class Member extends Model implements JWTSubject
         'phone',
         'is_active',
         'image',
+        'activation_code',
     ];
 
     /**
