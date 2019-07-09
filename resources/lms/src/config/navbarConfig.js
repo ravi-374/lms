@@ -36,5 +36,10 @@ export default {
             url: '/app/tags',
             icon: 'icon-globe'
         },
+        {
+            name: 'Membership Plans',
+            url: '/app/membership-plans',
+            icon: 'icon-briefcase'
+        },
     ],
 };
