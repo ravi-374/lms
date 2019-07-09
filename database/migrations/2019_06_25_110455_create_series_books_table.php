@@ -15,18 +15,18 @@ class CreateSeriesBooksTable extends Migration
     {
         Schema::create('series_books', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('series_id')->unsigned();
-            $table->integer('book_id')->unsigned();
+            $table->unsignedInteger('series_id');
+            $table->unsignedInteger('book_id');
             $table->integer('sequence');
             $table->timestamps();
 
             $table->foreign('series_id')->references('id')->on('book_series')
-                ->onDelete('set null')
-                ->onUpdate('set null');
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
 
             $table->foreign('book_id')->references('id')->on('books')
-                ->onDelete('set null')
-                ->onUpdate('set null');
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
         });
     }
 
