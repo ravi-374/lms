@@ -87,7 +87,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
             }
             DB::commit();
 
-            return $role;
+            return $this->find($role->id);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -115,7 +115,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
             $role->perms()->sync($permissions);
             DB::commit();
 
-            return $role;
+            return $this->find($id);
         } catch (\Exception $e) {
             DB::rollBack();
 

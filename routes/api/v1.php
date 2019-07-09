@@ -18,6 +18,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     // Roles
     Route::resource('roles', 'RoleAPIController');
+    Route::post('roles/{role}', 'RoleAPIController@update');
 
     // Permissions
     Route::resource('permissions', 'PermissionAPIController');
