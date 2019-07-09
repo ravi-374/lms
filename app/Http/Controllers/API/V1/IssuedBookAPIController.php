@@ -99,9 +99,9 @@ class IssuedBookAPIController extends AppBaseController
         $input = $request->all();
         $input['book_item_id'] = $bookItemId;
 
-        $this->issuedBookRepository->returnBook($input);
+        $result = $this->issuedBookRepository->returnBook($input);
 
-        return $this->sendSuccess('Book return successfully.');
+        return $this->sendResponse($result, 'Book return successfully.');
     }
 
     /**
