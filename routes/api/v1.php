@@ -48,6 +48,19 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     // Membership Plans
     Route::resource('membership-plans', 'MembershipPlanAPIController');
-    
+
+    // Issue Book
+    Route::post('books/{book_item_id}/issue-book', 'IssuedBookAPIController@issueBook');
+    // Reserve Book
+    Route::post('books/{book_item_id}/reserve-book', 'IssuedBookAPIController@reserveBook');
+    // Return Book
+    Route::post('books/{book_item_id}/return-book', 'IssuedBookAPIController@returnBook');
+    // books history
+    Route::get('members/{member_id}/books-history', 'IssuedBookAPIController@memberBooksHistory');
+    // get books history for admin users
+    Route::get('books-history', 'IssuedBookAPIController@index');
 });
 
+Route::post('members/login', 'MemberAuthController@login');
+Route::post('members/register', 'MemberAuthController@register');
+Route::get('members/activate', 'MemberAuthController@verifyAccount');

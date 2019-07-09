@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\ImageTrait;
 use Illuminate\Database\Eloquent\Model as Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * App\Models\Member
@@ -19,20 +20,10 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property string $password
  * @property int $membership_plan_id
  * @property string|null $phone
- * @property string|null $address1
- * @property string|null $address2
- * @property string|null $city
- * @property string|null $state
- * @property string|null $country
- * @property string|null $zip
  * @property string|null $image
  * @property bool $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereAddress1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereAddress2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereFirstName($value)
@@ -40,14 +31,17 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMembershipPlanId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereZip($value)
+ * @property string $member_id
+ * @property-read \App\Models\Address $address
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMemberId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMembershipPlanId($value)
+ * @property string|null $activation_code
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereActivationCode($value)
  */
-class Member extends Model
+class Member extends Model implements JWTSubject
 {
     use ImageTrait;
     const SUSPENDED = 0;
@@ -64,14 +58,18 @@ class Member extends Model
         'password',
         'membership_plan_id',
         'phone',
-        'address1',
-        'address2',
-        'city',
-        'state',
-        'country',
-        'zip',
         'is_active',
         'image',
+        'activation_code',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
     ];
 
     /**
@@ -88,12 +86,6 @@ class Member extends Model
         'password'           => 'string',
         'membership_plan_id' => 'integer',
         'phone'              => 'string',
-        'address1'           => 'string',
-        'address2'           => 'string',
-        'city'               => 'string',
-        'state'              => 'string',
-        'country'            => 'string',
-        'zip'                => 'string',
         'is_active'          => 'boolean',
     ];
 
@@ -110,10 +102,39 @@ class Member extends Model
         'membership_plan_id' => 'required',
     ];
 
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     public function deleteMemberImage()
     {
         if (!empty($this->image)) {
             self::deleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image); // thumbnail
         }
+    }
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'owner');
     }
 }

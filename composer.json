@@ -17,8 +17,9 @@
         "appointer/swaggervel": "dev-master",
         "laravelcollective/html": "^5.8.0",
         "tymon/jwt-auth": "dev-develop",
-        "zizaco/entrust": "dev-master",
-        "intervention/image": "2.4"
+        "zizaco/entrust": "5.2.x-dev",
+        "intervention/image": "2.4",
+        "infyomlabs/laravel-generator": "5.8.x-dev"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

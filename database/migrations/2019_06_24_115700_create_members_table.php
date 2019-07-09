@@ -22,14 +22,9 @@ class CreateMembersTable extends Migration
             $table->string('password');
             $table->unsignedInteger('membership_plan_id');
             $table->string('phone')->nullable();
-            $table->string('address1')->nullable();
-            $table->string('address2')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('country')->nullable();
-            $table->string('zip')->nullable();
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->string('activation_code')->nullable();
             $table->timestamps();
         });
     }

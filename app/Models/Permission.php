@@ -21,6 +21,7 @@ use Zizaco\Entrust\EntrustPermission;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  */
 class Permission extends EntrustPermission
 {
