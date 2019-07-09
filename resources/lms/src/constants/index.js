@@ -49,6 +49,25 @@ export const publisherActionType = {
     DELETE_PUBLISHER: 'DELETE_PUBLISHER',
 };
 
+export const membershipPlanActionType = {
+    FETCH_MEMBERSHIP_PLANS: 'FETCH_MEMBERSHIP_PLANS',
+    FETCH_MEMBERSHIP_PLAN: 'FETCH_MEMBERSHIP_PLAN',
+    ADD_MEMBERSHIP_PLAN: 'ADD_MEMBERSHIP_PLAN',
+    EDIT_MEMBERSHIP_PLAN: 'EDIT_PUBLISHER',
+    DELETE_MEMBERSHIP_PLAN: 'DELETE_PUBLISHER',
+};
+
+export const membershipPlanFrequency = {
+    YEARLY: 1,
+    MONTHLY: 2,
+};
+
+export const membershipPlanFrequencyOptions = [
+    {id: 0, name: 'Select Frequency'},
+    {id: 1, name: 'Yearly'},
+    {id: 2, name: 'Monthly'}
+];
+
 export const bookActionType = {
     FETCH_BOOKS: 'FETCH_BOOKS',
     FETCH_BOOK: 'FETCH_BOOK',

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Dashboard = React.lazy(() => import('./components/dashboard/Dashboard'));
 const Users = React.lazy(() => import('./components/users/Users'));
-const Books = React.lazy(() =>  import(/* webpackChunkName: "books" */'./components/books/Books'));
+const Books = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/Books'));
 const CreateBook = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/CreateBook'));
 const EditBook = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/EditBook'));
 const Genres = React.lazy(() => import('./components/genres/Genres'));
@@ -10,6 +10,7 @@ const Tags = React.lazy(() => import('./components/tags/Tags'));
 const Authors = React.lazy(() => import('./components/authors/Authors'));
 const Publishers = React.lazy(() => import('./components/publishers/Publishers'));
 const BookLanguages = React.lazy(() => import('./components/book-languages/BookLanguages'));
+const MembershipPlans = React.lazy(() => import('./components/membership-plans/MembershipPlans'));
 
 export default [
     {
@@ -71,5 +72,12 @@ export default [
         exact: true,
         name: 'BookLanguages',
         component: BookLanguages
+    },
+    {
+        path: '/app/membership-plans',
+        exact: true,
+        name: 'MembershipPlans',
+        component: MembershipPlans
+
     }
 ];
