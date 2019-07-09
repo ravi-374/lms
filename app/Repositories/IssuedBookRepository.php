@@ -187,7 +187,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     /**
      * @param array $input
      *
-     * @return bool
+     * @return IssuedBook
      */
     public function returnBook($input)
     {
@@ -210,6 +210,6 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         ]);
         $bookItem->update(['is_available' => true]);
 
-        return true;
+        return $this->find($issueBook->id);
     }
 }
