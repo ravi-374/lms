@@ -79,7 +79,7 @@ class UserRepository extends BaseRepository
      * @param array $input
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws Exception
      * @return User|\Illuminate\Database\Eloquent\Model
      */
     public function store($input)
@@ -89,12 +89,13 @@ class UserRepository extends BaseRepository
 
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
-            if (!empty($input['roles'])) {
-                $user->roles()->sync($input['roles']);
+            if (!empty($input['role_id'])) {
+                $user->roles()->sync($input['role_id']);
             }
 
-            if (!empty($input['address'])) {
-                $address = new Address($input['address']);
+            $addressArr = $this->makeAddressArray($input);
+            if(!empty($addressArr)) {
+                $address = new Address($addressArr);
                 $user->address()->save($address);
             }
 
@@ -104,7 +105,7 @@ class UserRepository extends BaseRepository
             }
             DB::commit();
 
-            return $user;
+            return User::with('address')->findOrFail($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -113,11 +114,30 @@ class UserRepository extends BaseRepository
     }
 
     /**
+     * @param $input
+     * @return array
+     */
+    public function makeAddressArray($input){
+        if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) || !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])) {
+            $addressArr = [
+                'address_1' => !empty($input['address_1']) ? $input['address_1'] : '',
+                'address_2' => !empty($input['address_2']) ? $input['address_2'] : '',
+                'city' => !empty($input['city']) ? $input['city'] : '',
+                'state' => !empty($input['state']) ? $input['state'] : '',
+                'zip' => !empty($input['zip']) ? $input['zip'] : '',
+                'country' => !empty($input['country']) ? $input['country'] : '',
+            ];
+            return $addressArr;
+        }
+        return [];
+    }
+
+    /**
      * @param array $input
      * @param int $id
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws Exception
      * @return User
      */
     public function update($input, $id)
@@ -142,18 +162,22 @@ class UserRepository extends BaseRepository
                 $user->update(['image' => $imagePath]);
             }
 
-            if (!empty($input['roles'])) {
-                $user->roles()->sync($input['roles']);
+            if (!empty($input['role_id'])) {
+                $user->roles()->sync($input['role_id']);
             }
 
-            if (!empty($input['address'])) {
-                $address = new Address($input['address']);
-                $user->address()->save($address);
+            $addressArr = $this->makeAddressArray($input);
+            if(!empty($addressArr)) {
+                $isUpdate = $user->address()->update($addressArr);
+                if(!$isUpdate){
+                    $address = new Address($addressArr);
+                    $user->address()->save($address);
+                }
             }
 
             DB::commit();
 
-            return $user;
+            return User::with('address')->findOrFail($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 

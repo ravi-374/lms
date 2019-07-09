@@ -6,15 +6,42 @@ use Illuminate\Database\Eloquent\Model as Model;
 
 /**
  * Class Address
+ *
  * @package App\Models
  * @version June 20, 2019, 7:32 am UTC
- *
  * @property string address_1
  * @property string address_2
  * @property string city
  * @property string state
  * @property integer zip
  * @property string country
+ * @property int $id
+ * @property int $owner_id
+ * @property string $owner_type
+ * @property string $address_1
+ * @property string $address_2
+ * @property string $city
+ * @property string $state
+ * @property int $zip
+ * @property string $country
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Address[] $owner
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereAddress1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereAddress2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereOwnerType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereZip($value)
+ * @mixin \Eloquent
  */
 class Address extends Model
 {

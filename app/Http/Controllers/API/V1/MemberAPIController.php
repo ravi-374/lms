@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMemberAPIRequest;
 use App\Http\Requests\API\UpdateMemberAPIRequest;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class MemberController
@@ -21,9 +21,13 @@ class MemberAPIController extends AppBaseController
     /** @var  MemberRepository */
     private $memberRepository;
 
-    public function __construct(MemberRepository $memberRepo)
+    /** @var  UserRepository */
+    private $userRepository;
+
+    public function __construct(MemberRepository $memberRepo,UserRepository $userRepository)
     {
         $this->memberRepository = $memberRepo;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -31,7 +35,7 @@ class MemberAPIController extends AppBaseController
      * GET|HEAD /members
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -50,7 +54,7 @@ class MemberAPIController extends AppBaseController
      * @param CreateMemberAPIRequest $request
      *
      * @throws ApiOperationFailedException
-     *
+     * @throws \Exception
      * @return JsonResponse
      */
     public function store(CreateMemberAPIRequest $request)
@@ -68,7 +72,7 @@ class MemberAPIController extends AppBaseController
      *
      * @param int $id
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -85,9 +89,9 @@ class MemberAPIController extends AppBaseController
      * @param int $id
      * @param UpdateMemberAPIRequest $request
      *
-     * @return JsonResponse
      * @throws ApiOperationFailedException
-     *
+     * @throws \Exception
+     * @return JsonResponse
      */
     public function update($id, UpdateMemberAPIRequest $request)
     {
@@ -106,8 +110,7 @@ class MemberAPIController extends AppBaseController
      * @param int $id
      *
      * @throws \Exception
-     *
-     * @return Response
+     * @return JsonResponse
      */
     public function destroy($id)
     {

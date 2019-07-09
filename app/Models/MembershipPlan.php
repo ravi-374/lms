@@ -31,6 +31,8 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereMembershipPlanId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $membership_plan_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereMembershipPlanId($value)
  */
 class MembershipPlan extends Model
 {
