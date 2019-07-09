@@ -105,7 +105,7 @@ class UserRepository extends BaseRepository
             }
             DB::commit();
 
-            return User::with('address')->findOrFail($user->id);
+            return $this->find($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -177,7 +177,7 @@ class UserRepository extends BaseRepository
 
             DB::commit();
 
-            return User::with('address')->findOrFail($user->id);
+            return $this->find($user->id);
         } catch (Exception $e) {
             DB::rollBack();
 
