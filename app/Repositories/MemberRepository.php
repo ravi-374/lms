@@ -73,10 +73,14 @@ class MemberRepository extends BaseRepository
     public function store($input)
     {
         MembershipPlan::findOrFail($input['membership_plan_id']);
-
         return $this->storeMember($input);
     }
 
+    /**
+     * @param $input
+     * @return Member|Member[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @throws ApiOperationFailedException
+     */
     public function storeMember($input){
         try {
             DB::beginTransaction();
@@ -128,7 +132,6 @@ class MemberRepository extends BaseRepository
     public function update($input, $id)
     {
         MembershipPlan::findOrFail($input['membership_plan_id']);
-
         try {
             if (!empty($input['password'])) {
                 $input['password'] = Hash::make($input['password']);
