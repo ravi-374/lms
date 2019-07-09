@@ -89,8 +89,8 @@ class UserRepository extends BaseRepository
 
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
-            if (!empty($input['roles'])) {
-                $user->roles()->sync($input['roles']);
+            if (!empty($input['role_id'])) {
+                $user->roles()->sync($input['role_id']);
             }
 
             $addressArr = $this->makeAddressArray($input);
@@ -162,8 +162,8 @@ class UserRepository extends BaseRepository
                 $user->update(['image' => $imagePath]);
             }
 
-            if (!empty($input['roles'])) {
-                $user->roles()->sync($input['roles']);
+            if (!empty($input['role_id'])) {
+                $user->roles()->sync($input['role_id']);
             }
 
             $addressArr = $this->makeAddressArray($input);
