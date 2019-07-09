@@ -33,12 +33,21 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('users', 'UserAPIController');
     Route::post('users/{user_id}', 'UserAPIController@update');
 
-    // Membership Plans
-    Route::resource('membership-plans', 'MembershipPlanAPIController');
 
     // Members
     Route::resource('members', 'MemberAPIController');
     Route::post('members/{member_id}', 'MemberAPIController@update');
+
+    // book series routes
+    Route::resource('book-series', 'BookSeriesAPIController');
+    Route::post('book-series/{id}', 'BookSeriesAPIController@update');
+
+    // series book routes
+    Route::resource('series-books', 'SeriesBookAPIController');
+    Route::post('series-books/{id}', 'SeriesBookAPIController@update');
+
+    // Membership Plans
+    Route::resource('membership-plans', 'MembershipPlanAPIController');
 
     // Issue Book
     Route::post('books/{book_item_id}/issue-book', 'IssuedBookAPIController@issueBook');
