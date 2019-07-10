@@ -101,3 +101,15 @@ export const errorMessage = {
     TOKEN_NOT_PROVIDED: 'Token not provided',
     TOKEN_EXPIRED: 'Token has expired'
 };
+
+export const roleActionType = {
+    FETCH_ROLES: 'FETCH_ROLES',
+    FETCH_ROLE: 'FETCH_ROLE',
+    ADD_ROLE: 'ADD_ROLE',
+    EDIT_ROLE: 'EDIT_ROLE',
+    DELETE_ROLE: 'DELETE_ROLE'
+};
+
+export const permissionActionType = {
+    FETCH_PERMISSIONS: 'FETCH_PERMISSIONS',
+};
