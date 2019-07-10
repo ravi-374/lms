@@ -12,19 +12,23 @@ import publisherReducer from './publisherReducer';
 import membershipPlanReducer from './membershipPlanReducer';
 import bookLanguageReducer from './bookLanguageReducer';
 import bookReducer from './bookReducer';
+import roleReducer from './roleReducer';
+import permissionReducer from './permissionReducer';
 
 export default combineReducers({
-    genres:genreReducer,
-    tags:tagReducer,
-    authors:authorReducer,
-    publishers:publisherReducer,
-    membershipPlans:membershipPlanReducer,
-    bookLanguages:bookLanguageReducer,
-    books:bookReducer,
+    genres: genreReducer,
+    tags: tagReducer,
+    authors: authorReducer,
+    publishers: publisherReducer,
+    membershipPlans: membershipPlanReducer,
+    bookLanguages: bookLanguageReducer,
+    books: bookReducer,
+    roles: roleReducer,
     isLoading: progressReduce,
     form: formReducer,
     searchText: searchReducer,
     sortObject: sortReducer,
-    toasts:toastReducer,
-    isToggle:modalReducer,
+    toasts: toastReducer,
+    isToggle: modalReducer,
+    permissions: permissionReducer
 });
