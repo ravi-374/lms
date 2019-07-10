@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Response as HttpResponse;
 use Response;
 
 class Handler extends ExceptionHandler
@@ -52,24 +53,25 @@ class Handler extends ExceptionHandler
     {
         $code = $exception->getCode();
         $message = $exception->getMessage();
+
         if ($code < 100 || $code >= 600) {
-            $code = \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR;
+            $code = HttpResponse::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+            $code = HttpResponse::HTTP_NOT_FOUND;
+        } else {
+            if ($exception instanceof ValidationException) {
+                $code = HttpResponse::HTTP_UNPROCESSABLE_ENTITY;
+                $validator = $exception->validator;
+                $message = $validator->errors()->first();
+            }
         }
 
         if ($request->expectsJson() or $request->isXmlHttpRequest()) {
-            if ($exception instanceof ValidationException) {
-                $validator = $exception->validator;
-                $message = $validator->errors()->first();
-                $code = \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY;
-            }
-
-            if ($exception instanceof ModelNotFoundException) {
-                $code = \Illuminate\Http\Response::HTTP_NOT_FOUND;
-            }
-
             return Response::json([
                 'success' => false,
-                'message' => empty($message) ? 'Unknown error' : $message,
+                'message' => $message,
             ], $code);
         }
 

@@ -26,6 +26,7 @@ class UpdateBookAPIRequest extends APIRequest
     {
         $rules = Book::$rules;
         $rules['name'] = 'required|unique:books,name,'.$this->route('id');
+        $rules['isbn'] = 'required|unique:books,isbn,'.$this->route('id');
 
         return $rules;
     }
