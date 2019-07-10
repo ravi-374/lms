@@ -9,6 +9,7 @@ use App\Models\MembershipPlan;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Support\Collection;
 
 /**
  * Class MemberRepository
@@ -51,7 +52,7 @@ class MemberRepository extends BaseRepository
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Member[]|
+     * @return Member[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {

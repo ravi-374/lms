@@ -6,6 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
+use App\Models\Member;
 use App\Repositories\BookItemRepository;
 use App\Repositories\BookRepository;
 use App\Repositories\IssuedBookRepository;
@@ -48,18 +49,17 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $bookItemId
+     * @param BookItem $bookItem
      * @param Request $request
      *
-     * @return JsonResponse
      * @throws Exception
      *
+     *@return JsonResponse
      */
-    public function issueBook($bookItemId, Request $request)
+    public function issueBook(BookItem $bookItem, Request $request)
     {
-        $this->bookItemRepo->findOrFail($bookItemId);
         $input = $request->all();
-        $input['book_item_id'] = $bookItemId;
+        $input['book_item_id'] = $bookItem->id;
 
         $result = $this->issuedBookRepository->issueBook($input);
 
@@ -67,18 +67,16 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $bookItemId
+     * @param BookItem $bookItem
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function reserveBook($bookItemId, Request $request)
+    public function reserveBook(BookItem $bookItem, Request $request)
     {
-        $this->bookItemRepo->findOrFail($bookItemId);
-
         $input = $request->all();
         $input['status'] = IssuedBook::STATUS_RESERVED;
-        $input['book_item_id'] = $bookItemId;
+        $input['book_item_id'] = $bookItem->id;
 
         $result = $this->issuedBookRepository->reserveBook($input);
 
@@ -86,18 +84,17 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $bookItemId
+     * @param BookItem $bookItem
      * @param Request $request
      *
-     * @return JsonResponse
-     *@throws Exception
+     * @throws Exception
      *
+     *@return JsonResponse
      */
-    public function returnBook($bookItemId, Request $request)
+    public function returnBook(BookItem $bookItem, Request $request)
     {
-        $this->bookItemRepo->findOrFail($bookItemId);
         $input = $request->all();
-        $input['book_item_id'] = $bookItemId;
+        $input['book_item_id'] = $bookItem->id;
 
         $result = $this->issuedBookRepository->returnBook($input);
 
@@ -153,15 +150,15 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $memberId
+     * @param Member $member
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function memberBooksHistory($memberId, Request $request)
+    public function memberBooksHistory(Member $member, Request $request)
     {
         $search = $request->all();
-        $search['member_id'] = $memberId;
+        $search['member_id'] = $member->id;
 
         $records = $this->issuedBookRepository->all(
             $search,

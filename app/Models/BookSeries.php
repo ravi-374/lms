@@ -5,11 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Model;
 
 /**
- * Class BookSeries
- * @package App\Models
- * @version June 25, 2019, 10:36 am UTC
+ * App\Models\BookSeries
  *
- * @property string title
+ * @property int $id
+ * @property string $title
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class BookSeries extends Model
 {

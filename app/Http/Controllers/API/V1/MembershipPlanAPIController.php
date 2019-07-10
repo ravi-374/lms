@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMembershipPlanAPIRequest;
 use App\Http\Requests\API\UpdateMembershipPlanAPIRequest;
 use App\Models\MembershipPlan;
@@ -9,8 +10,6 @@ use App\Repositories\MembershipPlanRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class MembershipPlanController
@@ -31,14 +30,15 @@ class MembershipPlanAPIController extends AppBaseController
      * GET|HEAD /membershipPlans
      *
      * @param Request $request
-     * @return Response
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
         $membershipPlans = $this->membershipPlanRepository->all(
             $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
+            $request->get('skip', null),
+            $request->get('limit', null)
         );
 
         return $this->sendResponse($membershipPlans->toArray(), 'Membership Plans retrieved successfully.');
@@ -50,7 +50,9 @@ class MembershipPlanAPIController extends AppBaseController
      *
      * @param CreateMembershipPlanAPIRequest $request
      *
-     * @return Response
+     * @throws Exception
+     *
+     * @return JsonResponse
      */
     public function store(CreateMembershipPlanAPIRequest $request)
     {
@@ -66,15 +68,12 @@ class MembershipPlanAPIController extends AppBaseController
      * Display the specified MembershipPlan.
      * GET|HEAD /membershipPlans/{id}
      *
-     * @param int $id
+     * @param MembershipPlan $membershipPlan
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(MembershipPlan $membershipPlan)
     {
-        /** @var MembershipPlan $membershipPlan */
-        $membershipPlan = $this->membershipPlanRepository->find($id);
-
         return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan retrieved successfully.');
     }
 
@@ -82,16 +81,16 @@ class MembershipPlanAPIController extends AppBaseController
      * Update the specified MembershipPlan in storage.
      * PUT/PATCH /membershipPlans/{id}
      *
-     * @param int $id
+     * @param MembershipPlan $membershipPlan
      * @param UpdateMembershipPlanAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdateMembershipPlanAPIRequest $request)
+    public function update(MembershipPlan $membershipPlan, UpdateMembershipPlanAPIRequest $request)
     {
         $input = $request->all();
 
-        $membershipPlan = $this->membershipPlanRepository->update($input, $id);
+        $membershipPlan = $this->membershipPlanRepository->update($input, $membershipPlan->id);
 
         return $this->sendResponse($membershipPlan->toArray(), 'MembershipPlan updated successfully.');
     }
@@ -100,19 +99,16 @@ class MembershipPlanAPIController extends AppBaseController
      * Remove the specified MembershipPlan from storage.
      * DELETE /membershipPlans/{id}
      *
-     * @param int $id
+     * @param MembershipPlan $membershipPlan
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(MembershipPlan $membershipPlan)
     {
-        /** @var MembershipPlan $membershipPlan */
-        $membershipPlan = $this->membershipPlanRepository->findOrFail($id);
-
         $membershipPlan->delete();
 
-        return $this->sendResponse($id, 'Membership Plan deleted successfully.');
+        return $this->sendResponse($membershipPlan, 'Membership Plan deleted successfully.');
     }
 }

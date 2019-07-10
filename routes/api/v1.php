@@ -37,27 +37,27 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     // Members
     Route::resource('members', 'MemberAPIController');
-    Route::post('members/{member_id}', 'MemberAPIController@update');
+    Route::post('members/{member}', 'MemberAPIController@update');
 
     // book series routes
     Route::resource('book-series', 'BookSeriesAPIController');
-    Route::post('book-series/{id}', 'BookSeriesAPIController@update');
+    Route::post('book-series/{book_series}', 'BookSeriesAPIController@update');
 
     // series book routes
     Route::resource('series-books', 'SeriesBookAPIController');
-    Route::post('series-books/{id}', 'SeriesBookAPIController@update');
+    Route::post('series-books/{series_book}', 'SeriesBookAPIController@update');
 
     // Membership Plans
     Route::resource('membership-plans', 'MembershipPlanAPIController');
 
     // Issue Book
-    Route::post('books/{book_item_id}/issue-book', 'IssuedBookAPIController@issueBook');
+    Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook');
     // Reserve Book
-    Route::post('books/{book_item_id}/reserve-book', 'IssuedBookAPIController@reserveBook');
+    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
     // Return Book
-    Route::post('books/{book_item_id}/return-book', 'IssuedBookAPIController@returnBook');
+    Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook');
     // books history
-    Route::get('members/{member_id}/books-history', 'IssuedBookAPIController@memberBooksHistory');
+    Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
     // get books history for admin users
     Route::get('books-history', 'IssuedBookAPIController@index');
 });
