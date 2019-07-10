@@ -5,8 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Response as HttpResponse;
 use Response;
 
 class Handler extends ExceptionHandler

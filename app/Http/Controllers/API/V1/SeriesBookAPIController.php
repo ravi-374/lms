@@ -7,6 +7,8 @@ use App\Http\Requests\API\CreateSeriesBookAPIRequest;
 use App\Http\Requests\API\UpdateSeriesBookAPIRequest;
 use App\Models\SeriesBook;
 use App\Repositories\SeriesBookRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -29,7 +31,8 @@ class SeriesBookAPIController extends AppBaseController
      * GET|HEAD /series-books
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -48,7 +51,7 @@ class SeriesBookAPIController extends AppBaseController
      *
      * @param CreateSeriesBookAPIRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(CreateSeriesBookAPIRequest $request)
     {
@@ -63,15 +66,12 @@ class SeriesBookAPIController extends AppBaseController
      * Display the specified SeriesBook.
      * GET|HEAD /series-book/{id}
      *
-     * @param int $id
+     * @param SeriesBook $seriesBook
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(SeriesBook $seriesBook)
     {
-        /** @var SeriesBook $seriesBook */
-        $seriesBook = $this->seriesBookRepository->findOrFail($id);
-
         return $this->sendResponse($seriesBook->toArray(), 'Series Book retrieved successfully.');
     }
 
@@ -79,18 +79,16 @@ class SeriesBookAPIController extends AppBaseController
      * Update the specified SeriesBook in storage.
      * PUT/PATCH /series-book/{id}
      *
-     * @param int $id
+     * @param SeriesBook $seriesBook
      * @param UpdateSeriesBookAPIRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update($id, UpdateseriesBookAPIRequest $request)
+    public function update(SeriesBook $seriesBook, UpdateseriesBookAPIRequest $request)
     {
         $input = $request->all();
 
-        $this->seriesBookRepository->findOrFail($id);
-
-        $seriesBook = $this->seriesBookRepository->update($input, $id);
+        $seriesBook = $this->seriesBookRepository->update($input, $seriesBook->id);
 
         return $this->sendResponse($seriesBook->toArray(), 'Series Book updated successfully.');
     }
@@ -99,18 +97,16 @@ class SeriesBookAPIController extends AppBaseController
      * Remove the specified seriesBook from storage.
      * DELETE series-book/{id}
      *
-     * @param int $id
+     * @param SeriesBook $seriesBook
      *
-     * @throws \Exception
-     * @return \Illuminate\Http\JsonResponse
+     * @throws Exception
+     *
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(SeriesBook $seriesBook)
     {
-        /** @var SeriesBook $seriesBook */
-        $seriesBook = $this->seriesBookRepository->findOrFail($id);
-
         $seriesBook->delete();
 
-        return $this->sendResponse($id, 'Series Book deleted successfully.');
+        return $this->sendResponse($seriesBook, 'Series Book deleted successfully.');
     }
 }

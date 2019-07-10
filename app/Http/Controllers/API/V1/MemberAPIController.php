@@ -9,6 +9,7 @@ use App\Http\Requests\API\UpdateMemberAPIRequest;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
 use App\Repositories\UserRepository;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class MemberAPIController extends AppBaseController
     /** @var  UserRepository */
     private $userRepository;
 
-    public function __construct(MemberRepository $memberRepo,UserRepository $userRepository)
+    public function __construct(MemberRepository $memberRepo, UserRepository $userRepository)
     {
         $this->memberRepository = $memberRepo;
         $this->userRepository = $userRepository;
@@ -35,6 +36,7 @@ class MemberAPIController extends AppBaseController
      * GET|HEAD /members
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function index(Request $request)
@@ -54,7 +56,8 @@ class MemberAPIController extends AppBaseController
      * @param CreateMemberAPIRequest $request
      *
      * @throws ApiOperationFailedException
-     * @throws \Exception
+     * @throws Exception
+     *
      * @return JsonResponse
      */
     public function store(CreateMemberAPIRequest $request)
@@ -70,14 +73,13 @@ class MemberAPIController extends AppBaseController
      * Display the specified Member.
      * GET|HEAD /members/{id}
      *
-     * @param int $id
+     * @param Member $member
      *
      * @return JsonResponse
      */
-    public function show($id)
+    public function show(Member $member)
     {
-        /** @var Member $member */
-        $member = $this->memberRepository->find($id);
+        $member->address;
 
         return $this->sendResponse($member->toArray(), 'Member retrieved successfully.');
     }
@@ -86,19 +88,19 @@ class MemberAPIController extends AppBaseController
      * Update the specified Member in storage.
      * PUT/PATCH /members/{id}
      *
-     * @param int $id
+     * @param Member $member
      * @param UpdateMemberAPIRequest $request
      *
      * @throws ApiOperationFailedException
-     * @throws \Exception
+     * @throws Exception
+     *
      * @return JsonResponse
      */
-    public function update($id, UpdateMemberAPIRequest $request)
+    public function update(Member $member, UpdateMemberAPIRequest $request)
     {
         $input = $request->all();
-        $this->memberRepository->findOrFail($id);
 
-        $member = $this->memberRepository->update($input, $id);
+        $member = $this->memberRepository->update($input, $member->id);
 
         return $this->sendResponse($member->toArray(), 'Member updated successfully.');
     }
@@ -107,19 +109,17 @@ class MemberAPIController extends AppBaseController
      * Remove the specified Member from storage.
      * DELETE /members/{id}
      *
-     * @param int $id
+     * @param Member $member
      *
-     * @throws \Exception
+     * @throws Exception
+     *
      * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Member $member)
     {
-        /** @var Member $member */
-        $member = $this->memberRepository->findOrFail($id);
-
         $member->deleteMemberImage();
         $member->delete();
 
-        return $this->sendResponse($id, 'Member deleted successfully.');
+        return $this->sendResponse($member, 'Member deleted successfully.');
     }
 }

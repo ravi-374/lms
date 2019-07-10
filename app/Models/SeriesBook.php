@@ -5,13 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Model;
 
 /**
- * Class SeriesBook
- * @package App\Models
- * @version June 25, 2019, 11:04 am UTC
+ * App\Models\SeriesBook
  *
- * @property integer series_id
- * @property integer book_id
- * @property integer sequence
+ * @property int $id
+ * @property int $series_id
+ * @property int $book_id
+ * @property int $sequence
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereBookId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereSequence($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereSeriesId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class SeriesBook extends Model
 {
