@@ -7,8 +7,9 @@ use App\Http\Requests\API\CreateGenreAPIRequest;
 use App\Http\Requests\API\UpdateGenreAPIRequest;
 use App\Models\Genre;
 use App\Repositories\GenreRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Response;
 
 /**
  * Class GenreAPIController
@@ -28,8 +29,8 @@ class GenreAPIController extends AppBaseController
      * Display a listing of the Genre.
      * GET|HEAD /genres
      *
-     * @param  Request  $request
-     * @return Response
+     * @param Request $request
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -46,9 +47,9 @@ class GenreAPIController extends AppBaseController
      * Store a newly created Genre in storage.
      * POST /genres
      *
-     * @param  CreateGenreAPIRequest  $request
+     * @param CreateGenreAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function store(CreateGenreAPIRequest $request)
     {
@@ -63,55 +64,47 @@ class GenreAPIController extends AppBaseController
      * Display the specified Genre.
      * GET|HEAD /genres/{id}
      *
-     * @param  int  $id
+     * @param Genre $genre
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Genre $genre)
     {
-        /** @var Genre $genre */
-        $genre = $this->genreRepository->findOrFail($id);
-
         return $this->sendResponse($genre->toArray(), 'Genre retrieved successfully.');
     }
 
     /**
      * Update the specified Genre in storage.
-     * PUT/PATCH /genres/{id}
+     * PUT/PATCH /genres/{genre}
      *
-     * @param  int  $id
-     * @param  UpdateGenreAPIRequest  $request
+     * @param Genre $genre
+     * @param UpdateGenreAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdateGenreAPIRequest $request)
+    public function update(Genre $genre, UpdateGenreAPIRequest $request)
     {
         $input = $request->all();
 
-        $this->genreRepository->findOrFail($id);
-
-        $genre = $this->genreRepository->update($input, $id);
+        $genre = $this->genreRepository->update($input, $genre->id);
 
         return $this->sendResponse($genre->toArray(), 'Genre updated successfully.');
     }
 
     /**
      * Remove the specified Genre from storage.
-     * DELETE /genres/{id}
+     * DELETE /genres/{genre}
      *
-     * @param  int  $id
+     * @param Genre $genre
      *
-     * @return Response
-     * @throws \Exception
+     * @throws Exception
      *
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Genre $genre)
     {
-        /** @var Genre $genre */
-        $genre = $this->genreRepository->findOrFail($id);
-
         $genre->delete();
 
-        return $this->sendResponse($id, 'Genre deleted successfully.');
+        return $this->sendResponse($genre, 'Genre deleted successfully.');
     }
 }

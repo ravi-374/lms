@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookLanguageAPIRequest;
 use App\Http\Requests\API\UpdateBookLanguageAPIRequest;
 use App\Models\BookLanguage;
 use App\Repositories\BookLanguageRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class BookLanguageAPIController
@@ -29,7 +30,8 @@ class BookLanguageAPIController extends AppBaseController
      * GET|HEAD /bookLanguages
      *
      * @param Request $request
-     * @return Response
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -48,7 +50,7 @@ class BookLanguageAPIController extends AppBaseController
      *
      * @param CreateBookLanguageAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function store(CreateBookLanguageAPIRequest $request)
     {
@@ -63,15 +65,12 @@ class BookLanguageAPIController extends AppBaseController
      * Display the specified BookLanguage.
      * GET|HEAD /bookLanguages/{id}
      *
-     * @param int $id
+     * @param BookLanguage $bookLanguage
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(BookLanguage $bookLanguage)
     {
-        /** @var BookLanguage $bookLanguage */
-        $bookLanguage = $this->bookLanguageRepository->findOrFail($id);
-
         return $this->sendResponse($bookLanguage->toArray(), 'Book Language retrieved successfully.');
     }
 
@@ -79,18 +78,16 @@ class BookLanguageAPIController extends AppBaseController
      * Update the specified BookLanguage in storage.
      * PUT/PATCH /bookLanguages/{id}
      *
-     * @param int $id
+     * @param BookLanguage $bookLanguage
      * @param UpdateBookLanguageAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdateBookLanguageAPIRequest $request)
+    public function update(BookLanguage $bookLanguage, UpdateBookLanguageAPIRequest $request)
     {
         $input = $request->all();
 
-        $this->bookLanguageRepository->findOrFail($id);
-
-        $bookLanguage = $this->bookLanguageRepository->update($input, $id);
+        $bookLanguage = $this->bookLanguageRepository->update($input, $bookLanguage->id);
 
         return $this->sendResponse($bookLanguage->toArray(), 'Book Language updated successfully.');
     }
@@ -99,19 +96,16 @@ class BookLanguageAPIController extends AppBaseController
      * Remove the specified BookLanguage from storage.
      * DELETE /bookLanguages/{id}
      *
-     * @param int $id
+     * @param BookLanguage $bookLanguage
      *
-     * @throws \Exception
+     * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(BookLanguage $bookLanguage)
     {
-        /** @var BookLanguage $bookLanguage */
-        $bookLanguage = $this->bookLanguageRepository->findOrFail($id);
-
         $bookLanguage->delete();
 
-        return $this->sendResponse($id, 'Book Language deleted successfully.');
+        return $this->sendResponse($bookLanguage, 'Book Language deleted successfully.');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 return [
 
     /*
@@ -64,6 +65,8 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+
+    'model' => App\User::class,
 
     'providers' => [
         'users' => [
