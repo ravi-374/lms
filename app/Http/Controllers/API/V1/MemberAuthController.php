@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Member;
-use App\Models\User;
 use App\Repositories\AccountRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\UserRepository;
@@ -12,7 +12,9 @@ use Crypt;
 use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use JWTAuth;
 use Session;
 use Validator;
@@ -25,14 +27,14 @@ class MemberAuthController extends AppBaseController
     /** @var  UserRepository */
     private $userRepository;
 
-    public function __construct(MemberRepository $memberRepo,UserRepository $userRepository)
+    public function __construct(MemberRepository $memberRepo, UserRepository $userRepository)
     {
         $this->memberRepository = $memberRepo;
         $this->userRepository = $userRepository;
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -62,21 +64,24 @@ class MemberAuthController extends AppBaseController
 
     /**
      * @param Request $request
+     *
+     * @throws ApiOperationFailedException
+     *
      * @return JsonResponse
-     * @throws \App\Exceptions\ApiOperationFailedException
      */
     public function register(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            'email' => 'required|unique:members|max:255',
+            'email'      => 'required|unique:members|max:255',
             'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'password' => 'required|string|max:255|min:8|confirmed',
+            'last_name'  => 'required|string|max:255',
+            'password'   => 'required|string|max:255|min:8|confirmed',
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->first();
+
             return $this->sendError($errors, 422);
         }
 
@@ -86,9 +91,9 @@ class MemberAuthController extends AppBaseController
         $token = JWTAuth::fromUser($member);
 
         $accountRepository = new AccountRepository();
-        $name = $member->first_name . ' ' . $member->last_name;
+        $name = $member->first_name.' '.$member->last_name;
 
-        $key = $member->id . '|' . $member->activation_code;
+        $key = $member->id.'|'.$member->activation_code;
         $code = Crypt::encrypt($key);
         $accountRepository->sendConfirmEmail(
             $name,
@@ -100,13 +105,14 @@ class MemberAuthController extends AppBaseController
     }
 
     /**
-     * @return JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return JsonResponse|RedirectResponse|Redirector
      */
     public function verifyAccount()
     {
         $token = \Request::get('token', null);
         if (empty($token)) {
             Session::flash('error', 'token not found.');
+
             //Todo: add proper redirect once all set up eg. return redirect('login');
             return $this->sendError('token not found.');
         }
@@ -115,6 +121,7 @@ class MemberAuthController extends AppBaseController
             list($memberId, $activationCode) = $result = explode('|', $token);
             if (count($result) < 2) {
                 Session::flash('error', 'token not found.');
+
                 //Todo: add proper redirect once all set up eg. return redirect('login');
                 return $this->sendError('token not found.');
             }
@@ -122,6 +129,7 @@ class MemberAuthController extends AppBaseController
             $member = Member::whereActivationCode($activationCode)->findOrFail($memberId);
             if (empty($member)) {
                 Session::flash('msg', 'This account activation token is invalid.');
+
                 //Todo: add proper redirect once all set up eg. return redirect('login');
                 return $this->sendError('This account activation token is invalid.');
             }
@@ -131,6 +139,7 @@ class MemberAuthController extends AppBaseController
             return $this->sendSuccess('Your account has been activated successfully.');
         } catch (Exception $e) {
             Session::flash('msg', 'Something went wrong.');
+
             //Todo: add proper redirect once all set up eg. return redirect('login');
             return $this->sendError('Something went wrong.');
         }
