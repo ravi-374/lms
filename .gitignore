@@ -1,8 +1,11 @@
 /node_modules
 /public/hot
 /public/storage
+/public/images/vendor
+/public/members
 /public/images
 /public/js
+/public/css
 /public/fonts
 /public/css
 /public/images
