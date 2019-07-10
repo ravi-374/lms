@@ -25,10 +25,10 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     // Book API Routes
     Route::resource('books', 'BookAPIController');
-    Route::post('books/{id}', 'BookAPIController@update');
+    Route::post('books/{book}', 'BookAPIController@update');
 
     // add book items
-    Route::post('books/{book_id}/items', 'BookAPIController@addItems');
+    Route::post('books/{book}/items', 'BookAPIController@addItems');
 
     // Users
     Route::resource('users', 'UserAPIController');

@@ -24,7 +24,7 @@ class UpdateBookLanguageAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['language_name'] = 'required|unique:book_languages,language_name,'.$this->route('book_language');
+        $rules['language_name'] = 'required|unique:book_languages,language_name,'.$this->route('book_language')->id;
 
         return $rules;
     }

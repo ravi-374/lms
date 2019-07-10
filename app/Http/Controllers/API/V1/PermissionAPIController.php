@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePermissionAPIRequest;
 use App\Http\Requests\API\UpdatePermissionAPIRequest;
 use App\Models\Permission;
 use App\Repositories\PermissionRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class PermissionAPIController
@@ -29,7 +30,8 @@ class PermissionAPIController extends AppBaseController
      * GET|HEAD /permissions
      *
      * @param Request $request
-     * @return Response
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -48,7 +50,7 @@ class PermissionAPIController extends AppBaseController
      *
      * @param CreatePermissionAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function store(CreatePermissionAPIRequest $request)
     {
@@ -63,15 +65,12 @@ class PermissionAPIController extends AppBaseController
      * Display the specified Permission.
      * GET|HEAD /permissions/{id}
      *
-     * @param int $id
+     * @param Permission $permission
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Permission $permission)
     {
-        /** @var Permission $permission */
-        $permission = $this->permissionRepository->findOrFail($id);
-
         return $this->sendResponse($permission->toArray(), 'Permission retrieved successfully.');
     }
 
@@ -79,18 +78,16 @@ class PermissionAPIController extends AppBaseController
      * Update the specified Permission in storage.
      * PUT/PATCH /permissions/{id}
      *
-     * @param int $id
+     * @param Permission $permission
      * @param UpdatePermissionAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdatePermissionAPIRequest $request)
+    public function update(Permission $permission, UpdatePermissionAPIRequest $request)
     {
         $input = $request->all();
 
-        $this->permissionRepository->findOrFail($id);
-
-        $permission = $this->permissionRepository->update($input, $id);
+        $permission = $this->permissionRepository->update($input, $permission->id);
 
         return $this->sendResponse($permission->toArray(), 'Permission updated successfully.');
     }
@@ -99,19 +96,16 @@ class PermissionAPIController extends AppBaseController
      * Remove the specified Permission from storage.
      * DELETE /permissions/{id}
      *
-     * @param int $id
+     * @param Permission $permission
      *
-     * @throws \Exception
+     * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Permission $permission)
     {
-        /** @var Permission $permission */
-        $permission = $this->permissionRepository->findOrFail($id);
-
         $permission->delete();
 
-        return $this->sendResponse($id, 'Permission deleted successfully.');
+        return $this->sendResponse($permission, 'Permission deleted successfully.');
     }
 }

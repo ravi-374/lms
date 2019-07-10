@@ -24,7 +24,7 @@ class UpdatePublisherAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['name'] = 'required|unique:publishers,name,'.$this->route('publisher');
+        $rules['name'] = 'required|unique:publishers,name,'.$this->route('publisher')->id;
 
         return $rules;
     }

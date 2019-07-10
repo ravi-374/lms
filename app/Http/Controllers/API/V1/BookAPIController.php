@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookAPIRequest;
 use App\Http\Requests\API\UpdateBookAPIRequest;
 use App\Models\Book;
 use App\Repositories\BookRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Response;
 
 /**
  * Class BookController
@@ -28,8 +30,9 @@ class BookAPIController extends AppBaseController
      * Display a listing of the Book.
      * GET|HEAD /books
      *
-     * @param  Request  $request
-     * @return Response
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -46,9 +49,11 @@ class BookAPIController extends AppBaseController
      * Store a newly created Book in storage.
      * POST /books
      *
-     * @param  CreateBookAPIRequest  $request
-     * @return Response
-     * @throws \App\Exceptions\ApiOperationFailedException
+     * @param CreateBookAPIRequest $request
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return JsonResponse
      */
     public function store(CreateBookAPIRequest $request)
     {
@@ -63,14 +68,15 @@ class BookAPIController extends AppBaseController
      * Display the specified Book.
      * GET|HEAD /books/{id}
      *
-     * @param  int  $id
+     * @param Book $book
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        /** @var Book $book */
-        $book = $this->bookRepository->findOrFail($id, ['tags', 'genres', 'items']);
+        $book->tags;
+        $book->genres;
+        $book->items;
 
         return $this->sendResponse($book->toArray(), 'Book retrieved successfully.');
     }
@@ -79,19 +85,17 @@ class BookAPIController extends AppBaseController
      * Update the specified Book in storage.
      * PUT/PATCH /books/{id}
      *
-     * @param  int  $id
-     * @param  UpdateBookAPIRequest  $request
+     * @param Book $book
+     * @param UpdateBookAPIRequest $request
      *
-     * @return Response
-     * @throws \App\Exceptions\ApiOperationFailedException
+     * @throws ApiOperationFailedException
+     * @return JsonResponse
      */
-    public function update($id, UpdateBookAPIRequest $request)
+    public function update(Book $book, UpdateBookAPIRequest $request)
     {
         $input = $request->all();
 
-        $this->bookRepository->findOrFail($id);
-
-        $book = $this->bookRepository->update($input, $id);
+        $book = $this->bookRepository->update($input, $book->id);
 
         return $this->sendResponse($book->toArray(), 'Book updated successfully.');
     }
@@ -100,33 +104,31 @@ class BookAPIController extends AppBaseController
      * Remove the specified Book from storage.
      * DELETE /books/{id}
      *
-     * @param  int  $id
+     * @param Book $book
      *
-     * @return Response
-     * @throws \Exception
+     * @throws Exception
      *
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        /** @var Book $book */
-        $book = $this->bookRepository->findOrFail($id);
-
         $book->delete();
 
-        return $this->sendResponse($id, 'Book deleted successfully.');
+        return $this->sendResponse($book, 'Book deleted successfully.');
     }
 
     /**
-     * @param  int  $bookId
-     * @param  Request  $request
+     * @param Book $book
+     * @param Request $request
+     *
+     * @throws Exception
+     *
      * @return Book
-     * @throws \Exception
      */
-    public function addItems($bookId, Request $request)
+    public function addItems(Book $book, Request $request)
     {
         $request->validate(['items' => 'required']);
 
-        $book = $this->bookRepository->findOrFail($bookId);
         $items = $request->get('items');
 
         return $this->bookRepository->addBookItems($book, $items);
