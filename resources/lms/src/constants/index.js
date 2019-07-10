@@ -129,3 +129,11 @@ export const roleActionType = {
 export const permissionActionType = {
     FETCH_PERMISSIONS: 'FETCH_PERMISSIONS',
 };
+
+export const bookSeriesActionType = {
+    FETCH_BOOKS_SERIES: 'FETCH_BOOKS_SERIES',
+    FETCH_BOOK_SERIES: 'FETCH_BOOK_SERIES',
+    ADD_BOOK_SERIES: 'ADD_BOOK_SERIES',
+    EDIT_BOOK_SERIES: 'EDIT_BOOK_SERIES',
+    DELETE_BOOK_SERIES: 'DELETE_BOOK_SERIES'
+};

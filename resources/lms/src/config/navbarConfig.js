@@ -47,6 +47,11 @@ export default {
             icon: 'icon-briefcase'
         },
         {
+            name: 'Books Series',
+            url: '/app/books-series',
+            icon: 'icon-grid'
+        },
+        {
             name: 'Member',
             url: '/app/members',
             icon: 'icon-user'

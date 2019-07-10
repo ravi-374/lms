@@ -15,6 +15,7 @@ import bookLanguageReducer from './bookLanguageReducer';
 import bookReducer from './bookReducer';
 import roleReducer from './roleReducer';
 import permissionReducer from './permissionReducer';
+import bookSeriesReducer from './bookSeriesReducer';
 import memberReducer from './memberReducer';
 
 export default combineReducers({
@@ -27,6 +28,7 @@ export default combineReducers({
     books: bookReducer,
     users:userReducer,
     roles: roleReducer,
+    booksSeries: bookSeriesReducer,
     members: memberReducer,
     isLoading: progressReduce,
     form: formReducer,
