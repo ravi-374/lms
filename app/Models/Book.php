@@ -101,6 +101,7 @@ class Book extends Model
      */
     public static $rules = [
         'name' => 'required|unique:books,name',
+        'isbn' => 'required|unique:books,isbn',
         'author_id' => 'required',
         'price' => 'required',
         'genres' => 'required',
