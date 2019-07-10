@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateRoleAPIRequest;
 use App\Http\Requests\API\UpdateRoleAPIRequest;
 use App\Models\Role;
 use App\Repositories\RoleRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Response;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
@@ -30,7 +32,8 @@ class RoleAPIController extends AppBaseController
      * GET|HEAD /roles
      *
      * @param Request $request
-     * @return Response
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -48,9 +51,9 @@ class RoleAPIController extends AppBaseController
      * POST /roles
      * @param CreateRoleAPIRequest $request
      *
-     * @throws \App\Exceptions\ApiOperationFailedException
+     * @throws ApiOperationFailedException
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(CreateRoleAPIRequest $request)
     {
@@ -65,14 +68,13 @@ class RoleAPIController extends AppBaseController
      * Display the specified Role.
      * GET|HEAD /roles/{id}
      *
-     * @param int $id
+     * @param Role $role
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        /** @var Role $role */
-        $role = $this->roleRepository->find($id);
+        $role->perms;
 
         return $this->sendResponse($role->toArray(), 'Role retrieved successfully.');
     }
@@ -80,21 +82,19 @@ class RoleAPIController extends AppBaseController
     /**
      * Update the specified Role in storage.
      * PUT/PATCH /roles/{id}
-     * @param int $id
+     * @param Role $role
      * @param UpdateRoleAPIRequest $request
      *
-     * @throws \App\Exceptions\ApiOperationFailedException
+     * @throws ApiOperationFailedException
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update($id, UpdateRoleAPIRequest $request)
+    public function update(Role $role, UpdateRoleAPIRequest $request)
     {
         $input = $request->all();
 
-        /** @var Role $role */
-        $this->roleRepository->findOrFail($id);
 
-        $role = $this->roleRepository->update($input, $id);
+        $role = $this->roleRepository->update($input, $role->id);
 
         return $this->sendResponse($role->toArray(), 'Role updated successfully.');
     }
@@ -103,17 +103,15 @@ class RoleAPIController extends AppBaseController
      * Remove the specified Role from storage.
      * DELETE /roles/{id}
      *
-     * @param int $id
+     * @param Role $role
      *
-     * @throws \Exception
+     * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        /** @var Role $role */
-        $role = Role::withCount('perms')->findOrFail($id);
-        if ($role->perms_count > 0) {
+        if (!$role->perms->isEmpty()) {
             return $this->sendError(
                 'Role is attached with one or more permissions.',
                 HttpResponse::HTTP_UNPROCESSABLE_ENTITY
@@ -122,6 +120,6 @@ class RoleAPIController extends AppBaseController
 
         $role->delete();
 
-        return $this->sendResponse($id, 'Role deleted successfully.');
+        return $this->sendSuccess('Role deleted successfully.');
     }
 }

@@ -51,5 +51,10 @@ export default {
             url: '/app/books-series',
             icon: 'icon-grid'
         },
+        {
+            name: 'Member',
+            url: '/app/members',
+            icon: 'icon-user'
+        }
     ],
 };

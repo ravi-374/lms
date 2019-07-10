@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePublisherAPIRequest;
 use App\Http\Requests\API\UpdatePublisherAPIRequest;
 use App\Models\Publisher;
 use App\Repositories\PublisherRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class PublisherAPIController
@@ -29,7 +30,7 @@ class PublisherAPIController extends AppBaseController
      * GET|HEAD /publishers
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -48,7 +49,7 @@ class PublisherAPIController extends AppBaseController
      *
      * @param CreatePublisherAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function store(CreatePublisherAPIRequest $request)
     {
@@ -63,15 +64,12 @@ class PublisherAPIController extends AppBaseController
      * Display the specified Publisher.
      * GET|HEAD /publishers/{id}
      *
-     * @param int $id
+     * @param Publisher $publisher
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Publisher $publisher)
     {
-        /** @var Publisher $publisher */
-        $publisher = $this->publisherRepository->findOrFail($id);
-
         return $this->sendResponse($publisher->toArray(), 'Publisher retrieved successfully.');
     }
 
@@ -79,18 +77,16 @@ class PublisherAPIController extends AppBaseController
      * Update the specified Publisher in storage.
      * PUT/PATCH /publishers/{id}
      *
-     * @param int $id
+     * @param Publisher $publisher
      * @param UpdatePublisherAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdatePublisherAPIRequest $request)
+    public function update(Publisher $publisher, UpdatePublisherAPIRequest $request)
     {
         $input = $request->all();
 
-        $this->publisherRepository->findOrFail($id);
-
-        $publisher = $this->publisherRepository->update($input, $id);
+        $publisher = $this->publisherRepository->update($input, $publisher->id);
 
         return $this->sendResponse($publisher->toArray(), 'Publisher updated successfully.');
     }
@@ -99,19 +95,16 @@ class PublisherAPIController extends AppBaseController
      * Remove the specified Publisher from storage.
      * DELETE /publishers/{id}
      *
-     * @param int $id
+     * @param Publisher $publisher
      *
-     * @throws \Exception
+     * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Publisher $publisher)
     {
-        /** @var Publisher $publisher */
-        $publisher = $this->publisherRepository->findOrFail($id);
-
         $publisher->delete();
 
-        return $this->sendResponse($id, 'Publisher deleted successfully.');
+        return $this->sendResponse($publisher, 'Publisher deleted successfully.');
     }
 }
