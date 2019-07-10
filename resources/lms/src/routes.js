@@ -11,6 +11,7 @@ const Authors = React.lazy(() => import('./components/authors/Authors'));
 const Publishers = React.lazy(() => import('./components/publishers/Publishers'));
 const BookLanguages = React.lazy(() => import('./components/book-languages/BookLanguages'));
 const MembershipPlans = React.lazy(() => import('./components/membership-plans/MembershipPlans'));
+const Roles = React.lazy(() => import('./components/roles/Roles'));
 const BooksSeries = React.lazy(() => import('./components/books-series/BooksSeries'));
 
 export default [
@@ -80,6 +81,12 @@ export default [
         name: 'MembershipPlans',
         component: MembershipPlans
 
+    },
+    {
+        path: '/app/roles',
+        exact: true,
+        name: 'Roles',
+        component: Roles
     },
     {
         path: '/app/books-series',

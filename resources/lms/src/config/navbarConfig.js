@@ -34,7 +34,12 @@ export default {
         {
             name: 'Tags',
             url: '/app/tags',
-            icon: 'icon-globe'
+            icon: 'icon-tag'
+        },
+        {
+            name: 'Roles',
+            url: '/app/roles',
+            icon: 'icon-grid'
         },
         {
             name: 'Membership Plans',
