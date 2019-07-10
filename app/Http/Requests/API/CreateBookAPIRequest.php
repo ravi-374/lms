@@ -24,8 +24,6 @@ class CreateBookAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Book::$rules;
-        $rules['isbn'] = 'required|unique:books,isbn';
-        return $rules;
+        return Book::$rules;
     }
 }
