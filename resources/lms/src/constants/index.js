@@ -102,6 +102,13 @@ export const errorMessage = {
     TOKEN_EXPIRED: 'Token has expired'
 };
 
+export const memberActionType = {
+    FETCH_MEMBERS: 'FETCH_MEMBERS',
+    FETCH_MEMBER: 'FETCH_MEMBER',
+    ADD_MEMBER: 'ADD_MEMBER',
+    EDIT_MEMBER: 'EDIT_MEMBER',
+    DELETE_MEMBER: 'DELETE_MEMBER'
+};
 export const roleActionType = {
     FETCH_ROLES: 'FETCH_ROLES',
     FETCH_ROLE: 'FETCH_ROLE',

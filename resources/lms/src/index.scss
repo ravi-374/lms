@@ -98,6 +98,12 @@ input[type="checkbox"] {
     display: none;
 }
 
+.input-group-text {
+    i  {
+        width: 14px;
+    }
+}
+
 .invalid-feedback {
     display: inline-block !important;
 }
@@ -107,7 +113,7 @@ input[type="checkbox"] {
     pointer-events: none;
     top: 11px;
     z-index: 1;
-    left: 53px;
+    left: 52px;
     margin: auto;
     opacity: 0.9;
     color: #636c72;
@@ -182,4 +188,3 @@ input[type="checkbox"] {
         display: none;
     }
 }
-
