@@ -1,10 +1,10 @@
 export default {
     items: [
-        // {
-        //     name: 'Users',
-        //     url: '/app/users',
-        //     icon: 'icon-user',
-        // },
+        {
+            name: 'Users',
+            url: '/app/users',
+            icon: 'icon-user',
+        },
         {
             name: 'Books',
             url: '/app/books',

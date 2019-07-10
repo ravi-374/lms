@@ -2,12 +2,16 @@
 /public/hot
 /public/storage
 /public/images/vendor
+/public/images
+/public/js
+/public/users
 /public/members
 /public/images
 /public/js
 /public/css
 /public/fonts
 /public/css
+/public/fonts
 /public/images
 /public/uploads
 /storage/*.key

@@ -9,6 +9,7 @@ import modalReducer from './modalReducer';
 import tagReducer from './tagReducer';
 import authorReducer from './authorReducer';
 import publisherReducer from './publisherReducer';
+import userReducer from './userReducer';
 import membershipPlanReducer from './membershipPlanReducer';
 import bookLanguageReducer from './bookLanguageReducer';
 import bookReducer from './bookReducer';
@@ -24,6 +25,7 @@ export default combineReducers({
     membershipPlans: membershipPlanReducer,
     bookLanguages: bookLanguageReducer,
     books: bookReducer,
+    users:userReducer,
     roles: roleReducer,
     members: memberReducer,
     isLoading: progressReduce,

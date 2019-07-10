@@ -1,0 +1,61 @@
+.user-modal {
+    max-width: 1000px;
+}
+
+.user-profile {
+    position: relative;
+}
+
+.image-holder {
+    position: relative;
+    width: 200px;
+    margin: auto;
+    border-radius: 10px;
+    background: gray;
+    cursor: pointer;
+}
+
+.image-preview {
+    border-radius: 10px;
+    object-fit: cover;
+    text-align: center;
+}
+
+.image-cover {
+    position: absolute;
+    text-align: center;
+    top: 26%;
+    left: 26%;
+    border-radius: 10px;
+    height: 100px;
+    width: 100px;
+    background-color: #ffffff;
+}
+
+.image-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: inherit;
+}
+
+.user-form {
+    display: flex;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .user-form {
+        flex-direction: column;
+    }
+    .user-logo {
+        flex: 100%;
+        max-width: 100%;
+    }
+    .primary-detail {
+        margin-top: 30px;
+        flex: 100%;
+        max-width: 100%;
+    }
+}

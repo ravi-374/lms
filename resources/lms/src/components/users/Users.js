@@ -1,7 +1,83 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {Row, Col, Button, Card, CardBody} from 'reactstrap';
+import {connect} from 'react-redux';
+import SearchField from '../../shared/components/SearchField';
+import searchFilter from '../../shared/searchFilter';
+import sortFilter from '../../shared/sortFilter';
+import {sortAction} from '../../store/actions/sortAction';
+import ProgressBar from '../../shared/progress-bar/ProgressBar';
+import UserModal from './UserModal';
+import User from './User';
+import './Users.scss';
+import Toasts from '../../shared/toast/Toasts';
+import EmptyComponent from '../../shared/empty-component/EmptyComponent';
+import {toggleModal} from '../../store/actions/modalAction';
+import {fetchUsers} from '../../store/actions/userAction';
+import {fetchRoles} from '../../store/actions/roleAction';
 
 const Users = (props) => {
-  return('Users')
+    const [isEditMode, setEditMode] = useState(false);
+    const [isDeleteMode, setDeleteMode] = useState(false);
+    const [user, setUser] = useState(null);
+    const {users, roles, sortAction, sortObject, toggleModal} = props;
+    useEffect(() => {
+        props.fetchUsers();
+        props.fetchRoles();
+    }, []);
+    const cardModalProps = {user, roles, isDeleteMode, isEditMode, toggleModal};
+    const onOpenModal = (isEdit, user = null, isDelete = false) => {
+        setEditMode(isEdit);
+        setDeleteMode(isDelete);
+        setUser(user);
+        toggleModal();
+    };
+    const cardBodyProps = {sortAction, sortObject, users,roles, onOpenModal};
+    if (props.isLoading) {
+        return <ProgressBar/>
+    }
+    return (
+        <Row className="animated fadeIn">
+            <Col sm={12} className="mb-2">
+                <h5 className="pull-left text-dark">Users</h5>
+                <div className="d-flex justify-content-end">
+                    <SearchField/>
+                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
+                        Add User
+                    </Button>
+                </div>
+            </Col>
+            <Col sm={12}>
+                <div className="sticky-table-container">
+                    <Card>
+                        <CardBody>
+                            {users.length > 0 ? <User {...cardBodyProps}/> :
+                                <EmptyComponent title="No users yet..."/>}
+                            <UserModal {...cardModalProps}/>
+                            <Toasts/>
+                        </CardBody>
+                    </Card>
+                </div>
+            </Col>
+        </Row>
+    );
 };
 
-export default Users;
+const prepareRoles = (roles) => {
+    let roleArray = [{id: 0, name: 'Select Role'}];
+    roles.forEach(role => roleArray.push({id: role.id, name: role.name}));
+    return roleArray;
+};
+
+const mapStateToProps = (state) => {
+    const {users, searchText, sortObject, isLoading} = state;
+    let usersArray = Object.values(users);
+    if (searchText) {
+        usersArray = searchFilter(usersArray, searchText);
+    }
+    if (sortObject) {
+        usersArray = sortFilter(usersArray, sortObject);
+    }
+    return {users: usersArray, roles: prepareRoles(Object.values(state.roles)), sortObject, isLoading};
+};
+
+export default connect(mapStateToProps, {fetchUsers, fetchRoles, sortAction, toggleModal})(Users);
