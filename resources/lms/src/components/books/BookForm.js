@@ -16,27 +16,28 @@ import {bookFormatOptions, bookStatusOptions} from '../../constants';
 
 const BookForm = (props) => {
     const [image, setImage] = useState(null);
-    const [genres] = useState(props.initialValues ? props.initialValues.selectedGenres : []);
-    const [tags] = useState(props.initialValues ? props.initialValues.selectedTags : []);
-    const [author] = useState(props.initialValues ? props.initialValues.author : []);
-    const [publisher] = useState(props.initialValues ? props.initialValues.publisher : []);
-    const [bookLanguage] = useState(props.initialValues ? props.initialValues.bookLanguage : []);
+    const {initialValues} = props;
+    const [genres] = useState(initialValues ? initialValues.selectedGenres : []);
+    const [tags] = useState(initialValues ? initialValues.selectedTags : []);
+    const [author] = useState(initialValues ? initialValues.author : []);
+    const [publisher] = useState(initialValues ? initialValues.publisher : []);
+    const [bookLanguage] = useState(initialValues ? initialValues.bookLanguage : []);
     const [file, setFile] = useState(null);
     const [isFeatured, setIsFeatured] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [items, setItems] = useState(props.initialValues ? props.initialValues.items : [{format: 1, is_available: 1}]);
+    const [items, setItems] = useState(initialValues ? initialValues.items : [{format: 1, is_available: 1}]);
     useEffect(() => {
-        if (props.initialValues && props.initialValues.is_featured) {
-            setIsFeatured(props.initialValues.is_featured ? props.initialValues.is_featured : false);
+        if (initialValues && initialValues.is_featured) {
+            setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
         }
-        if (props.initialValues) {
-            props.change('tags', props.initialValues.selectedTags);
-            props.change('genres', props.initialValues.selectedGenres);
-            props.change('author_id', props.initialValues.author_id);
-            props.change('publisher_id', props.initialValues.publisher_id);
-            props.change('language_id', props.initialValues.language_id);
-            if (props.initialValues.image) {
-                setImage('/images/books/' + props.initialValues.image);
+        if (initialValues) {
+            props.change('tags', initialValues.selectedTags);
+            props.change('genres', initialValues.selectedGenres);
+            props.change('author_id', initialValues.author_id);
+            props.change('publisher_id', initialValues.publisher_id);
+            props.change('language_id', initialValues.language_id);
+            if (initialValues.image) {
+                setImage('/images/books/' + initialValues.image);
             }
         } else {
             props.initialize({items: [{format: 1, is_available: 1}]});
@@ -49,9 +50,9 @@ const BookForm = (props) => {
         props.onSaveBook(formValues);
     };
     const onSaveBookItems = (formValues) => {
-        apiConfig.post(`books/${+props.initialValues.id}/items`, {items: formValues.items})
+        apiConfig.post(`books/${+initialValues.id}/items`, {items: formValues.items})
             .then((response) => {
-                props.change('items', response.data.items);
+                props.change('items', [...response.data.items]);
                 props.addToast({text: 'Item saved successfully.'})
             })
             .catch(({response}) => props.addToast({text: response.data.message, type: 'error'}));
@@ -102,7 +103,7 @@ const BookForm = (props) => {
         setIsFeatured(!isFeatured);
     };
 
-    if (isLoading && props.initialValues && genres.length === 0) {
+    if (isLoading && initialValues && genres.length === 0) {
         return null;
     }
     return (
@@ -221,7 +222,7 @@ const BookForm = (props) => {
                     </Col>
                 </Row>
             </Col>
-            {props.initialValues ?
+            {initialValues ?
                 <Fragment>
                     <Col xs={12}>
                         <SaveAction onSave={props.handleSubmit(onSaveBook)} {...props}/>
@@ -233,14 +234,14 @@ const BookForm = (props) => {
                 <FieldArray name="items" component={renderBookItems} change={props.change} setItems={setItems}
                             items={items}/>
             </Col>
-            {!props.initialValues ?
+            {!initialValues ?
                 <Fragment>
                     <Col xs={12}>
                         <SaveAction onSave={props.handleSubmit(onSaveBook)} {...props}/>
                     </Col>
                 </Fragment> : null
             }
-            {props.initialValues ?
+            {initialValues ?
                 <Fragment>
                     <Col xs={12}>
                         <SaveAction onSave={props.handleSubmit(onSaveBookItems)} {...props}/>
@@ -273,7 +274,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                     <th>Format</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th>Remove</th>
+                    <th className="text-center">Remove</th>
                 </tr>
                 </thead>
                 <tbody>

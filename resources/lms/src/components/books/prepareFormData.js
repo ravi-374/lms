@@ -1,7 +1,7 @@
 export default (formValues) => {
     const {is_featured, isbn, genres, author_id, publisher_id, name, language_id, price, tags, url, description, file, items} = formValues;
     const formData = new FormData();
-    formData.append('is_featured', is_featured);
+    formData.append('is_featured', is_featured ? '1' : '0');
     formData.append('isbn', isbn);
     genres.forEach(genre => formData.append('genres[]', genre.id.toString()));
     formData.append('author_id', author_id);

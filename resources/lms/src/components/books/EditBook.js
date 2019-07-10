@@ -65,7 +65,6 @@ const EditBook = (props) => {
         changAbleFields.publisher.length === 0 || changAbleFields.bookLanguage.length === 0) {
         return null;
     }
-
     const prepareFormOption = {
         onSaveBook,
         initialValues: changAbleFields,
