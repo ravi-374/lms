@@ -39,18 +39,6 @@ export default formValues => {
     }
     if (!formValues.items || !formValues.items.length) {
         errors.items = {_error: 'At least one item must be required.'}
-    } else {
-        // const itemsArrayErrors = [];
-        // formValues.items.forEach((item, Index) => {
-        //     const itemErrors = {};
-        //     if (!item || !item.format) {
-        //         itemErrors.format = 'Item format must be required.';
-        //         itemsArrayErrors[Index] = itemErrors
-        //     }
-        // });
-        // if (itemsArrayErrors.length) {
-        //     errors.items = itemsArrayErrors
-        // }
     }
     return errors;
 };

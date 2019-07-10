@@ -7,11 +7,10 @@ import DeleteAction from '../../shared/action-buttons/DeleteAction';
 const DeleteBook = (props) => {
     const content = `Are sure you wants to be delete a book ?`;
     const title = "Delete a book";
-    const onDeleteQuote = () => {
+    const onDeleteBook = () => {
         props.deleteBook(props.book.id);
     };
-
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteQuote} onCancel={props.toggleModal}/>}
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteBook} onCancel={props.toggleModal}/>}
                   content={content} title={title}/>;
 
 };

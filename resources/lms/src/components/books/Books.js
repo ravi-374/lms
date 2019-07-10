@@ -64,7 +64,6 @@ const Books = (props) => {
                 <h5 className="pull-left text-dark">Books</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
-                    {/*<DataFilter type="book" options={Bookstatus}/>*/}
                     <Link to="/app/books/new" size="md" className="btn btn-primary ml-2">Add Book</Link>
                 </div>
             </Col>
@@ -73,7 +72,7 @@ const Books = (props) => {
                     <Card>
                         <CardBody>
                             {books.length > 0 ? <Book {...cardBodyProps}/> :
-                                <EmptyComponent title="No Books yet..."/>}
+                                <EmptyComponent title="No books yet..."/>}
                             <DeleteBook {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
