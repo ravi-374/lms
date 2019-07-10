@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateTagAPIRequest;
 use App\Http\Requests\API\UpdateTagAPIRequest;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
-use Response;
 
 /**
  * Class TagAPIController
@@ -29,7 +30,8 @@ class TagAPIController extends AppBaseController
      * GET|HEAD /tags
      *
      * @param Request $request
-     * @return Response
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -48,7 +50,7 @@ class TagAPIController extends AppBaseController
      *
      * @param CreateTagAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function store(CreateTagAPIRequest $request)
     {
@@ -63,15 +65,12 @@ class TagAPIController extends AppBaseController
      * Display the specified Tag.
      * GET|HEAD /tags/{id}
      *
-     * @param int $id
+     * @param Tag $tag
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-        /** @var Tag $tag */
-        $tag = $this->tagRepository->findOrFail($id);
-
         return $this->sendResponse($tag->toArray(), 'Tag retrieved successfully.');
     }
 
@@ -79,18 +78,16 @@ class TagAPIController extends AppBaseController
      * Update the specified Tag in storage.
      * PUT/PATCH /tags/{id}
      *
-     * @param int $id
+     * @param Tag $tag
      * @param UpdateTagAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdateTagAPIRequest $request)
+    public function update(Tag $tag, UpdateTagAPIRequest $request)
     {
         $input = $request->all();
 
-        $this->tagRepository->findOrFail($id);
-
-        $tag = $this->tagRepository->update($input, $id);
+        $tag = $this->tagRepository->update($input, $tag->id);
 
         return $this->sendResponse($tag->toArray(), 'Tag updated successfully.');
     }
@@ -99,19 +96,16 @@ class TagAPIController extends AppBaseController
      * Remove the specified Tag from storage.
      * DELETE /tags/{id}
      *
-     * @param int $id
+     * @param Tag $tag
      *
-     * @throws \Exception
+     * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        /** @var Tag $tag */
-        $tag = $this->tagRepository->findOrFail($id);
-
         $tag->delete();
 
-        return $this->sendResponse($id, 'Tag deleted successfully.');
+        return $this->sendResponse($tag, 'Tag deleted successfully.');
     }
 }

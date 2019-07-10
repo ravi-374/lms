@@ -7,8 +7,9 @@ use App\Http\Requests\API\CreateAuthorAPIRequest;
 use App\Http\Requests\API\UpdateAuthorAPIRequest;
 use App\Models\Author;
 use App\Repositories\AuthorRepository;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Response;
 
 /**
  * Class AuthorAPIController
@@ -28,8 +29,8 @@ class AuthorAPIController extends AppBaseController
      * Display a listing of the Author.
      * GET|HEAD /authors
      *
-     * @param  Request  $request
-     * @return Response
+     * @param Request $request
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -46,9 +47,9 @@ class AuthorAPIController extends AppBaseController
      * Store a newly created Author in storage.
      * POST /authors
      *
-     * @param  CreateAuthorAPIRequest  $request
+     * @param CreateAuthorAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function store(CreateAuthorAPIRequest $request)
     {
@@ -63,15 +64,12 @@ class AuthorAPIController extends AppBaseController
      * Display the specified Author.
      * GET|HEAD /authors/{id}
      *
-     * @param  int  $id
+     * @param Author $author
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(Author $author)
     {
-        /** @var Author $author */
-        $author = $this->authorRepository->findOrFail($id);
-
         return $this->sendResponse($author->toArray(), 'Author retrieved successfully.');
     }
 
@@ -79,17 +77,16 @@ class AuthorAPIController extends AppBaseController
      * Update the specified Author in storage.
      * PUT/PATCH /authors/{id}
      *
-     * @param  int  $id
-     * @param  UpdateAuthorAPIRequest  $request
+     * @param Author $author
+     * @param UpdateAuthorAPIRequest $request
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function update($id, UpdateAuthorAPIRequest $request)
+    public function update(Author $author, UpdateAuthorAPIRequest $request)
     {
         $input = $request->all();
-        $this->authorRepository->findOrFail($id);
 
-        $author = $this->authorRepository->update($input, $id);
+        $author = $this->authorRepository->update($input, $author->id);
 
         return $this->sendResponse($author->toArray(), 'Author updated successfully.');
     }
@@ -98,19 +95,16 @@ class AuthorAPIController extends AppBaseController
      * Remove the specified Author from storage.
      * DELETE /authors/{id}
      *
-     * @param  int  $id
+     * @param Author $author
      *
-     * @return Response
-     * @throws \Exception
+     * @throws Exception
      *
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Author $author)
     {
-        /** @var Author $author */
-        $author = $this->authorRepository->findOrFail($id);
-
         $author->delete();
 
-        return $this->sendResponse($id, 'Author deleted successfully.');
+        return $this->sendResponse($author, 'Author deleted successfully.');
     }
 }

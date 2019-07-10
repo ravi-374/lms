@@ -24,7 +24,7 @@ class UpdatePermissionAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['name'] = 'required|unique:permissions,name,'.$this->route('permission');
+        $rules['name'] = 'required|unique:permissions,name,'.$this->route('permission')->id;
 
         return $rules;
     }
