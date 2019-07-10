@@ -12,6 +12,7 @@ import publisherReducer from './publisherReducer';
 import membershipPlanReducer from './membershipPlanReducer';
 import bookLanguageReducer from './bookLanguageReducer';
 import bookReducer from './bookReducer';
+import bookSeriesReducer from './bookSeriesReducer';
 
 export default combineReducers({
     genres:genreReducer,
@@ -21,6 +22,7 @@ export default combineReducers({
     membershipPlans:membershipPlanReducer,
     bookLanguages:bookLanguageReducer,
     books:bookReducer,
+    booksSeries:bookSeriesReducer,
     isLoading: progressReduce,
     form: formReducer,
     searchText: searchReducer,

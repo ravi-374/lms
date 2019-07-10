@@ -101,3 +101,11 @@ export const errorMessage = {
     TOKEN_NOT_PROVIDED: 'Token not provided',
     TOKEN_EXPIRED: 'Token has expired'
 };
+
+export const bookSeriesActionType = {
+    FETCH_BOOKS_SERIES: 'FETCH_BOOKS_SERIES',
+    FETCH_BOOK_SERIES: 'FETCH_BOOK_SERIES',
+    ADD_BOOK_SERIES: 'ADD_BOOK_SERIES',
+    EDIT_BOOK_SERIES: 'EDIT_BOOK_SERIES',
+    DELETE_BOOK_SERIES: 'DELETE_BOOK_SERIES',
+};

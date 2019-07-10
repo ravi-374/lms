@@ -41,5 +41,10 @@ export default {
             url: '/app/membership-plans',
             icon: 'icon-briefcase'
         },
+        {
+            name: 'Books Series',
+            url: '/app/books-series',
+            icon: 'icon-grid'
+        },
     ],
 };
