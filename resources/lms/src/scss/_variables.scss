@@ -15,3 +15,35 @@ $error: #ff5100 !default;
 $warning: #f6c223 !default;
 $body: #081f2c !default;
 $image-bg:#e2e2e28f !default;
+$blue: #00C6FF;
+$orange: #f5981c;
+$body-bg: #f8fafc;
+$font-family-sans-serif:
+    "Lato",
+    // Safari for OS X and iOS (San Francisco)
+    -apple-system,
+        // Chrome < 56 for OS X (San Francisco)
+    BlinkMacSystemFont,
+        // Windows
+    "Segoe UI",
+        // Android
+    "Roboto",
+        // Basic web fallback
+    "Helvetica Neue", Arial, sans-serif,
+        // Emoji fonts
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+$colors: ();
+
+$colors: map-merge(
+        ("blue" : $blue),
+        $colors
+);
+
+$theme-colors: ();
+$theme-colors: map-merge(
+        (
+            "primary": $blue,
+        ),
+        $theme-colors
+);
