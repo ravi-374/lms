@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateRolesSeeder::class);
         $this->call(CreatePermissionsSeeder::class);
         $this->call(PopulateRolesAndPermissionsSeeder::class);
+        $this->call(PopulateGenres::class);
     }
 }
