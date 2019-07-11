@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 
 /**
@@ -33,6 +34,9 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\BookItem $bookItem
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook reserve()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofMember($memberId)
  */
 class IssuedBook extends Model
 {
@@ -47,8 +51,8 @@ class IssuedBook extends Model
      * @var array
      */
     public static $rules = [
-        'member_id'       => 'required|numeric',
-        'status'          => 'required|numeric',
+        'member_id' => 'required|numeric',
+        'status'    => 'required|numeric',
     ];
     public $table = 'issued_books';
     public $fillable = [
@@ -68,7 +72,7 @@ class IssuedBook extends Model
      */
     protected $casts = [
         'id'           => 'integer',
-        'book_item_id'      => 'integer',
+        'book_item_id' => 'integer',
         'member_id'    => 'integer',
         'reserve_date' => 'datetime',
         'issued_on'    => 'datetime',
@@ -83,5 +87,26 @@ class IssuedBook extends Model
     public function bookItem()
     {
         return $this->belongsTo(BookItem::class, 'book_item_id');
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeReserve(Builder $query)
+    {
+        return $query->where('status', self::STATUS_RESERVED);
+    }
+
+    /**
+     * @param int $memberId
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeOfMember(Builder $query, $memberId)
+    {
+        return $query->where('member_id', $memberId);
     }
 }
