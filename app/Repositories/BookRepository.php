@@ -41,7 +41,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     protected $fieldSearchable = [
         'name',
         'published_on',
-        'author_id',
         'publisher_id',
         'price',
         'isbn',
@@ -94,6 +93,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $this->createOrUpdateBookItems($book, $input['items']);
             }
 
+            if (!empty($input['authors'])) {
+                $book->authors()->sync($input['authors']);
+            }
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
@@ -103,7 +106,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             throw new ApiOperationFailedException($e->getMessage());
         }
 
-        return Book::with(['tags', 'genres', 'items'])->findOrFail($book->id);
+        return Book::with(['tags', 'genres', 'items', 'authors'])->findOrFail($book->id);
     }
 
     /**
@@ -134,6 +137,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             }
             $book->update($input);
             $this->attachTagsAndGenres($book, $input);
+            if (!empty($input['authors'])) {
+                $book->authors()->sync($input['authors']);
+            }
 
             DB::commit();
         } catch (Exception $e) {
@@ -144,7 +150,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             throw new ApiOperationFailedException($e->getMessage());
         }
 
-        return Book::with(['tags', 'genres', 'items'])->findOrFail($book->id);
+        return Book::with(['tags', 'genres', 'items', 'authors'])->findOrFail($book->id);
     }
 
     /**

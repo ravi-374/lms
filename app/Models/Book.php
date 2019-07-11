@@ -15,7 +15,6 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @property string $description
  * @property string|Nullable $image
  * @property \Illuminate\Support\Carbon $published_on
- * @property int $author_id
  * @property int|null $publisher_id
  * @property float $price
  * @property string $isbn
@@ -30,7 +29,6 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereAuthorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereId($value)
@@ -46,6 +44,7 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUrl($value)
  * @mixin \Eloquent
  * @property-read string $image_path
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Author[] $authors
  */
 class Book extends Model
 {
@@ -65,7 +64,6 @@ class Book extends Model
         'description',
         'image',
         'published_on',
-        'author_id',
         'publisher_id',
         'price',
         'isbn',
@@ -80,18 +78,17 @@ class Book extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'name' => 'string',
-        'description' => 'string',
-        'image' => 'binary',
+        'id'           => 'integer',
+        'name'         => 'string',
+        'description'  => 'string',
+        'image'        => 'binary',
         'published_on' => 'datetime',
-        'author_id' => 'integer',
         'publisher_id' => 'integer',
-        'price' => 'float',
-        'isbn' => 'string',
-        'url' => 'string',
-        'language_id' => 'integer',
-        'is_featured' => 'boolean',
+        'price'        => 'float',
+        'isbn'         => 'string',
+        'url'          => 'string',
+        'language_id'  => 'integer',
+        'is_featured'  => 'boolean',
     ];
 
     /**
@@ -100,11 +97,10 @@ class Book extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:books,name',
-        'isbn' => 'required|unique:books,isbn',
-        'author_id' => 'required',
-        'price' => 'required',
-        'genres' => 'required',
+        'name'        => 'required|unique:books,name',
+        'isbn'        => 'required|unique:books,isbn',
+        'price'       => 'required',
+        'genres'      => 'required',
         'language_id' => 'required',
     ];
 
@@ -150,5 +146,13 @@ class Book extends Model
     public function items()
     {
         return $this->hasMany(BookItem::class, 'book_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class, 'book_authors', 'book_id', 'author_id');
     }
 }
