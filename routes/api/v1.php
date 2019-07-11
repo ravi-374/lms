@@ -60,6 +60,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
     // get books history for admin users
     Route::get('books-history', 'IssuedBookAPIController@index');
+    // Get available books
+    Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
 });
 
 Route::post('members/login', 'MemberAuthController@login');

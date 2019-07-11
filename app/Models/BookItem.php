@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Book $book
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssuedBook[] $issuedBooks
  */
 class BookItem extends Model
 {
@@ -60,5 +61,13 @@ class BookItem extends Model
     public function book()
     {
         return $this->belongsTo(Book::class, 'book_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function issuedBooks()
+    {
+        return $this->hasMany(IssuedBook::class, 'book_item_id');
     }
 }

@@ -19,7 +19,6 @@ class CreateBooksTable extends Migration
             $table->text('description');
             $table->string('image')->nullable();
             $table->datetime('published_on')->nullable();
-            $table->unsignedInteger('author_id');
             $table->unsignedInteger('publisher_id')->nullable();
             $table->float('price');
             $table->string('isbn')->nullable();
@@ -27,11 +26,6 @@ class CreateBooksTable extends Migration
             $table->unsignedInteger('language_id');
             $table->boolean('is_featured')->default(false);
             $table->timestamps();
-
-            $table->foreign('author_id')
-                ->references('id')->on('authors')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
 
             $table->foreign('publisher_id')
                 ->references('id')->on('publishers')

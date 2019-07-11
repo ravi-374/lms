@@ -26,8 +26,8 @@ class AccountRepository
                     $message->to($email);
                 });
 
-        } catch (\Exception $e) {
-            throw new Exception('Account created, but unable to send email.');
+        } catch (Exception $e) {
+            throw new Exception('Unable to send confirmation mail.');
         }
     }
 }

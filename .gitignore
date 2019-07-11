@@ -14,6 +14,7 @@
 /public/fonts
 /public/images
 /public/uploads
+/public/fonts
 /storage/*.key
 /vendor
 .env
