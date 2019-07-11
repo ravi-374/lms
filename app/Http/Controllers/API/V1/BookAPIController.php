@@ -77,6 +77,7 @@ class BookAPIController extends AppBaseController
         $book->tags;
         $book->genres;
         $book->items;
+        $book->authors;
 
         return $this->sendResponse($book->toArray(), 'Book retrieved successfully.');
     }
