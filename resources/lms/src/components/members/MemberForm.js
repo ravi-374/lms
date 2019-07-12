@@ -7,7 +7,7 @@ import SaveAction from '../../shared/action-buttons/SaveAction';
 import InputGroup from '../../shared/components/InputGroup';
 import CheckBox from "../../shared/components/CheckBox";
 import ImagePicker from '../../shared/image-picker/ImagePicker';
-import MultiSelect from "../../shared/multi-select/MultiSelect";
+import MultiSelect from '../../shared/multi-select/MultiSelect';
 
 const MemberForm = (props) => {
     const [selectedMemberShipPlan] = useState(props.initialValues ? props.initialValues.selectedMemberShipPlan : []);
@@ -122,16 +122,16 @@ const MemberForm = (props) => {
                         <Field name="address_2" label="Address2" groupText="address-book-o" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="country" label="Country" groupText="flag" component={InputGroup}/>
+                        <Field name="city" label="City" groupText="circle" component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="city" label="City" groupText="circle" component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
+                        <Field name="country" label="Country" groupText="flag" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>

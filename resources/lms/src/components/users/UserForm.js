@@ -7,6 +7,7 @@ import SaveAction from '../../shared/action-buttons/SaveAction';
 import InputGroup from '../../shared/components/InputGroup';
 import CheckBox from "../../shared/components/CheckBox";
 import MultiSelect from '../../shared/multi-select/MultiSelect';
+import ImagePicker from '../../shared/image-picker/ImagePicker';
 
 const UserForm = (props) => {
     const [image, setImage] = useState(null);
@@ -21,7 +22,9 @@ const UserForm = (props) => {
             if (props.initialValues.image) {
                 setImage('/users/' + props.initialValues.image);
             }
-            props.change('role_id', selectedRole[0].id);
+            if (selectedRole.length > 0) {
+                props.change('role_id', selectedRole[0].id);
+            }
         }
 
     }, []);
@@ -29,9 +32,6 @@ const UserForm = (props) => {
         delete formValues.file_name;
         formValues.file = file;
         props.onSaveUser(formValues);
-    };
-    const openFileSelect = () => {
-        document.getElementById('userInput').click();
     };
     const onFileChange = (event) => {
         props.change('file_name', 'file_name');
@@ -59,15 +59,7 @@ const UserForm = (props) => {
                 <hr/>
                 <div>
                     <Field name="file_name" type="hidden" component={InputGroup}/>
-                    <input id="userInput" type="file" className="d-none"
-                           onChange={(e) => onFileChange(e)}/>
-                    <div className="image-holder" onClick={openFileSelect}>
-                        <div className="image-cover"><span
-                            className="image-text">{image ? 'Change Image' : 'Add Image'}</span></div>
-                        <img src={image ? image : null}
-                             className="image-preview rounded mx-auto d-block" height={200} width={200}
-                             alt={image}/>
-                    </div>
+                    <ImagePicker onFileChange={onFileChange} image={image}/>
                 </div>
             </Col>
             <Col xs={8} className="primary-detail">
@@ -140,16 +132,16 @@ const UserForm = (props) => {
                         <Field name="address_2" label="Address2" groupText="address-book-o" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="country" label="Country" groupText="flag" component={InputGroup}/>
+                        <Field name="city" label="City" groupText="circle" component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="city" label="City" groupText="circle" component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
+                        <Field name="country" label="Country" groupText="flag" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>

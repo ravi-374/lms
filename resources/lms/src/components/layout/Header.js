@@ -6,9 +6,13 @@ const Header = (props) => {
     const user = JSON.parse(localStorage.getItem('user'));
     let imageUrl = 'images/user-avatar.png';
     if (user) {
-        // if (user.organization.logo_path) {
-        //     imageUrl = user.organization.logo_path;
-        // }
+        user.name = user.first_name;
+        if (user.last_name) {
+            user.name += ' ' + user.last_name;
+        }
+        if (user.image) {
+            imageUrl = '/users/' + user.image;
+        }
     }
     const goToUserProfile = () => {
         props.history.push('/');

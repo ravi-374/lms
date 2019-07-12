@@ -14,7 +14,10 @@ export default ({authors, onOpenModal, sortAction, sortObject}) => {
             </thead>
             <tbody>
             {authors.map((author) => {
-                    author.name = author.first_name + ' ' + author.last_name;
+                    author.name = author.first_name;
+                    if (author.last_name) {
+                        author.name += ' ' + author.last_name;
+                    }
                     return (
                         <tr key={author.id.toString()}>
                             <td>{author.name}</td>

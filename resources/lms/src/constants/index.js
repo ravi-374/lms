@@ -87,6 +87,7 @@ export const bookStatusConstant = {
 };
 
 export const bookFormatOptions = [
+    {id: 0, name: 'Select Format'},
     {id: 1, name: 'Hardcover'},
     {id: 2, name: 'Paperback'}
 ];

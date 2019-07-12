@@ -42,17 +42,17 @@ export default ({users, roles, onOpenModal, sortAction, sortObject}) => {
                     user.full_address = '';
                     if (user.address) {
                         if (user.address.address_1) {
-                            user.full_address += user.address.address_1 + ' ,';
+                            user.full_address += user.address.address_1 + ',';
                         }
                         if (user.address.address_2) {
-                            user.full_address += user.address.address_2 + ' ,';
+                            user.full_address += user.address.address_2 + ',';
                         }
                         user.full_address += user.address.city;
                         if (user.address.state) {
-                            user.full_address += ' ,' + user.address.state;
+                            user.full_address += ',' + user.address.state;
                         }
                         if (user.address.country) {
-                            user.full_address += ' ,' + user.address.country;
+                            user.full_address += ',' + user.address.country;
                         }
                         if (user.address.zip) {
                             user.full_address += '-' + user.address.zip;
@@ -64,7 +64,7 @@ export default ({users, roles, onOpenModal, sortAction, sortObject}) => {
                             <td className="align-middle">{user.name}</td>
                             <td className="align-middle">{user.email}</td>
                             <td className="align-middle">{user.phone ? user.phone : 'N/A'}</td>
-                            <td className="align-middle">{user.role_name}</td>
+                            <td className="align-middle">{user.role_name ? user.role_name : 'N/A'}</td>
                             <td className="align-middle">
                                 {user.full_address !== '' ? user.full_address : 'N/A'}
                             </td>

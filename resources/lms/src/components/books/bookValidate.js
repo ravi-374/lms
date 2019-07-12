@@ -3,8 +3,13 @@ export default formValues => {
     if (!formValues.isbn) {
         errors.isbn = 'ISBN No. must be required.';
     }
-    if (!formValues.author_id) {
-        errors.author_id = 'Author must be required.'
+    if (!formValues.authors || !formValues.authors.length) {
+        errors.authors = 'Author must be required.';
+    }
+    if (formValues.authors) {
+        if (formValues.authors.length === 0) {
+            errors.authors = 'At least one author must be required.';
+        }
     }
     if (!formValues.publisher_id) {
         errors.publisher_id = 'Publisher must be required.'

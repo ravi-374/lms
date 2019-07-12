@@ -22,7 +22,7 @@ export default {
         },
 
         {
-            name: 'Publisher',
+            name: 'Publishers',
             url: '/app/publishers',
             icon: 'icon-envelope-open',
         },
@@ -52,7 +52,7 @@ export default {
             icon: 'icon-grid'
         },
         {
-            name: 'Member',
+            name: 'Members',
             url: '/app/members',
             icon: 'icon-user'
         }

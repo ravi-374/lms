@@ -8,11 +8,9 @@ const MultiSelect = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [typed, setTyped] = useState('');
     const [isTouched, setIsTouched] = useState(false);
-
     const onFocus = () => {
         setIsFocused(true);
     };
-
     const onBlur = () => {
         const {options, multiple} = props;
         if (multiple) {
@@ -32,7 +30,6 @@ const MultiSelect = (props) => {
             setIsTouched(true);
         }
     };
-
     const onKeyDown = (e) => {
         const {options, multiple} = props;
         switch (e.key) {
@@ -118,11 +115,9 @@ const MultiSelect = (props) => {
                 break;
         }
     };
-
     const onClick = () => {
         setIsOpen(!isOpen);
     };
-
     const onDeleteOption = (option) => {
         const valueArray = [...values];
         const index = valueArray.indexOf(option);
@@ -130,13 +125,16 @@ const MultiSelect = (props) => {
         setValues(valueArray);
         props.onSelect(valueArray);
     };
-
     const onHoverOption = (option) => {
         const {options} = props;
         const index = options.findIndex(opt => opt.id === option.id);
         setFocusedValue(index);
     };
-
+    const onClickChildOption = (option, index) => {
+        setValues([option]);
+        setIsOpen(false);
+        props.onSelect([option], index);
+    };
     const onClickOption = (option, multiple) => {
         if (!multiple) {
             setValues([option]);
@@ -155,17 +153,15 @@ const MultiSelect = (props) => {
             props.onSelect(valueArray);
         }
     };
-
     const stopPropagation = (e) => {
         e.stopPropagation();
     };
-
     const renderValues = () => {
         const {placeholder, multiple} = props;
         if (values.length === 0 && multiple) {
             return (
                 <div className="multi-select-selection__placeholder">
-                    {placeholder}{required ? <span className="text-danger">*</span> : null}
+                    {placeholder}
                 </div>
             )
         }
@@ -182,18 +178,23 @@ const MultiSelect = (props) => {
                 );
             })
         }
-        return (
+        const {options, index, disabled} = props;
+        return disabled === false ?
             <div className="multi-select-selection__value multi-select-selection__value--wrap">
-                {values.length > 0 ?
-                    values[0].id === 0 ?
-                        <span>{values[0].name}{required ? <span className="text-danger">*</span> : null}</span>
-                        : values[0].name
-                    : null
+                {options[index] ? options[index].id === 0 ?
+                    <span>{options[index].name}</span> : options[index].name : options[0].id === 0
+                    ? <span>{options[0].name}</span> : props.options[0].name
                 }
-            </div>
-        )
+            </div> :
+            disabled === true ?
+                <div className="multi-select-selection__value multi-select-selection__value--wrap">
+                    {options.length > 0 ? props.options[0].id === 0 ?
+                        <span>{props.options[0].name}</span> : props.options[0].name : null}
+                </div> :
+                <div className="multi-select-selection__value multi-select-selection__value--wrap">
+                    {values.length > 0 ? values[0].id === 0 ? <span>{values[0].name}</span> : values[0].name : null}
+                </div>
     };
-
     const renderOption = (option, index) => {
         const {multiple} = props;
         const {name} = option;
@@ -205,13 +206,17 @@ const MultiSelect = (props) => {
         let className = "multi-select__option";
         if (selected) className += " selected";
         if (index === focusedValue) className += " focused";
-        return (
-            <div key={option.id} className={className} onMouseOver={() => onHoverOption(option)}
-                 onClick={() => onClickOption(option, multiple)}>
-                {multiple ? <span className="multi-select__checkbox">{selected ? <Check/> : null}</span> : null}
-                {option.id === 0 ?
-                    <span> {name}{required ? <span className="text-danger">*</span> : null}</span> : name}
-            </div>
+        return (props.disabled === false ?
+                <div key={option.id} className={className} onMouseOver={() => onHoverOption(option)}
+                     onClick={() => onClickChildOption(option, index)}>
+                    {multiple ? <span className="multi-select__checkbox">{selected ? <Check/> : null}</span> : null}
+                    <span> {name}</span>
+                </div> :
+                <div key={option.id} className={className} onMouseOver={() => onHoverOption(option)}
+                     onClick={() => onClickOption(option, multiple, index)}>
+                    {multiple ? <span className="multi-select__checkbox">{selected ? <Check/> : null}</span> : null}
+                    <span> {name}</span>
+                </div>
         )
     };
     const renderOptions = () => {
@@ -226,24 +231,40 @@ const MultiSelect = (props) => {
         )
     };
 
-    const {label, groupText, required, multiple} = props;
+    const {label, groupText, required, multiple, disabled, readOnly} = props;
     const errorCondition = (required && values.length === 0 && isTouched) || (required && values.length > 0 && values[0].id === 0 && isTouched);
     const selectionClass = errorCondition ? 'multi-select-selection multi-select-selection--invalid' : 'multi-select-selection multi-select-selection--valid';
     const messageClass = errorCondition ? 'multi-select__message--invalid' : 'multi-select__message';
     const selectClass = errorCondition ? 'multi-select multi-select--invalid' : 'multi-select';
-    const inputClass = errorCondition ? 'multi-select__input multi-select__input--invalid' : 'multi-select__input';
+    let inputClass = errorCondition ? 'multi-select__input multi-select__input--invalid' : 'multi-select__input';
+    if (disabled || readOnly) {
+        inputClass += ' multi-select__input--disabled'
+    }
+    const arrowClass = disabled || readOnly ? 'multi-select-selection__arrow--hidden' : 'multi-select-selection__arrow';
     return (
         <div className={selectClass} tabIndex="0" onFocus={() => onFocus()} onBlur={() => onBlur()}
              onKeyDown={(e) => onKeyDown(e)}>
-            {label ? <label className="multi-select__label">{label}
-                {required ? <span className="text-danger">*</span> : null}</label> : null}
-            <div className={selectionClass} onClick={() => onClick()}>
-                <div className="input-group-prepend">
-                    <span className="input-group-text"><i className={`fa fa-${groupText}`}/></span>
+            {label ?
+                <label className="multi-select__label">{label}
+                    {required ? <span className="text-danger">*</span> : null}
+                </label>
+                : null
+            }
+            {disabled || readOnly ?
+                <div className={selectionClass}>
+                    <div className="input-group-prepend">
+                        <span className="input-group-text"><i className={`fa fa-${groupText}`}/></span>
+                    </div>
+                    <div className={inputClass} style={!multiple ? {height: '45px'} : {}}>{renderValues()}</div>
+                    <span className={arrowClass}>{isOpen ? <ChevronUp/> : <ChevronDown/>}</span>
                 </div>
-                <div className={inputClass} style={!multiple ? {height: '45px'} : {}}>{renderValues()}</div>
-                <span className="multi-select-selection__arrow">{isOpen ? <ChevronUp/> : <ChevronDown/>}</span>
-            </div>
+                : <div className={selectionClass} onClick={() => onClick()}>
+                    <div className="input-group-prepend">
+                        <span className="input-group-text"><i className={`fa fa-${groupText}`}/></span>
+                    </div>
+                    <div className={inputClass} style={!multiple ? {height: '45px'} : {}}>{renderValues()}</div>
+                    <span className={arrowClass}>{isOpen ? <ChevronUp/> : <ChevronDown/>}</span>
+                </div>}
             {renderOptions()}
             <span className={messageClass}>{label} must be required.</span>
         </div>

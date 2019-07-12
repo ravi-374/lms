@@ -12,6 +12,7 @@ import Toasts from '../../shared/toast/Toasts';
 import BookForm from './BookForm';
 import prepareFormData from './prepareFormData';
 import {prepareAuthor, prepareBookLanguage, getSelectedObjects, preparePublisher} from './prepareArray';
+import {setLoading} from '../../store/actions/progressBarAction';
 
 const EditBook = (props) => {
     const [bookId, setBookId] = useState(null);
@@ -39,14 +40,13 @@ const EditBook = (props) => {
         )
     }
     const {books, authors, publishers, bookLanguages, genres, tags} = props;
-    const {id, is_featured, isbn, author_id, publisher_id, name, language_id, price, quantity, url, description, image, items} = props.book;
+    const {id, is_featured, isbn, publisher_id, name, language_id, price, quantity, url, description, image, items} = props.book;
     const changAbleFields = {
         id,
         is_featured,
         isbn,
         selectedGenres: props.book.genres,
-        author_id,
-        author: getSelectedObjects(author_id, authors),
+        selectedAuthors: props.book.authors ? prepareAuthor(props.book.authors) : [],
         publisher_id,
         publisher: getSelectedObjects(publisher_id, publishers),
         name,
@@ -60,9 +60,9 @@ const EditBook = (props) => {
         image,
         items: items && items.length > 0 ? items : [{format: 1, is_available: 1}]
     };
-    if (!changAbleFields.selectedGenres || !changAbleFields.selectedTags ||
-        changAbleFields.author.length === 0 ||
+    if (!changAbleFields.selectedGenres || !changAbleFields.selectedTags || !changAbleFields.selectedAuthors ||
         changAbleFields.publisher.length === 0 || changAbleFields.bookLanguage.length === 0) {
+        props.setLoading(true);
         return null;
     }
     const prepareFormOption = {
@@ -105,7 +105,6 @@ const mapStateToProps = (state, ownProp) => {
         genres: Object.values(genres)
     }
 };
-
 export default connect(
     mapStateToProps, {
         fetchBook, editBook,
@@ -113,6 +112,7 @@ export default connect(
         fetchGenres,
         fetchTags,
         fetchBookLanguages,
-        fetchPublishers
+        fetchPublishers,
+        setLoading,
     }
 )(EditBook);
