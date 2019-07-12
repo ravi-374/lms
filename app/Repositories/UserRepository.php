@@ -91,7 +91,7 @@ class UserRepository extends BaseRepository
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             if (!empty($input['role_id'])) {
-                $user->roles()->sync($input['role_id']);
+                $user->roles()->sync([$input['role_id']]);
             }
 
             $addressArr = $this->makeAddressArray($input);
