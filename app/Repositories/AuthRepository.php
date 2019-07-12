@@ -10,16 +10,19 @@
 namespace App\Repositories;
 
 use App\User;
+use Auth;
 class AuthRepository
 {
     /**
-     * @return User
+     * @return array
      */
     public function getAppConfig()
     {
-        /** @var User $users */
-        $users = User::with('roles.perms')->get();
+        /** @var User $user */
+        $user = User::with('roles.perms')->findOrFail(Auth::id());
 
-        return $users;
+        return [
+            'user' => $user
+        ];
     }
 }
