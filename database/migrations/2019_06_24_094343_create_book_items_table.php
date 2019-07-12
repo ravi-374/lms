@@ -19,9 +19,21 @@ class CreateBookItemsTable extends Migration
             $table->string('edition');
             $table->integer('format');
             $table->boolean('is_available')->default(1);
-            $table->string('location');
+            $table->string('location')->nullable();
             $table->float('price');
+            $table->unsignedInteger('publisher_id')->nullable();
+            $table->unsignedInteger('language_id');
             $table->timestamps();
+
+            $table->foreign('publisher_id')
+                ->references('id')->on('publishers')
+                ->onDelete('set null')
+                ->onUpdate('set null');
+
+            $table->foreign('language_id')
+                ->references('id')->on('book_languages')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

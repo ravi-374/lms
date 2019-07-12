@@ -15,10 +15,8 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @property string $description
  * @property string|Nullable $image
  * @property \Illuminate\Support\Carbon $published_on
- * @property int|null $publisher_id
  * @property string $isbn
  * @property string $url
- * @property int $language_id
  * @property bool $is_featured
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -34,10 +32,8 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereIsFeatured($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereIsbn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereLanguageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book wherePublishedOn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUrl($value)
  * @mixin \Eloquent
@@ -62,10 +58,8 @@ class Book extends Model
         'description',
         'image',
         'published_on',
-        'publisher_id',
         'isbn',
         'url',
-        'language_id',
         'is_featured',
     ];
 
@@ -80,10 +74,8 @@ class Book extends Model
         'description'  => 'string',
         'image'        => 'binary',
         'published_on' => 'datetime',
-        'publisher_id' => 'integer',
         'isbn'         => 'string',
         'url'          => 'string',
-        'language_id'  => 'integer',
         'is_featured'  => 'boolean',
     ];
 
@@ -96,7 +88,6 @@ class Book extends Model
         'name'        => 'required|unique:books,name',
         'isbn'        => 'required|unique:books,isbn',
         'genres'      => 'required',
-        'language_id' => 'required',
     ];
 
     /**

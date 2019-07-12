@@ -41,11 +41,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     protected $fieldSearchable = [
         'name',
         'published_on',
-        'publisher_id',
         'price',
         'isbn',
         'url',
-        'language_id',
         'is_featured',
     ];
 
@@ -278,6 +276,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $item->format = isset($bookItem['format']) ? $bookItem['format'] : null;
                 $item->location = isset($bookItem['location']) ? $bookItem['location'] : '';
                 $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
+                $item->publisher_id = isset($bookItem['publisher_id']) ? $bookItem['publisher_id'] : null;
+                $item->language_id= isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
 
                 $book->items()->save($item);
             }

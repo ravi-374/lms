@@ -33,6 +33,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssuedBook[] $issuedBooks
  * @property float $price
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePrice($value)
+ * @property int|null $publisher_id
+ * @property int $language_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereLanguageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePublisherId($value)
  */
 class BookItem extends Model
 {
@@ -56,6 +60,8 @@ class BookItem extends Model
         'is_available',
         'location',
         'price',
+        'language_id',
+        'publisher_id',
     ];
 
     /**

@@ -19,22 +19,10 @@ class CreateBooksTable extends Migration
             $table->text('description');
             $table->string('image')->nullable();
             $table->datetime('published_on')->nullable();
-            $table->unsignedInteger('publisher_id')->nullable();
             $table->string('isbn')->nullable();
             $table->string('url')->nullable();
-            $table->unsignedInteger('language_id');
             $table->boolean('is_featured')->default(false);
             $table->timestamps();
-
-            $table->foreign('publisher_id')
-                ->references('id')->on('publishers')
-                ->onDelete('set null')
-                ->onUpdate('set null');
-
-            $table->foreign('language_id')
-                ->references('id')->on('book_languages')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 
