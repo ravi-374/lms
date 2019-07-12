@@ -111,9 +111,9 @@ class RoleAPIController extends AppBaseController
      */
     public function destroy(Role $role)
     {
-        if (!$role->perms->isEmpty()) {
+        if (!$role->users->isEmpty()) {
             return $this->sendError(
-                'Role is attached with one or more permissions.',
+                'Role is assigned to one or more users.',
                 HttpResponse::HTTP_UNPROCESSABLE_ENTITY
             );
         }
