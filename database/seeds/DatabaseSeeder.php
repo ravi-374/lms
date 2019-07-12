@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreatePermissionsSeeder::class);
         $this->call(PopulateRolesAndPermissionsSeeder::class);
         $this->call(PopulateGenres::class);
+        $this->call(PopulateBookLanguages::class);
     }
 }
