@@ -37,6 +37,10 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property-read \App\Models\BookItem $bookItem
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook reserve()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofMember($memberId)
+ * @property int|null $issuer_id
+ * @property int|null $returner_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereIssuerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereReturnerId($value)
  */
 class IssuedBook extends Model
 {
@@ -64,6 +68,8 @@ class IssuedBook extends Model
         'note',
         'return_date',
         'status',
+        'issuer_id',
+        'returner_id',
     ];
     /**
      * The attributes that should be casted to native types.
@@ -79,6 +85,8 @@ class IssuedBook extends Model
         'note'         => 'string',
         'return_date'  => 'datetime',
         'status'       => 'integer',
+        'issuer_id'    => 'integer',
+        'returner_id'  => 'integer',
     ];
 
     /**

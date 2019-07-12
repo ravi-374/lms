@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
@@ -135,6 +136,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'return_due_date' => Carbon::now()->addDays(15),
             'note'            => !empty($input['note']) ? $input['note'] : null,
             'status'          => IssuedBook::STATUS_ISSUED,
+            'issuer_id'       => Auth::id(),
         ];
         if (!empty($issueBook)) {
             if ($issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id != $input['member_id']) {
@@ -174,10 +176,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         $issueBook = IssuedBook::create([
-            'book_item_id'    => $input['book_item_id'],
-            'member_id'       => $input['member_id'],
-            'note'            => !empty($input['note']) ? $input['note'] : null,
-            'status'          => IssuedBook::STATUS_RESERVED,
+            'book_item_id' => $input['book_item_id'],
+            'member_id'    => $input['member_id'],
+            'note'         => !empty($input['note']) ? $input['note'] : null,
+            'status'       => IssuedBook::STATUS_RESERVED,
         ]);
         $bookItem->update(['is_available' => false]);
 
@@ -207,6 +209,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'return_date' => Carbon::now(),
             'note'        => !empty($input['note']) ? $input['note'] : null,
             'status'      => IssuedBook::STATUS_RETURNED,
+            'returner_id' => Auth::id(),
         ]);
         $bookItem->update(['is_available' => true]);
 
