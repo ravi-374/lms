@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $books
  */
 class Author extends Model
 {
@@ -54,4 +55,12 @@ class Author extends Model
         'last_name' => 'string',
         'description' => 'string'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'book_authors', 'author_id', 'book_id');
+    }
 }

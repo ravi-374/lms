@@ -10,6 +10,7 @@ use App\Repositories\AuthorRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class AuthorAPIController
@@ -103,6 +104,9 @@ class AuthorAPIController extends AppBaseController
      */
     public function destroy(Author $author)
     {
+        if (!empty($author->books->toArray())) {
+            throw new BadRequestHttpException('Author can not be delete, it is used in one or more books.');
+        }
         $author->delete();
 
         return $this->sendResponse($author, 'Author deleted successfully.');

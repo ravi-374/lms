@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Genre whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Genre whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $books
  */
 class Genre extends Model
 {
@@ -50,4 +51,12 @@ class Genre extends Model
         'name' => 'string',
         'description' => 'string'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'book_authors', 'author_id', 'book_id');
+    }
 }

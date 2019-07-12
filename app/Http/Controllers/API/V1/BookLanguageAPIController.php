@@ -10,6 +10,7 @@ use App\Repositories\BookLanguageRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookLanguageAPIController
@@ -104,6 +105,9 @@ class BookLanguageAPIController extends AppBaseController
      */
     public function destroy(BookLanguage $bookLanguage)
     {
+        if (!empty($bookLanguage->bookItems->toArray())) {
+            throw new BadRequestHttpException('Language can not be delete, it is used in one or more book items.');
+        }
         $bookLanguage->delete();
 
         return $this->sendResponse($bookLanguage, 'Book Language deleted successfully.');
