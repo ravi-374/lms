@@ -25,6 +25,31 @@ code {
     monospace;
 }
 
+
+.sidebar {
+
+    .sidebar-nav {
+        .nav-link.active {
+
+            .nav-icon {
+                color: $orange;
+            }
+
+            &:hover  {
+                .nav-icon {
+                    color: #fff;
+                }
+            }
+        }
+
+        .nav-link {
+            &:hover {
+                background-color: $orange;
+            }
+        }
+    }
+}
+
 .sort-arrow-group {
     position: relative;
     font-size: 12px;
