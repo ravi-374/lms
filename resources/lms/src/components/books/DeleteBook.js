@@ -5,7 +5,7 @@ import {deleteBook} from '../../store/actions/bookAction';
 import DeleteAction from '../../shared/action-buttons/DeleteAction';
 
 const DeleteBook = (props) => {
-    const content = `Are sure you wants to be delete a book ?`;
+    const content = `Are you sure you want to delete "${props.book ? props.book.name : ''}" ?`;
     const title = "Delete a book";
     const onDeleteBook = () => {
         props.deleteBook(props.book.id);

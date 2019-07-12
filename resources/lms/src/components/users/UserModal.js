@@ -8,7 +8,7 @@ export default (props) => {
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'user-modal',
-            title: isEditMode ? 'Edit User' : 'Add New User',
+            title: isEditMode ? 'Edit User' : 'New User',
             toggleModal,
         };
         if (isEditMode) {
@@ -21,7 +21,7 @@ export default (props) => {
             userId: user.id,
             title: 'Delete User',
             toggleModal,
-            content: `Are sure you wants to be delete ? ${user.name}`,
+            content: `Are you sure you want to delete "${user.name}" ?`,
         };
         return <DeleteUser {...prepareModalOption}/>
     }

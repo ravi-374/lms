@@ -8,7 +8,7 @@ export default (props) => {
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'book-series-modal',
-            title: isEditMode ? 'Edit Book Series' : 'Add New Book Series',
+            title: isEditMode ? 'Edit Book Series' : 'New Book Series',
             toggleModal,
         };
         if (isEditMode) {
@@ -21,7 +21,7 @@ export default (props) => {
             bookSeriesId: bookSeries.id,
             title: 'Delete bookSeries',
             toggleModal,
-            content: `Are you sure you wants to delete ${bookSeries.title} ?`,
+            content: `Are you sure you want to delete "${bookSeries.title}" ?`,
         };
         return <DeleteBookSeries {...prepareModalOption}/>
     }

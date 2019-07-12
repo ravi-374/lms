@@ -64,7 +64,7 @@ const Books = (props) => {
                 <h5 className="pull-left text-dark">Books</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
-                    <Link to="/app/books/new" size="md" className="btn btn-primary ml-2">Add Book</Link>
+                    <Link to="/app/books/new" size="md" className="btn btn-primary ml-2">New Book</Link>
                 </div>
             </Col>
             <Col sm={12}>

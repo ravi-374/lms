@@ -8,7 +8,7 @@ export default (props) => {
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'publisher-modal',
-            title: isEditMode ? 'Edit Publisher' : 'Add New Publisher',
+            title: isEditMode ? 'Edit Publisher' : 'New Publisher',
             toggleModal,
         };
         if (isEditMode) {
@@ -21,7 +21,7 @@ export default (props) => {
             publisherId: publisher.id,
             title: 'Delete Publisher',
             toggleModal,
-            content: `Are sure you wants to be delete ? ${publisher.name}`,
+            content: `Are you sure you want to delete "${publisher.name}" ?`,
         };
         return <DeletePublisher {...prepareModalOption}/>
     }

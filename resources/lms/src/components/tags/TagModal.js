@@ -8,7 +8,7 @@ export default (props) => {
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'tag-modal',
-            title: isEditMode ? 'Edit Tag' : 'Add New Tag',
+            title: isEditMode ? 'Edit Tag' : 'New Tag',
             toggleModal,
         };
         if (isEditMode) {
@@ -21,7 +21,7 @@ export default (props) => {
             tagId: tag.id,
             title: 'Delete Tag',
             toggleModal,
-            content: `Are sure you wants to be delete ? ${tag.name}`,
+            content: `Are you sure you want to delete "${tag.name}" ?`,
         };
         return <DeleteTag {...prepareModalOption}/>
     }
