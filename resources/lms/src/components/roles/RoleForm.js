@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Row, Table} from 'reactstrap';
+import {Col, Row} from 'reactstrap';
 import {Field, reduxForm, FieldArray} from 'redux-form';
 import roleValidate from './roleValidate';
 import InputGroup from '../../shared/components/InputGroup';
@@ -33,7 +33,7 @@ const RoleForm = props => {
                 <Field name="description" label="Description" component={TextArea}/>
             </Col>
             <Col xs={12}>
-                <h3>Permissions</h3>
+                <h5>Permissions</h5>
                 <hr/>
                 <FieldArray name="permissions" component={renderPermissionsItems} permissions={permissions}/>
             </Col>

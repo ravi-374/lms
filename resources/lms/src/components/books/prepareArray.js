@@ -1,9 +1,12 @@
 export const prepareAuthor = (authors) => {
-    let authorArray = [{id: 0, name: 'Select Author'}];
-    authors.forEach(author => authorArray.push({
-        id: author.id,
-        name: author.first_name + ' ' + author.last_name
-    }));
+    let authorArray = [];
+    authors.forEach(author => {
+        let name = author.first_name;
+        if (author.last_name) {
+            name += ' ' + author.last_name;
+        }
+        authorArray.push({id: author.id, name: name})
+    });
     return authorArray;
 };
 
@@ -25,6 +28,6 @@ export const prepareBookLanguage = (bookLanguages) => {
     return bookLanguageArray;
 };
 
-export const getSelectedObjects = (id ,arrayOfObjects) => {
-    return arrayOfObjects.filter(objectItem =>+objectItem.id === +id);
+export const getSelectedObjects = (id, arrayOfObjects) => {
+    return arrayOfObjects.filter(objectItem => +objectItem.id === +id);
 };

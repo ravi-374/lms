@@ -9,7 +9,7 @@ const EditUser = (props) => {
     const onSaveUser = (formValues) => {
         props.editUser(props.user.id, prepareFormData(formValues));
     };
-    const {is_active, first_name, last_name, email, phone, roles, address,image} = props.user;
+    const {is_active, first_name, last_name, email, phone, roles, address, image} = props.user;
     const changeAbleFields = {
         is_active,
         first_name,

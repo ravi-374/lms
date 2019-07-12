@@ -38,7 +38,7 @@ const Login = (props) => {
             props.addToast({text: response.data.message, type: 'error'})
         );
     };
-    const {handleSubmit,invalid} = props;
+    const {handleSubmit, invalid} = props;
     return (
         <div className="app flex-row align-items-center">
             <Container>
@@ -54,7 +54,7 @@ const Login = (props) => {
                                            component={CustomInputGroup}/>
                                     <Field name="password" type="password" groupText="icon-lock"
                                            component={CustomInputGroup}/>
-                                    <div className="ml-2">
+                                    <div>
                                         <Field name="remember_me" checked={isRemember} onChange={onRememberChange}
                                                label="Remember Me" component={CheckBox}/>
                                     </div>

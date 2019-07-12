@@ -40,17 +40,17 @@ export default ({members, membershipPlans, onOpenModal, sortAction, sortObject})
                     }
                     if (member.address) {
                         if (member.address.address_1) {
-                            member.full_address += member.address.address_1 + ' ,';
+                            member.full_address += member.address.address_1 + ',';
                         }
                         if (member.address.address_2) {
-                            member.full_address += member.address.address_2 + ' ,';
+                            member.full_address += member.address.address_2 + ',';
                         }
                         member.full_address += member.address.city;
                         if (member.address.state) {
-                            member.full_address += ' ,' + member.address.state;
+                            member.full_address += ',' + member.address.state;
                         }
                         if (member.address.country) {
-                            member.full_address += ' ,' + member.address.country;
+                            member.full_address += ',' + member.address.country;
                         }
                         if (member.address.zip) {
                             member.full_address += '-' + member.address.zip;

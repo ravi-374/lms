@@ -13,13 +13,14 @@ import CustomInput from "../../shared/components/CustomInput";
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../store/actions/toastAction';
 import {bookFormatOptions, bookStatusOptions} from '../../constants';
+import ImagePicker from '../../shared/image-picker/ImagePicker';
 
 const BookForm = (props) => {
     const [image, setImage] = useState(null);
     const {initialValues} = props;
     const [genres] = useState(initialValues ? initialValues.selectedGenres : []);
     const [tags] = useState(initialValues ? initialValues.selectedTags : []);
-    const [author] = useState(initialValues ? initialValues.author : []);
+    const [authors] = useState(initialValues ? initialValues.selectedAuthors : []);
     const [publisher] = useState(initialValues ? initialValues.publisher : []);
     const [bookLanguage] = useState(initialValues ? initialValues.bookLanguage : []);
     const [file, setFile] = useState(null);
@@ -31,9 +32,9 @@ const BookForm = (props) => {
             setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
         }
         if (initialValues) {
-            props.change('tags', initialValues.selectedTags);
-            props.change('genres', initialValues.selectedGenres);
-            props.change('author_id', initialValues.author_id);
+            props.change('tags', tags);
+            props.change('genres', genres);
+            props.change('authors', authors);
             props.change('publisher_id', initialValues.publisher_id);
             props.change('language_id', initialValues.language_id);
             if (initialValues.image) {
@@ -57,9 +58,6 @@ const BookForm = (props) => {
             })
             .catch(({response}) => props.addToast({text: response.data.message, type: 'error'}));
     };
-    const openFileSelect = () => {
-        document.getElementById('userInput').click();
-    };
     const onFileChange = (event) => {
         props.change('file_name', 'file_name');
         setFile(event.target.files[0]);
@@ -73,13 +71,8 @@ const BookForm = (props) => {
         setIsLoading(false);
         props.change('genres', options);
     };
-
-    const onSelectAuthor = (option) => {
-        if (option.length > 0 && option[0].id !== 0) {
-            props.change('author_id', option[0].id);
-        } else {
-            props.change('author_id', null);
-        }
+    const onSelectAuthor = (options) => {
+        props.change('authors', options);
     };
     const onSelectPublisher = (option) => {
         if (option.length > 0 && option[0].id !== 0) {
@@ -113,15 +106,7 @@ const BookForm = (props) => {
                 <hr/>
                 <div>
                     <Field name="file_name" type="hidden" component={InputGroup}/>
-                    <input id="userInput" type="file" className="d-none"
-                           onChange={(e) => onFileChange(e)}/>
-                    <div className="image-holder" onClick={openFileSelect}>
-                        <div className="image-cover"><span
-                            className="image-text">{image ? 'Change Image' : 'Add Image'}</span></div>
-                        <img src={image ? image : null}
-                             className="image-preview rounded mx-auto d-block" height={200} width={200}
-                             alt={image}/>
-                    </div>
+                    <ImagePicker onFileChange={onFileChange} image={image}/>
                 </div>
             </Col>
             <Col xs={8} className="primary-detail">
@@ -159,10 +144,11 @@ const BookForm = (props) => {
                             groupText="user-circle-o"
                             options={props.authors}
                             required
+                            multiple
                             onSelect={onSelectAuthor}
-                            selctedItems={author}
+                            selctedItems={authors}
                         />
-                        <Field name="author_id" type="hidden" component={InputGroup}/>
+                        <Field name="authors" type="hidden" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <MultiSelect
@@ -198,10 +184,6 @@ const BookForm = (props) => {
                 <hr/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="price" min="1" type="number" label="Price" required groupText="money"
-                               component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
                         <MultiSelect
                             label="Tags"
                             placeholder="Select Tag"
@@ -214,7 +196,7 @@ const BookForm = (props) => {
                         />
                         <Field name="tags" type="hidden" component={InputGroup}/>
                     </Col>
-                    <Col xs={12}>
+                    <Col xs={6}>
                         <Field name="url" label="URL" groupText="link" component={InputGroup}/>
                     </Col>
                     <Col xs={12}>
@@ -273,8 +255,9 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                     <th>Edition</th>
                     <th>Format</th>
                     <th>Location</th>
+                    <th>Price</th>
                     <th>Status</th>
-                    <th className="text-center">Remove</th>
+                    <th className="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -312,6 +295,10 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                 <td>
                                     <Field name={`${item}.location`} type="text" placeholder="Location"
                                            groupText="map-marker" component={CustomInput}/>
+                                </td>
+                                <td>
+                                    <Field name={`${item}.price`} min="1" type="number" placeholder="Price"
+                                           groupText="money" component={CustomInput}/>
                                 </td>
                                 <td>
                                     <MultiSelect

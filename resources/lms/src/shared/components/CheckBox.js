@@ -1,12 +1,11 @@
 import React from 'react';
-import {FormGroup, Input, Label} from 'reactstrap';
+import './Component.scss';
 
-export default ({input, label, value, checked = false, type = 'checkbox'}) => {
+export default ({input, label, checked = false}) => {
     return (
-        <FormGroup className="form-check">
-            <Label className="form-check-label">
-                <Input type={type} checked={checked} {...input} className="form-check-input"/>{label}
-            </Label>
-        </FormGroup>
+        <label className="control control--checkbox">{label}
+            <input type="checkbox" checked={checked} {...input}/>
+            <div className="control__indicator"/>
+        </label>
     );
 };

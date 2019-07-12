@@ -18,11 +18,9 @@ export const fetchMembers = () => async (dispatch) => {
 };
 
 export const addMember = (member) => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfigWthFormData.post('members', member)
         .then((response) => {
             dispatch({type: memberActionType.ADD_MEMBER, payload: response.data.data});
-            dispatch(setLoading(false));
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
@@ -32,11 +30,9 @@ export const addMember = (member) => async (dispatch) => {
 };
 
 export const editMember = (memberId, member) => async (dispatch) => {
-    dispatch(setLoading(true));
     await apiConfigWthFormData.post(`members/${memberId}`, member)
         .then((response) => {
             dispatch({type: memberActionType.EDIT_MEMBER, payload: response.data.data});
-            dispatch(setLoading(false));
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })

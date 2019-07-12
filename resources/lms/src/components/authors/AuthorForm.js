@@ -16,7 +16,7 @@ const AuthorForm = props => {
                 <Field name="first_name" label="First Name" required groupText="user-circle-o" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
+                <Field name="last_name" label="Last Name" groupText="user" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="description" label="Description" component={TextArea}/>
