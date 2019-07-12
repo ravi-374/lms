@@ -16,7 +16,6 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @property string|Nullable $image
  * @property \Illuminate\Support\Carbon $published_on
  * @property int|null $publisher_id
- * @property float $price
  * @property string $isbn
  * @property string $url
  * @property int $language_id
@@ -37,7 +36,6 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereIsbn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereLanguageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book wherePublishedOn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUpdatedAt($value)
@@ -65,7 +63,6 @@ class Book extends Model
         'image',
         'published_on',
         'publisher_id',
-        'price',
         'isbn',
         'url',
         'language_id',
@@ -84,7 +81,6 @@ class Book extends Model
         'image'        => 'binary',
         'published_on' => 'datetime',
         'publisher_id' => 'integer',
-        'price'        => 'float',
         'isbn'         => 'string',
         'url'          => 'string',
         'language_id'  => 'integer',
@@ -99,7 +95,6 @@ class Book extends Model
     public static $rules = [
         'name'        => 'required|unique:books,name',
         'isbn'        => 'required|unique:books,isbn',
-        'price'       => 'required',
         'genres'      => 'required',
         'language_id' => 'required',
     ];
