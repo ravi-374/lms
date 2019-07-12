@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model as Model;
 use Zizaco\Entrust\EntrustRole;
 /**
  * App\Models\Role

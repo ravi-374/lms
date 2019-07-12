@@ -29,19 +29,9 @@ class CreatePermissionsSeeder extends Seeder
             'description'  => 'Create/Update/Delete Books, Book Series, Book Languages, Authors, Publishers, Tags',
         ];
         $permissions[] = [
-            'name'         => 'manage_book_items',
-            'display_name' => 'Can Manage Book Items',
-            'description'  => 'Create/Update/Delete Book Item',
-        ];
-        $permissions[] = [
             'name'         => 'issue_books',
             'display_name' => 'Can Manage Issue Books',
             'description'  => 'Can Manage Issue Books',
-        ];
-        $permissions[] = [
-            'name'         => 'return_books',
-            'display_name' => 'Can Return Books',
-            'description'  => 'Can Return Books',
         ];
         $permissions[] = [
             'name'         => 'manage_members',

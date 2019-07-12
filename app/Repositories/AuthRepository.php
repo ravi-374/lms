@@ -25,7 +25,7 @@ class AuthRepository
         $roles = $userDBRecord->roles->toArray();
         $permissions = [];
         foreach ($userDBRecord->roles as $role) {
-            $permissions[] = $role->perms->toArray();
+            $permissions = array_merge($permissions, $role->perms->toArray());
         }
 
         return [

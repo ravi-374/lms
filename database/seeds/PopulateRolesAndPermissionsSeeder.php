@@ -32,7 +32,7 @@ class PopulateRolesAndPermissionsSeeder extends Seeder
         $permissions = Permission::all();
         $admin->attachPermissions($permissions);
 
-        $librarianPermissions = ['manage_books', 'manage_book_items', 'issue_books', 'return_books', 'manage_members'];
+        $librarianPermissions = ['manage_books', 'issue_books', 'manage_members'];
         $permissions = Permission::whereIn('name', $librarianPermissions)->get();
         $librarian->attachPermissions($permissions);
     }

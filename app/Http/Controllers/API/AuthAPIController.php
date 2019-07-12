@@ -35,6 +35,10 @@ class AuthAPIController extends AppBaseController
             return $this->sendError('Invalid username or password', 422);
         }
 
+        if (!$user->is_active) {
+            return $this->sendError('Your account is not active', 422);
+        }
+
         $token = JWTAuth::fromUser($user);
 
         return $this->sendResponse(['token' => $token, 'user' => $user], 'Logged in successfully.');
