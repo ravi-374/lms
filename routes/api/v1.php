@@ -62,6 +62,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('books-history', 'IssuedBookAPIController@index');
     // Get available books
     Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
+
+    /** Get App Config */
+    Route::get('config', 'AuthAPIController@getAppConfig');
 });
 
 Route::post('members/login', 'MemberAuthController@login');

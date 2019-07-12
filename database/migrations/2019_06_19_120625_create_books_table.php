@@ -20,7 +20,6 @@ class CreateBooksTable extends Migration
             $table->string('image')->nullable();
             $table->datetime('published_on')->nullable();
             $table->unsignedInteger('publisher_id')->nullable();
-            $table->float('price');
             $table->string('isbn')->nullable();
             $table->string('url')->nullable();
             $table->unsignedInteger('language_id');

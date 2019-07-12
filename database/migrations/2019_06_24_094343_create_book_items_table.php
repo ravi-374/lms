@@ -20,6 +20,7 @@ class CreateBookItemsTable extends Migration
             $table->integer('format');
             $table->boolean('is_available')->default(1);
             $table->string('location');
+            $table->float('price');
             $table->timestamps();
         });
     }
