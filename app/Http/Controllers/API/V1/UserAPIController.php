@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
-use App\Models\Address;
 use App\Repositories\UserRepository;
 use App\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -31,7 +32,8 @@ class UserAPIController extends AppBaseController
      * GET|HEAD /users
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
@@ -49,9 +51,10 @@ class UserAPIController extends AppBaseController
      * POST /users
      * @param CreateUserAPIRequest $request
      *
-     * @throws \App\Exceptions\ApiOperationFailedException
-     * @throws \Exception
-     * @return \Illuminate\Http\JsonResponse
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return JsonResponse
      */
     public function store(CreateUserAPIRequest $request)
     {
@@ -65,14 +68,14 @@ class UserAPIController extends AppBaseController
      * Display the specified User.
      * GET|HEAD /users/{id}
      *
-     * @param int $id
+     * @param User $user
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(User $user)
     {
-        /** @var User $user */
-        $user = $this->userRepository->find($id);
+        $user->roles;
+        $user->address;
 
         return $this->sendResponse($user->toArray(), 'User retrieved successfully.');
     }
@@ -80,17 +83,18 @@ class UserAPIController extends AppBaseController
     /**
      * Update the specified User in storage.
      * PUT/PATCH /users/{id}
-     * @param int $id
+     * @param User $user
      * @param UpdateUserAPIRequest $request
      *
-     * @throws \App\Exceptions\ApiOperationFailedException
-     * @throws \Exception
-     * @return \Illuminate\Http\JsonResponse
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return JsonResponse
      */
-    public function update($id, UpdateUserAPIRequest $request)
+    public function update(User $user, UpdateUserAPIRequest $request)
     {
         $input = $request->all();
-        $user = $this->userRepository->update($input, $id);
+        $user = $this->userRepository->update($input, $user->id);
 
         return $this->sendResponse($user->toArray(), 'User updated successfully.');
     }
@@ -99,18 +103,27 @@ class UserAPIController extends AppBaseController
      * Remove the specified User from storage.
      * DELETE /users/{id}
      *
-     * @param int $id
+     * @param User $user
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        /** @var User $user */
-        $user = $this->userRepository->findOrFail($id);
-
         $user->deleteUserImage();
         $user->delete();
 
-        return $this->sendResponse($id, 'User deleted successfully.');
+        return $this->sendResponse($user, 'User deleted successfully.');
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return JsonResponse
+     */
+    public function removeImage(User $user)
+    {
+        $user->deleteUserImage();
+
+        return $this->sendSuccess('User image removed successfully.');
     }
 }

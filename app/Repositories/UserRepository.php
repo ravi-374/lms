@@ -8,6 +8,7 @@ use App\User;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Support\Collection;
 
 /**
  * Class UserRepository
@@ -50,7 +51,7 @@ class UserRepository extends BaseRepository
      * @param int|null $limit
      * @param array $columns
      *
-     * @return User[]|
+     * @return User[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {

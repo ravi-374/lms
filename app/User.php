@@ -94,7 +94,7 @@ class User extends Authenticatable implements JWTSubject
         'last_name'  => 'required',
         'email'      => 'required|unique:users,email',
         'password'   => 'required',
-        'role_id'    => 'required|integer',
+        'role_id'    => 'required|array',
     ];
 
     public static $messages = [
@@ -105,7 +105,7 @@ class User extends Authenticatable implements JWTSubject
         'first_name' => 'required',
         'last_name'  => 'required',
         'email'      => 'required|unique:users,email',
-        'role_id'    => 'nullable|integer',
+        'role_id'    => 'nullable|array',
     ];
 
     /**
@@ -138,6 +138,8 @@ class User extends Authenticatable implements JWTSubject
     public function deleteUserImage()
     {
         self::deleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image); // thumbnail
+
+        $this->update(['image' => null]);
     }
 
     /**

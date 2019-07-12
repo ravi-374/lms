@@ -134,4 +134,16 @@ class BookAPIController extends AppBaseController
 
         return $this->bookRepository->addBookItems($book, $items);
     }
+
+    /**
+     * @param Book $book
+     *
+     * @return JsonResponse
+     */
+    public function removeImage(Book $book)
+    {
+        $book->deleteImage();
+
+        return $this->sendSuccess('Book image removed successfully.');
+    }
 }

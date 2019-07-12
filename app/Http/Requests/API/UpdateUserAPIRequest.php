@@ -26,7 +26,7 @@ class UpdateUserAPIRequest extends APIRequest
     public function rules()
     {
         $rules =  User::$updateRules;
-        $rules['email'] = 'required|unique:users,email,'.$this->route('user_id');
+        $rules['email'] = 'required|unique:users,email,'.$this->route('user')->id;
 
         return $rules;
     }
