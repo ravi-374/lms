@@ -19,10 +19,19 @@ class AuthRepository
     public function getAppConfig()
     {
         /** @var User $user */
-        $user = User::with('roles.perms')->findOrFail(Auth::id());
+        $userDBRecord = User::findOrFail(Auth::id());
+
+        $userDetails = $userDBRecord->toArray();
+        $roles = $userDBRecord->roles->toArray();
+        $permissions = [];
+        foreach ($userDBRecord->roles as $role) {
+            $permissions[] = $role->perms->toArray();
+        }
 
         return [
-            'user' => $user
+            'user' => $userDetails,
+            'roles' => $roles,
+            'permissions' => $permissions,
         ];
     }
 }
