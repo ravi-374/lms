@@ -8,7 +8,7 @@ export default (props) => {
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'role-modal',
-            title: isEditMode ? 'Edit Role' : 'Add New Role',
+            title: isEditMode ? 'Edit Role' : 'New Role',
             toggleModal,
         };
         if (isEditMode) {
@@ -21,7 +21,7 @@ export default (props) => {
             roleId: role.id,
             title: 'Delete Role',
             toggleModal,
-            content: `Are you sure you want to delete ${role.name} ?`,
+            content: `Are you sure you want to delete "${role.name}" ?`,
         };
         return <DeleteRole {...prepareModalOption}/>
     }

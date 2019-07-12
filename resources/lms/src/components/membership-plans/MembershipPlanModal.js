@@ -8,7 +8,7 @@ export default (props) => {
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'membership-plan-modal',
-            title: isEditMode ? 'Edit Membership Plan' : 'Add New Membership Plan',
+            title: isEditMode ? 'Edit Membership Plan' : 'New Membership Plan',
             toggleModal,
         };
         if (isEditMode) {
@@ -21,7 +21,7 @@ export default (props) => {
             membershipPlanId: membershipPlan.id,
             title: 'Delete Membership Plan',
             toggleModal,
-            content: `Are you sure you want to delete ${membershipPlan.name} ?`,
+            content: `Are you sure you want to delete "${membershipPlan.name}" ?`,
         };
         return <DeleteMembershipPlan {...prepareModalOption}/>
     }

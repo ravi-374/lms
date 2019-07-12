@@ -8,7 +8,7 @@ const GenreModal = (props) => {
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'genre-modal',
-            title: isEditMode ? 'Edit Genre' : 'Add New Genre',
+            title: isEditMode ? 'Edit Genre' : 'New Genre',
             toggleModal,
         };
         if (isEditMode) {
@@ -21,7 +21,7 @@ const GenreModal = (props) => {
             genreId: genre.id,
             title: 'Delete Genre',
             toggleModal,
-            content: `Are sure you wants to be delete ? ${genre.name}`,
+            content: `Are you sure you want to delete "${genre.name}" ?`,
         };
         return <DeleteGenre {...prepareModalOption}/>
     }

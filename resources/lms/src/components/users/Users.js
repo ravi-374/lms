@@ -31,7 +31,7 @@ const Users = (props) => {
         setUser(user);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, users,roles, onOpenModal};
+    const cardBodyProps = {sortAction, sortObject, users, roles, onOpenModal};
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -42,7 +42,7 @@ const Users = (props) => {
                 <div className="d-flex justify-content-end">
                     <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        Add User
+                        New User
                     </Button>
                 </div>
             </Col>

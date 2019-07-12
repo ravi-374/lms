@@ -40,7 +40,7 @@ const BooksSeries = (props) => {
                 <div className="d-flex justify-content-end">
                     <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        Add Book Series
+                        New Book Series
                     </Button>
                 </div>
             </Col>

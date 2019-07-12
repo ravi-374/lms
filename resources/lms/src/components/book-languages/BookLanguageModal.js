@@ -4,11 +4,11 @@ import CreateBookLanguage from './CreateBookLanguage';
 import EditBookLanguage from './EditBookLanguage';
 
 export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, bookLanguage,isToggle} = props;
+    const {isEditMode, toggleModal, isDeleteMode, bookLanguage, isToggle} = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'book-language-modal',
-            title: isEditMode ? 'Edit Book Language' : 'Add New Book Language',
+            title: isEditMode ? 'Edit Book Language' : 'New Book Language',
             toggleModal,
         };
         if (isEditMode) {
@@ -22,7 +22,7 @@ export default (props) => {
             title: 'Delete Book Language',
             toggleModal,
             isToggle,
-            content: `Are sure you wants to be delete ? ${bookLanguage.language_name}`,
+            content: `Are you sure you want to delete "${bookLanguage.language_name}" ?`,
         };
         return <DeleteBookLanguage {...prepareModalOption}/>
     }

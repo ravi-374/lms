@@ -49,7 +49,7 @@ const CreateBook = (props) => {
         <div className="animated fadeIn">
             <Row>
                 <Col sm={12} className="mb-2">
-                    <h5 className="pull-left text-dark">Add Book</h5>
+                    <h5 className="pull-left text-dark">New Book</h5>
                 </Col>
                 <Col sm={12}>
                     <div className="sticky-table-container">
