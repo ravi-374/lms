@@ -24,6 +24,8 @@ class CreateIssuedBooksTable extends Migration
             $table->text('note')->nullable();
             $table->dateTime('return_date')->nullable();
             $table->integer('status');
+            $table->unsignedBigInteger('issuer_id')->nullable();
+            $table->unsignedBigInteger('returner_id')->nullable();
             $table->timestamps();
 
             $table->foreign('book_item_id')
@@ -33,6 +35,16 @@ class CreateIssuedBooksTable extends Migration
 
             $table->foreign('member_id')
                 ->references('id')->on('members')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('issuer_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('returner_id')
+                ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
