@@ -188,8 +188,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         foreach ($items as $item) {
             if (isset($item['format'])) {
                 if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
-                    throw new Exception('Invalid Book Format', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new Exception('Invalid Book Format.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
                 }
+            }
+
+            if (!isset($item['price']) || empty($item['price'])) {
+                throw new Exception('Please enter book item price.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             if (isset($item['book_item_id'])) {
@@ -273,6 +277,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
                 $item->format = isset($bookItem['format']) ? $bookItem['format'] : null;
                 $item->location = isset($bookItem['location']) ? $bookItem['location'] : '';
+                $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
 
                 $book->items()->save($item);
             }

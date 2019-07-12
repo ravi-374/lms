@@ -31,6 +31,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \App\Models\Book $book
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssuedBook[] $issuedBooks
+ * @property float $price
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePrice($value)
  */
 class BookItem extends Model
 {
@@ -53,6 +55,7 @@ class BookItem extends Model
         'format',
         'is_available',
         'location',
+        'price',
     ];
 
     /**
