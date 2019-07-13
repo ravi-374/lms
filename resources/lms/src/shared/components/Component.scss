@@ -66,3 +66,10 @@
 .control--checkbox input:disabled ~ .control__indicator:after {
     border-color: $control-disabled;
 }
+
+.toggle-label {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 2px;
+    margin-right: 10px;
+}

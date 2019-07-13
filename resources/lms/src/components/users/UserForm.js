@@ -5,7 +5,7 @@ import userValidate from './userValidate';
 import './Users.scss';
 import SaveAction from '../../shared/action-buttons/SaveAction';
 import InputGroup from '../../shared/components/InputGroup';
-import CheckBox from "../../shared/components/CheckBox";
+import ToggleSwitch from '../../shared/components/ToggleSwitch';
 import MultiSelect from '../../shared/multi-select/MultiSelect';
 import ImagePicker from '../../shared/image-picker/ImagePicker';
 
@@ -55,7 +55,7 @@ const UserForm = (props) => {
     return (
         <Row className="animated fadeIn user-form m-3">
             <Col xs={4} className="user-logo">
-                <h5>User Logo</h5>
+                <h5>User Profile</h5>
                 <hr/>
                 <div>
                     <Field name="file_name" type="hidden" component={InputGroup}/>
@@ -63,11 +63,11 @@ const UserForm = (props) => {
                 </div>
             </Col>
             <Col xs={8} className="primary-detail">
-                <div className="d-flex">
+                <div className="d-flex justify-content-between">
                     <h5>Primary Details</h5>
-                    <div className="ml-5 d-flex">
+                    <div className="d-flex">
                         <div>
-                            <Field name="is_active" checked={isActive} label="Is Active" component={CheckBox}
+                            <Field name="is_active" checked={isActive} label="Is Active" component={ToggleSwitch}
                                    onChange={onChecked}/>
                         </div>
                     </div>
@@ -135,13 +135,13 @@ const UserForm = (props) => {
                         <Field name="city" label="City" groupText="circle" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="country" label="Country" groupText="flag" component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
