@@ -1,23 +1,23 @@
 <?php
+/**
+ * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
+ * Author: Vishal Ribdiya
+ * Email: vishal.ribdiya@infyom.com
+ * Date: 13-07-2019
+ * Time: 03:31 PM
+ */
 
 namespace App\Repositories;
 
-use App\Models\BookSeries;
-use App\Models\SeriesBook;
-
-/**
- * Class BookSeriesRepository
- * @package App\Repositories
- * @version June 25, 2019, 10:36 am UTC
-*/
-
-class BookSeriesRepository extends BaseRepository
+use App\Models\Country;
+class CountryRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'title'
+        'name',
+        'code',
     ];
 
     /**
@@ -35,6 +35,6 @@ class BookSeriesRepository extends BaseRepository
      **/
     public function model()
     {
-        return BookSeries::class;
+        return Country::class;
     }
 }

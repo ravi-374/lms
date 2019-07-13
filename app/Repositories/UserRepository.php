@@ -14,8 +14,7 @@ use Illuminate\Support\Collection;
  * Class UserRepository
  * @package App\Repositories
  * @version June 20, 2019, 7:52 am UTC
-*/
-
+ */
 class UserRepository extends BaseRepository
 {
     /**
@@ -24,7 +23,7 @@ class UserRepository extends BaseRepository
     protected $fieldSearchable = [
         'first_name',
         'last_name',
-        'email'
+        'email',
     ];
 
     /**
@@ -55,7 +54,7 @@ class UserRepository extends BaseRepository
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('roles','address');
+        $query = $this->allQuery($search, $skip, $limit)->with('roles', 'address');
 
         /** @var User[] $users */
         $users = $query->orderByDesc('id')->get();
@@ -71,7 +70,7 @@ class UserRepository extends BaseRepository
      */
     public function find($id, $columns = ['*'])
     {
-        $user = $this->findOrFail($id, ['roles','address']);
+        $user = $this->findOrFail($id, ['roles', 'address']);
 
         return $user;
     }
@@ -95,13 +94,13 @@ class UserRepository extends BaseRepository
             }
 
             $addressArr = $this->makeAddressArray($input);
-            if(!empty($addressArr)) {
+            if (!empty($addressArr)) {
                 $address = new Address($addressArr);
                 $user->address()->save($address);
             }
 
             if (!empty($input['image'])) {
-                $imagePath = User::makeImage($input['image' ], User::IMAGE_PATH);
+                $imagePath = User::makeImage($input['image'], User::IMAGE_PATH);
                 $user->update(['image' => $imagePath]);
             }
             DB::commit();
@@ -118,18 +117,23 @@ class UserRepository extends BaseRepository
      * @param $input
      * @return array
      */
-    public function makeAddressArray($input){
-        if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) || !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])) {
+    public function makeAddressArray($input)
+    {
+        if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) ||
+            !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])
+        ) {
             $addressArr = [
-                'address_1' => !empty($input['address_1']) ? $input['address_1'] : '',
-                'address_2' => !empty($input['address_2']) ? $input['address_2'] : '',
-                'city' => !empty($input['city']) ? $input['city'] : '',
-                'state' => !empty($input['state']) ? $input['state'] : '',
-                'zip' => !empty($input['zip']) ? $input['zip'] : '',
-                'country' => !empty($input['country']) ? $input['country'] : '',
+                'address_1'  => !empty($input['address_1']) ? $input['address_1'] : '',
+                'address_2'  => !empty($input['address_2']) ? $input['address_2'] : '',
+                'city'       => !empty($input['city']) ? $input['city'] : '',
+                'state'      => !empty($input['state']) ? $input['state'] : '',
+                'zip'        => !empty($input['zip']) ? $input['zip'] : '',
+                'country_id' => !empty($input['country_id']) ? $input['country_id'] : '',
             ];
+
             return $addressArr;
         }
+
         return [];
     }
 
@@ -168,9 +172,9 @@ class UserRepository extends BaseRepository
             }
 
             $addressArr = $this->makeAddressArray($input);
-            if(!empty($addressArr)) {
+            if (!empty($addressArr)) {
                 $isUpdate = $user->address()->update($addressArr);
-                if(!$isUpdate){
+                if (!$isUpdate) {
                     $address = new Address($addressArr);
                     $user->address()->save($address);
                 }

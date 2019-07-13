@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PopulateGenres::class);
         $this->call(PopulateBookLanguages::class);
         $this->call(AdminUserSeeder::class);
+        $this->call(PopulateCountries::class);
     }
 }
