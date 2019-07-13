@@ -35,6 +35,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('users', 'UserAPIController');
     Route::post('users/{user}', 'UserAPIController@update');
     Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
+    Route::get('users/{user}/active-de-active', 'UserAPIController@activeDeactive');
 
 
     // Members
