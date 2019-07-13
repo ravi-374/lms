@@ -21,10 +21,9 @@ const Header = (props) => {
         <Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile/>
             <AppNavbarBrand>
-                <img src={'images/logo-blue-black.png'} width="50" alt="InfyOm Logo"/>
-                <span className="ml-2 infy-logo" style={{color: '#20a8d8'}}>InfyOm</span>
+                <img className="infy-logo" src={'images/logo-blue-black.png'} height="19" width="40" alt="InfyOm Logo"/>
+                <span className="ml-2 infy-name" style={{color: '#20a8d8'}}>InfyOm</span>
             </AppNavbarBrand>
-            <AppSidebarToggler className="d-md-down-none" display="lg"/>
             <Nav className="ml-auto" navbar>
                 <AppHeaderDropdown direction="down">
                     <DropdownToggle nav>
