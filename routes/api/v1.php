@@ -5,74 +5,99 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('genres', 'GenreAPIController');
 
     // Author Routes
-    Route::resource('authors', 'AuthorAPIController');
+    Route::middleware('permission:manage_authors')->group(function () {
+        Route::resource('authors', 'AuthorAPIController');
+    });
 
     // Publishers Routes
-    Route::resource('publishers', 'PublisherAPIController');
+    Route::middleware('permission:manage_publishers')->group(function () {
+        Route::resource('publishers', 'PublisherAPIController');
+    });
 
     // Tags Routes
-    Route::resource('tags', 'TagAPIController');
+    Route::middleware('permission:manage_tags')->group(function () {
+        Route::resource('tags', 'TagAPIController');
+    });
 
     // Book Language Routes
-    Route::resource('book-languages', 'BookLanguageAPIController');
+    Route::middleware('permission:manage_book_languages')->group(function () {
+        Route::resource('book-languages', 'BookLanguageAPIController');
+    });
 
-    // Roles
-    Route::resource('roles', 'RoleAPIController');
-    Route::post('roles/{role}', 'RoleAPIController@update');
+    Route::middleware('permission:manage_roles')->group(function () {
+        // Roles
+        Route::resource('roles', 'RoleAPIController');
+        Route::post('roles/{role}', 'RoleAPIController@update');
 
-    // Permissions
-    Route::resource('permissions', 'PermissionAPIController');
+        // Permissions
+        Route::resource('permissions', 'PermissionAPIController');
+    });
 
     // Book API Routes
-    Route::resource('books', 'BookAPIController');
-    Route::post('books/{book}', 'BookAPIController@update');
-    Route::post('books/{book}/remove-image', 'BookAPIController@removeImage');
+    Route::middleware('permission:manage_books')->group(function () {
+        Route::resource('books', 'BookAPIController');
+        Route::post('books/{book}', 'BookAPIController@update');
+        Route::post('books/{book}/remove-image', 'BookAPIController@removeImage');
 
-    // add book items
-    Route::post('books/{book}/items', 'BookAPIController@addItems');
+        // add book items
+        Route::post('books/{book}/items', 'BookAPIController@addItems');
+        // Get available books
+        Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
+    });
 
     // Users
-    Route::resource('users', 'UserAPIController');
-    Route::post('users/{user}', 'UserAPIController@update');
-    Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
-    Route::get('users/{user}/update-status', 'UserAPIController@updateStatus');
-
+    Route::middleware('permission:manage_users')->group(function () {
+        Route::resource('users', 'UserAPIController');
+        Route::post('users/{user}', 'UserAPIController@update');
+        Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
+        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus');
+    });
 
     // Members
-    Route::resource('members', 'MemberAPIController');
-    Route::post('members/{member}', 'MemberAPIController@update');
-    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
+    Route::middleware('permission:manage_members')->group(function () {
+        Route::resource('members', 'MemberAPIController');
+        Route::post('members/{member}', 'MemberAPIController@update');
+        Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
+    });
 
-    // book series routes
-    Route::resource('book-series', 'BookSeriesAPIController');
-    Route::post('book-series/{book_series}', 'BookSeriesAPIController@update');
+    Route::middleware('permission:manage_book_series')->group(function () {
+        // book series routes
+        Route::resource('book-series', 'BookSeriesAPIController');
+        Route::post('book-series/{book_series}', 'BookSeriesAPIController@update');
 
-    // series book routes
-    Route::resource('series-books', 'SeriesBookAPIController');
-    Route::post('series-books/{series_book}', 'SeriesBookAPIController@update');
+        // series book routes
+        Route::resource('series-books', 'SeriesBookAPIController');
+        Route::post('series-books/{series_book}', 'SeriesBookAPIController@update');
+    });
 
-    // Membership Plans
-    Route::resource('membership-plans', 'MembershipPlanAPIController');
+    Route::middleware('permission:manage_finance')->group(function () {
+        // Membership Plans
+        Route::resource('membership-plans', 'MembershipPlanAPIController');
+    });
 
-    // Issue Book
-    Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook');
     // Reserve Book
     Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
-    // Return Book
-    Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook');
     // books history
     Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
-    // get books history for admin users
-    Route::get('books-history', 'IssuedBookAPIController@index');
-    // Get available books
-    Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
+
+    Route::middleware('permission:issue_books')->group(function () {
+        // Issue Book
+        Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook');
+        // Return Book
+        Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook');
+
+        // get books history for admin users
+        Route::get('books-history', 'IssuedBookAPIController@index');
+    });
 
     /** Get App Config */
     Route::get('config', 'AuthAPIController@getAppConfig');
 
-    // Settings
-    Route::resource('settings', 'SettingAPIController');
-    Route::post('settings/{setting}', 'SettingAPIController@update');
+    Route::middleware('permission:manage_settings')->group(function () {
+        // Settings
+        Route::resource('settings', 'SettingAPIController');
+        Route::post('settings/{setting}', 'SettingAPIController@update');
+    });
 });
 
 Route::post('members/login', 'MemberAuthController@login');
