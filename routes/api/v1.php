@@ -55,10 +55,14 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     // Members
     Route::middleware('permission:manage_members')->group(function () {
-        Route::resource('members', 'MemberAPIController');
-        Route::post('members/{member}', 'MemberAPIController@update');
-        Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
+        Route::delete('members/{member}', 'MemberAPIController@destroy');
     });
+    Route::post('members', 'MemberAPIController@store');
+    Route::post('members/{member}', 'MemberAPIController@update');
+    Route::get('members', 'MemberAPIController@index');
+    Route::get('members/{member}', 'MemberAPIController@show');
+    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
+    Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage');
 
     Route::middleware('permission:manage_book_series')->group(function () {
         // book series routes
