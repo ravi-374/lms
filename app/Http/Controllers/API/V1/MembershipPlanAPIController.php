@@ -10,6 +10,7 @@ use App\Repositories\MembershipPlanRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class MembershipPlanController
@@ -107,6 +108,9 @@ class MembershipPlanAPIController extends AppBaseController
      */
     public function destroy(MembershipPlan $membershipPlan)
     {
+        if (!empty($membershipPlan->member)) {
+            throw new BadRequestHttpException('Plan can not be delete, it is assigned to one or more members.');
+        }
         $membershipPlan->delete();
 
         return $this->sendResponse($membershipPlan, 'Membership Plan deleted successfully.');

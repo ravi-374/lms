@@ -10,6 +10,7 @@ use App\Repositories\GenreRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class GenreAPIController
@@ -103,6 +104,9 @@ class GenreAPIController extends AppBaseController
      */
     public function destroy(Genre $genre)
     {
+        if (!empty($genre->books->toArray())) {
+            throw new BadRequestHttpException('Genre can not be delete, it is used in one or more books.');
+        }
         $genre->delete();
 
         return $this->sendResponse($genre, 'Genre deleted successfully.');

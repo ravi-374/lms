@@ -62,15 +62,6 @@ class MembershipPlanRepository extends BaseRepository
     {
         $this->validateMembershipPlan($input);
 
-        if (!empty($input['membership_plan_id'])) {
-            $membershipPlan = MembershipPlan::whereMembershipPlanId($input['membership_plan_id'])->exists();
-            if ($membershipPlan) {
-                throw new Exception('Membership plan with same id already exist.');
-            }
-        } else {
-            $input['membership_plan_id'] = $this->generateMembershipPlanId();
-        }
-
         $membershipPlan = MembershipPlan::create($input);
 
         return $membershipPlan;

@@ -10,6 +10,7 @@ use App\Repositories\PublisherRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class PublisherAPIController
@@ -103,6 +104,9 @@ class PublisherAPIController extends AppBaseController
      */
     public function destroy(Publisher $publisher)
     {
+        if (!empty($publisher->bookItems->toArray())) {
+            throw new BadRequestHttpException('Publisher can not be delete, it is used in one or more book items.');
+        }
         $publisher->delete();
 
         return $this->sendResponse($publisher, 'Publisher deleted successfully.');

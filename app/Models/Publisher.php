@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Model;
 
 /**
- * Class Publisher
+ * App\Models\Publisher
  *
- * @package App\Models
- * @version June 19, 2019, 5:17 am UTC
- * @property string name
  * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BookItem[] $publishers
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher query()
@@ -22,6 +20,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BookItem[] $bookItems
  */
 class Publisher extends Model
 {
@@ -48,4 +47,12 @@ class Publisher extends Model
         'id'   => 'integer',
         'name' => 'string',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bookItems()
+    {
+        return $this->hasMany(BookItem::class, 'publisher_id');
+    }
 }

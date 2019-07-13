@@ -67,6 +67,10 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     /** Get App Config */
     Route::get('config', 'AuthAPIController@getAppConfig');
+
+    // Settings
+    Route::resource('settings', 'SettingAPIController');
+    Route::post('settings/{setting}', 'SettingAPIController@update');
 });
 
 Route::post('members/login', 'MemberAuthController@login');

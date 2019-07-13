@@ -16,7 +16,6 @@ class CreateMembershipPlansTable extends Migration
         Schema::create('membership_plans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('membership_plan_id')->unique();
             $table->float('price');
             $table->text('description');
             $table->integer('frequency');

@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property string language_name
  * @property string language_code
  * @property int $id
- * @property string $language_name
- * @property string $language_code
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage newModelQuery()
@@ -25,6 +23,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage whereLanguageName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookLanguage whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read  \Illuminate\Database\Eloquent\Collection|\App\Models\BookItem[] $bookItems
  */
 class BookLanguage extends Model
 {
@@ -52,4 +51,12 @@ class BookLanguage extends Model
         'language_name' => 'string',
         'language_code' => 'string',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bookItems()
+    {
+        return $this->hasMany(BookItem::class, 'language_id');
+    }
 }

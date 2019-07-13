@@ -28,10 +28,10 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereStripePlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereMembershipPlanId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property string $membership_plan_id
+ * @property-read \App\Models\Member $member
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereMembershipPlanId($value)
  */
 class MembershipPlan extends Model
@@ -42,7 +42,6 @@ class MembershipPlan extends Model
     public $table = 'membership_plans';
 
     public $fillable = [
-        'membership_plan_id',
         'name',
         'price',
         'description',
@@ -58,7 +57,6 @@ class MembershipPlan extends Model
      */
     protected $casts = [
         'id'                 => 'integer',
-        'membership_plan_id' => 'string',
         'name'               => 'string',
         'price'              => 'float',
         'description'        => 'string',
@@ -86,5 +84,13 @@ class MembershipPlan extends Model
         self::creating(function (MembershipPlan $model) {
             $model->slug = Str::slug($model->name);
         });
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function member()
+    {
+        return $this->hasOne(Member::class, 'membership_plan_id');
     }
 }
