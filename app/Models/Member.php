@@ -49,6 +49,7 @@ class Member extends Model implements JWTSubject
     const IMAGE_PATH = 'members';
 
     public $table = 'members';
+    protected  $appends = ['image_path'];
 
     public $fillable = [
         'member_id',
@@ -122,10 +123,19 @@ class Member extends Model implements JWTSubject
         return [];
     }
 
+    public function getImagePathAttribute()
+    {
+        if (!empty($this->image)) {
+            return $this->imageUrl(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
+        }
+    }
+
     public function deleteMemberImage()
     {
         if (!empty($this->image)) {
             self::deleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image); // thumbnail
+
+            $this->update(['image' => null]);
         }
     }
 

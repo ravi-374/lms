@@ -135,4 +135,16 @@ class MemberAPIController extends AppBaseController
 
         return $this->sendSuccess($message);
     }
+
+    /**
+     * @param Member $member
+     *
+     * @return JsonResponse
+     */
+    public function removeImage(Member $member)
+    {
+        $member->deleteMemberImage();
+
+        return $this->sendSuccess('member image removed successfully.');
+    }
 }
