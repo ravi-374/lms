@@ -34,7 +34,7 @@
 
 .control:hover input:not([disabled]):checked ~ .control__indicator,
 .control input:checked:focus ~ .control__indicator {
-    background: $input-focused;
+    background: $input-checked;
 }
 
 .control input:disabled ~ .control__indicator {
