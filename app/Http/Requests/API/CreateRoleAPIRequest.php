@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API;
 
 use App\Models\Role;
+use App\User;
 use InfyOm\Generator\Request\APIRequest;
 
 class CreateRoleAPIRequest extends APIRequest
@@ -25,5 +26,13 @@ class CreateRoleAPIRequest extends APIRequest
     public function rules()
     {
         return Role::$rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return Role::$messages;
     }
 }
