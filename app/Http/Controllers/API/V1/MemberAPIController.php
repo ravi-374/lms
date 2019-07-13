@@ -122,4 +122,17 @@ class MemberAPIController extends AppBaseController
 
         return $this->sendResponse($member, 'Member deleted successfully.');
     }
+
+    /**
+     * @param Member $member
+     *
+     * @return JsonResponse
+     */
+    public function updateStatus(Member $member){
+        $member->is_active = ($member->is_active) ? 0 : 1;
+        $member->save();
+        $message = "Member has been ".(($member->is_active) ? 'Activated' : 'Deactivated')." successfully.";
+
+        return $this->sendSuccess($message);
+    }
 }
