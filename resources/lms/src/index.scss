@@ -25,7 +25,6 @@ code {
     monospace;
 }
 
-
 .sidebar {
 
     .sidebar-nav {
@@ -35,7 +34,7 @@ code {
                 color: $orange;
             }
 
-            &:hover  {
+            &:hover {
                 .nav-icon {
                     color: #fff;
                 }
@@ -164,6 +163,13 @@ select {
 .brand-minimized {
 
     .infy-logo {
+        margin-left: 1px;
+    }
+    .infy-name {
         display: none;
     }
+}
+
+.sidebar-minimized .sidebar .nav-link .nav-icon {
+    font-size: 20px !important;
 }
