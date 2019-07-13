@@ -1,10 +1,17 @@
-import React from 'react';
-import {Table, Badge} from 'reactstrap';
+import React, {useState} from 'react';
+import {Field, reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
+import {Table} from 'reactstrap';
 import {sortConfig} from '../../config/sortConfig';
 import TableHeader from '../../shared/table-header/Tableheader';
 import ModalAction from '../../shared/action-buttons/ModalAction';
+import ToggleSwitch from '../../shared/components/ToggleSwitch';
+import './Users.scss';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../store/actions/toastAction';
 
-export default ({users, roles, onOpenModal, sortAction, sortObject}) => {
+const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast}) => {
+    const [isActive] = useState(users.length > 0 ? users.map(({is_active}) => is_active) : []);
     const headers = [
         {id: 'name', name: 'Name'},
         {id: 'email', name: 'Email'},
@@ -13,15 +20,13 @@ export default ({users, roles, onOpenModal, sortAction, sortObject}) => {
         {id: 'status', name: 'Status'},
     ];
     const headerProps = {staticField: 'Image', sortAction, sortObject, sortConfig, headers};
-    const renderUserStatus = (user) => {
-        switch (user.is_active) {
-            case 1:
-                user.status = 'Active';
-                return <Badge color="primary">Active</Badge>;
-            default:
-                user.status = 'Inactive';
-                return <Badge color="danger">Inactive</Badge>;
-        }
+    const onChecked = (index, userId) => {
+        isActive[index] = !isActive[index];
+        apiConfig.get(`users/${userId}/update-status`).then(response => {
+            addToast({text: response.data.message});
+        }).catch(({response}) => {
+            addToast({text: response.data.message, type: 'error'});
+        })
     };
     return (
         <Table hover bordered striped responsive size="md">
@@ -29,7 +34,7 @@ export default ({users, roles, onOpenModal, sortAction, sortObject}) => {
             <TableHeader{...headerProps}/>
             </thead>
             <tbody>
-            {users.map((user) => {
+            {users.map((user, index) => {
                     const imageUrl = user.image ? '/users/' + user.image : 'images/user-avatar.png';
                     if (user.roles.length > 0) {
                         const role = roles.find(role => role.id === +user.roles[0].id);
@@ -47,7 +52,13 @@ export default ({users, roles, onOpenModal, sortAction, sortObject}) => {
                             <td className="align-middle">{user.email}</td>
                             <td className="align-middle">{user.phone ? user.phone : ' '}</td>
                             <td className="align-middle">{user.role_name ? user.role_name : ' '}</td>
-                            <td className="align-middle text-center" style={{width: '90px'}}>{renderUserStatus(user)}</td>
+                            <td className="text-center" style={{width: '90px'}}>
+                                <div className="user-form__switch">
+                                    <Field name="is_active" checked={isActive[index]} component={ToggleSwitch}
+                                           onChange={() => onChecked(index, user.id)}/>
+                                </div>
+                            </td>
+
                             <td className="align-middle text-center">
                                 <ModalAction onOpenModal={onOpenModal} item={user}/>
                             </td>
@@ -59,3 +70,6 @@ export default ({users, roles, onOpenModal, sortAction, sortObject}) => {
         </Table>
     );
 };
+
+const userForm = reduxForm({form: 'userForm'})(User);
+export default connect(null, {addToast})(userForm);
