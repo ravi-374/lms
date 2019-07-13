@@ -48,6 +48,11 @@ class CreatePermissionsSeeder extends Seeder
             'display_name' => 'Can Manage Settings',
             'description'  => 'Manage Settings',
         ];
+        $permissions[] = [
+            'name'         => 'manage_roles',
+            'display_name' => 'Can Manage Roles and permission',
+            'description'  => 'Manage Roles and permission',
+        ];
 
         foreach ($permissions as $permission) {
             Permission::create($permission);
