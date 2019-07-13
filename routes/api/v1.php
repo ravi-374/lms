@@ -41,6 +41,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     // Members
     Route::resource('members', 'MemberAPIController');
     Route::post('members/{member}', 'MemberAPIController@update');
+    Route::get('members/{member}/active-de-active', 'MemberAPIController@activeDeactive');
 
     // book series routes
     Route::resource('book-series', 'BookSeriesAPIController');
