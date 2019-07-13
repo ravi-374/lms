@@ -24,8 +24,17 @@ class UpdateRoleAPIRequest extends APIRequest
      */
     public function rules()
     {
+        $rules = Role::$rules;
         $rules['name'] = 'required|unique:roles,name,'.$this->route('role')->id;
 
         return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return Role::$messages;
     }
 }

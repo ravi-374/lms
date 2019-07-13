@@ -98,6 +98,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
         Route::resource('settings', 'SettingAPIController');
         Route::post('settings/{setting}', 'SettingAPIController@update');
     });
+
+    // Countries
+    Route::get('countries', 'CountryAPIController@index');
 });
 
 Route::post('members/login', 'MemberAuthController@login');

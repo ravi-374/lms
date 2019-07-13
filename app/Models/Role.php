@@ -37,6 +37,11 @@ class Role extends EntrustRole
      */
     public static $rules = [
         'name' => 'required|unique:roles,name',
+        'permissions' => 'required|array',
+    ];
+
+    public static $messages = [
+        'permissions.required' => 'Role must have at least one permission.',
     ];
     public $table = 'roles';
     public $fillable = [
