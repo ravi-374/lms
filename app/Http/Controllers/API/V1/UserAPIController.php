@@ -126,4 +126,17 @@ class UserAPIController extends AppBaseController
 
         return $this->sendSuccess('User image removed successfully.');
     }
+
+    /**
+     * @param User $user
+     *
+     * @return JsonResponse
+     */
+    public function updateStatus(User $user){
+        $user->is_active = ($user->is_active) ? 0 : 1;
+        $user->save();
+        $message = "User has been ".(($user->is_active) ? 'Activated' : 'Deactivated')." successfully.";
+
+        return $this->sendSuccess($message);
+    }
 }

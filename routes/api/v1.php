@@ -35,11 +35,13 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('users', 'UserAPIController');
     Route::post('users/{user}', 'UserAPIController@update');
     Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
+    Route::get('users/{user}/update-status', 'UserAPIController@updateStatus');
 
 
     // Members
     Route::resource('members', 'MemberAPIController');
     Route::post('members/{member}', 'MemberAPIController@update');
+    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
 
     // book series routes
     Route::resource('book-series', 'BookSeriesAPIController');
