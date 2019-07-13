@@ -50,8 +50,8 @@ class CreatePermissionsSeeder extends Seeder
         ];
         $permissions[] = [
             'name'         => 'manage_roles',
-            'display_name' => 'Can Manage Roles and permission',
-            'description'  => 'Manage Roles and permission',
+            'display_name' => 'Can Manage Roles',
+            'description'  => 'Manage Roles',
         ];
         $permissions[] = [
             'name'         => 'manage_authors',
@@ -74,12 +74,12 @@ class CreatePermissionsSeeder extends Seeder
             'description'  => 'Manage Users',
         ];
         $permissions[] = [
-            'name'         => 'manage_book_language',
-            'display_name' => 'Can Manage Book Language',
-            'description'  => 'Manage Book Language',
+            'name'         => 'manage_book_languages',
+            'display_name' => 'Can Manage Book Languages',
+            'description'  => 'Manage Book Languages',
         ];
         $permissions[] = [
-            'name'         => 'manage_Plans',
+            'name'         => 'manage_plans',
             'display_name' => 'Can Manage Plans',
             'description'  => 'Manage Plans',
         ];

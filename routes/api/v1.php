@@ -20,7 +20,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     });
 
     // Book Language Routes
-    Route::middleware('permission:manage_book_language')->group(function () {
+    Route::middleware('permission:manage_book_languages')->group(function () {
         Route::resource('book-languages', 'BookLanguageAPIController');
     });
 
@@ -75,24 +75,25 @@ Route::group(['middleware' => 'jwt.auth'], function () {
         Route::resource('membership-plans', 'MembershipPlanAPIController');
     });
 
+    // Reserve Book
+    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
+    // books history
+    Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
+
     Route::middleware('permission:issue_books')->group(function () {
         // Issue Book
         Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook');
-        // Reserve Book
-        Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
         // Return Book
         Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook');
 
-        // books history
-        Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
         // get books history for admin users
         Route::get('books-history', 'IssuedBookAPIController@index');
     });
 
-    Route::middleware('permission:manage_settings')->group(function () {
-        /** Get App Config */
-        Route::get('config', 'AuthAPIController@getAppConfig');
+    /** Get App Config */
+    Route::get('config', 'AuthAPIController@getAppConfig');
 
+    Route::middleware('permission:manage_settings')->group(function () {
         // Settings
         Route::resource('settings', 'SettingAPIController');
         Route::post('settings/{setting}', 'SettingAPIController@update');
