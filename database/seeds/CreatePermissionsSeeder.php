@@ -88,6 +88,11 @@ class CreatePermissionsSeeder extends Seeder
             'display_name' => 'Can Manage Tags',
             'description'  => 'Manage Tags',
         ];
+        $permissions[] = [
+            'name'         => 'manage_genres',
+            'display_name' => 'Can Manage Genres',
+            'description'  => 'Manage Genres',
+        ];
 
         foreach ($permissions as $permission) {
             Permission::create($permission);
