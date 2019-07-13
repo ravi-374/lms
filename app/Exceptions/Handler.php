@@ -54,6 +54,13 @@ class Handler extends ExceptionHandler
         $code = $exception->getCode();
         $message = $exception->getMessage();
 
+        if (method_exists($exception, 'getStatusCode') && $exception->getStatusCode()== 403) {
+            return Response::json([
+                'success' => false,
+                'message' => 'Unauthorized action.',
+            ], HttpResponse::HTTP_FORBIDDEN);
+        }
+
         if ($code < 100 || $code >= 600) {
             $code = HttpResponse::HTTP_INTERNAL_SERVER_ERROR;
         }

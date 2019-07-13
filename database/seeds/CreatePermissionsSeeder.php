@@ -48,6 +48,46 @@ class CreatePermissionsSeeder extends Seeder
             'display_name' => 'Can Manage Settings',
             'description'  => 'Manage Settings',
         ];
+        $permissions[] = [
+            'name'         => 'manage_roles',
+            'display_name' => 'Can Manage Roles and permission',
+            'description'  => 'Manage Roles and permission',
+        ];
+        $permissions[] = [
+            'name'         => 'manage_authors',
+            'display_name' => 'Can Manage Authors',
+            'description'  => 'Manage Authors',
+        ];
+        $permissions[] = [
+            'name'         => 'manage_publishers',
+            'display_name' => 'Can Manage Publishers',
+            'description'  => 'Manage Publishers',
+        ];
+        $permissions[] = [
+            'name'         => 'manage_book_series',
+            'display_name' => 'Can Manage Book Series',
+            'description'  => 'Manage Book Series',
+        ];
+        $permissions[] = [
+            'name'         => 'manage_users',
+            'display_name' => 'Can Manage Users',
+            'description'  => 'Manage Users',
+        ];
+        $permissions[] = [
+            'name'         => 'manage_book_language',
+            'display_name' => 'Can Manage Book Language',
+            'description'  => 'Manage Book Language',
+        ];
+        $permissions[] = [
+            'name'         => 'manage_Plans',
+            'display_name' => 'Can Manage Plans',
+            'description'  => 'Manage Plans',
+        ];
+        $permissions[] = [
+            'name'         => 'manage_tags',
+            'display_name' => 'Can Manage Tags',
+            'description'  => 'Manage Tags',
+        ];
 
         foreach ($permissions as $permission) {
             Permission::create($permission);
