@@ -58,14 +58,14 @@ export const membershipPlanActionType = {
 };
 
 export const membershipPlanFrequency = {
-    YEARLY: 1,
-    MONTHLY: 2,
+    MONTHLY: 1,
+    YEARLY: 2,
 };
 
 export const membershipPlanFrequencyOptions = [
     {id: 0, name: 'Select Frequency'},
-    {id: 1, name: 'Yearly'},
-    {id: 2, name: 'Monthly'}
+    {id: 1, name: 'Monthly'},
+    {id: 2, name: 'Yearly'},
 ];
 
 export const bookActionType = {

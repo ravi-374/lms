@@ -9,9 +9,7 @@ import {membershipPlanFrequency} from '../../constants';
 export default ({membershipPlans, onOpenModal, sortAction, sortObject}) => {
     const headers = [
         {id: 'name', name: 'Name'},
-        {id: 'membership_plan_id', name: 'Membership Plan Id'},
         {id: 'frequency_name', name: 'Frequency'},
-        {id: 'stripe_plan_id', name: 'Stripe Plan Id'},
         {id: 'price', name: 'Price'}
     ];
     const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
@@ -35,9 +33,7 @@ export default ({membershipPlans, onOpenModal, sortAction, sortObject}) => {
                     return (
                         <tr key={membershipPlan.id.toString()}>
                             <td>{membershipPlan.name}</td>
-                            <td>{membershipPlan.membership_plan_id}</td>
                             <td>{renderMemberShipPlanFrequency(membershipPlan)}</td>
-                            <td>{membershipPlan.stripe_plan_id}</td>
                             <td className="text-right">{priceFormatter(membershipPlan.price)}</td>
                             <td className="text-center">
                                 <ModalAction onOpenModal={onOpenModal} item={membershipPlan}/>
