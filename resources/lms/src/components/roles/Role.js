@@ -16,8 +16,8 @@ export default ({roles, onOpenModal, sortAction, sortObject}) => {
             {roles.map((role) =>
                 (
                     <tr key={role.id.toString()}>
-                        <td>{role.name}</td>
                         <td>{role.display_name}</td>
+                        <td>{role.name}</td>
                         <td className="text-center">
                             <ModalAction onOpenModal={onOpenModal} item={role}/>
                         </td>
