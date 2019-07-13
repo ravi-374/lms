@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property string $city
  * @property string $state
  * @property int $zip
- * @property string $country
+ * @property string|null $country_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Address[] $owner
@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereAddress1($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereAddress2($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereOwnerId($value)
