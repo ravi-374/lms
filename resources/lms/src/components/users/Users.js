@@ -17,6 +17,7 @@ import {fetchRoles} from '../../store/actions/roleAction';
 
 const Users = (props) => {
     const [isEditMode, setEditMode] = useState(false);
+    const [isCreateMode, setCreateMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [user, setUser] = useState(null);
     const {users, roles, sortAction, sortObject, toggleModal} = props;
@@ -24,8 +25,9 @@ const Users = (props) => {
         props.fetchUsers();
         props.fetchRoles();
     }, []);
-    const cardModalProps = {user, roles, isDeleteMode, isEditMode, toggleModal};
+    const cardModalProps = {user, roles, isDeleteMode, isEditMode,isCreateMode, toggleModal};
     const onOpenModal = (isEdit, user = null, isDelete = false) => {
+        setCreateMode(!isEdit);
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setUser(user);

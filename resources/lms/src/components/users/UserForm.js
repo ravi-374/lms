@@ -14,6 +14,7 @@ const UserForm = (props) => {
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(false);
     const [selectedRole] = useState(props.initialValues ? props.initialValues.selectedRole : []);
+    const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
     useEffect(() => {
         if (props.initialValues) {
             if (props.initialValues.is_active) {
@@ -50,6 +51,13 @@ const UserForm = (props) => {
             props.change('role_id', option[0].id);
         } else {
             props.change('role_id', null);
+        }
+    };
+    const onSelectCountry = (option) => {
+        if (option.length > 0 && option[0].id !== 0) {
+            props.change('country_id', option[0].id);
+        } else {
+            props.change('country_id', null);
         }
     };
     return (
@@ -138,7 +146,15 @@ const UserForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="country" label="Country" groupText="flag" component={InputGroup}/>
+                        <MultiSelect
+                            label="Country"
+                            placeholder="Select Country"
+                            groupText="flag"
+                            options={props.countries}
+                            onSelect={onSelectCountry}
+                            selctedItems={selectedCountry}
+                        />
+                        <Field name="country_id" type="hidden" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>

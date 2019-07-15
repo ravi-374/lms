@@ -109,8 +109,10 @@ svg {
     }
 
     &__options {
+        max-height: 200px;
         position: absolute;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
         top: 100%;
         left: 38px;
         right: 0;
@@ -154,7 +156,7 @@ svg {
             background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
             z-index: 1;
         }
-        &--disabled{
+        &--disabled {
             background-color: $select-disabled;
             opacity: 1;
             user-select: none;
