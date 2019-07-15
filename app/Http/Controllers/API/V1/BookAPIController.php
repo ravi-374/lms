@@ -117,6 +117,7 @@ class BookAPIController extends AppBaseController
         if (!empty($book->items->toArray())) {
             throw new BadRequestHttpException('Book can not be delete, it is has one or more book items.');
         }
+        $book->deleteImage();
         $book->delete();
 
         return $this->sendResponse($book, 'Book deleted successfully.');
