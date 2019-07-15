@@ -1,0 +1,56 @@
+// Variable overrides
+$white: #FFF !default;
+$red: #FF0000 !default;
+$tertiary: #2EC551 !default;
+$border-bg:#c8ced3 !default;
+$grey-background: #f5f5f5 !default;
+$grey-border: #ddd !default;
+$grey-text: #898989 !default;
+$grey-dark: #444 !default;
+$main-light: #d9f2fb !default;
+$main: #00a9e0 !default;
+$main-dark: #007da6 !default;
+$success: #7fd81e !default;
+$error: #ff5100 !default;
+$warning: #f6c223 !default;
+$body: #081f2c !default;
+$image-cover:#e2e2e28f !default;
+$control-disabled:#7b7b7b !default;
+$input-checked:#4a8bee !default;
+$input-disabled:#e6e6e6 !default;
+$input-focused:#0e647d !default;
+$input-indicator:#ccc !default;
+$select-disabled:#e4e7ea !default;
+$image-bg:#e2e2e28f !default;
+$blue: #00C6FF;
+$orange: #f5981c;
+$body-bg: #f8fafc;
+$font-family-sans-serif:
+    "Lato",
+    // Safari for OS X and iOS (San Francisco)
+    -apple-system,
+        // Chrome < 56 for OS X (San Francisco)
+    BlinkMacSystemFont,
+        // Windows
+    "Segoe UI",
+        // Android
+    "Roboto",
+        // Basic web fallback
+    "Helvetica Neue", Arial, sans-serif,
+        // Emoji fonts
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+$colors: ();
+
+$colors: map-merge(
+        ("blue" : $blue),
+        $colors
+);
+
+$theme-colors: ();
+$theme-colors: map-merge(
+        (
+            "primary": $blue,
+        ),
+        $theme-colors
+);
