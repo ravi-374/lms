@@ -11,9 +11,12 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Models\Book;
+use App\Models\BookItem;
 use App\Repositories\BookItemRepository;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class BookItemAPIController extends AppBaseController
 {
     /** @var BookItemRepository */
@@ -44,5 +47,22 @@ class BookItemAPIController extends AppBaseController
         );
 
         return $this->sendResponse($records->toArray(), 'Books history retrieved successfully.');
+    }
+
+    /**
+     * @param BookItem $bookItem
+     *
+     * @throws Exception
+     *
+     * @return JsonResponse
+     */
+    public function destroy(BookItem $bookItem)
+    {
+        if (!$bookItem->is_available) {
+            throw new BadRequestHttpException('BookItem can not be delete, it is reserved OR issued by someone.');
+        }
+        $bookItem->delete();
+
+        return $this->sendSuccess('BookItem deleted successfully.');
     }
 }

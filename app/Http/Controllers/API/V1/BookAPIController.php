@@ -11,6 +11,7 @@ use App\Repositories\BookRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookController
@@ -113,6 +114,9 @@ class BookAPIController extends AppBaseController
      */
     public function destroy(Book $book)
     {
+        if (!empty($book->items->toArray())) {
+            throw new BadRequestHttpException('Book can not be delete, it is has one or more book items.');
+        }
         $book->delete();
 
         return $this->sendResponse($book, 'Book deleted successfully.');

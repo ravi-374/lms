@@ -34,14 +34,14 @@ class Author extends Model
      * @var array
      */
     public static $rules = [
-        'first_name' => 'required'
+        'first_name' => 'required',
     ];
 
     public $table = 'authors';
     public $fillable = [
         'first_name',
         'last_name',
-        'description'
+        'description',
     ];
 
     /**
@@ -50,10 +50,10 @@ class Author extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'first_name' => 'string',
-        'last_name' => 'string',
-        'description' => 'string'
+        'id'          => 'integer',
+        'first_name'  => 'string',
+        'last_name'   => 'string',
+        'description' => 'string',
     ];
 
     /**
