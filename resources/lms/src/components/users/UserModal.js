@@ -4,7 +4,7 @@ import CreateUser from './CreateUser';
 import EditUser from './EditUser';
 
 export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, user,roles} = props;
+    const {isEditMode, toggleModal, isDeleteMode, isCreateMode, user, roles} = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'user-modal',
@@ -14,7 +14,10 @@ export default (props) => {
         if (isEditMode) {
             return <EditUser {...prepareModalOption} user={user} roles={roles}/>
         }
-        return <CreateUser {...prepareModalOption} roles={roles}/>
+        if (isCreateMode) {
+            return <CreateUser {...prepareModalOption} roles={roles}/>
+        }
+        return null;
     }
     if (isDeleteMode) {
         const prepareModalOption = {
