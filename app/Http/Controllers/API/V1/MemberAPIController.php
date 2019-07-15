@@ -131,7 +131,7 @@ class MemberAPIController extends AppBaseController
     public function updateStatus(Member $member){
         $member->is_active = ($member->is_active) ? 0 : 1;
         $member->save();
-        $message = "Member has been ".(($member->is_active) ? 'Activated' : 'Deactivated')." successfully.";
+        $message = "Member has been ".(($member->is_active) ? 'activated' : 'deactivated')." successfully.";
 
         return $this->sendSuccess($message);
     }
