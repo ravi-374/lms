@@ -1,7 +1,7 @@
 .toast {
     visibility: hidden;
     overflow: hidden;
-    max-width: 50px;
+    width: auto;
     height: 60px;
     margin: auto;
     color: #fff;
@@ -34,6 +34,7 @@
 
     &__message {
         padding: 19px;
+        margin-right: 22px;
         white-space: nowrap;
         color: green;
     }
@@ -41,60 +42,15 @@
 
 .toast.show {
     visibility: visible;
-    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s;
-    animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s;
+    -webkit-animation: fade 2s ease-in-out;
+    animation: fade 2s ease-in-out;
 }
 
-@-webkit-keyframes expand {
-    from {
-        min-width: 50px
+@keyframes fade {
+    0%, 100% {
+        opacity: 0
     }
-    to {
-        min-width: 350px
-    }
-}
-
-@keyframes expand {
-    from {
-        min-width: 50px
-    }
-    to {
-        min-width: 350px
-    }
-}
-
-@-webkit-keyframes stay {
-    from {
-        min-width: 350px
-    }
-    to {
-        min-width: 350px
-    }
-}
-
-@keyframes stay {
-    from {
-        min-width: 350px
-    }
-    to {
-        min-width: 350px
-    }
-}
-
-@-webkit-keyframes shrink {
-    from {
-        min-width: 300px;
-    }
-    to {
-        min-width: 50px;
-    }
-}
-
-@keyframes shrink {
-    from {
-        min-width: 350px;
-    }
-    to {
-        min-width: 50px;
+    50% {
+        opacity: 1
     }
 }

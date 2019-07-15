@@ -3,7 +3,7 @@ import './Toast.scss';
 
 const Toast = (props) => {
     useEffect(() => {
-        setTimeout(() => props.onCancel(), 5000);
+        setTimeout(() => props.onCancel(), 2000);
     }, []);
     return (
         <div className="toast show"
