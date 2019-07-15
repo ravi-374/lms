@@ -92,24 +92,24 @@ const MultiSelect = (props) => {
             default:
                 if (/^[a-z0-9]$/i.test(e.key)) {
                     const char = e.key;
-                    const timeout = setTimeout(() => {
+                    setTimeout(() => {
                         setTyped('');
-                    }, 1000);
-                    clearTimeout(timeout);
-                    const typed = typed + char;
-                    const re = new RegExp(`^${typed}`, 'i');
+                    }, 500);
+                    const enteredText = typed + char;
+                    const re = new RegExp(`^${enteredText}`, 'i');
                     const index = options.findIndex(option => re.test(option.name));
                     if (index === -1) {
-                        setTyped(typed);
+                        setTyped(enteredText);
                     }
                     if (multiple) {
                         setFocusedValue(index);
-                        setTyped(typed);
+                        setTyped(enteredText);
 
-                    } else {
+                    }
+                    if (index > -1) {
                         setValues([options[index]]);
                         setFocusedValue(index);
-                        setTyped(typed);
+                        setTyped(enteredText);
                     }
                 }
                 break;
