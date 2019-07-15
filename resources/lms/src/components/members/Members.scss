@@ -1,0 +1,26 @@
+.member-modal {
+    max-width: 1000px;
+}
+
+.member-profile {
+    position: relative;
+}
+
+.member-form {
+    display: flex;
+}
+
+@media only screen and (max-width: 700px) {
+    .member-form {
+        flex-direction: column;
+    }
+    .member-logo {
+        flex: 100%;
+        max-width: 100%;
+    }
+    .primary-detail {
+        margin-top: 30px;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
