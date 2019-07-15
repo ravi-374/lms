@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'jwt.auth'], function () {
+Route::group(['middleware' => 'backend.auth'], function () {
     // Genre Routes
     Route::resource('genres', 'GenreAPIController');
 
@@ -41,6 +41,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
         // add book items
         Route::post('books/{book}/items', 'BookAPIController@addItems');
+        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
         // Get available books
         Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
     });

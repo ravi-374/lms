@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\BackendMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -51,8 +52,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth'          => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can'           => \Illuminate\Auth\Middleware\Authorize::class,
@@ -63,6 +64,7 @@ class Kernel extends HttpKernel
         'role'          => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission'    => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability'       => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'backend.auth'  => BackendMiddleware::class,
     ];
 
     /**

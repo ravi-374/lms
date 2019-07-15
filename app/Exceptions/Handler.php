@@ -66,6 +66,17 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof ModelNotFoundException) {
+            /*
+            * Try to convert error message like:
+            *     No query results for model [App\Models\Model].
+            * To:
+            *     Model not found
+            */
+            if (preg_match('@\\\\(\w+)\]@', $message, $matches)) {
+                $model = $matches[1];
+                $model = preg_replace('/Table/i', '', $model);
+                $message = "{$model} not found.";
+            }
             $code = HttpResponse::HTTP_NOT_FOUND;
         } else {
             if ($exception instanceof ValidationException) {
