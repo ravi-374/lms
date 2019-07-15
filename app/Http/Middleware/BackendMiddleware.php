@@ -7,6 +7,7 @@ use App\User;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use JWTAuth;
 
 class BackendMiddleware
 {
@@ -19,7 +20,9 @@ class BackendMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (App::isLocal()) {
+        $token = JWTAuth::getToken();
+
+        if (App::isLocal() && empty($token)) {
             /** @var User $user */
             $user = User::whereEmail('admin@lms.local')->first();
             if ($user) {
