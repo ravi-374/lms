@@ -1,0 +1,24 @@
+@import "../../scss/variables";
+
+.user-profile {
+    position: relative;
+}
+
+.book-form {
+    display: flex;
+}
+
+@media only screen and (max-width: 800px) {
+    .book-form {
+        flex-direction: column;
+    }
+    .book-logo {
+        flex: 100%;
+        max-width: 100%;
+    }
+    .primary-detail {
+        margin-top: 30px;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
