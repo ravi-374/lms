@@ -24,6 +24,6 @@ class UpdateBookSeriesAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return BookSeries::$rules;
+        return ['title' => 'required|unique:book_series,title,'. $this->route('book_series')->id];
     }
 }

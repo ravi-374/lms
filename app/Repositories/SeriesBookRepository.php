@@ -2,8 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Exceptions\ApiOperationFailedException;
+use App\Exceptions\MissingPropertyException;
+use App\Models\Book;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
+use Arr;
+use DB;
+use Exception;
 
 /**
  * Class SeriesBookRepository
@@ -40,4 +46,66 @@ class SeriesBookRepository extends BaseRepository
         return SeriesBook::class;
     }
 
+    /**
+     * @param BookSeries $bookSeries
+     * @param array $seriesItems
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return bool
+     */
+    public function createOrUpdateSeriesItems($bookSeries, $seriesItems)
+    {
+        $existingItems = $bookSeries->seriesItems->pluck('id');
+        $removedItems = array_diff($existingItems->toArray(), Arr::pluck($seriesItems, 'id'));
+
+        try {
+            DB::beginTransaction();
+            SeriesBook::whereIn('id', $removedItems)->delete();
+            foreach ($seriesItems as $seriesItem) {
+                if (!empty($seriesItem['id'])) {
+                    $item = SeriesBook::findOrFail($seriesItem['id']);
+                } else {
+                    $item = new SeriesBook();
+                }
+
+                $item->series_id = $bookSeries->id;
+                $item->book_id = $seriesItem['book_id'];
+                $item->sequence =  $seriesItem['sequence'];
+
+                $bookSeries->seriesItems()->save($item);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            throw new ApiOperationFailedException('Unable to update BookSeries Items: '.$e->getMessage());
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $seriesItems
+     *
+     * @throws MissingPropertyException
+     *
+     * @return bool
+     */
+    public function validateSeriesItems($seriesItems)
+    {
+        foreach ($seriesItems as $seriesItem) {
+            if (!isset($seriesItem['book_id'])) {
+                throw new MissingPropertyException('Book is required.');
+            }
+
+            if (!isset($seriesItem['sequence'])) {
+                throw new MissingPropertyException('Sequence is required.');
+            }
+
+            Book::findOrFail($seriesItem['book_id']);
+        }
+
+        return true;
+    }
 }

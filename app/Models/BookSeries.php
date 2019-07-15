@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SeriesBook[] $seriesItems
  */
 class BookSeries extends Model
 {
@@ -47,4 +48,11 @@ class BookSeries extends Model
         'title' => 'required|unique:book_series,title',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function seriesItems()
+    {
+        return $this->hasMany(SeriesBook::class, 'series_id')->orderBy('sequence');
+    }
 }
