@@ -47,7 +47,7 @@ class Book extends Model
         deleteImage as traitDeleteImage;
     }
 
-    const IMAGE_PATH = 'images'.DIRECTORY_SEPARATOR.'books';
+    const IMAGE_PATH = 'books';
 
     public $table = 'books';
 
