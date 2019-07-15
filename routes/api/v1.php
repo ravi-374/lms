@@ -59,9 +59,9 @@ Route::group(['middleware' => 'backend.auth'], function () {
         Route::delete('members/{member}', 'MemberAPIController@destroy');
     });
     Route::post('members', 'MemberAPIController@store');
-    Route::post('members/{member}', 'MemberAPIController@update');
+    Route::post('members/{member}', 'MemberAPIController@update')->where('member', '\d+');
     Route::get('members', 'MemberAPIController@index');
-    Route::get('members/{member}', 'MemberAPIController@show');
+    Route::get('members/{member}', 'MemberAPIController@show')->where('member', '\d+');
     Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
     Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage');
 
