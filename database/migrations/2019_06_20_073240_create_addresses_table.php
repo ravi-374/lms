@@ -22,8 +22,13 @@ class CreateAddressesTable extends Migration
             $table->string('city');
             $table->string('state');
             $table->integer('zip');
-            $table->string('country');
+            $table->unsignedInteger('country_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('country_id')
+                ->references('id')->on('countries')
+                ->onDelete('set null')
+                ->onUpdate('set null');
         });
     }
 
