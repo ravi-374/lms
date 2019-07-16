@@ -21,11 +21,14 @@ const Users = (props) => {
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [user, setUser] = useState(null);
     const {users, roles, sortAction, sortObject, toggleModal} = props;
+    const setActiveInactive = (index) => {
+        users[index].is_active = !users[index].is_active;
+    };
     useEffect(() => {
         props.fetchUsers();
         props.fetchRoles();
     }, []);
-    const cardModalProps = {user, roles, isDeleteMode, isEditMode,isCreateMode, toggleModal};
+    const cardModalProps = {user, roles, isDeleteMode, isEditMode, isCreateMode, toggleModal};
     const onOpenModal = (isEdit, user = null, isDelete = false) => {
         setCreateMode(!isEdit);
         setEditMode(isEdit);
@@ -33,7 +36,7 @@ const Users = (props) => {
         setUser(user);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, users, roles, onOpenModal};
+    const cardBodyProps = {sortAction, sortObject, users, roles, setActiveInactive, onOpenModal};
     if (props.isLoading) {
         return <ProgressBar/>
     }
