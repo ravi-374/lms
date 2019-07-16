@@ -10,7 +10,7 @@ export default (formValues) => {
     formData.append('role_id', role_id.toString());
     formData.append('address_1', address_1?address_1:'');
     formData.append('address_2', address_2 ? address_2 : '');
-    formData.append('country_id', country_id ? country_id : '');
+    formData.append('country_id', country_id ? country_id.toString() : '');
     formData.append('city', city ? city : '');
     formData.append('state', state ? state : '');
     formData.append('zip', zip ? zip.toString() : '');

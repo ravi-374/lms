@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {Table} from 'reactstrap';
@@ -10,8 +10,8 @@ import './Users.scss';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../store/actions/toastAction';
 
-const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast}) => {
-    const [isActive] = useState(users.length > 0 ? users.map(({is_active}) => is_active) : []);
+const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setActiveInactive}) => {
+    const isActive = users.length > 0 ? users.map(({is_active}) => is_active) : [];
     const headers = [
         {id: 'name', name: 'Name'},
         {id: 'email', name: 'Email'},
@@ -21,7 +21,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast}) => 
     ];
     const headerProps = {staticField: 'Image', sortAction, sortObject, sortConfig, headers};
     const onChecked = (index, userId) => {
-        isActive[index] = !isActive[index];
+        setActiveInactive(index);
         apiConfig.get(`users/${userId}/update-status`).then(response => {
             addToast({text: response.data.message});
         }).catch(({response}) => {

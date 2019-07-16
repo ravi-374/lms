@@ -16,22 +16,27 @@ import {fetchMembers} from '../../store/actions/memberAction';
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
 
 const members = (props) => {
+    const [isCreateMode, setCreateMode] = useState(false);
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [member, setMember] = useState(null);
     const {members, membershipPlans, sortAction, sortObject, toggleModal} = props;
+    const setActiveInactive = (index) => {
+        members[index].is_active = !members[index].is_active;
+    };
     useEffect(() => {
         props.fetchMembers();
         props.fetchMembershipPlans();
     }, []);
-    const cardModalProps = {member,membershipPlans, isDeleteMode, isEditMode, toggleModal};
+    const cardModalProps = {member, membershipPlans, isEditMode, isDeleteMode, isCreateMode, toggleModal};
     const onOpenModal = (isEdit, member = null, isDelete = false) => {
+        setCreateMode(!isEdit);
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setMember(member);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, members, membershipPlans, onOpenModal};
+    const cardBodyProps = {sortAction, sortObject, members, membershipPlans, setActiveInactive, onOpenModal};
     if (props.isLoading) {
         return <ProgressBar/>
     }
