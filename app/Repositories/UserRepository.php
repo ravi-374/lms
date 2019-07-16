@@ -128,7 +128,7 @@ class UserRepository extends BaseRepository
                 'city'       => !empty($input['city']) ? $input['city'] : '',
                 'state'      => !empty($input['state']) ? $input['state'] : '',
                 'zip'        => !empty($input['zip']) ? $input['zip'] : '',
-                'country_id' => !empty($input['country_id']) ? $input['country_id'] : '',
+                'country_id' => !empty($input['country_id']) ? $input['country_id'] : null,
             ];
 
             return $addressArr;

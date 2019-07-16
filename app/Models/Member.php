@@ -99,7 +99,7 @@ class Member extends Model implements JWTSubject
         'first_name'         => 'required',
         'last_name'          => 'required',
         'email'              => 'required|unique:members,email',
-        'password'           => 'required',
+        'password'           => 'required|min:6',
         'membership_plan_id' => 'required',
     ];
 

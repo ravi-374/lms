@@ -11,6 +11,7 @@ use Arr;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
  */
 class BookRepository extends BaseRepository implements BookRepositoryInterface
 {
+    use ImageTrait;
 
     /** @var TagRepository */
     private $tagRepo;
@@ -34,7 +36,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         $this->genreRepo = $genreRepository;
     }
 
-    use ImageTrait;
     /**
      * @var array
      */
@@ -63,6 +64,22 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     public function model()
     {
         return Book::class;
+    }
+
+    /**
+     * @param array $search
+     * @param int|null $skip
+     * @param int|null $limit
+     * @param array $columns
+     *
+     *
+     * @return Book[]|Collection
+     */
+    public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
+    {
+        $query = $this->allQuery($search, $skip, $limit)->with('authors');
+
+        return $query->get();
     }
 
     /**
