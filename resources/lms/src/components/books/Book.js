@@ -31,7 +31,7 @@ export default ({books, authors, publishers, tags, bookLanguages, genres, onOpen
                 if (language) {
                     book.language_name = language.language_name;
                 }
-                const imageUrl = book.image ? '/images/books/' + book.image : 'images/default-book-image.jpg';
+                const imageUrl = book.image ? 'uploads/books/' + book.image : 'images/default-book-image.jpg';
                 return (
                     <tr key={book.id.toString()}>
                         <td className="text-center"><img src={imageUrl} alt={imageUrl} width="50" height="50"/></td>

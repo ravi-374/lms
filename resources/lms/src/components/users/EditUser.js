@@ -39,6 +39,9 @@ const EditUser = (props) => {
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
     }
+    if (!address) {
+        changeAbleFields.selectedCountry = [];
+    }
     const prepareFormOption = {
         onSaveUser,
         onCancel: props.toggleModal,

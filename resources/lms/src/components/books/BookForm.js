@@ -38,7 +38,7 @@ const BookForm = (props) => {
             props.change('publisher_id', initialValues.publisher_id);
             props.change('language_id', initialValues.language_id);
             if (initialValues.image) {
-                setImage('/images/books/' + initialValues.image);
+                setImage('uploads/books/' + initialValues.image);
             }
         } else {
             props.initialize({items: [{format: 1, is_available: 1}]});

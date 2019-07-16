@@ -21,7 +21,7 @@ const UserForm = (props) => {
                 setActive(props.initialValues.is_active ? props.initialValues.is_active : false)
             }
             if (props.initialValues.image) {
-                setImage('/users/' + props.initialValues.image);
+                setImage('uploads/users/' + props.initialValues.image);
             }
             if (selectedRole.length > 0) {
                 props.change('role_id', selectedRole[0].id);

@@ -35,7 +35,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
             </thead>
             <tbody>
             {users.map((user, index) => {
-                    const imageUrl = user.image ? '/users/' + user.image : 'images/user-avatar.png';
+                    const imageUrl = user.image ? 'uploads/users/' + user.image : 'images/user-avatar.png';
                     if (user.roles.length > 0) {
                         const role = roles.find(role => role.id === +user.roles[0].id);
                         if (role) {

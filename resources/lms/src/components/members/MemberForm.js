@@ -21,7 +21,7 @@ const MemberForm = (props) => {
                 setActive(props.initialValues.is_active ? props.initialValues.is_active : false)
             }
             if (props.initialValues.image) {
-                setImage('/members/' + props.initialValues.image);
+                setImage('uploads/members/' + props.initialValues.image);
             }
             props.change('membership_plan_id', selectedMemberShipPlan[0].id);
         }

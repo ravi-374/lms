@@ -33,8 +33,8 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
             <TableHeader{...headerProps}/>
             </thead>
             <tbody>
-            {members.map((member, index) => {
-                    const imageUrl = member.image ? '/members/' + member.image : 'images/user-avatar.png';
+            {members.map((member,index) => {
+                    const imageUrl = member.image ? 'uploads/members/' + member.image : 'images/user-avatar.png';
                     member.name = member.first_name + ' ' + member.last_name;
                     const memberPlan = membershipPlans.find(memberPlan => memberPlan.id === member.membership_plan_id);
                     if (memberPlan) {
