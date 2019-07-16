@@ -10,7 +10,7 @@ import CheckBox from "../../shared/components/CheckBox";
 const RoleForm = props => {
     const [permissions] = useState(props.permissions);
     const onSaveRole = formValues => {
-        formValues.permissionArray = formValues.permissions.filter(perm => perm.selected === true).map((({id}) => id));
+        formValues.permissionArray = formValues.permissions.filter(perm => perm.isChecked === true).map((({id}) => id));
         props.onSaveRole(formValues);
     };
     useEffect(() => {
@@ -55,7 +55,7 @@ const renderPermissionsItems = ({fields, meta: {error, submitFailed}, permission
             {fields.map((item, index) => {
                     return (
                         <Col xs={6} key={index}>
-                            <Field name={`${item}.selected`} checked={permissions[index].selected}
+                            <Field name={`${item}.isChecked`} checked={permissions[index].selected}
                                    label={permissions[index].name}
                                    onChange={() => handleChanged(index)}
                                    component={CheckBox}/>
