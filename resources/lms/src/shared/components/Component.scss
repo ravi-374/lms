@@ -29,12 +29,12 @@
 }
 
 .control input:checked ~ .control__indicator {
-    background: $input-checked;
+    background: $blue;
 }
 
 .control:hover input:not([disabled]):checked ~ .control__indicator,
 .control input:checked:focus ~ .control__indicator {
-    background: $input-checked;
+    background: $blue;
 }
 
 .control input:disabled ~ .control__indicator {
