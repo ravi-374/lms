@@ -74,7 +74,6 @@ class MembershipPlan extends Model
         'name'           => 'required',
         'price'          => 'required',
         'frequency'      => 'required',
-        'stripe_plan_id' => 'required',
     ];
 
     public static function boot()
