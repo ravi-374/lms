@@ -52,7 +52,7 @@ const renderAppHeader = (props) => {
         e.preventDefault();
         props.history.push('/app/login');
         localStorage.removeItem('user');
-        localStorage.removeItem('token');
+        localStorage.removeItem('authtoken');
     };
     return (
         <AppHeader fixed>

@@ -9,6 +9,8 @@ export default {
                 let token = localStorage.getItem('authtoken');
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${ token }`;
+                } else {
+                    window.location.href = 'http://local.lms.com/#/app/login';
                 }
                 if (isFormData) {
                     config.headers['Content-Type'] = 'multipart/form-data';
