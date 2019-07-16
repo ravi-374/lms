@@ -111,3 +111,7 @@ Route::group(['middleware' => 'backend.auth'], function () {
 Route::post('members/login', 'MemberAuthController@login');
 Route::post('members/register', 'MemberAuthController@register');
 Route::get('members/activate', 'MemberAuthController@verifyAccount');
+
+/** Password Reset API's */
+Route::post('send-reset-password-link', 'AccountAPIController@sendResetPasswordLink');
+Route::post('reset-password', 'AccountAPIController@resetPassword');
