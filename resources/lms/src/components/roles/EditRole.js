@@ -37,7 +37,7 @@ const preparePermissions = (permissions, selectedPermission) => {
         if (perm) {
             selected = true;
         }
-        permissionArray.push({id: permission.id, name: permission.display_name, selected})
+        permissionArray.push({id: permission.id, name: permission.display_name, selected, isChecked: selected})
     });
     return permissionArray;
 };
