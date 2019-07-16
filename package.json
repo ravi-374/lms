@@ -10,6 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "dependencies": {
+        "@brainhubeu/react-permissible": "^1.6.17",
         "@coreui/coreui": "^2.1.12",
         "@coreui/icons": "^0.3.0",
         "@coreui/react": "^2.5.1",

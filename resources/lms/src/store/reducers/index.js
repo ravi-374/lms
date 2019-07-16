@@ -17,6 +17,7 @@ import roleReducer from './roleReducer';
 import permissionReducer from './permissionReducer';
 import bookSeriesReducer from './bookSeriesReducer';
 import memberReducer from './memberReducer';
+import configReducer from './configReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -36,5 +37,6 @@ export default combineReducers({
     sortObject: sortReducer,
     toasts: toastReducer,
     isToggle: modalReducer,
-    permissions: permissionReducer
+    permissions: permissionReducer,
+    config: configReducer,
 });

@@ -1,7 +1,6 @@
-import React, { Suspense} from 'react';
+import React, {Suspense, useState} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
-import routes from '../../routes';
 import {
     AppFooter,
     AppHeader,
@@ -15,21 +14,37 @@ import {
 import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
 import Toasts from '../../shared/toast/Toasts';
+import routes from "../../routes";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
+    const [sideMenuList] = useState(prepareNavigations(props));
     return (
         <div className="app">
             {renderAppHeader(props)}
             <div className="app-body">
-                {renderAppSidebar(props)}
-                {renderMainSection()}
+                {renderAppSidebar(props, sideMenuList)}
+                {renderMainSection(props)}
             </div>
             {renderAppFooter()}
         </div>
     );
+};
+
+const prepareNavigations = (props) => {
+    let sideMenu = navigation;
+       let routes = [];
+    sideMenu.items.forEach(route => {
+        if (props.permissions.includes(route.permission)) {
+            routes.push(route);
+        }
+    });
+    sideMenu.items = routes;
+    sideMenu.items = sideMenu.items.slice();
+
+    return sideMenu;
 };
 
 const renderAppHeader = (props) => {
@@ -48,13 +63,13 @@ const renderAppHeader = (props) => {
     );
 };
 
-const renderAppSidebar = (props) => {
+const renderAppSidebar = (props, sideMenuList) => {
     return (
         <AppSidebar fixed display="lg">
             <AppSidebarHeader/>
             <AppSidebarForm/>
             <Suspense>
-                <AppSidebarNav navConfig={navigation} {...props} />
+                <AppSidebarNav navConfig={sideMenuList} {...props} />
             </Suspense>
             <AppSidebarFooter/>
             <AppSidebarMinimizer/>
@@ -62,13 +77,13 @@ const renderAppSidebar = (props) => {
     );
 };
 
-const renderMainSection = () => {
+const renderMainSection = (props) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes()}
+                        {renderRoutes(props)}
                         <Redirect from="/" to="/app/genres"/>
                     </Switch>
                 </Suspense>
@@ -78,8 +93,16 @@ const renderMainSection = () => {
     )
 };
 
-const renderRoutes = () => {
-    return routes.map((route, index) => {
+const renderRoutes = (props) => {
+    let routesArr = routes;
+    let filterRoutes = [];
+    routesArr.forEach((route) => {
+        if (props.permissions.includes(route.permission)) {
+            filterRoutes.push(route)
+        }
+    })
+
+    return filterRoutes.map((route, index) => {
         return route.component ? (
             <Route
                 key={index}
