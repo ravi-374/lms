@@ -30,4 +30,27 @@ class AccountRepository
             throw new Exception('Unable to send confirmation mail.');
         }
     }
+
+    /**
+     * @param array $data
+     *
+     * @throws Exception
+     *
+     * @return bool
+     */
+    public function sendResetPasswordLinkMail($data)
+    {
+        try {
+            Mail::send('auth.passwords.reset', ['data' => $data],
+                function ($message) use ($data) {
+                    $message->subject('Password Reset Request Received');
+                    $message->to($data['email']);
+                });
+
+        } catch (Exception $e) {
+            throw new Exception('Unable to send password reset mail.');
+        }
+
+        return true;
+    }
 }
