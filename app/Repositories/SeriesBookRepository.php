@@ -10,6 +10,7 @@ use App\Models\SeriesBook;
 use Arr;
 use DB;
 use Exception;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class SeriesBookRepository
@@ -94,6 +95,11 @@ class SeriesBookRepository extends BaseRepository
      */
     public function validateSeriesItems($seriesItems)
     {
+        $sequences = Arr::pluck($seriesItems, 'sequence', 'sequence');
+        if (count($sequences) != count($seriesItems)) {
+            throw new UnprocessableEntityHttpException('Sequence is duplicated');
+        }
+
         foreach ($seriesItems as $seriesItem) {
             if (!isset($seriesItem['book_id'])) {
                 throw new MissingPropertyException('Book is required.');

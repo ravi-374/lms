@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
+use App\Exceptions\MissingPropertyException;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Repositories\Contracts\BookRepositoryInterface;
@@ -201,6 +202,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     public function validateItems($items)
     {
         foreach ($items as $item) {
+            if (empty($item['language_id'])) {
+                throw new MissingPropertyException('Language is required.');
+            }
+
             if (isset($item['format'])) {
                 if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
                     throw new Exception('Invalid Book Format.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
