@@ -20,7 +20,7 @@ class CreateMembershipPlansTable extends Migration
             $table->text('description');
             $table->integer('frequency');
             $table->string('slug');
-            $table->string('stripe_plan_id');
+            $table->string('stripe_plan_id')->nullable();
             $table->timestamps();
         });
     }

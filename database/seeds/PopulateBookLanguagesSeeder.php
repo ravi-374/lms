@@ -3,7 +3,7 @@
 use App\Models\BookLanguage;
 use Illuminate\Database\Seeder;
 
-class PopulateBookLanguages extends Seeder
+class PopulateBookLanguagesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
