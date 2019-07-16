@@ -138,3 +138,24 @@ export const bookSeriesActionType = {
     EDIT_BOOK_SERIES: 'EDIT_BOOK_SERIES',
     DELETE_BOOK_SERIES: 'DELETE_BOOK_SERIES'
 };
+
+export const configActionType = {
+    FETCH_CONFIG: 'FETCH_CONFIG',
+};
+
+export const Permissions = {
+    MANAGE_BOOKS: 'manage_books',
+    ISSUE_BOOKS: 'issue_books',
+    MANAGE_MEMBERS: 'manage_members',
+    MANAGE_FINANCE: 'manage_finance',
+    MANAGE_SETTINGS: 'manage_settings',
+    MANAGE_ROLES: 'manage_roles',
+    MANAGE_AUTHORS: 'manage_authors',
+    MANAGE_PUBLISHERS: 'manage_publishers',
+    MANAGE_BOOK_SERIES: 'manage_book_series',
+    MANAGE_BOOK_LANGUAGES: 'manage_book_languages',
+    MANAGE_PLANS: 'manage_plans',
+    MANAGE_TAGS: 'manage_tags',
+    MANAGE_GENRES: 'manage_genres',
+    MANAGE_USERS: 'manage_users'
+}
