@@ -112,6 +112,10 @@ Route::post('members/login', 'MemberAuthController@login');
 Route::post('members/register', 'MemberAuthController@register');
 Route::get('members/activate', 'MemberAuthController@verifyAccount');
 
-/** Password Reset API's */
+/** Password Reset API's For User */
 Route::post('send-reset-password-link', 'AccountAPIController@sendResetPasswordLink');
 Route::post('reset-password', 'AccountAPIController@resetPassword');
+
+/** Password Reset API's For Member */
+Route::post('send-reset-member-password-link', 'MemberAuthController@sendResetPasswordLink');
+Route::post('reset-member-password', 'MemberAuthController@resetPassword');

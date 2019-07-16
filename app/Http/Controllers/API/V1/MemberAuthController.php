@@ -8,6 +8,8 @@ use App\Models\Member;
 use App\Repositories\AccountRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\UserRepository;
+use App\User;
+use Auth;
 use Crypt;
 use Exception;
 use Hash;
@@ -17,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use JWTAuth;
 use Session;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use URL;
 use Validator;
 
 class MemberAuthController extends AppBaseController
@@ -27,10 +31,17 @@ class MemberAuthController extends AppBaseController
     /** @var  UserRepository */
     private $userRepository;
 
-    public function __construct(MemberRepository $memberRepo, UserRepository $userRepository)
-    {
+    /** @var AccountRepository */
+    private $accountRepo;
+
+    public function __construct(
+        MemberRepository $memberRepo,
+        UserRepository $userRepository,
+        AccountRepository $accountRepo
+    ) {
         $this->memberRepository = $memberRepo;
         $this->userRepository = $userRepository;
+        $this->accountRepo = $accountRepo;
     }
 
     /**
@@ -143,5 +154,64 @@ class MemberAuthController extends AppBaseController
             //Todo: add proper redirect once all set up eg. return redirect('login');
             return $this->sendError('Something went wrong.');
         }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @throws Exception
+     *
+     * @return JsonResponse
+     */
+    public function sendResetPasswordLink(Request $request)
+    {
+        $request->validate(['email' => 'required']);
+
+        $data = [];
+        /** @var User $member */
+        $member = Member::whereEmail($request->get('email'))->first();
+        if (!$member) {
+            throw new UnprocessableEntityHttpException('Given Email does not exist in our system.');
+        }
+        $key = $member->email.'|'.date('Y-m-d H:i:s');
+        $token = Crypt::encrypt($key);
+        $encodedToken = urlencode($token);
+        $data['token'] = $encodedToken;
+        $data['link'] = URL::to('/#/reset-password?'.$encodedToken);
+        $data['first_name'] = $member->first_name;
+        $data['last_name'] = $member->last_name;
+        $data['email'] = $member->email;
+
+        $this->accountRepo->sendResetPasswordLinkMail($data);
+
+        return $this->sendSuccess('Password reset link sent successfully.');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return bool|JsonResponse
+     */
+    public function resetPassword(Request $request)
+    {
+        $request->validate(['token' => 'required', 'password' => 'required']);
+
+        $input = $request->all();
+        $token = Crypt::decrypt($input['token']);
+        list($email, $registerTime) = explode('|', $token);
+
+        $member = Member::whereEmail($email)->first();
+        if (!$member) {
+            return $this->sendError('User with given email not available.');
+        }
+
+        //check activated link has expired in 1 hour
+        if ((strtotime(date('Y-m-d H:i:s')) - strtotime($registerTime)) / (60 * 60) > 1) {
+            return $this->sendError('The activate link has expired.');
+        }
+
+        $member->update(['password' => Hash::make($input['password'])]);
+
+        return $this->sendSuccess('Password updated successfully.');
     }
 }
