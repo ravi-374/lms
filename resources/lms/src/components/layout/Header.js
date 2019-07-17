@@ -11,7 +11,7 @@ const Header = (props) => {
             user.name += ' ' + user.last_name;
         }
         if (user.image) {
-            imageUrl = '/users/' + user.image;
+            imageUrl = 'uploads/users/' + user.image;
         }
     }
     const goToUserProfile = () => {
