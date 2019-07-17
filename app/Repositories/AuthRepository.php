@@ -11,6 +11,10 @@ namespace App\Repositories;
 use App\User;
 use Auth;
 
+/**
+ * Class AuthRepository
+ * @package App\Repositories
+ */
 class AuthRepository
 {
     /**

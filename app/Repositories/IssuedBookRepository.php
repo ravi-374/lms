@@ -54,7 +54,6 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @param null $limit
      * @param array $columns
      *
-     *
      * @return IssuedBook[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])

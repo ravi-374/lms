@@ -30,6 +30,7 @@ class PublisherAPIController extends AppBaseController
      * GET|HEAD /publishers
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function index(Request $request)

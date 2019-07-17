@@ -5,6 +5,10 @@ use Exception;
 use Mail;
 use URL;
 
+/**
+ * Class AccountRepository
+ * @package App\Repositories
+ */
 class AccountRepository
 {
     /**

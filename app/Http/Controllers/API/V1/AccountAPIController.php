@@ -21,6 +21,10 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use URL;
 
+/**
+ * Class AccountAPIController
+ * @package App\Http\Controllers\API\V1
+ */
 class AccountAPIController extends AppBaseController
 {
     /** @var AccountRepository */

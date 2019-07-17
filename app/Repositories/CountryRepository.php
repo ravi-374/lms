@@ -10,6 +10,10 @@ namespace App\Repositories;
 
 use App\Models\Country;
 
+/**
+ * Class CountryRepository
+ * @package App\Repositories
+ */
 class CountryRepository extends BaseRepository
 {
     /**
