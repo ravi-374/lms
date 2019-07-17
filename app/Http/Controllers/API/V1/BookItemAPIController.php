@@ -6,7 +6,6 @@
  * Date: 11-07-2019
  * Time: 10:16 AM
  */
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -17,6 +16,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
 class BookItemAPIController extends AppBaseController
 {
     /** @var BookItemRepository */

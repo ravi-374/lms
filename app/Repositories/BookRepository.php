@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -73,7 +72,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     *
      * @return Book[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
@@ -84,7 +82,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $input
+     * @param  array $input
      *
      * @return mixed
      * @throws Exception
@@ -126,8 +124,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $input
-     * @param  int  $id
+     * @param  array $input
+     * @param  int $id
      * @return \Illuminate\Http\JsonResponse|mixed
      * @throws Exception
      * @throws ApiOperationFailedException
@@ -170,7 +168,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $input
+     * @param  array $input
      * @return bool
      * @throws Exception
      */
@@ -195,7 +193,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $items
+     * @param  array $items
      * @return bool
      * @throws Exception
      */
@@ -231,9 +229,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
         return true;
     }
+
     /**
-     * @param  Book  $book
-     * @param  array  $input
+     * @param  Book $book
+     * @param  array $input
      * @return Book
      */
     public function attachTagsAndGenres($book, $input)
@@ -252,8 +251,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  Book  $book
-     * @param  array  $items
+     * @param  Book $book
+     * @param  array $items
      * @return Book
      * @throws Exception
      */
@@ -270,8 +269,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  Book  $book
-     * @param  array  $bookItems
+     * @param  Book $book
+     * @param  array $bookItems
      * @return bool
      * @throws Exception
      * @throws ApiOperationFailedException
@@ -299,7 +298,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $item->location = isset($bookItem['location']) ? $bookItem['location'] : '';
                 $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
                 $item->publisher_id = isset($bookItem['publisher_id']) ? $bookItem['publisher_id'] : null;
-                $item->language_id= isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
+                $item->language_id = isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
 
                 $book->items()->save($item);
             }

@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Requests\API;
 
-use App\Models\BookLanguage;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateBookLanguageAPIRequest extends APIRequest

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -15,7 +14,6 @@ use Illuminate\Http\Request;
  * Class SeriesBookAPIController
  * @package App\Http\Controllers\API
  */
-
 class SeriesBookAPIController extends AppBaseController
 {
     /** @var  SeriesBookRepository */

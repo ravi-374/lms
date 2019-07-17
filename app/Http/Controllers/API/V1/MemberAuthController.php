@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -9,7 +8,6 @@ use App\Repositories\AccountRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\UserRepository;
 use App\User;
-use Auth;
 use Crypt;
 use Exception;
 use Hash;

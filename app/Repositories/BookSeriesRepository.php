@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -12,8 +11,7 @@ use Illuminate\Container\Container as Application;
  * Class BookSeriesRepository
  * @package App\Repositories
  * @version June 25, 2019, 10:36 am UTC
-*/
-
+ */
 class BookSeriesRepository extends BaseRepository
 {
     /** @var SeriesBookRepository */
@@ -29,7 +27,7 @@ class BookSeriesRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'title'
+        'title',
     ];
 
     /**

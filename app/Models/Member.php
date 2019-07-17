@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Traits\ImageTrait;
@@ -49,7 +48,7 @@ class Member extends Model implements JWTSubject
     const IMAGE_PATH = 'members';
 
     public $table = 'members';
-    protected  $appends = ['image_path'];
+    protected $appends = ['image_path'];
 
     public $fillable = [
         'member_id',

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -44,7 +43,8 @@ class BookItem extends Model
     const STATUS_NOT_AVAILABLE = 2;
 
     const STATUS_ARRAY = [
-        self::STATUS_AVAILABLE, self::STATUS_NOT_AVAILABLE
+        self::STATUS_AVAILABLE,
+        self::STATUS_NOT_AVAILABLE,
     ];
 
     const FORMAT_HARDCOVER = 1;

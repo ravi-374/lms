@@ -30,10 +30,13 @@ class Tag extends Model
     public static $rules = [
         'name' => 'required|unique:tags,name',
     ];
+
     public $table = 'tags';
+
     public $fillable = [
         'name',
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

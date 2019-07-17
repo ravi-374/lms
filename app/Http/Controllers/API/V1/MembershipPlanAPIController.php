@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -93,7 +92,7 @@ class MembershipPlanAPIController extends AppBaseController
 
         $membershipPlan = $this->membershipPlanRepository->update($input, $membershipPlan->id);
 
-        return $this->sendResponse($membershipPlan->toArray(), 'MembershipPlan updated successfully.');
+        return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan updated successfully.');
     }
 
     /**
@@ -109,7 +108,7 @@ class MembershipPlanAPIController extends AppBaseController
     public function destroy(MembershipPlan $membershipPlan)
     {
         if (!empty($membershipPlan->member)) {
-            throw new BadRequestHttpException('Plan can not be delete, it is assigned to one or more members.');
+            throw new BadRequestHttpException('Membership Plan can not be delete, it is assigned to one or more members.');
         }
         $membershipPlan->delete();
 

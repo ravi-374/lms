@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Role;
-use App\Repositories\BaseRepository;
 use App\Repositories\Contracts\RoleRepositoryInterface;
 use DB;
 

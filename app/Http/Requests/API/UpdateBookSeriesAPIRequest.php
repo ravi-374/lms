@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Requests\API;
 
-use App\Models\BookSeries;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateBookSeriesAPIRequest extends APIRequest
@@ -24,6 +22,6 @@ class UpdateBookSeriesAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return ['title' => 'required|unique:book_series,title,'. $this->route('book_series')->id];
+        return ['title' => 'required|unique:book_series,title,'.$this->route('book_series')->id];
     }
 }

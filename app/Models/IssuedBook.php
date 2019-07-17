@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -49,6 +48,7 @@ class IssuedBook extends Model
     const STATUS_RETURNED = 3;
     const STATUS_LOST = 4;
     const STATUS_DAMAGED = 5;
+
     /**
      * Validation rules
      *
@@ -58,7 +58,9 @@ class IssuedBook extends Model
         'member_id' => 'required|numeric',
         'status'    => 'required|numeric',
     ];
+
     public $table = 'issued_books';
+
     public $fillable = [
         'book_item_id',
         'member_id',
@@ -71,6 +73,7 @@ class IssuedBook extends Model
         'issuer_id',
         'returner_id',
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

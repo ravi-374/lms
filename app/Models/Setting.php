@@ -6,10 +6,10 @@
  * Date: 12-07-2019
  * Time: 05:55 PM
  */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 /**
  * App\Models\Setting
  *
@@ -36,6 +36,7 @@ class Setting extends Model
         'key',
         'value',
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

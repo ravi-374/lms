@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\BookItem;
@@ -7,7 +6,6 @@ use App\Models\IssuedBook;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
