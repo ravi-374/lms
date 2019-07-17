@@ -78,8 +78,9 @@ class MemberRepository extends BaseRepository
 
     /**
      * @param $input
-     * @return Member|Member[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      * @throws ApiOperationFailedException
+     *
+     * @return Member
      */
     public function storeMember($input)
     {

@@ -17,6 +17,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * Class BookItemAPIController
+ * @package App\Http\Controllers\API\V1
+ */
 class BookItemAPIController extends AppBaseController
 {
     /** @var BookItemRepository */

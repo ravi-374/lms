@@ -21,6 +21,10 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use URL;
 use Validator;
 
+/**
+ * Class MemberAuthController
+ * @package App\Http\Controllers\API\V1
+ */
 class MemberAuthController extends AppBaseController
 {
     /** @var  MemberRepository */

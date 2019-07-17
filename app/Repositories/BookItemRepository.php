@@ -12,6 +12,10 @@ use App\Models\BookItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
+/**
+ * Class BookItemRepository
+ * @package App\Repositories
+ */
 class BookItemRepository extends BaseRepository
 {
     /**

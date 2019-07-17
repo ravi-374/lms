@@ -17,6 +17,10 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Class SettingAPIController
+ * @package App\Http\Controllers\API\V1
+ */
 class SettingAPIController extends AppBaseController
 {
     /** @var SettingRepository */

@@ -84,10 +84,11 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param  array $input
      *
-     * @return mixed
      * @throws Exception
      *
      * @throws ApiOperationFailedException
+     *
+     * @return mixed
      */
     public function store($input)
     {
@@ -126,9 +127,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param  array $input
      * @param  int $id
-     * @return \Illuminate\Http\JsonResponse|mixed
      * @throws Exception
      * @throws ApiOperationFailedException
+     *
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function update($input, $id)
     {
@@ -169,8 +171,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  array $input
-     * @return bool
      * @throws Exception
+     *
+     * @return bool
      */
     public function validateInput($input)
     {
@@ -194,8 +197,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  array $items
-     * @return bool
      * @throws Exception
+     *
+     * @return bool
      */
     public function validateItems($items)
     {
@@ -253,8 +257,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param  Book $book
      * @param  array $items
-     * @return Book
      * @throws Exception
+     *
+     * @return Book
      */
     public function addBookItems($book, $items)
     {
@@ -271,9 +276,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param  Book $book
      * @param  array $bookItems
-     * @return bool
      * @throws Exception
      * @throws ApiOperationFailedException
+     *
+     * @return bool
      */
     public function createOrUpdateBookItems($book, $bookItems)
     {

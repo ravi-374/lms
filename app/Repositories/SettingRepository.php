@@ -10,6 +10,10 @@ namespace App\Repositories;
 
 use App\Models\Setting;
 
+/**
+ * Class SettingRepository
+ * @package App\Repositories
+ */
 class SettingRepository extends BaseRepository
 {
     /**
