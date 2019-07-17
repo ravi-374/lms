@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -16,8 +15,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  * Class SeriesBookRepository
  * @package App\Repositories
  * @version June 25, 2019, 10:36 am UTC
-*/
-
+ */
 class SeriesBookRepository extends BaseRepository
 {
     /**
@@ -26,7 +24,7 @@ class SeriesBookRepository extends BaseRepository
     protected $fieldSearchable = [
         'series_id',
         'book_id',
-        'sequence'
+        'sequence',
     ];
 
     /**
@@ -72,7 +70,7 @@ class SeriesBookRepository extends BaseRepository
 
                 $item->series_id = $bookSeries->id;
                 $item->book_id = $seriesItem['book_id'];
-                $item->sequence =  $seriesItem['sequence'];
+                $item->sequence = $seriesItem['sequence'];
 
                 $bookSeries->seriesItems()->save($item);
             }

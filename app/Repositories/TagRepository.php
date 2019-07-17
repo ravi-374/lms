@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Tag;
-use App\Repositories\BaseRepository;
 use App\Repositories\Contracts\TagRepositoryInterface;
 
 /**

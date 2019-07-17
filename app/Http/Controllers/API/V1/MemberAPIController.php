@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -128,7 +127,8 @@ class MemberAPIController extends AppBaseController
      *
      * @return JsonResponse
      */
-    public function updateStatus(Member $member){
+    public function updateStatus(Member $member)
+    {
         $member->is_active = ($member->is_active) ? 0 : 1;
         $member->save();
         $message = "Member has been ".(($member->is_active) ? 'activated' : 'deactivated')." successfully.";

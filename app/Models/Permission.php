@@ -1,7 +1,8 @@
 <?php
-
 namespace App\Models;
+
 use Zizaco\Entrust\EntrustPermission;
+
 /**
  * App\Models\Permission
  *
@@ -33,12 +34,15 @@ class Permission extends EntrustPermission
     public static $rules = [
         'name' => 'required|unique:permissions,name',
     ];
+
     public $table = 'permissions';
+
     public $fillable = [
         'name',
         'display_name',
         'description',
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

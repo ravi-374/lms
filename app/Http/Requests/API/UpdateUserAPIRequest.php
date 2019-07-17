@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Http\Requests\API;
 
 use App\User;
-use Illuminate\Foundation\Http\FormRequest;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateUserAPIRequest extends APIRequest
@@ -25,7 +23,7 @@ class UpdateUserAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules =  User::$updateRules;
+        $rules = User::$updateRules;
         $rules['email'] = 'required|unique:users,email,'.$this->route('user')->id;
 
         return $rules;

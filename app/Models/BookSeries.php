@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
@@ -26,7 +25,7 @@ class BookSeries extends Model
     public $table = 'book_series';
 
     public $fillable = [
-        'title'
+        'title',
     ];
 
     /**
@@ -35,8 +34,8 @@ class BookSeries extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'title' => 'string'
+        'id'    => 'integer',
+        'title' => 'string',
     ];
 
     /**

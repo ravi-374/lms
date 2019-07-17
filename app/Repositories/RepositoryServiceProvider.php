@@ -19,8 +19,8 @@ use App\Repositories\IssuedBookRepository;
 use App\Repositories\PublisherRepository;
 use App\Repositories\SeriesBookRepository;
 use App\Repositories\TagRepository;
-use BookSeriesRepositoryInterface;
 use App\Repositories\UserRepository;
+use BookSeriesRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use SeriesBookRepositoryInterface;
 

@@ -6,10 +6,10 @@
  * Date: 13-07-2019
  * Time: 03:14 PM
  */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 /**
  * App\Models\Country
  *

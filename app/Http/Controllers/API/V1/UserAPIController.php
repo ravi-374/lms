@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -16,7 +15,6 @@ use Illuminate\Http\Request;
  * Class UserController
  * @package App\Http\Controllers\API
  */
-
 class UserAPIController extends AppBaseController
 {
     /** @var  UserRepository */
@@ -132,7 +130,8 @@ class UserAPIController extends AppBaseController
      *
      * @return JsonResponse
      */
-    public function updateStatus(User $user){
+    public function updateStatus(User $user)
+    {
         $user->is_active = ($user->is_active) ? 0 : 1;
         $user->save();
         $message = "User has been ".(($user->is_active) ? 'activated' : 'deactivated')." successfully.";

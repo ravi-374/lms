@@ -6,10 +6,10 @@
  * Date: 12-07-2019
  * Time: 05:57 PM
  */
-
 namespace App\Repositories;
 
 use App\Models\Setting;
+
 class SettingRepository extends BaseRepository
 {
     /**

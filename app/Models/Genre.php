@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
-
 
 /**
  * App\Models\Genre
@@ -32,13 +30,13 @@ class Genre extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:genres,name'
+        'name' => 'required|unique:genres,name',
     ];
 
     public $table = 'genres';
     public $fillable = [
         'name',
-        'description'
+        'description',
     ];
 
     /**
@@ -47,9 +45,9 @@ class Genre extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'name' => 'string',
-        'description' => 'string'
+        'id'          => 'integer',
+        'name'        => 'string',
+        'description' => 'string',
     ];
 
     /**

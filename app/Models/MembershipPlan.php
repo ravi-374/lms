@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
@@ -56,13 +55,13 @@ class MembershipPlan extends Model
      * @var array
      */
     protected $casts = [
-        'id'                 => 'integer',
-        'name'               => 'string',
-        'price'              => 'float',
-        'description'        => 'string',
-        'frequency'          => 'integer',
-        'slug'               => 'string',
-        'stripe_plan_id'     => 'string',
+        'id'             => 'integer',
+        'name'           => 'string',
+        'price'          => 'float',
+        'description'    => 'string',
+        'frequency'      => 'integer',
+        'slug'           => 'string',
+        'stripe_plan_id' => 'string',
     ];
 
     /**
@@ -71,9 +70,9 @@ class MembershipPlan extends Model
      * @var array
      */
     public static $rules = [
-        'name'           => 'required',
-        'price'          => 'required',
-        'frequency'      => 'required',
+        'name'      => 'required',
+        'price'     => 'required',
+        'frequency' => 'required',
     ];
 
     public static function boot()

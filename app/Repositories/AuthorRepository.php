@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Author;
@@ -18,7 +17,7 @@ class AuthorRepository extends BaseRepository implements AuthorRepositoryInterfa
     protected $fieldSearchable = [
         'first_name',
         'last_name',
-        'description'
+        'description',
     ];
 
     /**

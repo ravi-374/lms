@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Http\Requests\API;
 
 use App\Models\Role;
-use App\User;
 use InfyOm\Generator\Request\APIRequest;
 
 class CreateRoleAPIRequest extends APIRequest
