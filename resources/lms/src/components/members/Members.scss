@@ -2,10 +2,6 @@
     max-width: 1000px;
 }
 
-.member-profile {
-    position: relative;
-}
-
 .member-form {
     display: flex;
 
@@ -16,11 +12,17 @@
     }
 }
 
+.member-profile {
+    &__title {
+        margin-bottom: 18px;
+    }
+}
+
 @media only screen and (max-width: 700px) {
     .member-form {
         flex-direction: column;
     }
-    .member-logo {
+    .member-profile {
         flex: 100%;
         max-width: 100%;
     }

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import userValidate from './userValidate';
@@ -8,13 +9,19 @@ import InputGroup from '../../shared/components/InputGroup';
 import ToggleSwitch from '../../shared/components/ToggleSwitch';
 import MultiSelect from '../../shared/multi-select/MultiSelect';
 import ImagePicker from '../../shared/image-picker/ImagePicker';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../store/actions/toastAction';
 
 const UserForm = (props) => {
-    const [image, setImage] = useState(null);
+    const defaultImage = 'images/user-avatar.png';
+    const [image, setImage] = useState(defaultImage);
+    const [isDefaultImage, setIsDefaultImage] = useState(true);
+    const [isDeleteImage, setIsDeleteImage] = useState(false);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(false);
     const [selectedRole] = useState(props.initialValues ? props.initialValues.selectedRole : []);
     const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
+    const userId = props.initialValues ? props.initialValues.id : null;
     useEffect(() => {
         if (props.initialValues) {
             if (props.initialValues.is_active) {
@@ -37,10 +44,23 @@ const UserForm = (props) => {
     const onFileChange = (event) => {
         props.change('file_name', 'file_name');
         setFile(event.target.files[0]);
+        setIsDefaultImage(false);
         const fileReader = new FileReader();
         fileReader.readAsDataURL(event.target.files[0]);
         fileReader.onloadend = () => {
             setImage(fileReader.result);
+        }
+    };
+    const onRemovePhoto = () => {
+        props.change('file_name', 'file_name');
+        setFile(null);
+        setImage(defaultImage);
+        setIsDefaultImage(true);
+        if (userId && !isDeleteImage) {
+            setIsDeleteImage(true);
+            apiConfig.post(`users/${userId}/remove-image`)
+                .then(response => addToast({text: response.data.message}))
+                .catch(({response}) => addToast({text: response.data.message}))
         }
     };
     const onChecked = () => {
@@ -60,16 +80,9 @@ const UserForm = (props) => {
             props.change('country_id', null);
         }
     };
+    const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
         <Row className="animated fadeIn user-form m-3">
-            <Col xs={4} className="user-logo">
-                <h5>User Profile</h5>
-                <hr/>
-                <div>
-                    <Field name="file_name" type="hidden" component={InputGroup}/>
-                    <ImagePicker onFileChange={onFileChange} image={image}/>
-                </div>
-            </Col>
             <Col xs={8} className="primary-detail">
                 <div className="d-flex justify-content-between">
                     <h5>Primary Details</h5>
@@ -129,6 +142,14 @@ const UserForm = (props) => {
                     }
                 </Row>
             </Col>
+            <Col xs={4} className="user-profile">
+                <h5 className="user-profile__title">User Profile</h5>
+                <hr/>
+                <div>
+                    <Field name="file_name" type="hidden" component={InputGroup}/>
+                    <ImagePicker {...imagePickerOptions}/>
+                </div>
+            </Col>
             <Col xs={12} className="mt-2">
                 <h5>Additional Details</h5>
                 <hr/>
@@ -168,4 +189,5 @@ const UserForm = (props) => {
     );
 };
 
-export default reduxForm({form: 'userForm', validate: userValidate})(UserForm);
+const userForm = reduxForm({form: 'userForm', validate: userValidate})(UserForm);
+export default connect(null, {addToast})(userForm);

@@ -3,7 +3,6 @@ import {Table} from 'reactstrap';
 import {sortConfig} from '../../config/sortConfig';
 import TableHeader from '../../shared/table-header/Tableheader';
 import ModalAction from '../../shared/action-buttons/ModalAction';
-import {priceFormatter} from '../../shared/sharedMethod';
 
 export default ({books, authors, publishers, tags, bookLanguages, genres, onOpenModal, history, sortAction, sortObject}) => {
     const headers = [
