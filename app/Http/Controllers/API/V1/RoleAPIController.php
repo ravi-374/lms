@@ -92,7 +92,6 @@ class RoleAPIController extends AppBaseController
     {
         $input = $request->all();
 
-
         $role = $this->roleRepository->update($input, $role->id);
 
         return $this->sendResponse($role->toArray(), 'Role updated successfully.');

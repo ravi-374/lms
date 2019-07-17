@@ -126,7 +126,7 @@ class IssuedBookAPIController extends AppBaseController
 
         $issuedBook = $this->issuedBookRepository->update($input, $id);
 
-        return $this->sendResponse($issuedBook->toArray(), 'IssuedBook updated successfully');
+        return $this->sendResponse($issuedBook->toArray(), 'Issued Book updated successfully');
     }
 
     /**

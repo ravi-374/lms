@@ -27,7 +27,6 @@ class SettingAPIController extends AppBaseController
         $this->settingRepo = $settingRepo;
     }
 
-
     /**
      * Display a listing of the Setting.
      * GET|HEAD /settings
