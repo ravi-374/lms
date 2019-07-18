@@ -16,7 +16,10 @@ import {bookFormatOptions, bookStatusOptions} from '../../constants';
 import ImagePicker from '../../shared/image-picker/ImagePicker';
 
 const BookForm = (props) => {
-    const [image, setImage] = useState(null);
+    const defaultImage = 'images/book-avatar.png';
+    const [image, setImage] = useState(defaultImage);
+    const [isDefaultImage, setIsDefaultImage] = useState(true);
+    const [isDeleteImage, setIsDeleteImage] = useState(false);
     const {initialValues} = props;
     const [genres] = useState(initialValues ? initialValues.selectedGenres : []);
     const [tags] = useState(initialValues ? initialValues.selectedTags : []);
@@ -27,6 +30,7 @@ const BookForm = (props) => {
     const [isFeatured, setIsFeatured] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [items, setItems] = useState(initialValues ? initialValues.items : [{format: 1, is_available: 1}]);
+    const bookId = props.initialValues ? props.initialValues.id : null;
     useEffect(() => {
         if (initialValues && initialValues.is_featured) {
             setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
@@ -61,10 +65,23 @@ const BookForm = (props) => {
     const onFileChange = (event) => {
         props.change('file_name', 'file_name');
         setFile(event.target.files[0]);
+        setIsDefaultImage(false);
         const fileReader = new FileReader();
         fileReader.readAsDataURL(event.target.files[0]);
         fileReader.onloadend = () => {
             setImage(fileReader.result);
+        }
+    };
+    const onRemovePhoto = () => {
+        props.change('file_name', 'file_name');
+        setFile(null);
+        setImage(defaultImage);
+        setIsDefaultImage(true);
+        if (bookId && !isDeleteImage) {
+            setIsDeleteImage(true);
+            apiConfig.post(`books/${bookId}/remove-image`)
+                .then(response => addToast({text: response.data.message}))
+                .catch(({response}) => addToast({text: response.data.message}))
         }
     };
     const onSelectGenres = (options) => {
@@ -88,7 +105,6 @@ const BookForm = (props) => {
             props.change('language_id', null);
         }
     };
-
     const onSelectTag = (options) => {
         props.change('tags', options);
     };
@@ -99,16 +115,9 @@ const BookForm = (props) => {
     if (isLoading && initialValues && genres.length === 0) {
         return null;
     }
+    const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
         <Row className="animated fadeIn book-form m-3">
-            <Col xs={4} className="book-logo">
-                <h5>Book Image</h5>
-                <hr/>
-                <div>
-                    <Field name="file_name" type="hidden" component={InputGroup}/>
-                    <ImagePicker onFileChange={onFileChange} image={image}/>
-                </div>
-            </Col>
             <Col xs={8} className="primary-detail">
                 <div className="d-flex">
                     <h5>Primary Details</h5>
@@ -178,6 +187,14 @@ const BookForm = (props) => {
                         <Field name="language_id" type="hidden" component={InputGroup}/>
                     </Col>
                 </Row>
+            </Col>
+            <Col xs={4} className="book-logo">
+                <h5>Book Image</h5>
+                <hr/>
+                <div>
+                    <Field name="file_name" type="hidden" component={InputGroup}/>
+                    <ImagePicker {...imagePickerOptions}/>
+                </div>
             </Col>
             <Col xs={12} className="mt-2">
                 <h5>Additional Details</h5>
@@ -282,7 +299,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                     <Field name={`${item}.edition`} type="text" placeholder="Edition"
                                            groupText="file-text" component={CustomInput}/>
                                 </td>
-                                <td>
+                                <td style={{minWidth: '200px'}}>
                                     <MultiSelect
                                         placeholder="Select Format"
                                         groupText="wpforms"
@@ -300,7 +317,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                     <Field name={`${item}.price`} min="1" type="number" placeholder="Price"
                                            groupText="money" component={CustomInput}/>
                                 </td>
-                                <td>
+                                <td style={{minWidth: '200px'}}>
                                     <MultiSelect
                                         placeholder="Select status"
                                         groupText="info-circle"

@@ -8,13 +8,19 @@ import InputGroup from '../../shared/components/InputGroup';
 import ToggleSwitch from '../../shared/components/ToggleSwitch';
 import ImagePicker from '../../shared/image-picker/ImagePicker';
 import MultiSelect from '../../shared/multi-select/MultiSelect';
+import {addToast} from "../../store/actions/toastAction";
+import apiConfig from '../../config/apiConfig';
 
 const MemberForm = (props) => {
+    const defaultImage = 'images/user-avatar.png';
     const [selectedMemberShipPlan] = useState(props.initialValues ? props.initialValues.selectedMemberShipPlan : []);
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(defaultImage);
+    const [isDefaultImage, setIsDefaultImage] = useState(true);
+    const [isDeleteImage, setIsDeleteImage] = useState(false);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(false);
     const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
+    const memberId = props.initialValues ? props.initialValues.id : null;
     useEffect(() => {
         if (props.initialValues) {
             if (props.initialValues.is_active) {
@@ -34,10 +40,23 @@ const MemberForm = (props) => {
     const onFileChange = (event) => {
         props.change('file_name', 'file_name');
         setFile(event.target.files[0]);
+        setIsDefaultImage(false);
         const fileReader = new FileReader();
         fileReader.readAsDataURL(event.target.files[0]);
         fileReader.onloadend = () => {
             setImage(fileReader.result);
+        }
+    };
+    const onRemovePhoto = () => {
+        props.change('file_name', 'file_name');
+        setFile(null);
+        setImage(defaultImage);
+        setIsDefaultImage(true);
+        if (memberId && !isDeleteImage) {
+            setIsDeleteImage(true);
+            apiConfig.post(`members/${memberId}/remove-image`)
+                .then(response => addToast({text: response.data.message}))
+                .catch(({response}) => addToast({text: response.data.message}))
         }
     };
     const onChecked = () => {
@@ -57,16 +76,10 @@ const MemberForm = (props) => {
             props.change('country_id', null);
         }
     };
+
+    const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
         <Row className="animated fadeIn member-form m-3">
-            <Col xs={4} className="member-logo">
-                <h5>Member Profile</h5>
-                <hr/>
-                <div>
-                    <Field name="file_name" type="hidden" component={InputGroup}/>
-                    <ImagePicker onFileChange={onFileChange} image={image}/>
-                </div>
-            </Col>
             <Col xs={8} className="primary-detail">
                 <div className="d-flex justify-content-between">
                     <h5>Primary Details</h5>
@@ -118,6 +131,14 @@ const MemberForm = (props) => {
                         </Col>
                     }
                 </Row>
+            </Col>
+            <Col xs={4} className="member-profile">
+                <h5 className="member-profile__title">Member Profile</h5>
+                <hr/>
+                <div>
+                    <Field name="file_name" type="hidden" component={InputGroup}/>
+                    <ImagePicker {...imagePickerOptions}/>
+                </div>
             </Col>
             <Col xs={12} className="mt-2">
                 <h5>Additional Details</h5>

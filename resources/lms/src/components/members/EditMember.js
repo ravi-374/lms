@@ -18,8 +18,9 @@ const EditMember = (props) => {
         formValues.roles = [];
         props.editMember(props.member.id, prepareFormData(formValues));
     };
-    const {is_active, first_name, last_name, email, password, membership_plan_id, phone, address,image} = props.member;
+    const {id, is_active, first_name, last_name, email, password, membership_plan_id, phone, address, image} = props.member;
     const changeAbleFields = {
+        id,
         is_active,
         first_name,
         last_name,
