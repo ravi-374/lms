@@ -135,7 +135,7 @@ const MemberForm = (props) => {
             <Col xs={4} className="member-profile">
                 <h5 className="member-profile__title">Member Profile</h5>
                 <hr/>
-                <div>
+                <div className="mt-5">
                     <Field name="file_name" type="hidden" component={InputGroup}/>
                     <ImagePicker {...imagePickerOptions}/>
                 </div>

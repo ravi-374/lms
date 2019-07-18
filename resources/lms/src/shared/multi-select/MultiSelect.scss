@@ -109,15 +109,14 @@ svg {
     }
 
     &__options {
-        max-height: 200px;
+        max-height: 150px;
         position: absolute;
         overflow-x: hidden;
         overflow-y: auto;
         top: 100%;
         left: 38px;
         right: 0;
-        border: solid $grey-border;
-        border-width: 0 1px;
+        border: 1px solid $grey-border;
         background: $white;
         z-index: 11111;
     }
@@ -137,6 +136,10 @@ svg {
 
         &.focused {
             background: $grey-background;
+        }
+
+        &:last-child {
+            border-bottom: 0;
         }
     }
 

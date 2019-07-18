@@ -15,7 +15,7 @@ export default formValues => {
         errors.publisher_id = 'Publisher must be required.'
     }
     if (!formValues.name) {
-        errors.name = 'Name must be required.';
+        errors.name = 'Book name must be required.';
     }
     if (!formValues.language_id) {
         errors.language_id = 'Language must be required.';
@@ -34,16 +34,29 @@ export default formValues => {
             errors.genres = 'At least one genre must be required.';
         }
     }
-    if (!formValues.tags || !formValues.tags.length) {
-        errors.tags = 'Tag must be required.';
-    }
-    if (formValues.tags) {
-        if (formValues.tags.length === 0) {
-            errors.tags = 'At least one tag must be required.';
-        }
-    }
     if (!formValues.items || !formValues.items.length) {
         errors.items = {_error: 'At least one item must be required.'}
+    }
+    const booksArrayErrors = [];
+    if (formValues.items && formValues.items.length) {
+        formValues.items.forEach((item, index) => {
+            const bookErrors = {};
+            if (!item || !item.edition) {
+                bookErrors.edition = 'Edition must be required.';
+                booksArrayErrors[index] = bookErrors
+            }
+            if (!item || !item.language_id) {
+                bookErrors.language_id = 'Language must be required.';
+                booksArrayErrors[index] = bookErrors
+            }
+            if (!item || !item.price) {
+                bookErrors.price = 'Price must be required.';
+                booksArrayErrors[index] = bookErrors
+            }
+        });
+        if (booksArrayErrors.length) {
+            errors.items = booksArrayErrors
+        }
     }
     return errors;
 };

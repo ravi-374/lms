@@ -11,7 +11,7 @@ export const prepareAuthor = (authors) => {
 };
 
 export const preparePublisher = (publishers) => {
-    let publisherArray = [{id: 0, name: 'Select Publisher'}];
+    let publisherArray = [];
     publishers.forEach(publisher => publisherArray.push({
         id: publisher.id,
         name: publisher.name
@@ -20,7 +20,7 @@ export const preparePublisher = (publishers) => {
 };
 
 export const prepareBookLanguage = (bookLanguages) => {
-    let bookLanguageArray = [{id: 0, name: 'Select Language'}];
+    let bookLanguageArray = [];
     bookLanguages.forEach(author => bookLanguageArray.push({
         id: author.id,
         name: author.language_name
