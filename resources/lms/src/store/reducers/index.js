@@ -15,9 +15,11 @@ import bookLanguageReducer from './bookLanguageReducer';
 import bookReducer from './bookReducer';
 import roleReducer from './roleReducer';
 import permissionReducer from './permissionReducer';
+import circulationReducer from './circulationReducer';
 import bookSeriesReducer from './bookSeriesReducer';
 import memberReducer from './memberReducer';
 import configReducer from './configReducer';
+import availableBookReducer from './availableBookReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -31,6 +33,8 @@ export default combineReducers({
     roles: roleReducer,
     booksSeries: bookSeriesReducer,
     members: memberReducer,
+    circulations:circulationReducer,
+    availableBooks:availableBookReducer,
     isLoading: progressReduce,
     form: formReducer,
     searchText: searchReducer,

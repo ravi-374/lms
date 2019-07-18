@@ -5,6 +5,8 @@ export default (state = {}, action) => {
     switch (action.type) {
         case bookActionType.FETCH_BOOKS:
             return {...state, ..._.mapKeys(action.payload, 'id')};
+        case bookActionType.FETCH_BOOKS_BY_MEMBER:
+            return {...state, bookItems: _.mapKeys(action.payload, 'id')};
         case bookActionType.FETCH_BOOK:
         case bookActionType.EDIT_BOOK:
         case bookActionType.ADD_BOOK:

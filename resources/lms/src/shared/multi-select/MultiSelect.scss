@@ -164,6 +164,11 @@ svg {
             opacity: 1;
             user-select: none;
         }
+        &--disabled{
+            background-color: #e4e7ea;
+            opacity: 1;
+            user-select: none;
+        }
     }
 
     &__checkbox {
