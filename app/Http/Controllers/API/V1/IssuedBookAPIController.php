@@ -43,7 +43,11 @@ class IssuedBookAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($issuedBooks->toArray(), 'Issued Books retrieved successfully');
+        $issuedBooks = $issuedBooks->map(function (IssuedBook $issuedBook) {
+            return $issuedBook->apiObj();
+        });
+
+        return $this->sendResponse($issuedBooks, 'Issued Books retrieved successfully');
     }
 
     /**
@@ -164,6 +168,10 @@ class IssuedBookAPIController extends AppBaseController
             $request->get('limit', null)
         );
 
-        return $this->sendResponse($records->toArray(), 'Books history retrieved successfully.');
+        $records = $records->map(function (IssuedBook $issuedBook) {
+            return $issuedBook->apiObj();
+        });
+
+        return $this->sendResponse($records, 'Books history retrieved successfully.');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 
@@ -40,6 +41,10 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property int|null $returner_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereIssuerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereReturnerId($value)
+ * @property-read string|null $issuer_name
+ * @property-read string|null $returner_name
+ * @property-read \App\User|null $issuer
+ * @property-read \App\User|null $returner
  */
 class IssuedBook extends Model
 {
@@ -111,6 +116,22 @@ class IssuedBook extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function issuer()
+    {
+        return $this->belongsTo(User::class, 'issuer_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function returner()
+    {
+        return $this->belongsTo(User::class, 'returner_id');
+    }
+
+    /**
      * @param int $memberId
      * @param Builder $query
      *
@@ -119,5 +140,34 @@ class IssuedBook extends Model
     public function scopeOfMember(Builder $query, $memberId)
     {
         return $query->where('member_id', $memberId);
+    }
+
+    public function getIssuerNameAttribute()
+    {
+        if (!empty($this->issuer_id)) {
+            return $this->issuer->first_name. " ".$this->issuer->last_name;
+        }
+    }
+
+    public function getReturnerNameAttribute()
+    {
+        if (!empty($this->returner_id)) {
+            return $this->returner->first_name. " ".$this->returner->last_name;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function apiObj()
+    {
+        $record = $this->toArray();
+        $record['issuer_name'] = $this->issuer_name;
+        $record['returner_name'] = $this->returner_name;;
+
+        unset($record['issuer']);
+        unset($record['returner']);
+
+        return $record;
     }
 }

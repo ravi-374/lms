@@ -50,15 +50,16 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
     /**
      * @param array $search
-     * @param null $skip
-     * @param null $limit
+     * @param int|null $skip
+     * @param int|null $limit
      * @param array $columns
      *
      * @return IssuedBook[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('bookItem.book');
+        $with = ['issuer', 'returner', 'bookItem.book'];
+        $query = $this->allQuery($search, $skip, $limit)->with($with);
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
