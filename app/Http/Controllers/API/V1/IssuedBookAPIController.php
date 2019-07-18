@@ -65,7 +65,7 @@ class IssuedBookAPIController extends AppBaseController
 
         $result = $this->issuedBookRepository->issueBook($input);
 
-        return $this->sendResponse($result, 'Book issued successfully.');
+        return $this->sendResponse($result->apiObj(), 'Book issued successfully.');
     }
 
     /**
@@ -82,7 +82,7 @@ class IssuedBookAPIController extends AppBaseController
 
         $result = $this->issuedBookRepository->reserveBook($input);
 
-        return $this->sendResponse($result, 'Book reserved successfully.');
+        return $this->sendResponse($result->apiObj(), 'Book reserved successfully.');
     }
 
     /**
@@ -100,7 +100,7 @@ class IssuedBookAPIController extends AppBaseController
 
         $result = $this->issuedBookRepository->returnBook($input);
 
-        return $this->sendResponse($result, 'Book return successfully.');
+        return $this->sendResponse($result->apiObj(), 'Book return successfully.');
     }
 
     /**
