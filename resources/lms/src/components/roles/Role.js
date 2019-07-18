@@ -5,7 +5,7 @@ import TableHeader from '../../shared/table-header/Tableheader';
 import ModalAction from '../../shared/action-buttons/ModalAction';
 
 export default ({roles, onOpenModal, sortAction, sortObject}) => {
-    const headers = [{id: 'name', name: 'Name'}, {id: 'display_name', name: 'Display Name'}];
+    const headers = [{id: 'display_name', name: 'Display Name'}, {id: 'name', name: 'Name'}];
     const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
     return (
         <Table hover bordered striped responsive size="md">

@@ -18,7 +18,7 @@ const MemberForm = (props) => {
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [isDeleteImage, setIsDeleteImage] = useState(false);
     const [file, setFile] = useState(null);
-    const [isActive, setActive] = useState(false);
+    const [isActive, setActive] = useState(true);
     const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
     const memberId = props.initialValues ? props.initialValues.id : null;
     useEffect(() => {
@@ -30,6 +30,8 @@ const MemberForm = (props) => {
                 setImage('uploads/members/' + props.initialValues.image);
             }
             props.change('membership_plan_id', selectedMemberShipPlan[0].id);
+        } else {
+            props.change('is_active', true);
         }
     }, []);
     const onSaveMember = (formValues) => {
