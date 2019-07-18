@@ -70,10 +70,15 @@ export const membershipPlanFrequencyOptions = [
 
 export const bookActionType = {
     FETCH_BOOKS: 'FETCH_BOOKS',
+    FETCH_BOOKS_BY_MEMBER: 'FETCH_BOOKS_BY_MEMBER',
     FETCH_BOOK: 'FETCH_BOOK',
     ADD_BOOK: 'ADD_BOOK',
     EDIT_BOOK: 'EDIT_BOOK',
     DELETE_BOOK: 'DELETE_BOOK'
+};
+
+export const avilableBookActionType = {
+    FETCH_AVAILABLE_BOOKS: 'FETCH_AVAILABLE_BOOKS',
 };
 
 export const bookFormatConstant = {
@@ -129,6 +134,35 @@ export const roleActionType = {
 
 export const permissionActionType = {
     FETCH_PERMISSIONS: 'FETCH_PERMISSIONS',
+};
+
+export const circulationActionType = {
+    FETCH_CIRCULATIONS: 'FETCH_CIRCULATIONS',
+    FETCH_CIRCULATION: 'FETCH_CIRCULATION',
+    ADD_CIRCULATION: 'ADD_CIRCULATION',
+    EDIT_CIRCULATION: 'EDIT_CIRCULATION',
+    DELETE_CIRCULATION: 'DELETE_CIRCULATION'
+};
+
+export const circularOptions = [
+    {id: 0, name: 'Select Status'},
+    {id: 1, name: 'Reserved'},
+    {id: 2, name: 'Issued'},
+    {id: 3, name: 'Returned'},
+    // {id: 4, name: 'Lost'},
+    // {id: 5, name: 'Damaged'},
+];
+
+export const circularStatusConstant = {
+    BOOK_RESERVED: 1,
+    BOOK_ISSUED: 2,
+    BOOK_RETURNED: 3,
+    BOOK_LOST: 4,
+    BOOK_DAMAGED: 5
+};
+
+export const toastType = {
+    ERROR: 'error'
 };
 
 export const bookSeriesActionType = {

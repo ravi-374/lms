@@ -22,8 +22,8 @@ export const fetchBooks = (history = null) => async (dispatch) => {
         });
 };
 
-export const fetchBook = (bookId) => async (dispatch) => {
-    dispatch(setLoading(true));
+export const fetchBook = (bookId, isLoading = true) => async (dispatch) => {
+    dispatch(setLoading(isLoading));
     await apiConfig.get(`books/${bookId}`)
         .then((response) => {
             dispatch({type: bookActionType.FETCH_BOOK, payload: response.data.data});

@@ -67,6 +67,12 @@ export default {
             url: '/app/members',
             icon: 'icon-user',
             permission: Permissions.MANAGE_MEMBERS,
+        },
+        {
+            name: 'Circulations',
+            url: '/app/circulations',
+            icon: 'icon-grid',
+            permission: Permissions.MANAGE_BOOKS
         }
     ],
 };
