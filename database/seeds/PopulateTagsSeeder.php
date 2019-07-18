@@ -19,7 +19,6 @@ class PopulateTagsSeeder extends Seeder
             'Science',
             'History',
             'Biopic',
-            'Biopic',
             'Art',
             'Horror',
             'Comedy',
