@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
@@ -12,7 +11,7 @@ use JWTAuth;
 class AuthAPIController extends AppBaseController
 {
     /**
-     * @param  Request  $request
+     * @param  Request $request
      *
      * @return JsonResponse
      */

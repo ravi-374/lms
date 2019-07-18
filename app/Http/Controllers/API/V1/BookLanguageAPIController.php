@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -106,7 +105,7 @@ class BookLanguageAPIController extends AppBaseController
     public function destroy(BookLanguage $bookLanguage)
     {
         if (!empty($bookLanguage->bookItems->toArray())) {
-            throw new BadRequestHttpException('Language can not be delete, it is used in one or more book items.');
+            throw new BadRequestHttpException('Book Language can not be delete, it is used in one or more book items.');
         }
         $bookLanguage->delete();
 

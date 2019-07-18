@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -10,13 +9,13 @@ use App\Models\SeriesBook;
 use Arr;
 use DB;
 use Exception;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class SeriesBookRepository
  * @package App\Repositories
  * @version June 25, 2019, 10:36 am UTC
-*/
-
+ */
 class SeriesBookRepository extends BaseRepository
 {
     /**
@@ -25,7 +24,7 @@ class SeriesBookRepository extends BaseRepository
     protected $fieldSearchable = [
         'series_id',
         'book_id',
-        'sequence'
+        'sequence',
     ];
 
     /**
@@ -71,7 +70,7 @@ class SeriesBookRepository extends BaseRepository
 
                 $item->series_id = $bookSeries->id;
                 $item->book_id = $seriesItem['book_id'];
-                $item->sequence =  $seriesItem['sequence'];
+                $item->sequence = $seriesItem['sequence'];
 
                 $bookSeries->seriesItems()->save($item);
             }
@@ -94,6 +93,11 @@ class SeriesBookRepository extends BaseRepository
      */
     public function validateSeriesItems($seriesItems)
     {
+        $sequences = Arr::pluck($seriesItems, 'sequence', 'sequence');
+        if (count($sequences) != count($seriesItems)) {
+            throw new UnprocessableEntityHttpException('Sequence is duplicated');
+        }
+
         foreach ($seriesItems as $seriesItem) {
             if (!isset($seriesItem['book_id'])) {
                 throw new MissingPropertyException('Book is required.');

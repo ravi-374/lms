@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -8,7 +7,6 @@ use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Repositories\BookItemRepository;
-use App\Repositories\BookRepository;
 use App\Repositories\IssuedBookRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -45,7 +43,11 @@ class IssuedBookAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($issuedBooks->toArray(), 'Issued Books retrieved successfully');
+        $issuedBooks = $issuedBooks->map(function (IssuedBook $issuedBook) {
+            return $issuedBook->apiObj();
+        });
+
+        return $this->sendResponse($issuedBooks, 'Issued Books retrieved successfully');
     }
 
     /**
@@ -54,7 +56,7 @@ class IssuedBookAPIController extends AppBaseController
      *
      * @throws Exception
      *
-     *@return JsonResponse
+     * @return JsonResponse
      */
     public function issueBook(BookItem $bookItem, Request $request)
     {
@@ -89,7 +91,7 @@ class IssuedBookAPIController extends AppBaseController
      *
      * @throws Exception
      *
-     *@return JsonResponse
+     * @return JsonResponse
      */
     public function returnBook(BookItem $bookItem, Request $request)
     {
@@ -128,11 +130,11 @@ class IssuedBookAPIController extends AppBaseController
 
         $issuedBook = $this->issuedBookRepository->update($input, $id);
 
-        return $this->sendResponse($issuedBook->toArray(), 'IssuedBook updated successfully');
+        return $this->sendResponse($issuedBook->toArray(), 'Issued Book updated successfully');
     }
 
     /**
-     * @param int$id
+     * @param int $id
      *
      * @throws Exception
      *
@@ -166,6 +168,10 @@ class IssuedBookAPIController extends AppBaseController
             $request->get('limit', null)
         );
 
-        return $this->sendResponse($records->toArray(), 'Books history retrieved successfully.');
+        $records = $records->map(function (IssuedBook $issuedBook) {
+            return $issuedBook->apiObj();
+        });
+
+        return $this->sendResponse($records, 'Books history retrieved successfully.');
     }
 }

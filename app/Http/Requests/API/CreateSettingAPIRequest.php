@@ -6,11 +6,11 @@
  * Date: 12-07-2019
  * Time: 05:59 PM
  */
-
 namespace App\Http\Requests\API;
 
 use App\Models\Setting;
 use Illuminate\Foundation\Http\FormRequest;
+
 class CreateSettingAPIRequest extends FormRequest
 {
     /**

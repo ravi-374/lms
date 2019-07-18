@@ -6,15 +6,17 @@
  * Date: 13-07-2019
  * Time: 03:31 PM
  */
-
 namespace App\Http\Controllers\API\V1;
 
-
 use App\Http\Controllers\AppBaseController;
-use App\Models\Country;
 use App\Repositories\CountryRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
+/**
+ * Class CountryAPIController
+ * @package App\Http\Controllers\API\V1
+ */
 class CountryAPIController extends AppBaseController
 {
     /** @var CountryRepository */

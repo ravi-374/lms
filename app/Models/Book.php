@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use App\Traits\ImageTrait;
 use Illuminate\Database\Eloquent\Model as Model;
 use phpDocumentor\Reflection\Types\Nullable;
-
 
 /**
  * App\Models\Book
@@ -85,9 +83,9 @@ class Book extends Model
      * @var array
      */
     public static $rules = [
-        'name'        => 'required|unique:books,name',
-        'isbn'        => 'required|unique:books,isbn',
-        'genres'      => 'required',
+        'name'   => 'required|unique:books,name',
+        'isbn'   => 'required|unique:books,isbn',
+        'genres' => 'required',
     ];
 
     /**
@@ -106,9 +104,10 @@ class Book extends Model
     public function deleteImage()
     {
         if (!empty($this->image)) {
-            return $this->traitDeleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
-
+            $this->traitDeleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
             $this->update(['image' => null]);
+
+            return true;
         }
     }
 

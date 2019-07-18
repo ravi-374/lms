@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\BookItem;
@@ -7,7 +6,6 @@ use App\Models\IssuedBook;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -52,16 +50,16 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
     /**
      * @param array $search
-     * @param null $skip
-     * @param null $limit
+     * @param int|null $skip
+     * @param int|null $limit
      * @param array $columns
-     *
      *
      * @return IssuedBook[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('bookItem.book');
+        $with = ['issuer', 'returner', 'bookItem.book'];
+        $query = $this->allQuery($search, $skip, $limit)->with($with);
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);

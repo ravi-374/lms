@@ -6,12 +6,16 @@
  * Date: 01-07-2019
  * Time: 11:57 AM
  */
-
 namespace App\Repositories;
 
 use App\Models\BookItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+
+/**
+ * Class BookItemRepository
+ * @package App\Repositories
+ */
 class BookItemRepository extends BaseRepository
 {
     /**
@@ -47,7 +51,6 @@ class BookItemRepository extends BaseRepository
      * @param int|null $skip
      * @param int|null $limit
      * @param array $columns
-     *
      *
      * @return BookItem|Collection
      */

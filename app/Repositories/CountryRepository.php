@@ -6,10 +6,14 @@
  * Date: 13-07-2019
  * Time: 03:31 PM
  */
-
 namespace App\Repositories;
 
 use App\Models\Country;
+
+/**
+ * Class CountryRepository
+ * @package App\Repositories
+ */
 class CountryRepository extends BaseRepository
 {
     /**

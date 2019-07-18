@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Requests\API;
 
-use App\Models\Permission;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdatePermissionAPIRequest extends APIRequest

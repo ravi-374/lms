@@ -6,7 +6,6 @@
  * Date: 12-07-2019
  * Time: 05:56 PM
  */
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -17,6 +16,11 @@ use App\Repositories\SettingRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
+/**
+ * Class SettingAPIController
+ * @package App\Http\Controllers\API\V1
+ */
 class SettingAPIController extends AppBaseController
 {
     /** @var SettingRepository */
@@ -26,7 +30,6 @@ class SettingAPIController extends AppBaseController
     {
         $this->settingRepo = $settingRepo;
     }
-
 
     /**
      * Display a listing of the Setting.

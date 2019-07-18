@@ -20,6 +20,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use URL;
+
+/**
+ * Class AccountAPIController
+ * @package App\Http\Controllers\API\V1
+ */
 class AccountAPIController extends AppBaseController
 {
     /** @var AccountRepository */
@@ -47,7 +52,7 @@ class AccountAPIController extends AppBaseController
         if (!$user) {
             throw new UnprocessableEntityHttpException('Given Email does not exist in our system.');
         }
-        $key =  $user->email.'|'.date('Y-m-d H:i:s');
+        $key = $user->email.'|'.date('Y-m-d H:i:s');
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
@@ -68,7 +73,7 @@ class AccountAPIController extends AppBaseController
      */
     public function resetPassword(Request $request)
     {
-        $request->validate(['token' => 'required', 'password'=> 'required']);
+        $request->validate(['token' => 'required', 'password' => 'required']);
 
         $input = $request->all();
         $token = Crypt::decrypt($input['token']);
@@ -81,7 +86,7 @@ class AccountAPIController extends AppBaseController
 
         //check activated link has expired in 1 hour
         if ((strtotime(date('Y-m-d H:i:s')) - strtotime($registerTime)) / (60 * 60) > 1) {
-            return  $this->sendError('The activate link has expired.');
+            return $this->sendError('The activate link has expired.');
         }
 
         $user->update(['password' => Hash::make($input['password'])]);

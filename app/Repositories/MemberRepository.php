@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -73,15 +72,18 @@ class MemberRepository extends BaseRepository
     public function store($input)
     {
         MembershipPlan::findOrFail($input['membership_plan_id']);
+
         return $this->storeMember($input);
     }
 
     /**
      * @param $input
-     * @return Member|Member[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      * @throws ApiOperationFailedException
+     *
+     * @return Member
      */
-    public function storeMember($input){
+    public function storeMember($input)
+    {
         try {
             DB::beginTransaction();
             $input['password'] = Hash::make($input['password']);
@@ -95,7 +97,7 @@ class MemberRepository extends BaseRepository
             /** @var UserRepository $userRepo */
             $userRepo = app(UserRepository::class);
             $addressArr = $userRepo->makeAddressArray($input);
-            if(!empty($addressArr)) {
+            if (!empty($addressArr)) {
                 $address = new Address($addressArr);
                 $member->address()->save($address);
             }
@@ -152,9 +154,9 @@ class MemberRepository extends BaseRepository
             /** @var UserRepository $userRepo */
             $userRepo = app(UserRepository::class);
             $addressArr = $userRepo->makeAddressArray($input);
-            if(!empty($addressArr)) {
+            if (!empty($addressArr)) {
                 $isUpdate = $member->address()->update($addressArr);
-                if(!$isUpdate){
+                if (!$isUpdate) {
                     $address = new Address($addressArr);
                     $member->address()->save($address);
                 }

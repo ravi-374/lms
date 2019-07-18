@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\MembershipPlan;
@@ -10,8 +9,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  * Class MembershipPlanRepository
  * @package App\Repositories
  * @version June 24, 2019, 10:42 am UTC
-*/
-
+ */
 class MembershipPlanRepository extends BaseRepository
 {
     /**
@@ -20,7 +18,7 @@ class MembershipPlanRepository extends BaseRepository
     protected $fieldSearchable = [
         'name',
         'frequency',
-        'stripe_plan_id'
+        'stripe_plan_id',
     ];
 
     /**

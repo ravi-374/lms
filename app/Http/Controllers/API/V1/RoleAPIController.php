@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -92,7 +91,6 @@ class RoleAPIController extends AppBaseController
     public function update(Role $role, UpdateRoleAPIRequest $request)
     {
         $input = $request->all();
-
 
         $role = $this->roleRepository->update($input, $role->id);
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
@@ -31,7 +30,7 @@ class SeriesBook extends Model
     public $fillable = [
         'series_id',
         'book_id',
-        'sequence'
+        'sequence',
     ];
 
     /**
@@ -40,10 +39,10 @@ class SeriesBook extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id'        => 'integer',
         'series_id' => 'integer',
-        'book_id' => 'integer',
-        'sequence' => 'integer'
+        'book_id'   => 'integer',
+        'sequence'  => 'integer',
     ];
 
     /**
@@ -53,8 +52,7 @@ class SeriesBook extends Model
      */
     public static $rules = [
         'series_id' => 'required',
-        'book_id' => 'required',
-        'sequence' => 'required'
+        'book_id'   => 'required',
+        'sequence'  => 'required',
     ];
-
 }

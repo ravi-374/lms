@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Publisher;
-use App\Repositories\BaseRepository;
 use App\Repositories\Contracts\PublisherRepositoryInterface;
 
 /**

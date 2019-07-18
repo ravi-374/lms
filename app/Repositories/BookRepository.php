@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
+use App\Exceptions\MissingPropertyException;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Repositories\Contracts\BookRepositoryInterface;
@@ -72,7 +72,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     *
      * @return Book[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
@@ -83,12 +82,13 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $input
+     * @param  array $input
      *
-     * @return mixed
      * @throws Exception
      *
      * @throws ApiOperationFailedException
+     *
+     * @return mixed
      */
     public function store($input)
     {
@@ -125,11 +125,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $input
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @param  array $input
+     * @param  int $id
      * @throws Exception
      * @throws ApiOperationFailedException
+     *
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function update($input, $id)
     {
@@ -169,9 +170,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $input
-     * @return bool
+     * @param  array $input
      * @throws Exception
+     *
+     * @return bool
      */
     public function validateInput($input)
     {
@@ -194,13 +196,18 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array  $items
-     * @return bool
+     * @param  array $items
      * @throws Exception
+     *
+     * @return bool
      */
     public function validateItems($items)
     {
         foreach ($items as $item) {
+            if (empty($item['language_id'])) {
+                throw new MissingPropertyException('Language is required.');
+            }
+
             if (isset($item['format'])) {
                 if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
                     throw new Exception('Invalid Book Format.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
@@ -226,9 +233,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
         return true;
     }
+
     /**
-     * @param  Book  $book
-     * @param  array  $input
+     * @param  Book $book
+     * @param  array $input
      * @return Book
      */
     public function attachTagsAndGenres($book, $input)
@@ -247,10 +255,11 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  Book  $book
-     * @param  array  $items
-     * @return Book
+     * @param  Book $book
+     * @param  array $items
      * @throws Exception
+     *
+     * @return Book
      */
     public function addBookItems($book, $items)
     {
@@ -265,11 +274,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  Book  $book
-     * @param  array  $bookItems
-     * @return bool
+     * @param  Book $book
+     * @param  array $bookItems
      * @throws Exception
      * @throws ApiOperationFailedException
+     *
+     * @return bool
      */
     public function createOrUpdateBookItems($book, $bookItems)
     {
@@ -294,7 +304,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $item->location = isset($bookItem['location']) ? $bookItem['location'] : '';
                 $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
                 $item->publisher_id = isset($bookItem['publisher_id']) ? $bookItem['publisher_id'] : null;
-                $item->language_id= isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
+                $item->language_id = isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
 
                 $book->items()->save($item);
             }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\API;
 
 use App\Models\Member;
@@ -24,7 +23,7 @@ class UpdateMemberAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules =Member::$rules;
+        $rules = Member::$rules;
         $rules['email'] = 'required|unique:members,email,'.$this->route('member')->id;
 
         return $rules;

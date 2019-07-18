@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -31,6 +30,7 @@ class PublisherAPIController extends AppBaseController
      * GET|HEAD /publishers
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function index(Request $request)

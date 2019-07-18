@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Models;
 
 use Zizaco\Entrust\EntrustRole;
+
 /**
  * App\Models\Role
  *
@@ -29,26 +29,29 @@ class Role extends EntrustRole
 {
     const ROLE_ADMIN = 'admin';
     const ROLE_LIBRARIAN = 'librarian';
-    
+
     /**
      * Validation rules
      *
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:roles,name',
+        'name'        => 'required|unique:roles,name',
         'permissions' => 'required|array',
     ];
 
     public static $messages = [
         'permissions.required' => 'Role must have at least one permission.',
     ];
+
     public $table = 'roles';
+
     public $fillable = [
         'name',
         'display_name',
         'description',
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

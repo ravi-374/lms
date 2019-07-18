@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -16,7 +15,6 @@ use Illuminate\Http\Request;
  * Class BookSeriesAPIController
  * @package App\Http\Controllers\API
  */
-
 class BookSeriesAPIController extends AppBaseController
 {
     /** @var  BookSeriesRepository */

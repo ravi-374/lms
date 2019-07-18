@@ -1,17 +1,20 @@
 <?php
-
 namespace App\Repositories;
 
 use Exception;
 use Mail;
 use URL;
 
+/**
+ * Class AccountRepository
+ * @package App\Repositories
+ */
 class AccountRepository
 {
     /**
-     * @param  string  $username
-     * @param  string  $email
-     * @param  string  $activateCode
+     * @param  string $username
+     * @param  string $email
+     * @param  string $activateCode
      * @throws Exception
      */
     public function sendConfirmEmail($username, $email, $activateCode)

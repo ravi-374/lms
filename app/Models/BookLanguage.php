@@ -36,11 +36,14 @@ class BookLanguage extends Model
         'language_name' => 'required|unique:book_languages,language_name',
         'language_code' => 'required|unique:book_languages,language_code',
     ];
+
     public $table = 'book_languages';
+
     public $fillable = [
         'language_name',
         'language_code',
     ];
+
     /**
      * The attributes that should be casted to native types.
      *

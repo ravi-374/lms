@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Requests\API;
 
-use App\Models\Genre;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateGenreAPIRequest extends APIRequest

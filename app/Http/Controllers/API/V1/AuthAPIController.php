@@ -12,6 +12,11 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\AuthRepository;
 use Illuminate\Http\JsonResponse;
+
+/**
+ * Class AuthAPIController
+ * @package App\Http\Controllers\API\V1
+ */
 class AuthAPIController extends AppBaseController
 {
     /** @var AuthRepository $authRepo */

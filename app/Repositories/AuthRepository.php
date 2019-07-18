@@ -6,11 +6,15 @@
  * Date: 12-07-2019
  * Time: 11:17 AM
  */
-
 namespace App\Repositories;
 
 use App\User;
 use Auth;
+
+/**
+ * Class AuthRepository
+ * @package App\Repositories
+ */
 class AuthRepository
 {
     /**
@@ -29,8 +33,8 @@ class AuthRepository
         }
 
         return [
-            'user' => $userDetails,
-            'roles' => $roles,
+            'user'        => $userDetails,
+            'roles'       => $roles,
             'permissions' => $permissions,
         ];
     }
