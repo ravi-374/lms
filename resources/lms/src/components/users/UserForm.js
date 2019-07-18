@@ -18,7 +18,7 @@ const UserForm = (props) => {
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [isDeleteImage, setIsDeleteImage] = useState(false);
     const [file, setFile] = useState(null);
-    const [isActive, setActive] = useState(false);
+    const [isActive, setActive] = useState(true);
     const [selectedRole] = useState(props.initialValues ? props.initialValues.selectedRole : []);
     const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
     const userId = props.initialValues ? props.initialValues.id : null;
@@ -33,6 +33,8 @@ const UserForm = (props) => {
             if (selectedRole.length > 0) {
                 props.change('role_id', selectedRole[0].id);
             }
+        } else {
+            props.change('is_active', true);
         }
 
     }, []);
