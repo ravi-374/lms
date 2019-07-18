@@ -40,7 +40,7 @@ const Circulations = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <h5 className="pull-left text-dark">Circulations</h5>
+                <h5 className="pull-left text-dark">Issued Books</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
@@ -53,7 +53,7 @@ const Circulations = (props) => {
                     <Card>
                         <CardBody>
                             {circulations.length > 0 ? <Circulation {...cardBodyProps}/> :
-                                <EmptyComponent title="No circulations yet..."/>}
+                                <EmptyComponent title="No issued books yet..."/>}
                             <CirculationModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>

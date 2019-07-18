@@ -69,9 +69,9 @@ export default {
             permission: Permissions.MANAGE_MEMBERS,
         },
         {
-            name: 'Circulations',
-            url: '/app/circulations',
-            icon: 'icon-grid',
+            name: 'Issued Books',
+            url: '/app/issued-books',
+            icon: 'icon-book-open',
             permission: Permissions.MANAGE_BOOKS
         }
     ],

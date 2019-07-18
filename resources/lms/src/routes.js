@@ -116,7 +116,7 @@ export default [
         permission: Permissions.MANAGE_BOOK_SERIES
     },
     {
-        path: '/app/circulations',
+        path: '/app/issued-books',
         exact: true,
         name: 'Circulations',
         component: Circulations,
