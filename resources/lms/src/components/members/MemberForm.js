@@ -7,9 +7,9 @@ import SaveAction from '../../shared/action-buttons/SaveAction';
 import InputGroup from '../../shared/components/InputGroup';
 import ToggleSwitch from '../../shared/components/ToggleSwitch';
 import ImagePicker from '../../shared/image-picker/ImagePicker';
-import MultiSelect from '../../shared/multi-select/MultiSelect';
 import {addToast} from "../../store/actions/toastAction";
 import apiConfig from '../../config/apiConfig';
+import TypeAhead from '../../shared/components/TypeAhead';
 
 const MemberForm = (props) => {
     const defaultImage = 'images/user-avatar.png';
@@ -21,6 +21,7 @@ const MemberForm = (props) => {
     const [isActive, setActive] = useState(true);
     const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
     const memberId = props.initialValues ? props.initialValues.id : null;
+    const [isValidMemberPlan, setIsValidMemberPlan] = useState(false);
     useEffect(() => {
         if (props.initialValues) {
             if (props.initialValues.is_active) {
@@ -65,14 +66,16 @@ const MemberForm = (props) => {
         setActive(!isActive);
     };
     const onSelectMembershipPlan = (option) => {
-        if (option.length > 0 && option[0].id !== 0) {
+        if (option.length > 0) {
+            setIsValidMemberPlan(false);
             props.change('membership_plan_id', option[0].id);
         } else {
+            setIsValidMemberPlan(true);
             props.change('membership_plan_id', null);
         }
     };
     const onSelectCountry = (option) => {
-        if (option.length > 0 && option[0].id !== 0) {
+        if (option.length > 0) {
             props.change('country_id', option[0].id);
         } else {
             props.change('country_id', null);
@@ -111,27 +114,23 @@ const MemberForm = (props) => {
                         </Col> : null
                     }
                     <Col xs={6}>
-                        <MultiSelect
-                            label=" Membership Plan"
-                            placeholder="Select Membership Plan"
-                            groupText="tasks"
-                            options={props.membershipPlans}
+                        <Field name="phone" type="number" label="Phone No." groupText="phone"
+                               component={InputGroup}/>
+                    </Col>
+                    <Col xs={props.initialValues ? 12 : 6}>
+                        <TypeAhead
+                            id="membership-plan"
+                            label="Membership Plan"
                             required
-                            onSelect={onSelectMembershipPlan}
-                            selctedItems={selectedMemberShipPlan}
+                            options={props.membershipPlans}
+                            placeholder="Select Membership Plan"
+                            onChange={onSelectMembershipPlan}
+                            groupText="tasks"
+                            defaultSelected={selectedMemberShipPlan}
+                            isInvalid={isValidMemberPlan}
                         />
                         <Field name="membership_plan_id" type="hidden" component={InputGroup}/>
                     </Col>
-                    {props.initialValues ?
-                        <Col xs={12}>
-                            <Field name="phone" type="number" label="Phone No." groupText="phone"
-                                   component={InputGroup}/>
-                        </Col> :
-                        <Col xs={6}>
-                            <Field name="phone" type="number" label="Phone No." groupText="phone"
-                                   component={InputGroup}/>
-                        </Col>
-                    }
                 </Row>
             </Col>
             <Col xs={4} className="member-profile">
@@ -159,13 +158,15 @@ const MemberForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <MultiSelect
+                        <TypeAhead
+                            id="country"
                             label="Country"
-                            placeholder="Select Country"
-                            groupText="flag"
                             options={props.countries}
-                            onSelect={onSelectCountry}
-                            selctedItems={selectedCountry}
+                            placeholder="Select Country"
+                            onChange={onSelectCountry}
+                            groupText="flag"
+                            defaultSelected={selectedCountry}
+                            dropUp={true}
                         />
                         <Field name="country_id" type="hidden" component={InputGroup}/>
                     </Col>

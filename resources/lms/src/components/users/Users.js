@@ -67,12 +67,6 @@ const Users = (props) => {
     );
 };
 
-const prepareRoles = (roles) => {
-    let roleArray = [{id: 0, name: 'Select Role'}];
-    roles.forEach(role => roleArray.push({id: role.id, name: role.name}));
-    return roleArray;
-};
-
 const mapStateToProps = (state) => {
     const {users, searchText, sortObject, isLoading} = state;
     let usersArray = Object.values(users);
@@ -82,7 +76,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         usersArray = sortFilter(usersArray, sortObject);
     }
-    return {users: usersArray, roles: prepareRoles(Object.values(state.roles)), sortObject, isLoading};
+    return {users: usersArray, roles: Object.values(state.roles), sortObject, isLoading};
 };
 
 export default connect(mapStateToProps, {fetchUsers, fetchRoles, sortAction, toggleModal})(Users);

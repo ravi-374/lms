@@ -6,10 +6,11 @@ import InputGroup from '../../shared/components/InputGroup';
 import SaveAction from '../../shared/action-buttons/SaveAction';
 import TextArea from '../../shared/components/TextArea';
 import {membershipPlanFrequencyOptions} from '../../constants';
-import MultiSelect from '../../shared/multi-select/MultiSelect';
+import TypeAhead from '../../shared/components/TypeAhead';
 
 const MembershipPlanForm = props => {
     const [selectedFrequency] = useState(props.initialValues ? props.initialValues.selectedFrequency : []);
+    const [isValidFrequency, setIsValidFrequency] = useState(false);
     useEffect(() => {
         if (props.initialValues) {
             props.change('frequency', selectedFrequency[0].id);
@@ -19,9 +20,11 @@ const MembershipPlanForm = props => {
         props.onSaveMembershipPlan(formValues);
     };
     const onSelectFrequency = (option) => {
-        if (option.length > 0 && option[0].id !== 0) {
+        if (option.length > 0) {
+            setIsValidFrequency(false);
             props.change('frequency', option[0].id);
         } else {
+            setIsValidFrequency(true);
             props.change('frequency', null);
         }
     };
@@ -35,14 +38,16 @@ const MembershipPlanForm = props => {
                        component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <MultiSelect
+                <TypeAhead
+                    id="Frequency"
                     label="Frequency"
-                    placeholder="Select Frequency"
-                    groupText="clock-o"
-                    options={membershipPlanFrequencyOptions}
                     required
-                    onSelect={onSelectFrequency}
-                    selctedItems={selectedFrequency}
+                    options={membershipPlanFrequencyOptions}
+                    placeholder="Select Frequency"
+                    onChange={onSelectFrequency}
+                    groupText="clock-o"
+                    defaultSelected={selectedFrequency}
+                    isInvalid={isValidFrequency}
                 />
                 <Field name="frequency" type="hidden" component={InputGroup}/>
             </Col>

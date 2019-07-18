@@ -67,14 +67,6 @@ const members = (props) => {
     );
 };
 
-const prepareMembershipPlan = (membershipPlans) => {
-    let membershipPlanArray = [{id: 0, name: 'Select Membership Plan'}];
-    membershipPlans.forEach(membershipPlan => membershipPlanArray.push({
-        id: membershipPlan.id,
-        name: membershipPlan.name
-    }));
-    return membershipPlanArray;
-};
 const mapStateToProps = (state) => {
     const {members, membershipPlans, searchText, sortObject, isLoading} = state;
     let membersArray = Object.values(members);
@@ -86,7 +78,7 @@ const mapStateToProps = (state) => {
     }
     return {
         members: membersArray,
-        membershipPlans: prepareMembershipPlan(Object.values(membershipPlans)), sortObject, isLoading
+        membershipPlans: Object.values(membershipPlans), sortObject, isLoading
     };
 };
 
