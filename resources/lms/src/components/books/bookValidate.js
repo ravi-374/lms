@@ -23,9 +23,6 @@ export default formValues => {
     if (!formValues.price) {
         errors.price = 'Price must be required.';
     }
-    if (!formValues.description) {
-        errors.description = 'Description must be required.';
-    }
     if (!formValues.genres || !formValues.genres.length) {
         errors.genres = 'Genre must be required.';
     }

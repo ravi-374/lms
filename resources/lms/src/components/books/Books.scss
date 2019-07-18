@@ -2,6 +2,11 @@
 
 .book-form {
     display: flex;
+
+    &__item-header:after {
+        content: "*";
+        color: $red;
+    }
 }
 
 @media only screen and (max-width: 800px) {
