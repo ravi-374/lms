@@ -12,8 +12,9 @@ import {
 export default ({input, label, type = "text", min, max, required, readOnly, groupText, customGroupText = '', addOnType = 'prepend', placeholder, meta: {touched, error}}) => {
     const inputClass = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
+    const formClass = type === 'hidden' ? 'input-form-group' : '';
     return (
-        <FormGroup>
+        <FormGroup className={formClass}>
             {type !== 'hidden' ? <Label className={labelClass}>{label}</Label> : null}
             <InputGroup>
                 {type !== 'hidden' ?

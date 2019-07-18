@@ -231,7 +231,7 @@ const MultiSelect = (props) => {
         )
     };
 
-    const {label, groupText, required, multiple, disabled, readOnly} = props;
+    const {label, labelText, groupText, required, multiple, disabled, readOnly} = props;
     const errorCondition = (required && values.length === 0 && isTouched) || (required && values.length > 0 && values[0].id === 0 && isTouched);
     const selectionClass = errorCondition ? 'multi-select-selection multi-select-selection--invalid' : 'multi-select-selection multi-select-selection--valid';
     const messageClass = errorCondition ? 'multi-select__message--invalid' : 'multi-select__message';
@@ -266,7 +266,7 @@ const MultiSelect = (props) => {
                     <span className={arrowClass}>{isOpen ? <ChevronUp/> : <ChevronDown/>}</span>
                 </div>}
             {renderOptions()}
-            <span className={messageClass}>{label} must be required.</span>
+            <span className={messageClass}>{label || labelText} must be required.</span>
         </div>
     )
 };

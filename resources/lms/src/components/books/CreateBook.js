@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardBody} from 'reactstrap';
+import {Row, Col, Card, CardBody,Button} from 'reactstrap';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
 import Toasts from '../../shared/toast/Toasts';
 import BookForm from './BookForm';
@@ -48,8 +48,9 @@ const CreateBook = (props) => {
     return (
         <div className="animated fadeIn">
             <Row>
-                <Col sm={12} className="mb-2">
+                <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">New Book</h5>
+                    <Button onClick={goBack}>Back</Button>
                 </Col>
                 <Col sm={12}>
                     <div className="sticky-table-container">

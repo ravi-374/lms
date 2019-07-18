@@ -13,22 +13,12 @@ import Toasts from '../../shared/toast/Toasts';
 import Book from './Book';
 import EmptyComponent from '../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../store/actions/modalAction';
-import {fetchAuthors} from '../../store/actions/authorAction';
-import {fetchGenres} from '../../store/actions/genreAction';
-import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
-import {fetchPublishers} from '../../store/actions/publisherAction';
-import {fetchTags} from '../../store/actions/tagAction';
 
 const Books = (props) => {
     const [book, setBook] = useState(null);
-    const {books, authors, publishers, tags, bookLanguages, genres, history, sortAction, sortObject, isLoading, toggleModal} = props;
+    const {books, history, sortAction, sortObject, isLoading, toggleModal} = props;
     useEffect(() => {
         props.fetchBooks(props.history);
-        props.fetchAuthors();
-        props.fetchPublishers();
-        props.fetchGenres();
-        props.fetchBookLanguages();
-        props.fetchTags();
     }, []);
     const cardModalProps = {
         book,
@@ -40,11 +30,6 @@ const Books = (props) => {
     };
     const cardBodyProps = {
         books,
-        authors,
-        publishers,
-        bookLanguages,
-        genres,
-        tags,
         history,
         sortAction,
         sortObject,
@@ -86,7 +71,6 @@ const Books = (props) => {
 
 const mapStateToProps = (state) => {
     const {books, searchText, sortObject, isLoading, filterObject} = state;
-    const {authors, publishers, bookLanguages, genres, tags} = state;
     let booksArray = Object.values(books);
     if (searchText) {
         booksArray = searchFilter(booksArray, searchText);
@@ -99,19 +83,9 @@ const mapStateToProps = (state) => {
     }
     return {
         books: booksArray, sortObject, isLoading,
-        authors: Object.values(authors),
-        publishers: Object.values(publishers),
-        bookLanguages: Object.values(bookLanguages),
-        genres: Object.values(genres),
-        tags: Object.values(tags)
     };
 };
 
 export default connect(mapStateToProps, {
-    fetchBooks, fetchAuthors,
-    fetchGenres,
-    fetchBookLanguages,
-    fetchPublishers,
-    fetchTags,
-    sortAction, toggleModal
+    fetchBooks, sortAction, toggleModal
 })(Books);

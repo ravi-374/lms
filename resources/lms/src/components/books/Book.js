@@ -3,13 +3,13 @@ import {Table} from 'reactstrap';
 import {sortConfig} from '../../config/sortConfig';
 import TableHeader from '../../shared/table-header/Tableheader';
 import ModalAction from '../../shared/action-buttons/ModalAction';
+import {prepareAuthor} from './prepareArray';
 
-export default ({books, authors, publishers, tags, bookLanguages, genres, onOpenModal, history, sortAction, sortObject}) => {
+export default ({books, onOpenModal, history, sortAction, sortObject}) => {
     const headers = [
-        {id: 'isbn_no', name: 'ISBN No.'},
+        {id: 'isbn', name: 'ISBN No.'},
         {id: 'name', name: 'Book Name'},
-        {id: 'publisher_name', name: 'Publisher'},
-        {id: 'language_name', name: 'Language'},
+        {id: 'authors_name', name: 'Authors'},
     ];
     const headerProps = {staticField: 'Image', sortAction, sortObject, sortConfig, headers};
     const goToEditBook = (bookId) => {
@@ -22,22 +22,16 @@ export default ({books, authors, publishers, tags, bookLanguages, genres, onOpen
             </thead>
             <tbody>
             {books.map((book) => {
-                const publisher = publishers.find(publisher => publisher.id === +book.publisher_id);
-                if (publisher) {
-                    book.publisher_name = publisher.name;
-                }
-                const language = bookLanguages.find(language => language.id === +book.language_id);
-                if (language) {
-                    book.language_name = language.language_name;
-                }
                 const imageUrl = book.image ? 'uploads/books/' + book.image : 'images/default-book-image.jpg';
+                book.authors_name = prepareAuthor(book.authors).map((({name}) => name)).join(', ');
                 return (
                     <tr key={book.id.toString()}>
-                        <td className="text-center"><img src={imageUrl} alt={imageUrl} width="50" height="50"/></td>
+                        <td className="text-center" style={{width: '90px'}}>
+                            <img src={imageUrl} alt={imageUrl} height="30"/>
+                        </td>
                         <td className="align-middle">{book.isbn}</td>
                         <td className="align-middle">{book.name}</td>
-                        <td className="align-middle">{book.publisher_name}</td>
-                        <td className="align-middle">{book.language_name}</td>
+                        <td className="align-middle">{book.authors_name}</td>
                         <td className="align-middle text-center">
                             <ModalAction onOpenModal={onOpenModal} item={book} isEditMode={true}
                                          goToEditItem={goToEditBook}/>
