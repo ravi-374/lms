@@ -104,9 +104,10 @@ class Book extends Model
     public function deleteImage()
     {
         if (!empty($this->image)) {
-            return $this->traitDeleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
-
+            $this->traitDeleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
             $this->update(['image' => null]);
+
+            return true;
         }
     }
 
