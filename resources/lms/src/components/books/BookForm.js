@@ -29,7 +29,7 @@ const BookForm = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isValidAuthor, setIsValidAuthor] = useState(false);
     const [isValidGenre, setIsValidGenre] = useState(false);
-    const [items, setItems] = useState(initialValues ? initialValues.items : [{format: 1, price: 1}]);
+    const [items, setItems] = useState(initialValues ? initialValues.items : [{}]);
     const bookId = props.initialValues ? props.initialValues.id : null;
     useEffect(() => {
         if (initialValues && initialValues.is_featured) {
@@ -44,7 +44,7 @@ const BookForm = (props) => {
                 setIsDefaultImage(false);
             }
         } else {
-            props.initialize({items: [{format: 1, price: 1}]});
+            props.initialize({items: [{}]});
         }
 
     }, []);
@@ -190,7 +190,7 @@ const BookForm = (props) => {
                 <hr/>
                 <Row>
                     <Col xs={12}>
-                        <Field name="description" required cols={90} rows={3} label="Description" component={TextArea}/>
+                        <Field name="description" cols={90} rows={3} label="Description" component={TextArea}/>
                     </Col>
                 </Row>
             </Col>
@@ -232,8 +232,8 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
     fields.forEach(field => validateArray.push(false));
     const [isValidLanguage] = useState(validateArray);
     const onAddSubFields = () => {
-        setItems([...items, {id: 1, format: 1, price: 1}]);
-        return fields.push({format: 1, price: 1});
+        setItems([...items, {id: 1}]);
+        return fields.push({});
     };
     const onRemoveSubFields = (index) => {
         return fields.remove(index);
@@ -255,10 +255,10 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
             <Table responsive size="md">
                 <thead>
                 <tr>
-                    <th>Edition</th>
+                    <th className="book-form__item-header">Edition</th>
                     <th>Format</th>
-                    <th>Price</th>
-                    <th>Language</th>
+                    <th className="book-form__item-header">Price</th>
+                    <th className="book-form__item-header">Language</th>
                     <th>Publisher</th>
                     <th className="text-center">Action</th>
                 </tr>

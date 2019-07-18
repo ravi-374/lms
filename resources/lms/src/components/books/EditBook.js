@@ -54,7 +54,7 @@ const EditBook = (props) => {
         url,
         description,
         image,
-        items: items && items.length > 0 ? items : [{format: 1, price: 1}]
+        items: items && items.length > 0 ? items : [{}]
     };
     if (!changAbleFields.selectedGenres || changAbleFields.selectedGenres && changAbleFields.selectedGenres.length === 0 || bookLanguages.length === 0) {
         props.setLoading(true);
