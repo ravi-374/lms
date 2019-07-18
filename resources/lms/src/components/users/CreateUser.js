@@ -7,7 +7,7 @@ import prepareFormData from './prepareFormData';
 import apiConfig from '../../config/apiConfig';
 
 const CreateUser = (props) => {
-    const [countries, setCountries] = useState([{id: 0, name: 'Select Country'}]);
+    const [countries, setCountries] = useState([]);
     useEffect(() => {
         apiConfig.get('countries').then(response =>
             setCountries([...countries, ...response.data.data])

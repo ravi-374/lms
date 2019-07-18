@@ -7,10 +7,10 @@ import './Users.scss';
 import SaveAction from '../../shared/action-buttons/SaveAction';
 import InputGroup from '../../shared/components/InputGroup';
 import ToggleSwitch from '../../shared/components/ToggleSwitch';
-import MultiSelect from '../../shared/multi-select/MultiSelect';
 import ImagePicker from '../../shared/image-picker/ImagePicker';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../store/actions/toastAction';
+import TypeAhead from '../../shared/components/TypeAhead';
 
 const UserForm = (props) => {
     const defaultImage = 'images/user-avatar.png';
@@ -22,6 +22,7 @@ const UserForm = (props) => {
     const [selectedRole] = useState(props.initialValues ? props.initialValues.selectedRole : []);
     const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
     const userId = props.initialValues ? props.initialValues.id : null;
+    const [isValidRole, setIsValidRole] = useState(false);
     useEffect(() => {
         if (props.initialValues) {
             if (props.initialValues.is_active) {
@@ -36,7 +37,6 @@ const UserForm = (props) => {
         } else {
             props.change('is_active', true);
         }
-
     }, []);
     const onSaveUser = (formValues) => {
         delete formValues.file_name;
@@ -69,14 +69,16 @@ const UserForm = (props) => {
         setActive(!isActive);
     };
     const onSelectRole = (option) => {
-        if (option.length > 0 && option[0].id !== 0) {
+        if (option.length > 0) {
+            setIsValidRole(false);
             props.change('role_id', option[0].id);
         } else {
+            setIsValidRole(true);
             props.change('role_id', null);
         }
     };
     const onSelectCountry = (option) => {
-        if (option.length > 0 && option[0].id !== 0) {
+        if (option.length > 0) {
             props.change('country_id', option[0].id);
         } else {
             props.change('country_id', null);
@@ -116,32 +118,20 @@ const UserForm = (props) => {
                     <Col xs={6}>
                         <Field name="phone" label="Phone No." type="number" groupText="phone" component={InputGroup}/>
                     </Col>
-                    {props.initialValues ?
-                        <Col xs={12}>
-                            <MultiSelect
-                                label="Role"
-                                placeholder="Select role"
-                                groupText="tasks"
-                                options={props.roles}
-                                required
-                                onSelect={onSelectRole}
-                                selctedItems={selectedRole}
-                            />
-                            <Field name="role_id" type="hidden" component={InputGroup}/>
-                        </Col> :
-                        <Col xs={6}>
-                            <MultiSelect
-                                label="Role"
-                                placeholder="Select role"
-                                groupText="tasks"
-                                options={props.roles}
-                                required
-                                onSelect={onSelectRole}
-                                selctedItems={selectedRole}
-                            />
-                            <Field name="role_id" type="hidden" component={InputGroup}/>
-                        </Col>
-                    }
+                    <Col xs={props.initialValues ? 12 : 6}>
+                        <TypeAhead
+                            id="role"
+                            label="Role"
+                            required
+                            options={props.roles}
+                            placeholder="Select Role"
+                            onChange={onSelectRole}
+                            groupText="tasks"
+                            defaultSelected={selectedRole}
+                            isInvalid={isValidRole}
+                        />
+                        <Field name="role_id" type="hidden" component={InputGroup}/>
+                    </Col>
                 </Row>
             </Col>
             <Col xs={4} className="user-profile">
@@ -169,13 +159,15 @@ const UserForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <MultiSelect
+                        <TypeAhead
+                            id="country"
                             label="Country"
-                            placeholder="Select Country"
-                            groupText="flag"
                             options={props.countries}
-                            onSelect={onSelectCountry}
-                            selctedItems={selectedCountry}
+                            placeholder="Select Country"
+                            onChange={onSelectCountry}
+                            groupText="flag"
+                            defaultSelected={selectedCountry}
+                            dropUp={true}
                         />
                         <Field name="country_id" type="hidden" component={InputGroup}/>
                     </Col>

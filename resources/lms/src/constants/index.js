@@ -63,7 +63,6 @@ export const membershipPlanFrequency = {
 };
 
 export const membershipPlanFrequencyOptions = [
-    {id: 0, name: 'Select Frequency'},
     {id: 1, name: 'Monthly'},
     {id: 2, name: 'Yearly'},
 ];
@@ -92,13 +91,11 @@ export const bookStatusConstant = {
 };
 
 export const bookFormatOptions = [
-    {id: 0, name: 'Select Format'},
     {id: 1, name: 'Hardcover'},
     {id: 2, name: 'Paperback'}
 ];
 
 export const bookStatusOptions = [
-    {id: 0, name: 'Select Status'},
     {id: 1, name: 'Available'},
     {id: 2, name: 'Not available'},
 ];
@@ -192,4 +189,4 @@ export const Permissions = {
     MANAGE_TAGS: 'manage_tags',
     MANAGE_GENRES: 'manage_genres',
     MANAGE_USERS: 'manage_users'
-}
+};
