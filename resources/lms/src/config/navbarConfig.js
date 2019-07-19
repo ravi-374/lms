@@ -69,8 +69,8 @@ export default {
             permission: Permissions.MANAGE_MEMBERS,
         },
         {
-            name: 'Issued Books',
-            url: '/app/issued-books',
+            name: 'Books Allotment',
+            url: '/app/books-allotment',
             icon: 'icon-book-open',
             permission: Permissions.MANAGE_BOOKS
         }

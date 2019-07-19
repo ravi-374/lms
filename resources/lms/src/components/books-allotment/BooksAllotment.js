@@ -6,45 +6,45 @@ import searchFilter from '../../shared/searchFilter';
 import sortFilter from '../../shared/sortFilter';
 import {sortAction} from '../../store/actions/sortAction';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import CirculationModal from './CirculationModal';
-import Circulation from './Circulation';
-import './Circulations.scss';
+import BookAllotmentModal from './BookAllotmentModal';
+import BookAllotment from './BookAllotment';
+import './BooksAllotment.scss';
 import Toasts from '../../shared/toast/Toasts';
 import EmptyComponent from '../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../store/actions/modalAction';
-import {fetchCirculations} from '../../store/actions/circulationAction';
+import {fetchBookAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 
-const Circulations = (props) => {
+const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
-    const [circulation, setCirculation] = useState(null);
-    const {circulations, books, members, sortAction, sortObject, toggleModal} = props;
+    const [bookAllotment, setBookAllotment] = useState(null);
+    const {booksAllotment, books, members, sortAction, sortObject, toggleModal} = props;
     useEffect(() => {
-        props.fetchCirculations();
+        props.fetchBookAllotment();
         props.fetchBooks();
         props.fetchMembers();
     }, []);
-    const cardModalProps = {circulation, books, members, isEditMode, isDeleteMode, toggleModal};
-    const onOpenModal = (isEdit, circulation = null, isDelete = false) => {
+    const cardModalProps = {bookAllotment, books, members, isEditMode, isDeleteMode, toggleModal};
+    const onOpenModal = (isEdit, booksAllotment = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
-        setCirculation(circulation);
+        setBookAllotment(booksAllotment);
         toggleModal();
     };
-    const cardBodyProps = {books, members, sortAction, sortObject, circulations, onOpenModal};
+    const cardBodyProps = {books, members, sortAction, sortObject, booksAllotment, onOpenModal};
     if (props.isLoading) {
         return <ProgressBar/>
     }
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <h5 className="pull-left text-dark">Issued Books</h5>
+                <h5 className="pull-left text-dark">Books Allotment</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        Issue/Reserve Book
+                        New Book Allotment
                     </Button>
                 </div>
             </Col>
@@ -52,9 +52,9 @@ const Circulations = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            {circulations.length > 0 ? <Circulation {...cardBodyProps}/> :
-                                <EmptyComponent title="No issued books yet..."/>}
-                            <CirculationModal {...cardModalProps}/>
+                            {booksAllotment.length > 0 ? <BookAllotment {...cardBodyProps}/> :
+                                <EmptyComponent title="No books allotment yet..."/>}
+                            <BookAllotmentModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
                     </Card>
@@ -65,32 +65,25 @@ const Circulations = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {books, circulations, members, searchText, sortObject, isLoading} = state;
-    let circulationsArray = Object.values(circulations);
+    const {books, booksAllotment, members, searchText, sortObject, isLoading} = state;
+    let booksAllotmentArray = Object.values(booksAllotment);
     if (searchText) {
-        circulationsArray = searchFilter(circulationsArray, searchText);
+        booksAllotmentArray = searchFilter(booksAllotmentArray, searchText);
     }
     if (sortObject) {
-        circulationsArray = sortFilter(circulationsArray, sortObject);
+        booksAllotmentArray = sortFilter(booksAllotmentArray, sortObject);
     }
     return {
-        books: prepareBooks(Object.values(books)),
-        circulations: circulationsArray,
+        books: Object.values(books),
+        booksAllotment: booksAllotmentArray,
         members: prepareMembers(Object.values(members)),
         sortObject,
         isLoading
     };
 };
-const prepareBooks = (books) => {
-    let bookArray = [{id: 0, name: 'Select Book'}];
-    books.forEach(book => {
-        book.quantity = 1;
-        bookArray.push(book);
-    });
-    return bookArray;
-};
+
 const prepareMembers = (members) => {
-    let memberArray = [{id: 0, name: 'Select Member'}];
+    let memberArray = [];
     members.forEach(member => {
         memberArray.push({id: member.id, name: member.first_name + ' ' + member.last_name});
     });
@@ -98,9 +91,9 @@ const prepareMembers = (members) => {
 };
 
 export default connect(mapStateToProps, {
-    fetchCirculations,
+    fetchBookAllotment,
     fetchBooks,
     fetchMembers,
     sortAction,
     toggleModal
-})(Circulations);
+})(BooksAllotment);

@@ -1,14 +1,14 @@
-import {circulationActionType, toastType,circularStatusConstant} from '../../constants';
+import {bookAllotmentActionType, toastType, bookAllotmentStatusConstant} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {setLoading} from './progressBarAction';
 import {addToast} from './toastAction';
 import {toggleModal} from './modalAction';
 
-export const fetchCirculations = () => async (dispatch) => {
+export const fetchBookAllotment = () => async (dispatch) => {
     dispatch(setLoading(true));
     await apiConfig.get('books-history')
         .then((response) => {
-            dispatch({type: circulationActionType.FETCH_CIRCULATIONS, payload: response.data.data});
+            dispatch({type: bookAllotmentActionType.FETCH_BOOKS_ALLOTMENT, payload: response.data.data});
             dispatch(setLoading(false));
         })
         .catch(({response}) => {
@@ -16,10 +16,10 @@ export const fetchCirculations = () => async (dispatch) => {
         });
 };
 
-export const addCirculation = (circulation) => async (dispatch) => {
-    await apiConfig.post(`books/${circulation.book_item_id}/${getApiRoute(circulation.status)}`, circulation)
+export const addBookAllotment = (book) => async (dispatch) => {
+    await apiConfig.post(`books/${book.book_item_id}/${getApiRoute(book.status)}`, book)
         .then((response) => {
-            dispatch({type: circulationActionType.ADD_CIRCULATION, payload: response.data.data});
+            dispatch({type: bookAllotmentActionType.ADD_BOOK_ALLOTMENT, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
@@ -28,10 +28,10 @@ export const addCirculation = (circulation) => async (dispatch) => {
         });
 };
 
-export const editCirculation = (circulation) => async (dispatch) => {
-    await apiConfig.post(`books/${circulation.book_item_id}/${getApiRoute(circulation.status)}`, circulation)
+export const editBookAllotment = (book) => async (dispatch) => {
+    await apiConfig.post(`books/${book.book_item_id}/${getApiRoute(book.status)}`, book)
         .then((response) => {
-            dispatch({type: circulationActionType.EDIT_CIRCULATION, payload: response.data.data});
+            dispatch({type: bookAllotmentActionType.EDIT_BOOK_ALLOTMENT, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
@@ -40,23 +40,23 @@ export const editCirculation = (circulation) => async (dispatch) => {
         });
 };
 
-export const deleteCirculation = (circulationId) => async (dispatch) => {
-    await apiConfig.delete(`circulations/${circulationId}`)
+export const deleteBookAllotment = (bookId) => async (dispatch) => {
+    await apiConfig.delete(`books-history/${bookId}`)
         .then((response) => {
-            dispatch({type: circulationActionType.DELETE_CIRCULATION, payload: circulationId});
+            dispatch({type: bookAllotmentActionType.DELETE_BOOK_ALLOTMENT, payload: bookId});
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
         .catch(({response}) => {
-            dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+            dispatch(addToast({text: response.data.message, type: 'error'}));
         });
 };
 
 const getApiRoute = (status) => {
     switch (status) {
-        case circularStatusConstant.BOOK_RESERVED:
+        case bookAllotmentStatusConstant.BOOK_RESERVED:
             return 'reserve-book';
-        case circularStatusConstant.BOOK_ISSUED:
+        case bookAllotmentStatusConstant.BOOK_ISSUED:
             return 'issue-book';
         default:
             return 'return-book';

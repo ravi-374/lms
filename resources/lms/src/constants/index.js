@@ -133,16 +133,15 @@ export const permissionActionType = {
     FETCH_PERMISSIONS: 'FETCH_PERMISSIONS',
 };
 
-export const circulationActionType = {
-    FETCH_CIRCULATIONS: 'FETCH_CIRCULATIONS',
-    FETCH_CIRCULATION: 'FETCH_CIRCULATION',
-    ADD_CIRCULATION: 'ADD_CIRCULATION',
-    EDIT_CIRCULATION: 'EDIT_CIRCULATION',
-    DELETE_CIRCULATION: 'DELETE_CIRCULATION'
+export const bookAllotmentActionType = {
+    FETCH_BOOKS_ALLOTMENT: 'FETCH_BOOKS_ALLOTMENT',
+    FETCH_BOOK_ALLOTMENT: 'FETCH_BOOK_ALLOTMENT',
+    ADD_BOOK_ALLOTMENT: 'ADD_BOOK_ALLOTMENT',
+    EDIT_BOOK_ALLOTMENT: 'EDIT_BOOK_ALLOTMENT',
+    DELETE_BOOK_ALLOTMENT: 'DELETE_BOOK_ALLOTMENT'
 };
 
-export const circularOptions = [
-    {id: 0, name: 'Select Status'},
+export const bookAllotmentStatusOptions = [
     {id: 1, name: 'Reserved'},
     {id: 2, name: 'Issued'},
     {id: 3, name: 'Returned'},
@@ -150,7 +149,7 @@ export const circularOptions = [
     // {id: 5, name: 'Damaged'},
 ];
 
-export const circularStatusConstant = {
+export const bookAllotmentStatusConstant = {
     BOOK_RESERVED: 1,
     BOOK_ISSUED: 2,
     BOOK_RETURNED: 3,
