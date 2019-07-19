@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 import './Component.scss';
 
-export default ({id, label, required, valueKey = 'id', labelKey = 'name', labelText, dropUp = false, multiple = false, onChange, filterBy = [], groupText, validationState, isInvalid = false, isValid, options, defaultSelected, placeholder}) => {
+export default ({id, label, reference = null, required, valueKey = 'id', labelKey = 'name', disabled = false, labelText, dropUp = false, multiple = false, onChange, filterBy = [], groupText, validationState, isInvalid = false, isValid, options, defaultSelected, placeholder}) => {
     const labelClass = required ? 'control-label' : '';
     return (
         <FormGroup validationstate={validationState}>
@@ -23,6 +23,7 @@ export default ({id, label, required, valueKey = 'id', labelKey = 'name', labelT
                 </InputGroupAddon>
                 <Typeahead
                     id={id}
+                    ref={reference}
                     isInvalid={isInvalid}
                     multiple={multiple}
                     options={options}
@@ -32,6 +33,7 @@ export default ({id, label, required, valueKey = 'id', labelKey = 'name', labelT
                     onChange={onChange}
                     defaultSelected={defaultSelected}
                     dropup={dropUp}
+                    disabled={disabled}
                 />
                 {isInvalid ?
                     <FormFeedback
