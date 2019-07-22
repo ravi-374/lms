@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -146,5 +147,32 @@ class MemberAPIController extends AppBaseController
         $member->deleteMemberImage();
 
         return $this->sendSuccess('member image removed successfully.');
+    }
+
+    /**
+     * @param Member $member
+     *
+     * @return JsonResponse
+     */
+    public function getLoggedInMemberDetails(Member $member)
+    {
+        return $this->sendResponse($member, 'Member details retrieved successfully.');
+    }
+
+    /**
+     * @param Member $member
+     * @param UpdateMemberAPIRequest $request
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     * @return JsonResponse
+     */
+    public function updateMemberProfile(Member $member, UpdateMemberAPIRequest $request)
+    {
+        $input = $request->all();
+
+        $updateMember = $this->memberRepository->update($input, $member->id);
+
+        return $this->sendResponse($updateMember->toArray(), 'Member profile updated successfully.');
     }
 }

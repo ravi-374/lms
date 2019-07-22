@@ -54,6 +54,12 @@ Route::group(['middleware' => 'backend.auth'], function () {
         Route::get('users/{user}/update-status', 'UserAPIController@updateStatus');
     });
 
+    // get logged in user details
+    Route::get('user-details', 'UserAPIController@getLoggedInUserDetails');
+
+    // update logged in user profile
+    Route::post('update-user-profile', 'UserAPIController@updateUserProfile');
+
     // Members
     Route::middleware('permission:manage_members')->group(function () {
         Route::delete('members/{member}', 'MemberAPIController@destroy');
@@ -64,6 +70,13 @@ Route::group(['middleware' => 'backend.auth'], function () {
     Route::get('members/{member}', 'MemberAPIController@show')->where('member', '\d+');
     Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
     Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage');
+
+    // update logged in member profile
+    Route::post('members/{member}/update-member-profile', 'MemberAPIController@updateMemberProfile')
+        ->where('member', '\d+');
+
+    // get logged in member details
+    Route::get('member-details/{member}', 'MemberAPIController@getLoggedInMemberDetails')->where('member', '\d+');
 
     Route::middleware('permission:manage_book_series')->group(function () {
         // book series routes
@@ -108,7 +121,6 @@ Route::group(['middleware' => 'backend.auth'], function () {
     Route::get('countries', 'CountryAPIController@index');
 });
 
-Route::post('members/login', 'MemberAuthController@login');
 Route::post('members/register', 'MemberAuthController@register');
 Route::get('members/activate', 'MemberAuthController@verifyAccount');
 
