@@ -5,7 +5,10 @@ export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDele
     return (
         isEditMode ?
             <Fragment>
-                <Button color="primary" size="sm" onClick={() => goToEditItem(item.id)}>
+                <Button color="primary" size="sm" onClick={(e) => {
+                    e.stopPropagation();
+                    goToEditItem(item.id)
+                }}>
                     <i className="cui-pencil icons font-md"/>
                 </Button>
                 <Button className="ml-2" color="danger" size="sm" onClick={() => onOpenModal(item)}>

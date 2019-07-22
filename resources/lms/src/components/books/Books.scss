@@ -1,5 +1,13 @@
 @import "../../scss/variables";
 
+.book-modal {
+    max-width: 1000px;
+}
+
+.book-table-row {
+    cursor: pointer;
+}
+
 .book-form {
     display: flex;
 
