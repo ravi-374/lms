@@ -142,9 +142,9 @@ export const bookAllotmentActionType = {
 };
 
 export const bookAllotmentStatusOptions = [
-    {id: 1, name: 'Reserved'},
-    {id: 2, name: 'Issued'},
-    {id: 3, name: 'Returned'},
+    {id: 1, name: 'Reserve'},
+    {id: 2, name: 'Issue'},
+    {id: 3, name: 'Return'},
     // {id: 4, name: 'Lost'},
     // {id: 5, name: 'Damaged'},
 ];
