@@ -16,6 +16,7 @@ const Roles = React.lazy(() => import('./components/roles/Roles'));
 const Members = React.lazy(() => import('./components/members/Members'));
 const BooksSeries = React.lazy(() => import('./components/books-series/BooksSeries'));
 const BooksAllotment = React.lazy(() => import('./components/books-allotment/BooksAllotment'));
+const BookDetail = React.lazy(() => import('./components/book-detail/BookDetail'));
 const MemberDetail = React.lazy(() => import('./components/member-detail/MemberDetail'));
 
 export default [
@@ -121,6 +122,13 @@ export default [
         exact: true,
         name: 'BooksAllotment',
         component: BooksAllotment,
+        permission: Permissions.MANAGE_BOOKS
+    },
+    {
+        path: '/app/books/:id/detail',
+        exact: true,
+        name: 'BookDetail',
+        component: BookDetail,
         permission: Permissions.MANAGE_BOOKS
     },
     {

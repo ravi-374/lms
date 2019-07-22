@@ -96,8 +96,8 @@ export const bookFormatOptions = [
 ];
 
 export const bookStatusOptions = [
-    {id: 1, name: 'Available'},
-    {id: 2, name: 'Not available'},
+    {id: 0, name: 'Not available'},
+    {id: 1, name: 'Available'}
 ];
 
 export const errorMessage = {

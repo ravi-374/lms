@@ -48,14 +48,18 @@ export const addBook = (book, history) => async (dispatch) => {
         });
 };
 
-export const editBook = (bookId, book, history) => async (dispatch) => {
+export const editBook = (bookId, book, history = null) => async (dispatch) => {
     dispatch(setLoading(true));
     await apiConfigWthFormData.post(`books/${bookId}`, book)
         .then((response) => {
             dispatch({type: bookActionType.EDIT_BOOK, payload: response.data.data});
             dispatch(setLoading(false));
             dispatch(addToast({text: response.data.message}));
-            history.push('/app/books');
+            if (history) {
+                history.push('/app/books');
+            } else {
+                dispatch(toggleModal());
+            }
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
