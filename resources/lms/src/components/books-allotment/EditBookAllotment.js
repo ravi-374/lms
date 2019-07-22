@@ -2,12 +2,13 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../shared/components/Modal';
 import {editBookAllotment} from '../../store/actions/bookAllotmentAction';
+import {editMemberBookHistory} from '../../store/actions/memberBookHistoryAction';
 import BookAllotmentForm from './BookAllotmentForm';
 import {fetchBook} from '../../store/actions/bookAction';
 import {bookAllotmentStatusOptions} from '../../constants';
 
 const EditBookAllotment = (props) => {
-    const {toggleModal, className, title, books, selectedBook, bookAllotment, onSelectBook, bookId, members, bookItems, selectedBookItem} = props;
+    const {toggleModal, className, title, books, selectedBook, bookAllotment, onSelectBook, bookId, members, bookItems, selectedBookItem, isMemberBookHistory} = props;
     const modalOption = {toggleModal, className, title};
     const formOption = {books, onSelectBook, bookId, members};
     const {book_item_id, status, note} = bookAllotment;
@@ -26,7 +27,11 @@ const EditBookAllotment = (props) => {
         props.fetchBook(bookAllotment.book_item.book.id, false);
     }, []);
     const onSaveBookAllotment = (formValues) => {
-        props.editBookAllotment(formValues, bookAllotment.book_item.book.id);
+        if (!isMemberBookHistory) {
+            props.editBookAllotment(formValues);
+        } else {
+            props.editMemberBookHistory(formValues);
+        }
     };
     if (selectedBookItem.length === 0 || changeAbleFields.bookItems.length === 0) {
         return null;
@@ -65,4 +70,4 @@ const prepareBookItems = (books) => {
     });
     return bookArray;
 };
-export default connect(mapStateToProps, {editBookAllotment, fetchBook})(EditBookAllotment);
+export default connect(mapStateToProps, {editBookAllotment, editMemberBookHistory, fetchBook})(EditBookAllotment);

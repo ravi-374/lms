@@ -76,7 +76,7 @@ export const bookActionType = {
     DELETE_BOOK: 'DELETE_BOOK'
 };
 
-export const avilableBookActionType = {
+export const availableBookActionType = {
     FETCH_AVAILABLE_BOOKS: 'FETCH_AVAILABLE_BOOKS',
 };
 
@@ -188,4 +188,9 @@ export const Permissions = {
     MANAGE_TAGS: 'manage_tags',
     MANAGE_GENRES: 'manage_genres',
     MANAGE_USERS: 'manage_users'
+};
+
+export const memberBookHistoryActionType = {
+    FETCH_MEMBER_BOOK_HISTORY: 'FETCH_AVAILABLE_BOOKS',
+    EDIt_MEMBER_BOOK_HISTORY: 'EDIt_MEMBER_BOOK_HISTORY',
 };

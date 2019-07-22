@@ -20,7 +20,7 @@ const members = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [member, setMember] = useState(null);
-    const {members, membershipPlans, sortAction, sortObject, toggleModal} = props;
+    const {members, membershipPlans, sortAction, sortObject, toggleModal,history} = props;
     const setActiveInactive = (index) => {
         members[index].is_active = !members[index].is_active;
     };
@@ -36,7 +36,7 @@ const members = (props) => {
         setMember(member);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, members, membershipPlans, setActiveInactive, onOpenModal};
+    const cardBodyProps = {sortAction, sortObject, members, membershipPlans, setActiveInactive, onOpenModal,history};
     if (props.isLoading) {
         return <ProgressBar/>
     }
