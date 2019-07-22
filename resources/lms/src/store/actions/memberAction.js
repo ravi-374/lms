@@ -17,6 +17,18 @@ export const fetchMembers = () => async (dispatch) => {
         });
 };
 
+export const fetchMember = (memberId) => async (dispatch) => {
+    dispatch(setLoading(true));
+    await apiConfig.get(`members/${memberId}`)
+        .then((response) => {
+            dispatch({type: memberActionType.FETCH_MEMBER, payload: response.data.data});
+            dispatch(setLoading(false));
+        })
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: 'error'}));
+        });
+};
+
 export const addMember = (member) => async (dispatch) => {
     await apiConfigWthFormData.post('members', member)
         .then((response) => {

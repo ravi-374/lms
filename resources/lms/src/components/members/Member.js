@@ -8,8 +8,9 @@ import ModalAction from '../../shared/action-buttons/ModalAction';
 import ToggleSwitch from '../../shared/components/ToggleSwitch';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../store/actions/toastAction';
+import './Members.scss';
 
-const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, addToast, setActiveInactive}) => {
+const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
     const isActive = members.length > 0 ? members.map(({is_active}) => is_active) : [];
     const headers = [
         {id: 'name', name: 'Name'},
@@ -27,13 +28,16 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
             addToast({text: response.data.message, type: 'error'});
         })
     };
+    const goToMemberDetailPage = (memberId) => {
+        history.push(`members/${memberId}/detail`);
+    };
     return (
         <Table hover bordered striped responsive size="md">
             <thead>
             <TableHeader{...headerProps}/>
             </thead>
             <tbody>
-            {members.map((member,index) => {
+            {members.map((member, index) => {
                     const imageUrl = member.image ? 'uploads/members/' + member.image : 'images/user-avatar.png';
                     member.name = member.first_name + ' ' + member.last_name;
                     const memberPlan = membershipPlans.find(memberPlan => memberPlan.id === member.membership_plan_id);
@@ -41,7 +45,8 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
                         member.membership_plan_name = memberPlan.name;
                     }
                     return (
-                        <tr key={member.id.toString()}>
+                        <tr className="member-table-row" onClick={() => goToMemberDetailPage(member.id)}
+                            key={member.id.toString()}>
                             <td className="text-center" style={{width: '90px'}}>
                                 <img src={imageUrl} alt={imageUrl} height="30"/>
                             </td>

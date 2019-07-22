@@ -20,6 +20,7 @@ import bookSeriesReducer from './bookSeriesReducer';
 import memberReducer from './memberReducer';
 import configReducer from './configReducer';
 import availableBookReducer from './availableBookReducer';
+import memberBookHistoryReducer from './memberBookHistoryReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -35,6 +36,7 @@ export default combineReducers({
     members: memberReducer,
     booksAllotment:bookAllotmentReducer,
     availableBooks:availableBookReducer,
+    memberBookHistory:memberBookHistoryReducer,
     isLoading: progressReduce,
     form: formReducer,
     searchText: searchReducer,

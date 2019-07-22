@@ -13,7 +13,10 @@ export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDele
                 </Button>
             </Fragment> :
             <Fragment>
-                <Button color="primary" size="sm" onClick={() => onOpenModal(true, item)}>
+                <Button color="primary" size="sm" onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenModal(true, item)
+                }}>
                     <i className="cui-pencil icons font-md"/>
                 </Button>
                 {!isHideDeleteIcon ?
