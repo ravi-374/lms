@@ -6,18 +6,22 @@ import {editMemberBookHistory} from '../../store/actions/memberBookHistoryAction
 import BookAllotmentForm from './BookAllotmentForm';
 import {fetchBook} from '../../store/actions/bookAction';
 import {bookAllotmentStatusOptions} from '../../constants';
+import moment from 'moment';
 
 const EditBookAllotment = (props) => {
     const {toggleModal, className, title, books, selectedBook, bookAllotment, onSelectBook, bookId, members, bookItems, selectedBookItem, isMemberBookHistory} = props;
     const modalOption = {toggleModal, className, title};
     const formOption = {books, onSelectBook, bookId, members};
-    const {book_item_id, status, note} = bookAllotment;
+    const {book_item_id, status, note, reserve_date, issued_on, return_date} = bookAllotment;
     const changeAbleFields = {
         selectedBook,
         book_id: bookAllotment.book_item.book.id,
         book_item_id,
         status,
         note,
+        reserve_date: reserve_date ? moment(reserve_date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
+        issued_on: issued_on ? moment(issued_on, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
+        return_date: return_date ? moment(return_date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
         selectedBookItem: selectedBookItem,
         bookItems,
         selectedMember: members.filter(member => member.id === +bookAllotment.member_id),

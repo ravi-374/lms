@@ -96,3 +96,17 @@
 .rbt-input-hint {
     top: 5px !important;
 }
+
+.react-datepicker-wrapper {
+    width: 93%;
+}
+
+.react-datepicker__input-container {
+    width: 100%;
+    input {
+        width: 100%;
+        text-indent: 12px;
+        border-radius: unset !important;
+        border: 1px solid #e4e7ea;
+    }
+}

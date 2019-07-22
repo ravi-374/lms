@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect, createRef, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
@@ -6,39 +6,71 @@ import bookAllotmentValidate from './bookAllotmentValidate';
 import InputGroup from '../../shared/components/InputGroup';
 import SaveAction from '../../shared/action-buttons/SaveAction';
 import TextArea from '../../shared/components/TextArea';
-import {bookAllotmentStatusOptions} from '../../constants';
+import {bookAllotmentStatusOptions, bookAllotmentStatusConstant} from '../../constants';
 import './BooksAllotment.scss';
 import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
 import TypeAhead from '../../shared/components/TypeAhead';
+import moment from 'moment';
+import DatePicker from '../../shared/components/DatePicker';
 
 let bookId = null;
 let memberId = null;
 const BookAllotmentForm = props => {
-    const [selectedBook] = useState(props.initialValues ? props.initialValues.selectedBook : []);
-    const [selectedBookItem] = useState(props.initialValues ? props.initialValues.selectedBookItem : []);
-    const [selectedMember] = useState(props.initialValues ? props.initialValues.selectedMember : []);
-    const [selectedStatus] = useState(props.initialValues ? props.initialValues.selectedStatus : []);
+    const {initialValues} = props;
+    const [selectedBook] = useState(initialValues ? initialValues.selectedBook : []);
+    const [selectedBookItem] = useState(initialValues ? initialValues.selectedBookItem : []);
+    const [selectedMember] = useState(initialValues ? initialValues.selectedMember : []);
+    const [selectedStatus] = useState(initialValues ? initialValues.selectedStatus : []);
     const [isDisabledItem, setDisabledItem] = useState(true);
     const [isValidBook, setIsValidBook] = useState(false);
     const [isValidMember, setIsValidMember] = useState(false);
     const [isValidBookItem, setIsValidBookItem] = useState(false);
     const [isValidStatus, setIsValidStatus] = useState(false);
+    const [status, setStatus] = useState(null);
     const bookItemRef = createRef();
+    const [selectedDate, setSelectedDate] = useState(null);
     useEffect(() => {
         bookId = null;
         memberId = null;
-        if (props.initialValues) {
+        if (initialValues) {
             bookId = selectedBook[0].id;
             memberId = selectedMember[0].id;
             props.change('book_id', selectedBook[0].id);
             props.change('book_item_id', selectedBookItem[0].id);
             props.change('member_id', selectedMember[0].id);
             props.change('status', selectedStatus[0].id);
+            setStatus(selectedStatus[0].id);
             setDisabledItem(false);
+            if (initialValues.reserve_date) {
+                setSelectedDate(moment(initialValues.reserve_date).toDate());
+                props.change('reserve_date', initialValues.reserve_date);
+            } else if (initialValues.issued_on) {
+                setSelectedDate(moment(initialValues.issued_on).toDate());
+                props.change('issued_on', initialValues.issued_on);
+            } else {
+                setSelectedDate(moment(initialValues.return_date).toDate());
+                props.change('return_date', initialValues.return_date);
+            }
         }
     }, []);
+    const prepareFormValues = (formValues) => {
+        const {book_id, book_item_id, member_id, note, status} = formValues;
+        const formData = {book_id, book_item_id, member_id, note, status};
+        switch (status) {
+            case bookAllotmentStatusConstant.BOOK_RESERVED:
+                formData.reserve_date = moment(selectedDate).format('YYYY-MM-DD hh:mm:ss');
+                break;
+            case bookAllotmentStatusConstant.BOOK_ISSUED:
+                formData.issued_on = moment(selectedDate).format('YYYY-MM-DD hh:mm:ss');
+                break;
+            default:
+                formData.return_date = moment(selectedDate).format('YYYY-MM-DD hh:mm:ss');
+                break;
+        }
+        return formData;
+    };
     const onSaveBookAllotment = formValues => {
-        props.onSaveBookAllotment(formValues);
+        props.onSaveBookAllotment(prepareFormValues(formValues));
     };
     const getBooks = () => {
         if (bookId && memberId) {
@@ -86,10 +118,43 @@ const BookAllotmentForm = props => {
         if (option.length > 0) {
             setIsValidStatus(false);
             props.change('status', option[0].id);
+            setStatus(option[0].id);
         } else {
             setIsValidStatus(true);
             props.change('status', null);
+            setStatus(null);
         }
+    };
+    const onSelectDate = (date) => {
+        setSelectedDate(date);
+    };
+    const renderDatePicker = (status) => {
+        if (!status) {
+            return null;
+        }
+        let field = '';
+        let label = '';
+        switch (status) {
+            case bookAllotmentStatusConstant.BOOK_RESERVED:
+                label = 'Reserve Date';
+                field = 'reserve_date';
+                break;
+            case bookAllotmentStatusConstant.BOOK_ISSUED:
+                label = 'Issue Date';
+                field = 'issued_on';
+                break;
+            default:
+                label = 'Return Date';
+                field = 'return_date';
+                break;
+        }
+        return (
+            <Fragment>
+                <DatePicker label={label} selected={selectedDate} onChange={onSelectDate}
+                            placeHolder="Click to select a date"/>
+                <Field name={field} type="hidden" component={InputGroup}/>
+            </Fragment>
+        )
     };
     if (!props.books || props.books && props.books.length === 0 || !props.members || props.members && props.members.length === 0) {
         return null;
@@ -153,6 +218,9 @@ const BookAllotmentForm = props => {
                     isInvalid={isValidStatus}
                 />
                 <Field name="status" type="hidden" component={InputGroup}/>
+            </Col>
+            <Col xs={12}>
+                {renderDatePicker(status)}
             </Col>
             <Col xs={12}>
                 <Field name="note" label="Note" component={TextArea}/>
