@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\BookItem;
@@ -127,11 +128,12 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
 
+        $issuedOn = (!empty($input['issued_on'])) ? $input['issued_on'] : Carbon::now();
         $input = [
             'book_item_id'    => $input['book_item_id'],
             'member_id'       => $input['member_id'],
-            'issued_on'       => Carbon::now(),
-            'return_due_date' => Carbon::now()->addDays(15),
+            'issued_on'       => $issuedOn,
+            'return_due_date' => Carbon::parse($issuedOn)->addDays(15),
             'note'            => !empty($input['note']) ? $input['note'] : null,
             'status'          => IssuedBook::STATUS_ISSUED,
             'issuer_id'       => Auth::id(),
@@ -173,10 +175,12 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             throw new UnprocessableEntityHttpException('Book is not available.');
         }
 
+        $reserveDate = (!empty($input['reserve_date'])) ? $input['reserve_date'] : Carbon::now();
         $issueBook = IssuedBook::create([
             'book_item_id' => $input['book_item_id'],
             'member_id'    => $input['member_id'],
             'note'         => !empty($input['note']) ? $input['note'] : null,
+            'reserve_date' => $reserveDate,
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
         $bookItem->update(['is_available' => false]);
@@ -204,7 +208,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         $issueBook->update([
-            'return_date' => Carbon::now(),
+            'return_date' => (!empty($input['return_date'])) ? $input['return_date'] : Carbon::now(),
             'note'        => !empty($input['note']) ? $input['note'] : null,
             'status'      => IssuedBook::STATUS_RETURNED,
             'returner_id' => Auth::id(),
