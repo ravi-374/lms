@@ -1,4 +1,5 @@
-import React, {Suspense, useState} from 'react';
+import React, {Suspense, useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {
@@ -15,12 +16,17 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
 import Toasts from '../../shared/toast/Toasts';
 import routes from "../../routes";
+import {setLoading} from "../../store/actions/progressBarAction";
+import {fetchConfig} from "../../store/actions/configAction";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const [sideMenuList] = useState(prepareNavigations(props));
+    useEffect(() => {
+        props.fetchConfig();
+    }, []);
+    const [sideMenuList] = useState(prepareNavigation(props));
     return (
         <div className="app">
             {renderAppHeader(props)}
@@ -33,9 +39,12 @@ const Layout = (props) => {
     );
 };
 
-const prepareNavigations = (props) => {
+const prepareNavigation = (props) => {
     let sideMenu = navigation;
-       let routes = [];
+    let routes = [];
+    if (props.permissions.length === 0) {
+        return sideMenu;
+    }
     sideMenu.items.forEach(route => {
         if (props.permissions.includes(route.permission)) {
             routes.push(route);
@@ -43,7 +52,6 @@ const prepareNavigations = (props) => {
     });
     sideMenu.items = routes;
     sideMenu.items = sideMenu.items.slice();
-
     return sideMenu;
 };
 
@@ -100,7 +108,7 @@ const renderRoutes = (props) => {
         if (props.permissions.includes(route.permission)) {
             filterRoutes.push(route)
         }
-    })
+    });
 
     return filterRoutes.map((route, index) => {
         return route.component ? (
@@ -126,4 +134,16 @@ const renderAppFooter = () => {
     );
 };
 
-export default Layout;
+const mapStateToProps = (state) => {
+    const permissions = [];
+    if (state.config.permissions) {
+        state.config.permissions.forEach((permission) =>
+            permissions.push(permission.name)
+        );
+    }
+    return {
+        permissions
+    };
+};
+
+export default connect(mapStateToProps, {fetchConfig, setLoading})(Layout);
