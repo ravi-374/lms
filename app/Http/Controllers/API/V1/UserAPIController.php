@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
+use App\Http\Requests\API\UpdateUserProfileAPIRequest;
 use App\Repositories\UserRepository;
 use App\User;
 use Exception;
@@ -137,5 +139,33 @@ class UserAPIController extends AppBaseController
         $message = "User has been ".(($user->is_active) ? 'activated' : 'deactivated')." successfully.";
 
         return $this->sendSuccess($message);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getLoggedInUserDetails()
+    {
+        $loginUser = \Auth::user();
+
+        return $this->sendResponse($loginUser, 'User details retrieved successfully.');
+    }
+
+    /**
+     * @param UpdateUserProfileAPIRequest $request
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     * @return JsonResponse
+     */
+    public function updateUserProfile(UpdateUserProfileAPIRequest $request)
+    {
+        $input = $request->all();
+
+        $userId = \Auth::user()->id;
+
+        $user = $this->userRepository->update($input, $userId);
+
+        return $this->sendResponse($user->toArray(), 'User profile updated successfully.');
     }
 }
