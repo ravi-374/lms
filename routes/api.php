@@ -17,7 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Login API
+// User Login API
 Route::post('/login', 'AuthAPIController@login');
+
+// member login API
+Route::post('member-login', 'AuthAPIController@memberLogin');
 
 include 'api/v1.php';

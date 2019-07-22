@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -44,35 +45,6 @@ class MemberAuthController extends AppBaseController
         $this->memberRepository = $memberRepo;
         $this->userRepository = $userRepository;
         $this->accountRepo = $accountRepo;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function login(Request $request)
-    {
-        $email = $request->get('email');
-        $password = $request->get('password');
-
-        if (empty($email) or empty($password)) {
-            return $this->sendError('email and password required.', 422);
-        }
-
-        /** @var Member $member */
-        $member = Member::whereRaw('lower(email) = ?', [$email])->first();
-        if (empty($member)) {
-            return $this->sendError('Invalid email or password.', 422);
-        }
-
-        if (!Hash::check($password, $member->password)) {
-            return $this->sendError('Invalid email or password.', 422);
-        }
-
-        $token = JWTAuth::fromUser($member);
-
-        return $this->sendResponse(['token' => $token, 'user' => $member], 'Logged in successfully.');
     }
 
     /**
