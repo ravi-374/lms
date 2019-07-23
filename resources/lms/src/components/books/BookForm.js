@@ -186,13 +186,12 @@ const BookForm = (props) => {
                 </div>
             </Col>
             <Col xs={12} className="mt-2">
-                <h5>Additional Details</h5>
-                <hr/>
                 <Row>
                     <Col xs={12}>
                         <Field name="description" cols={90} rows={3} label="Description" component={TextArea}/>
                     </Col>
                 </Row>
+                <hr/>
             </Col>
             {initialValues ?
                 <Fragment>
@@ -202,7 +201,7 @@ const BookForm = (props) => {
                 </Fragment> : null
             }
             <Col xs={12} className="mt-3">
-                <h5>Book Item Details</h5>
+                <h5>Book Items</h5>
                 <FieldArray name="items" component={renderBookItems}
                             bookLanguages={props.bookLanguages}
                             publishers={props.publishers}

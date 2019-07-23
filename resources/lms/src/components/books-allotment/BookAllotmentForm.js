@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createRef, Fragment} from 'react';
+import React, {createRef, Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
@@ -6,7 +6,7 @@ import bookAllotmentValidate from './bookAllotmentValidate';
 import InputGroup from '../../shared/components/InputGroup';
 import SaveAction from '../../shared/action-buttons/SaveAction';
 import TextArea from '../../shared/components/TextArea';
-import {bookAllotmentStatusOptions, bookAllotmentStatusConstant} from '../../constants';
+import {bookAllotmentStatusConstant, bookAllotmentStatusOptions} from '../../constants';
 import './BooksAllotment.scss';
 import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
 import TypeAhead from '../../shared/components/TypeAhead';
@@ -156,9 +156,7 @@ const BookAllotmentForm = props => {
             </Fragment>
         )
     };
-    if (!props.books || props.books && props.books.length === 0 || !props.members || props.members && props.members.length === 0) {
-        return null;
-    }
+
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
