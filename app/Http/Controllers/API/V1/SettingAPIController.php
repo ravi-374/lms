@@ -62,7 +62,7 @@ class SettingAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $setting = $this->settingRepo->create($input);
+        $setting = $this->settingRepo->createOrUpdate($input);
 
         return $this->sendResponse($setting->toArray(), 'Setting saved successfully.');
     }
