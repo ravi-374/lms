@@ -29,7 +29,7 @@ const BookItemForm = (props) => {
     return (
         <Row className="animated fadeIn book-form">
             <Col xs={12} className="mt-5">
-                <h5>Book Item Details</h5>
+                <h5>Book Items</h5>
                 <FieldArray name="items" component={renderBookItems}
                             bookLanguages={bookLanguages}
                             publishers={publishers}
@@ -73,7 +73,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
             <Table responsive size="md">
                 <thead>
                 <tr>
-                    <th className="book-detail-form__item-header">Book Item Id</th>
+                    <th className="book-detail-form__item-header">Book Code</th>
                     <th className="book-detail-form__item-header">Edition</th>
                     <th>Format</th>
                     <th>Location</th>
@@ -112,8 +112,8 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                         return (
                             <tr key={index}>
                                 <td>
-                                    <Field name={`${item}.book_item_id`} readOnly={true} type="text"
-                                           placeholder="Auto Generated"
+                                    <Field name={`${item}.book_item_id`} type="text"
+                                           placeholder="Book Code"
                                            groupText="file-text" component={CustomInput}/>
                                 </td>
                                 <td>
@@ -168,11 +168,11 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                 <td>
                                     <TypeAhead
                                         id="status"
-                                        options={bookStatusOptions}
+                                        options={bookAllotmentStatusOptions}
                                         placeholder="Select Status"
                                         onChange={onSelectPublisher}
                                         groupText="info"
-                                        defaultSelected={prepareSelectedItem(index, bookStatusOptions, 'status')}
+                                        defaultSelected={prepareSelectedItem(index, bookAllotmentStatusOptions, 'status')}
                                         disabled={true}
                                     />
                                     <Field name={`${item}.publisher_id`} type="hidden" component={InputGroup}/>

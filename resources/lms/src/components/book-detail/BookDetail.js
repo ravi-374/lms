@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardBody, Button} from 'reactstrap';
+import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import './BookDetail.scss';
 import {fetchPublishers} from '../../store/actions/publisherAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
@@ -17,7 +17,7 @@ const BookDetail = props => {
         props.fetchBookLanguages();
         props.fetchPublishers();
     }, []);
-    const {book, bookLanguages, publishers, toggleModal, history} = props;
+    const { book, bookLanguages, publishers, toggleModal, history } = props;
     if (!book || !book.genres) {
         return null;
     }
@@ -28,14 +28,14 @@ const BookDetail = props => {
     const goBack = () => {
         history.push('/app/books');
     };
-    const bookItemFormOptions = {bookItems: book.items, bookId: book.id, bookLanguages, publishers};
-    const bookFormOptions = {book, toggleModal};
+    const bookItemFormOptions = { bookItems: book.items, bookId: book.id, bookLanguages, publishers };
+    const bookFormOptions = { book, toggleModal };
     const imageUrl = book.image ? 'uploads/books/' + book.image : 'images/book-avatar.png';
     return (
         <div className="animated fadeIn">
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="pull-left text-dark">Book Detail</h5>
+                    <h5 className="pull-left text-dark">Book Details</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>Edit Book Detail</Button>
                         <Button onClick={() => goBack()}>Back</Button>
@@ -46,51 +46,61 @@ const BookDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="book-detail-row no-gutters">
-                                    <div className="image-holder-wrapper">
+                                    <div className="book-image-container">
                                         <div className="image-holder">
-                                            <img src={imageUrl} height="400" width="400" alt={imageUrl}/>
+                                            <img src={imageUrl} height="270" width="220" alt={imageUrl}/>
                                         </div>
                                     </div>
                                     <div className="book-detail">
                                         <div className="book-detail__item-container">
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-heading">Title</span>
+                                                <span className="book-detail__item-title-heading">Title</span>
                                                 <span>{book.name}</span>
                                             </div>
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-heading">ISBN</span>
+                                                <span className="book-detail__item-isbn-heading">ISBN</span>
                                                 <span>{book.isbn}</span>
                                             </div>
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-heading">Genre(s)</span>
+                                                <span className="book-detail__item-genre-heading">Genre(s)</span>
                                                 <span>
-                                                    {book.genres.map((({name}) => name)).join(',  ')}
+                                                    {book.genres.map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
+
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-heading">Author(s)</span>
+                                                <span className="book-detail__item-authors-heading">Author(s)</span>
                                                 <span>
-                                                    {prepareAuthor(book.authors).map((({name}) => name)).join(',  ')}
+                                                    {prepareAuthor(book.authors).map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
-                                            <div className="book-detail__item">
-                                                <span className="book-detail__item-heading">Tag(s)</span>
-                                                <span>
-                                                    {book.tags.map((({name}) => name)).join(',  ')}
+
+                                            {book.tags.length > 0 ?
+                                                <div className="book-detail__item">
+                                                    <span className="book-detail__item-tags-heading">Tag(s)</span>
+                                                    <span>
+                                                    {book.tags.map((({ name }) => name)).join(',  ')}
                                                 </span>
-                                            </div>
-                                            <div className="book-detail__item">
-                                                <span className="book-detail__item-heading">URL</span>
-                                                <span>
-                                                    {book.url ? book.url : 'N/A'}
+                                                </div>
+                                                : ''}
+
+                                            {book.url ?
+                                                <div className="book-detail__item">
+                                                    <span className="book-detail__item-url-heading">URL</span>
+                                                    <span>
+                                                    {book.url}
                                                 </span>
-                                            </div>
-                                            <div className="book-detail__item">
-                                                <span className="book-detail__item-heading">Description</span>
-                                                <span>
-                                                    {book.description ? book.description : 'N/A'}
+                                                </div>
+                                                : ''}
+
+                                            {book.description ?
+                                                <div className="book-detail__item">
+                                                    <span className="book-detail__item-desc-heading">Description</span>
+                                                    <span>
+                                                    {book.description}
                                                 </span>
-                                            </div>
+                                                </div>
+                                                : ''}
                                         </div>
                                     </div>
                                 </Row>
@@ -108,7 +118,7 @@ const BookDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const {books, publishers, bookLanguages} = state;
+    const { books, publishers, bookLanguages } = state;
     return {
         book: books[ownProp.match.params.id],
         bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),

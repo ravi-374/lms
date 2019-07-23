@@ -116,7 +116,7 @@ const BookForm = (props) => {
                     <Col xs={6}>
                         <TypeAhead
                             id="author"
-                            label="Author"
+                            label="Authors"
                             required
                             multiple={true}
                             options={props.authors}
@@ -173,8 +173,6 @@ const BookForm = (props) => {
                 </div>
             </Col>
             <Col xs={12} className="mt-2">
-                <h5>Additional Details</h5>
-                <hr/>
                 <Row>
                     <Col xs={12}>
                         <Field name="description" cols={90} rows={3} label="Description" component={TextArea}/>
@@ -184,7 +182,6 @@ const BookForm = (props) => {
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveBook)} {...props}/>
             </Col>
-
         </Row>
     );
 };
