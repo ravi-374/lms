@@ -61,7 +61,7 @@ const prepareBookItem = (books, bookAllotment = null) => {
     }
     const bookItem = books[0].items.find(book => book.id === +bookAllotment.book_item_id);
     if (bookItem) {
-        return [{id: +bookItem.id, name: bookItem.edition + ` (${bookItem.book_item_id})`}]
+        return [{id: +bookItem.id, name: bookItem.edition + ` (${bookItem.book_code})`}]
     }
 };
 const prepareBookItems = (books) => {
@@ -70,7 +70,7 @@ const prepareBookItems = (books) => {
         return bookArray;
     }
     books[0].items.forEach(book => {
-        bookArray.push({id: +book.id, name: book.edition + ` (${book.book_item_id})`});
+        bookArray.push({id: +book.id, name: book.edition + ` (${book.book_code})`});
     });
     return bookArray;
 };

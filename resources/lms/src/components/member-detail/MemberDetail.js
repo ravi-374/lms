@@ -18,6 +18,7 @@ import Toasts from '../../shared/toast/Toasts';
 
 const MemberDetail = props => {
     const [isEditMode, setEditMode] = useState(false);
+    const [isEditMember, setIsEditMember] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookHistory, setBookHistory] = useState(null);
     const [countries, setCountries] = useState([]);
@@ -34,12 +35,15 @@ const MemberDetail = props => {
     }, []);
     const {member, memberBookHistory, membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading} = props;
     if (!member || !members || !books || isLoading || (books && books.length === 0)) {
-        return <Fragment>
-            <ProgressBar/>
-            <Toasts/>
-        </Fragment>
+        return (
+            <Fragment>
+                <ProgressBar/>
+                <Toasts/>
+            </Fragment>
+        )
     }
     const onOpenModal = (isEdit, bookHistory = null, isDelete = false) => {
+        setIsEditMember(!isEdit);
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setBookHistory(bookHistory);
@@ -49,7 +53,17 @@ const MemberDetail = props => {
         history.push('/app/members');
     };
     const cardBodyProps = {books, members, sortAction, sortObject, memberBookHistory, onOpenModal};
-    const cardModalProps = {bookHistory, books, members, isEditMode, isDeleteMode, toggleModal};
+    const cardModalProps = {
+        bookHistory,
+        books,
+        members,
+        isEditMode,
+        isDeleteMode,
+        isEditMember,
+        toggleModal,
+        membershipPlans,
+        member
+    };
     const imageUrl = member.image ? 'uploads/members/' + member.image : 'images/user-avatar.png';
     const {address} = member;
     let fullAddress = '';
@@ -86,6 +100,9 @@ const MemberDetail = props => {
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">Member Details</h5>
                     <div className="d-flex">
+                        <Button className="mr-2" color="primary" onClick={() => onOpenModal(false)}>
+                            Edit Member Details
+                        </Button>
                         <Button onClick={() => goBack()}>Back</Button>
                     </div>
                 </Col>
@@ -111,14 +128,18 @@ const MemberDetail = props => {
                                                 <span className="member-detail__item-heading">Email</span>
                                                 <span>{member.email}</span>
                                             </div>
-                                            <div className="member-detail__item">
-                                                <span className="member-detail__item-heading">Address</span>
-                                                <span>{fullAddress}</span>
-                                            </div>
-                                            <div className="member-detail__item">
-                                                <span className="member-detail__item-heading">Phone</span>
-                                                <span>{member.phone ? member.phone : 'N/A'}</span>
-                                            </div>
+                                            {fullAddress !== '' ?
+                                                <div className="member-detail__item">
+                                                    <span className="member-detail__item-heading">Address</span>
+                                                    <span>{fullAddress}</span>
+                                                </div> : null
+                                            }
+                                            {member.phone ?
+                                                <div className="member-detail__item">
+                                                    <span className="member-detail__item-heading">Phone</span>
+                                                    <span>{member.phone}</span>
+                                                </div> : null
+                                            }
                                             <div className="member-detail__item">
                                                 <span className="member-detail__item-heading">Membership Plan</span>
                                                 <span>{member.membership_plan_name}</span>
@@ -131,7 +152,9 @@ const MemberDetail = props => {
                                     </div>
                                 </Row>
                                 <div className="mt-5">
-                                    <MemberBookHistory {...cardBodyProps}/>
+                                    {memberBookHistory.length > 0 ?
+                                        <MemberBookHistory {...cardBodyProps}/> : null
+                                    }
                                 </div>
                                 <BookHistoryModal {...cardModalProps}/>
                             </CardBody>

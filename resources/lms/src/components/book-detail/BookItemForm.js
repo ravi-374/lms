@@ -112,7 +112,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                         return (
                             <tr key={index}>
                                 <td>
-                                    <Field name={`${item}.book_item_id`} type="text"
+                                    <Field name={`${item}.book_code`} type="text"
                                            placeholder="Book Code"
                                            groupText="file-text" component={CustomInput}/>
                                 </td>
@@ -159,6 +159,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                         id="publisher"
                                         options={publishers}
                                         placeholder="Select Publisher"
+                                        onChange={onSelectPublisher}
                                         groupText="user-circle-o"
                                         defaultSelected={prepareSelectedItem(index, publishers, 'publisher')}
                                         dropUp={true}

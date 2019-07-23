@@ -23,6 +23,7 @@ export default ({label, required, placeHolder, selected = '', addOnType = 'prepe
                     <DatePicker placeholderText={placeHolder}
                                 selected={selected}
                                 onChange={onChange}
+                                maxDate={maxDate}
                                 dateFormat={dateFormat}/>
                 </InputGroup>
             </FormGroup>
