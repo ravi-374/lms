@@ -104,16 +104,17 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $id
+     * @param IssuedBook $issuedBook
      *
      * @return JsonResponse
      */
-    public function show($id)
+    public function show(IssuedBook $issuedBook)
     {
-        /** @var IssuedBook $issuedBook */
-        $issuedBook = $this->issuedBookRepository->findOrFail($id);
+        $issuedBook->issuer;
+        $issuedBook->returner;
+        $issuedBook->bookItem->book;
 
-        return $this->sendResponse($issuedBook->toArray(), 'Issued Book retrieved successfully');
+        return $this->sendResponse($issuedBook->apiObj(), 'Issued Book retrieved successfully');
     }
 
     /**

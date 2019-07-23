@@ -49,6 +49,7 @@ class SettingRepository extends BaseRepository
      */
     public function createOrUpdate($input)
     {
+        /** @var Setting $setting */
         $setting = Setting::where('key', $input['key'])->first();
 
         if (empty($setting)) {

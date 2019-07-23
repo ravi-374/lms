@@ -109,6 +109,7 @@ Route::group(['middleware' => 'backend.auth'], function () {
 
         // get books history for admin users
         Route::get('books-history', 'IssuedBookAPIController@index');
+        Route::get('issued-books/{issued_book}', 'IssuedBookAPIController@show');
     });
 
     /** Get App Config */
