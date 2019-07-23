@@ -36,7 +36,7 @@ const Publishers = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <h5 className="pull-left text-dark">Publishers</h5>
+                <h5 className="page-heading">Publishers</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">

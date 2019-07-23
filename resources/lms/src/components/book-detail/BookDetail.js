@@ -35,7 +35,7 @@ const BookDetail = props => {
         <div className="animated fadeIn">
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="pull-left text-dark">Book Details</h5>
+                    <h5 className="page-heading">Book Details</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>Edit Book Detail</Button>
                         <Button onClick={() => goBack()}>Back</Button>

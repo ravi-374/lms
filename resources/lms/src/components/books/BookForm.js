@@ -251,7 +251,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
     };
     return (
         <div>
-            <Table responsive size="md">
+            <Table responsive size="md" className="table-multi-item-responsive">
                 <thead>
                 <tr>
                     <th className="book-form__item-header">Edition</th>
@@ -289,11 +289,11 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                         };
                         return (
                             <tr key={index}>
-                                <td style={{width: '300px'}}>
+                                <td>
                                     <Field name={`${item}.edition`} type="text" placeholder="Edition"
                                            groupText="file-text" component={CustomInput}/>
                                 </td>
-                                <td style={{width: '300px'}}>
+                                <td>
                                     <TypeAhead
                                         id="format"
                                         options={bookFormatOptions}
@@ -304,11 +304,11 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                     />
                                     <Field name={`${item}.format`} type="hidden" component={InputGroup}/>
                                 </td>
-                                <td style={{width: '300px'}}>
+                                <td>
                                     <Field name={`${item}.price`} min="1" type="number" placeholder="Price"
                                            groupText="money" component={CustomInput}/>
                                 </td>
-                                <td style={{width: '300px'}}>
+                                <td>
                                     <TypeAhead
                                         id="language"
                                         labelText="Language"

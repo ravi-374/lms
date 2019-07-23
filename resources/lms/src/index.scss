@@ -28,6 +28,13 @@ code {
     monospace;
 }
 
+.page-heading {
+    @extend .float-left;
+    @extend .text-dark;
+    @extend .pr-3;
+    font-weight: 700;
+}
+
 .sidebar {
 
     .sidebar-nav {
@@ -175,4 +182,18 @@ select {
 
 .sidebar-minimized .sidebar .nav-link .nav-icon {
     font-size: 20px !important;
+}
+
+.table-multi-item-responsive {
+
+    @media (max-width: 1399px){
+        input.form-control {
+            border-top-left-radius: .25rem !important;
+            border-bottom-left-radius: .25rem !important;
+        }
+
+        .input-group-prepend {
+            display: none;
+        }
+    }
 }

@@ -46,7 +46,7 @@ const Books = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <h5 className="pull-left text-dark">Books</h5>
+                <h5 className="page-heading">Books</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
                     <Link to="/app/books/new" size="md" className="btn btn-primary ml-2">New Book</Link>
