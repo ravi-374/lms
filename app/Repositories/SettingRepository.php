@@ -41,4 +41,25 @@ class SettingRepository extends BaseRepository
     {
         return Setting::class;
     }
+
+    /**
+     * @param array $input
+     *
+     * @return Setting
+     */
+    public function createOrUpdate($input)
+    {
+        /** @var Setting $setting */
+        $setting = Setting::where('key', $input['key'])->first();
+
+        if (empty($setting)) {
+            $setting = Setting::create($input);
+
+            return $setting;
+        }
+
+        $setting->update($input);
+
+        return $setting->fresh();
+    }
 }

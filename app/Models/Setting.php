@@ -60,6 +60,8 @@ class Setting extends Model
      * @var array
      */
     public static $rules = [
-        'key' => 'required|unique:settings,key',
+        'key'          => 'required',
+        'value'        => 'required',
+        'display_name' => 'required',
     ];
 }

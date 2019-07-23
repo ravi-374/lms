@@ -6,6 +6,7 @@
  * Date: 11-07-2019
  * Time: 10:16 AM
  */
+
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
@@ -68,5 +69,23 @@ class BookItemAPIController extends AppBaseController
         $bookItem->delete();
 
         return $this->sendSuccess('BookItem deleted successfully.');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function searchBooks(Request $request)
+    {
+        $input = $request->except(['limit', 'skip']);
+
+        $records = $this->bookItemRepo->searchBooks(
+            $input,
+            $request->get('skip', null),
+            $request->get('limit', null)
+        );
+
+        return $this->sendResponse($records, 'BookItem retrieved successfully.');
     }
 }
