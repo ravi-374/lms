@@ -23,7 +23,10 @@ export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDele
                     <i className="cui-pencil icons font-md"/>
                 </Button>
                 {!isHideDeleteIcon ?
-                    <Button className="ml-2" color="danger" size="sm" onClick={() => onOpenModal(false, item, true)}>
+                    <Button className="ml-2" color="danger" size="sm" onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenModal(false, item, true)
+                    }}>
                         <i className="cui-trash icon font-md"/>
                     </Button> : null}
             </Fragment>

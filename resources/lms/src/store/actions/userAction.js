@@ -17,6 +17,18 @@ export const fetchUsers = () => async (dispatch) => {
         });
 };
 
+export const fetchUser = (userId) => async (dispatch) => {
+    dispatch(setLoading(true));
+    await apiConfig.get(`users/${userId}`)
+        .then((response) => {
+            dispatch({type: userActionType.FETCH_USER, payload: response.data.data});
+            dispatch(setLoading(false));
+        })
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: 'error'}));
+        });
+};
+
 export const addUser = (user) => async (dispatch) => {
     await apiConfigWthFormData.post('users', user)
         .then((response) => {

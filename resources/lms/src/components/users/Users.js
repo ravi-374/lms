@@ -20,7 +20,7 @@ const Users = (props) => {
     const [isCreateMode, setCreateMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [user, setUser] = useState(null);
-    const {users, roles, sortAction, sortObject, toggleModal} = props;
+    const {users, roles, sortAction, sortObject, toggleModal,history} = props;
     const setActiveInactive = (index) => {
         users[index].is_active = !users[index].is_active;
     };
@@ -36,7 +36,7 @@ const Users = (props) => {
         setUser(user);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, users, roles, setActiveInactive, onOpenModal};
+    const cardBodyProps = {sortAction, sortObject, users, roles, setActiveInactive, onOpenModal,history};
     if (props.isLoading) {
         return <ProgressBar/>
     }
