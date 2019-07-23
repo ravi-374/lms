@@ -26,6 +26,7 @@ class BookItemRepository extends BaseRepository
         'format',
         'is_available',
         'book_id',
+        'book_code',
     ];
 
     /**
@@ -65,5 +66,80 @@ class BookItemRepository extends BaseRepository
         });
 
         return $query->get();
+    }
+
+    /**
+     * @param array $search
+     * @param int|null $skip
+     * @param int|null $limit
+     *
+     * @return BookItem[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function searchBooks($search = [], $skip = null, $limit = null)
+    {
+        $query = $this->allQuery($search, $skip, $limit)->with(['book', 'lastIssuedBook']);
+        $query = $this->applyDynamicSearch($search, $query);
+
+        $query->orderByDesc('is_available');
+
+        $records = $query->get();
+        $records = $this->sortByReturnDueDate($records);
+
+        return $records;
+    }
+
+    /**
+     * @param BookItem[]|Collection $records
+     *
+     * @return BookItem[]
+     */
+    public function sortByReturnDueDate($records)
+    {
+        $available = collect($records->where('is_available' , 1));
+        $notAvailable = collect($records->where('is_available' , 0))->toArray();
+
+        usort($notAvailable, function ($a, $b) {
+            $a = $a['last_issued_book'];
+            $b = $b['last_issued_book'];
+            if ($a[0]['return_due_date'] == $b[0]['return_due_date']) {
+                return 0;
+            }
+
+            return ($a[0]['return_due_date'] > $b[0]['return_due_date']) ? 1 : -1;
+        });
+
+        $records = $available->merge(collect($notAvailable));
+
+        return $records;
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['name']), function (Builder $query) use($search) {
+            $query->whereHas('book', function (Builder $query)  use ($search) {
+                $searchString = ['%'.$search['name'].'%'];
+
+                // search by book name
+                if (!empty($search['search_by_book'])) {
+                    $query->whereRaw('name LIKE ? ', $searchString);
+                }
+
+                // search by book authors
+                if (!empty($search['search_by_author'])) {
+                    $query->whereHas('authors', function (Builder $query) use ($search, $searchString) {
+                        $query->whereRaw('first_name LIKE ? ', $searchString);
+                        $query->orWhereRaw('last_name LIKE ? ', $searchString);
+                    });
+                }
+            });
+        });
+
+        return $query;
     }
 }

@@ -46,6 +46,9 @@ Route::group(['middleware' => 'backend.auth'], function () {
         Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
     });
 
+    // Book search
+    Route::get('search-books', 'BookItemAPIController@searchBooks');
+
     // Users
     Route::middleware('permission:manage_users')->group(function () {
         Route::resource('users', 'UserAPIController');
