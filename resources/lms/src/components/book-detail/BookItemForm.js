@@ -9,7 +9,7 @@ import InputGroup from '../../shared/components/InputGroup';
 import CustomInput from '../../shared/components/CustomInput';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../store/actions/toastAction';
-import {bookFormatOptions, bookStatusOptions} from '../../constants';
+import {bookFormatOptions, bookAllotmentStatusOptions} from '../../constants';
 import TypeAhead from '../../shared/components/TypeAhead';
 
 const BookItemForm = (props) => {
