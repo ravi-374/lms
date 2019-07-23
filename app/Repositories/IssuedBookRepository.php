@@ -65,7 +65,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
         });
-        $bookRecords = $query->orderByDesc('issued_on')->get();
+        $bookRecords = $query->orderByDesc('id')->get();
 
         return $bookRecords;
     }
