@@ -3,7 +3,7 @@
 use App\Models\MembershipPlan;
 use Illuminate\Database\Seeder;
 
-class PopulatePlansSeeder extends Seeder
+class CreatePlansSeeder extends Seeder
 {
     /**
      * Run the database seeds.

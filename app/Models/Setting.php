@@ -6,6 +6,7 @@
  * Date: 12-07-2019
  * Time: 05:55 PM
  */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereValue($value)
  * @mixin \Eloquent
+ * @property string $display_name
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereDisplayName($value)
  */
 class Setting extends Model
 {
@@ -35,6 +38,7 @@ class Setting extends Model
     public $fillable = [
         'key',
         'value',
+        'display_name',
     ];
 
     /**
@@ -43,8 +47,9 @@ class Setting extends Model
      * @var array
      */
     protected $casts = [
-        'key'   => 'string',
-        'value' => 'string',
+        'key'          => 'string',
+        'value'        => 'string',
+        'display_name' => 'string',
     ];
 
     /**

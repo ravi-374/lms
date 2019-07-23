@@ -15,7 +15,7 @@ use Illuminate\Database\Seeder;
 /**
  * Class PopulateRolesAndPermissionsSeeder
  */
-class PopulateRolesAndPermissionsSeeder extends Seeder
+class CreateRolesAndPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
