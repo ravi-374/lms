@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 
@@ -65,6 +66,8 @@ class IssuedBook extends Model
     ];
 
     public $table = 'issued_books';
+
+    protected $appends = ['issue_due_date'];
 
     public $fillable = [
         'book_item_id',
@@ -163,11 +166,20 @@ class IssuedBook extends Model
     {
         $record = $this->toArray();
         $record['issuer_name'] = $this->issuer_name;
-        $record['returner_name'] = $this->returner_name;;
+        $record['returner_name'] = $this->returner_name;
 
         unset($record['issuer']);
         unset($record['returner']);
 
         return $record;
+    }
+
+    public function getIssueDueDateAttribute()
+    {
+        if ($this->status == self::STATUS_RESERVED) {
+            $reserveDueDays = getSettingValueByKey(Setting::RESERVE_DUE_DAYS);
+
+            return Carbon::parse($this->reserve_date)->addDays($reserveDueDays)->toDateTimeString();
+        }
     }
 }
