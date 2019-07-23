@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreatePublishersSeeder::class);
         $this->call(CreateTagsSeeder::class);
         $this->call(CreatePlansSeeder::class);
+        $this->call(CreateSettingsSeeder::class);
     }
 }
