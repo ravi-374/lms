@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $book_id
- * @property string $book_item_id
+ * @property string $book_code
  * @property string $edition
  * @property int $format
  * @property bool $is_available
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereBookId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereBookItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereBookCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereEdition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereFormat($value)
@@ -54,7 +54,7 @@ class BookItem extends Model
 
     public $fillable = [
         'book_id',
-        'book_item_id',
+        'book_code',
         'edition',
         'format',
         'is_available',
