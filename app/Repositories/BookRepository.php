@@ -12,7 +12,9 @@ use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
 use Illuminate\Support\Collection;
+use Str;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class BookRepository
@@ -218,14 +220,18 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 throw new Exception('Please enter book item price.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
             }
 
-            if (isset($item['book_item_id'])) {
-                $bookItem = BookItem::whereBookItemId($item['book_item_id']);
+            if (isset($item['book_code'])) {
+                if (strlen($item['book_code']) > 8 || strlen($item['book_code']) < 8) {
+                    throw new UnprocessableEntityHttpException('Book code must be 8 character long.');
+                }
+
+                $bookItem = BookItem::whereBookCode($item['book_code']);
 
                 if (isset($item['id'])) {
                     $bookItem->where('id', '!=', $item['id']);
                 }
                 if ($bookItem->exists()) {
-                    throw new Exception('Given book_item_id already exist.',
+                    throw new Exception('Given book code is already exist.',
                         HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
                 }
             }
@@ -295,7 +301,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     $item = BookItem::findOrFail($bookItem['id']);
                 } else {
                     $item = new BookItem();
-                    $item->book_item_id = isset($bookItem['book_item_id']) ? $bookItem['book_item_id'] : $this->generateItemId();
+                    $item->book_code = isset($bookItem['book_code']) ? $bookItem['book_code'] : $this->generateUniqueBookCode();
                     $item->is_available = BookItem::STATUS_AVAILABLE;
                 }
 
@@ -321,16 +327,16 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @return string
      */
-    public function generateItemId()
+    public function generateUniqueBookCode()
     {
-        //todo: later will change format
-        $rand = rand(10000, 99999);
-        $itemId = $rand;
+        $rand = rand(1, 99999999);
+
+        $itemId = sprintf("%08d", $rand);
         while (true) {
-            if (!BookItem::whereBookItemId($itemId)->exists()) {
+            if (!BookItem::whereBookCode($itemId)->exists()) {
                 break;
             }
-            $itemId = rand(10000, 99999);
+            $itemId = rand(1, 99999999);
         }
 
         return $itemId;

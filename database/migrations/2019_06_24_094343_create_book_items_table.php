@@ -15,7 +15,7 @@ class CreateBookItemsTable extends Migration
         Schema::create('book_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('book_id');
-            $table->string('book_item_id')->unique();
+            $table->string('book_code')->unique();
             $table->string('edition');
             $table->integer('format');
             $table->boolean('is_available')->default(1);

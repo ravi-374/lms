@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Setting extends Model
 {
+    const RESERVE_DUE_DAYS = 'reserve_due_days';
+    const RETURN_DUE_DAYS = 'return_due_days';
 
     public $table = 'settings';
     public $fillable = [
