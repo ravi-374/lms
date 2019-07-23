@@ -9,7 +9,7 @@ import InputGroup from '../../shared/components/InputGroup';
 import CustomInput from '../../shared/components/CustomInput';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../store/actions/toastAction';
-import {bookFormatOptions, bookAllotmentStatusOptions} from '../../constants';
+import {bookFormatOptions, bookStatusOptions} from '../../constants';
 import TypeAhead from '../../shared/components/TypeAhead';
 
 const BookItemForm = (props) => {
@@ -48,8 +48,8 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
     fields.forEach(field => validateArray.push(false));
     const [isValidLanguage] = useState(validateArray);
     const onAddSubFields = () => {
-        setItems([...items, {id: 1, is_available: 1}]);
-        return fields.push({is_available: 1});
+        setItems([...items, {id: 1, book_status: 1}]);
+        return fields.push({book_status: 1});
     };
     const onRemoveSubFields = (index) => {
         return fields.remove(index);
@@ -63,7 +63,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
             case'publisher':
                 return itemArray.filter(item => item.id === items[index].publisher_id);
             case'status':
-                return itemArray.filter(item => item.id === items[index].is_available);
+                return itemArray.filter(item => item.id === items[index].book_status);
             default:
                 return [];
         }
@@ -168,11 +168,10 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                 <td>
                                     <TypeAhead
                                         id="status"
-                                        options={bookAllotmentStatusOptions}
+                                        options={bookStatusOptions}
                                         placeholder="Select Status"
-                                        onChange={onSelectPublisher}
                                         groupText="info"
-                                        defaultSelected={prepareSelectedItem(index, bookAllotmentStatusOptions, 'status')}
+                                        defaultSelected={prepareSelectedItem(index, bookStatusOptions, 'status')}
                                         disabled={true}
                                     />
                                     <Field name={`${item}.publisher_id`} type="hidden" component={InputGroup}/>
