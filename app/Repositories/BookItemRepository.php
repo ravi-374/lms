@@ -96,19 +96,10 @@ class BookItemRepository extends BaseRepository
     public function sortByReturnDueDate($records)
     {
         $available = collect($records->where('is_available' , 1));
-        $notAvailable = collect($records->where('is_available' , 0))->toArray();
+        $notAvailable = collect($records->where('is_available' , 0))
+            ->sortBy('lastIssuedBook.return_due_date');
 
-        usort($notAvailable, function ($a, $b) {
-            $a = $a['last_issued_book'];
-            $b = $b['last_issued_book'];
-            if ($a[0]['return_due_date'] == $b[0]['return_due_date']) {
-                return 0;
-            }
-
-            return ($a[0]['return_due_date'] > $b[0]['return_due_date']) ? 1 : -1;
-        });
-
-        $records = $available->merge(collect($notAvailable));
+        $records = $available->merge($notAvailable);
 
         return $records;
     }

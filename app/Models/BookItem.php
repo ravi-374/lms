@@ -84,16 +84,17 @@ class BookItem extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function lastIssuedBook()
     {
-        return $this->hasMany(IssuedBook::class, 'book_item_id')
+        return $this->hasOne(IssuedBook::class, 'book_item_id')
             ->where('status', '!=', IssuedBook::STATUS_RETURNED);
     }
 
     public function getBookStatusAttribute()
     {
+        /** @var IssuedBook $lastIssuedBook */
         $lastIssuedBook = $this->lastIssuedBook()->first();
         if (!empty($lastIssuedBook)) {
             return $lastIssuedBook->status;
