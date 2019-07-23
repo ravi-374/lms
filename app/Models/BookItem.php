@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Book $book
+ * @property-read \App\Models\IssuedBook $lastIssuedBook
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssuedBook[] $issuedBooks
  * @property float $price
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePrice($value)
@@ -36,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $language_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereLanguageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePublisherId($value)
+ * @property-read mixed $book_status
  */
 class BookItem extends Model
 {
@@ -51,6 +53,7 @@ class BookItem extends Model
     const FORMAT_PAPERBACK = 2;
 
     public $table = 'book_items';
+    protected $appends = ['book_status'];
 
     public $fillable = [
         'book_id',
@@ -78,5 +81,24 @@ class BookItem extends Model
     public function issuedBooks()
     {
         return $this->hasMany(IssuedBook::class, 'book_item_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function lastIssuedBook()
+    {
+        return $this->hasMany(IssuedBook::class, 'book_item_id')
+            ->where('status', '!=', IssuedBook::STATUS_RETURNED);
+    }
+
+    public function getBookStatusAttribute()
+    {
+        $lastIssuedBook = $this->lastIssuedBook()->first();
+        if (!empty($lastIssuedBook)) {
+            return $lastIssuedBook->status;
+        }
+
+        return IssuedBook::STATUS_AVAILABLE;
     }
 }
