@@ -9,7 +9,7 @@ import {dateFormatter} from '../../shared/sharedMethod';
 export default ({books, memberBookHistory, onOpenModal, sortAction, sortObject}) => {
     const headers = [
         {id: 'book_name', name: 'Book'},
-        {id: 'book_item_id', name: 'Book Item'},
+        {id: 'book_code', name: 'Book Item'},
         {id: 'issued_on', name: 'Issue Date'},
         {id: 'return_due_date', name: 'Return Due Date'},
         {id: 'return_date', name: 'Return Date'},
@@ -43,7 +43,7 @@ export default ({books, memberBookHistory, onOpenModal, sortAction, sortObject})
                     return (
                         <tr key={bookHistory.id.toString()}>
                             <td>{bookHistory.book_name}</td>
-                            <td>{bookHistory.book_item.edition + ` (${bookHistory.book_item.book_item_id})`}</td>
+                            <td>{bookHistory.book_item.edition + ` (${bookHistory.book_item.book_code})`}</td>
                             <td>{bookHistory.issued_on ? dateFormatter(bookHistory.issued_on) : ' '}</td>
                             <td>{bookHistory.return_due_date ? dateFormatter(bookHistory.return_due_date) : ' '}</td>
                             <td>{bookHistory.return_date ? dateFormatter(bookHistory.return_date) : ' '}</td>

@@ -58,13 +58,13 @@ const BookAllotmentForm = props => {
         const formData = {book_id, book_item_id, member_id, note, status};
         switch (status) {
             case bookAllotmentStatusConstant.BOOK_RESERVED:
-                formData.reserve_date = moment(selectedDate).format('YYYY-MM-DD hh:mm:ss');
+                formData.reserve_date = selectedDate ? moment(selectedDate).format('YYYY-MM-DD hh:mm:ss') : "";
                 break;
             case bookAllotmentStatusConstant.BOOK_ISSUED:
-                formData.issued_on = moment(selectedDate).format('YYYY-MM-DD hh:mm:ss');
+                formData.issued_on = selectedDate ? moment(selectedDate).format('YYYY-MM-DD hh:mm:ss') : "";
                 break;
             default:
-                formData.return_date = moment(selectedDate).format('YYYY-MM-DD hh:mm:ss');
+                formData.return_date = selectedDate ? moment(selectedDate).format('YYYY-MM-DD hh:mm:ss') : "";
                 break;
         }
         return formData;
@@ -134,6 +134,7 @@ const BookAllotmentForm = props => {
         }
         let field = '';
         let label = '';
+        let maxDate = '';
         switch (status) {
             case bookAllotmentStatusConstant.BOOK_RESERVED:
                 label = 'Reserve Date';
@@ -142,6 +143,7 @@ const BookAllotmentForm = props => {
             case bookAllotmentStatusConstant.BOOK_ISSUED:
                 label = 'Issue Date';
                 field = 'issued_on';
+                maxDate = moment().toDate();
                 break;
             default:
                 label = 'Return Date';
@@ -150,7 +152,7 @@ const BookAllotmentForm = props => {
         }
         return (
             <Fragment>
-                <DatePicker label={label} selected={selectedDate} onChange={onSelectDate}
+                <DatePicker label={label} selected={selectedDate} maxDate={maxDate} onChange={onSelectDate}
                             placeHolder="Click to select a date"/>
                 <Field name={field} type="hidden" component={InputGroup}/>
             </Fragment>
@@ -238,7 +240,7 @@ const bookAllotmentForm = reduxForm({form: 'bookAllotmentForm', validate: bookAl
 const prepareBookItems = (books) => {
     let bookArray = [];
     books.forEach(book => {
-        bookArray.push({id: +book.id, name: book.edition + ` (${book.book_item_id})`});
+        bookArray.push({id: +book.id, name: book.edition + ` (${book.book_code})`});
     });
     return bookArray;
 };

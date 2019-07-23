@@ -8,5 +8,5 @@ export const priceFormatter = price => {
 };
 
 export const dateFormatter = (date) => {
-    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MMMM Do YYYY');
+    return moment(date, 'YYYY-MM-DD hh:mm:ss').format(' Do MMMM, YYYY');
 };

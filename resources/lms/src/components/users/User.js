@@ -42,7 +42,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
                     if (user.roles.length > 0) {
                         const role = roles.find(role => role.id === +user.roles[0].id);
                         if (role) {
-                            user.role_name = role.name;
+                            user.role_name = role.display_name;
                         }
                     }
                     user.name = user.first_name + ' ' + user.last_name;

@@ -3,16 +3,16 @@ import {Permissions} from "../constants";
 export default {
     items: [
         {
-            name: 'Users',
-            url: '/app/users',
-            icon: 'icon-user',
-            permission: Permissions.MANAGE_USERS,
-        },
-        {
             name: 'Books',
             url: '/app/books',
             icon: 'icon-book-open',
             permission: Permissions.MANAGE_BOOKS,
+        },
+        {
+            name: 'Users',
+            url: '/app/users',
+            icon: 'icon-user',
+            permission: Permissions.MANAGE_USERS,
         },
         {
             name: 'Genres',
