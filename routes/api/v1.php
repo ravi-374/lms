@@ -119,6 +119,9 @@ Route::group(['middleware' => 'backend.auth'], function () {
 
     // Countries
     Route::get('countries', 'CountryAPIController@index');
+
+    // Currencies
+    Route::get('currencies', 'CommonAPIController@currencies');
 });
 
 Route::post('members/register', 'MemberAuthController@register');
