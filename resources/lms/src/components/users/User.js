@@ -10,7 +10,7 @@ import './Users.scss';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../store/actions/toastAction';
 
-const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setActiveInactive}) => {
+const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
     const isActive = users.length > 0 ? users.map(({is_active}) => is_active) : [];
     const headers = [
         {id: 'name', name: 'Name'},
@@ -28,6 +28,9 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
             addToast({text: response.data.message, type: 'error'});
         })
     };
+    const goToUserDetail = (userId) => {
+        history.push(`/app/users/${userId}/detail`);
+    };
     return (
         <Table hover bordered striped responsive size="md">
             <thead>
@@ -44,7 +47,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
                     }
                     user.name = user.first_name + ' ' + user.last_name;
                     return (
-                        <tr key={user.id.toString()}>
+                        <tr key={user.id.toString()} className="user-table-row" onClick={() => goToUserDetail(user.id)}>
                             <td className="text-center" style={{width: '90px'}}>
                                 <img src={imageUrl} alt={imageUrl} height="30"/>
                             </td>
