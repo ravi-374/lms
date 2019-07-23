@@ -89,6 +89,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function store($input)
     {
         $this->validateBook($input);
+        
         /** @var IssuedBook $issueBooked */
         $issueBooked = IssuedBook::create($input);
 
@@ -120,6 +121,11 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function issueBook($input)
     {
+        $issuedOn = (!empty($input['issued_on'])) ? Carbon::parse($input['issued_on'] ) : Carbon::now();
+        if ($issuedOn->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            throw new UnprocessableEntityHttpException('Issue date must be less or equal to today\'s date.');
+        }
+
         /** @var IssuedBook $issueBook */
         $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
@@ -128,7 +134,6 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
 
-        $issuedOn = (!empty($input['issued_on'])) ? $input['issued_on'] : Carbon::now();
         $input = [
             'book_item_id'    => $input['book_item_id'],
             'member_id'       => $input['member_id'],
