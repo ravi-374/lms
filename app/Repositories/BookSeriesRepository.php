@@ -6,6 +6,7 @@ use App\Models\BookSeries;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
+use Illuminate\Support\Collection;
 
 /**
  * Class BookSeriesRepository
@@ -46,6 +47,21 @@ class BookSeriesRepository extends BaseRepository
     public function model()
     {
         return BookSeries::class;
+    }
+
+    /**
+     * @param array $search
+     * @param int|null $skip
+     * @param int|null $limit
+     * @param array $columns
+     *
+     * @return Collection
+     */
+    public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
+    {
+        $query = $this->allQuery($search, $skip, $limit)->with('seriesItems');
+
+        return $query->orderByDesc('id')->get();
     }
 
     /**

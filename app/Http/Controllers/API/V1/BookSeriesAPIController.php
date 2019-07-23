@@ -73,6 +73,8 @@ class BookSeriesAPIController extends AppBaseController
      */
     public function show(BookSeries $bookSeries)
     {
+        $bookSeries->seriesItems;
+
         return $this->sendResponse($bookSeries->toArray(), 'Book Series retrieved successfully.');
     }
 

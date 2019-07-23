@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Author;
 
-class PopulateAuthorsSeeder extends Seeder
+class CreateAuthorsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

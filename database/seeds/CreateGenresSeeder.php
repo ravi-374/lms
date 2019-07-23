@@ -3,7 +3,7 @@
 use App\Models\Genre;
 use Illuminate\Database\Seeder;
 
-class PopulateGenresSeeder extends Seeder
+class CreateGenresSeeder extends Seeder
 {
     /**
      * Run the database seeds.

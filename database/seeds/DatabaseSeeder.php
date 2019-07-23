@@ -13,14 +13,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CreateRolesSeeder::class);
         $this->call(CreatePermissionsSeeder::class);
-        $this->call(PopulateRolesAndPermissionsSeeder::class);
-        $this->call(PopulateGenresSeeder::class);
-        $this->call(PopulateBookLanguagesSeeder::class);
-        $this->call(AdminUserSeeder::class);
-        $this->call(PopulateCountriesSeeder::class);
-        $this->call(PopulateAuthorsSeeder::class);
-        $this->call(PopulatePublishersSeeder::class);
-        $this->call(PopulateTagsSeeder::class);
-        $this->call(PopulatePlansSeeder::class);
+        $this->call(CreateRolesAndPermissionsSeeder::class);
+        $this->call(CreateGenresSeeder::class);
+        $this->call(CreateBookLanguagesSeeder::class);
+        $this->call(CreateAdminUserSeeder::class);
+        $this->call(CreateCountriesSeeder::class);
+        $this->call(CreateAuthorsSeeder::class);
+        $this->call(CreatePublishersSeeder::class);
+        $this->call(CreateTagsSeeder::class);
+        $this->call(CreatePlansSeeder::class);
     }
 }
