@@ -60,7 +60,7 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
                                            onChange={() => onChecked(index, member.id)}/>
                                 </div>
                             </td>
-                            <td className="align-middle text-center">
+                            <td className="align-middle text-center text-nowrap">
                                 <ModalAction onOpenModal={onOpenModal} item={member}/>
                             </td>
                         </tr>
