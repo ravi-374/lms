@@ -6,6 +6,7 @@ use App\User;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 use JWTAuth;
 
 class BackendMiddleware
@@ -31,9 +32,16 @@ class BackendMiddleware
             }
         }
 
-        return app(\Tymon\JWTAuth\Http\Middleware\Authenticate::class)->handle($request,
+        $jwtAuthClosure =  app(\Tymon\JWTAuth\Http\Middleware\Authenticate::class)->handle($request,
             function ($request) use ($next) {
                 return $next($request);
-            });
+        });
+
+        $user = Auth::user();
+        if (!$user->is_active) {
+            throw new UnauthorizedException('Your account is not active.', 401);
+        }
+
+        return $jwtAuthClosure;
     }
 }
