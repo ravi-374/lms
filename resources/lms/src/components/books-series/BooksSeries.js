@@ -1,35 +1,34 @@
 import React, {useState, useEffect} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import SearchField from '../../shared/components/SearchField';
 import searchFilter from '../../shared/searchFilter';
 import sortFilter from '../../shared/sortFilter';
 import {sortAction} from '../../store/actions/sortAction';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import BookSeriesModal from './BookSeriesModal';
+import DeleteBookSeries from './DeleteBookSeries';
 import BookSeries from './BookSeries';
 import './BooksSeries.scss';
 import Toasts from '../../shared/toast/Toasts';
 import EmptyComponent from '../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../store/actions/modalAction';
 import {fetchBooksSeries} from '../../store/actions/bookSeriesAction';
+import {fetchBooks} from '../../store/actions/bookAction';
 
 const BooksSeries = (props) => {
-    const [isEditMode, setEditMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookSeries, setBookSeries] = useState(null);
-    const {booksSeries, sortAction, sortObject, toggleModal} = props;
+    const {booksSeries, sortAction, sortObject, toggleModal,history} = props;
     useEffect(() => {
         props.fetchBooksSeries();
+        props.fetchBooks();
     }, []);
-    const cardModalProps = {bookSeries, isDeleteMode, isEditMode, toggleModal};
-    const onOpenModal = (isEdit, bookSeries = null, isDelete = false) => {
-        setEditMode(isEdit);
-        setDeleteMode(isDelete);
+    const cardModalProps = {bookSeries, toggleModal};
+    const onOpenModal = (bookSeries = null) => {
         setBookSeries(bookSeries);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, booksSeries, onOpenModal};
+    const cardBodyProps = {sortAction, sortObject, booksSeries, onOpenModal,history};
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -39,9 +38,7 @@ const BooksSeries = (props) => {
                 <h5 className="page-heading">Books Series</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
-                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        New Book Series
-                    </Button>
+                    <Link to="/app/books-series/new" size="md" className="btn btn-primary ml-2">New Book Series</Link>
                 </div>
             </Col>
             <Col sm={12}>
@@ -50,7 +47,7 @@ const BooksSeries = (props) => {
                         <CardBody>
                             {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
                                 <EmptyComponent title="No books series yet..."/>}
-                            <BookSeriesModal {...cardModalProps}/>
+                            <DeleteBookSeries {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
                     </Card>
@@ -61,7 +58,7 @@ const BooksSeries = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {booksSeries, searchText, sortObject, isLoading} = state;
+    const {booksSeries, books, searchText, sortObject, isLoading} = state;
     let booksSeriesArray = Object.values(booksSeries);
     if (searchText) {
         booksSeriesArray = searchFilter(booksSeriesArray, searchText);
@@ -69,7 +66,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         booksSeriesArray = sortFilter(booksSeriesArray, sortObject);
     }
-    return {booksSeries: booksSeriesArray, sortObject, isLoading};
+    return {booksSeries: booksSeriesArray, sortObject, isLoading, books: Object.values(books)};
 };
 
-export default connect(mapStateToProps, {fetchBooksSeries, sortAction, toggleModal})(BooksSeries);
+export default connect(mapStateToProps, {fetchBooksSeries, fetchBooks, sortAction, toggleModal})(BooksSeries);

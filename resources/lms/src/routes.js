@@ -14,7 +14,9 @@ const BookLanguages = React.lazy(() => import('./components/book-languages/BookL
 const MembershipPlans = React.lazy(() => import('./components/membership-plans/MembershipPlans'));
 const Roles = React.lazy(() => import('./components/roles/Roles'));
 const Members = React.lazy(() => import('./components/members/Members'));
-const BooksSeries = React.lazy(() => import('./components/books-series/BooksSeries'));
+const BooksSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/BooksSeries'));
+const CreateBookSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/CreateBookSeries'));
+const EditBookSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/EditBookSeries'));
 const BooksAllotment = React.lazy(() => import('./components/books-allotment/BooksAllotment'));
 const BookDetail = React.lazy(() => import('./components/book-detail/BookDetail'));
 const MemberDetail = React.lazy(() => import('./components/member-detail/MemberDetail'));
@@ -116,6 +118,20 @@ export default [
         exact: true,
         name: 'BooksSeries',
         component: BooksSeries,
+        permission: Permissions.MANAGE_BOOK_SERIES
+    },
+    {
+        path: '/app/books-series/new',
+        exact: true,
+        name: 'CreateSeriesBook',
+        component: CreateBookSeries,
+        permission: Permissions.MANAGE_BOOK_SERIES
+    },
+    {
+        path: '/app/books-series/:id/edit',
+        exact: true,
+        name: 'EditSeriesBook',
+        component: EditBookSeries,
         permission: Permissions.MANAGE_BOOK_SERIES
     },
     {
