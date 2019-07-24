@@ -114,7 +114,9 @@ class IssuedBookAPIController extends AppBaseController
         $issuedBook->returner;
         $bookItem = $issuedBook->bookItem;
         $bookItem->publisher;
+        $bookItem->language;
         $book = $bookItem->book;
+        $book->genres;
         $book->authors;
         $book->tags;
 
