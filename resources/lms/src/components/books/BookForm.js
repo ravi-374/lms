@@ -129,7 +129,7 @@ const BookForm = (props) => {
                     <Col xs={6}>
                         <TypeAhead
                             id="author"
-                            label="Author"
+                            label="Authors"
                             required
                             multiple={true}
                             options={props.authors}
