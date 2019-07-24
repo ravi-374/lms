@@ -118,6 +118,6 @@ class BookItem extends Model
      */
     public function language()
     {
-        return $this->belongsTo(Publisher::class, 'publisher_id');
+        return $this->belongsTo(BookLanguage::class, 'language_id');
     }
 }
