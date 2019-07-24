@@ -6,7 +6,7 @@ import ModalAction from '../../shared/action-buttons/ModalAction';
 import {bookAllotmentStatusConstant} from '../../constants';
 import {dateFormatter} from '../../shared/sharedMethod';
 
-export default ({books, booksAllotment, members, onOpenModal, sortAction, sortObject}) => {
+export default ({books, booksAllotment, members, onOpenModal, sortAction, sortObject, history}) => {
     const headers = [
         {id: 'book_name', name: 'Book'},
         {id: 'book_code', name: 'Book Item'},
@@ -29,6 +29,9 @@ export default ({books, booksAllotment, members, onOpenModal, sortAction, sortOb
                 return <Badge color="primary">Reserved</Badge>;
         }
     };
+    const gotToBookHistoryDetail = (bookHistoryId) => {
+        history.push(`/app/book-history/${bookHistoryId}/detail`);
+    };
     return (
         <Table hover bordered striped responsive size="md">
             <thead>
@@ -45,7 +48,8 @@ export default ({books, booksAllotment, members, onOpenModal, sortAction, sortOb
                         bookAllotment.member_name = member.name;
                     }
                     return (
-                        <tr key={bookAllotment.id.toString()}>
+                        <tr key={bookAllotment.id.toString()} className="books-allotment-table-row"
+                            onClick={() => gotToBookHistoryDetail(bookAllotment.id)}>
                             <td>{bookAllotment.book_name}</td>
                             <td>{bookAllotment.book_item.edition + ` (${bookAllotment.book_item.book_code})`}</td>
                             <td>{bookAllotment.member_name}</td>

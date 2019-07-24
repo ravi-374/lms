@@ -19,6 +19,7 @@ const BooksAllotment = React.lazy(() => import('./components/books-allotment/Boo
 const BookDetail = React.lazy(() => import('./components/book-detail/BookDetail'));
 const MemberDetail = React.lazy(() => import('./components/member-detail/MemberDetail'));
 const UserDetail = React.lazy(() => import('./components/user-detail/UserDetail'));
+const BookHistoryDetail = React.lazy(() => import('./components/book-history-detail/BookHistoryDetail'));
 
 export default [
     {
@@ -144,6 +145,13 @@ export default [
         exact: true,
         name: 'UserDetail',
         component: UserDetail,
+        permission: Permissions.MANAGE_BOOKS
+    },
+    {
+        path: '/app/book-history/:id/detail',
+        exact: true,
+        name: 'BookHistoryDetail',
+        component: BookHistoryDetail,
         permission: Permissions.MANAGE_BOOKS
     }
 ];
