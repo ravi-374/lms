@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 import './App.scss';
 import ProgressBar from './shared/progress-bar/ProgressBar';
@@ -11,7 +11,7 @@ const App = () => {
         <HashRouter>
             <React.Suspense fallback={<ProgressBar/>}>
                 <Switch>
-                    <Route path="/app/login" name="Home" render={props => <Login {...props}/>}/>
+                    <Route path="/app/admin/login" name="Home" render={props => <Login {...props}/>}/>
                     <Route path="/" name="Home" render={props => <Layout {...props}/>}/>
                 </Switch>
             </React.Suspense>

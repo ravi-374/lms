@@ -14,10 +14,10 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
     ];
     const headerProps = {staticField: 'Image', sortAction, sortObject, sortConfig, headers};
     const goToEditBook = (bookId) => {
-        history.push(`/app/books/${bookId}/edit`);
+        history.push(`/app/admin/books/${bookId}/edit`);
     };
     const goToBookDetail = (bookId) => {
-        history.push(`/app/books/${bookId}/detail`);
+        history.push(`/app/admin/books/${bookId}/detail`);
     };
     return (
         <Table hover bordered striped responsive size="md">

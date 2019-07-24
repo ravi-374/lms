@@ -29,7 +29,7 @@ const EditBook = (props) => {
         props.editBook(bookId, prepareFormData(formValues), props.history);
     };
     const goBack = () => {
-        props.history.push('/app/books');
+        props.history.push('/app/admin/books');
     };
     if (!props.book || props.isLoading) {
         return (

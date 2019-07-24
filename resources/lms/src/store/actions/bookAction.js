@@ -17,7 +17,7 @@ export const fetchBooks = (history = null) => async (dispatch) => {
                 dispatch(addToast({text: response.data.message, type: 'error'}));
             } else if (history) {
                 dispatch(addToast({text: 'Something went wrong !', type: 'error'}));
-                history.push('/app/error');
+                history.push('/app/admin/error');
             }
         });
 };
@@ -41,7 +41,7 @@ export const addBook = (book, history) => async (dispatch) => {
             dispatch({type: bookActionType.ADD_BOOK, payload: response.data.data});
             dispatch(setLoading(false));
             dispatch(addToast({text: response.data.message}));
-            history.push('/app/books');
+            history.push('/app/admin/books');
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
@@ -56,7 +56,7 @@ export const editBook = (bookId, book, history = null) => async (dispatch) => {
             dispatch(setLoading(false));
             dispatch(addToast({text: response.data.message}));
             if (history) {
-                history.push('/app/books');
+                history.push('/app/admin/books');
             } else {
                 dispatch(toggleModal());
             }

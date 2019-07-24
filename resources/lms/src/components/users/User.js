@@ -29,7 +29,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
         })
     };
     const goToUserDetail = (userId) => {
-        history.push(`/app/users/${userId}/detail`);
+        history.push(`/app/admin/users/${userId}/detail`);
     };
     return (
         <Table hover bordered striped responsive size="md">

@@ -35,7 +35,7 @@ export const addBookSeries = (bookSeries, history) => async (dispatch) => {
             dispatch({type: bookSeriesActionType.ADD_BOOK_SERIES, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(setLoading(false));
-            history.push('/app/books-series');
+            history.push('/app/admin/books-series');
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
@@ -49,7 +49,7 @@ export const editBookSeries = (bookSeriesId, bookSeries, history) => async (disp
             dispatch({type: bookSeriesActionType.EDIT_BOOK_SERIES, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(setLoading(false));
-            history.push('/app/books-series');
+            history.push('/app/admin/books-series');
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));

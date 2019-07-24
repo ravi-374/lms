@@ -25,7 +25,7 @@ const CreateBook = (props) => {
         props.addBook(prepareFormData(formValues), props.history);
     };
     const goBack = () => {
-        props.history.push('/app/books');
+        props.history.push('/app/admin/books');
     };
     const {authors, publishers, tags, bookLanguages, genres, isLoading} = props;
     if (isLoading) {

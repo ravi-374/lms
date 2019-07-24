@@ -49,7 +49,7 @@ const Books = (props) => {
                 <h5 className="page-heading">Books</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
-                    <Link to="/app/books/new" size="md" className="btn btn-primary ml-2">New Book</Link>
+                    <Link to="/app/admin/books/new" size="md" className="btn btn-primary ml-2">New Book</Link>
                 </div>
             </Col>
             <Col sm={12}>

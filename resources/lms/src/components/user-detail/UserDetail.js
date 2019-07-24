@@ -26,7 +26,7 @@ const UserDetail = props => {
         )
     }
     const goBack = () => {
-        history.push('/app/users');
+        history.push('/app/admin/users');
     };
     const imageUrl = user.image ? 'uploads/users/' + user.image : 'images/user-avatar.png';
     const {address} = user;

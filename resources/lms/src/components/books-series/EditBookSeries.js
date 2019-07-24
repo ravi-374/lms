@@ -17,7 +17,7 @@ const EditBookSeries = (props) => {
         props.editBookSeries(props.bookSeries.id, formValues,props.history);
     };
     const goBack = () => {
-        props.history.push('/app/books-series');
+        props.history.push('/app/admin/books-series');
     };
     const {books,isLoading} = props;
     const {title,series_items} = props.bookSeries;

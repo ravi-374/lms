@@ -30,7 +30,7 @@ export default ({books, booksAllotment, members, onOpenModal, sortAction, sortOb
         }
     };
     const gotToBookHistoryDetail = (bookHistoryId) => {
-        history.push(`/app/book-history/${bookHistoryId}/detail`);
+        history.push(`/app/admin/book-history/${bookHistoryId}/detail`);
     };
     return (
         <Table hover bordered striped responsive size="md">

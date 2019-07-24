@@ -1,4 +1,5 @@
 import {errorMessage} from '../constants';
+import {environment} from "../envieroment";
 
 export default {
     setupInterceptors: (axios, isToken = false, isFormData = false) => {
@@ -8,9 +9,9 @@ export default {
                 }
                 let token = localStorage.getItem('authtoken');
                 if (token) {
-                    config.headers['Authorization'] = `Bearer ${ token }`;
+                    config.headers['Authorization'] = `Bearer ${token}`;
                 } else {
-                    window.location.href = 'http://local.lms.com/#/app/login';
+                    window.location.href = environment.URL + '/#/app/admin/login';
                 }
                 if (isFormData) {
                     config.headers['Content-Type'] = 'multipart/form-data';
@@ -27,10 +28,10 @@ export default {
         );
         const errorHandler = (error) => {
             if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
-                window.location.href = 'http://local.lms.com/#/app/login';
+                window.location.href = environment.URL + '/#/app/admin/login';
                 localStorage.removeItem('authtoken');
             }
-            return Promise.reject({...error})
+            return Promise.reject({ ...error })
         };
         const successHandler = (response) => {
             return response;
