@@ -25,146 +25,146 @@ const BookHistoryDetail = React.lazy(() => import('./components/book-history-det
 
 export default [
     {
-        path: '/app/dashboard',
+        path: '/app/admin/dashboard',
         exact: true,
         name: 'Dashboard',
         component: Dashboard
     },
     {
-        path: '/app/users',
+        path: '/app/admin/users',
         exact: true,
         name: 'Users',
         component: Users,
         permission: Permissions.MANAGE_USERS
     },
     {
-        path: '/app/books',
+        path: '/app/admin/books',
         exact: true,
         name: 'Books',
         component: Books,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/books/new',
+        path: '/app/admin/books/new',
         exact: true,
         name: 'Add Book',
         component: CreateBook,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/books/:id/edit',
+        path: '/app/admin/books/:id/edit',
         exact: true,
         name: 'Edit Book',
         component: EditBook,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/genres',
+        path: '/app/admin/genres',
         exact: true,
         name: 'Genres',
         component: Genres,
         permission: Permissions.MANAGE_GENRES
     },
     {
-        path: '/app/tags',
+        path: '/app/admin/tags',
         exact: true,
         name: 'Tags',
         component: Tags,
         permission: Permissions.MANAGE_TAGS
     },
     {
-        path: '/app/authors',
+        path: '/app/admin/authors',
         exact: true,
         name: 'Authors',
         component: Authors,
         permission: Permissions.MANAGE_AUTHORS
     },
     {
-        path: '/app/publishers',
+        path: '/app/admin/publishers',
         exact: true,
         name: 'Publishers',
         component: Publishers,
         permission: Permissions.MANAGE_PUBLISHERS
     },
     {
-        path: '/app/book-languages',
+        path: '/app/admin/book-languages',
         exact: true,
         name: 'BookLanguages',
         component: BookLanguages,
         permission: Permissions.MANAGE_BOOK_LANGUAGES
     },
     {
-        path: '/app/membership-plans',
+        path: '/app/admin/membership-plans',
         exact: true,
         name: 'MembershipPlans',
         component: MembershipPlans,
         permission: Permissions.MANAGE_PLANS
     },
     {
-        path: '/app/members',
+        path: '/app/admin/members',
         exact: true,
         name: 'Members',
         component: Members,
         permission: Permissions.MANAGE_MEMBERS
     },
     {
-        path: '/app/roles',
+        path: '/app/admin/roles',
         exact: true,
         name: 'Roles',
         component: Roles,
         permission: Permissions.MANAGE_ROLES
     },
     {
-        path: '/app/books-series',
+        path: '/app/admin/books-series',
         exact: true,
         name: 'BooksSeries',
         component: BooksSeries,
         permission: Permissions.MANAGE_BOOK_SERIES
     },
     {
-        path: '/app/books-series/new',
+        path: '/app/admin/books-series/new',
         exact: true,
         name: 'CreateSeriesBook',
         component: CreateBookSeries,
         permission: Permissions.MANAGE_BOOK_SERIES
     },
     {
-        path: '/app/books-series/:id/edit',
+        path: '/app/admin/books-series/:id/edit',
         exact: true,
         name: 'EditSeriesBook',
         component: EditBookSeries,
         permission: Permissions.MANAGE_BOOK_SERIES
     },
     {
-        path: '/app/books-allotment',
+        path: '/app/admin/books-allotment',
         exact: true,
         name: 'BooksAllotment',
         component: BooksAllotment,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/books/:id/detail',
+        path: '/app/admin/books/:id/detail',
         exact: true,
         name: 'BookDetail',
         component: BookDetail,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/members/:id/detail',
+        path: '/app/admin/members/:id/detail',
         exact: true,
         name: 'MemberDetail',
         component: MemberDetail,
         permission: Permissions.MANAGE_MEMBERS
     },
     {
-        path: '/app/users/:id/detail',
+        path: '/app/admin/users/:id/detail',
         exact: true,
         name: 'UserDetail',
         component: UserDetail,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/book-history/:id/detail',
+        path: '/app/admin/book-history/:id/detail',
         exact: true,
         name: 'BookHistoryDetail',
         component: BookHistoryDetail,

@@ -26,7 +26,7 @@ const BookDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push('/app/books');
+        history.push('/app/admin/books');
     };
     const bookItemFormOptions = {bookItems: book.items, bookId: book.id, bookLanguages, publishers};
     const bookFormOptions = {book, toggleModal};

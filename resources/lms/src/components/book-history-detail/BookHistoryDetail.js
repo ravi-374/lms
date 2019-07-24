@@ -35,7 +35,7 @@ const BookHistoryDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push('/app/books-allotment');
+        history.push('/app/admin/books-allotment');
     };
     const cardModalProps = {isToggle, books, members, toggleModal, bookHistory};
     const member = members.find(member => member.id === +bookHistory.member_id);
@@ -66,7 +66,7 @@ const BookHistoryDetail = props => {
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">Book</span>
                                                 <span>
-                                                    <Link to={`/app/books/${book.id}/detail`}>{book.name}</Link>
+                                                    <Link to={`/app/admin/books/${book.id}/detail`}>{book.name}</Link>
                                                 </span>
                                             </div>
                                             <div className="book-history-detail__item">

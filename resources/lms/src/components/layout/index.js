@@ -58,7 +58,7 @@ const prepareNavigation = (props) => {
 const renderAppHeader = (props) => {
     const signOut = (e) => {
         e.preventDefault();
-        props.history.push('/app/login');
+        props.history.push('/app/admin/login');
         localStorage.removeItem('user');
         localStorage.removeItem('authtoken');
     };
@@ -92,7 +92,7 @@ const renderMainSection = (props) => {
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
                         {renderRoutes(props)}
-                        <Redirect from="/" to="/app/users"/>
+                        <Redirect from="/" to="/app/admin/users"/>
                     </Switch>
                 </Suspense>
             </Container>

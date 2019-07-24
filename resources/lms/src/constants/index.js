@@ -63,8 +63,8 @@ export const membershipPlanFrequency = {
 };
 
 export const membershipPlanFrequencyOptions = [
-    {id: 1, name: 'Monthly'},
-    {id: 2, name: 'Yearly'},
+    { id: 1, name: 'Monthly' },
+    { id: 2, name: 'Yearly' },
 ];
 
 export const bookActionType = {
@@ -91,8 +91,8 @@ export const bookStatusConstant = {
 };
 
 export const bookFormatOptions = [
-    {id: 1, name: 'Hardcover'},
-    {id: 2, name: 'Paperback'}
+    { id: 1, name: 'Hardcover' },
+    { id: 2, name: 'Paperback' }
 ];
 
 export const bookStatusOptions = [
@@ -144,9 +144,9 @@ export const bookAllotmentActionType = {
 };
 
 export const bookAllotmentStatusOptions = [
-    {id: 1, name: 'Reserve'},
-    {id: 2, name: 'Issue'},
-    {id: 3, name: 'Return'},
+    { id: 1, name: 'Reserve' },
+    { id: 2, name: 'Issue' },
+    { id: 3, name: 'Return' },
     // {id: 4, name: 'Lost'},
     // {id: 5, name: 'Damaged'},
 ];

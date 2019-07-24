@@ -10,7 +10,7 @@ export default ({booksSeries, books, onOpenModal, sortAction, sortObject,history
     ];
     const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
     const goToEditSeriesBook = (bookId) => {
-        history.push(`/app/books-series/${bookId}/edit`);
+        history.push(`/app/admin/books-series/${bookId}/edit`);
     };
     return (
         <Table hover bordered striped responsive size="md">
