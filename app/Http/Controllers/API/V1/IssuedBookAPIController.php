@@ -112,7 +112,11 @@ class IssuedBookAPIController extends AppBaseController
     {
         $issuedBook->issuer;
         $issuedBook->returner;
-        $issuedBook->bookItem->book;
+        $bookItem = $issuedBook->bookItem;
+        $bookItem->publisher;
+        $book = $bookItem->book;
+        $book->authors;
+        $book->tags;
 
         return $this->sendResponse($issuedBook->apiObj(), 'Issued Book retrieved successfully');
     }

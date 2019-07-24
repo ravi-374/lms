@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereLanguageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePublisherId($value)
  * @property-read mixed $book_status
+ * @property-read \App\Models\Publisher|null $publisher
  */
 class BookItem extends Model
 {
@@ -101,5 +102,13 @@ class BookItem extends Model
         }
 
         return IssuedBook::STATUS_AVAILABLE;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function publisher()
+    {
+        return $this->belongsTo(Publisher::class, 'publisher_id');
     }
 }
