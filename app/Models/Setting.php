@@ -9,6 +9,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string $display_name
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting ofKey($key)
  */
 class Setting extends Model
 {
@@ -64,4 +66,15 @@ class Setting extends Model
         'value'        => 'required',
         'display_name' => 'required',
     ];
+
+    /**
+     * @param Builder $query
+     * @param string $key
+     *
+     * @return Builder
+     */
+    public function scopeOfKey(Builder $query, $key)
+    {
+        return $query->where('key', $key);
+    }
 }
