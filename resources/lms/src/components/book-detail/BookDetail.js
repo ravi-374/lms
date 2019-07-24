@@ -46,6 +46,11 @@ const BookDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="book-detail-row no-gutters">
+                                    <div className="book-image-container">
+                                        <div className="image-holder">
+                                            <img src={imageUrl} height="250" width="220" alt={imageUrl}/>
+                                        </div>
+                                    </div>
                                     <div className="book-detail">
                                         <div className="book-detail__item-container">
                                             <div className="book-detail__item">
@@ -96,11 +101,6 @@ const BookDetail = props => {
                                                 </span>
                                                 </div>
                                                 : ''}
-                                        </div>
-                                    </div>
-                                    <div className="book-image-container">
-                                        <div className="image-holder">
-                                            <img src={imageUrl} height="250" width="250" alt={imageUrl}/>
                                         </div>
                                     </div>
                                 </Row>

@@ -1,7 +1,7 @@
 @import "../../scss/variables";
 
 .book-image-container {
-    max-width: 250px;
+    max-width: 220px;
     width: 100%;
     border: 1px solid $image-border;
     border-radius: 10px;
@@ -14,7 +14,7 @@
 
 .image-holder {
     position: relative;
-    width: 250px;
+    width: 220px;
     height: 250px;
     border-radius: 10px;
     background: gray;
@@ -24,7 +24,6 @@
 .book-detail-row {
     @media (max-width: 1139px) {
         flex-flow: column;
-        flex-direction: column-reverse;
     }
 }
 
@@ -34,7 +33,7 @@
 }
 
 .book-detail {
-    width: calc(100% - 250px);
+    width: calc(100% - 220px);
 
     @media (max-width: 1139px) {
         width: 100%;
@@ -44,6 +43,7 @@
     }
 
     &__item-container {
+        margin-left: 50px;
         @media (max-width: 1139px) {
             margin-top: 25px;
             margin-left: 20px;
