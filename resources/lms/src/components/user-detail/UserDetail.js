@@ -58,7 +58,7 @@ const UserDetail = props => {
         <div className="animated fadeIn">
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="pull-left text-dark">User Detail</h5>
+                    <h5 className="pull-left text-dark">User Details</h5>
                     <div className="d-flex">
                         <Button onClick={() => goBack()}>Back</Button>
                     </div>
@@ -70,7 +70,7 @@ const UserDetail = props => {
                                 <Row className="user-detail-row no-gutters">
                                     <div className="image-holder-wrapper">
                                         <div className="image-holder">
-                                            <img src={imageUrl} height="300" width="300"/>
+                                            <img src={imageUrl} height="250" width="220"/>
                                         </div>
                                     </div>
                                     <div className="user-detail">

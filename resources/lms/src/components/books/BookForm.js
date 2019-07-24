@@ -129,7 +129,7 @@ const BookForm = (props) => {
                     <Col xs={6}>
                         <TypeAhead
                             id="author"
-                            label="Author"
+                            label="Authors"
                             required
                             multiple={true}
                             options={props.authors}
@@ -177,8 +177,8 @@ const BookForm = (props) => {
                     </Col>
                 </Row>
             </Col>
-            <Col xs={4} className="book-logo">
-                <h5>Book Logo</h5>
+            <Col xs={4} className="book-cover">
+                <h5>Book Cover</h5>
                 <hr/>
                 <div className="mt-5">
                     <Field name="file_name" type="hidden" component={InputGroup}/>
