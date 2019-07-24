@@ -12,7 +12,7 @@ import './BooksAllotment.scss';
 import Toasts from '../../shared/toast/Toasts';
 import EmptyComponent from '../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../store/actions/modalAction';
-import {fetchBookAllotment} from '../../store/actions/bookAllotmentAction';
+import {fetchBooksAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 
@@ -20,9 +20,9 @@ const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
-    const {booksAllotment, books, members, sortAction, sortObject, toggleModal} = props;
+    const {booksAllotment, books, members, sortAction, sortObject, toggleModal,history} = props;
     useEffect(() => {
-        props.fetchBookAllotment();
+        props.fetchBooksAllotment();
         props.fetchBooks();
         props.fetchMembers();
     }, []);
@@ -33,7 +33,7 @@ const BooksAllotment = (props) => {
         setBookAllotment(booksAllotment);
         toggleModal();
     };
-    const cardBodyProps = {books, members, sortAction, sortObject, booksAllotment, onOpenModal};
+    const cardBodyProps = {books, members, sortAction, sortObject, booksAllotment, onOpenModal,history};
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -91,7 +91,7 @@ const prepareMembers = (members) => {
 };
 
 export default connect(mapStateToProps, {
-    fetchBookAllotment,
+    fetchBooksAllotment,
     fetchBooks,
     fetchMembers,
     sortAction,

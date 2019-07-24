@@ -4,11 +4,23 @@ import {setLoading} from './progressBarAction';
 import {addToast} from './toastAction';
 import {toggleModal} from './modalAction';
 
-export const fetchBookAllotment = () => async (dispatch) => {
+export const fetchBooksAllotment = () => async (dispatch) => {
     dispatch(setLoading(true));
     await apiConfig.get('books-history')
         .then((response) => {
             dispatch({type: bookAllotmentActionType.FETCH_BOOKS_ALLOTMENT, payload: response.data.data});
+            dispatch(setLoading(false));
+        })
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+        });
+};
+
+export const fetchBookAllotment = (bookAllotmentId) => async (dispatch) => {
+    dispatch(setLoading(true));
+    await apiConfig.get(`issued-books/${bookAllotmentId}`)
+        .then((response) => {
+            dispatch({type: bookAllotmentActionType.FETCH_BOOK_ALLOTMENT, payload: response.data.data});
             dispatch(setLoading(false));
         })
         .catch(({response}) => {
