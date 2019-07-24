@@ -17,7 +17,7 @@ const BookDetail = props => {
         props.fetchBookLanguages();
         props.fetchPublishers();
     }, []);
-    const { book, bookLanguages, publishers, toggleModal, history } = props;
+    const {book, bookLanguages, publishers, toggleModal, history} = props;
     if (!book || !book.genres) {
         return null;
     }
@@ -28,8 +28,8 @@ const BookDetail = props => {
     const goBack = () => {
         history.push('/app/books');
     };
-    const bookItemFormOptions = { bookItems: book.items, bookId: book.id, bookLanguages, publishers };
-    const bookFormOptions = { book, toggleModal };
+    const bookItemFormOptions = {bookItems: book.items, bookId: book.id, bookLanguages, publishers};
+    const bookFormOptions = {book, toggleModal};
     const imageUrl = book.image ? 'uploads/books/' + book.image : 'images/book-avatar.png';
     return (
         <div className="animated fadeIn">
@@ -46,11 +46,6 @@ const BookDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="book-detail-row no-gutters">
-                                    <div className="book-image-container">
-                                        <div className="image-holder">
-                                            <img src={imageUrl} height="270" width="220" alt={imageUrl}/>
-                                        </div>
-                                    </div>
                                     <div className="book-detail">
                                         <div className="book-detail__item-container">
                                             <div className="book-detail__item">
@@ -64,14 +59,14 @@ const BookDetail = props => {
                                             <div className="book-detail__item">
                                                 <span className="book-detail__item-genre-heading">Genre(s)</span>
                                                 <span>
-                                                    {book.genres.map((({ name }) => name)).join(',  ')}
+                                                    {book.genres.map((({name}) => name)).join(',  ')}
                                                 </span>
                                             </div>
 
                                             <div className="book-detail__item">
                                                 <span className="book-detail__item-authors-heading">Author(s)</span>
                                                 <span>
-                                                    {prepareAuthor(book.authors).map((({ name }) => name)).join(',  ')}
+                                                    {prepareAuthor(book.authors).map((({name}) => name)).join(',  ')}
                                                 </span>
                                             </div>
 
@@ -79,7 +74,7 @@ const BookDetail = props => {
                                                 <div className="book-detail__item">
                                                     <span className="book-detail__item-tags-heading">Tag(s)</span>
                                                     <span>
-                                                    {book.tags.map((({ name }) => name)).join(',  ')}
+                                                    {book.tags.map((({name}) => name)).join(',  ')}
                                                 </span>
                                                 </div>
                                                 : ''}
@@ -103,6 +98,11 @@ const BookDetail = props => {
                                                 : ''}
                                         </div>
                                     </div>
+                                    <div className="book-image-container">
+                                        <div className="image-holder">
+                                            <img src={imageUrl} height="250" width="250" alt={imageUrl}/>
+                                        </div>
+                                    </div>
                                 </Row>
                                 <Col xs={12}>
                                     <BookItemForm {...bookItemFormOptions}/>
@@ -118,7 +118,7 @@ const BookDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { books, publishers, bookLanguages } = state;
+    const {books, publishers, bookLanguages} = state;
     return {
         book: books[ownProp.match.params.id],
         bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),

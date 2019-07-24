@@ -111,11 +111,6 @@ const MemberDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="member-detail-row no-gutters">
-                                    <div className="image-holder-wrapper">
-                                        <div className="image-holder">
-                                            <img src={imageUrl} height="250" width="220"/>
-                                        </div>
-                                    </div>
                                     <div className="member-detail">
                                         <div className="member-detail__item-container">
                                             <div className="member-detail__item">
@@ -148,6 +143,11 @@ const MemberDetail = props => {
                                                 <span className="member-detail__item-heading">Status</span>
                                                 <span>{member.is_active ? 'Active' : 'Inactive'}</span>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="image-holder-wrapper">
+                                        <div className="image-holder">
+                                            <img src={imageUrl} height="250" width="250"/>
                                         </div>
                                     </div>
                                 </Row>
