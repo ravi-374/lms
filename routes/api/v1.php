@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'backend.auth'], function () {
+Route::group(['middleware' => 'user.auth'], function () {
     // Genre Routes
     Route::resource('genres', 'GenreAPIController');
 
