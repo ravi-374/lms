@@ -15,6 +15,8 @@ Route::group(['middleware' => 'member.auth'], function () {
 
     // update logged in member profile
     Route::post('update-member-profile', 'MemberAPIController@updateMemberProfile');
+    Route::get('membership-plans', 'MembershipPlanAPIController@index');
+    Route::get('countries', 'CountryAPIController@index');
 });
 
 Route::post('register-member', 'MemberAuthController@register');
