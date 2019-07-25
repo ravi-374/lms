@@ -14,15 +14,15 @@ $factory->define(IssuedBook::class, function (Faker $faker) {
     $user = factory(User::class)->create();
 
     return [
-        'book_item_id' => $bookItem->id,
-        'member_id' => $member->id,
-        'reserve_date' => $faker->dateTime,
-        'issued_on' => $faker->dateTime,
+        'book_item_id'    => $bookItem->id,
+        'member_id'       => $member->id,
+        'reserve_date'    => $faker->dateTime,
+        'issued_on'       => $faker->dateTime,
         'return_due_date' => $faker->dateTime,
-        'note' => $faker->sentence,
-        'return_date' => $faker->dateTime,
-        'status' => $faker->dateTime,
-        'issuer_id' => $user->id,
-        'returner_id' => $user->id,
+        'note'            => $faker->sentence,
+        'return_date'     => $faker->dateTime,
+        'status'          => $faker->dateTime,
+        'issuer_id'       => $user->id,
+        'returner_id'     => $user->id,
     ];
 });

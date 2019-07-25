@@ -15,10 +15,10 @@ $factory->define(BookItem::class, function (Faker $faker) {
     $publisher = factory(Publisher::class)->create();
 
     return [
-        'book_id' => $book->id,
-        'book_code' => $faker->unique()->word,
-        'price' => $faker->word,
-        'language_id' => $bookLanguage->id,
+        'book_id'      => $book->id,
+        'book_code'    => $faker->unique()->word,
+        'price'        => $faker->word,
+        'language_id'  => $bookLanguage->id,
         'publisher_id' => $publisher->id,
     ];
 });

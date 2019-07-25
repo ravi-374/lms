@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 /**
- * Class SettingTest
+ * Class IssueBookTest
  * @package Tests\Integration\Models
  */
 class IssueBookTest extends TestCase
@@ -29,12 +29,12 @@ class IssueBookTest extends TestCase
             'member_id' => $vishal->id,
         ]);
 
-        $members = IssuedBook::ofMember($book1->member_id)->get();
-        $this->assertCount(1, $members);
+        $issuedBooks = IssuedBook::ofMember($ankit->id)->get();
+        $this->assertCount(1, $issuedBooks);
 
-        $firstMember = $members->first();
-        $this->assertEquals($book1->id, $firstMember->id);
-        $this->assertEquals($book1->member_id, $firstMember->member_id);
+        $firstIssuedBooks = $issuedBooks->first();
+        $this->assertEquals($book1->id, $firstIssuedBooks->id);
+        $this->assertEquals($ankit->id, $firstIssuedBooks->member_id);
     }
 
     /** @test */

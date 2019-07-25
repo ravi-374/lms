@@ -8,10 +8,10 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Book::class, function (Faker $faker) {
 
     return [
-        'name' => $faker->name,
-        'description' => $faker->sentence,
+        'name'         => $faker->name,
+        'description'  => $faker->sentence,
         'published_on' => $faker->dateTime,
-        'url' => $faker->url,
-        'is_featured' => $faker->boolean,
+        'url'          => $faker->url,
+        'is_featured'  => $faker->boolean,
     ];
 });
