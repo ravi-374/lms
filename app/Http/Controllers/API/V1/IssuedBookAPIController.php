@@ -8,6 +8,7 @@ use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Repositories\BookItemRepository;
 use App\Repositories\IssuedBookRepository;
+use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -159,15 +160,14 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param Member $member
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function memberBooksHistory(Member $member, Request $request)
+    public function memberBooksHistory(Request $request)
     {
         $search = $request->all();
-        $search['member_id'] = $member->id;
+        $search['member_id'] = Auth::id();
 
         $records = $this->issuedBookRepository->all(
             $search,
