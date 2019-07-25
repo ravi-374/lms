@@ -1,0 +1,58 @@
+<?php
+
+namespace Tests\Integration\Models;
+
+use App\Models\IssuedBook;
+use App\Models\Member;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
+
+/**
+ * Class IssueBookTest
+ * @package Tests\Integration\Models
+ */
+class IssueBookTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    /** @test */
+    public function it_can_get_issue_books_of_given_member()
+    {
+        $ankit = factory(Member::class)->create();
+        $vishal = factory(Member::class)->create();
+
+        $book1 = factory(IssuedBook::class)->create([
+            'member_id' => $ankit->id,
+        ]);
+
+        $book2 = factory(IssuedBook::class)->create([
+            'member_id' => $vishal->id,
+        ]);
+
+        $issuedBooks = IssuedBook::ofMember($ankit->id)->get();
+        $this->assertCount(1, $issuedBooks);
+
+        $firstIssuedBooks = $issuedBooks->first();
+        $this->assertEquals($book1->id, $firstIssuedBooks->id);
+        $this->assertEquals($ankit->id, $firstIssuedBooks->member_id);
+    }
+
+    /** @test */
+    public function it_can_retrieve_only_reserve_books()
+    {
+        $book1 = factory(IssuedBook::class)->create([
+            'status' => IssuedBook::STATUS_RESERVED,
+        ]);
+
+        $book2 = factory(IssuedBook::class)->create([
+            'status' => IssuedBook::STATUS_RETURNED,
+        ]);
+
+        $books = IssuedBook::reserve()->get();
+        $this->assertCount(1, $books);
+
+        /** @var IssuedBook $firstBook */
+        $firstBook = $books->first();
+        $this->assertEquals(IssuedBook::STATUS_RESERVED, $firstBook->status);
+    }
+}
