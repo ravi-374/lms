@@ -9,6 +9,7 @@ use Closure;
 use Config;
 use Illuminate\Support\Facades\Facade;
 use JWTAuth;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class MemberAuth
 {
@@ -16,6 +17,11 @@ class MemberAuth
 
     public function handle($request, Closure $next)
     {
+        $payload = JWTAuth::parseToken()->getPayload()->get('issued_for');
+        if ($payload != 'member') {
+            throw new UnprocessableEntityHttpException('Invalid token given.');
+        }
+
         $this->app = App::getInstance();
         $this->parser = JWTAuth::parser();
         $this->passable = $request;

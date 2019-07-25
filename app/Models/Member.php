@@ -120,7 +120,7 @@ class Member extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return ['issued_for' => 'member'];
     }
 
     public function getImagePathAttribute()
