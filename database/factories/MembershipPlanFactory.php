@@ -6,6 +6,7 @@ use App\Models\MembershipPlan;
 use Faker\Generator as Faker;
 
 $factory->define(MembershipPlan::class, function (Faker $faker) {
+
     return [
         'name' => $faker->name,
         'description' => $faker->sentence,

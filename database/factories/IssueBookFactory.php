@@ -12,6 +12,7 @@ $factory->define(IssuedBook::class, function (Faker $faker) {
     $bookItem = factory(BookItem::class)->create();
     $member = factory(Member::class)->create();
     $user = factory(User::class)->create();
+
     return [
         'book_item_id' => $bookItem->id,
         'member_id' => $member->id,

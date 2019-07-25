@@ -13,6 +13,7 @@ $factory->define(BookItem::class, function (Faker $faker) {
     $book = factory(Book::class)->create();
     $bookLanguage = factory(BookLanguage::class)->create();
     $publisher = factory(Publisher::class)->create();
+
     return [
         'book_id' => $book->id,
         'book_code' => $faker->unique()->word,

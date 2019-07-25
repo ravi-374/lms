@@ -3,6 +3,7 @@
 namespace Tests\Integration\Models;
 
 use App\Models\IssuedBook;
+use App\Models\Member;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -15,21 +16,29 @@ class IssueBookTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_can_get_issue_book_of_given_member()
+    public function it_can_get_issue_books_of_given_member()
     {
-        $member1 = factory(IssuedBook::class)->create();
-        $member2 = factory(IssuedBook::class)->create();
+        $ankit = factory(Member::class)->create();
+        $vishal = factory(Member::class)->create();
 
-        $members = IssuedBook::ofMember($member1->member_id)->get();
+        $book1 = factory(IssuedBook::class)->create([
+            'member_id' => $ankit->id,
+        ]);
+
+        $book2 = factory(IssuedBook::class)->create([
+            'member_id' => $vishal->id,
+        ]);
+
+        $members = IssuedBook::ofMember($book1->member_id)->get();
         $this->assertCount(1, $members);
 
         $firstMember = $members->first();
-        $this->assertEquals($member1->id, $firstMember->id);
-        $this->assertEquals($member1->member_id, $firstMember->member_id);
+        $this->assertEquals($book1->id, $firstMember->id);
+        $this->assertEquals($book1->member_id, $firstMember->member_id);
     }
 
     /** @test */
-    public function it_can_get_issue_book_of_reserve_date()
+    public function it_can_retrieve_only_reserve_books()
     {
         $book1 = factory(IssuedBook::class)->create([
             'status' => IssuedBook::STATUS_RESERVED,
@@ -39,11 +48,11 @@ class IssueBookTest extends TestCase
             'status' => IssuedBook::STATUS_RETURNED,
         ]);
 
-        $books = IssuedBook::reserve($book1->status)->get();
+        $books = IssuedBook::reserve()->get();
         $this->assertCount(1, $books);
 
         /** @var IssuedBook $firstBook */
         $firstBook = $books->first();
-        $this->assertEquals($book1->id, $firstBook->id);
+        $this->assertEquals(IssuedBook::STATUS_RESERVED, $firstBook->status);
     }
 }

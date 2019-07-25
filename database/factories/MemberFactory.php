@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Member::class, function (Faker $faker) {
     $membershipPlan = factory(MembershipPlan::class)->create();
+
     return [
         'member_id' => $faker->unique()->uuid,
         'first_name' => $faker->firstName,
