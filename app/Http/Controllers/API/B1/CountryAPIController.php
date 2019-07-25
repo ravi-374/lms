@@ -6,7 +6,7 @@
  * Date: 13-07-2019
  * Time: 03:31 PM
  */
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\CountryRepository;
@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class CountryAPIController
- * @package App\Http\Controllers\API\V1
+ * @package App\Http\Controllers\API\B1
  */
 class CountryAPIController extends AppBaseController
 {

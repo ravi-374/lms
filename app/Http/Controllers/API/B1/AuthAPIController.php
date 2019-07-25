@@ -7,7 +7,7 @@
  * Time: 11:17 AM
  */
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\AuthRepository;
@@ -15,7 +15,7 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * Class AuthAPIController
- * @package App\Http\Controllers\API\V1
+ * @package App\Http\Controllers\API\B1
  */
 class AuthAPIController extends AppBaseController
 {

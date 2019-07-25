@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMembershipPlanAPIRequest;
