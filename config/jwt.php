@@ -124,6 +124,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | User Model namespace
+    |--------------------------------------------------------------------------
+    |
+    | Specify the full namespace to your User model.
+    | e.g. 'App\User'
+    |
+    */
+
+    'user' => \App\User::class,
+
+    /*
+    |--------------------------------------------------------------------------
     | JWT hashing algorithm
     |--------------------------------------------------------------------------
     |
@@ -266,6 +278,8 @@ return [
 
     'providers' => [
 
+        'user' => \Tymon\JWTAuth\Providers\Auth\Illuminate::class,
+
         /*
         |--------------------------------------------------------------------------
         | JWT Provider
@@ -286,7 +300,7 @@ return [
         |
         */
 
-        'auth' => Tymon\JWTAuth\Providers\Auth\Illuminate::class,
+        'auth' => \App\Providers\JWT\UserJWTAuthProvider::class,
 
         /*
         |--------------------------------------------------------------------------

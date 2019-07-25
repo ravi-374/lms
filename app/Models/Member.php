@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\ImageTrait;
 use Illuminate\Database\Eloquent\Model as Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -40,7 +41,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $activation_code
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereActivationCode($value)
  */
-class Member extends Model implements JWTSubject
+class Member extends Authenticatable implements JWTSubject
 {
     use ImageTrait;
     const SUSPENDED = 0;

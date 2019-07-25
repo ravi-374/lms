@@ -6,9 +6,11 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMemberAPIRequest;
 use App\Http\Requests\API\UpdateMemberAPIRequest;
+use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
 use App\Repositories\UserRepository;
+use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -150,28 +152,27 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
-     * @param Member $member
-     *
      * @return JsonResponse
      */
-    public function getLoggedInMemberDetails(Member $member)
+    public function getLoggedInMemberDetails()
     {
+        $member = Auth::user();
+
         return $this->sendResponse($member, 'Member details retrieved successfully.');
     }
 
     /**
-     * @param Member $member
-     * @param UpdateMemberAPIRequest $request
+     * @param UpdateMemberProfileAPIRequest $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      * @return JsonResponse
      */
-    public function updateMemberProfile(Member $member, UpdateMemberAPIRequest $request)
+    public function updateMemberProfile(UpdateMemberProfileAPIRequest $request)
     {
         $input = $request->all();
 
-        $updateMember = $this->memberRepository->update($input, $member->id);
+        $updateMember = $this->memberRepository->update($input, Auth::id());
 
         return $this->sendResponse($updateMember->toArray(), 'Member profile updated successfully.');
     }
