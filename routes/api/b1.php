@@ -123,3 +123,7 @@ Route::group(['middleware' => 'user.auth'], function () {
     // Currencies
     Route::get('currencies', 'CommonAPIController@currencies');
 });
+
+/** Password Reset API's For User */
+Route::post('send-reset-password-link', 'AccountAPIController@sendResetPasswordLink');
+Route::post('reset-password', 'AccountAPIController@resetPassword');

@@ -6,7 +6,7 @@
  * Date: 12-07-2019
  * Time: 05:56 PM
  */
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateSettingAPIRequest;
@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class SettingAPIController
- * @package App\Http\Controllers\API\V1
+ * @package App\Http\Controllers\API\B1
  */
 class SettingAPIController extends AppBaseController
 {
