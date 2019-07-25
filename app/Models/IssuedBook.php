@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property-read \App\Models\BookItem $bookItem
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook reserve()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofMember($memberId)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofBookItem($bookItemId)
  * @property int|null $issuer_id
  * @property int|null $returner_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereIssuerId($value)
@@ -182,5 +183,16 @@ class IssuedBook extends Model
 
             return Carbon::parse($this->reserve_date)->addDays($reserveDueDays)->toDateTimeString();
         }
+    }
+
+    /**
+     * @param int $bookItemId
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeOfBookItem(Builder $query, $bookItemId)
+    {
+        return $query->where('book_item_id', $bookItemId);
     }
 }

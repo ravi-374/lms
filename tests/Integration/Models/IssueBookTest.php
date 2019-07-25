@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Models;
 
+use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -54,5 +55,27 @@ class IssueBookTest extends TestCase
         /** @var IssuedBook $firstBook */
         $firstBook = $books->first();
         $this->assertEquals(IssuedBook::STATUS_RESERVED, $firstBook->status);
+    }
+
+    /** @test */
+    public function it_can_get_issue_books_of_given_book_item()
+    {
+        $bookItem1 = factory(BookItem::class)->create();
+        $bookItem2 = factory(BookItem::class)->create();
+
+        $book1 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem1->id,
+        ]);
+
+        $book2 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem2->id,
+        ]);
+
+        $issuedBooks = IssuedBook::ofMember($bookItem1->id)->get();
+        $this->assertCount(1, $issuedBooks);
+
+        $firstIssuedBooks = $issuedBooks->first();
+        $this->assertEquals($book1->id, $firstIssuedBooks->id);
+        $this->assertEquals($bookItem1->id, $firstIssuedBooks->book_item_id);
     }
 }
