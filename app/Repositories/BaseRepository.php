@@ -20,7 +20,7 @@ abstract class BaseRepository
     protected $app;
 
     /**
-     * @param  Application  $app
+     * @param Application $app
      *
      * @throws \Exception
      */
@@ -33,9 +33,9 @@ abstract class BaseRepository
     /**
      * Make Model instance
      *
-     * @return Model
      * @throws \Exception
      *
+     * @return Model
      */
     public function makeModel()
     {
@@ -58,8 +58,8 @@ abstract class BaseRepository
     /**
      * Paginate records for scaffold.
      *
-     * @param  int  $perPage
-     * @param  array  $columns
+     * @param int $perPage
+     * @param array $columns
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function paginate($perPage, $columns = ['*'])
@@ -72,9 +72,9 @@ abstract class BaseRepository
     /**
      * Build a query for retrieving all records.
      *
-     * @param  array  $search
-     * @param  int|null  $skip
-     * @param  int|null  $limit
+     * @param array $search
+     * @param int|null $skip
+     * @param int|null $limit
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function allQuery($search = [], $skip = null, $limit = null)
@@ -110,10 +110,10 @@ abstract class BaseRepository
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param  array  $search
-     * @param  int|null  $skip
-     * @param  int|null  $limit
-     * @param  array  $columns
+     * @param array $search
+     * @param int|null $skip
+     * @param int|null $limit
+     * @param array $columns
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
@@ -127,7 +127,7 @@ abstract class BaseRepository
     /**
      * Create model record
      *
-     * @param  array  $input
+     * @param array $input
      *
      * @return Model
      */
@@ -143,8 +143,8 @@ abstract class BaseRepository
     /**
      * Find model record for given id
      *
-     * @param  int  $id
-     * @param  array  $columns
+     * @param int $id
+     * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
      */
@@ -158,8 +158,8 @@ abstract class BaseRepository
     /**
      * Update model record for given id
      *
-     * @param  array  $input
-     * @param  int  $id
+     * @param array $input
+     * @param int $id
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
      */
@@ -177,11 +177,11 @@ abstract class BaseRepository
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
      *
-     * @return bool|mixed|null
      * @throws \Exception
      *
+     * @return bool|mixed|null
      */
     public function delete($id)
     {
@@ -193,8 +193,8 @@ abstract class BaseRepository
     }
 
     /**
-     * @param  int  $id
-     * @param  array  $with
+     * @param int $id
+     * @param array $with
      * @return mixed
      */
     public function findOrFail($id, $with = [])
