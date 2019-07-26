@@ -15,23 +15,22 @@ class AuthorControllerValidationTest extends TestCase
     {
         parent::setUp();
 
-        $this->signInWithDefaultAdminUser();
+//        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */
     public function test_create_author_fails_when_first_name_is_not_passed()
     {
-        $this->post('api/v1/authors', ['first_name' => ''])
-            ->assertSessionHasErrors(['first_name' => '']);
+        $this->post('api/b1/authors', ['first_name' => ''])
+            ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
     }
-
 
     /** @test */
     public function test_update_author_fails_when_first_name_is_not_passed()
     {
         $author = factory(Author::class)->create();
 
-        $this->put('api/v1/authors/'.$author->id, ['first_name' => ''])
+        $this->put('api/b1/authors/'.$author->id, ['first_name' => ''])
             ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
     }
 }
