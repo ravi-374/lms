@@ -9,6 +9,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -128,7 +129,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         /** @var IssuedBook $issueBook */
         $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
-            ->where('status', '!=', IssuedBook::STATUS_RETURNED)
+            ->lastIssuedBook()
             ->first();
 
         /** @var BookItem $bookItem */
@@ -171,7 +172,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         /** @var IssuedBook $issueBook */
         $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
-            ->where('status', '!=', IssuedBook::STATUS_RETURNED)
+            ->lastIssuedBook()
             ->first();
 
         /** @var BookItem $bookItem */
@@ -202,7 +203,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         /** @var IssuedBook $issueBook */
         $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
-            ->where('status', '!=', IssuedBook::STATUS_RETURNED)
+            ->lastIssuedBook()
             ->first();
 
         /** @var BookItem $bookItem */
@@ -218,6 +219,29 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'status'      => IssuedBook::STATUS_RETURNED,
             'returner_id' => Auth::id(),
         ]);
+        $bookItem->update(['is_available' => true]);
+
+        return $this->find($issueBook->id);
+    }
+
+    /**
+     * @param BookItem $bookItem
+     * @param array $input
+     *
+     * @return IssuedBook
+     */
+    public function unReserveBook($bookItem, $input)
+    {
+        /** @var IssuedBook $issueBook */
+        $issueBook = IssuedBook::ofBookItem($bookItem->id)
+            ->where('status', IssuedBook::STATUS_RESERVED)
+            ->firstOrFail();
+
+        if ($issueBook->member_id != $input['member_id']) {
+            throw new UnauthorizedException('You can un-reserve only your books.');
+        }
+
+        $issueBook->update(['status' => IssuedBook::STATUS_UN_RESERVED]);
         $bookItem->update(['is_available' => true]);
 
         return $this->find($issueBook->id);
