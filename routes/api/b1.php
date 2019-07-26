@@ -94,6 +94,9 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     // Reserve Book
     Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
+    // Un-Reserve Book
+    Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook');
+
     // books history
     Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
 

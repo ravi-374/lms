@@ -47,6 +47,8 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property-read string|null $returner_name
  * @property-read \App\User|null $issuer
  * @property-read \App\User|null $returner
+ * @property-read mixed $issue_due_date
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook lastIssuedBook()
  */
 class IssuedBook extends Model
 {
@@ -54,8 +56,9 @@ class IssuedBook extends Model
     const STATUS_ISSUED = 2;
     const STATUS_RETURNED = 3;
     const STATUS_AVAILABLE = 4;
-    const STATUS_LOST = 5;
-    const STATUS_DAMAGED = 6;
+    const STATUS_UN_RESERVED = 5;
+    const STATUS_LOST = 6;
+    const STATUS_DAMAGED = 7;
 
     /**
      * Validation rules
@@ -194,5 +197,16 @@ class IssuedBook extends Model
     public function scopeOfBookItem(Builder $query, $bookItemId)
     {
         return $query->where('book_item_id', $bookItemId);
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeLastIssuedBook(Builder $query)
+    {
+        return $query->where('status', '!=', self::STATUS_RETURNED)
+            ->where('status', '!=', self::STATUS_UN_RESERVED);
     }
 }
