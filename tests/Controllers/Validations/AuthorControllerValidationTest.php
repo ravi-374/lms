@@ -2,9 +2,9 @@
 
 namespace Tests\Controllers\Validations;
 
+use App\Models\Author;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use App\Models\Author;
 use Tests\TestCase;
 
 class AuthorControllerValidationTest extends TestCase
@@ -15,7 +15,7 @@ class AuthorControllerValidationTest extends TestCase
     {
         parent::setUp();
 
-//        $this->signInWithDefaultAdminUser();
+        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */

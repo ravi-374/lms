@@ -15,7 +15,7 @@ abstract class TestCase extends BaseTestCase
 
     public function signInWithDefaultAdminUser()
     {
-        $user = User::first();
+        $user = factory(User::class)->create();
 
         return $this->actingAs($user);
     }
