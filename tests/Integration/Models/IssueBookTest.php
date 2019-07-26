@@ -71,7 +71,7 @@ class IssueBookTest extends TestCase
             'book_item_id' => $bookItem2->id,
         ]);
 
-        $issuedBooks = IssuedBook::ofMember($bookItem1->id)->get();
+        $issuedBooks = IssuedBook::ofBookItem($bookItem1->id)->get();
         $this->assertCount(1, $issuedBooks);
 
         $firstIssuedBooks = $issuedBooks->first();
