@@ -103,7 +103,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function validateBook($input)
     {
-        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
+        $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->exists();
 
@@ -127,7 +127,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         /** @var IssuedBook $issueBook */
-        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
+        $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
@@ -170,7 +170,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function reserveBook($input)
     {
         /** @var IssuedBook $issueBook */
-        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
+        $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
@@ -201,7 +201,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function returnBook($input)
     {
         /** @var IssuedBook $issueBook */
-        $issueBook = IssuedBook::whereBookItemId($input['book_item_id'])
+        $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
             ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->first();
 
