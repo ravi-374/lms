@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
+use App\Models\Member;
 use App\Repositories\MemberRepository;
 use Auth;
 use Exception;
@@ -57,8 +58,9 @@ class MemberAPIController extends AppBaseController
      */
     public function removeImage()
     {
+        /** @var Member $member */
         $member = Auth::user();
-        $member->deleteUserImage();
+        $member->deleteMemberImage();
 
         return $this->sendSuccess('Member image removed successfully.');
     }
