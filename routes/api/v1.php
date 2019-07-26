@@ -20,6 +20,10 @@ Route::group(['middleware' => 'member.auth'], function () {
     // update logged in member profile
     Route::post('update-member-profile', 'MemberAPIController@updateMemberProfile');
     Route::get('membership-plans', 'MembershipPlanAPIController@index');
+
+    // delete login user image
+    Route::post('remove-image', 'MemberAPIController@removeImage');
+
     Route::get('countries', 'CountryAPIController@index');
 });
 
