@@ -3,12 +3,13 @@
 namespace Tests\Controllers\Validations;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use App\Models\Author;
 use Tests\TestCase;
 
 class AuthorControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseTransactions, WithoutMiddleware;
 
     public function setUp(): void
     {
@@ -20,8 +21,8 @@ class AuthorControllerValidationTest extends TestCase
     /** @test */
     public function test_create_author_fails_when_first_name_is_not_passed()
     {
-        $this->post('authors', ['first_name' => ''])
-            ->assertSessionHasErrors('first_name');
+        $this->post('api/v1/authors', ['first_name' => ''])
+            ->assertSessionHasErrors(['first_name' => '']);
     }
 
 
@@ -30,7 +31,7 @@ class AuthorControllerValidationTest extends TestCase
     {
         $author = factory(Author::class)->create();
 
-        $this->put('authors/' . $author->id, ['first_name' => ''])
+        $this->put('api/v1/authors/'.$author->id, ['first_name' => ''])
             ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
     }
 }
