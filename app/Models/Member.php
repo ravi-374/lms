@@ -103,6 +103,11 @@ class Member extends Authenticatable implements JWTSubject
         'membership_plan_id' => 'required',
     ];
 
+    public static $memberRules = [
+        'first_name'         => 'required',
+        'last_name'          => 'required',
+    ];
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
