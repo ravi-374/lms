@@ -10,6 +10,10 @@ Route::group(['middleware' => 'member.auth'], function () {
 
     // get logged in member details
     Route::get('member-details', 'MemberAPIController@getLoggedInMemberDetails');
+
+    // get all books
+    Route::get('books', 'BookAPIController@index');
+
     // Book search
     Route::get('search-books', 'BookItemAPIController@searchBooks');
 
