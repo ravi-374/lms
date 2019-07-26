@@ -36,10 +36,7 @@ class UpdateMemberProfileAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $loggedInMemberId = Auth::user()->id;
-
-        $rules = Member::$rules;
-        $rules['email'] = 'required|unique:members,email,'.$loggedInMemberId;
+        $rules = Member::$memberRules;
 
         return $rules;
     }
