@@ -181,4 +181,18 @@ class IssuedBookAPIController extends AppBaseController
 
         return $this->sendResponse($records, 'Books history retrieved successfully.');
     }
+
+    /**
+     * @param BookItem $bookItem
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function unReserveBook(BookItem $bookItem, Request $request)
+    {
+        $input = $request->all();
+        $result = $this->issuedBookRepository->unReserveBook($bookItem, $input);
+
+        return $this->sendResponse($result->apiObj(), 'Book un-reserved successfully.');
+    }
 }

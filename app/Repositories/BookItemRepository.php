@@ -77,7 +77,7 @@ class BookItemRepository extends BaseRepository
      */
     public function searchBooks($search = [], $skip = null, $limit = null)
     {
-        $query = $this->allQuery($search, $skip, $limit)->with(['book', 'lastIssuedBook']);
+        $query = $this->allQuery($search, $skip, $limit)->with(['book.authors', 'lastIssuedBook', 'publisher', 'language']);
         $query = $this->applyDynamicSearch($search, $query);
 
         $query->orderByDesc('is_available');

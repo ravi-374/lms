@@ -64,9 +64,23 @@ class IssuedBookAPIController extends AppBaseController
         $input = $request->all();
         $input['status'] = IssuedBook::STATUS_RESERVED;
         $input['book_item_id'] = $bookItem->id;
+        $input['member_id'] = Auth::id();
 
         $result = $this->issuedBookRepository->reserveBook($input);
 
         return $this->sendResponse($result->apiObj(), 'Book reserved successfully.');
+    }
+
+    /**
+     * @param BookItem $bookItem
+     *
+     * @return JsonResponse
+     */
+    public function unReserveBook(BookItem $bookItem)
+    {
+        $input['member_id'] = Auth::id();
+        $result = $this->issuedBookRepository->unReserveBook($bookItem, $input);
+
+        return $this->sendResponse($result->apiObj(), 'Book un-reserved successfully.');
     }
 }
