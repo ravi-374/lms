@@ -21,7 +21,7 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::post('update-member-profile', 'MemberAPIController@updateMemberProfile');
     Route::get('membership-plans', 'MembershipPlanAPIController@index');
 
-    // delete login user image
+    // delete login member image
     Route::post('remove-image', 'MemberAPIController@removeImage');
 
     Route::get('countries', 'CountryAPIController@index');
