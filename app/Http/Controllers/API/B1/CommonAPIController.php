@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 
 /**
  * Class CommonAPIController
- * @package App\Http\Controllers\API\V1
+ * @package App\Http\Controllers\API\B1
  */
 class CommonAPIController extends AppBaseController
 {

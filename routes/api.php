@@ -24,3 +24,4 @@ Route::post('/login', 'AuthAPIController@login');
 Route::post('member-login', 'AuthAPIController@memberLogin');
 
 include 'api/v1.php';
+include 'api/b1.php';

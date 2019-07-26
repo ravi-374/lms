@@ -125,7 +125,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return ['issued_for' => 'user'];
     }
 
     public function getImagePathAttribute()

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
@@ -24,7 +24,7 @@ use Validator;
 
 /**
  * Class MemberAuthController
- * @package App\Http\Controllers\API\V1
+ * @package App\Http\Controllers\API\B1
  */
 class MemberAuthController extends AppBaseController
 {
