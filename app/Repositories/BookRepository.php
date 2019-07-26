@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -12,7 +13,6 @@ use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
 use Illuminate\Support\Collection;
-use Str;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -78,13 +78,13 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('authors');
+        $query = $this->allQuery($search, $skip, $limit)->with(['authors', 'items.publisher', 'items.language']);
 
         return $query->get();
     }
 
     /**
-     * @param  array $input
+     * @param array $input
      *
      * @throws Exception
      *
@@ -127,8 +127,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array $input
-     * @param  int $id
+     * @param array $input
+     * @param int $id
      * @throws Exception
      * @throws ApiOperationFailedException
      *
@@ -172,7 +172,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array $input
+     * @param array $input
      * @throws Exception
      *
      * @return bool
@@ -198,7 +198,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  array $items
+     * @param array $items
      * @throws Exception
      *
      * @return bool
@@ -241,8 +241,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  Book $book
-     * @param  array $input
+     * @param Book $book
+     * @param array $input
      * @return Book
      */
     public function attachTagsAndGenres($book, $input)
@@ -261,8 +261,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  Book $book
-     * @param  array $items
+     * @param Book $book
+     * @param array $items
      * @throws Exception
      *
      * @return Book
@@ -280,8 +280,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param  Book $book
-     * @param  array $bookItems
+     * @param Book $book
+     * @param array $bookItems
      * @throws Exception
      * @throws ApiOperationFailedException
      *
