@@ -35,6 +35,7 @@ class MemberAPIController extends AppBaseController
     public function getLoggedInMemberDetails()
     {
         $member = Auth::user();
+        $member->address;
 
         return $this->sendResponse($member, 'Member details retrieved successfully.');
     }
