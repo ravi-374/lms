@@ -7,8 +7,8 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import {addToast} from "../../store/actions/toastAction";
-import apiConfig from '../../../config/apiConfig';
+import {addToast} from "../../../store/action/toastAction";
+import apiConfig from '../../config/apiConfig';
 import TypeAhead from '../../../shared/components/TypeAhead';
 
 const MemberForm = (props) => {
@@ -107,17 +107,15 @@ const MemberForm = (props) => {
                     <Col xs={6}>
                         <Field name="email" label="Email" required groupText="envelope" component={InputGroup}/>
                     </Col>
-                    {!props.initialValues ?
-                        <Col xs={6}>
-                            <Field name="password" label="Password" type="password" required groupText="lock"
-                                   component={InputGroup}/>
-                        </Col> : null
-                    }
+                    <Col xs={6}>
+                        <Field name="password" label="Password" type="password" groupText="lock"
+                               component={InputGroup}/>
+                    </Col>
                     <Col xs={6}>
                         <Field name="phone" type="number" label="Phone No." groupText="phone"
                                component={InputGroup}/>
                     </Col>
-                    <Col xs={props.initialValues ? 12 : 6}>
+                    <Col xs={6}>
                         <TypeAhead
                             id="membership-plan"
                             label="Membership Plan"

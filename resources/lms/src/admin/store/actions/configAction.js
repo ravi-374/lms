@@ -1,6 +1,6 @@
 import {configActionType} from '../../constants';
-import apiConfig from '../../../config/apiConfig';
-import {addToast} from './toastAction';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../../store/action/toastAction';
 
 export const fetchConfig = () => async (dispatch) => {
     await apiConfig.get('config')

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import apiConfig from '../../../config/apiConfigWithoutToken';
+import apiConfig from '../../config/apiConfigWithoutToken';
 import {Field, reduxForm} from 'redux-form';
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
 import CheckBox from '../../../shared/components/CheckBox';
-import {addToast} from '../../store/actions/toastAction';
+import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../shared/toast/Toasts';
 import {connect} from 'react-redux';
 

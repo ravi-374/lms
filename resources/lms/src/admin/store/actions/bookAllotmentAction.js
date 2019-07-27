@@ -1,7 +1,7 @@
 import {bookAllotmentActionType, toastType, bookAllotmentStatusConstant} from '../../constants';
-import apiConfig from '../../../config/apiConfig';
-import {setLoading} from './progressBarAction';
-import {addToast} from './toastAction';
+import apiConfig from '../../config/apiConfig';
+import {setLoading} from '../../../store/action/progressBarAction';
+import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from './modalAction';
 
 export const fetchBooksAllotment = () => async (dispatch) => {

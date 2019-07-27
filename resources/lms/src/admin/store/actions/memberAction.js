@@ -1,8 +1,8 @@
 import {memberActionType} from '../../constants';
-import apiConfig from '../../../config/apiConfig';
-import apiConfigWthFormData from '../../../config/apiConfigWthFormData';
-import {setLoading} from './progressBarAction';
-import {addToast} from './toastAction';
+import apiConfig from '../../config/apiConfig';
+import apiConfigWthFormData from '../../config/apiConfigWthFormData';
+import {setLoading} from '../../../store/action/progressBarAction';
+import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from './modalAction';
 
 export const fetchMembers = () => async (dispatch) => {

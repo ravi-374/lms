@@ -4,7 +4,7 @@ import Modal from '../../shared/components/Modal';
 import {addUser} from '../../store/actions/userAction';
 import UserForm from './UserForm';
 import prepareFormData from './prepareFormData';
-import apiConfig from '../../../config/apiConfig';
+import apiConfig from '../../config/apiConfig';
 
 const CreateUser = (props) => {
     const [countries, setCountries] = useState([]);

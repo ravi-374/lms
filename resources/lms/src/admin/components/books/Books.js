@@ -6,7 +6,7 @@ import {fetchBooks} from '../../store/actions/bookAction';
 import SearchField from '../../shared/components/SearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../store/actions/sortAction';
+import {sortAction} from '../../../store/action/sortAction';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
 import DeleteBook from './DeleteBook';
 import Toasts from '../../shared/toast/Toasts';

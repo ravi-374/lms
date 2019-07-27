@@ -6,7 +6,7 @@ import Toasts from '../../shared/toast/Toasts';
 import {editBookSeries, fetchBookSeries} from '../../store/actions/bookSeriesAction';
 import BookSeriesForm from './BookSeriesForm';
 import {fetchBooks} from '../../store/actions/bookAction';
-import {setLoading} from '../../store/actions/progressBarAction';
+import {setLoading} from '../../../store/action/progressBarAction';
 
 const EditBookSeries = (props) => {
     useEffect(() => {

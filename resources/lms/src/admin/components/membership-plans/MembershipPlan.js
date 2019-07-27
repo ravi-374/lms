@@ -12,7 +12,7 @@ export default ({membershipPlans, onOpenModal, sortAction, sortObject}) => {
         {id: 'frequency_name', name: 'Frequency'},
         {id: 'price', name: 'Price'}
     ];
-    const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
+    const headerProps = {sortAction, sortObject, sortConfig, headers};
     const renderMemberShipPlanFrequency = (membershipPlan) => {
         switch (membershipPlan.frequency) {
             case membershipPlanFrequency.MONTHLY:

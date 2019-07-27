@@ -1,6 +1,6 @@
 import {permissionActionType} from '../../constants';
-import apiConfig from '../../../config/apiConfig';
-import {addToast} from './toastAction';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../../store/action/toastAction';
 
 export const fetchPermissions = () => async (dispatch) => {
     await apiConfig.get('permissions')

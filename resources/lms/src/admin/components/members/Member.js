@@ -6,8 +6,8 @@ import {sortConfig} from '../../../config/sortConfig';
 import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
-import apiConfig from '../../../config/apiConfig';
-import {addToast} from '../../store/actions/toastAction';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../../store/action/toastAction';
 import './Members.scss';
 
 const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
@@ -55,7 +55,7 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
                             <td className="align-middle">{member.phone ? member.phone : ' '}</td>
                             <td className="align-middle" style={{width: '186px'}}>{member.membership_plan_name}</td>
                             <td className="text-center" style={{width: '90px'}}>
-                                <div className="member-form__switch">
+                                <div className="member-form__switch" onClick={(e) => e.stopPropagation()}>
                                     <Field name="is_active" checked={isActive[index]} component={ToggleSwitch}
                                            onChange={() => onChecked(index, member.id)}/>
                                 </div>

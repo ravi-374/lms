@@ -1,13 +1,14 @@
 import React from 'react';
 
-const Dashboard = React.lazy(() => import('./components/dashboard/Dashboard'));
+const Books = React.lazy(() => import('./components/books/Books'));
+const MemberProfile = React.lazy(() => import('./components/member-profile/MemberProfile'));
 const BookHistory = React.lazy(() => import('./components/book-history/BookHistory'));
 export default [
     {
         path: '/app/books',
         exact: true,
         name: 'Books',
-        component: Dashboard
+        component: Books
     },
     {
         path: '/app/book-history',
@@ -16,9 +17,9 @@ export default [
         component: BookHistory
     },
     {
-        path: '/app/profile',
+        path: '/app/member-profile',
         exact: true,
-        name: 'Profile',
-        component: Dashboard
-    },
+        name: 'MemberProfile',
+        component: MemberProfile
+    }
 ];

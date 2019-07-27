@@ -8,8 +8,8 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import TextArea from '../../../shared/components/TextArea';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
-import apiConfig from '../../../config/apiConfig';
-import {addToast} from '../../store/actions/toastAction';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../../store/action/toastAction';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import TypeAhead from '../../../shared/components/TypeAhead';
 

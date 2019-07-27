@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Toast from './Toast';
-import {removeToast} from '../../store/actions/toastAction';
+import {removeToast} from '../../../store/action/toastAction';
 
 const Toasts = props => {
     const {removeToast, toasts} = props;

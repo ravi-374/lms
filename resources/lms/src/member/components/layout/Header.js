@@ -1,27 +1,28 @@
 import React, {Fragment} from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const Header = (props) => {
     const member = JSON.parse(localStorage.getItem('member'));
-    let imageUrl = 'images/user-avatar.png';
+    let imageUrl = publicImagePath.USER_AVATAR;
     if (member) {
         member.name = member.first_name;
         if (member.last_name) {
             member.name += ' ' + member.last_name;
         }
         if (member.image) {
-            imageUrl = 'uploads/members/' + member.image;
+            imageUrl = publicImagePathURL.MEMBER_AVATAR_URL + member.image;
         }
     }
     const goToMemberProfile = () => {
-        props.history.push('/');
+        props.history.push('/app/member-profile');
     };
     return (
         <Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile/>
             <AppNavbarBrand>
-                <img className="infy-logo" src={'images/logo-blue-black.png'} height="19" width="40" alt="InfyOm Logo"/>
+                <img className="infy-logo" src={publicImagePath.APP_LOGO} height="19" width="40" alt="InfyOm Logo"/>
                 <span className="ml-2 infy-name" style={{color: '#20a8d8'}}>InfyOm</span>
             </AppNavbarBrand>
             <Nav className="ml-auto" navbar>

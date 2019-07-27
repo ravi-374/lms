@@ -6,7 +6,7 @@ import ModalAction from '../../../shared/action-buttons/ModalAction';
 
 export default ({publishers, onOpenModal, sortAction, sortObject}) => {
     const headers = [{id: 'name', name: 'Name'}];
-    const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
+    const headerProps = {sortAction, sortObject, sortConfig, headers};
     return (
         <Table hover bordered striped responsive size="md">
             <thead>

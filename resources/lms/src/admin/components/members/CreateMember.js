@@ -4,7 +4,7 @@ import Modal from '../../shared/components/Modal';
 import {addMember} from '../../store/actions/memberAction';
 import MemberForm from './MemberForm';
 import prepareFormData from './prepareFormData';
-import apiConfig from '../../../config/apiConfig';
+import apiConfig from '../../config/apiConfig';
 
 const CreateMember = (props) => {
     const [countries, setCountries] = useState([]);

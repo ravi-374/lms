@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {searchFilter} from '../../store/actions/searchAction';
+import {searchFilter} from '../../../store/action/searchAction';
 import CustomInput from '../../../shared/components/CustomInput';
 
 const SearchField = ({searchFilter}) => {

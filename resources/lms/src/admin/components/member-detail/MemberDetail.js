@@ -8,10 +8,10 @@ import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 import {toggleModal} from '../../store/actions/modalAction';
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
-import apiConfig from '../../../config/apiConfig';
+import apiConfig from '../../config/apiConfig';
 import MemberBookHistory from './MemberBookHistory';
 import BookHistoryModal from './BookHistoryModal';
-import {sortAction} from '../../store/actions/sortAction';
+import {sortAction} from '../../../store/action/sortAction';
 import sortFilter from '../../../shared/sortFilter';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
 import Toasts from '../../shared/toast/Toasts';
@@ -50,7 +50,7 @@ const MemberDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push('/app/members');
+        history.push('/app/admin/members');
     };
     const cardBodyProps = {books, members, sortAction, sortObject, memberBookHistory, onOpenModal};
     const cardModalProps = {
