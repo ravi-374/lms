@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -37,7 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $language_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereLanguageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePublisherId($value)
- * @property-read mixed $book_status
+ * @property-read mixed $expected_available_date
  * @property-read \App\Models\Publisher|null $publisher
  * @property-read \App\Models\BookLanguage|null $language
  */
@@ -55,7 +56,6 @@ class BookItem extends Model
     const FORMAT_PAPERBACK = 2;
 
     public $table = 'book_items';
-    protected $appends = ['book_status'];
 
     public $fillable = [
         'book_id',
@@ -94,17 +94,6 @@ class BookItem extends Model
             ->where('status', '!=', IssuedBook::STATUS_RETURNED);
     }
 
-    public function getBookStatusAttribute()
-    {
-        /** @var IssuedBook $lastIssuedBook */
-        $lastIssuedBook = $this->lastIssuedBook()->first();
-        if (!empty($lastIssuedBook)) {
-            return $lastIssuedBook->status;
-        }
-
-        return IssuedBook::STATUS_AVAILABLE;
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -119,5 +108,27 @@ class BookItem extends Model
     public function language()
     {
         return $this->belongsTo(BookLanguage::class, 'language_id');
+    }
+
+    public function getExpectedAvailableDateAttribute()
+    {
+        $lastIssuedBook = $this->lastIssuedBook;
+        if (!empty($lastIssuedBook)) {
+            if ($lastIssuedBook->status == IssuedBook::STATUS_RESERVED) {
+                 $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
+                 
+                 return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
+            } else if ($lastIssuedBook->status == IssuedBook::STATUS_ISSUED) {
+                return $lastIssuedBook->return_due_date;
+            }
+        }
+    }
+
+    public function apiObj()
+    {
+        $bookItem = $this->toArray();
+        $bookItem['expected_available_date'] = $this->expected_available_date;
+
+        return $bookItem;
     }
 }
