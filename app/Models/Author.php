@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 
 
@@ -61,5 +62,23 @@ class Author extends Model
     public function books()
     {
         return $this->belongsToMany(Book::class, 'book_authors', 'author_id', 'book_id');
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByKeywords(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(first_name) LIKE ?', ['%'.strtolower(trim($keyword)).'%']);
+                $query->orWhereRaw('lower(last_name) LIKE ?', ['%'.strtolower(trim($keyword)).'%']);
+            }
+        });
+
+        return $query;
     }
 }
