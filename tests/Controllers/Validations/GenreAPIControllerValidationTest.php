@@ -56,11 +56,11 @@ class GenreAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_genre()
     {
-        /** @var Genre $genre */
-        $genre = factory(Genre::class)->make();
+        $name = $this->faker->name;
+        $response = $this->postJson('api/b1/genres', ['name' => $name]);
 
-        $response = $this->postJson('api/b1/genres', ['name' => $this->faker->name]);
         $this->assertSuccessMessageResponse($response, 'Genre saved successfully.');
+        $this->assertNotEmpty(Genre::whereName($name)->first());
     }
 
     /** @test */
@@ -71,6 +71,8 @@ class GenreAPIControllerValidationTest extends TestCase
 
         $newName = $this->faker->name;
         $response = $this->putJson('api/b1/genres/'.$genre->id, ['name' => $newName]);
+
         $this->assertSuccessMessageResponse($response, 'Genre updated successfully.');
+        $this->assertEquals($newName, $genre->fresh()->name);
     }
 }
