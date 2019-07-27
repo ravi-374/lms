@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\User;
 use Faker\Factory;
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -36,5 +37,23 @@ abstract class TestCase extends BaseTestCase
             \Zizaco\Entrust\Middleware\EntrustRole::class,
             \Zizaco\Entrust\Middleware\EntrustPermission::class,
         ];
+    }
+
+    public function assertSuccessMessageResponse(TestResponse $response, string $message)
+    {
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => $message,
+            ]);
+    }
+    public function assertSuccessDataResponse(TestResponse $response, array $data, string $message)
+    {
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => $message,
+                'data'    => $data,
+            ]);
     }
 }
