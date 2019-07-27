@@ -27,8 +27,6 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::post('remove-image', 'MemberAPIController@removeImage');
 
     Route::get('countries', 'CountryAPIController@index');
-
-    Route::get('authors', 'AuthorAPIController@index');
 });
 
 Route::post('register-member', 'MemberAuthController@register');
