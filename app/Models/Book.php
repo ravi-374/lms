@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Traits\ImageTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 use phpDocumentor\Reflection\Types\Nullable;
 
@@ -141,5 +142,22 @@ class Book extends Model
     public function authors()
     {
         return $this->belongsToMany(Author::class, 'book_authors', 'book_id', 'author_id');
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByKeywords(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(name) LIKE ?', ['%'.strtolower(trim($keyword)).'%']);
+            }
+        });
+
+        return $query;
     }
 }
