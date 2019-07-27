@@ -29,10 +29,9 @@ class BookControllerValidationTest extends TestCase
     /** @test */
     public function test_create_book_fails_when_name_is_duplicate()
     {
-        $book1 = factory(Book::class)->create();
-        $book2 = factory(Book::class)->create();
+        $book = factory(Book::class)->create();
 
-        $this->post('api/b1/books/', ['name' => $book2->name])
+        $this->post('api/b1/books/', ['name' => $book->name])
             ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
     }
 
@@ -44,12 +43,11 @@ class BookControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function test_create_isbn_fails_when_name_is_duplicate()
+    public function test_create_isbn_fails_when_isbn_is_duplicate()
     {
-        $isbn1 = factory(Book::class)->create();
-        $isbn2 = factory(Book::class)->create();
+        $isbn = factory(Book::class)->create();
 
-        $this->post('api/b1/books/', ['isbn' => $isbn2->isbn])
+        $this->post('api/b1/books/', ['isbn' => $isbn->isbn])
             ->assertSessionHasErrors(['isbn' => 'The isbn has already been taken.']);
     }
 
