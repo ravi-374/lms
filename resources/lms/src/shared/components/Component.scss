@@ -121,8 +121,8 @@
         background-color: $radio-background;
         color: #666;
         top: 10px;
-        height: 25px;
-        width: 25px;
+        height: 22px;
+        width: 22px;
         border: 0;
         border-radius: 50px;
         cursor: pointer;
@@ -139,9 +139,9 @@
 
 .form__radio:checked::before {
     position: absolute;
-    font: 13px/1 'Open Sans', sans-serif;
-    left: 9px;
-    top: 5px;
+    font: 12px/1 'Open Sans', sans-serif;
+    left: 7px;
+    top: 4px;
     content: '\02143';
     color: $white;
     transform: rotate(40deg);
