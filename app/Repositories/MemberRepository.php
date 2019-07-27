@@ -152,6 +152,10 @@ class MemberRepository extends BaseRepository
                 $member->update(['image' => $imagePath]);
             }
 
+            if (!empty($input['remove_image'])) {
+                $member->deleteMemberImage();
+            }
+
             /** @var UserRepository $userRepo */
             $userRepo = app(UserRepository::class);
             $addressArr = $userRepo->makeAddressArray($input);
