@@ -101,6 +101,7 @@ class MemberAPIController extends AppBaseController
     public function update(Member $member, UpdateMemberAPIRequest $request)
     {
         $input = $request->all();
+        unset($input['email']);
 
         $member = $this->memberRepository->update($input, $member->id);
 
