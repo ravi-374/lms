@@ -50,17 +50,15 @@ class PublisherAPIControllerValidationTest extends TestCase
         $publisher1 = factory(Publisher::class)->create();
         $publisher2 = factory(Publisher::class)->create();
 
-        $this->put('api/b1/publishers/'.$publisher2->id, ['name' => $publisher2->name])
+        $this->put('api/b1/publishers/'.$publisher2->id, ['name' => $publisher1->name])
             ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
     }
 
     /** @test */
     public function it_can_store_publisher()
     {
-        /** @var Publisher $publisher */
-        $publisher = factory(Publisher::class)->make();
+        $response = $this->postJson('api/b1/publishers', ['name' => $this->faker->name]);
 
-        $response = $this->postJson('api/b1/publishers', $publisher->toArray());
         $this->assertSuccessMessageResponse($response, 'Publisher saved successfully.');
     }
 
@@ -70,7 +68,10 @@ class PublisherAPIControllerValidationTest extends TestCase
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->create();
 
-        $response = $this->putJson('api/b1/publishers/'.$publisher->id, ['name' => 'Ankit']);
+        $newName = $this->faker->name;
+        $response = $this->putJson('api/b1/publishers/'.$publisher->id, ['name' => $newName]);
+
         $this->assertSuccessMessageResponse($response, 'Publisher updated successfully.');
+        $this->assertEquals($newName, $publisher->fresh()->name);
     }
 }
