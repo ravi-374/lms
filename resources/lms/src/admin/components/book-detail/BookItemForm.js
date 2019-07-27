@@ -69,11 +69,11 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
         }
     };
     return (
-        <div>
-            <Table responsive size="md">
+        <div className="table-wide">
+            <Table responsive size="md" className="table-multi-item-responsive table-multi-item-responsive--wide">
                 <thead>
                 <tr>
-                    <th className="book-detail-form__item-header">Book Code</th>
+                    <th className="book-detail-form__item-header text-nowrap">Book Code</th>
                     <th className="book-detail-form__item-header">Edition</th>
                     <th>Format</th>
                     <th>Location</th>
@@ -189,7 +189,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                 )}
                 </tbody>
             </Table>
-            <button type="button" className="btn btn-outline-primary" onClick={() => onAddSubFields()}>Add Item
+            <button type="button" className="btn btn-outline-primary book-detail-form__add-item" onClick={() => onAddSubFields()}>Add Item
             </button>
             {submitFailed && error && <div className="text-danger mt-3">{error}</div>}
         </div>

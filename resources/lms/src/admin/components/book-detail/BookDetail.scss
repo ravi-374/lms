@@ -98,5 +98,11 @@
             content: "*";
             color: $red;
         }
+
+        &__add-item {
+            @media (max-width: 1399px){
+                margin-top: 8px;
+            }
+        }
     }
 }

@@ -196,6 +196,7 @@ select {
 }
 
 .table-multi-item-responsive {
+    overflow: auto;
 
     @media (max-width: 1399px){
         input.form-control {
@@ -205,6 +206,21 @@ select {
 
         .input-group-prepend {
             display: none;
+        }
+    }
+
+    &--wide {
+
+        @media (max-width: 1399px){
+            min-width: 872px;
+        }
+    }
+}
+
+.table-wide {
+    & > {
+        .table-responsive {
+            overflow: auto;
         }
     }
 }
