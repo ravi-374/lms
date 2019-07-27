@@ -65,7 +65,7 @@ class PublisherAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_activity_type()
+    public function it_can_update_publisher()
     {
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->create();
