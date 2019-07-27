@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import thunk from 'redux-thunk';
-import {createStore, applyMiddleware, compose} from 'redux';
-import './index.scss';
-import App from './App';
-import reducers from './store/reducers';
+import MemberApp from './member/App';
+import AdminApp from './admin/App';
+import {routePath} from './appConstant';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
-
-ReactDOM.render(<Provider store={store}><App/></Provider>,
-    document.getElementById('root')
-);
+if (window.location.hash.startsWith(routePath.ADMIN_ROUTE_PATH)) {
+    ReactDOM.render(<AdminApp/>, document.getElementById('root'));
+} else {
+    ReactDOM.render(<MemberApp/>, document.getElementById('root'));
+}
