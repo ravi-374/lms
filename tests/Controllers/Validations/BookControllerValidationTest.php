@@ -43,7 +43,7 @@ class BookControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function test_create_isbn_fails_when_isbn_is_duplicate()
+    public function test_create_book_fails_when_isbn_is_duplicate()
     {
         $isbn = factory(Book::class)->create();
 
