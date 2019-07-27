@@ -21,8 +21,8 @@ class GenreAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_genre_fails_when_name_is_not_passed()
     {
-        $this->post('api/b1/genres/', ['genre' => ''])
-            ->assertSessionHasErrors(['genre' => 'The genre field is required.']);
+        $this->post('api/b1/genres/', ['name' => ''])
+            ->assertSessionHasErrors(['name' => 'The name field is required.']);
     }
 
     /** @test */
@@ -30,8 +30,8 @@ class GenreAPIControllerValidationTest extends TestCase
     {
         $genre = factory(Genre::class)->create();
 
-        $this->put('api/b1/genres/'.$genre->id, ['genre' => ''])
-            ->assertSessionHasErrors(['genre' => 'The genre field is required.']);
+        $this->put('api/b1/genres/'.$genre->id, ['name' => ''])
+            ->assertSessionHasErrors(['name' => 'The name field is required.']);
     }
 
     /** @test */
