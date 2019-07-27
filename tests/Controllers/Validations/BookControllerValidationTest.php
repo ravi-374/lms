@@ -4,7 +4,6 @@ namespace Tests\Controllers\Validations;
 
 use App\Models\Book;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class BookControllerValidationTest extends TestCase
@@ -87,5 +86,25 @@ class BookControllerValidationTest extends TestCase
 
         $this->put('api/b1/books/'.$book2->id, ['isbn' => $book1->isbn])
             ->assertSessionHasErrors(['isbn' => 'The isbn has already been taken.']);
+    }
+
+    /** @test */
+    public function it_can_store_book()
+    {
+        /** @var Book $book */
+        $book = factory(Book::class)->make();
+
+        $response = $this->postJson('api/b1/books', $book->toArray());
+        $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
+    }
+
+    /** @test */
+    public function it_can_update_book()
+    {
+        /** @var Book $book */
+        $book = factory(Book::class)->create();
+
+        $response = $this->putJson('api/b1/books/'.$book->id, ['name' => 'Ankit']);
+        $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
     }
 }
