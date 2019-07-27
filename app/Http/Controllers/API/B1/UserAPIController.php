@@ -146,7 +146,10 @@ class UserAPIController extends AppBaseController
      */
     public function getLoggedInUserDetails()
     {
+        /** @var User $loginUser */
         $loginUser = \Auth::user();
+        $loginUser->address;
+        $loginUser->roles;
 
         return $this->sendResponse($loginUser, 'User details retrieved successfully.');
     }

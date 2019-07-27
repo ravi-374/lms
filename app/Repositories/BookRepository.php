@@ -150,7 +150,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $oldImageName = $book->image;
             }
 
-            if (!empty($oldImageName)) {
+            if (!empty($oldImageName) || !empty($input['remove_image'])) {
                 $book->deleteImage();
             }
             $book->update($input);

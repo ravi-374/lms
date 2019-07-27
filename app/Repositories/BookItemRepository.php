@@ -8,9 +8,12 @@
  */
 namespace App\Repositories;
 
+use App\Models\Author;
+use App\Models\Book;
 use App\Models\BookItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use NeonMobile\Models\Menu\DB\MenuCategoryTable;
 
 /**
  * Class BookItemRepository
@@ -114,18 +117,17 @@ class BookItemRepository extends BaseRepository
     {
         $query->when(!empty($search['name']), function (Builder $query) use($search) {
             $query->whereHas('book', function (Builder $query)  use ($search) {
-                $searchString = ['%'.$search['name'].'%'];
+                $keywords = explode_trim_remove_empty_values_from_array($search['name'], ' ');
 
                 // search by book name
                 if (!empty($search['search_by_book'])) {
-                    $query->whereRaw('name LIKE ? ', $searchString);
+                    Book::filterByKeywords($query, $keywords);
                 }
 
                 // search by book authors
                 if (!empty($search['search_by_author'])) {
-                    $query->whereHas('authors', function (Builder $query) use ($search, $searchString) {
-                        $query->whereRaw('first_name LIKE ? ', $searchString);
-                        $query->orWhereRaw('last_name LIKE ? ', $searchString);
+                    $query->whereHas('authors', function (Builder $query) use ($search, $keywords) {
+                        Author::filterByKeywords($query, $keywords);
                     });
                 }
             });
