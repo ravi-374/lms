@@ -160,14 +160,15 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
+     * @param Member $member
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function memberBooksHistory(Request $request)
+    public function memberBooksHistory(Member $member, Request $request)
     {
         $search = $request->all();
-        $search['member_id'] = Auth::id();
+        $search['member_id'] = $member->id;
 
         $records = $this->issuedBookRepository->all(
             $search,
