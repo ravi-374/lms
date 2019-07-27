@@ -167,6 +167,10 @@ class UserRepository extends BaseRepository
                 $user->update(['image' => $imagePath]);
             }
 
+            if (!empty($input['remove_image'])) {
+                $user->deleteUserImage();
+            }
+
             if (!empty($input['role_id'])) {
                 $user->roles()->sync($input['role_id']);
             }
