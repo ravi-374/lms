@@ -1,10 +1,14 @@
 import React from 'react';
 import './Tableheader.scss';
 
-const TableHeader = (props, isAction = true) => {
+const TableHeader = (props) => {
+    let isAction = true;
     const sort = (header) => {
         props.sortAction({orderBy: header, order: props.sortObject.order === 'asc' ? 'desc' : 'asc'})
     };
+    if (props.hasOwnProperty('isAction')) {
+        isAction = props.isAction;
+    }
     const sortIcon = (header) => {
         return props.sortConfig(header, props.sortObject)
     };

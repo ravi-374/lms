@@ -1,0 +1,210 @@
+// Styles
+// CoreUI Icons Set
+@import '~@coreui/icons/css/coreui-icons.css';
+// Import Flag Icons Set
+@import '~flag-icon-css/css/flag-icon.min.css';
+// Import Font Awesome Icons Set
+@import '~font-awesome/css/font-awesome.min.css';
+// Import Simple Line Icons Set
+@import '~simple-line-icons/css/simple-line-icons.css';
+// Import Main styles for this application
+@import '../scss/style.scss';
+// Styles
+// CoreUI Icons Set
+@import '~@coreui/icons/css/coreui-icons.css';
+// Import Flag Icons Set
+@import '~flag-icon-css/css/flag-icon.min.css';
+// Import Font Awesome Icons Set
+@import '~font-awesome/css/font-awesome.min.css';
+// Import Simple Line Icons Set
+@import '~simple-line-icons/css/simple-line-icons.css';
+// Import Main styles for this application
+@import '../scss/style.scss';
+// Import react boostrap typeahed scss
+@import '~react-bootstrap-typeahead/css/Typeahead.css';
+@import "~react-datepicker/dist/react-datepicker.css";
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.page-heading {
+    @extend .float-left;
+    @extend .text-dark;
+    @extend .pr-3;
+    font-weight: 700;
+}
+
+.sidebar {
+
+    .sidebar-nav {
+        .nav-link.active {
+
+            .nav-icon {
+                color: $orange;
+            }
+
+            &:hover {
+                .nav-icon {
+                    color: #fff;
+                }
+            }
+        }
+
+        .nav-link {
+            &:hover {
+                background-color: $orange;
+            }
+        }
+    }
+}
+
+.sort-arrow-group {
+    position: relative;
+    font-size: 12px;
+
+    .fa-long-arrow-up {
+        margin-right: 2px;
+    }
+    .fa-long-arrow-down {
+        vertical-align: middle;
+    }
+
+    &__visible {
+        opacity: .5;
+        transition: opacity .25s ease-in-out;
+        -moz-transition: opacity .25s ease-in-out;
+        -webkit-transition: opacity .25s ease-in-out;
+    }
+    &__hidden {
+        opacity: 1;
+        transition: opacity .25s ease-in-out;
+        -moz-transition: opacity .25s ease-in-out;
+        -webkit-transition: opacity .25s ease-in-out;
+    }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"] {
+    height: 45px;
+    border-radius: 0 0.25rem .25rem 0;
+}
+
+select {
+    height: 45px !important;
+}
+
+.custom-select {
+    height: 35px !important;
+}
+
+.form-group .control-label:after {
+    content: "*";
+    color: $red;
+}
+
+.form-group .control-option:after {
+    content: "*";
+    color: $red;
+}
+
+.modal-header .close {
+    color: $white;
+    opacity: 1;
+    font-size: 1.37rem;
+
+    &:hover {
+        color: $white;
+    }
+}
+
+.app-header .nav-item .nav-link > .img-avatar {
+    width: 35px;
+    object-fit: cover;
+}
+
+.sticky-table-container {
+    .card {
+        padding: 1.25rem;
+    }
+
+    .card-body {
+        min-height: calc(100vh - 240px);
+        overflow: hidden;
+        padding: 0;
+        position: relative;
+    }
+
+    .table {
+        border-top: 0;
+
+        thead tr:nth-child(1) th {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-top: 1px solid $border-bg;
+                top: -1px;
+            }
+        }
+    }
+
+    .table-responsive {
+        overflow: initial;
+    }
+}
+
+.app-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 111;
+}
+
+.brand-minimized {
+
+    .infy-logo {
+        margin-left: 1px;
+    }
+    .infy-name {
+        display: none;
+    }
+}
+
+.sidebar-minimized .sidebar .nav-link .nav-icon {
+    font-size: 20px !important;
+}
+
+.table-multi-item-responsive {
+
+    @media (max-width: 1399px){
+        input.form-control {
+            border-top-left-radius: .25rem !important;
+            border-bottom-left-radius: .25rem !important;
+        }
+
+        .input-group-prepend {
+            display: none;
+        }
+    }
+}

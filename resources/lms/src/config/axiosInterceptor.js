@@ -1,5 +1,5 @@
-import {errorMessage} from '../constants';
-import {environment} from "../envieroment";
+import {errorMessage} from '../appConstant';
+import {environment} from '../envieroment';
 
 export default {
     setupInterceptors: (axios, isToken = false, isFormData = false) => {

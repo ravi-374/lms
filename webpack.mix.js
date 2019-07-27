@@ -12,9 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.options({
-        postCss: [
-            require('autoprefixer'),
-        ],
+    postCss: [
+        require('autoprefixer'),
+    ],
 });
 mix.setPublicPath('public');
 mix.webpackConfig({
