@@ -9,13 +9,14 @@ use Tests\TestCase;
 
 class BookControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
 
-                $this->signInWithDefaultAdminUser();
+        $this->withoutMiddleware($this->skipMiddleware());
+        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */
@@ -76,7 +77,7 @@ class BookControllerValidationTest extends TestCase
         $book1 = factory(Book::class)->create();
         $book2 = factory(Book::class)->create();
 
-        $this->put('api/b1/books/'.$book2->id, ['name' => $book2->name])
+        $this->put('api/b1/books/'.$book2->id, ['name' => $book1->name])
             ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
     }
 
