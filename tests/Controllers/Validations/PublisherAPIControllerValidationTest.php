@@ -9,12 +9,13 @@ use Tests\TestCase;
 
 class PublisherAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
 
@@ -28,10 +29,9 @@ class PublisherAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_publisher_fails_when_name_is_duplicate()
     {
-        $publisher1 = factory(Publisher::class)->create();
-        $publisher2 = factory(Publisher::class)->create();
+        $publisher = factory(Publisher::class)->create();
 
-        $this->post('api/b1/publishers/', ['name' => $publisher2->name])
+        $this->post('api/b1/publishers/', ['name' => $publisher->name])
             ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
     }
 
@@ -47,10 +47,9 @@ class PublisherAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_update_book_fails_when_name_is_duplicate()
     {
-        $publisher1 = factory(Publisher::class)->create();
-        $publisher2 = factory(Publisher::class)->create();
+        $publisher = factory(Publisher::class)->create();
 
-        $this->put('api/b1/publishers/'.$publisher2->id, ['name' => $publisher2->name])
+        $this->put('api/b1/publishers/'.$publisher->id, ['name' => $publisher->name])
             ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
     }
 }
