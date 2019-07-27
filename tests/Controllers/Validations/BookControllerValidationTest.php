@@ -3,6 +3,7 @@
 namespace Tests\Controllers\Validations;
 
 use App\Models\Book;
+use App\Models\Genre;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -91,10 +92,7 @@ class BookControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_book()
     {
-        /** @var Book $book */
-        $book = factory(Book::class)->make();
-
-        $response = $this->postJson('api/b1/books', $book->toArray());
+        $response = $this->postJson('api/b1/books', $this->prepareBookInputs());
         $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
     }
 
@@ -104,7 +102,19 @@ class BookControllerValidationTest extends TestCase
         /** @var Book $book */
         $book = factory(Book::class)->create();
 
-        $response = $this->putJson('api/b1/books/'.$book->id, ['name' => 'Ankit']);
+        $response = $this->putJson('api/b1/books/'.$book->id, $this->prepareBookInputs());
+
         $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
+    }
+
+    public function prepareBookInputs($input = [])
+    {
+        $genre = factory(Genre::class)->create();
+
+        return array_merge([
+            'name' => $this->faker->name,
+            'isbn' => $this->faker->isbn10,
+            'genres' => [$genre->id]
+        ], $input);
     }
 }
