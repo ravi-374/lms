@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
-import progressReduce from './progressReducer';
-import searchReducer from './searchReducer';
-import sortReducer from './sortReducer';
+import progressReduce from '../../../store/reducers/progressReducer';
+import searchReducer from '../../../store/reducers/searchReducer';
+import sortReducer from '../../../store/reducers/sortReducer';
 import genreReducer from './genreReducer';
-import toastReducer from './toastReducer';
+import toastReducer from '../../../store/reducers/toastReducer';
 import modalReducer from './modalReducer';
 import tagReducer from './tagReducer';
 import authorReducer from './authorReducer';

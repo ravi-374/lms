@@ -16,7 +16,7 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
 import Toasts from '../../shared/toast/Toasts';
 import routes from "../../routes";
-import {setLoading} from "../../store/actions/progressBarAction";
+import {setLoading} from "../../../store/action/progressBarAction";
 import {fetchConfig} from "../../store/actions/configAction";
 
 const Footer = React.lazy(() => import('./Footer'));

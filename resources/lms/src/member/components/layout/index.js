@@ -1,5 +1,4 @@
-import React, {Suspense, useState} from 'react';
-import {connect} from 'react-redux';
+import React, {Suspense} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {
@@ -15,28 +14,22 @@ import {
 import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../shared/progress-bar/ProgressBar';
 import Toasts from '../../shared/toast/Toasts';
-import routes from "../../routes";
-import {setLoading} from "../../store/actions/progressBarAction";
+import routes from '../../routes';
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const [sideMenuList] = useState(prepareNavigation(props));
     return (
         <div className="app">
             {renderAppHeader(props)}
             <div className="app-body">
-                {renderAppSidebar(props, sideMenuList)}
-                {renderMainSection(props)}
+                {renderAppSidebar(props)}
+                {renderMainSection()}
             </div>
             {renderAppFooter()}
         </div>
     );
-};
-
-const prepareNavigation = () => {
-    return navigation;
 };
 
 const renderAppHeader = (props) => {
@@ -55,13 +48,13 @@ const renderAppHeader = (props) => {
     );
 };
 
-const renderAppSidebar = (props, sideMenuList) => {
+const renderAppSidebar = (props) => {
     return (
         <AppSidebar fixed display="lg">
             <AppSidebarHeader/>
             <AppSidebarForm/>
             <Suspense>
-                <AppSidebarNav navConfig={sideMenuList} {...props} />
+                <AppSidebarNav navConfig={navigation} {...props} />
             </Suspense>
             <AppSidebarFooter/>
             <AppSidebarMinimizer/>
@@ -69,14 +62,14 @@ const renderAppSidebar = (props, sideMenuList) => {
     );
 };
 
-const renderMainSection = (props) => {
+const renderMainSection = () => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes(props)}
-                        <Redirect from="/" to="/app/dashboard"/>
+                        {renderRoutes()}
+                        <Redirect from="/" to="/app/books"/>
                     </Switch>
                 </Suspense>
             </Container>
@@ -85,7 +78,7 @@ const renderMainSection = (props) => {
     )
 };
 
-const renderRoutes = (props) => {
+const renderRoutes = () => {
     return routes.map((route, index) => {
         return route.component ? (
             <Route
@@ -110,4 +103,4 @@ const renderAppFooter = () => {
     );
 };
 
-export default connect(null, { setLoading })(Layout);
+export default Layout;

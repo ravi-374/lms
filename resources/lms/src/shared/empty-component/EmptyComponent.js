@@ -1,13 +1,14 @@
 import React from 'react';
 import './EmptyComponent.scss';
 
-const EmptyComponent = props => {
-  return (
-      <div className="empty-component">
-          <i className="fa fa-2x fa-ban"/>
-          <h5 className="empty-component__title">{props.title}</h5>
-      </div>
-  ) ;
+const EmptyComponent = ({title, isShort}) => {
+    const className = isShort ? 'empty-component empty-component--mini' : 'empty-component empty-component--maxi';
+    return (
+        <div className={className}>
+            <i className="fa fa-2x fa-ban"/>
+            <h5 className="empty-component__title">{title}</h5>
+        </div>
+    );
 };
 
 export default EmptyComponent;

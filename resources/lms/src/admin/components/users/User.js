@@ -7,8 +7,8 @@ import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import './Users.scss';
-import apiConfig from '../../../config/apiConfig';
-import {addToast} from '../../store/actions/toastAction';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../../store/action/toastAction';
 
 const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
     const isActive = users.length > 0 ? users.map(({is_active}) => is_active) : [];
@@ -56,7 +56,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
                             <td className="align-middle">{user.phone ? user.phone : ' '}</td>
                             <td className="align-middle">{user.role_name ? user.role_name : ' '}</td>
                             <td className="text-center" style={{width: '90px'}}>
-                                <div className="user-form__switch">
+                                <div className="user-form__switch" onClick={(e) => e.stopPropagation()}>
                                     <Field name="is_active" checked={isActive[index]} component={ToggleSwitch}
                                            onChange={() => onChecked(index, user.id)}/>
                                 </div>

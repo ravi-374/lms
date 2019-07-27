@@ -25,7 +25,7 @@ const BookHistoryDetail = React.lazy(() => import('./components/book-history-det
 
 export default [
     {
-        path: '/app/admin/dashboard',
+        path: '/app/admin/books',
         exact: true,
         name: 'Dashboard',
         component: Dashboard

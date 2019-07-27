@@ -7,8 +7,8 @@ import './BookDetail.scss';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import CustomInput from '../../../shared/components/CustomInput';
-import apiConfig from '../../../config/apiConfig';
-import {addToast} from '../../store/actions/toastAction';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../../store/action/toastAction';
 import {bookFormatOptions, bookStatusOptions} from '../../constants';
 import TypeAhead from '../../../shared/components/TypeAhead';
 

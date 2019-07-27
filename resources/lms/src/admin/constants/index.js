@@ -86,8 +86,8 @@ export const bookFormatConstant = {
 };
 
 export const bookStatusConstant = {
-    STATUS_AVAILABLE: 1,
-    STATUS_NOT_AVAILABLE: 2,
+    STATUS_NOT_AVAILABLE: 0,
+    STATUS_AVAILABLE: 1
 };
 
 export const bookFormatOptions = [

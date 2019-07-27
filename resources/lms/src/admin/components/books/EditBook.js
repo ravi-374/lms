@@ -12,7 +12,7 @@ import Toasts from '../../shared/toast/Toasts';
 import BookForm from './BookForm';
 import prepareFormData from './prepareFormData';
 import {prepareAuthor, prepareBookLanguage, preparePublisher} from './prepareArray';
-import {setLoading} from '../../store/actions/progressBarAction';
+import {setLoading} from '../../../store/action/progressBarAction';
 
 const EditBook = (props) => {
     const [bookId, setBookId] = useState(null);

@@ -8,7 +8,7 @@ export default ({booksSeries, books, onOpenModal, sortAction, sortObject,history
     const headers = [
         {id: 'title', name: 'Title'},
     ];
-    const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
+    const headerProps = {sortAction, sortObject, sortConfig, headers};
     const goToEditSeriesBook = (bookId) => {
         history.push(`/app/admin/books-series/${bookId}/edit`);
     };

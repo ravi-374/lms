@@ -15,7 +15,7 @@ export default ({books, memberBookHistory, onOpenModal, sortAction, sortObject})
         {id: 'return_date', name: 'Return Date'},
         {id: 'status_name', name: 'Status'},
     ];
-    const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
+    const headerProps = {sortAction, sortObject, sortConfig, headers};
     const renderBookStatus = (bookHistory) => {
         switch (bookHistory.status) {
             case bookAllotmentStatusConstant.BOOK_ISSUED:

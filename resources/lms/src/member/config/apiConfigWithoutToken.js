@@ -1,10 +1,9 @@
 import axios from 'axios';
 import axiosInterceptor from './axiosInterceptor';
-import {environment} from '../envieroment';
 
-const wampServer = environment.URL + '/api/b1/';
+const wampServer = 'http://local.lms.com/api/';
 const axiosApi = axios.create({
     baseURL: wampServer,
 });
-axiosInterceptor.setupInterceptors(axiosApi, false, true);
+axiosInterceptor.setupInterceptors(axiosApi,true,false);
 export default axiosApi;

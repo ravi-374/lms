@@ -1,11 +1,15 @@
 .empty-component {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-  height: 70vh;
-
-  &__title {
-    margin: 7px 10px 10px;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    &--mini {
+        height: 30vh;
+    }
+    &--maxi {
+        height: 70vh;
+    }
+    &__title {
+        margin: 7px 10px 10px;
+    }
 }

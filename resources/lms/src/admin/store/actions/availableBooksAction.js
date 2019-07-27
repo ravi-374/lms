@@ -1,6 +1,6 @@
 import {availableBookActionType} from '../../constants';
-import apiConfig from '../../../config/apiConfig';
-import {addToast} from './toastAction';
+import apiConfig from '../../config/apiConfig';
+import {addToast} from '../../../store/action/toastAction';
 
 export const fetchAvailableBooks = (bookId, memberId) => async (dispatch) => {
     await apiConfig.get(`books/${bookId}/available-books?member_id=${memberId}`)

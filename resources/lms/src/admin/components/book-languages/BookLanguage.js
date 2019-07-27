@@ -6,7 +6,7 @@ import ModalAction from '../../../shared/action-buttons/ModalAction';
 
 export default ({bookLanguages, onOpenModal, sortAction, sortObject}) => {
     const headers = [{id: 'language_code', name: 'Code'},{id: 'language_name', name: 'Name'}];
-    const headerProps = {isAction: false, sortAction, sortObject, sortConfig, headers};
+    const headerProps = {sortAction, sortObject, sortConfig, headers};
     return (
         <Table hover bordered striped responsive size="md">
             <thead>

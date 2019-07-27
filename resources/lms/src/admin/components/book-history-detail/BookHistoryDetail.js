@@ -108,7 +108,7 @@ const BookHistoryDetail = props => {
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">Status</span>
                                                 <span>
-                                                    {bookStatusOptions.filter(bookStatus => bookStatus.id === +book_item.is_available).map(({name}) => name)}
+                                                    {bookStatusOptions.filter(bookStatus => bookStatus.id === +bookHistory.status).map(({name}) => name)}
                                                 </span>
                                             </div>
                                             {bookHistory.issuer_name ?

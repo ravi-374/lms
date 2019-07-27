@@ -1,8 +1,8 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Card, CardBody, Col, Row} from 'reactstrap';
 import {fetchBooksHistory} from '../../store/actions/bookHistoryAction';
-import {sortAction} from '../../store/actions/sortAction';
+import {sortAction} from '../../../store/action/sortAction';
 import sortFilter from '../../../shared/sortFilter';
 import BookHistoryTable from "./BookHistoryTable";
 import Toasts from "../../../admin/shared/toast/Toasts";
@@ -10,20 +10,35 @@ import ProgressBar from "../../../admin/shared/progress-bar/ProgressBar";
 import SearchField from "../../../admin/shared/components/SearchField";
 import EmptyComponent from "../../../shared/empty-component/EmptyComponent";
 import searchFilter from "../../../shared/searchFilter";
+import {toggleModal} from '../../store/actions/modalAction';
+import UnReserveBook from "./UnReserveBook";
 
 const BookHistory = props => {
+    const [history, setHistory] = useState(null);
     useEffect(() => {
         props.fetchBooksHistory();
     }, []);
 
-    const { bookHistory, sortObject, sortAction, isLoading } = props;
-    const cardBodyProps = { bookHistory, sortAction, sortObject };
-
+    const { bookHistory, sortObject, sortAction, isLoading, toggleModal } = props;
+    const cardModalProps = {
+        history,
+        toggleModal,
+    };
+    const onOpenModal = (bookItem = null) => {
+        setHistory(bookItem);
+        toggleModal();
+    };
+    const cardBodyProps = {
+        bookHistory,
+        sortAction,
+        sortObject,
+        onOpenModal
+    };
     if (isLoading) {
         return (
             <Fragment>
-                <Toasts/>
                 <ProgressBar/>
+                <Toasts/>
             </Fragment>
         )
     }
@@ -43,6 +58,7 @@ const BookHistory = props => {
                                 <BookHistoryTable {...cardBodyProps}/> :
                                 <EmptyComponent title="No book history yet..."/>
                             }
+                            <UnReserveBook {...cardModalProps}/>
                         </CardBody>
                     </Card>
                 </div>
@@ -67,4 +83,4 @@ const mapStateToProps = (state) => {
         isLoading
     }
 };
-export default connect(mapStateToProps, { fetchBooksHistory, sortAction })(BookHistory);
+export default connect(mapStateToProps, { fetchBooksHistory, sortAction, toggleModal })(BookHistory);

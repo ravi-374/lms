@@ -13,9 +13,6 @@ export default formValues => {
     if (!emailExpression.test(formValues.email)) {
         errors.email = 'Invalid email address.'
     }
-    if (!formValues.password) {
-        errors.password = 'Password must be required.'
-    }
     if (formValues.password && formValues.password.length < 6) {
         errors.password = 'Password must be greater than 5 characters.'
     }
