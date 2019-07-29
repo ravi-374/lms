@@ -67,19 +67,25 @@ class SettingAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_publisher()
+    public function it_can_store_setting()
     {
+        $key = $this->faker->name;
+        $value = $this->faker->word;
+        $displayName = $this->faker->word;
         $response = $this->postJson('api/b1/settings', [
-            'key'          => $this->faker->name,
-            'value'        => $this->faker->word,
-            'display_name' => $this->faker->word,
+            'key'          => $key,
+            'value'        => $value,
+            'display_name' => $displayName,
         ]);
 
         $this->assertSuccessMessageResponse($response, 'Setting saved successfully.');
+        $this->assertNull(Setting::whereKey($key)->first());
+        $this->assertNotEmpty(Setting::whereValue($value)->first());
+        $this->assertNotEmpty(Setting::whereDisplayName($displayName)->first());
     }
 
     /** @test */
-    public function it_can_update_publisher()
+    public function it_can_update_setting()
     {
         /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
@@ -93,7 +99,7 @@ class SettingAPIControllerValidationTest extends TestCase
             'display_name' => $displayName,
         ]);
 
-        $this->assertSuccessMessageResponse($response, 'Publisher updated successfully.');
+        $this->assertSuccessMessageResponse($response, 'Setting updated successfully.');
         $this->assertEquals($key, $setting->fresh()->key);
         $this->assertEquals($value, $setting->fresh()->value);
         $this->assertEquals($displayName, $setting->fresh()->display_name);
