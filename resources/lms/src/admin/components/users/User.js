@@ -9,6 +9,7 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import './Users.scss';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
     const isActive = users.length > 0 ? users.map(({is_active}) => is_active) : [];
@@ -19,7 +20,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
         {id: 'role_name', name: 'Role'},
         {id: 'status', name: 'Status'},
     ];
-    const headerProps = {staticField: 'Image', sortAction, sortObject, sortConfig, headers};
+    const headerProps = {staticField: 'Profile', sortAction, sortObject, sortConfig, headers};
     const onChecked = (index, userId) => {
         setActiveInactive(index);
         apiConfig.get(`users/${userId}/update-status`).then(response => {
@@ -38,7 +39,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
             </thead>
             <tbody>
             {users.map((user, index) => {
-                    const imageUrl = user.image ? 'uploads/users/' + user.image : 'images/user-avatar.png';
+                    const imageUrl = user.image ? publicImagePathURL.USER_AVATAR_URL + user.image : publicImagePath.USER_AVATAR;
                     if (user.roles.length > 0) {
                         const role = roles.find(role => role.id === +user.roles[0].id);
                         if (role) {
@@ -48,14 +49,14 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
                     user.name = user.first_name + ' ' + user.last_name;
                     return (
                         <tr key={user.id.toString()} className="user-table-row" onClick={() => goToUserDetail(user.id)}>
-                            <td className="text-center" style={{width: '90px'}}>
-                                <img className={'rounded-circle'} src={imageUrl} alt={imageUrl} height="30"/>
+                            <td className="text-center user-table-row__profile">
+                                <img className="user-table-row__profile-img" src={imageUrl} alt={imageUrl}/>
                             </td>
                             <td className="align-middle">{user.name}</td>
                             <td className="align-middle">{user.email}</td>
                             <td className="align-middle">{user.phone ? user.phone : ' '}</td>
                             <td className="align-middle">{user.role_name ? user.role_name : ' '}</td>
-                            <td className="text-center" style={{width: '90px'}}>
+                            <td className="text-center user-table-row__switch">
                                 <div className="user-form__switch" onClick={(e) => e.stopPropagation()}>
                                     <Field name="is_active" checked={isActive[index]} component={ToggleSwitch}
                                            onChange={() => onChecked(index, user.id)}/>

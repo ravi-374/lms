@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import userValidate from './userValidate';
@@ -8,43 +7,41 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import apiConfig from '../../config/apiConfig';
-import {addToast} from '../../../store/action/toastAction';
 import TypeAhead from '../../../shared/components/TypeAhead';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const UserForm = (props) => {
-    const defaultImage = 'images/user-avatar.png';
-    const [image, setImage] = useState(defaultImage);
+    const {initialValues, change, roles, countries} = props;
+    const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
-    const [isDeleteImage, setIsDeleteImage] = useState(false);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
-    const [selectedRole] = useState(props.initialValues ? props.initialValues.selectedRole : []);
-    const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
-    const userId = props.initialValues ? props.initialValues.id : null;
+    const [selectedRole] = useState(initialValues ? initialValues.selectedRole : []);
+    const [selectedCountry] = useState(initialValues ? initialValues.selectedCountry : []);
     const [isValidRole, setIsValidRole] = useState(false);
     useEffect(() => {
-        if (props.initialValues) {
-            if (props.initialValues.is_active) {
-                setActive(props.initialValues.is_active ? props.initialValues.is_active : false)
+        if (initialValues) {
+            if (initialValues.is_active) {
+                setActive(initialValues.is_active ? initialValues.is_active : false)
             }
-            if (props.initialValues.image) {
-                setImage('uploads/users/' + props.initialValues.image);
+            if (initialValues.image) {
+                change('file_name', true);
+                setImage(publicImagePathURL.USER_AVATAR_URL + initialValues.image);
+                setIsDefaultImage(false);
             }
             if (selectedRole.length > 0) {
-                props.change('role_id', selectedRole[0].id);
+                change('role_id', selectedRole[0].id);
             }
         } else {
-            props.change('is_active', true);
+            change('is_active', true);
         }
     }, []);
     const onSaveUser = (formValues) => {
-        delete formValues.file_name;
         formValues.file = file;
         props.onSaveUser(formValues);
     };
     const onFileChange = (event) => {
-        props.change('file_name', 'file_name');
+        change('file_name', true);
         setFile(event.target.files[0]);
         setIsDefaultImage(false);
         const fileReader = new FileReader();
@@ -54,16 +51,10 @@ const UserForm = (props) => {
         }
     };
     const onRemovePhoto = () => {
-        props.change('file_name', 'file_name');
+        change('file_name', false);
         setFile(null);
-        setImage(defaultImage);
+        setImage(publicImagePath.USER_AVATAR);
         setIsDefaultImage(true);
-        if (userId && !isDeleteImage) {
-            setIsDeleteImage(true);
-            apiConfig.post(`users/${userId}/remove-image`)
-                .then(response => addToast({text: response.data.message}))
-                .catch(({response}) => addToast({text: response.data.message}))
-        }
     };
     const onChecked = () => {
         setActive(!isActive);
@@ -71,17 +62,17 @@ const UserForm = (props) => {
     const onSelectRole = (option) => {
         if (option.length > 0) {
             setIsValidRole(false);
-            props.change('role_id', option[0].id);
+            change('role_id', option[0].id);
         } else {
             setIsValidRole(true);
-            props.change('role_id', null);
+            change('role_id', null);
         }
     };
     const onSelectCountry = (option) => {
         if (option.length > 0) {
-            props.change('country_id', option[0].id);
+            change('country_id', option[0].id);
         } else {
-            props.change('country_id', null);
+            change('country_id', null);
         }
     };
     const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
@@ -110,7 +101,8 @@ const UserForm = (props) => {
                         <Field name="email" label="Email" required groupText="envelope" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="password" label="Password" type="password" groupText="lock"
+                        <Field name={initialValues ? 'password_new' : 'password'} label="Password"
+                               required={!initialValues} type="password" groupText="lock"
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
@@ -121,7 +113,7 @@ const UserForm = (props) => {
                             id="role"
                             label="Role"
                             required
-                            options={props.roles}
+                            options={roles}
                             placeholder="Select Role"
                             onChange={onSelectRole}
                             groupText="tasks"
@@ -160,7 +152,7 @@ const UserForm = (props) => {
                         <TypeAhead
                             id="country"
                             label="Country"
-                            options={props.countries}
+                            options={countries}
                             placeholder="Select Country"
                             onChange={onSelectCountry}
                             groupText="flag"
@@ -181,5 +173,4 @@ const UserForm = (props) => {
     );
 };
 
-const userForm = reduxForm({form: 'userForm', validate: userValidate})(UserForm);
-export default connect(null, {addToast})(userForm);
+export default reduxForm({form: 'userForm', validate: userValidate})(UserForm);

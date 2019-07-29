@@ -7,41 +7,39 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import {addToast} from "../../../store/action/toastAction";
-import apiConfig from '../../config/apiConfig';
 import TypeAhead from '../../../shared/components/TypeAhead';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const MemberForm = (props) => {
-    const defaultImage = 'images/user-avatar.png';
-    const [selectedMemberShipPlan] = useState(props.initialValues ? props.initialValues.selectedMemberShipPlan : []);
-    const [image, setImage] = useState(defaultImage);
+    const {initialValues, membershipPlans, countries, change} = props;
+    const [selectedMemberShipPlan] = useState(initialValues ? initialValues.selectedMemberShipPlan : []);
+    const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
-    const [isDeleteImage, setIsDeleteImage] = useState(false);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
-    const [selectedCountry] = useState(props.initialValues ? props.initialValues.selectedCountry : []);
-    const memberId = props.initialValues ? props.initialValues.id : null;
+    const [selectedCountry] = useState(initialValues ? initialValues.selectedCountry : []);
     const [isValidMemberPlan, setIsValidMemberPlan] = useState(false);
     useEffect(() => {
-        if (props.initialValues) {
-            if (props.initialValues.is_active) {
-                setActive(props.initialValues.is_active ? props.initialValues.is_active : false)
+        if (initialValues) {
+            if (initialValues.is_active) {
+                setActive(initialValues.is_active ? initialValues.is_active : false)
             }
-            if (props.initialValues.image) {
-                setImage('uploads/members/' + props.initialValues.image);
+            if (initialValues.image) {
+                change('file_name', true);
+                setImage(publicImagePathURL.MEMBER_AVATAR_URL + initialValues.image);
+                setIsDefaultImage(false);
             }
-            props.change('membership_plan_id', selectedMemberShipPlan[0].id);
+            change('membership_plan_id', selectedMemberShipPlan[0].id);
         } else {
-            props.change('is_active', true);
+            change('is_active', true);
         }
     }, []);
     const onSaveMember = (formValues) => {
-        delete formValues.file_name;
         formValues.file = file;
         props.onSaveMember(formValues);
     };
     const onFileChange = (event) => {
-        props.change('file_name', 'file_name');
+        change('file_name', true);
         setFile(event.target.files[0]);
         setIsDefaultImage(false);
         const fileReader = new FileReader();
@@ -51,16 +49,10 @@ const MemberForm = (props) => {
         }
     };
     const onRemovePhoto = () => {
-        props.change('file_name', 'file_name');
+        change('file_name', false);
         setFile(null);
-        setImage(defaultImage);
+        setImage(publicImagePath.USER_AVATAR);
         setIsDefaultImage(true);
-        if (memberId && !isDeleteImage) {
-            setIsDeleteImage(true);
-            apiConfig.post(`members/${memberId}/remove-image`)
-                .then(response => addToast({text: response.data.message}))
-                .catch(({response}) => addToast({text: response.data.message}))
-        }
     };
     const onChecked = () => {
         setActive(!isActive);
@@ -68,20 +60,19 @@ const MemberForm = (props) => {
     const onSelectMembershipPlan = (option) => {
         if (option.length > 0) {
             setIsValidMemberPlan(false);
-            props.change('membership_plan_id', option[0].id);
+            change('membership_plan_id', option[0].id);
         } else {
             setIsValidMemberPlan(true);
-            props.change('membership_plan_id', null);
+            change('membership_plan_id', null);
         }
     };
     const onSelectCountry = (option) => {
         if (option.length > 0) {
-            props.change('country_id', option[0].id);
+            change('country_id', option[0].id);
         } else {
-            props.change('country_id', null);
+            change('country_id', null);
         }
     };
-
     const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
         <Row className="animated fadeIn member-form m-3">
@@ -108,7 +99,8 @@ const MemberForm = (props) => {
                         <Field name="email" label="Email" required groupText="envelope" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="password" label="Password" type="password" groupText="lock"
+                        <Field name={initialValues ? 'password_new' : 'password'} label="Password"
+                               required={!initialValues} type="password" groupText="lock"
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
@@ -120,7 +112,7 @@ const MemberForm = (props) => {
                             id="membership-plan"
                             label="Membership Plan"
                             required
-                            options={props.membershipPlans}
+                            options={membershipPlans}
                             placeholder="Select Membership Plan"
                             onChange={onSelectMembershipPlan}
                             groupText="tasks"
@@ -159,7 +151,7 @@ const MemberForm = (props) => {
                         <TypeAhead
                             id="country"
                             label="Country"
-                            options={props.countries}
+                            options={countries}
                             placeholder="Select Country"
                             onChange={onSelectCountry}
                             groupText="flag"

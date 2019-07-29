@@ -14,13 +14,12 @@ import {addToast} from '../../../store/action/toastAction';
 import {bookFormatOptions} from '../../constants';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import TypeAhead from '../../../shared/components/TypeAhead';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const BookForm = (props) => {
-    const defaultImage = 'images/book-avatar.png';
-    const [image, setImage] = useState(defaultImage);
+    const [image, setImage] = useState(publicImagePath.BOOK_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
-    const [isDeleteImage, setIsDeleteImage] = useState(false);
-    const {initialValues} = props;
+    const {initialValues, change} = props;
     const [genres] = useState(initialValues ? initialValues.selectedGenres : []);
     const [tags] = useState(initialValues ? initialValues.selectedTags : []);
     const [authors] = useState(initialValues ? initialValues.selectedAuthors : []);
@@ -30,7 +29,6 @@ const BookForm = (props) => {
     const [isValidAuthor, setIsValidAuthor] = useState(false);
     const [isValidGenre, setIsValidGenre] = useState(false);
     const [items, setItems] = useState(initialValues ? initialValues.items : [{}]);
-    const bookId = props.initialValues ? props.initialValues.id : null;
     useEffect(() => {
         if (initialValues && initialValues.is_featured) {
             setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
@@ -40,7 +38,8 @@ const BookForm = (props) => {
             props.change('genres', genres);
             props.change('authors', authors);
             if (initialValues.image) {
-                setImage('uploads/books/' + initialValues.image);
+                change('file_name', true);
+                setImage(publicImagePathURL.BOOK_AVATAR_URL + initialValues.image);
                 setIsDefaultImage(false);
             }
         } else {
@@ -49,7 +48,6 @@ const BookForm = (props) => {
 
     }, []);
     const onSaveBook = (formValues) => {
-        delete formValues.file_name;
         formValues.file = file;
         props.onSaveBook(formValues);
     };
@@ -62,8 +60,9 @@ const BookForm = (props) => {
             .catch(({response}) => props.addToast({text: response.data.message, type: 'error'}));
     };
     const onFileChange = (event) => {
-        props.change('file_name', 'file_name');
+        change('file_name', true);
         setFile(event.target.files[0]);
+        setIsDefaultImage(false);
         const fileReader = new FileReader();
         fileReader.readAsDataURL(event.target.files[0]);
         fileReader.onloadend = () => {
@@ -71,16 +70,10 @@ const BookForm = (props) => {
         }
     };
     const onRemovePhoto = () => {
-        props.change('file_name', 'file_name');
+        change('file_name', false);
         setFile(null);
-        setImage(defaultImage);
+        setImage(publicImagePath.BOOK_AVATAR);
         setIsDefaultImage(true);
-        if (bookId && !isDeleteImage) {
-            setIsDeleteImage(true);
-            apiConfig.post(`books/${bookId}/remove-image`)
-                .then(response => addToast({text: response.data.message}))
-                .catch(({response}) => addToast({text: response.data.message}))
-        }
     };
     const onSelectGenres = (options) => {
         setIsLoading(false);
@@ -108,7 +101,7 @@ const BookForm = (props) => {
     if (isLoading && initialValues && genres.length === 0) {
         return null;
     }
-    const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
+    const imagePickerOptions = {image, buttonName: 'Cover', isDefaultImage, onRemovePhoto, onFileChange};
     return (
         <Row className="animated fadeIn book-form m-3">
             <Col xs={8} className="primary-detail">

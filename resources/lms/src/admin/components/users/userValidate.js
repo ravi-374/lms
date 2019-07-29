@@ -13,8 +13,14 @@ export default formValues => {
     if (!emailExpression.test(formValues.email)) {
         errors.email = 'Invalid email address.'
     }
+    if (!formValues.password) {
+        errors.password = 'Password must be required.'
+    }
     if (formValues.password && formValues.password.length < 6) {
         errors.password = 'Password must be greater than 5 characters.'
+    }
+    if (formValues.password_new && formValues.password_new.length < 6) {
+        errors.password_new = 'Password must be greater than 5 characters.'
     }
     const phoneExpression = /^\d{10}$/;
     if (formValues.phone && !phoneExpression.test(formValues.phone)) {
