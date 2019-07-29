@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {fetchSettings, fetchCurrencies, postCurrencies} from '../../store/actions/settingAction';
 import {Card, CardBody, Col, Row} from 'reactstrap';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import Toasts from "../../shared/toast/Toasts";
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from "../../../shared/toast/Toasts";
 import SettingsForm from "./SettingsForm";
 import {settingsKey} from '../../constants';
 
