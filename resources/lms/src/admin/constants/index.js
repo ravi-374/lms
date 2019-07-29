@@ -206,3 +206,14 @@ export const userProfileActionType = {
     FETCH_USER_PROFILE: 'FETCH_USER_PROFILE',
     EDIT_USER_PROFILE: 'EDIT_USER_PROFILE',
 };
+
+export const settingsActionsType = {
+    FETCH_SETTINGS: 'FETCH_SETTINGS',
+    POST_SETTINGS: 'POST_SETTINGS',
+    FETCH_CURRENCIES: 'FETCH_CURRENCIES',
+};
+
+export const settingsKey = {
+    CURRENCY: 'currency',
+    RETURN_DUE_DAYS: 'return_due_days',
+};

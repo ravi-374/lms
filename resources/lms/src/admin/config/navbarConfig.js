@@ -73,6 +73,12 @@ export default {
             url: '/app/admin/books-allotment',
             icon: 'icon-book-open',
             permission: Permissions.MANAGE_BOOKS
+        },
+        {
+            name: 'Settings',
+            url: '/app/admin/settings',
+            icon: 'icon-settings',
+            permission: Permissions.MANAGE_FINANCE,
         }
     ],
 };

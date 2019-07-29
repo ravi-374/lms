@@ -21,8 +21,10 @@ import memberReducer from './memberReducer';
 import configReducer from './configReducer';
 import availableBookReducer from './availableBookReducer';
 import memberBookHistoryReducer from './memberBookHistoryReducer';
+import currencyReducer from './currencyReducer';
 import userProfileReducer from './userProfileReducer';
 import countryReducer from './countryReducer';
+import settingReducer from './settingReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -42,6 +44,8 @@ export default combineReducers({
     userProfile: userProfileReducer,
     countries: countryReducer,
     isLoading: progressReduce,
+    settings: settingReducer,
+    currencies: currencyReducer,
     form: formReducer,
     searchText: searchReducer,
     sortObject: sortReducer,
