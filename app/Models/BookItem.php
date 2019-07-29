@@ -92,7 +92,7 @@ class BookItem extends Model
     public function lastIssuedBook()
     {
         return $this->hasOne(IssuedBook::class, 'book_item_id')
-            ->where('status', '!=', IssuedBook::STATUS_RETURNED);
+            ->lastIssuedBook();
     }
 
     /**
