@@ -99,7 +99,8 @@ export const bookStatusOptions = [
     {id: 1, name: 'Reserved'},
     {id: 2, name: 'Issued'},
     {id: 3, name: 'Returned'},
-    {id: 4, name: 'Available'}
+    {id: 4, name: 'Available'},
+    {id: 5, name: 'Unreserved'}
 ];
 
 export const errorMessage = {

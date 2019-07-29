@@ -56,6 +56,7 @@ class BookItem extends Model
     const FORMAT_PAPERBACK = 2;
 
     public $table = 'book_items';
+    protected $appends = ['book_item_status'];
 
     public $fillable = [
         'book_id',
@@ -130,5 +131,16 @@ class BookItem extends Model
         $bookItem['expected_available_date'] = $this->expected_available_date;
 
         return $bookItem;
+    }
+
+    public function getBookItemStatusAttribute()
+    {
+        /** @var IssuedBook $lastIssuedBook */
+        $lastIssuedBook = $this->lastIssuedBook;
+        if (!empty($lastIssuedBook)) {
+            return $lastIssuedBook->status;
+        }
+
+        return IssuedBook::STATUS_AVAILABLE;
     }
 }

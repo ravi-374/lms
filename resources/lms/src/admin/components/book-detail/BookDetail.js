@@ -28,7 +28,7 @@ const BookDetail = props => {
     const goBack = () => {
         history.push('/app/admin/books');
     };
-    const bookItemFormOptions = {bookItems: book.items, bookId: book.id, bookLanguages, publishers};
+    const bookItemFormOptions = {bookItems: book.items, bookId: book.id, bookLanguages, publishers, goBack};
     const bookFormOptions = {book, toggleModal};
     const imageUrl = book.image ? 'uploads/books/' + book.image : 'images/book-avatar.png';
     return (
