@@ -24,6 +24,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
         $this->post('api/b1/book-series', ['title' => ''])
             ->assertSessionHasErrors(['title' => 'The title field is required.']);
     }
+
     /** @test */
     public function test_create_book_series_fails_when_title_is_duplicate()
     {
@@ -58,7 +59,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
         $bookSeries = factory(BookSeries::class)->create();
         $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
 
-        $response = $this->putJson('api/b1/book-series/'.$bookSeries->id,$fakeBookSeries);
+        $response = $this->putJson('api/b1/book-series/'.$bookSeries->id, $fakeBookSeries);
 
         $this->assertSuccessMessageResponse($response, 'Book Series updated successfully.');
         $this->assertEquals($fakeBookSeries['title'], $bookSeries->fresh()->title);
