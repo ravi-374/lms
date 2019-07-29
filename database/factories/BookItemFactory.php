@@ -16,7 +16,7 @@ $factory->define(BookItem::class, function (Faker $faker) {
 
     return [
         'book_id'      => $book->id,
-        'book_code'    => $faker->unique()->word,
+        'book_code'    => $faker->unique()->uuid,
         'price'        => $faker->word,
         'language_id'  => $bookLanguage->id,
         'publisher_id' => $publisher->id,

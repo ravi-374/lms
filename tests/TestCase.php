@@ -12,11 +12,14 @@ abstract class TestCase extends BaseTestCase
     /** @var \Faker\Generator */
     public $faker;
 
+    public $loggedInUserId;
+
     use CreatesApplication;
 
     public function signInWithDefaultAdminUser()
     {
         $user = factory(User::class)->create();
+        $this->loggedInUserId = $user->id;
 
         return $this->actingAs($user);
     }
@@ -34,6 +37,7 @@ abstract class TestCase extends BaseTestCase
             \Illuminate\Auth\Middleware\Authenticate::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\UserAuth::class,
+            \App\Http\Middleware\MemberAuth::class,
             \Zizaco\Entrust\Middleware\EntrustRole::class,
             \Zizaco\Entrust\Middleware\EntrustPermission::class,
         ];
