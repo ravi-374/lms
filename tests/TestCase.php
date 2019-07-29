@@ -47,6 +47,7 @@ abstract class TestCase extends BaseTestCase
                 'message' => $message,
             ]);
     }
+
     public function assertSuccessDataResponse(TestResponse $response, array $data, string $message)
     {
         $response->assertStatus(200)

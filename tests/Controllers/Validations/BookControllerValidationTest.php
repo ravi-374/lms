@@ -92,12 +92,8 @@ class BookControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_book()
     {
-        $genre = factory(Genre::class)->create();
-        $response = $this->postJson('api/b1/books', [
-            'name'  => $this->faker->name,
-            'isbn'  => $this->faker->isbn10,
-            'genres' => $genre->id,
-        ]);
+        $response = $this->postJson('api/b1/books', $this->prepareBookInputs());
+
         $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
     }
 
@@ -107,20 +103,19 @@ class BookControllerValidationTest extends TestCase
         /** @var Book $book */
         $book = factory(Book::class)->create();
 
-        /** @var Genre $genre */
-        $genre = factory(Genre::class)->create();
-
-        $newName = $this->faker->name;
-        $isbn = $this->faker->isbn10;
-        $genre = $genre->id;
-        $response = $this->putJson('api/b1/books/'.$book->id, [
-            'name' => $newName,
-            'isbn' => $isbn,
-            'genres' => $genre,
-
-        ]);
+        $response = $this->putJson('api/b1/books/'.$book->id, $this->prepareBookInputs());
 
         $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
-        $this->assertEquals($newName, $book->fresh()->name);
+    }
+
+    public function prepareBookInputs($input = [])
+    {
+        $genre = factory(Genre::class)->create();
+
+        return array_merge([
+            'name' => $this->faker->name,
+            'isbn' => $this->faker->isbn10,
+            'genres' => [$genre->id]
+        ], $input);
     }
 }
