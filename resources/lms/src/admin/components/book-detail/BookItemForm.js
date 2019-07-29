@@ -13,11 +13,12 @@ import {bookFormatOptions, bookStatusOptions} from '../../constants';
 import TypeAhead from '../../../shared/components/TypeAhead';
 
 const BookItemForm = (props) => {
-    const {bookLanguages, bookId, publishers, change, addToast, bookItems} = props;
+    const {bookLanguages, bookId, publishers, change, addToast, bookItems, goBack} = props;
     const [items, setItems] = useState(bookItems);
     useEffect(() => {
         props.initialize({items: [...bookItems]});
     }, []);
+
     const onSaveBookItems = (formValues) => {
         apiConfig.post(`books/${+bookId}/items`, {items: formValues.items})
             .then((response) => {
@@ -37,7 +38,7 @@ const BookItemForm = (props) => {
                             items={items}/>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveBookItems)} {...props}/>
+                <SaveAction onCancel={goBack} onSave={props.handleSubmit(onSaveBookItems)} {...props}/>
             </Col>
         </Row>
     );
@@ -63,7 +64,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
             case'publisher':
                 return itemArray.filter(item => item.id === items[index].publisher_id);
             case'status':
-                return itemArray.filter(item => item.id === items[index].book_status);
+                return itemArray.filter(item => item.id === items[index].book_item_status);
             default:
                 return [];
         }
