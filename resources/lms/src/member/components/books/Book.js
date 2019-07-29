@@ -36,10 +36,10 @@ const Book = ({books, addToast, reserveBook}) => {
             </thead>
             <tbody>
             {books.map((book, index) => {
-                const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
+                const imageUrl = book.book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.book.image : publicImagePath.BOOK_AVATAR;
                 return (
                     <tr className="book__table-row" key={book.id.toString()}>
-                        <td className="text-center book__table-row-cover">
+                        <td className="text-center align-middle book__table-row-cover">
                             <img src={imageUrl} alt={imageUrl} height="30"/>
                         </td>
                         <td className="align-middle book__table-row-book-code"
