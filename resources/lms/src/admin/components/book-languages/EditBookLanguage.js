@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {editBookLanguage} from '../../store/actions/bookLanguageAction';
 import BookLanguageForm from './BookLanguageForm';
 

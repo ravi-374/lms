@@ -4,7 +4,7 @@ import {editBook} from '../../store/actions/bookAction';
 import BookForm from './BookForm';
 import prepareFormData from '../books/prepareFormData';
 import {prepareAuthor} from '../books/prepareArray';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {fetchAuthors} from '../../store/actions/authorAction';
 import {fetchTags} from '../../store/actions/tagAction';
 import {fetchGenres} from '../../store/actions/genreAction';

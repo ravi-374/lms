@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {editPublisher} from '../../store/actions/publisherAction';
 import PublisherForm from './PublisherForm';
 

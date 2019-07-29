@@ -3,7 +3,7 @@ import apiConfig from '../../config/apiConfig';
 import apiConfigWthFormData from '../../config/apiConfigWthFormData';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
-import {toggleModal} from './modalAction';
+import {toggleModal} from '../../../store/action/modalAction';
 
 export const fetchUsers = () => async (dispatch) => {
     dispatch(setLoading(true));

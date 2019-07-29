@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
-import SearchField from '../../shared/components/SearchField';
+import SearchField from '../../../shared/components/SearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import AuthorModal from './AuthorModal';
 import Author from './Author';
 import './Authors.scss';
-import Toasts from '../../shared/toast/Toasts';
+import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
-import {toggleModal} from '../../store/actions/modalAction';
+import {toggleModal} from '../../../store/action/modalAction';
 import {fetchAuthors} from '../../store/actions/authorAction';
 
 const Authors = (props) => {

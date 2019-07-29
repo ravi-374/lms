@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {deleteMembershipPlan} from '../../store/actions/membershipPlanAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
 

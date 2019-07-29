@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {searchFilter} from '../../../store/action/searchAction';
-import CustomInput from '../../../shared/components/CustomInput';
+import {searchFilter} from '../../store/action/searchAction';
+import CustomInput from './CustomInput';
 
 const SearchField = ({searchFilter}) => {
     useEffect(() => {

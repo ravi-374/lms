@@ -13,8 +13,8 @@ import {
     AppSidebarNav,
 } from '@coreui/react';
 import navigation from '../../config/navbarConfig';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import Toasts from '../../shared/toast/Toasts';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
 import routes from "../../routes";
 import {setLoading} from "../../../store/action/progressBarAction";
 import {fetchConfig} from "../../store/actions/configAction";

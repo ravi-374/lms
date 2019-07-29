@@ -5,12 +5,12 @@ import {fetchBooksHistory} from '../../store/actions/bookHistoryAction';
 import {sortAction} from '../../../store/action/sortAction';
 import sortFilter from '../../../shared/sortFilter';
 import BookHistoryTable from "./BookHistoryTable";
-import Toasts from "../../../admin/shared/toast/Toasts";
-import ProgressBar from "../../../admin/shared/progress-bar/ProgressBar";
-import SearchField from "../../../admin/shared/components/SearchField";
+import Toasts from "../../../shared/toast/Toasts";
+import ProgressBar from "../../../shared/progress-bar/ProgressBar";
+import SearchField from "../../../shared/components/SearchField";
 import EmptyComponent from "../../../shared/empty-component/EmptyComponent";
 import searchFilter from "../../../shared/searchFilter";
-import {toggleModal} from '../../store/actions/modalAction';
+import {toggleModal} from '../../../store/action/modalAction';
 import UnReserveBook from "./UnReserveBook";
 
 const BookHistory = props => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import ConfirmAction from '../../../shared/action-buttons/ConfirmAction';
 import {unReserveBook} from "../../store/actions/bookHistoryAction";
 

@@ -7,7 +7,7 @@ import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import {fetchBook} from '../../store/actions/bookAction';
 import BookItemForm from './BookItemForm';
 import {prepareAuthor, prepareBookLanguage, preparePublisher} from '../books/prepareArray';
-import {toggleModal} from '../../store/actions/modalAction';
+import {toggleModal} from '../../../store/action/modalAction';
 import EditBook from './EditBook';
 
 const BookDetail = props => {

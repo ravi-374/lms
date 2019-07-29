@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
-import progressReduce from '../../store/reducers/progressReducer';
-import searchReducer from '../../store/reducers/searchReducer';
-import sortReducer from '../../store/reducers/sortReducer';
-import toastReducer from '../../store/reducers/toastReducer';
-import modalReducer from './modalReducer';
+import progressReduce from '../../../store/reducers/progressReducer';
+import searchReducer from '../../../store/reducers/searchReducer';
+import sortReducer from '../../../store/reducers/sortReducer';
+import toastReducer from '../../../store/reducers/toastReducer';
+import modalReducer from '../../../store/reducers/modalReducer';
 import memberReducer from './memberReducer';
 import membershipPlanReducer from './membershipPlanReducer';
 import countryReducer from './countryReducer';

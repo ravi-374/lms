@@ -12,8 +12,8 @@ import {
     AppSidebarNav,
 } from '@coreui/react';
 import navigation from '../../config/navbarConfig';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import Toasts from '../../shared/toast/Toasts';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
 import routes from '../../routes';
 
 const Footer = React.lazy(() => import('./Footer'));

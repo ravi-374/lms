@@ -1,9 +1,9 @@
-import {constants} from '../../constants';
+import {constants} from '../../member/constants/index';
 
-export default (state = { orderBy: 'item_name', order: 'desc' }, action) => {
+export default (state = {orderBy: 'item_name', order: 'desc'}, action) => {
     switch (action.type) {
         case constants.SORT_ACTION:
-            return { ...action.payload };
+            return {...action.payload};
         default:
             return state;
     }

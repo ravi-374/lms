@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {editMember} from '../../store/actions/memberAction';
 import MemberForm from './MemberForm';
 import prepareFormData from './prepareFormData';

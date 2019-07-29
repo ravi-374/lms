@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {addGenre} from '../../store/actions/genreAction';
 import GenreForm from './GenreForm';
 

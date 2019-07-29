@@ -1,4 +1,4 @@
-import {constants} from '../../constants'
+import {constants} from '../../member/constants/index'
 
 export default (state = '', action) => {
     switch (action.type) {

@@ -41,9 +41,10 @@
 }
 
 .toast.show {
+    max-width: max-content;
     visibility: visible;
-    -webkit-animation: fade 2s ease-in-out;
-    animation: fade 2s ease-in-out;
+    -webkit-animation: fade 3.5s ease-in-out;
+    animation: fade 3.5s ease-in-out;
 }
 
 @keyframes fade {

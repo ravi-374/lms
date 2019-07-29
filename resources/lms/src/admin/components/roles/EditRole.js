@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {editRole} from '../../store/actions/roleAction';
 import {fetchPermissions} from '../../store/actions/permissionAction';
 import RoleForm from './RoleForm';
