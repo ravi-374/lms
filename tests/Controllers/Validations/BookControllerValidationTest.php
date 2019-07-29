@@ -93,6 +93,7 @@ class BookControllerValidationTest extends TestCase
     public function it_can_store_book()
     {
         $response = $this->postJson('api/b1/books', $this->prepareBookInputs());
+
         $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
     }
 
