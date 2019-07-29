@@ -49,7 +49,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
                     return (
                         <tr key={user.id.toString()} className="user-table-row" onClick={() => goToUserDetail(user.id)}>
                             <td className="text-center" style={{width: '90px'}}>
-                                <img src={imageUrl} alt={imageUrl} height="30"/>
+                                <img className={'rounded-circle'} src={imageUrl} alt={imageUrl} height="30"/>
                             </td>
                             <td className="align-middle">{user.name}</td>
                             <td className="align-middle">{user.email}</td>

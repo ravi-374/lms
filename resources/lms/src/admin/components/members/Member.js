@@ -48,7 +48,7 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
                         <tr className="member-table-row" onClick={() => goToMemberDetailPage(member.id)}
                             key={member.id.toString()}>
                             <td className="text-center" style={{width: '90px'}}>
-                                <img src={imageUrl} alt={imageUrl} height="30"/>
+                                <img className={'rounded-circle'} src={imageUrl} alt={imageUrl} height="30"/>
                             </td>
                             <td className="align-middle">{member.name}</td>
                             <td className="align-middle">{member.email}</td>

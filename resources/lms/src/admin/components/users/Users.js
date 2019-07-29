@@ -14,6 +14,7 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../store/actions/modalAction';
 import {fetchUsers} from '../../store/actions/userAction';
 import {fetchRoles} from '../../store/actions/roleAction';
+import {ErrorBoundary} from "react-beautiful-dnd";
 
 const Users = (props) => {
     const [isEditMode, setEditMode] = useState(false);
