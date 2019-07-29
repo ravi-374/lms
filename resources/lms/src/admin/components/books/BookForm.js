@@ -9,6 +9,7 @@ import InputGroup from '../../../shared/components/InputGroup';
 import TextArea from '../../../shared/components/TextArea';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import CustomInput from '../../../shared/components/CustomInput';
+import PriceInput from '../../../shared/components/PriceInput';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {bookFormatOptions} from '../../constants';
@@ -299,7 +300,7 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                 </td>
                                 <td>
                                     <Field name={`${item}.price`} min="1" type="number" placeholder="Price"
-                                           groupText="money" component={CustomInput}/>
+                                           groupText="money" component={PriceInput}/>
                                 </td>
                                 <td>
                                     <TypeAhead

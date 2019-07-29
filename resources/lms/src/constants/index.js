@@ -8,3 +8,13 @@ export const constants = {
     REMOVE_TOAST: 'REMOVE_TOAST',
     ERROR_ACTION: 'ERROR_ACTION'
 };
+
+export const countryCode = {
+    INR: 'INR',
+    USD: 'USD',
+    GBP: 'GBP',
+    AED: 'AED',
+    CAD: 'CAD',
+    CNY: 'CNY',
+    RUB: 'RUB'
+};
