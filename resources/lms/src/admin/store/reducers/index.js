@@ -5,7 +5,7 @@ import searchReducer from '../../../store/reducers/searchReducer';
 import sortReducer from '../../../store/reducers/sortReducer';
 import genreReducer from './genreReducer';
 import toastReducer from '../../../store/reducers/toastReducer';
-import modalReducer from './modalReducer';
+import modalReducer from '../../../store/reducers/modalReducer';
 import tagReducer from './tagReducer';
 import authorReducer from './authorReducer';
 import publisherReducer from './publisherReducer';

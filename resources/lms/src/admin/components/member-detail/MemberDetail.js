@@ -6,15 +6,15 @@ import {fetchMember} from '../../store/actions/memberAction';
 import {fetchMemberBooksHistory} from '../../store/actions/memberBookHistoryAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
-import {toggleModal} from '../../store/actions/modalAction';
+import {toggleModal} from '../../../store/action/modalAction';
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
 import apiConfig from '../../config/apiConfig';
 import MemberBookHistory from './MemberBookHistory';
 import BookHistoryModal from './BookHistoryModal';
 import {sortAction} from '../../../store/action/sortAction';
 import sortFilter from '../../../shared/sortFilter';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import Toasts from '../../shared/toast/Toasts';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
 
 const MemberDetail = props => {
     const [isEditMode, setEditMode] = useState(false);

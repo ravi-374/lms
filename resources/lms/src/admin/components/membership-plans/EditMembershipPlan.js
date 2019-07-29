@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {editMembershipPlan} from '../../store/actions/membershipPlanAction';
 import MembershipPlanForm from './MembershipPlanForm';
 import {membershipPlanFrequencyOptions} from '../../constants';

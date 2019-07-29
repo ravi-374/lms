@@ -2,7 +2,7 @@ import {bookHistoryActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {setLoading} from '../../../store/action/progressBarAction';
-import {toggleModal} from "../../../admin/store/actions/modalAction";
+import {toggleModal} from "../../../store/action/modalAction";
 
 export const fetchBooksHistory = () => async (dispatch) => {
     dispatch(setLoading(true));

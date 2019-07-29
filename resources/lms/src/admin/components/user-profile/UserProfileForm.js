@@ -110,7 +110,7 @@ const UserProfileForm = (props) => {
                 </Row>
             </Col>
             <Col xs={4} className="user-profile">
-                <h5 className="user-profile__title">user Profile</h5>
+                <h5 className="user-profile__title">User Profile</h5>
                 <hr className={'mt-0'}/>
                 <div className="mt-5">
                     <Field name="file_name" type="hidden" component={InputGroup}/>

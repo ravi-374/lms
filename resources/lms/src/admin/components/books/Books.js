@@ -3,16 +3,16 @@ import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
 import {fetchBooks} from '../../store/actions/bookAction';
-import SearchField from '../../shared/components/SearchField';
+import SearchField from '../../../shared/components/SearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import DeleteBook from './DeleteBook';
-import Toasts from '../../shared/toast/Toasts';
+import Toasts from '../../../shared/toast/Toasts';
 import Book from './Book';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
-import {toggleModal} from '../../store/actions/modalAction';
+import {toggleModal} from '../../../store/action/modalAction';
 
 const Books = (props) => {
     const [book, setBook] = useState(null);

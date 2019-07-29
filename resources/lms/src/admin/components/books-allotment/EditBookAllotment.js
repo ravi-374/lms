@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {editBookAllotment} from '../../store/actions/bookAllotmentAction';
 import {editMemberBookHistory} from '../../store/actions/memberBookHistoryAction';
 import BookAllotmentForm from './BookAllotmentForm';

@@ -4,8 +4,8 @@ import {Row, Col, Card, CardBody, Button} from 'reactstrap';
 import './UserDetail.scss';
 import {fetchUser} from '../../store/actions/userAction';
 import apiConfig from '../../config/apiConfig';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import Toasts from '../../shared/toast/Toasts';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
 
 const UserDetail = props => {
     const [countries, setCountries] = useState([]);

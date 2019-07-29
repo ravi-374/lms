@@ -1,14 +1,14 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {fetchBook, editBook} from '../../store/actions/bookAction';
 import {fetchAuthors} from '../../store/actions/authorAction';
 import {fetchGenres} from '../../store/actions/genreAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import {fetchPublishers} from '../../store/actions/publisherAction';
 import {fetchTags} from '../../store/actions/tagAction';
-import Toasts from '../../shared/toast/Toasts';
+import Toasts from '../../../shared/toast/Toasts';
 import BookForm from './BookForm';
 import prepareFormData from './prepareFormData';
 import {prepareAuthor, prepareBookLanguage, preparePublisher} from './prepareArray';

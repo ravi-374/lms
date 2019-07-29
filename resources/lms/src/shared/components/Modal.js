@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {connect} from 'react-redux';
-import {toggleModal} from '../../store/actions/modalAction';
+import {toggleModal} from '../../store/action/modalAction';
 
 const GlobalModal = (props) => {
     const className = `modal-primary primary ${props.className}`;

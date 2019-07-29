@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Modal from '../../shared/components/Modal';
+import Modal from '../../../shared/components/Modal';
 import {deleteBookSeries} from '../../store/actions/bookSeriesAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
 

@@ -1,7 +1,7 @@
 import {bookAllotmentStatusConstant, memberBookHistoryActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
-import {toggleModal} from "./modalAction";
+import {toggleModal} from "../../../store/action/modalAction";
 
 export const fetchMemberBooksHistory = (memberId) => async (dispatch) => {
     await apiConfig.get(`members/${memberId}/books-history`)

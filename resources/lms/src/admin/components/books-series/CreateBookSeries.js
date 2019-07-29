@@ -1,8 +1,8 @@
 import React, {useEffect, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
-import ProgressBar from '../../shared/progress-bar/ProgressBar';
-import Toasts from '../../shared/toast/Toasts';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
 import {addBookSeries} from '../../store/actions/bookSeriesAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import BookSeriesForm from './BookSeriesForm';

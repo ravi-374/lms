@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TopBarProgress from 'react-topbar-progress-indicator';
-import progressConfig from '../../../config/progressbarConfig';
+import progressConfig from '../../config/progressbarConfig';
 
 TopBarProgress.config({progressConfig});
 
