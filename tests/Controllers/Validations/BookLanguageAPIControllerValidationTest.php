@@ -92,7 +92,7 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_setting()
+    public function it_can_delete_book_language()
     {
         $bookLanguage = factory(BookLanguage::class)->create();
 
