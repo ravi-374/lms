@@ -1,33 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
-import memberValidate from './memberProfileValidate';
-import './MemberProfile.scss';
+import userProfileValidate from './userProfileValidate';
+import './UserProfile.scss';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
-const MemberForm = (props) => {
-    const {initialValues, change, membershipPlans, countries} = props;
+const UserProfileForm = (props) => {
+    const {initialValues, change, roles, countries} = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
-    const [selectedMemberShipPlan] = useState(initialValues.selectedMemberShipPlan);
+    const [selectedRole] = useState(initialValues.selectedRole);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [selectedCountry] = useState(initialValues.selectedCountry);
     const defaultImage = publicImagePath.USER_AVATAR;
-    const [isValidMemberPlan, setIsValidMemberPlan] = useState(false);
+    const [isValidRole, setIsValidRole] = useState(false);
     useEffect(() => {
         if (initialValues.image) {
-            change('file_name', true);
-            setImage(publicImagePathURL.MEMBER_AVATAR_URL + initialValues.image);
+            setImage(publicImagePathURL.USER_AVATAR_URL + initialValues.image);
             setIsDefaultImage(false);
         }
+        change('role_id', selectedRole[0].id);
     }, []);
-    const onSaveMemberProfile = (formValues) => {
+    const onSaveProfile = (formValues) => {
         formValues.file = file;
-        props.onSaveMemberProfile(formValues);
+        props.onSaveProfile(formValues);
     };
     const onFileChange = (event) => {
         change('file_name', true);
@@ -45,14 +45,13 @@ const MemberForm = (props) => {
         setImage(defaultImage);
         setIsDefaultImage(true);
     };
-
-    const onSelectMembershipPlan = (option) => {
+    const onSelectRole = (option) => {
         if (option.length > 0) {
-            setIsValidMemberPlan(false);
-            change('membership_plan_id', option[0].id);
+            setIsValidRole(false);
+            props.change('role_id', option[0].id);
         } else {
-            setIsValidMemberPlan(true);
-            change('membership_plan_id', null);
+            setIsValidRole(true);
+            props.change('role_id', null);
         }
     };
     const onSelectCountry = (option) => {
@@ -64,7 +63,7 @@ const MemberForm = (props) => {
     };
     const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
-        <Row className="animated fadeIn member-form m-3">
+        <Row className="animated fadeIn user-form m-3">
             <Col xs={8} className="primary-detail">
                 <div className="d-flex justify-content-between">
                     <h5>Primary Details</h5>
@@ -96,22 +95,22 @@ const MemberForm = (props) => {
                     </Col>
                     <Col xs={12}>
                         <TypeAhead
-                            id="membership-plan"
-                            label="Membership Plan"
-                            disabled={true}
-                            options={membershipPlans}
-                            placeholder="Select Membership Plan"
-                            onChange={onSelectMembershipPlan}
+                            id="role"
+                            label="Role"
+                            required
+                            options={roles}
+                            placeholder="Select Role"
+                            onChange={onSelectRole}
                             groupText="tasks"
-                            defaultSelected={selectedMemberShipPlan}
-                            isInvalid={isValidMemberPlan}
+                            defaultSelected={selectedRole}
+                            isInvalid={isValidRole}
                         />
-                        <Field name="membership_plan_id" type="hidden" component={InputGroup}/>
+                        <Field name="role_id" type="hidden" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
-            <Col xs={4} className="member-profile">
-                <h5 className="member-profile__title">Member Profile</h5>
+            <Col xs={4} className="user-profile">
+                <h5 className="user-profile__title">user Profile</h5>
                 <hr className={'mt-0'}/>
                 <div className="mt-5">
                     <Field name="file_name" type="hidden" component={InputGroup}/>
@@ -153,10 +152,10 @@ const MemberForm = (props) => {
                 </Row>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveMemberProfile)} {...props}/>
+                <SaveAction onSave={props.handleSubmit(onSaveProfile)} {...props}/>
             </Col>
         </Row>
     );
 };
 
-export default reduxForm({form: 'memberForm', validate: memberValidate})(MemberForm);
+export default reduxForm({form: 'userProfileForm', validate: userProfileValidate})(UserProfileForm);

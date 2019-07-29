@@ -5,6 +5,7 @@ import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import {prepareAuthor} from './prepareArray';
 import './Books.scss';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 export default ({books, onOpenModal, history, sortAction, sortObject}) => {
     const headers = [
@@ -12,7 +13,7 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
         {id: 'name', name: 'Book Name'},
         {id: 'authors_name', name: 'Authors'},
     ];
-    const headerProps = {staticField: 'Image', sortAction, sortObject, sortConfig, headers};
+    const headerProps = {staticField: 'Cover', sortAction, sortObject, sortConfig, headers};
     const goToEditBook = (bookId) => {
         history.push(`/app/admin/books/${bookId}/edit`);
     };
@@ -26,12 +27,12 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
             </thead>
             <tbody>
             {books.map((book) => {
-                const imageUrl = book.image ? 'uploads/books/' + book.image : 'images/book-avatar.png';
+                const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
                 book.authors_name = prepareAuthor(book.authors).map((({name}) => name)).join(',  ');
                 return (
                     <tr className="book-table-row" key={book.id.toString()} onClick={() => goToBookDetail(book.id)}>
-                        <td className="text-center" style={{width: '90px'}}>
-                            <img src={imageUrl} alt={imageUrl} height="30"/>
+                        <td className="text-center book-table-row__cover">
+                            <img className="book-table-row__cover-img" src={imageUrl} alt={imageUrl}/>
                         </td>
                         <td className="align-middle">{book.isbn}</td>
                         <td className="align-middle">{book.name}</td>

@@ -1,5 +1,5 @@
 export default (formValues) => {
-    const {is_featured, isbn, genres, authors, name, tags, url, description, file, items} = formValues;
+    const {is_featured, isbn, genres, authors, name, tags, url, description, file, items, file_name} = formValues;
     const formData = new FormData();
     formData.append('is_featured', is_featured ? '1' : '0');
     formData.append('isbn', isbn);
@@ -13,6 +13,9 @@ export default (formValues) => {
     formData.append('description', description ? description : '');
     if (file) {
         formData.append('photo', file, file.name);
+    }
+    if (!file_name) {
+        formData.append('remove_image', '1');
     }
     if (items && items.length > 0 && items) {
         items.forEach((item, index) => {

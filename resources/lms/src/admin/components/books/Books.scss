@@ -6,6 +6,15 @@
 
 .book-table-row {
     cursor: pointer;
+
+    &__cover {
+        width: 90px;
+
+        &-img {
+            width: 30px;
+            height: 30px;
+        }
+    }
 }
 
 .book-form {

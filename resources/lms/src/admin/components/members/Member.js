@@ -9,6 +9,8 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import './Members.scss';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+
 
 const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
     const isActive = members.length > 0 ? members.map(({is_active}) => is_active) : [];
@@ -19,7 +21,7 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
         {id: 'membership_plan_name', name: 'Membership Plan'},
         {id: 'status', name: 'Status'},
     ];
-    const headerProps = {staticField: 'Image', sortAction, sortObject, sortConfig, headers};
+    const headerProps = {staticField: 'Profile', sortAction, sortObject, sortConfig, headers};
     const onChecked = (index, memberId) => {
         setActiveInactive(index);
         apiConfig.get(`members/${memberId}/update-status`).then(response => {
@@ -38,7 +40,7 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
             </thead>
             <tbody>
             {members.map((member, index) => {
-                    const imageUrl = member.image ? 'uploads/members/' + member.image : 'images/user-avatar.png';
+                    const imageUrl = member.image ? publicImagePathURL.MEMBER_AVATAR_URL + member.image : publicImagePath.USER_AVATAR;
                     member.name = member.first_name + ' ' + member.last_name;
                     const memberPlan = membershipPlans.find(memberPlan => memberPlan.id === member.membership_plan_id);
                     if (memberPlan) {
@@ -47,14 +49,14 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
                     return (
                         <tr className="member-table-row" onClick={() => goToMemberDetailPage(member.id)}
                             key={member.id.toString()}>
-                            <td className="text-center" style={{width: '90px'}}>
-                                <img className={'rounded-circle'} src={imageUrl} alt={imageUrl} height="30"/>
+                            <td className="text-center member-table-row__profile">
+                                <img className="member-table-row__profile-img" src={imageUrl} alt={imageUrl}/>
                             </td>
                             <td className="align-middle">{member.name}</td>
                             <td className="align-middle">{member.email}</td>
                             <td className="align-middle">{member.phone ? member.phone : ' '}</td>
-                            <td className="align-middle" style={{width: '186px'}}>{member.membership_plan_name}</td>
-                            <td className="text-center" style={{width: '90px'}}>
+                            <td className="align-middle member-table-row__plan-name">{member.membership_plan_name}</td>
+                            <td className="text-center member-table-row__switch">
                                 <div className="member-form__switch" onClick={(e) => e.stopPropagation()}>
                                     <Field name="is_active" checked={isActive[index]} component={ToggleSwitch}
                                            onChange={() => onChecked(index, member.id)}/>

@@ -196,3 +196,12 @@ export const memberBookHistoryActionType = {
     FETCH_MEMBER_BOOK_HISTORY: 'FETCH_AVAILABLE_BOOKS',
     EDIt_MEMBER_BOOK_HISTORY: 'EDIt_MEMBER_BOOK_HISTORY',
 };
+
+export const countryActionType = {
+    FETCH_COUNTRIES: 'FETCH_COUNTRIES'
+};
+
+export const userProfileActionType = {
+    FETCH_USER_PROFILE: 'FETCH_USER_PROFILE',
+    EDIT_USER_PROFILE: 'EDIT_USER_PROFILE',
+};
