@@ -25,6 +25,7 @@ class BookLanguageAPIControllerValidationTest extends TestCase
         $this->post('api/b1/book-languages', ['language_name' => ''])
             ->assertSessionHasErrors(['language_name' => 'The language name field is required.']);
     }
+
     /** @test */
     public function test_create_book_language_fails_when_language_name_is_duplicate()
     {
@@ -73,6 +74,7 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     public function it_can_store_book_language()
     {
         $fakeBookLanguage = factory(BookLanguage::class)->make()->toArray();
+
         $response = $this->postJson('api/b1/book-languages', $fakeBookLanguage);
 
         $this->assertSuccessMessageResponse($response, 'Book Language saved successfully.');
@@ -85,7 +87,7 @@ class BookLanguageAPIControllerValidationTest extends TestCase
         $bookLanguage = factory(BookLanguage::class)->create();
         $fakeBookLanguage = factory(BookLanguage::class)->make()->toArray();
 
-        $response = $this->putJson('api/b1/book-languages/'.$bookLanguage->id,$fakeBookLanguage);
+        $response = $this->putJson('api/b1/book-languages/'.$bookLanguage->id, $fakeBookLanguage);
 
         $this->assertSuccessMessageResponse($response, 'Book Language updated successfully.');
         $this->assertEquals($fakeBookLanguage['language_name'], $bookLanguage->fresh()->language_name);
