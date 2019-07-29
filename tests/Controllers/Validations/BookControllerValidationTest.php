@@ -3,8 +3,8 @@
 namespace Tests\Controllers\Validations;
 
 use App\Models\Book;
+use App\Models\Genre;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class BookControllerValidationTest extends TestCase
@@ -87,5 +87,34 @@ class BookControllerValidationTest extends TestCase
 
         $this->put('api/b1/books/'.$book2->id, ['isbn' => $book1->isbn])
             ->assertSessionHasErrors(['isbn' => 'The isbn has already been taken.']);
+    }
+
+    /** @test */
+    public function it_can_store_book()
+    {
+        $response = $this->postJson('api/b1/books', $this->prepareBookInputs());
+        $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
+    }
+
+    /** @test */
+    public function it_can_update_book()
+    {
+        /** @var Book $book */
+        $book = factory(Book::class)->create();
+
+        $response = $this->putJson('api/b1/books/'.$book->id, $this->prepareBookInputs());
+
+        $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
+    }
+
+    public function prepareBookInputs($input = [])
+    {
+        $genre = factory(Genre::class)->create();
+
+        return array_merge([
+            'name' => $this->faker->name,
+            'isbn' => $this->faker->isbn10,
+            'genres' => [$genre->id]
+        ], $input);
     }
 }
