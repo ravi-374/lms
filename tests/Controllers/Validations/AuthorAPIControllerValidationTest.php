@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
-class AuthorControllerValidationTest extends TestCase
+class AuthorAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions, WithoutMiddleware;
 

@@ -172,6 +172,7 @@ class MemberAPIController extends AppBaseController
     public function updateMemberProfile(UpdateMemberProfileAPIRequest $request)
     {
         $input = $request->all();
+        unset($input['email']);
 
         $updateMember = $this->memberRepository->update($input, Auth::id());
 
