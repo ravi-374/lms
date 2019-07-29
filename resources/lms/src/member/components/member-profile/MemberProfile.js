@@ -11,23 +11,15 @@ import {fetchCountries} from '../../store/actions/countryAction';
 import prepareFormData from './prepareFormData';
 
 const MemberProfile = props => {
+    const {isLoading, countries, member, membershipPlans, history} = props;
     useEffect(() => {
         props.fetchMember();
         props.fetchMembershipPlans();
         props.fetchCountries();
     }, []);
     const onSaveMemberProfile = (formValues) => {
-        props.editMember(prepareFormData(formValues));
+        props.editMember(prepareFormData(formValues), history);
     };
-    const {isLoading, countries, member, membershipPlans} = props;
-    if (!member || isLoading || !member.id) {
-        return (
-            <Fragment>
-                <ProgressBar/>
-                <Toasts/>
-            </Fragment>
-        )
-    }
     const {id, is_active, first_name, last_name, email, password, membership_plan_id, phone, address, image} = member;
     const changeAbleFields = {
         id,
@@ -57,8 +49,18 @@ const MemberProfile = props => {
         initialValues: changeAbleFields,
         membershipPlans,
         countries,
+        history,
         onSaveMemberProfile
     };
+
+    if (!member || isLoading || !member.id || address && address.country_id && changeAbleFields.selectedCountry.length === 0) {
+        return (
+            <Fragment>
+                <ProgressBar/>
+                <Toasts/>
+            </Fragment>
+        )
+    }
     return (
         <div className="animated fadeIn">
             <Row>

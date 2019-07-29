@@ -17,13 +17,14 @@ export const fetchMember = () => async (dispatch) => {
         });
 };
 
-export const editMember = (member) => async (dispatch) => {
+export const editMember = (member, history) => async (dispatch) => {
     dispatch(setLoading(true));
     await apiConfigWthFormData.post(`update-member-profile`, member)
         .then((response) => {
             dispatch({type: memberActionType.EDIT_MEMBER, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(setLoading(false));
+            history.push('/');
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
