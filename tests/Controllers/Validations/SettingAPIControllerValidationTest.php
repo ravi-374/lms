@@ -69,39 +69,33 @@ class SettingAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_setting()
     {
-        $key = $this->faker->name;
-        $value = $this->faker->word;
-        $displayName = $this->faker->word;
-        $response = $this->postJson('api/b1/settings', [
-            'key'          => $key,
-            'value'        => $value,
-            'display_name' => $displayName,
-        ]);
+        $fakeSetting = factory(Setting::class)->make()->toArray();
+        $response = $this->postJson('api/b1/settings', $fakeSetting);
 
         $this->assertSuccessMessageResponse($response, 'Setting saved successfully.');
-        $this->assertNull(Setting::whereKey($key)->first());
-        $this->assertNotEmpty(Setting::whereValue($value)->first());
-        $this->assertNotEmpty(Setting::whereDisplayName($displayName)->first());
+        $this->assertNotEmpty(Setting::where('key', $fakeSetting['key'])->first());
     }
 
     /** @test */
     public function it_can_update_setting()
     {
-        /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
+        $fakeSetting = factory(Setting::class)->make()->toArray();
 
-        $key = $this->faker->name;
-        $value = $this->faker->word;
-        $displayName = $this->faker->word;
-        $response = $this->putJson('api/b1/settings/'.$setting->id, [
-            'key'          => $key,
-            'value'        => $value,
-            'display_name' => $displayName,
-        ]);
+        $response = $this->putJson('api/b1/settings/'.$setting->id,$fakeSetting);
 
         $this->assertSuccessMessageResponse($response, 'Setting updated successfully.');
-        $this->assertEquals($key, $setting->fresh()->key);
-        $this->assertEquals($value, $setting->fresh()->value);
-        $this->assertEquals($displayName, $setting->fresh()->display_name);
+        $this->assertEquals($fakeSetting['key'], $setting->fresh()->key);
+    }
+
+    /** @test */
+    public function it_can_delete_setting()
+    {
+        $setting = factory(Setting::class)->create();
+
+        $response = $this->deleteJson('api/b1/settings/'.$setting->id);
+
+        $this->assertSuccessMessageResponse($response, 'Setting deleted successfully.');
+        $this->assertEmpty(Setting::where('key', $setting->key)->first());
     }
 }
