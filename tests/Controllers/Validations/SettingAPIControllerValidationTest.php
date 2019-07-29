@@ -104,5 +104,4 @@ class SettingAPIControllerValidationTest extends TestCase
         $this->assertEquals($value, $setting->fresh()->value);
         $this->assertEquals($displayName, $setting->fresh()->display_name);
     }
-
 }
