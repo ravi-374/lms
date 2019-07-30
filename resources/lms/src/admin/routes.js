@@ -26,12 +26,6 @@ const Settings = React.lazy(() => import('./components/settings/Settings'));
 
 export default [
     {
-        path: '/app/admin/books',
-        exact: true,
-        name: 'Dashboard',
-        component: Dashboard
-    },
-    {
         path: '/app/admin/users',
         exact: true,
         name: 'Users',
