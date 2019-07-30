@@ -10,7 +10,7 @@ import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const MemberForm = (props) => {
-    const {initialValues, change, membershipPlans, countries} = props;
+    const {initialValues, change, membershipPlans, countries, history} = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [selectedMemberShipPlan] = useState(initialValues.selectedMemberShipPlan);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
@@ -45,7 +45,6 @@ const MemberForm = (props) => {
         setImage(defaultImage);
         setIsDefaultImage(true);
     };
-
     const onSelectMembershipPlan = (option) => {
         if (option.length > 0) {
             setIsValidMemberPlan(false);
@@ -61,6 +60,9 @@ const MemberForm = (props) => {
         } else {
             change('country_id', null);
         }
+    };
+    const goToHomePage = () => {
+        history.push('/');
     };
     const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
@@ -153,7 +155,7 @@ const MemberForm = (props) => {
                 </Row>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveMemberProfile)} {...props}/>
+                <SaveAction onSave={props.handleSubmit(onSaveMemberProfile)} onCancel={goToHomePage} {...props}/>
             </Col>
         </Row>
     );
