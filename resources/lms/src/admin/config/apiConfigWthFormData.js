@@ -1,6 +1,6 @@
 import axios from 'axios';
 import axiosInterceptor from './axiosInterceptor';
-import {environment} from '../../envieroment';
+import {environment} from '../../environment';
 
 const wampServer = environment.URL + '/api/b1/';
 const axiosApi = axios.create({
