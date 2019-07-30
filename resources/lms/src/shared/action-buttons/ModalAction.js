@@ -1,16 +1,18 @@
 import React, {Fragment} from 'react';
 import {Button} from 'reactstrap';
 
-export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDeleteIcon = false}) => {
+export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDeleteIcon = false, isHideEditIcon = false}) => {
     return (
         isEditMode ?
             <Fragment>
-                <Button color="primary" size="sm" onClick={(e) => {
-                    e.stopPropagation();
-                    goToEditItem(item.id)
-                }}>
-                    <i className="cui-pencil icons font-md"/>
-                </Button>
+                {!isHideEditIcon ?
+                    <Button color="primary" size="sm" onClick={(e) => {
+                        e.stopPropagation();
+                        goToEditItem(item.id)
+                    }}>
+                        <i className="cui-pencil icons font-md"/>
+                    </Button> : null
+                }
                 <Button className="ml-2" color="danger" size="sm" onClick={(e) => {
                     e.stopPropagation();
                     onOpenModal(item)

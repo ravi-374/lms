@@ -14,9 +14,6 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
         {id: 'authors_name', name: 'Authors'},
     ];
     const headerProps = {staticField: 'Cover', sortAction, sortObject, sortConfig, headers};
-    const goToEditBook = (bookId) => {
-        history.push(`/app/admin/books/${bookId}/edit`);
-    };
     const goToBookDetail = (bookId) => {
         history.push(`/app/admin/books/${bookId}/detail`);
     };
@@ -38,8 +35,7 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
                         <td className="align-middle">{book.name}</td>
                         <td className="align-middle">{book.authors_name}</td>
                         <td className="align-middle text-center">
-                            <ModalAction onOpenModal={onOpenModal} item={book} isEditMode={true}
-                                         goToEditItem={goToEditBook}/>
+                            <ModalAction onOpenModal={onOpenModal} isHideEditIcon={true} item={book} isEditMode={true}/>
                         </td>
                     </tr>
                 )

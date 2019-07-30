@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Field, FieldArray, reduxForm} from 'redux-form';
 import {Col, Row, Button, Table} from 'reactstrap';
@@ -10,7 +10,6 @@ import TextArea from '../../../shared/components/TextArea';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import CustomInput from '../../../shared/components/CustomInput';
 import PriceInput from '../../../shared/components/PriceInput';
-import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {bookFormatOptions} from '../../constants';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
@@ -51,14 +50,6 @@ const BookForm = (props) => {
     const onSaveBook = (formValues) => {
         formValues.file = file;
         props.onSaveBook(formValues);
-    };
-    const onSaveBookItems = (formValues) => {
-        apiConfig.post(`books/${+initialValues.id}/items`, {items: formValues.items})
-            .then((response) => {
-                props.change('items', [...response.data.items]);
-                props.addToast({text: 'Item saved successfully.'})
-            })
-            .catch(({response}) => props.addToast({text: response.data.message, type: 'error'}));
     };
     const onFileChange = (event) => {
         change('file_name', true);
@@ -185,15 +176,7 @@ const BookForm = (props) => {
                         <Field name="description" cols={90} rows={3} label="Description" component={TextArea}/>
                     </Col>
                 </Row>
-                <hr/>
             </Col>
-            {initialValues ?
-                <Fragment>
-                    <Col xs={12}>
-                        <SaveAction onSave={props.handleSubmit(onSaveBook)} {...props}/>
-                    </Col>
-                </Fragment> : null
-            }
             <Col xs={12} className="mt-3">
                 <h5>Book Items</h5>
                 <FieldArray name="items" component={renderBookItems}
@@ -202,20 +185,9 @@ const BookForm = (props) => {
                             change={props.change} setItems={setItems}
                             items={items}/>
             </Col>
-            {!initialValues ?
-                <Fragment>
-                    <Col xs={12}>
-                        <SaveAction onSave={props.handleSubmit(onSaveBook)} {...props}/>
-                    </Col>
-                </Fragment> : null
-            }
-            {initialValues ?
-                <Fragment>
-                    <Col xs={12}>
-                        <SaveAction onSave={props.handleSubmit(onSaveBookItems)} {...props}/>
-                    </Col>
-                </Fragment> : null
-            }
+            <Col xs={12}>
+                <SaveAction onSave={props.handleSubmit(onSaveBook)} {...props}/>
+            </Col>
         </Row>
     );
 };
