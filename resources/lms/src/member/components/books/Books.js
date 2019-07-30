@@ -19,7 +19,7 @@ const Books = (props) => {
         fetchBooks();
         fetchAuthors();
     }, []);
-    if (isLoading) {
+    if (isLoading && !isSearch) {
         return (
             <Fragment>
                 <ProgressBar/>
@@ -47,10 +47,11 @@ const Books = (props) => {
                                     <Col xs={12} className="mt-3">
                                         {searchBooks.length > 0 && isSearch ?
                                             <Book books={searchBooks}/> :
-                                            searchBooks.length === 0 && isSearch ?
+                                            searchBooks.length === 0 && isSearch && !isLoading ?
                                                 <EmptyComponent isShort={true} title="No books found..."/> : null
                                         }
                                     </Col>
+                                    <ProgressBar/>
                                 </Row>
                             </CardBody>
                         </Card>
@@ -62,7 +63,7 @@ const Books = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {books, searchBooks, authors} = state;
-    return {books, searchBooks, authors: prepareFullNames(authors)}
+    const {books, searchBooks, authors, isLoading} = state;
+    return {books, searchBooks, authors: prepareFullNames(authors), isLoading}
 };
 export default connect(mapStateToProps, {fetchBooks, fetchAuthors, findBooks})(Books);

@@ -1,4 +1,4 @@
-import React, {Suspense, useState, useEffect} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
@@ -16,43 +16,53 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from "../../routes";
-import {setLoading} from "../../../store/action/progressBarAction";
 import {fetchConfig} from "../../store/actions/configAction";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
+    const {permissions} = props;
+    const newRoutes = prepareRoutes(permissions);
     useEffect(() => {
         props.fetchConfig();
     }, []);
-    const [sideMenuList] = useState(prepareNavigation(props));
+    if (permissions.length === 0) {
+        return null;
+    }
     return (
         <div className="app">
             {renderAppHeader(props)}
             <div className="app-body">
-                {renderAppSidebar(props, sideMenuList)}
-                {renderMainSection(props)}
+                {renderAppSidebar(props, prepareNavigation(permissions))}
+                {renderMainSection(newRoutes)}
             </div>
             {renderAppFooter()}
         </div>
     );
 };
 
-const prepareNavigation = (props) => {
+const prepareRoutes = (permissions) => {
+    let filterRoutes = [];
+    routes.forEach((route) => {
+        if (permissions.includes(route.permission)) {
+            filterRoutes.push(route)
+        }
+    });
+    return filterRoutes;
+};
+
+const prepareNavigation = (permissions) => {
     let sideMenu = navigation;
     let routes = [];
-    if (props.permissions.length === 0) {
-        return sideMenu;
-    }
     sideMenu.items.forEach(route => {
-        if (props.permissions.includes(route.permission)) {
+        if (permissions.includes(route.permission)) {
             routes.push(route);
         }
     });
     sideMenu.items = routes;
     sideMenu.items = sideMenu.items.slice();
-    return sideMenu;
+    return navigation;
 };
 
 const renderAppHeader = (props) => {
@@ -85,13 +95,13 @@ const renderAppSidebar = (props, sideMenuList) => {
     );
 };
 
-const renderMainSection = (props) => {
+const renderMainSection = (newRoutes) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes(props)}
+                        {renderRoutes(newRoutes)}
                         <Redirect from="/" to="/app/admin/genres"/>
                     </Switch>
                 </Suspense>
@@ -101,16 +111,8 @@ const renderMainSection = (props) => {
     )
 };
 
-const renderRoutes = (props) => {
-    let routesArr = routes;
-    let filterRoutes = [];
-    routesArr.forEach((route) => {
-        if (props.permissions.includes(route.permission)) {
-            filterRoutes.push(route)
-        }
-    });
-
-    return filterRoutes.map((route, index) => {
+const renderRoutes = (newRoutes) => {
+    return newRoutes.map((route, index) => {
         return route.component ? (
             <Route
                 key={index}
@@ -146,4 +148,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {fetchConfig, setLoading})(Layout);
+export default connect(mapStateToProps, {fetchConfig})(Layout);
