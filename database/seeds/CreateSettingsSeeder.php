@@ -15,7 +15,7 @@ class CreateSettingsSeeder extends Seeder
      */
     public function run()
     {
-        $settings[] = ['currency', 'INR', 'Currency'];
+        $settings[] = ['currency', 'INR', 'Indain Rupee'];
         $settings[] = ['return_due_days', 15, 'Return Due Days'];
         $settings[] = ['reserve_due_days', 5, 'Reserve Due Days'];
 
