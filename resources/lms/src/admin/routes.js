@@ -5,7 +5,6 @@ const Dashboard = React.lazy(() => import('./components/dashboard/Dashboard'));
 const Users = React.lazy(() => import('./components/users/Users'));
 const Books = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/Books'));
 const CreateBook = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/CreateBook'));
-const EditBook = React.lazy(() => import(/* webpackChunkName: "books" */'./components/books/EditBook'));
 const Genres = React.lazy(() => import('./components/genres/Genres'));
 const Tags = React.lazy(() => import('./components/tags/Tags'));
 const Authors = React.lazy(() => import('./components/authors/Authors'));
@@ -51,13 +50,6 @@ export default [
         exact: true,
         name: 'Add Book',
         component: CreateBook,
-        permission: Permissions.MANAGE_BOOKS
-    },
-    {
-        path: '/app/admin/books/:id/edit',
-        exact: true,
-        name: 'Edit Book',
-        component: EditBook,
         permission: Permissions.MANAGE_BOOKS
     },
     {
