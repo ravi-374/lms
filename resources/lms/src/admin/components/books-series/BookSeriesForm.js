@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Col, Row, Button, Table} from 'reactstrap';
-import {Field, FieldArray, reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
+import {Field, FieldArray, reduxForm,formValueSelector} from 'redux-form';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import bookSeriesValidate from './bookSeriesValidate';
 import InputGroup from '../../../shared/components/InputGroup';
@@ -29,8 +30,15 @@ const getItemStyle = (draggableStyle) => ({
 
 const getListStyle = (isDraggingOver) => ({});
 
+const filteredBooks = (books, seriesItems) => {
+    if (!seriesItems) {
+        return books;
+    }
+    return books.filter(o => !seriesItems.find(o2 => o.id === +o2.book_id));
+};
+
 const BookSeriesForm = props => {
-    const {initialValues, books, change} = props;
+    const {initialValues, books, change, seriesItems} = props;
     const [items, setItems] = useState(getItems(initialValues ? initialValues.series_items : [{
         id: 1,
         sequence: 1,
@@ -73,7 +81,7 @@ const BookSeriesForm = props => {
             <Col xs={12} className="mt-3">
                 <h5>Book Item Details</h5>
                 <FieldArray name="series_items" component={renderBookSeriesItems}
-                            books={books}
+                            books={filteredBooks(books, seriesItems)}
                             change={change}
                             onDragEnd={onDragEnd}
                             setItems={setItems}
@@ -200,4 +208,15 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
     )
 };
 
-export default reduxForm({form: 'bookSeriesForm', validate: bookSeriesValidate})(BookSeriesForm);
+let bookSeriesForm = reduxForm({form: 'bookSeriesForm', validate: bookSeriesValidate})(BookSeriesForm);
+const selector = formValueSelector('bookSeriesForm');
+bookSeriesForm = connect(
+    state => {
+        const seriesItems = selector(state, 'series_items');
+        return {
+            seriesItems
+        }
+    }
+)(bookSeriesForm);
+
+export default bookSeriesForm;

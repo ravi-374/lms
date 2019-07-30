@@ -35,7 +35,7 @@ const CreateBookSeries = (props) => {
         <div className="animated fadeIn">
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="pull-left text-dark">New Series Book</h5>
+                    <h5 className="pull-left text-dark">New Book Series</h5>
                     <Button onClick={goBack}>Back</Button>
                 </Col>
                 <Col sm={12}>
