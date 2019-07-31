@@ -16,11 +16,9 @@ const BookSearchForm = (props) => {
     const typeAheadRef = createRef();
     const prepareParams = (item) => {
         if (isBookChecked) {
-            return `name=${item[0].name}&search_by_book=${true}`
+            return `id=${item[0].id}&search_by_book=${true}`
         } else if (isAuthorChecked) {
-            return `name=${item[0].name.split(" ")[0]}&search_by_author=${true}`
-        } else {
-            return ``
+            return `id=${item[0].id}&search_by_author=${true}`
         }
     };
     const searchBook = (formValues) => {
