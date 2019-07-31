@@ -2,6 +2,7 @@
 
 namespace Tests\Controllers\Validations;
 
+use App\Models\Member;
 use App\Models\MembershipPlan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -86,6 +87,17 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Membership Plan updated successfully.');
         $this->assertEquals($fakeMembershipPlan['name'], $membershipPlan->fresh()->name);
+    }
+
+    /** @test */
+    public function test_can_not_delete_membership_plan_when_plan_is_assigned_to_member()
+    {
+        $plan  = factory(MembershipPlan::class)->create();
+        $vishal = factory(Member::class)->create(['membership_plan_id' => $plan->id]);
+
+        $response = $this->deleteJson('api/b1/membership-plans/'.$plan->id);
+
+        $this->assertExceptionMessage($response, 'Membership Plan can not be delete, it is assigned to one or more members.');
     }
 
     /** @test */
