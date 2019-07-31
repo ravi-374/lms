@@ -20,20 +20,19 @@ const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
-    const {booksAllotment, books, members, sortAction, sortObject, toggleModal,history} = props;
+    const {booksAllotment, members, sortAction, sortObject, toggleModal,history} = props;
     useEffect(() => {
         props.fetchBooksAllotment();
-        props.fetchBooks();
         props.fetchMembers();
     }, []);
-    const cardModalProps = {bookAllotment, books, members, isEditMode, isDeleteMode, toggleModal};
+    const cardModalProps = {bookAllotment, members, isEditMode, isDeleteMode, toggleModal};
     const onOpenModal = (isEdit, booksAllotment = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setBookAllotment(booksAllotment);
         toggleModal();
     };
-    const cardBodyProps = {books, members, sortAction, sortObject, booksAllotment, onOpenModal,history};
+    const cardBodyProps = { members, sortAction, sortObject, booksAllotment, onOpenModal,history};
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -65,7 +64,7 @@ const BooksAllotment = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {books, booksAllotment, members, searchText, sortObject, isLoading} = state;
+    const {booksAllotment, members, searchText, sortObject, isLoading} = state;
     let booksAllotmentArray = Object.values(booksAllotment);
     if (searchText) {
         booksAllotmentArray = searchFilter(booksAllotmentArray, searchText);
@@ -74,7 +73,6 @@ const mapStateToProps = (state) => {
         booksAllotmentArray = sortFilter(booksAllotmentArray, sortObject);
     }
     return {
-        books: Object.values(books),
         booksAllotment: booksAllotmentArray,
         members: prepareMembers(Object.values(members)),
         sortObject,
@@ -92,7 +90,6 @@ const prepareMembers = (members) => {
 
 export default connect(mapStateToProps, {
     fetchBooksAllotment,
-    fetchBooks,
     fetchMembers,
     sortAction,
     toggleModal

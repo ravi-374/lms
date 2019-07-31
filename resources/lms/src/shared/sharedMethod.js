@@ -9,7 +9,11 @@ export const priceFormatter = price => {
 };
 
 export const dateFormatter = (date) => {
-    return moment(date, 'YYYY-MM-DD hh:mm:ss').format(' Do MMMM, YYYY');
+    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('Do MMMM, YYYY');
+};
+
+export const timeFormatter = (date) => {
+    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('hh:mma');
 };
 
 export const prepareFullNames = (members) => {

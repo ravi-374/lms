@@ -3,9 +3,10 @@ import {Button, Table} from 'reactstrap';
 import {sortConfig} from '../../../config/sortConfig';
 import TableHeader from '../../../shared/table-header/Tableheader';
 import {bookAllotmentStatusConstant,} from '../../constants';
-import {dateFormatter} from '../../../shared/sharedMethod';
+import {dateFormatter, timeFormatter} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
 import './BookHistory.scss';
+import TooltipItem from "../../../shared/tooltip/TolltipItem";
 
 export default ({ bookHistory, sortAction, sortObject, onOpenModal }) => {
     const headers = [
@@ -36,7 +37,14 @@ export default ({ bookHistory, sortAction, sortObject, onOpenModal }) => {
         }
         return '';
     };
-
+    const renderDate = (id, date) => {
+        return (
+            <span>
+                <span id={id}>{date ? dateFormatter(date) : ''}</span>
+                <TooltipItem key={id.toString()} tooltip={date ? timeFormatter(date) : ''} target={id}/>
+            </span>
+        );
+    };
     return (
         <Table hover bordered striped responsive size="md">
             <thead>
@@ -48,11 +56,11 @@ export default ({ bookHistory, sortAction, sortObject, onOpenModal }) => {
                         <tr key={history.id.toString()}>
                             <td className="book-name">{history.book_item.book.name}</td>
                             <td>{history.book_item.book_code}</td>
-                            <td>{history.issued_on ? dateFormatter(history.issued_on) : ' '}</td>
-                            <td>{history.reserve_date ? dateFormatter(history.reserve_date) : ' '}</td>
+                            <td>{renderDate('custom-tooltip-' + history.id, history.issued_on)}</td>
+                            <td>{renderDate('reserve-date-' + history.id, history.reserve_date)}</td>
                             <td>{history.issue_due_date ? dateFormatter(history.issue_due_date) : ' '}</td>
                             <td>{history.return_due_date ? dateFormatter(history.return_due_date) : ' '}</td>
-                            <td>{history.return_date ? dateFormatter(history.return_date) : ' '}</td>
+                            <td>{renderDate('return-date-' + history.id, history.return_date)}</td>
                             <td className="text-center book-return-date">{renderBookStatus(history)}</td>
                             <td className="text-center book-action">{renderAction(history)}</td>
                         </tr>
