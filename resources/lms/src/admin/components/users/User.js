@@ -10,6 +10,7 @@ import './Users.scss';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {Routes} from "../../../constants";
 
 const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
     const isActive = users.length > 0 ? users.map(({is_active}) => is_active) : [];
@@ -30,7 +31,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
         })
     };
     const goToUserDetail = (userId) => {
-        history.push(`/app/admin/users/${userId}/detail`);
+        history.push(`${Routes.USERS +userId}/details`);
     };
     return (
         <Table hover bordered striped responsive size="md">

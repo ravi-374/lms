@@ -2,26 +2,27 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
-import './BookHistoryDetail.scss';
+import './BookAllotmentDetail.scss';
 import {fetchBookAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 import {toggleModal} from '../../../store/action/modalAction';
-import BookHistoryModal from './BookHistoryModal';
+import BookHistoryModal from './BookAllotmentModal';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
-import {dateFormatter} from '../../../shared/sharedMethod';
-import {prepareFullNames} from '../../../shared/sharedMethod';
-import {bookFormatOptions, bookStatusOptions} from '../../constants';
+import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
+import {bookFormatOptions} from '../../constants';
+import {Routes} from "../../../constants";
+import BookStatus from "../../../shared/book-status/book-status";
 
-const BookHistoryDetail = props => {
+const BookAllotmentDetail = props => {
     const [isToggle, setIsToggle] = useState(false);
     useEffect(() => {
         props.fetchBookAllotment(+props.match.params.id);
         props.fetchBooks();
         props.fetchMembers();
     }, []);
-    const {bookHistory, books, toggleModal, history, members, isLoading} = props;
+    const { bookHistory, books, toggleModal, history, members, isLoading } = props;
     if (!bookHistory || !members || !books || isLoading || (books && books.length === 0)) {
         return (
             <Fragment>
@@ -37,21 +38,26 @@ const BookHistoryDetail = props => {
     const goBack = () => {
         history.push('/app/admin/books-allotment');
     };
-    const cardModalProps = {isToggle, books, members, toggleModal, bookHistory};
+    const renderBookStatus = (bookHistory) => {
+        const statusProps = { status: bookHistory.status, item: bookHistory };
+        return <BookStatus {...statusProps} item={bookHistory}/>
+    };
+
+    const cardModalProps = { isToggle, books, members, toggleModal, bookHistory };
     const member = members.find(member => member.id === +bookHistory.member_id);
     if (member) {
         bookHistory.member_name = member.name;
     }
-    const {book_item} = bookHistory;
-    const {book} = book_item;
+    const { book_item } = bookHistory;
+    const { book } = book_item;
     return (
         <div className="animated fadeIn">
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">Book History Details</h5>
+                    <h5 className="page-heading">Book Allotment Details</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
-                            Edit Book History Details
+                            Edit Book Allotment
                         </Button>
                         <Button onClick={() => goBack()}>Back</Button>
                     </div>
@@ -63,12 +69,14 @@ const BookHistoryDetail = props => {
                                 <Row className="no-gutters">
                                     <div className="book-history-detail">
                                         <div className="book-history-detail__item-container">
-                                            <div className="book-history-detail__item">
-                                                <span className="book-history-detail__item-heading">Book</span>
+                                            <div className="book-history-detail__item-name">
+                                                <span className="book-history-detail__item-name-heading">Book</span>
                                                 <span>
-                                                    <Link to={`/app/admin/books/${book.id}/detail`}>{book.name}</Link>
+                                                    <Link to={`${Routes.BOOKS + book.id}/details`}>{book.name}</Link>
                                                 </span>
                                             </div>
+                                        </div>
+                                        <div className="book-history-detail__item-container">
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">Book Code</span>
                                                 <span>
@@ -78,7 +86,9 @@ const BookHistoryDetail = props => {
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">Member</span>
                                                 <span>
-                                                    {bookHistory.member_name}
+                                                      <Link to={`${Routes.MEMBERS + book_item.member_id}/details`}>
+                                                          {bookHistory.member_name}
+                                                      </Link>
                                                 </span>
                                             </div>
                                             {book_item.language ?
@@ -96,7 +106,7 @@ const BookHistoryDetail = props => {
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">Format</span>
                                                 <span>
-                                                   {bookFormatOptions.filter(bookFormat => bookFormat.id === +book_item.format).map(({name}) => name)}
+                                                   {bookFormatOptions.filter(bookFormat => bookFormat.id === +book_item.format).map(({ name }) => name)}
                                                 </span>
                                             </div>
                                             <div className="book-history-detail__item">
@@ -107,9 +117,7 @@ const BookHistoryDetail = props => {
                                             </div>
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">Status</span>
-                                                <span>
-                                                    {bookStatusOptions.filter(bookStatus => bookStatus.id === +bookHistory.status).map(({name}) => name)}
-                                                </span>
+                                                <span> {renderBookStatus(bookHistory)}</span>
                                             </div>
                                             {bookHistory.issuer_name ?
                                                 <div className="book-history-detail__item">
@@ -180,7 +188,7 @@ const BookHistoryDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const {members, booksAllotment, membershipPlans, books, isLoading} = state;
+    const { members, booksAllotment, membershipPlans, books, isLoading } = state;
     return {
         bookHistory: booksAllotment[ownProp.match.params.id],
         membershipPlans: Object.values(membershipPlans),
@@ -194,4 +202,4 @@ export default connect(mapStateToProps, {
     fetchBooks,
     fetchMembers,
     toggleModal
-})(BookHistoryDetail);
+})(BookAllotmentDetail);

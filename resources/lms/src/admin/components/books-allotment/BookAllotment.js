@@ -1,36 +1,28 @@
 import React from 'react';
-import {Table, Badge} from 'reactstrap';
+import {Table} from 'reactstrap';
 import {sortConfig} from '../../../config/sortConfig';
 import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
-import {bookAllotmentStatusConstant} from '../../constants';
 import {dateFormatter} from '../../../shared/sharedMethod';
+import {Routes} from "../../../constants";
+import BookStatus from '../../../shared/book-status/book-status';
 
-export default ({books, booksAllotment, members, onOpenModal, sortAction, sortObject, history}) => {
+export default ({ books, booksAllotment, members, onOpenModal, sortAction, sortObject, history }) => {
     const headers = [
-        {id: 'book_name', name: 'Book'},
-        {id: 'book_code', name: 'Book Item'},
-        {id: 'member_name', name: 'Member'},
-        {id: 'issued_on', name: 'Issue Date'},
-        {id: 'return_date', name: 'Return Date'},
-        {id: 'status_name', name: 'Status'},
+        { id: 'book_name', name: 'Book' },
+        { id: 'book_code', name: 'Book Item' },
+        { id: 'member_name', name: 'Member' },
+        { id: 'issued_on', name: 'Issue Date' },
+        { id: 'return_date', name: 'Return Date' },
+        { id: 'status_name', name: 'Status' },
     ];
-    const headerProps = {sortAction, sortObject, sortConfig, headers};
+    const headerProps = { sortAction, sortObject, sortConfig, headers };
     const renderBookStatus = (bookAllotment) => {
-        switch (bookAllotment.status) {
-            case bookAllotmentStatusConstant.BOOK_ISSUED:
-                bookAllotment.status_name = 'Issued';
-                return <Badge color="success">Issued</Badge>;
-            case bookAllotmentStatusConstant.BOOK_RETURNED:
-                bookAllotment.status_name = 'Returned';
-                return <Badge color="secondary">Returned</Badge>;
-            default:
-                bookAllotment.status_name = 'Reserved';
-                return <Badge color="primary">Reserved</Badge>;
-        }
+        const statusProps = { status: bookAllotment.status, item: bookAllotment };
+        return <BookStatus {...statusProps} item={bookAllotment}/>
     };
-    const gotToBookHistoryDetail = (bookHistoryId) => {
-        history.push(`/app/admin/book-history/${bookHistoryId}/detail`);
+    const gotToBookHistoryDetail = (bookAllotmentId) => {
+        history.push(`${Routes.BOOK_ALLOTMENTS + bookAllotmentId}/details`);
     };
     return (
         <Table hover bordered striped responsive size="md">
@@ -55,7 +47,7 @@ export default ({books, booksAllotment, members, onOpenModal, sortAction, sortOb
                             <td>{bookAllotment.member_name}</td>
                             <td>{bookAllotment.issued_on ? dateFormatter(bookAllotment.issued_on) : ' '}</td>
                             <td>{bookAllotment.return_date ? dateFormatter(bookAllotment.return_date) : ' '}</td>
-                            <td className="text-center" style={{width: '90px'}}>{renderBookStatus(bookAllotment)}</td>
+                            <td className="text-center" style={{ width: '90px' }}>{renderBookStatus(bookAllotment)}</td>
                             <td className="text-center">
                                 <ModalAction onOpenModal={onOpenModal} isHideDeleteIcon={true} item={bookAllotment}/>
                             </td>

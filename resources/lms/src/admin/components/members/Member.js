@@ -10,6 +10,7 @@ import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import './Members.scss';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {Routes} from "../../../constants";
 
 
 const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
@@ -31,7 +32,7 @@ const Member = ({members, membershipPlans, onOpenModal, sortAction, sortObject, 
         })
     };
     const goToMemberDetailPage = (memberId) => {
-        history.push(`members/${memberId}/detail`);
+        history.push(`members/${memberId}/details`);
     };
     return (
         <Table hover bordered striped responsive size="md">

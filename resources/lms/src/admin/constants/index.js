@@ -156,8 +156,10 @@ export const bookAllotmentStatusConstant = {
     BOOK_RESERVED: 1,
     BOOK_ISSUED: 2,
     BOOK_RETURNED: 3,
-    BOOK_LOST: 4,
-    BOOK_DAMAGED: 5
+    BOOK_AVAILABLE: 4,
+    BOOK_UN_RESERVED: 5,
+    BOOK_LOST: 6,
+    BOOK_DAMAGED: 7
 };
 
 export const toastType = {

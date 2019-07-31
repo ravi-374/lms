@@ -1,5 +1,6 @@
 import React from 'react';
 import {Permissions} from './constants';
+import {Routes} from "../constants";
 
 const Dashboard = React.lazy(() => import('./components/dashboard/Dashboard'));
 const Users = React.lazy(() => import('./components/users/Users'));
@@ -20,30 +21,44 @@ const BooksAllotment = React.lazy(() => import('./components/books-allotment/Boo
 const BookDetail = React.lazy(() => import('./components/book-detail/BookDetail'));
 const MemberDetail = React.lazy(() => import('./components/member-detail/MemberDetail'));
 const UserDetail = React.lazy(() => import('./components/user-detail/UserDetail'));
-const BookHistoryDetail = React.lazy(() => import('./components/book-history-detail/BookHistoryDetail'));
+const BookAllotmentDetails = React.lazy(() => import('./components/book-allotment-detail/BookAllotmentDetail'));
 const UserProfile = React.lazy(() => import('./components/user-profile/UserProfile'));
 const Settings = React.lazy(() => import('./components/settings/Settings'));
 
 export default [
     {
-        path: '/app/admin/users',
+        path: Routes.USERS,
         exact: true,
         name: 'Users',
         component: Users,
         permission: Permissions.MANAGE_USERS
     },
     {
-        path: '/app/admin/books',
+        path: `${Routes.USERS}:id/details`,
+        exact: true,
+        name: 'UserDetails',
+        component: UserDetail,
+        permission: Permissions.MANAGE_BOOKS
+    },
+    {
+        path: Routes.BOOKS,
         exact: true,
         name: 'Books',
         component: Books,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/admin/books/new',
+        path: `${Routes.BOOKS}new`,
         exact: true,
         name: 'Add Book',
         component: CreateBook,
+        permission: Permissions.MANAGE_BOOKS
+    },
+    {
+        path: `${Routes.BOOKS}:id/details`,
+        exact: true,
+        name: 'BookDetails',
+        component: BookDetail,
         permission: Permissions.MANAGE_BOOKS
     },
     {
@@ -89,7 +104,7 @@ export default [
         permission: Permissions.MANAGE_PLANS
     },
     {
-        path: '/app/admin/members',
+        path: Routes.MEMBERS,
         exact: true,
         name: 'Members',
         component: Members,
@@ -131,31 +146,17 @@ export default [
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/admin/books/:id/detail',
-        exact: true,
-        name: 'BookDetail',
-        component: BookDetail,
-        permission: Permissions.MANAGE_BOOKS
-    },
-    {
-        path: '/app/admin/members/:id/detail',
+        path: '/app/admin/members/:id/details',
         exact: true,
         name: 'MemberDetail',
         component: MemberDetail,
         permission: Permissions.MANAGE_MEMBERS
     },
     {
-        path: '/app/admin/users/:id/detail',
+        path: '/app/admin/books-allotment/:id/details',
         exact: true,
-        name: 'UserDetail',
-        component: UserDetail,
-        permission: Permissions.MANAGE_BOOKS
-    },
-    {
-        path: '/app/admin/book-history/:id/detail',
-        exact: true,
-        name: 'BookHistoryDetail',
-        component: BookHistoryDetail,
+        name: 'BookAllotmentDetails',
+        component: BookAllotmentDetails,
         permission: Permissions.MANAGE_BOOKS
     },
     {
