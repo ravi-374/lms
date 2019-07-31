@@ -1,14 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Table, Button} from 'reactstrap';
-import {prepareFullNames} from '../../../shared/sharedMethod';
+import {Button, Table} from 'reactstrap';
+import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {bookStatusConstant} from '../../constants';
 import {addToast} from '../../../store/action/toastAction';
-import {dateFormatter} from '../../../shared/sharedMethod';
 import {reserveBook} from '../../store/actions/bookSearchAction';
 
-const Book = ({books, addToast, reserveBook}) => {
+const Book = ({ books, addToast, reserveBook }) => {
     const renderActionButton = (book, index) => {
         switch (book.is_available) {
             case bookStatusConstant.STATUS_AVAILABLE:
@@ -17,8 +16,6 @@ const Book = ({books, addToast, reserveBook}) => {
                 return null;
         }
     };
-    const isActionVisible = books.filter(status => status.is_available === bookStatusConstant.STATUS_AVAILABLE).length > 0 ? true : false;
-    const isExpectDateVisible = books.filter(book => book.expected_available_date !== null).length > 0 ? true : false;
     return (
         <Table hover bordered striped responsive size="md">
             <thead>
@@ -29,9 +26,9 @@ const Book = ({books, addToast, reserveBook}) => {
                 <th>Author(s)</th>
                 <th>Publisher</th>
                 <th>Language</th>
-                {isExpectDateVisible ? <th>Expected Available Date</th> : null}
+                <th>Expected Available Date</th>
                 <th>Status</th>
-                {isActionVisible ? <th className="text-center">Action</th> : null}
+                <th className="text-center">Reserve</th>
             </tr>
             </thead>
             <tbody>
@@ -43,12 +40,12 @@ const Book = ({books, addToast, reserveBook}) => {
                             <img src={imageUrl} alt={imageUrl} height="30"/>
                         </td>
                         <td className="align-middle book__table-row-book-code"
-                            style={{width: '100px'}}>{book.book_code}</td>
+                            style={{ width: '100px' }}>{book.book_code}</td>
                         <td className="align-middle">
                             {book.book.name}
                         </td>
                         <td className="align-middle">
-                            {prepareFullNames(book.book.authors).map((({name}) => name)).join(',  ')}
+                            {prepareFullNames(book.book.authors).map((({ name }) => name)).join(',  ')}
                         </td>
                         <td className="align-middle">
                             {book.publisher.name}
@@ -56,18 +53,14 @@ const Book = ({books, addToast, reserveBook}) => {
                         <td className="align-middle book__table-row-language">
                             {book.language.language_name}
                         </td>
-                        {isExpectDateVisible ?
-                            <td className="align-middle book__table-row-expected-available-date">
-                                {book.expected_available_date ? dateFormatter(book.expected_available_date) : null}
-                            </td> : null
-                        }
+                        <td className="align-middle book__table-row-expected-available-date">
+                            {book.expected_available_date ? dateFormatter(book.expected_available_date) : null}
+                        </td>
                         <td className="align-middle book__table-row-status">
                             {book.is_available ? <span className="text-success"> Available</span> :
                                 <span className="text-danger"> Unavailable</span>}
                         </td>
-                        {isActionVisible ?
-                            <td className="text-center align-middle book__table-row-action">{renderActionButton(book, index)}</td> : null
-                        }
+                        <td className="text-center align-middle book__table-row-action">{renderActionButton(book, index)}</td>
                     </tr>
                 )
             })}
@@ -75,4 +68,4 @@ const Book = ({books, addToast, reserveBook}) => {
         </Table>
     )
 };
-export default (connect)(null, {addToast, reserveBook})(Book);
+export default (connect)(null, { addToast, reserveBook })(Book);
