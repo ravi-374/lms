@@ -26,6 +26,18 @@
             font-weight: 700;
         }
     }
+
+    &__item-name {
+        display: flex;
+        margin-bottom: 25px;
+        width: 100%;
+
+        &-heading {
+            min-width: 120px;
+            font-weight: 700;
+        }
+    }
+
     &__item-note {
         display: flex;
         margin-bottom: 25px;

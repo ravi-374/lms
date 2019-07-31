@@ -6,6 +6,7 @@ import ModalAction from '../../../shared/action-buttons/ModalAction';
 import {prepareAuthor} from './prepareArray';
 import './Books.scss';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {Routes} from "../../../constants";
 
 export default ({books, onOpenModal, history, sortAction, sortObject}) => {
     const headers = [
@@ -15,7 +16,7 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
     ];
     const headerProps = {staticField: 'Cover', sortAction, sortObject, sortConfig, headers};
     const goToBookDetail = (bookId) => {
-        history.push(`/app/admin/books/${bookId}/detail`);
+        history.push(`${Routes.BOOKS + bookId}/details`);
     };
     return (
         <Table hover bordered striped responsive size="md">

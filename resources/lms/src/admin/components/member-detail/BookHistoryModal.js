@@ -10,7 +10,7 @@ export default (props) => {
             const prepareModalOption = {
                 toggleModal,
                 className: 'books-allotment-modal',
-                title: 'Edit Book History',
+                title: 'Edit Book Allotment',
                 books, members, isMemberBookHistory: true
             };
             return <EditBookAllotment {...prepareModalOption} bookAllotment={bookHistory}/>

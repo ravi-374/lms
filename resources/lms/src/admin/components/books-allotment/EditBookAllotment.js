@@ -5,7 +5,7 @@ import {editBookAllotment} from '../../store/actions/bookAllotmentAction';
 import {editMemberBookHistory} from '../../store/actions/memberBookHistoryAction';
 import BookAllotmentForm from './BookAllotmentForm';
 import {fetchBook} from '../../store/actions/bookAction';
-import {bookAllotmentStatusOptions} from '../../constants';
+import {bookStatusOptions} from '../../constants';
 import moment from 'moment';
 
 const EditBookAllotment = (props) => {
@@ -25,7 +25,7 @@ const EditBookAllotment = (props) => {
         selectedBookItem: selectedBookItem,
         bookItems,
         selectedMember: members.filter(member => member.id === +bookAllotment.member_id),
-        selectedStatus: bookAllotmentStatusOptions.filter(circular => circular.id === +bookAllotment.status)
+        selectedStatus: bookStatusOptions.filter(circular => circular.id === +bookAllotment.status)
     };
     useEffect(() => {
         props.fetchBook(bookAllotment.book_item.book.id, false);

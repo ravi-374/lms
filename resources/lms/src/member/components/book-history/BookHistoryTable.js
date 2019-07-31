@@ -4,6 +4,7 @@ import {sortConfig} from '../../../config/sortConfig';
 import TableHeader from '../../../shared/table-header/Tableheader';
 import {bookAllotmentStatusConstant,} from '../../constants';
 import {dateFormatter} from '../../../shared/sharedMethod';
+import BookStatus from "../../../shared/book-status/book-status";
 
 export default ({ bookHistory, sortAction, sortObject, onOpenModal }) => {
     const headers = [
@@ -17,27 +18,10 @@ export default ({ bookHistory, sortAction, sortObject, onOpenModal }) => {
         { id: 'status_name', name: 'Status' },
     ];
     const headerProps = { sortAction, sortObject, sortConfig, headers };
+
     const renderBookStatus = (bookHistory) => {
-        switch (bookHistory.status) {
-            case bookAllotmentStatusConstant.BOOK_ISSUED:
-                bookHistory.status_name = 'Issued';
-                return <span className="text-success"><strong>Issued</strong></span>;
-            case bookAllotmentStatusConstant.BOOK_RETURNED:
-                bookHistory.status_name = 'Returned';
-                return <span className="text-dark"><strong>Returned</strong></span>;
-            case bookAllotmentStatusConstant.BOOK_LOST:
-                bookHistory.status_name = 'Lost';
-                return <span className="text-danger"><strong>Lost</strong></span>;
-            case bookAllotmentStatusConstant.BOOK_DAMAGED:
-                bookHistory.status_name = 'Damaged';
-                return <span className="text-danger"><strong>Damaged</strong></span>;
-            case bookAllotmentStatusConstant.BOOK_UN_RESERVED:
-                bookHistory.status_name = 'Damaged';
-                return <span className="text-warning"><strong>Unreserved</strong></span>;
-            default:
-                bookHistory.status_name = 'Reserved';
-                return <span className="text-info"><strong>Reserved</strong></span>;
-        }
+        const statusProps = { status: bookHistory.status, item: bookHistory };
+        return <BookStatus {...statusProps} item={bookHistory}/>
     };
 
     const renderAction = (bookHistory) => {

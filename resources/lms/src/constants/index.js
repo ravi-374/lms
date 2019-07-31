@@ -18,3 +18,10 @@ export const countryCode = {
     CNY: 'CNY',
     RUB: 'RUB'
 };
+
+export const Routes = {
+    BOOKS: '/app/admin/books/',
+    MEMBERS: '/app/admin/members/',
+    BOOK_ALLOTMENTS: '/app/admin/books-allotment/',
+    USERS: '/app/admin/users/',
+};

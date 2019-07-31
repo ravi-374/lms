@@ -6,7 +6,7 @@ import bookAllotmentValidate from './bookAllotmentValidate';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import TextArea from '../../../shared/components/TextArea';
-import {bookAllotmentStatusConstant, bookAllotmentStatusOptions} from '../../constants';
+import {bookAllotmentStatusConstant, bookStatusOptions} from '../../constants';
 import './BooksAllotment.scss';
 import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
 import TypeAhead from '../../../shared/components/TypeAhead';
@@ -210,7 +210,7 @@ const BookAllotmentForm = props => {
                     id="status"
                     label="Status"
                     required
-                    options={bookAllotmentStatusOptions}
+                    options={bookStatusOptions}
                     placeholder="Select Status"
                     onChange={onSelectBookStatus}
                     groupText="info-circle"
