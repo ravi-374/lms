@@ -140,6 +140,14 @@ class IssuedBook extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id');
+    }
+
+    /**
      * @param int $memberId
      * @param Builder $query
      *
