@@ -57,6 +57,7 @@ class TagAPIControllerValidationTest extends TestCase
     public function it_can_update_tag()
     {
         $tag = factory(Tag::class)->create();
+
         $fakeTag = factory(Tag::class)->make()->toArray();
 
         $response = $this->putJson('api/b1/tags/'.$tag->id, $fakeTag);
