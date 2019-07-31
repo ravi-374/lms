@@ -115,19 +115,19 @@ class BookItemRepository extends BaseRepository
      */
     public function applyDynamicSearch($search, $query)
     {
-        $query->when(!empty($search['name']), function (Builder $query) use($search) {
+        $query->when(!empty($search['id']), function (Builder $query) use($search) {
             $query->whereHas('book', function (Builder $query)  use ($search) {
-                $keywords = explode_trim_remove_empty_values_from_array($search['name'], ' ');
+                $ids = explode_trim_remove_empty_values_from_array($search['id'], ' ');
 
-                // search by book name
+                // search by book's Id
                 if (!empty($search['search_by_book'])) {
-                    Book::filterByKeywords($query, $keywords);
+                    Book::filterById($query, $ids);
                 }
 
-                // search by book authors
+                // search by book author's Id
                 if (!empty($search['search_by_author'])) {
-                    $query->whereHas('authors', function (Builder $query) use ($search, $keywords) {
-                        Author::filterByKeywords($query, $keywords);
+                    $query->whereHas('authors', function (Builder $query) use ($search, $ids) {
+                        Author::filterById($query, $ids);
                     });
                 }
             });

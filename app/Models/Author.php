@@ -81,4 +81,21 @@ class Author extends Model
 
         return $query;
     }
+
+    /**
+     * @param $query
+     * @param $keywords
+     *
+     * @return mixed
+     */
+    public static function filterById(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('authors.id = ?', [trim($keyword)]);
+            }
+        });
+
+        return $query;
+    }
 }
