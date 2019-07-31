@@ -10,13 +10,10 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Models\Book;
 use App\Models\BookItem;
 use App\Repositories\BookItemRepository;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookItemAPIController
