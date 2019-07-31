@@ -5,6 +5,7 @@ import TableHeader from '../../../shared/table-header/Tableheader';
 import {bookAllotmentStatusConstant,} from '../../constants';
 import {dateFormatter} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
+import './BookHistory.scss';
 
 export default ({ bookHistory, sortAction, sortObject, onOpenModal }) => {
     const headers = [
@@ -45,15 +46,15 @@ export default ({ bookHistory, sortAction, sortObject, onOpenModal }) => {
             {bookHistory.map((history) => {
                     return (
                         <tr key={history.id.toString()}>
-                            <td>{history.book_item.book.name}</td>
+                            <td className="book-name">{history.book_item.book.name}</td>
                             <td>{history.book_item.book_code}</td>
                             <td>{history.issued_on ? dateFormatter(history.issued_on) : ' '}</td>
                             <td>{history.reserve_date ? dateFormatter(history.reserve_date) : ' '}</td>
                             <td>{history.issue_due_date ? dateFormatter(history.issue_due_date) : ' '}</td>
                             <td>{history.return_due_date ? dateFormatter(history.return_due_date) : ' '}</td>
                             <td>{history.return_date ? dateFormatter(history.return_date) : ' '}</td>
-                            <td className="text-center" style={{ width: '100px' }}>{renderBookStatus(history)}</td>
-                            <td className="text-center" style={{ width: '90px' }}>{renderAction(history)}</td>
+                            <td className="text-center book-return-date">{renderBookStatus(history)}</td>
+                            <td className="text-center book-action">{renderAction(history)}</td>
                         </tr>
                     )
                 }
