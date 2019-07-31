@@ -71,6 +71,7 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
     public function it_can_store_membership_plan()
     {
         $fakeMembershipPlan = factory(MembershipPlan::class)->make()->toArray();
+        
         $response = $this->postJson('api/b1/membership-plans', $fakeMembershipPlan);
 
         $this->assertSuccessMessageResponse($response, 'Membership Plan saved successfully.');
@@ -78,7 +79,7 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_setting()
+    public function it_can_update_membership_plan()
     {
         $membershipPlan = factory(MembershipPlan::class)->create();
         $fakeMembershipPlan = factory(MembershipPlan::class)->make()->toArray();
