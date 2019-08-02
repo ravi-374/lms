@@ -4,7 +4,7 @@ import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/reac
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const Header = (props) => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(atob(localStorage.getItem('user')));
     let imageUrl = publicImagePath.USER_AVATAR;
     if (user) {
         user.name = user.first_name;

@@ -10,7 +10,12 @@ import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
 
 const Login = (props) => {
-    const [isRemember, setRemember] = useState(true);
+    let remember = true;
+    const isAdminRemember = localStorage.getItem('is_admin_remember');
+    if (isAdminRemember !== null && isAdminRemember === 'false') {
+        remember = false;
+    }
+    const [isRemember, setRemember] = useState(remember);
     useEffect(() => {
         if (localStorage.getItem('currentUser')) {
             const user = JSON.parse(atob(localStorage.getItem('currentUser')));
@@ -35,8 +40,9 @@ const Login = (props) => {
                     }
                 }
             }
+            localStorage.setItem('is_admin_remember', isRemember);
             localStorage.setItem('authtoken', response.data.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.data.user));
+            localStorage.setItem('user', btoa(JSON.stringify(response.data.data.user)));
             props.history.push('/app/admin');
         }).catch(({ response }) =>
             props.addToast({ text: response.data.message, type: 'error' })
