@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
-import './UserDetail.scss';
+import './UserDetails.scss';
 import {fetchUser} from '../../store/actions/userAction';
 import apiConfig from '../../config/apiConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';

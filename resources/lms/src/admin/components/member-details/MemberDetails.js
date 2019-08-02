@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
-import './MemberDetail.scss';
+import './MemberDetails.scss';
 import {fetchMember} from '../../store/actions/memberAction';
 import {fetchMemberBooksHistory} from '../../store/actions/memberBookHistoryAction';
 import {fetchBooks} from '../../store/actions/bookAction';
@@ -9,7 +9,7 @@ import {fetchMembers} from '../../store/actions/memberAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
 import apiConfig from '../../config/apiConfig';
-import MemberBookHistory from './MemberBookHistory';
+import MemberBookHistory from './MemberBookAllotment';
 import BookHistoryModal from './BookHistoryModal';
 import {sortAction} from '../../../store/action/sortAction';
 import sortFilter from '../../../shared/sortFilter';
