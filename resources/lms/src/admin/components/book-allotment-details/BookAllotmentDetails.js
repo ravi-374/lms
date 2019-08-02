@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
-import './BookAllotmentDetail.scss';
+import './BookAllotmentDetails.scss';
 import {fetchBookAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';

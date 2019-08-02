@@ -219,3 +219,9 @@ export const settingsKey = {
     CURRENCY: 'currency',
     RETURN_DUE_DAYS: 'return_due_days',
 };
+
+export const bookItemActionType = {
+    SET_BOOKS_ITEMS: 'SET_BOOKS_ITEMS',
+    ADD_BOOK_ITEM: 'ADD_BOOK_ITEM',
+    DELETE_BOOK_ITEM: 'DELETE_BOOK_ITEM'
+};

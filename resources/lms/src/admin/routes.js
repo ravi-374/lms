@@ -18,10 +18,10 @@ const BooksSeries = React.lazy(() => import(/* webpackChunkName: "books-series" 
 const CreateBookSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/CreateBookSeries'));
 const EditBookSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/EditBookSeries'));
 const BooksAllotment = React.lazy(() => import('./components/books-allotment/BooksAllotment'));
-const BookDetail = React.lazy(() => import('./components/book-detail/BookDetail'));
-const MemberDetail = React.lazy(() => import('./components/member-detail/MemberDetail'));
-const UserDetail = React.lazy(() => import('./components/user-detail/UserDetail'));
-const BookAllotmentDetails = React.lazy(() => import('./components/book-allotment-detail/BookAllotmentDetail'));
+const BookDetails = React.lazy(() => import('./components/book-details/BookDetails'));
+const MemberDetails = React.lazy(() => import('./components/member-details/MemberDetails'));
+const UserDetails = React.lazy(() => import('./components/user-details/UserDetails'));
+const BookAllotmentDetails = React.lazy(() => import('./components/book-allotment-details/BookAllotmentDetails'));
 const UserProfile = React.lazy(() => import('./components/user-profile/UserProfile'));
 const Settings = React.lazy(() => import('./components/settings/Settings'));
 
@@ -37,7 +37,7 @@ export default [
         path: `${Routes.USERS}:id/details`,
         exact: true,
         name: 'UserDetails',
-        component: UserDetail,
+        component: UserDetails,
         permission: Permissions.MANAGE_BOOKS
     },
     {
@@ -58,7 +58,7 @@ export default [
         path: `${Routes.BOOKS}:id/details`,
         exact: true,
         name: 'BookDetails',
-        component: BookDetail,
+        component: BookDetails,
         permission: Permissions.MANAGE_BOOKS
     },
     {
@@ -111,6 +111,13 @@ export default [
         permission: Permissions.MANAGE_MEMBERS
     },
     {
+        path: `${Routes.MEMBERS}:id/details`,
+        exact: true,
+        name: 'MemberDetail',
+        component: MemberDetails,
+        permission: Permissions.MANAGE_MEMBERS
+    },
+    {
         path: '/app/admin/roles',
         exact: true,
         name: 'Roles',
@@ -139,21 +146,14 @@ export default [
         permission: Permissions.MANAGE_BOOK_SERIES
     },
     {
-        path: '/app/admin/books-allotment',
+        path: Routes.BOOK_ALLOTMENTS,
         exact: true,
         name: 'BooksAllotment',
         component: BooksAllotment,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: '/app/admin/members/:id/details',
-        exact: true,
-        name: 'MemberDetail',
-        component: MemberDetail,
-        permission: Permissions.MANAGE_MEMBERS
-    },
-    {
-        path: '/app/admin/books-allotment/:id/details',
+        path: `${Routes.BOOK_ALLOTMENTS}:id/details`,
         exact: true,
         name: 'BookAllotmentDetails',
         component: BookAllotmentDetails,

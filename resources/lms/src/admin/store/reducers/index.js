@@ -25,6 +25,7 @@ import currencyReducer from './currencyReducer';
 import userProfileReducer from './userProfileReducer';
 import countryReducer from './countryReducer';
 import settingReducer from './settingReducer';
+import bookItemReducer from './bookItemReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -43,6 +44,7 @@ export default combineReducers({
     memberBookHistory: memberBookHistoryReducer,
     userProfile: userProfileReducer,
     countries: countryReducer,
+    bookItems: bookItemReducer,
     isLoading: progressReduce,
     settings: settingReducer,
     currencies: currencyReducer,

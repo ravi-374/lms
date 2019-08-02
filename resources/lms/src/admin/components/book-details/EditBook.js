@@ -42,7 +42,7 @@ const EditBook = (props) => {
     };
     const prepareModalOption = {
         className: 'book-modal',
-        title: 'Edit Book',
+        title: 'Edit Book Details',
         toggleModal
     };
     return (
