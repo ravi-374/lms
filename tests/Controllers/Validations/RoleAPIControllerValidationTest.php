@@ -57,7 +57,11 @@ class RoleAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_role()
     {
-        $response = $this->postJson('api/b1/roles', $this->prepareRoleInputs());
+        $role = factory(Role::class)->make()->toArray();
+        $permission = factory(Permission::class)->create();
+        $role['permissions'] = [$permission->id];
+
+        $response = $this->postJson('api/b1/roles', $role);
 
         $this->assertSuccessMessageResponse($response, 'Role saved successfully.');
     }
@@ -89,8 +93,8 @@ class RoleAPIControllerValidationTest extends TestCase
         $permission = factory(Permission::class)->create();
 
         return array_merge([
-            'name' => $this->faker->name,
-            'permissions' => [$permission->id]
+            'name'        => $this->faker->name,
+            'permissions' => [$permission->id],
         ], $input);
     }
 }
