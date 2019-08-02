@@ -140,6 +140,14 @@ class IssuedBook extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id');
+    }
+
+    /**
      * @param int $memberId
      * @param Builder $query
      *
@@ -172,11 +180,26 @@ class IssuedBook extends Model
         $record = $this->toArray();
         $record['issuer_name'] = $this->issuer_name;
         $record['returner_name'] = $this->returner_name;
-
+        if(isset($record['book_item']['last_issued_book'])) {
+            $record['expected_available_date'] = $this->getExpectedAvailableDate($record['book_item']['last_issued_book']);
+        }
         unset($record['issuer']);
         unset($record['returner']);
 
         return $record;
+    }
+
+    public function getExpectedAvailableDate($lastIssuedBook)
+    {
+        if (!empty($lastIssuedBook)) {
+            if ($lastIssuedBook['status'] == IssuedBook::STATUS_RESERVED) {
+                $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
+
+                return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
+            } else if ($lastIssuedBook->status == IssuedBook::STATUS_ISSUED) {
+                return $lastIssuedBook->return_due_date;
+            }
+        }
     }
 
     public function getIssueDueDateAttribute()
