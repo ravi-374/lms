@@ -15,6 +15,7 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from '../../routes';
+import {Routes} from "../../../constants";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
@@ -35,7 +36,7 @@ const Layout = (props) => {
 const renderAppHeader = (props) => {
     const signOut = (e) => {
         e.preventDefault();
-        props.history.push('/app/login');
+        props.history.push(Routes.MEMBER_LOGIN);
         localStorage.removeItem('member');
         localStorage.removeItem('memberToken');
     };
@@ -69,7 +70,7 @@ const renderMainSection = () => {
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
                         {renderRoutes()}
-                        <Redirect from="/" to="/app/books"/>
+                        <Redirect from="/" to={Routes.MEMBER_DEFAULT}/>
                     </Switch>
                 </Suspense>
             </Container>

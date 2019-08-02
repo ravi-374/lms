@@ -1,5 +1,6 @@
 import {errorMessage} from '../../appConstant';
 import {environment} from '../../environment';
+import {Routes} from "../../constants";
 
 export default {
     setupInterceptors: (axios, isToken = false, isFormData = false) => {
@@ -11,7 +12,7 @@ export default {
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
                 } else {
-                    window.location.href = environment.URL + '/#/app/login';
+                    window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
                 }
                 if (isFormData) {
                     config.headers['Content-Type'] = 'multipart/form-data';
@@ -28,7 +29,7 @@ export default {
         );
         const errorHandler = (error) => {
             if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
-                window.location.href = environment.URL + '/#/app/login';
+                window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
                 localStorage.removeItem('memberToken');
             }
             return Promise.reject({ ...error })
