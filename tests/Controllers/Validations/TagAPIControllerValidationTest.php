@@ -47,6 +47,7 @@ class TagAPIControllerValidationTest extends TestCase
     public function it_can_store_tag()
     {
         $fakeTag = factory(Tag::class)->make()->toArray();
+
         $response = $this->postJson('api/b1/tags', $fakeTag);
 
         $this->assertSuccessMessageResponse($response, 'Tag saved successfully.');
