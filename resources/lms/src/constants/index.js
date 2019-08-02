@@ -20,6 +20,8 @@ export const countryCode = {
 };
 
 export const Routes = {
+    ADMIN_LOGIN: '/app/admin/login',
+    ADMIN_DEFAULT: '/app/admin/books',
     BOOKS: '/app/admin/books/',
     MEMBERS: '/app/admin/members/',
     BOOK_ALLOTMENTS: '/app/admin/books-allotment/',

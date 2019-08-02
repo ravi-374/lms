@@ -17,12 +17,13 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from "../../routes";
 import {fetchConfig} from "../../store/actions/configAction";
+import {Routes} from "../../../constants";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const {permissions} = props;
+    const { permissions } = props;
     const newRoutes = prepareRoutes(permissions);
     useEffect(() => {
         props.fetchConfig();
@@ -68,7 +69,7 @@ const prepareNavigation = (permissions) => {
 const renderAppHeader = (props) => {
     const signOut = (e) => {
         e.preventDefault();
-        props.history.push('/app/admin/login');
+        props.history.push(Routes.ADMIN_LOGIN);
         localStorage.removeItem('user');
         localStorage.removeItem('authtoken');
     };
@@ -102,7 +103,7 @@ const renderMainSection = (newRoutes) => {
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
                         {renderRoutes(newRoutes)}
-                        <Redirect from="/" to="/app/admin/genres"/>
+                        <Redirect from="/" to={Routes.ADMIN_DEFAULT}/>
                     </Switch>
                 </Suspense>
             </Container>
@@ -114,14 +115,9 @@ const renderMainSection = (newRoutes) => {
 const renderRoutes = (newRoutes) => {
     return newRoutes.map((route, index) => {
         return route.component ? (
-            <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                name={route.name}
-                render={props => (
-                    <route.component {...props} />
-                )}/>
+            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => (
+                <route.component {...props} />
+            )}/>
         ) : (null);
     });
 };
@@ -148,4 +144,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {fetchConfig})(Layout);
+export default connect(mapStateToProps, { fetchConfig })(Layout);

@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose} from 'redux';
 import reducers from './store/reducers';
+import {Routes} from "../constants";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
@@ -18,7 +19,7 @@ const App = () => {
             <HashRouter>
                 <React.Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        <Route path="/app/admin/login" name="Home" render={props => <Login {...props}/>}/>
+                        <Route path={Routes.ADMIN_LOGIN} name="Home" render={props => <Login {...props}/>}/>
                         <Route path="/app/admin" name="Home" render={props => <Layout {...props}/>}/>
                     </Switch>
                 </React.Suspense>
