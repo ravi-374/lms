@@ -196,8 +196,8 @@ class IssuedBook extends Model
                 $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
 
                 return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
-            } else if ($lastIssuedBook->status == IssuedBook::STATUS_ISSUED) {
-                return $lastIssuedBook->return_due_date;
+            } else if ($lastIssuedBook['status'] == IssuedBook::STATUS_ISSUED) {
+                return $lastIssuedBook['return_due_date'];
             }
         }
     }
