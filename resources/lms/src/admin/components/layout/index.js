@@ -23,7 +23,7 @@ const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const { permissions } = props;
+    const {permissions} = props;
     const newRoutes = prepareRoutes(permissions);
     useEffect(() => {
         props.fetchConfig();
@@ -144,4 +144,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { fetchConfig })(Layout);
+export default connect(mapStateToProps, {fetchConfig})(Layout);
