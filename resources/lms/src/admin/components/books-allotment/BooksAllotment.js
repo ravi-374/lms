@@ -15,24 +15,26 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBooksAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
+import {prepareFullNames} from '../../../shared/sharedMethod';
 
 const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
-    const {booksAllotment, members, sortAction, sortObject, toggleModal,history} = props;
+    const {booksAllotment, members, books, sortAction, sortObject, toggleModal, history} = props;
     useEffect(() => {
         props.fetchBooksAllotment();
         props.fetchMembers();
+        props.fetchBooks();
     }, []);
-    const cardModalProps = {bookAllotment, members, isEditMode, isDeleteMode, toggleModal};
+    const cardModalProps = {bookAllotment, members, books, isEditMode, isDeleteMode, toggleModal};
     const onOpenModal = (isEdit, booksAllotment = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setBookAllotment(booksAllotment);
         toggleModal();
     };
-    const cardBodyProps = { members, sortAction, sortObject, booksAllotment, onOpenModal,history};
+    const cardBodyProps = {members, sortAction, sortObject, booksAllotment, onOpenModal, history};
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -64,7 +66,7 @@ const BooksAllotment = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {booksAllotment, members, searchText, sortObject, isLoading} = state;
+    const {booksAllotment, members, books, searchText, sortObject, isLoading} = state;
     let booksAllotmentArray = Object.values(booksAllotment);
     if (searchText) {
         booksAllotmentArray = searchFilter(booksAllotmentArray, searchText);
@@ -74,23 +76,17 @@ const mapStateToProps = (state) => {
     }
     return {
         booksAllotment: booksAllotmentArray,
-        members: prepareMembers(Object.values(members)),
+        members: prepareFullNames(Object.values(members)),
+        books: Object.values(books),
         sortObject,
         isLoading
     };
 };
 
-const prepareMembers = (members) => {
-    let memberArray = [];
-    members.forEach(member => {
-        memberArray.push({id: member.id, name: member.first_name + ' ' + member.last_name});
-    });
-    return memberArray;
-};
-
 export default connect(mapStateToProps, {
     fetchBooksAllotment,
     fetchMembers,
+    fetchBooks,
     sortAction,
     toggleModal
 })(BooksAllotment);

@@ -86,7 +86,7 @@ const BookAllotmentDetail = props => {
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">Member</span>
                                                 <span>
-                                                      <Link to={`${Routes.MEMBERS + book_item.member_id}/details`}>
+                                                      <Link to={`${Routes.MEMBERS + bookHistory.member_id}/details`}>
                                                           {bookHistory.member_name}
                                                       </Link>
                                                 </span>
