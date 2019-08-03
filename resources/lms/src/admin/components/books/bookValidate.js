@@ -42,6 +42,10 @@ export default formValues => {
                 bookErrors.edition = 'Edition must be required.';
                 booksArrayErrors[index] = bookErrors
             }
+            if (!item || !item.format) {
+                bookErrors.format = 'Format must be required.';
+                booksArrayErrors[index] = bookErrors
+            }
             if (!item || !item.language_id) {
                 bookErrors.language_id = 'Language must be required.';
                 booksArrayErrors[index] = bookErrors

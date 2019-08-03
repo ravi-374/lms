@@ -9,16 +9,15 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import Select from "../../../shared/components/Select";
 
 const MemberForm = (props) => {
     const {initialValues, membershipPlans, countries, change} = props;
-    const [selectedMemberShipPlan] = useState(initialValues ? initialValues.selectedMemberShipPlan : []);
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
     const [selectedCountry] = useState(initialValues ? initialValues.selectedCountry : []);
-    const [isValidMemberPlan, setIsValidMemberPlan] = useState(false);
     useEffect(() => {
         if (initialValues) {
             if (initialValues.is_active) {
@@ -29,7 +28,6 @@ const MemberForm = (props) => {
                 setImage(publicImagePathURL.MEMBER_AVATAR_URL + initialValues.image);
                 setIsDefaultImage(false);
             }
-            change('membership_plan_id', selectedMemberShipPlan[0].id);
         } else {
             change('is_active', true);
         }
@@ -56,15 +54,6 @@ const MemberForm = (props) => {
     };
     const onChecked = () => {
         setActive(!isActive);
-    };
-    const onSelectMembershipPlan = (option) => {
-        if (option.length > 0) {
-            setIsValidMemberPlan(false);
-            change('membership_plan_id', option[0].id);
-        } else {
-            setIsValidMemberPlan(true);
-            change('membership_plan_id', null);
-        }
     };
     const onSelectCountry = (option) => {
         if (option.length > 0) {
@@ -108,18 +97,16 @@ const MemberForm = (props) => {
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead
-                            id="membership-plan"
+                        <Field
+                            name="membership_plan"
                             label="Membership Plan"
                             required
                             options={membershipPlans}
                             placeholder="Select Membership Plan"
-                            onChange={onSelectMembershipPlan}
                             groupText="tasks"
-                            defaultSelected={selectedMemberShipPlan}
-                            isInvalid={isValidMemberPlan}
+                            component={Select}
+                            isMini={true}
                         />
-                        <Field name="membership_plan_id" type="hidden" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>

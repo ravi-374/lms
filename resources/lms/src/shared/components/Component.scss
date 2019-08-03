@@ -154,3 +154,38 @@
 .form__radio:checked {
     background-color: $blue;
 }
+
+.react-select {
+
+    .input-group-text {
+        width: 38px;
+        height: 45px;
+    }
+    &__input {
+        height: 45px;
+
+        input {
+            height: auto;
+        }
+
+        &--inline {
+            width: 97.7%;
+        }
+        &--modal {
+            width: 93.8%;
+        }
+        &--mini {
+            width: 86.8%
+        }
+
+        .css-1hwfws3,
+        .css-yk16xz-control {
+            height: 45px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .css-2613qy-menu {
+            cursor: pointer;
+        }
+    }
+}

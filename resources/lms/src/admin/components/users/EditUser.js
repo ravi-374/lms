@@ -17,7 +17,7 @@ const EditUser = (props) => {
     const onSaveUser = (formValues) => {
         props.editUser(props.user.id, prepareFormData(formValues));
     };
-    const {id,is_active, first_name, last_name, email, phone, roles, address, image} = props.user;
+    const {id, is_active, first_name, last_name, email, phone, roles, address, image} = props.user;
     const changeAbleFields = {
         id,
         is_active,
@@ -26,7 +26,7 @@ const EditUser = (props) => {
         email,
         phone,
         image,
-        selectedRole: roles,
+        role: {id: roles[0].id, name: roles[0].name},
     };
     if (countries.length <= 1) {
         return null;

@@ -20,7 +20,7 @@ export default (formValues) => {
     if (items && items.length > 0 && items) {
         items.forEach((item, index) => {
             formData.append(`items[${index}][edition]`, item.edition ? item.edition : '');
-            formData.append(`items[${index}][format]`, item.format ? item.format.toString() : '');
+            formData.append(`items[${index}][format]`, item.format ? item.format.id.toString() : '');
             formData.append(`items[${index}][language_id]`, item.language_id ? item.language_id.toString() : '');
             formData.append(`items[${index}][publisher_id]`, item.publisher_id ? item.publisher_id.toString() : '');
             formData.append(`items[${index}][price]`, item.price ? item.price.toString() : '');

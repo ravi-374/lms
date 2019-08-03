@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {Col, Row, Button, Table} from 'reactstrap';
 import {connect} from 'react-redux';
-import {Field, FieldArray, reduxForm,formValueSelector} from 'redux-form';
+import {Field, FieldArray, reduxForm, formValueSelector} from 'redux-form';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import bookSeriesValidate from './bookSeriesValidate';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import CustomInput from '../../../shared/components/CustomInput';
-import TypeAhead from '../../../shared/components/TypeAhead';
+import Select from "../../../shared/components/Select";
 
 const getItems = seriesItems =>
     seriesItems.map((item, key) => ({
         id: `item-${key}`,
         sequence: item.sequence,
-        book_id: item.book_id
+        book_id: item.book_id.id
     }));
 
 const reorder = (list, startIndex, endIndex) => {
@@ -34,17 +34,19 @@ const filteredBooks = (books, seriesItems) => {
     if (!seriesItems) {
         return books;
     }
-    return books.filter(o => !seriesItems.find(o2 => o.id === +o2.book_id));
+    return books.filter(o => !seriesItems.find(o2 => {
+        if (o2.book_id && o2.book_id.id) {
+            return o.id === +o2.book_id.id
+        }
+    }));
 };
-
 const BookSeriesForm = props => {
     const {initialValues, books, change, seriesItems} = props;
     const [items, setItems] = useState(getItems(initialValues ? initialValues.series_items : [{
         id: 1,
         sequence: 1,
-        book_id: null
+        book_id: {id: null}
     }]));
-    const [selectedBookIds] = useState(initialValues ? initialValues.series_items.map(({book_id}) => book_id) : []);
     const onDragEnd = (result) => {
         if (!result.destination) {
             return;
@@ -54,7 +56,21 @@ const BookSeriesForm = props => {
             result.source.index,
             result.destination.index
         );
+        const seriesItem = reorder(
+            seriesItems,
+            result.source.index,
+            result.destination.index
+        );
+        let array = [];
+        seriesItem.forEach((item, index) => {
+            seriesItems.forEach((i) => {
+                if (item.sequence === +i.sequence) {
+                    array.push({sequence: index + 1, book_id: i.book_id})
+                }
+            });
+        });
         setItems(item);
+        props.change('series_items', array);
     };
 
     useEffect(() => {
@@ -63,11 +79,7 @@ const BookSeriesForm = props => {
         }
     }, []);
     const prepareFormData = (formValues) => {
-        items.forEach((item, index) => {
-                formValues.series_items[index].sequence = (index + 1),
-                    formValues.series_items[index].book_id = item.book_id
-            }
-        );
+        formValues.series_items.forEach(seriesItem => seriesItem.book_id = seriesItem.book_id.id)
         return formValues;
     };
     const onSaveBookSeries = formValues => {
@@ -81,12 +93,12 @@ const BookSeriesForm = props => {
             <Col xs={12} className="mt-3">
                 <h5>Book Item Details</h5>
                 <FieldArray name="series_items" component={renderBookSeriesItems}
-                            books={filteredBooks(books, seriesItems)}
+                            books={filteredBooks(books, seriesItems, initialValues)}
                             change={change}
                             onDragEnd={onDragEnd}
                             setItems={setItems}
-                            selectedBookIds={selectedBookIds}
-                            items={items}/>
+                            items={items}
+                />
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveBookSeries)} {...props}/>
@@ -94,27 +106,16 @@ const BookSeriesForm = props => {
         </Row>
     );
 };
-const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, change, items, setItems, books, selectedBookIds}) => {
-    const validateArray = [];
-    fields.forEach(field => validateArray.push(false));
-    const [isValidBook] = useState([...validateArray]);
+const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, change, items, setItems, books}) => {
     const onAddSubFields = () => {
         setItems([...items, {id: `item-${items.length + 1}`, sequence: items.length + 1, book_id: null}]);
-        return fields.push({sequence: items.length + 1});
+        return fields.push({sequence: items.length + 1, book_id: null});
     };
     const onRemoveSubFields = (index) => {
         const valueArray = [...items];
         valueArray.splice(index, 1);
         setItems(valueArray);
         return fields.remove(index);
-    };
-    const prepareSelectedItem = (index, itemArray, field) => {
-        switch (field) {
-            case'book':
-                return itemArray.filter(item => item.id === selectedBookIds[index]);
-            default:
-                return [];
-        }
     };
     return (
         <div>
@@ -135,17 +136,6 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
                                 {...provided.droppableProps}
                             >
                             {fields.map((item, index) => {
-                                const onSelectBook = (option) => {
-                                    if (option.length > 0) {
-                                        isValidBook[index] = false;
-                                        change(`${item}.book_id`, option[0].id);
-                                        items[index].book_id = option[0].id;
-                                    } else {
-                                        isValidBook[index] = true;
-                                        items[index].book_id = null;
-                                        change(`${item}.book_id`, null);
-                                    }
-                                };
                                 return (
                                     <Draggable
                                         key={items[index].id}
@@ -168,20 +158,14 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
                                                            groupText="file-text" component={CustomInput}/>
                                                 </td>
                                                 <td style={{width: '720px'}}>
-                                                    <TypeAhead
-                                                        id="book"
-                                                        labelText="Book"
+                                                    <Field
+                                                        name={`${item}.book_id`}
                                                         required
                                                         options={books}
                                                         placeholder="Select Book"
-                                                        onChange={onSelectBook}
                                                         groupText="book"
-                                                        defaultSelected={prepareSelectedItem(index, books, 'book')}
-                                                        isInvalid={isValidBook[index]}
-                                                        dropUp={true}
+                                                        component={Select}
                                                     />
-                                                    <Field name={`${item}.book_id`} type="hidden"
-                                                           component={InputGroup}/>
                                                 </td>
                                                 <td className="text-center">
                                                     <Button size="sm" color="danger" style={{marginTop: '10px'}}

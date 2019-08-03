@@ -1,4 +1,4 @@
-import React, {useEffect,Fragment} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
@@ -9,26 +9,20 @@ import {fetchBooks} from '../../store/actions/bookAction';
 import {setLoading} from '../../../store/action/progressBarAction';
 
 const EditBookSeries = (props) => {
+    const {books, bookSeries, isLoading} = props;
     useEffect(() => {
         props.fetchBookSeries(+props.match.params.id);
         props.fetchBooks();
     }, []);
     const onSaveBookSeries = (formValues) => {
-        props.editBookSeries(props.bookSeries.id, formValues,props.history);
+        props.editBookSeries(props.bookSeries.id, formValues, props.history);
     };
     const goBack = () => {
         props.history.push('/app/admin/books-series');
     };
-    const {books,isLoading} = props;
-    const {title,series_items} = props.bookSeries;
-    const changAbleFields = {title, series_items};
-    const prepareFormOption = {
-        onSaveBookSeries,
-        onCancel: goBack,
-        initialValues: changAbleFields,
-        books
-    };
-    if (isLoading) {
+    if (isLoading || !bookSeries || !books || (books && books.length === 0) ||
+        (bookSeries && !bookSeries.series_items) ||
+        (bookSeries && bookSeries.series_items && bookSeries.series_items.length === 0)) {
         return (
             <Fragment>
                 <ProgressBar/>
@@ -36,6 +30,14 @@ const EditBookSeries = (props) => {
             </Fragment>
         )
     }
+    const {title, series_items} = bookSeries;
+    const changAbleFields = {title, series_items: prepareBookSeriesItem(series_items, books)};
+    const prepareFormOption = {
+        onSaveBookSeries,
+        onCancel: goBack,
+        initialValues: changAbleFields,
+        books
+    };
     return (
         <div className="animated fadeIn">
             <Row>
@@ -57,7 +59,16 @@ const EditBookSeries = (props) => {
         </div>
     );
 };
-
+const prepareBookSeriesItem = (seriesItems, books) => {
+    let seriesItemArray = [];
+    seriesItems.forEach(seriesItem => {
+        const book = books.find(book => book.id === seriesItem.book_id);
+        if (book) {
+            seriesItemArray.push({sequence: seriesItem.sequence, book_id: {id: book.id, name: book.name}});
+        }
+    });
+    return seriesItemArray;
+};
 const mapStateToProps = (state, ownProp) => {
     const {isLoading, books, booksSeries} = state;
     return {

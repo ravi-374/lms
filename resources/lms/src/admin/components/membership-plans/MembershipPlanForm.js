@@ -1,33 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Col, Row} from 'reactstrap';
 import {Field, reduxForm} from 'redux-form';
 import membershipPlanValidate from './membershipPlanValidate';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import TextArea from '../../../shared/components/TextArea';
+import Select from "../../../shared/components/Select";
+import PriceInput from '../../../shared/components/PriceInput';
 import {membershipPlanFrequencyOptions} from '../../constants';
-import TypeAhead from '../../../shared/components/TypeAhead';
-import PriceInput from "../../../shared/components/PriceInput";
 
 const MembershipPlanForm = props => {
-    const [selectedFrequency] = useState(props.initialValues ? props.initialValues.selectedFrequency : []);
-    const [isValidFrequency, setIsValidFrequency] = useState(false);
-    useEffect(() => {
-        if (props.initialValues) {
-            props.change('frequency', selectedFrequency[0].id);
-        }
-    }, []);
     const onSaveMembershipPlan = formValues => {
-        props.onSaveMembershipPlan(formValues);
-    };
-    const onSelectFrequency = (option) => {
-        if (option.length > 0) {
-            setIsValidFrequency(false);
-            props.change('frequency', option[0].id);
-        } else {
-            setIsValidFrequency(true);
-            props.change('frequency', null);
-        }
+        const {description, frequency, name, price, stripe_plan_id} = formValues;
+        props.onSaveMembershipPlan({description, frequency: frequency.id, name, price, stripe_plan_id});
     };
     return (
         <Row className="animated fadeIn m-3">
@@ -35,22 +20,18 @@ const MembershipPlanForm = props => {
                 <Field name="name" label="Name" required groupText="tasks" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <Field name="price" label="Price" min="1" type="number" placeholder="Price"
-                       groupText="money" component={PriceInput} required/>
+                <Field name="price" label="Price" placeholder="Price" type="number" min="0" required component={PriceInput}/>
             </Col>
             <Col xs={12}>
-                <TypeAhead
-                    id="Frequency"
+                <Field
+                    name="frequency"
                     label="Frequency"
                     required
                     options={membershipPlanFrequencyOptions}
                     placeholder="Select Frequency"
-                    onChange={onSelectFrequency}
                     groupText="clock-o"
-                    defaultSelected={selectedFrequency}
-                    isInvalid={isValidFrequency}
+                    component={Select}
                 />
-                <Field name="frequency" type="hidden" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="stripe_plan_id" label="Stripe Plan Id" required groupText="stripe"

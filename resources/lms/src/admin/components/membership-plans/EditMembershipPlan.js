@@ -11,8 +11,8 @@ const EditMembershipPlan = (props) => {
     };
     const {name, membership_plan_id, price, frequency, stripe_plan_id, description} = props.membershipPlan;
     const changeAbleFields = {
-        name, membership_plan_id, price, frequency, stripe_plan_id, description,
-        selectedFrequency: membershipPlanFrequencyOptions.filter(option => option.id === frequency)
+        name, membership_plan_id, price, stripe_plan_id, description,
+        frequency: membershipPlanFrequencyOptions.find(option => option.id === frequency)
     };
     const prepareFormOption = {
         onSaveMembershipPlan,

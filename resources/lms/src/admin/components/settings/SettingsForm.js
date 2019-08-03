@@ -2,51 +2,39 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
-import TypeAhead from '../../../shared/components/TypeAhead';
-import InputGroup from '../../../shared/components/InputGroup';
+import Select from '../../../shared/components/Select';
 import settingsFormValidate from '../settings/settingsFormValidate';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import {addToast} from '../../../store/action/toastAction';
 import {mapCurrencyCode} from '../../../shared/sharedMethod';
 
 const SettingsForm = (props) => {
-    const {currencies, selectedCurrency} = props;
-    const [isInValidaCurrency, setIsInInValidaCurrency] = useState(false);
-    const [groupText, setGroupText] = useState(mapCurrencyCode(selectedCurrency[0].id));
-    const onSelectCurrency = (options) => {
-        if (options.length > 0) {
-            props.change('currencySetting', [options[0]]);
-            setGroupText(mapCurrencyCode(options[0].id));
-            setIsInInValidaCurrency(false)
-        } else {
-            props.change('currencySetting', null);
-            setIsInInValidaCurrency(true);
-        }
+    const {currencies, currencySetting} = props;
+    const [groupText, setGroupText] = useState(mapCurrencyCode(currencySetting ? currencySetting.id : null));
+    const onSelectCurrency = (option) => {
+        setGroupText(mapCurrencyCode(option.id))
     };
     const onSaveSettings = (formValues) => {
         const data = {
             key: 'currency',
-            value: formValues.currencySetting[0].id,
-            display_name: formValues.currencySetting[0].name
+            value: formValues.currencySetting.id,
+            display_name: formValues.currencySetting.name
         };
         props.onSaveSettings(data);
     };
     return (
         <Row>
             <Col xs={12}>
-                <TypeAhead
-                    id="currency"
+                <Field
+                    name='currencySetting'
                     label="Currency"
                     required
-                    options={currencies}
-                    placeholder="Select Currency"
-                    onChange={onSelectCurrency}
                     groupText={groupText}
-                    isInvalid={isInValidaCurrency}
-                    defaultSelected={selectedCurrency}
-                    dropUp={false}
+                    options={currencies}
+                    onChange={onSelectCurrency}
+                    component={Select}
+                    isAuto={true}
                 />
-                <Field name='currencySetting' type="hidden" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveSettings)} {...props}/>

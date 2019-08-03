@@ -18,11 +18,10 @@ const Settings = (props) => {
     };
     const prepareFormOption = {
         currencies,
-        selectedCurrency,
         initialValues: {currencySetting: selectedCurrency},
         onSaveSettings
     };
-    if (isLoading || selectedCurrency.length === 0) {
+    if (isLoading) {
         return <ProgressBar/>
     }
     return (
@@ -48,7 +47,7 @@ const Settings = (props) => {
     );
 };
 
-export const prepareCurrencies = (currencies) => {
+const prepareCurrencies = (currencies) => {
     let currenciesArray = [];
     currencies.forEach(cur => currenciesArray.push({
         id: cur.iso_code,
@@ -57,15 +56,22 @@ export const prepareCurrencies = (currencies) => {
     return currenciesArray;
 };
 
+const prepareSelectedCurrency = (currencies) => {
+    const currency = currencies.filter(setting => setting.key === settingsKey.CURRENCY)
+        .map(({value, display_name}) => ({
+            id: value,
+            name: display_name,
+        }));
+    if (currency.length > 0) {
+        return {id: currency[0].id, name: currency[0].name};
+    }
+};
+
 const mapStateToProps = (state) => {
     const {currencies, settings, isLoading} = state;
     return {
         currencies: prepareCurrencies(currencies),
-        selectedCurrency: Object.values(settings).filter(setting => setting.key === settingsKey.CURRENCY)
-            .map(({value, display_name}) => ({
-                id: value,
-                name: display_name,
-            })),
+        selectedCurrency: prepareSelectedCurrency(Object.values(settings)),
         isLoading
     }
 };
