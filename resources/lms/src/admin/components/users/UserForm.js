@@ -9,6 +9,8 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import Select from "../../../shared/components/Select";
+import {membershipPlanFrequencyOptions} from "../../constants";
 
 const UserForm = (props) => {
     const {initialValues, change, roles, countries} = props;
@@ -16,9 +18,7 @@ const UserForm = (props) => {
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
-    const [selectedRole] = useState(initialValues ? initialValues.selectedRole : []);
     const [selectedCountry] = useState(initialValues ? initialValues.selectedCountry : []);
-    const [isValidRole, setIsValidRole] = useState(false);
     useEffect(() => {
         if (initialValues) {
             if (initialValues.is_active) {
@@ -28,9 +28,6 @@ const UserForm = (props) => {
                 change('file_name', true);
                 setImage(publicImagePathURL.USER_AVATAR_URL + initialValues.image);
                 setIsDefaultImage(false);
-            }
-            if (selectedRole.length > 0) {
-                change('role_id', selectedRole[0].id);
             }
         } else {
             change('is_active', true);
@@ -58,15 +55,6 @@ const UserForm = (props) => {
     };
     const onChecked = () => {
         setActive(!isActive);
-    };
-    const onSelectRole = (option) => {
-        if (option.length > 0) {
-            setIsValidRole(false);
-            change('role_id', option[0].id);
-        } else {
-            setIsValidRole(true);
-            change('role_id', null);
-        }
     };
     const onSelectCountry = (option) => {
         if (option.length > 0) {
@@ -109,18 +97,16 @@ const UserForm = (props) => {
                         <Field name="phone" label="Phone No." type="number" groupText="phone" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead
-                            id="role"
+                        <Field
+                            name="role"
                             label="Role"
                             required
                             options={roles}
                             placeholder="Select Role"
-                            onChange={onSelectRole}
                             groupText="tasks"
-                            defaultSelected={selectedRole}
-                            isInvalid={isValidRole}
+                            component={Select}
+                            isMini={true}
                         />
-                        <Field name="role_id" type="hidden" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>

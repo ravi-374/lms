@@ -26,8 +26,8 @@ export default formValues => {
     if (formValues.phone && !phoneExpression.test(formValues.phone)) {
         errors.phone = 'Phone no. must be of 10 digit.'
     }
-    if (!formValues.membership_plan_id) {
-        errors.membership_plan_id = 'Membership plan must be required.';
+    if (!formValues.membership_plan) {
+        errors.membership_plan = 'Membership plan must be required.';
     }
     return errors;
 };

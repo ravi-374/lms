@@ -1,6 +1,6 @@
 export default (formValues) => {
     const formData = new FormData();
-    const {is_active, first_name, last_name, email, password, password_new, phone, address_1, address_2, country_id, city, state, zip, membership_plan_id, file, file_name} = formValues;
+    const {is_active, first_name, last_name, email, password, password_new, phone, address_1, address_2, country_id, city, state, zip, membership_plan, file, file_name} = formValues;
     formData.append('is_active', is_active ? '1' : '0');
     formData.append('first_name', first_name);
     formData.append('last_name', last_name ? last_name : '');
@@ -18,7 +18,7 @@ export default (formValues) => {
     formData.append('city', city ? city : '');
     formData.append('state', state ? state : '');
     formData.append('zip', zip ? zip.toString() : '');
-    formData.append('membership_plan_id', membership_plan_id.toString());
+    formData.append('membership_plan_id', membership_plan.id.toString());
     if (file) {
         formData.append('image', file, file.name);
     }

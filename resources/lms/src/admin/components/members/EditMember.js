@@ -26,9 +26,8 @@ const EditMember = (props) => {
         last_name,
         email,
         password,
-        membership_plan_id,
         image,
-        selectedMemberShipPlan: props.membershipPlans.filter(memberPlan => memberPlan.id === membership_plan_id),
+        membership_plan: props.membershipPlans.find(memberPlan => memberPlan.id === membership_plan_id),
         phone
     };
     if (countries.length <= 1) {

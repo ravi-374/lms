@@ -15,6 +15,7 @@ import {bookFormatOptions} from '../../constants';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import Select from "../../../shared/components/Select";
 
 const BookForm = (props) => {
     const [image, setImage] = useState(publicImagePath.BOOK_AVATAR);
@@ -230,13 +231,6 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                 </thead>
                 <tbody>
                 {fields.map((item, index) => {
-                        const onSelectBookFormat = (option) => {
-                            if (option.length > 0) {
-                                change(`${item}.format`, option[0].id);
-                            } else {
-                                change(`${item}.format`, null);
-                            }
-                        };
                         const onSelectPublisher = (option) => {
                             if (option.length > 0) {
                                 change(`${item}.publisher_id`, option[0].id);
@@ -259,16 +253,16 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                     <Field name={`${item}.edition`} type="text" placeholder="Edition"
                                            groupText="file-text" component={CustomInput}/>
                                 </td>
-                                <td>
-                                    <TypeAhead
-                                        id="format"
+                                <td style={{width: '20%'}}>
+                                    <Field
+                                        name={`${item}.format`}
+                                        required
                                         options={bookFormatOptions}
                                         placeholder="Select Format"
-                                        onChange={onSelectBookFormat}
                                         groupText="wpforms"
-                                        defaultSelected={prepareSelectedItem(index, bookFormatOptions, 'format')}
+                                        component={Select}
+                                        isMini={true}
                                     />
-                                    <Field name={`${item}.format`} type="hidden" component={InputGroup}/>
                                 </td>
                                 <td>
                                     <Field name={`${item}.price`} min="1" type="number" placeholder="Price"

@@ -1,36 +1,44 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import Select from 'react-select';
 import {
-    FormFeedback, FormGroup, InputGroup,
+    FormFeedback,
+    FormGroup,
+    InputGroup,
     InputGroupAddon,
     InputGroupText,
-    Input, Label
+    Label
 } from 'reactstrap';
+import './Component.scss';
 
-export default ({input, label, type = "select", required, disabled, isCustom, addOnType = "prepend", groupText, customGroupText = "", meta: {touched, error, warning}, options, defaultOption}) => {
-    const selectClass = `${touched && error ? 'is-invalid' : ''} ${isCustom ? 'custom-select' : ' '}`;
+export default (props) => {
+    const {input, placeholder, required, label, groupText, isSearchable = false, defaultValue = {}, meta: {touched, error}, options, isAuto = false, isMini = false} = props;
     const labelClass = required ? 'control-label' : '';
+    let reactSelectInputClass = isAuto ? 'react-select__input react-select__input--inline' : 'react-select__input react-select__input--modal';
+    reactSelectInputClass = isMini ? 'react-select__input react-select__input--mini' : reactSelectInputClass;
     return (
-        <FormGroup className={isCustom ? 'mb-0' : ''}>
+        <FormGroup className="react-select">
             {label ? <Label className={labelClass}>{label}</Label> : null}
-            <InputGroup>
-                <InputGroupAddon addonType={addOnType}>
-                    <InputGroupText>{customGroupText === '' ?
-                        <i className={`fa fa-${groupText}`}/> : customGroupText}
+            <InputGroup style={{display: '-webkit-inline-box'}}>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                        <i className={`fa fa-${groupText}`}/>
                     </InputGroupText>
                 </InputGroupAddon>
-                <Input type={type} {...input} className={selectClass} placeholder={label} disabled={disabled}
-                       autoComplete="off">
-                    <option value="">{defaultOption}</option>
-                    {options.map((option, index) =>
-                        (
-                            <Fragment key={index}>
-                                <option value={option.id}>{option.name}</option>
-                            </Fragment>
-                        )
-                    )}
-                </Input>
-                {touched && ((error && <FormFeedback>{error}</FormFeedback>))}
+                <Select
+                    {...input}
+                    className={reactSelectInputClass}
+                    placeholder={placeholder}
+                    value={input.value}
+                    onChange={(value) => input.onChange(value)}
+                    onBlur={() => input.onBlur(input.value)}
+                    options={options}
+                    getOptionLabel={(option) => option.name}
+                    getOptionValue={(option) => option.id}
+                    defaultValue={defaultValue}
+                    isSearchable={isSearchable}
+                />
             </InputGroup>
+            {touched && ((error && <FormFeedback className="d-block">{error}</FormFeedback>))}
         </FormGroup>
-    );
-};
+    )
+}
