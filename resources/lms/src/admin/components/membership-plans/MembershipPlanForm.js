@@ -7,6 +7,7 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import TextArea from '../../../shared/components/TextArea';
 import {membershipPlanFrequencyOptions} from '../../constants';
 import TypeAhead from '../../../shared/components/TypeAhead';
+import PriceInput from "../../../shared/components/PriceInput";
 
 const MembershipPlanForm = props => {
     const [selectedFrequency] = useState(props.initialValues ? props.initialValues.selectedFrequency : []);
@@ -34,8 +35,8 @@ const MembershipPlanForm = props => {
                 <Field name="name" label="Name" required groupText="tasks" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <Field name="price" label="Price" type="number" min="0" required groupText="money"
-                       component={InputGroup}/>
+                <Field name="price" label="Price" min="1" type="number" placeholder="Price"
+                       groupText="money" component={PriceInput} required/>
             </Col>
             <Col xs={12}>
                 <TypeAhead

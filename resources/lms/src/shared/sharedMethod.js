@@ -1,10 +1,10 @@
 import moment from 'moment';
 import {countryCode} from '../constants';
 
-export const priceFormatter = price => {
+export const priceFormatter = (price, format) => {
     return new Intl.NumberFormat('en-IN', {
         style: 'currency',
-        currency: 'INR'
+        currency: format
     }).format(price);
 };
 
