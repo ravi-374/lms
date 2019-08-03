@@ -28,6 +28,12 @@ mix.webpackConfig({
         chunkFilename: 'js/chunks/[name].js',
     },
 });
+module.exports = {
+    //...
+    optimization: {
+        concatenateModules: true
+    }
+};
 
 // used to run app using reactjs
 mix.js('resources/lms/src/index.js', 'public/js/app.js').version();

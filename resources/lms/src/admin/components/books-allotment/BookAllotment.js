@@ -52,12 +52,12 @@ export default ({ books, booksAllotment, members, onOpenModal, sortAction, sortO
                                              target={'custom-tooltip-' + bookAllotment.id}/>
                             </td>
                             <td>
-                                  <span id={'custom-tooltip-' + bookAllotment.id}>
+                                  <span id={'return-date-' + bookAllotment.id}>
                                       {bookAllotment.return_date ? dateFormatter(bookAllotment.return_date) : ''}
                                   </span>
                                 <TooltipItem key={bookAllotment.id.toString()}
                                              tooltip={bookAllotment.return_date ? timeFormatter(bookAllotment.return_date) : ' '}
-                                             target={'custom-tooltip-' + bookAllotment.id}/>
+                                             target={'return-date-' + bookAllotment.id}/>
                             </td>
                             <td className="text-center" style={{ width: '90px' }}>{renderBookStatus(bookAllotment)}</td>
                             <td className="text-center">
