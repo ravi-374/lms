@@ -4,10 +4,13 @@ import {connect} from 'react-redux';
 import {Field, FieldArray, reduxForm, formValueSelector} from 'redux-form';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import bookSeriesValidate from './bookSeriesValidate';
+import DeleteBookSeriesItem from './DeleteBookSeriesItem';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import CustomInput from '../../../shared/components/CustomInput';
 import Select from "../../../shared/components/Select";
+import {toggleModal} from "../../../store/action/modalAction";
+import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 
 const getItems = seriesItems =>
     seriesItems.map((item, key) => ({
@@ -41,7 +44,7 @@ const filteredBooks = (books, seriesItems) => {
     }));
 };
 const BookSeriesForm = props => {
-    const {initialValues, books, change, seriesItems} = props;
+    const {initialValues, books, change, seriesItems, toggleModal} = props;
     const [items, setItems] = useState(getItems(initialValues ? initialValues.series_items : [{
         id: 1,
         sequence: 1,
@@ -72,14 +75,15 @@ const BookSeriesForm = props => {
         setItems(item);
         props.change('series_items', array);
     };
-
     useEffect(() => {
         if (!initialValues) {
             props.initialize({series_items: [{sequence: 1}]});
         }
     }, []);
     const prepareFormData = (formValues) => {
-        formValues.series_items.forEach(seriesItem => seriesItem.book_id = seriesItem.book_id.id)
+        formValues.series_items.forEach((seriesItem, index) => {
+            seriesItem.sequence = index + 1, seriesItem.book_id = seriesItem.book_id.id
+        });
         return formValues;
     };
     const onSaveBookSeries = formValues => {
@@ -91,13 +95,15 @@ const BookSeriesForm = props => {
                 <Field name="title" label="Title" required groupText="television" component={InputGroup}/>
             </Col>
             <Col xs={12} className="mt-3">
-                <h5>Book Item Details</h5>
+                <h5>Book Series Item Details</h5>
                 <FieldArray name="series_items" component={renderBookSeriesItems}
                             books={filteredBooks(books, seriesItems, initialValues)}
                             change={change}
                             onDragEnd={onDragEnd}
                             setItems={setItems}
                             items={items}
+                            toggleModal={toggleModal}
+                            seriesItems={seriesItems}
                 />
             </Col>
             <Col xs={12}>
@@ -106,17 +112,20 @@ const BookSeriesForm = props => {
         </Row>
     );
 };
-const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, change, items, setItems, books}) => {
+const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, change, items, setItems, books, toggleModal, seriesItems}) => {
+    const [index, setIndex] = useState(null);
     const onAddSubFields = () => {
         setItems([...items, {id: `item-${items.length + 1}`, sequence: items.length + 1, book_id: null}]);
         return fields.push({sequence: items.length + 1, book_id: null});
     };
     const onRemoveSubFields = (index) => {
-        const valueArray = [...items];
-        valueArray.splice(index, 1);
-        setItems(valueArray);
-        return fields.remove(index);
+        setIndex(index);
+        toggleModal();
     };
+    const cardModalProps = {fields, seriesItems, items, setItems, index, setIndex, toggleModal};
+    if (fields.length === 0) {
+        return <EmptyComponent isShort={true} title="No books series items yet..."/>
+    }
     return (
         <div>
             <Table responsive size="md">
@@ -180,6 +189,7 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
                                 )
                             })}
                             {provided.placeholder}
+                            {index !== null ? <DeleteBookSeriesItem {...cardModalProps}/> : null}
                             </tbody>
                         )}
                     </Droppable>
@@ -200,7 +210,7 @@ bookSeriesForm = connect(
         return {
             seriesItems
         }
-    }
-)(bookSeriesForm);
+    },
+    {toggleModal})(bookSeriesForm);
 
 export default bookSeriesForm;
