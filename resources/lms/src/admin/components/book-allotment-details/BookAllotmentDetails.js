@@ -36,7 +36,7 @@ const BookAllotmentDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push('/app/admin/books-allotment');
+        history.push(Routes.BOOK_ALLOTMENTS);
     };
     const renderBookStatus = (bookHistory) => {
         const statusProps = { status: bookHistory.status, item: bookHistory };
