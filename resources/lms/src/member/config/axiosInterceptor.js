@@ -28,7 +28,10 @@ export default {
             error => errorHandler(error)
         );
         const errorHandler = (error) => {
-            if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
+            if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED
+                || error.response.data.message === errorMessage.TOKEN_INVALID
+                || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
+                || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
                 window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
                 localStorage.removeItem('memberToken');
             }

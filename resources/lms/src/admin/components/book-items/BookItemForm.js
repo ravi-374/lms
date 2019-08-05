@@ -101,7 +101,7 @@ const BookItemForm = (props) => {
             <Col xs={12}>
                 <TypeAhead
                     id="publisher"
-                    label="publisher"
+                    label="Publisher"
                     options={publishers}
                     placeholder="Select Publisher"
                     onChange={onSelectPublisher}

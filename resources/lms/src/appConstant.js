@@ -5,7 +5,9 @@ export const routePath = {
 
 export const errorMessage = {
     TOKEN_NOT_PROVIDED: 'Token not provided',
-    TOKEN_EXPIRED: 'Token has expired'
+    TOKEN_EXPIRED: 'Token has expired',
+    TOKEN_INVALID: 'Could not decode token: Error while decoding to JSON: Syntax error',
+    TOKEN_INVALID_SIGNATURE: 'Token Signature could not be verified.'
 };
 
 export const publicImagePath = {
