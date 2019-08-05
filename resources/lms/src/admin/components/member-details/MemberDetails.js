@@ -113,7 +113,7 @@ const MemberDetail = props => {
                                 <Row className="member-detail-row no-gutters">
                                     <div className="image-holder-wrapper">
                                         <div className="image-holder">
-                                            <img src={imageUrl} height="250" width="220"/>
+                                            <img src={imageUrl} height="250"/>
                                         </div>
                                     </div>
                                     <div className="member-detail">
