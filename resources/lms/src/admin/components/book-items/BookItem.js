@@ -1,28 +1,22 @@
 import React from 'react';
-import {Table, Badge} from 'reactstrap';
+import {Table} from 'reactstrap';
 import './BookItems.scss';
 import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import {sortConfig} from '../../../config/sortConfig';
-import {bookStatusConstant} from "../../constants";
+import BookStatus from "../../../shared/book-status/book-status";
 
-export default ({bookItems, bookLanguages, onOpenModal, sortAction, sortObject}) => {
+export default ({ bookItems, bookLanguages, onOpenModal, sortAction, sortObject }) => {
     const headers = [
-        {id: 'book_code', name: 'Book Code'},
-        {id: 'edition', name: 'Edition'},
-        {id: 'language_name', name: 'Language'},
-        {id: 'status_name', name: 'Status'}
+        { id: 'book_code', name: 'Book Code' },
+        { id: 'edition', name: 'Edition' },
+        { id: 'language_name', name: 'Language' },
+        { id: 'status_name', name: 'Status' }
     ];
-    const headerProps = {sortAction, sortObject, sortConfig, headers};
+    const headerProps = { sortAction, sortObject, sortConfig, headers };
     const renderBookItemStatus = (bookItem) => {
-        switch (bookItem.is_available) {
-            case bookStatusConstant.STATUS_AVAILABLE:
-                bookItem.status_name = 'Available';
-                return <Badge color="success">Available</Badge>;
-            default:
-                bookItem.status_name = 'Unavailable';
-                return <Badge color="danger">Unavailable</Badge>;
-        }
+        const statusProps = { status: bookItem.book_item_status, item: bookItem };
+        return <BookStatus {...statusProps} item={bookItem}/>;
     };
     return (
         <Table hover bordered striped responsive size="md" className="book-item__table">

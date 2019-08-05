@@ -61,7 +61,7 @@ const BookDetail = props => {
                                 <Row className="book-detail-row no-gutters">
                                     <div className="book-image-container">
                                         <div className="image-holder">
-                                            <img src={imageUrl} width="250" height="250" alt={imageUrl}/>
+                                            <img src={imageUrl} height="250" alt={imageUrl}/>
                                         </div>
                                     </div>
                                     <div className="book-detail">
