@@ -36,7 +36,7 @@ export default ({ bookItems, bookLanguages, onOpenModal, sortAction, sortObject 
                             <td>{bookItem.language_name}</td>
                             <td className="book-item__table-status">{renderBookItemStatus(bookItem)}</td>
                             <td className="text-center book-item__table-action">
-                                <ModalAction onOpenModal={onOpenModal} item={bookItem}/>
+                                <ModalAction isHideDeleteIcon={true} onOpenModal={onOpenModal} item={bookItem}/>
                             </td>
                         </tr>
                     )
