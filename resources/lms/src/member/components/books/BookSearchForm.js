@@ -49,8 +49,6 @@ const BookSearchForm = (props) => {
         change('item', null);
         typeAheadRef.current.getInstance().clear();
         setIsDisabled(true);
-        setIsAuthorChecked(false);
-        setIsBookChecked(true);
         resetSearchBooks();
     };
     const {handleSubmit} = props;
