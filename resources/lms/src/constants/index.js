@@ -29,3 +29,8 @@ export const Routes = {
     BOOK_ALLOTMENTS: '/app/admin/books-allotment/',
     USERS: '/app/admin/users/',
 };
+
+export const Tokens = {
+    ADMIN:'authtoken',
+    MEMBER:'memberToken'
+};

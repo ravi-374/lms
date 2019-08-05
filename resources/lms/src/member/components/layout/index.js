@@ -15,7 +15,7 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from '../../routes';
-import {Routes} from "../../../constants";
+import {Routes, Tokens} from "../../../constants";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
@@ -38,7 +38,7 @@ const renderAppHeader = (props) => {
         e.preventDefault();
         props.history.push(Routes.MEMBER_LOGIN);
         localStorage.removeItem('member');
-        localStorage.removeItem('memberToken');
+        localStorage.removeItem(Tokens.MEMBER);
     };
     return (
         <AppHeader fixed>
@@ -80,16 +80,18 @@ const renderMainSection = () => {
 };
 
 const renderRoutes = () => {
+    if (!localStorage.getItem(Tokens.MEMBER)) {
+        sessionStorage.setItem('prevMemberPrevUrl', window.location.href)
+    } else {
+        sessionStorage.removeItem('prevMemberPrevUrl')
+    }
     return routes.map((route, index) => {
         return route.component ? (
-            <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                name={route.name}
-                render={props => (
-                    <route.component {...props} />
-                )}/>
+            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={(props) => (
+                localStorage.getItem(Tokens.MEMBER)
+                    ? <route.component {...props} />
+                    : <Redirect to={Routes.MEMBER_LOGIN}/>
+            )}/>
         ) : (null);
     });
 };

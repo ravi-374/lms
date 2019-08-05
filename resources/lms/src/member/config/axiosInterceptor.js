@@ -1,6 +1,6 @@
 import {errorMessage} from '../../appConstant';
 import {environment} from '../../environment';
-import {Routes} from "../../constants";
+import {Routes, Tokens} from "../../constants";
 
 export default {
     setupInterceptors: (axios, isToken = false, isFormData = false) => {
@@ -8,7 +8,7 @@ export default {
                 if (isToken) {
                     return config;
                 }
-                let token = localStorage.getItem('memberToken');
+                let token = localStorage.getItem(Tokens.MEMBER);
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
                 } else {
@@ -33,7 +33,7 @@ export default {
                 || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
                 || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
                 window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
-                localStorage.removeItem('memberToken');
+                localStorage.removeItem(Tokens.MEMBER);
             }
             return Promise.reject({ ...error })
         };

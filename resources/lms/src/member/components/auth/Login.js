@@ -8,6 +8,7 @@ import CheckBox from '../../../shared/components/CheckBox';
 import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
+import {Tokens} from "../../../constants";
 
 const Login = (props) => {
     let remember = true;
@@ -17,10 +18,10 @@ const Login = (props) => {
     }
     const [isRemember, setRemember] = useState(remember);
     useEffect(() => {
-        if (localStorage.getItem('memberToken')) {
+        if (localStorage.getItem(Tokens.MEMBER)) {
             props.history.push('/');
         }
-        if(localStorage.getItem('currentMember')){
+        if (localStorage.getItem('currentMember')) {
             const member = JSON.parse(atob(localStorage.getItem('currentMember')));
             if (member) {
                 props.initialize(member);
@@ -41,15 +42,19 @@ const Login = (props) => {
                     localStorage.removeItem('currentMember');
                 }
             }
-            localStorage.setItem('memberToken', response.data.data.token);
+            localStorage.setItem(Tokens.MEMBER, response.data.data.token);
             localStorage.setItem('is_member_remember', isRemember);
             localStorage.setItem('member', btoa(JSON.stringify(response.data.data.user)));
-            props.history.push('/');
-        }).catch(({response}) =>
-            props.addToast({text: response.data.message, type: 'error'})
+            if (sessionStorage.getItem('prevMemberPrevUrl')) {
+                window.location.href = sessionStorage.getItem('prevMemberPrevUrl');
+            } else {
+                props.history.push('/');
+            }
+        }).catch(({ response }) =>
+            props.addToast({ text: response.data.message, type: 'error' })
         );
     };
-    const {handleSubmit, invalid} = props;
+    const { handleSubmit, invalid } = props;
     return (
         <div className="app flex-row align-items-center">
             <Container>
@@ -89,6 +94,6 @@ const Login = (props) => {
     );
 };
 
-const form = reduxForm({form: 'loginForm', validate: loginFormValidate})(Login);
+const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(Login);
 
-export default connect(null, {addToast})(form);
+export default connect(null, { addToast })(form);
