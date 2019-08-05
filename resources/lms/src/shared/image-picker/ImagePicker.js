@@ -1,5 +1,5 @@
-import React, {useState, Fragment} from 'react';
-import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
+import React, {Fragment, useState} from 'react';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import './ImagePicker.scss';
 
 export default ({image, isDefaultImage, onFileChange, onRemovePhoto, inputField = 'userInput', buttonName = 'Profile'}) => {
@@ -10,6 +10,15 @@ export default ({image, isDefaultImage, onFileChange, onRemovePhoto, inputField 
     const openFileSelect = () => {
         document.getElementById(inputField).click();
     };
+
+    const renderRemoveOption = () => {
+        if (!isDefaultImage) {
+            return (<DropdownItem className="text-center" onClick={() => onRemovePhoto()}>
+                Remove {buttonName}
+            </DropdownItem>);
+        }
+    };
+
     const renderPopOver = () => {
         return (
             <Dropdown isOpen={isOpen} toggle={toggle}>
@@ -17,10 +26,10 @@ export default ({image, isDefaultImage, onFileChange, onRemovePhoto, inputField 
                     {isDefaultImage ? ` Add ${buttonName}` : `Change ${buttonName}`}
                 </DropdownToggle>
                 <DropdownMenu className="image__dropdown-menu">
-                    <DropdownItem className="text-center" onClick={() => openFileSelect()}>Add {buttonName}
+                    <DropdownItem className="text-center" onClick={() => openFileSelect()}>
+                        Add {buttonName}
                     </DropdownItem>
-                    <DropdownItem className="text-center" onClick={() => onRemovePhoto()}>Remove {buttonName}
-                    </DropdownItem>
+                    {renderRemoveOption()}
                     <DropdownItem className="text-center">Cancel</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
