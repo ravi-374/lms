@@ -8,7 +8,7 @@ import CheckBox from '../../../shared/components/CheckBox';
 import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
-import {Routes} from "../../../constants";
+import {Routes, Tokens} from "../../../constants";
 
 const Login = (props) => {
     let remember = true;
@@ -18,7 +18,7 @@ const Login = (props) => {
     }
     const [isRemember, setRemember] = useState(remember);
     useEffect(() => {
-        if (localStorage.getItem('authtoken')) {
+        if (localStorage.getItem(Tokens.ADMIN)) {
             props.history.push(Routes.ADMIN_DEFAULT);
         }
         if (localStorage.getItem('currentUser')) {
@@ -45,7 +45,7 @@ const Login = (props) => {
                 }
             }
             localStorage.setItem('is_admin_remember', isRemember);
-            localStorage.setItem('authtoken', response.data.data.token);
+            localStorage.setItem(Tokens.ADMIN, response.data.data.token);
             localStorage.setItem('user', btoa(JSON.stringify(response.data.data.user)));
             props.history.push(Routes.ADMIN_DEFAULT);
         }).catch(({ response }) =>

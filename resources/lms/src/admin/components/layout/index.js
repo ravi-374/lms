@@ -17,7 +17,7 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from "../../routes";
 import {fetchConfig} from "../../store/actions/configAction";
-import {Routes} from "../../../constants";
+import {Routes, Tokens} from "../../../constants";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
@@ -71,7 +71,7 @@ const renderAppHeader = (props) => {
         e.preventDefault();
         props.history.push(Routes.ADMIN_LOGIN);
         localStorage.removeItem('user');
-        localStorage.removeItem('authtoken');
+        localStorage.removeItem(Tokens.ADMIN);
     };
     return (
         <AppHeader fixed>
