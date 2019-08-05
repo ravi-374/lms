@@ -12,7 +12,7 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 
 const BookDetail = props => {
-    const {book, bookLanguages, publishers, toggleModal, history} = props;
+    const { book, bookLanguages, publishers, toggleModal, history } = props;
     const [isToggle, setIsToggle] = useState(false);
     const [isParentToggle, setIsParentToggle] = useState(false);
     useEffect(() => {
@@ -31,7 +31,7 @@ const BookDetail = props => {
     const goBack = () => {
         history.push('/app/admin/books');
     };
-    const bookFormOptions = {book, toggleModal};
+    const bookFormOptions = { book, toggleModal };
     const bookItemFormOptions = {
         bookItemList: book.items,
         bookId: book.id,
@@ -41,6 +41,7 @@ const BookDetail = props => {
         isParentToggle,
         setIsParentToggle,
     };
+
     const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
     return (
         <div className="animated fadeIn">
@@ -77,21 +78,21 @@ const BookDetail = props => {
                                             <div className="book-detail__item">
                                                 <span className="book-detail__item-genre-heading">Genre(s)</span>
                                                 <span>
-                                                    {book.genres.map((({name}) => name)).join(',  ')}
+                                                    {book.genres.map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
 
                                             <div className="book-detail__item">
                                                 <span className="book-detail__item-authors-heading">Author(s)</span>
                                                 <span>
-                                                    {prepareAuthor(book.authors).map((({name}) => name)).join(',  ')}
+                                                    {prepareAuthor(book.authors).map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
                                             {book.tags.length > 0 ?
                                                 <div className="book-detail__item">
                                                     <span className="book-detail__item-tags-heading">Tag(s)</span>
                                                     <span>
-                                                    {book.tags.map((({name}) => name)).join(',  ')}
+                                                    {book.tags.map((({ name }) => name)).join(',  ')}
                                                 </span>
                                                 </div> : null
                                             }
@@ -99,8 +100,10 @@ const BookDetail = props => {
                                                 <div className="book-detail__item">
                                                     <span className="book-detail__item-url-heading">URL</span>
                                                     <span>
-                                                    {book.url}
-                                                </span>
+                                                       <a target="_blank" href={'https://'+book.url}>
+                                                            {book.url}
+                                                        </a>
+                                                     </span>
                                                 </div> : null
                                             }
 
@@ -129,7 +132,7 @@ const BookDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const {books, publishers, bookLanguages} = state;
+    const { books, publishers, bookLanguages } = state;
     return {
         book: books[ownProp.match.params.id],
         bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),
