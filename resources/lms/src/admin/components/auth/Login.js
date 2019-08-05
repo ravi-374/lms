@@ -47,7 +47,11 @@ const Login = (props) => {
             localStorage.setItem('is_admin_remember', isRemember);
             localStorage.setItem(Tokens.ADMIN, response.data.data.token);
             localStorage.setItem('user', btoa(JSON.stringify(response.data.data.user)));
-            props.history.push(Routes.ADMIN_DEFAULT);
+            if (sessionStorage.getItem('prevAdminPrevUrl')) {
+                window.location.href = sessionStorage.getItem('prevAdminPrevUrl');
+            } else {
+                props.history.push(Routes.ADMIN_DEFAULT);
+            }
         }).catch(({ response }) =>
             props.addToast({ text: response.data.message, type: 'error' })
         );

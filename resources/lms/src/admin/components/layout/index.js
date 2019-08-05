@@ -26,6 +26,12 @@ const Layout = (props) => {
     const {permissions} = props;
     const newRoutes = prepareRoutes(permissions);
     useEffect(() => {
+        console.log(window.location.href);
+        if (!localStorage.getItem(Tokens.ADMIN)) {
+            sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
+        } else {
+            sessionStorage.removeItem('prevAdminPrevUrl');
+        }
         props.fetchConfig();
     }, []);
     if (permissions.length === 0) {
@@ -115,8 +121,10 @@ const renderMainSection = (newRoutes) => {
 const renderRoutes = (newRoutes) => {
     return newRoutes.map((route, index) => {
         return route.component ? (
-            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => (
-                <route.component {...props} />
+            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={(props) => (
+                localStorage.getItem(Tokens.ADMIN)
+                    ? <route.component {...props} />
+                    : <Redirect to={Routes.ADMIN_LOGIN}/>
             )}/>
         ) : (null);
     });
