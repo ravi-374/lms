@@ -24,7 +24,7 @@ const SettingsForm = (props) => {
     };
     return (
         <Row>
-            <Col xs={12}>
+            <Col xs={6}>
                 <Field
                     name='currencySetting'
                     label="Currency"
