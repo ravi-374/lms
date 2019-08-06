@@ -102,7 +102,7 @@ const BookDetail = props => {
                                                 <div className="book-detail__item">
                                                     <span className="book-detail__item-url-heading">URL</span>
                                                     <span>
-                                                       <a target="_blank" href={'https://'+book.url}>
+                                                       <a target="_blank" href={book.url}>
                                                             {book.url}
                                                         </a>
                                                      </span>

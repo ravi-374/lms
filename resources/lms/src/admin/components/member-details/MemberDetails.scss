@@ -1,7 +1,6 @@
 @import "../../../scss/variables";
 
 .member__image-holder-wrapper {
-    border: 1px solid $image-border;
     border-radius: 10px;
     overflow: hidden;
     @media (max-width: 1139px) {
