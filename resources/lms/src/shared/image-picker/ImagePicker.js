@@ -27,7 +27,7 @@ export default ({image, isDefaultImage, onFileChange, onRemovePhoto, inputField 
                 </DropdownToggle>
                 <DropdownMenu className="image__dropdown-menu">
                     <DropdownItem className="text-center" onClick={() => openFileSelect()}>
-                        Add {buttonName}
+                        {isDefaultImage ? ` Add ${buttonName}` : `Change ${buttonName}`}
                     </DropdownItem>
                     {renderRemoveOption()}
                     <DropdownItem className="text-center">Cancel</DropdownItem>
