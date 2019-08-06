@@ -1,9 +1,6 @@
 @import "../../../scss/variables";
 
-.image-holder-wrapper {
-    max-width: 220px;
-    height: 250px;
-    width: 100%;
+.member__image-holder-wrapper {
     border: 1px solid $image-border;
     border-radius: 10px;
     overflow: hidden;
@@ -12,7 +9,7 @@
     }
 }
 
-.image-holder {
+.member__image-holder {
     position: relative;
     height: 250px;
     border-radius: 10px;
@@ -27,8 +24,6 @@
 }
 
 .member-detail {
-    width: calc(100% - 220px);
-
     @media (max-width: 1139px) {
         width: 100%;
         margin: auto;

@@ -38,20 +38,17 @@ const MemberProfile = props => {
         email,
         password,
         image,
-        selectedRole: userProfile.roles,
+        role: userProfile.roles.length > 0 ? {id: userProfile.roles[0].id, name: userProfile.roles[0].name} : {},
         phone
     };
     if (address) {
         const {address_1, address_2, country_id, city, state, zip} = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.selectedCountry = country_id ? countries.filter(country => country.id === +country_id) : [];
+        changeAbleFields.country = country_id ? countries.find(country => country.id === +country_id) : {};
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
-    }
-    if (!address) {
-        changeAbleFields.selectedCountry = [];
     }
     const prepareFormOption = {
         initialValues: changeAbleFields,

@@ -113,8 +113,8 @@ const MemberDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="member-detail-row no-gutters">
-                                    <div className="image-holder-wrapper">
-                                        <div className="image-holder">
+                                    <div className="member__image-holder-wrapper">
+                                        <div className="member__image-holder">
                                             <img src={imageUrl} height="250"/>
                                         </div>
                                     </div>

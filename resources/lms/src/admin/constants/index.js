@@ -225,3 +225,7 @@ export const bookItemActionType = {
     ADD_BOOK_ITEM: 'ADD_BOOK_ITEM',
     DELETE_BOOK_ITEM: 'DELETE_BOOK_ITEM'
 };
+
+export const maxDigits = {
+    BOOK_CODE: 8
+};

@@ -9,8 +9,8 @@ import {addToast} from '../../../store/action/toastAction';
 import {mapCurrencyCode} from '../../../shared/sharedMethod';
 
 const SettingsForm = (props) => {
-    const {currencies, currencySetting} = props;
-    const [groupText, setGroupText] = useState(mapCurrencyCode(currencySetting ? currencySetting.id : null));
+    const {currencies,initialValues} = props;
+    const [groupText, setGroupText] = useState(mapCurrencyCode(initialValues.currencySetting ? initialValues.currencySetting.id : null));
     const onSelectCurrency = (option) => {
         setGroupText(mapCurrencyCode(option.id))
     };
@@ -33,6 +33,7 @@ const SettingsForm = (props) => {
                     options={currencies}
                     onChange={onSelectCurrency}
                     component={Select}
+                    isSearchable={true}
                     isAuto={true}
                 />
             </Col>

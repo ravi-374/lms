@@ -16,5 +16,8 @@ export default formValues => {
     if (formValues.phone && !phoneExpression.test(formValues.phone)) {
         errors.phone = 'Phone no. must be of 10 digit.';
     }
+    if (!formValues.role) {
+        errors.role = 'Role must be required.';
+    }
     return errors;
 };

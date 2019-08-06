@@ -12,20 +12,18 @@ const EditBookAllotment = (props) => {
     const {toggleModal, className, title, books, selectedBook, bookAllotment, onSelectBook, bookId, members, bookItems, selectedBookItem, isMemberBookHistory} = props;
     const modalOption = {toggleModal, className, title};
     const formOption = {books, onSelectBook, bookId, members};
-    const {book_item_id, status, note, reserve_date, issued_on, return_date} = bookAllotment;
+    const {note, reserve_date, issued_on, return_date} = bookAllotment;
     const changeAbleFields = {
         selectedBook,
-        book_id: bookAllotment.book_item.book.id,
-        book_item_id,
-        status,
+        book: bookAllotment.book_item.book,
         note,
         reserve_date: reserve_date ? moment(reserve_date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
         issued_on: issued_on ? moment(issued_on, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
         return_date: return_date ? moment(return_date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
-        selectedBookItem: selectedBookItem,
+        book_item: selectedBookItem,
         bookItems,
-        selectedMember: members.filter(member => member.id === +bookAllotment.member_id),
-        selectedStatus: bookStatusOptions.filter(circular => circular.id === +bookAllotment.status)
+        member: members.find(member => member.id === +bookAllotment.member_id),
+        status: bookStatusOptions.find(circular => circular.id === +bookAllotment.status)
     };
     useEffect(() => {
         props.fetchBook(bookAllotment.book_item.book.id, false);
@@ -37,7 +35,7 @@ const EditBookAllotment = (props) => {
             props.editMemberBookHistory(formValues);
         }
     };
-    if (selectedBookItem.length === 0 || changeAbleFields.bookItems.length === 0) {
+    if (changeAbleFields.bookItems.length === 0) {
         return null;
     }
     const prepareFormOption = {
@@ -61,7 +59,7 @@ const prepareBookItem = (books, bookAllotment = null) => {
     }
     const bookItem = books[0].items.find(book => book.id === +bookAllotment.book_item_id);
     if (bookItem) {
-        return [{id: +bookItem.id, name: bookItem.edition + ` (${bookItem.book_code})`}]
+        return {id: +bookItem.id, name: bookItem.edition + ` (${bookItem.book_code})`};
     }
 };
 const prepareBookItems = (books) => {

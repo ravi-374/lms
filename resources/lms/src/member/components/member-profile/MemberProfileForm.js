@@ -6,18 +6,15 @@ import './MemberProfile.scss';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import Select from "../../../shared/components/Select";
 
 const MemberForm = (props) => {
     const {initialValues, change, membershipPlans, countries, history} = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
-    const [selectedMemberShipPlan] = useState(initialValues.selectedMemberShipPlan);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
-    const [selectedCountry] = useState(initialValues.selectedCountry);
     const defaultImage = publicImagePath.USER_AVATAR;
-    const [isValidMemberPlan, setIsValidMemberPlan] = useState(false);
     useEffect(() => {
         if (initialValues.image) {
             change('file_name', true);
@@ -44,22 +41,6 @@ const MemberForm = (props) => {
         setFile(null);
         setImage(defaultImage);
         setIsDefaultImage(true);
-    };
-    const onSelectMembershipPlan = (option) => {
-        if (option.length > 0) {
-            setIsValidMemberPlan(false);
-            change('membership_plan_id', option[0].id);
-        } else {
-            setIsValidMemberPlan(true);
-            change('membership_plan_id', null);
-        }
-    };
-    const onSelectCountry = (option) => {
-        if (option.length > 0) {
-            change('country_id', option[0].id);
-        } else {
-            change('country_id', null);
-        }
     };
     const goToHomePage = () => {
         history.push('/');
@@ -97,18 +78,17 @@ const MemberForm = (props) => {
                                component={InputGroup}/>
                     </Col>
                     <Col xs={12}>
-                        <TypeAhead
-                            id="membership-plan"
+                        <Field
+                            name="membership_plan"
                             label="Membership Plan"
-                            disabled={true}
+                            required
                             options={membershipPlans}
                             placeholder="Select Membership Plan"
-                            onChange={onSelectMembershipPlan}
                             groupText="tasks"
-                            defaultSelected={selectedMemberShipPlan}
-                            isInvalid={isValidMemberPlan}
+                            component={Select}
+                            isSearchable={true}
+                            isMini={true}
                         />
-                        <Field name="membership_plan_id" type="hidden" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
@@ -137,17 +117,17 @@ const MemberForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead
-                            id="country"
+                        <Field
+                            name="country"
                             label="Country"
                             options={countries}
                             placeholder="Select Country"
-                            onChange={onSelectCountry}
                             groupText="flag"
-                            defaultSelected={selectedCountry}
-                            dropUp={true}
+                            component={Select}
+                            isSearchable={true}
+                            isMini={true}
+                            menuPlacement="top"
                         />
-                        <Field name="country_id" type="hidden" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>

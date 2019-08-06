@@ -182,8 +182,7 @@ const BookForm = (props) => {
                 <h5>Book Items</h5>
                 <FieldArray name="items" component={renderBookItems}
                             bookLanguages={props.bookLanguages}
-                            publishers={props.publishers}
-                            change={props.change} setItems={setItems}
+                            publishers={props.publishers} setItems={setItems}
                             items={items}/>
             </Col>
             <Col xs={12}>
@@ -193,10 +192,7 @@ const BookForm = (props) => {
     );
 };
 
-const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, setItems, bookLanguages, publishers}) => {
-    const validateArray = [];
-    fields.forEach(field => validateArray.push(false));
-    const [isValidLanguage] = useState(validateArray);
+const renderBookItems = ({fields, meta: {error, submitFailed}, items, setItems, bookLanguages, publishers}) => {
     const onAddSubFields = () => {
         setItems([...items, {id: 1}]);
         return fields.push({});
@@ -204,25 +200,13 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
     const onRemoveSubFields = (index) => {
         return fields.remove(index);
     };
-    const prepareSelectedItem = (index, itemArray, field) => {
-        switch (field) {
-            case'format':
-                return itemArray.filter(status => status.id === items[index].format);
-            case'language':
-                return itemArray.filter(status => status.id === items[index].language_id);
-            case'publisher':
-                return itemArray.filter(status => status.id === items[index].publisher_id);
-            default:
-                return [];
-        }
-    };
     return (
         <div>
             <Table responsive size="md" className="table-multi-item-responsive">
                 <thead>
                 <tr>
                     <th className="book-form__item-header">Edition</th>
-                    <th>Format</th>
+                    <th className="book-form__item-header">Format</th>
                     <th className="book-form__item-header">Price</th>
                     <th className="book-form__item-header">Language</th>
                     <th>Publisher</th>
@@ -231,29 +215,13 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                 </thead>
                 <tbody>
                 {fields.map((item, index) => {
-                        const onSelectPublisher = (option) => {
-                            if (option.length > 0) {
-                                change(`${item}.publisher_id`, option[0].id);
-                            } else {
-                                change(`${item}.publisher_id`, null);
-                            }
-                        };
-                        const onSelectBookLanguage = (option) => {
-                            if (option.length > 0) {
-                                isValidLanguage[index] = false;
-                                change(`${item}.language_id`, option[0].id);
-                            } else {
-                                isValidLanguage[index] = true;
-                                change(`${item}.language_id`, null);
-                            }
-                        };
                         return (
                             <tr key={index}>
                                 <td>
                                     <Field name={`${item}.edition`} type="text" placeholder="Edition"
                                            groupText="file-text" component={CustomInput}/>
                                 </td>
-                                <td style={{width: '20%'}}>
+                                <td className="book-form__format">
                                     <Field
                                         name={`${item}.format`}
                                         required
@@ -262,36 +230,36 @@ const renderBookItems = ({fields, meta: {error, submitFailed}, change, items, se
                                         groupText="wpforms"
                                         component={Select}
                                         isMini={true}
+                                        menuPlacement="top"
                                     />
                                 </td>
                                 <td>
                                     <Field name={`${item}.price`} min="1" type="number" placeholder="Price"
                                            groupText="money" component={PriceInput}/>
                                 </td>
-                                <td>
-                                    <TypeAhead
-                                        id="language"
-                                        labelText="Language"
+                                <td className="book-form__language">
+                                    <Field
+                                        name={`${item}.language`}
                                         required
                                         options={bookLanguages}
                                         placeholder="Select Language"
-                                        onChange={onSelectBookLanguage}
                                         groupText="language"
-                                        defaultSelected={prepareSelectedItem(index, bookLanguages, 'language')}
-                                        isInvalid={isValidLanguage[index]}
-                                        dropUp={true}
+                                        component={Select}
+                                        isSearchable={true}
+                                        isMini={true}
+                                        menuPlacement="top"
                                     />
-                                    <Field name={`${item}.language_id`} type="hidden" component={InputGroup}/>
                                 </td>
-                                <td>
-                                    <TypeAhead
-                                        id="publisher"
+                                <td className="book-form__publisher">
+                                    <Field
+                                        name={`${item}.publisher`}
                                         options={publishers}
                                         placeholder="Select Publisher"
-                                        onChange={onSelectPublisher}
                                         groupText="user-circle-o"
-                                        defaultSelected={prepareSelectedItem(index, publishers, 'publisher')}
-                                        dropUp={true}
+                                        component={Select}
+                                        isSearchable={true}
+                                        isMini={true}
+                                        menuPlacement="top"
                                     />
                                     <Field name={`${item}.publisher_id`} type="hidden" component={InputGroup}/>
                                 </td>

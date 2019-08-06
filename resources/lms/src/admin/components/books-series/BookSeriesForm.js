@@ -174,6 +174,7 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
                                                         placeholder="Select Book"
                                                         groupText="book"
                                                         component={Select}
+                                                        isSearchable={true}
                                                     />
                                                 </td>
                                                 <td className="text-center">

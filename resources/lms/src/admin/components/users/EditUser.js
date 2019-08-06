@@ -35,13 +35,10 @@ const EditUser = (props) => {
         const {address_1, address_2, country_id, city, state, zip} = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.selectedCountry = country_id ? countries.filter(country => country.id === +country_id) : [];
+        changeAbleFields.country = country_id ? countries.find(country => country.id === +country_id) : null;
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
-    }
-    if (!address) {
-        changeAbleFields.selectedCountry = [];
     }
     const prepareFormOption = {
         onSaveUser,

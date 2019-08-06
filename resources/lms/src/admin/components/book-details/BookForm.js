@@ -102,10 +102,10 @@ const BookForm = (props) => {
                 </div>
                 <hr style={{marginTop: '0px'}}/>
                 <Row>
-                    <Col xs={6}>
-                        <Field name="isbn" label="ISBN No" required groupText="id-card" component={InputGroup}/>
+                    <Col xs={12}>
+                        <Field name="name" label="Name" required groupText="book" component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12}>
                         <TypeAhead
                             id="author"
                             label="Authors"
@@ -121,6 +121,9 @@ const BookForm = (props) => {
                         <Field name="authors" type="hidden" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
+                        <Field name="isbn" label="ISBN No" required groupText="id-card" component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
                         <TypeAhead
                             id="genres"
                             label="Genres"
@@ -134,9 +137,6 @@ const BookForm = (props) => {
                             isInvalid={isValidGenre}
                         />
                         <Field name="genres" type="hidden" component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="name" label="Name" required groupText="book" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <TypeAhead

@@ -11,7 +11,7 @@ import {
 import './Component.scss';
 
 export default (props) => {
-    const {input, placeholder, required, label, groupText, isSearchable = false, defaultValue = {}, meta: {touched, error}, options, isAuto = false, isMini = false} = props;
+    const {input, placeholder, required, label, groupText, isSearchable = false, defaultValue = {}, disabled, menuPlacement = "auto", meta: {touched, error}, options, isAuto = false, isMini = false} = props;
     const labelClass = required ? 'control-label' : '';
     let reactSelectInputClass = isAuto ? 'react-select__input react-select__input--inline' : 'react-select__input react-select__input--modal';
     reactSelectInputClass = isMini ? 'react-select__input react-select__input--mini' : reactSelectInputClass;
@@ -30,12 +30,14 @@ export default (props) => {
                     placeholder={placeholder}
                     value={input.value}
                     onChange={(value) => input.onChange(value)}
+                    isDisabled={disabled}
                     onBlur={() => input.onBlur(input.value)}
                     options={options}
                     getOptionLabel={(option) => option.name}
                     getOptionValue={(option) => option.id}
                     defaultValue={defaultValue}
                     isSearchable={isSearchable}
+                    menuPlacement={menuPlacement}
                 />
             </InputGroup>
             {touched && ((error && <FormFeedback className="d-block">{error}</FormFeedback>))}

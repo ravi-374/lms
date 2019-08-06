@@ -1,7 +1,6 @@
 @import "../../../scss/variables";
 
 .book-image-container {
-    max-width: 250px;
     height: 250px;
     border: 1px solid $image-border;
     border-radius: 10px;
@@ -31,8 +30,7 @@
 }
 
 .book-detail {
-    width: calc(100% - 250px);
-
+   
     @media (max-width: 1139px) {
         width: 100%;
         margin: auto;

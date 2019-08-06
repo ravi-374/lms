@@ -31,20 +31,18 @@ const MemberProfile = props => {
         password,
         membership_plan_id,
         image,
-        selectedMemberShipPlan: membershipPlans.filter(memberPlan => memberPlan.id === +membership_plan_id),
+        membership_plan: props.membershipPlans.find(memberPlan => memberPlan.id === membership_plan_id),
         phone
     };
     if (address) {
         const {address_1, address_2, country_id, city, state, zip} = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
+        changeAbleFields.country = country_id ? countries.find(country => country.id === +country_id) : null;
         changeAbleFields.selectedCountry = country_id ? countries.filter(country => country.id === +country_id) : [];
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
-    }
-    if (!address) {
-        changeAbleFields.selectedCountry = [];
     }
     const prepareFormOption = {
         initialValues: changeAbleFields,

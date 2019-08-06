@@ -7,10 +7,8 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
-import {membershipPlanFrequencyOptions} from "../../constants";
 
 const UserForm = (props) => {
     const {initialValues, change, roles, countries} = props;
@@ -18,7 +16,6 @@ const UserForm = (props) => {
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
-    const [selectedCountry] = useState(initialValues ? initialValues.selectedCountry : []);
     useEffect(() => {
         if (initialValues) {
             if (initialValues.is_active) {
@@ -55,13 +52,6 @@ const UserForm = (props) => {
     };
     const onChecked = () => {
         setActive(!isActive);
-    };
-    const onSelectCountry = (option) => {
-        if (option.length > 0) {
-            change('country_id', option[0].id);
-        } else {
-            change('country_id', null);
-        }
     };
     const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
@@ -105,6 +95,7 @@ const UserForm = (props) => {
                             placeholder="Select Role"
                             groupText="tasks"
                             component={Select}
+                            isSearchable={true}
                             isMini={true}
                         />
                     </Col>
@@ -135,17 +126,16 @@ const UserForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead
-                            id="country"
+                        <Field
+                            name="country"
                             label="Country"
                             options={countries}
                             placeholder="Select Country"
-                            onChange={onSelectCountry}
                             groupText="flag"
-                            defaultSelected={selectedCountry}
-                            dropUp={true}
+                            component={Select}
+                            isSearchable={true}
+                            isMini={true}
                         />
-                        <Field name="country_id" type="hidden" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
