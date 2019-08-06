@@ -44,6 +44,15 @@ class TagAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function test_update_tag_fails_when_name_is_not_duplicate()
+    {
+        $tags = factory(Tag::class)->times(2)->create();
+
+        $this->put('api/b1/tags/'.$tags[1]->id, ['name' => $tags[0]->name])
+            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+    }
+
+    /** @test */
     public function it_can_store_tag()
     {
         $fakeTag = factory(Tag::class)->make()->toArray();

@@ -3,9 +3,7 @@
 namespace Tests\Controllers\Validations;
 
 use App\Models\Member;
-use App\Models\MembershipPlan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class MemberControllerValidationTest extends TestCase
@@ -46,6 +44,20 @@ class MemberControllerValidationTest extends TestCase
     {
         $this->post('api/b1/members', ['password' => ''])
             ->assertSessionHasErrors(['password' => 'The password field is required.']);
+    }
+
+    /** @test */
+    public function test_create_member_fails_when_password_length_is_less_than_six()
+    {
+        $this->post('api/b1/members', ['password' => 12345])
+            ->assertSessionHasErrors(['password' => 'The password must be at least 6 characters.']);
+    }
+
+    /** @test */
+    public function test_create_member_fails_when_member_ship_plan_id_is_not_passed()
+    {
+        $this->post('api/b1/members', ['membership_plan_id' => ''])
+            ->assertSessionHasErrors(['membership_plan_id' => 'The membership plan id field is required.']);
     }
 
     /** @test */
