@@ -26,7 +26,6 @@ const Layout = (props) => {
     const {permissions} = props;
     const newRoutes = prepareRoutes(permissions);
     useEffect(() => {
-        console.log(window.location.href);
         if (!localStorage.getItem(Tokens.ADMIN)) {
             sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
         } else {
