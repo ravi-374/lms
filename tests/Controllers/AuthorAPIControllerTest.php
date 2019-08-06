@@ -2,6 +2,7 @@
 
 namespace Tests\Controllers;
 
+use App\Models\ActivityType;
 use App\Models\Author;
 use App\Repositories\AuthorRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -34,6 +35,28 @@ class AuthorAPIControllerTest extends TestCase
         parent::tearDown();
 
         \Mockery::close();
+    }
+
+    /** @test */
+    public function test_can_get_authors()
+    {
+        $this->mockRepository();
+
+        $authors = factory(Author::class)->times(5)->create();
+
+        $this->authorRepo->shouldReceive('all')
+            ->once()
+            ->andReturn($authors);
+
+        $response = $this->getJson('api/b1/authors');
+
+        $this->assertSuccessMessageResponse($response, 'Authors retrieved successfully.');
+        $this->assertCount(5, $response->original['data']);
+
+        $data = \Arr::pluck($response->original['data'], 'first_name');
+        $authors->map(function (Author $author) use ($data) {
+            $this->assertContains($author->first_name, $data);
+        });
     }
 
     /** @test */
