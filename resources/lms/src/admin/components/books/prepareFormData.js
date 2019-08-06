@@ -21,8 +21,8 @@ export default (formValues) => {
         items.forEach((item, index) => {
             formData.append(`items[${index}][edition]`, item.edition ? item.edition : '');
             formData.append(`items[${index}][format]`, item.format ? item.format.id.toString() : '');
-            formData.append(`items[${index}][language_id]`, item.language_id ? item.language_id.toString() : '');
-            formData.append(`items[${index}][publisher_id]`, item.publisher_id ? item.publisher_id.toString() : '');
+            formData.append(`items[${index}][language_id]`, item.language ? item.language.id.toString() : '');
+            formData.append(`items[${index}][publisher_id]`, item.publisher ? item.publisher.id.toString() : '');
             formData.append(`items[${index}][price]`, item.price ? item.price.toString() : '');
         });
     }

@@ -10,8 +10,8 @@ export default formValues => {
     if (!formValues.format) {
         errors.format = 'Format must be required.';
     }
-    if (!formValues.language_id) {
-        errors.language_id = 'Language must be required.';
+    if (!formValues.language) {
+        errors.language = 'Language must be required.';
     }
     if (!formValues.price) {
         errors.price = 'Price must be required.';

@@ -19,10 +19,10 @@ const EditBookItem = (props) => {
         addBookItem(bookId, bookItemArray);
     };
     const changeAbleFields = {
-        book_code, edition, format, location, price,
-        selectedLanguage: bookLanguages.filter(language => language.id === language_id),
-        selectedPublisher: publishers.filter(publisher => publisher.id === publisher_id),
-        selectedFormat: bookFormatOptions.filter(bookFormat => bookFormat.id === format),
+        book_code, edition, location, price,
+        language: bookLanguages.find(language => language.id === language_id),
+        publisher: publishers.find(publisher => publisher.id === publisher_id),
+        format: bookFormatOptions.find(bookFormat => bookFormat.id === format),
     };
     const prepareFormOption = {
         saveBookItem,

@@ -44,3 +44,9 @@ export const mapCurrencyCode = (isoCode) => {
             return 'inr';
     }
 };
+
+export const enableDisableUserInput = (event, digit) => {
+    if (event.target.value.length > digit) {
+        event.preventDefault();
+    }
+};

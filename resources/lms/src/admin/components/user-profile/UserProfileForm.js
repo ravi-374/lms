@@ -6,24 +6,20 @@ import './UserProfile.scss';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import Select from "../../../shared/components/Select";
 
 const UserProfileForm = (props) => {
     const {initialValues, change, roles, countries} = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
-    const [selectedRole] = useState(initialValues.selectedRole);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
-    const [selectedCountry] = useState(initialValues.selectedCountry);
     const defaultImage = publicImagePath.USER_AVATAR;
-    const [isValidRole, setIsValidRole] = useState(false);
     useEffect(() => {
         if (initialValues.image) {
             setImage(publicImagePathURL.USER_AVATAR_URL + initialValues.image);
             setIsDefaultImage(false);
         }
-        change('role_id', selectedRole[0].id);
     }, []);
     const onSaveProfile = (formValues) => {
         formValues.file = file;
@@ -44,22 +40,6 @@ const UserProfileForm = (props) => {
         setFile(null);
         setImage(defaultImage);
         setIsDefaultImage(true);
-    };
-    const onSelectRole = (option) => {
-        if (option.length > 0) {
-            setIsValidRole(false);
-            props.change('role_id', option[0].id);
-        } else {
-            setIsValidRole(true);
-            props.change('role_id', null);
-        }
-    };
-    const onSelectCountry = (option) => {
-        if (option.length > 0) {
-            change('country_id', option[0].id);
-        } else {
-            change('country_id', null);
-        }
     };
     const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
@@ -94,18 +74,16 @@ const UserProfileForm = (props) => {
                                component={InputGroup}/>
                     </Col>
                     <Col xs={12}>
-                        <TypeAhead
-                            id="role"
+                        <Field
+                            name="role"
                             label="Role"
                             required
                             options={roles}
                             placeholder="Select Role"
-                            onChange={onSelectRole}
                             groupText="tasks"
-                            defaultSelected={selectedRole}
-                            isInvalid={isValidRole}
+                            component={Select}
+                            isSearchable={true}
                         />
-                        <Field name="role_id" type="hidden" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
@@ -134,17 +112,17 @@ const UserProfileForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead
-                            id="country"
+                        <Field
+                            name="country"
                             label="Country"
                             options={countries}
                             placeholder="Select Country"
-                            onChange={onSelectCountry}
                             groupText="flag"
-                            defaultSelected={selectedCountry}
-                            dropUp={true}
+                            component={Select}
+                            isSearchable={true}
+                            isMini={true}
+                            menuPlacement="top"
                         />
-                        <Field name="country_id" type="hidden" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>

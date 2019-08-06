@@ -70,8 +70,8 @@ const UserDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="user-detail-row no-gutters">
-                                    <div className="image-holder-wrapper">
-                                        <div className="image-holder">
+                                    <div className="user__image-holder-wrapper">
+                                        <div className="user__image-holder">
                                             <img src={imageUrl} height="250"/>
                                         </div>
                                     </div>

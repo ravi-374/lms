@@ -1,4 +1,4 @@
-import React, {createRef, Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
@@ -9,37 +9,25 @@ import TextArea from '../../../shared/components/TextArea';
 import {bookAllotmentStatusConstant, bookStatusOptions} from '../../constants';
 import './BooksAllotment.scss';
 import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
-import TypeAhead from '../../../shared/components/TypeAhead';
 import moment from 'moment';
 import DatePicker from '../../../shared/components/DatePicker';
+import Select from "../../../shared/components/Select";
 
 let bookId = null;
 let memberId = null;
 const BookAllotmentForm = props => {
     const {initialValues} = props;
-    const [selectedBook] = useState(initialValues ? initialValues.selectedBook : []);
-    const [selectedBookItem] = useState(initialValues ? initialValues.selectedBookItem : []);
-    const [selectedMember] = useState(initialValues ? initialValues.selectedMember : []);
-    const [selectedStatus] = useState(initialValues ? initialValues.selectedStatus : []);
     const [isDisabledItem, setDisabledItem] = useState(true);
-    const [isValidBook, setIsValidBook] = useState(false);
-    const [isValidMember, setIsValidMember] = useState(false);
-    const [isValidBookItem, setIsValidBookItem] = useState(false);
-    const [isValidStatus, setIsValidStatus] = useState(false);
     const [status, setStatus] = useState(null);
-    const bookItemRef = createRef();
     const [selectedDate, setSelectedDate] = useState(null);
     useEffect(() => {
         bookId = null;
         memberId = null;
         if (initialValues) {
-            bookId = selectedBook[0].id;
-            memberId = selectedMember[0].id;
-            props.change('book_id', selectedBook[0].id);
-            props.change('book_item_id', selectedBookItem[0].id);
-            props.change('member_id', selectedMember[0].id);
-            props.change('status', selectedStatus[0].id);
-            setStatus(selectedStatus[0].id);
+            const {book, member} = initialValues;
+            bookId = book.id;
+            memberId = member.id;
+            setStatus(initialValues.status.id);
             setDisabledItem(false);
             if (initialValues.reserve_date) {
                 setSelectedDate(moment(initialValues.reserve_date).toDate());
@@ -54,8 +42,14 @@ const BookAllotmentForm = props => {
         }
     }, []);
     const prepareFormValues = (formValues) => {
-        const {book_id, book_item_id, member_id, note, status} = formValues;
-        const formData = {book_id, book_item_id, member_id, note, status};
+        const {book, book_item, member, note} = formValues;
+        const formData = {
+            book_id: book.id,
+            book_item_id: book_item.id,
+            member_id: member.id,
+            note,
+            status: formValues.status.id
+        };
         switch (status) {
             case bookAllotmentStatusConstant.BOOK_RESERVED:
                 formData.reserve_date = selectedDate ? moment(selectedDate).format('YYYY-MM-DD hh:mm:ss') : "";
@@ -78,52 +72,21 @@ const BookAllotmentForm = props => {
             props.fetchAvailableBooks(bookId, memberId);
         } else {
             setDisabledItem(true);
-            bookItemRef.current.getInstance().clear()
+            props.change('book_item', null);
         }
     };
     const onSelectBook = (option) => {
-        if (option.length > 0) {
-            bookId = option[0].id;
-            setIsValidBook(false);
-            props.change('book_id', option[0].id);
-        } else {
-            bookId = null;
-            setIsValidBook(true);
-            props.change('book_id', null);
-        }
+        props.change('book_item', null);
+        bookId = option.id;
         getBooks();
     };
     const onSelectMember = (option) => {
-        if (option.length > 0) {
-            memberId = option[0].id;
-            setIsValidMember(false);
-            props.change('member_id', option[0].id);
-        } else {
-            memberId = null;
-            setIsValidMember(true);
-            props.change('member_id', null);
-        }
+        props.change('book_item', null);
+        memberId = option.id;
         getBooks();
     };
-    const onSelectBookItem = (option) => {
-        if (option.length > 0) {
-            setIsValidBookItem(false);
-            props.change('book_item_id', option[0].id);
-        } else {
-            setIsValidBookItem(true);
-            props.change('book_item_id', null);
-        }
-    };
     const onSelectBookStatus = (option) => {
-        if (option.length > 0) {
-            setIsValidStatus(false);
-            props.change('status', option[0].id);
-            setStatus(option[0].id);
-        } else {
-            setIsValidStatus(true);
-            props.change('status', null);
-            setStatus(null);
-        }
+        setStatus(option.id);
     };
     const onSelectDate = (date) => {
         setSelectedDate(date);
@@ -162,62 +125,55 @@ const BookAllotmentForm = props => {
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <TypeAhead
-                    id="book"
+                <Field
+                    name="book"
                     label="Book"
                     required
                     options={props.books}
                     placeholder="Select Book"
                     onChange={onSelectBook}
                     groupText="book"
-                    defaultSelected={selectedBook}
-                    isInvalid={isValidBook}
+                    component={Select}
+                    isSearchable={true}
                 />
-                <Field name="book_id" type="hidden" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <TypeAhead
-                    id="member"
+                <Field
+                    name="member"
                     label="Member"
                     required
                     options={props.members}
                     placeholder="Select Member"
                     onChange={onSelectMember}
                     groupText="user-circle-o"
-                    defaultSelected={selectedMember}
-                    isInvalid={isValidMember}
+                    component={Select}
+                    isSearchable={true}
                 />
-                <Field name="member_id" type="hidden" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <TypeAhead
-                    id="book-item"
+                <Field
+                    name="book_item"
                     label="Book Item"
                     required
                     options={props.bookItems.length > 0 ? props.bookItems : props.initialValues ? props.initialValues.bookItems : props.bookItems}
                     placeholder="Select Book Item"
-                    onChange={onSelectBookItem}
                     groupText="object-group"
-                    defaultSelected={selectedBookItem}
-                    isInvalid={isValidBookItem}
-                    reference={bookItemRef}
+                    component={Select}
+                    isSearchable={true}
                     disabled={isDisabledItem}
                 />
-                <Field name="book_item_id" type="hidden" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <TypeAhead
-                    id="status"
+                <Field
+                    name="status"
                     label="Status"
                     required
                     options={bookStatusOptions}
                     placeholder="Select Status"
                     onChange={onSelectBookStatus}
                     groupText="info-circle"
-                    defaultSelected={selectedStatus}
-                    isInvalid={isValidStatus}
+                    component={Select}
                 />
-                <Field name="status" type="hidden" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 {renderDatePicker(status)}
