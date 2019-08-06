@@ -9,6 +9,7 @@ const EditBookItem = (props) => {
     const {bookLanguages, publishers, bookItems, bookItem, toggleModal, addBookItem, bookId} = props;
     const {id, book_code, edition, format, location, price, language_id, publisher_id} = bookItem;
     const saveBookItem = (formValues) => {
+        formValues.id = id;
         const bookItemArray = [...bookItems];
         const index = bookItemArray.findIndex(bookItem => bookItem.id === id);
         bookItemArray.splice(index, 1, formValues);
