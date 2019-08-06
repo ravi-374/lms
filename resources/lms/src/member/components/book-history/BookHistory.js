@@ -12,6 +12,7 @@ import EmptyComponent from "../../../shared/empty-component/EmptyComponent";
 import searchFilter from "../../../shared/searchFilter";
 import {toggleModal} from '../../../store/action/modalAction';
 import UnReserveBook from "./UnReserveBook";
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BookHistory = props => {
     const [history, setHistory] = useState(null);
@@ -45,6 +46,7 @@ const BookHistory = props => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Book History | LMS System'}/>
                 <h5 className="page-heading">Book History</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>

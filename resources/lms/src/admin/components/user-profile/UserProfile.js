@@ -9,6 +9,7 @@ import {fetchUserProfile, editUserProfile} from '../../store/actions/userProfile
 import {fetchRoles} from '../../store/actions/roleAction';
 import {fetchCountries} from '../../store/actions/countryAction';
 import prepareFormData from './prepareFormData';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MemberProfile = props => {
     const {isLoading, countries, userProfile, roles, fetchUserProfile, fetchRoles, fetchCountries, editUserProfile} = props;
@@ -60,6 +61,7 @@ const MemberProfile = props => {
     };
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'Profile | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">Profile</h5>

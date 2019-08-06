@@ -9,6 +9,7 @@ import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
 import {Routes, Tokens} from "../../../constants";
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Login = (props) => {
     let remember = true;
@@ -59,6 +60,7 @@ const Login = (props) => {
     const { handleSubmit, invalid } = props;
     return (
         <div className="app flex-row align-items-center">
+            <HeaderTitle title={'Login | LMS System'}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">

@@ -7,6 +7,7 @@ import {editBookSeries, fetchBookSeries} from '../../store/actions/bookSeriesAct
 import BookSeriesForm from './BookSeriesForm';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {setLoading} from '../../../store/action/progressBarAction';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const EditBookSeries = (props) => {
     const {books, bookSeries, isLoading} = props;
@@ -40,6 +41,7 @@ const EditBookSeries = (props) => {
     };
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'Edit Books Series | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">Edit Book Series</h5>

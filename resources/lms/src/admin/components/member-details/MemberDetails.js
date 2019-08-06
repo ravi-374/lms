@@ -15,6 +15,7 @@ import {sortAction} from '../../../store/action/sortAction';
 import sortFilter from '../../../shared/sortFilter';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MemberDetail = props => {
     const [isEditMode, setEditMode] = useState(false);
@@ -96,6 +97,7 @@ const MemberDetail = props => {
     }
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'Member Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">Member Details</h5>

@@ -15,6 +15,7 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBooksSeries} from '../../store/actions/bookSeriesAction';
 import {fetchBooks} from '../../store/actions/bookAction';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BooksSeries = (props) => {
     const [bookSeries, setBookSeries] = useState(null);
@@ -35,6 +36,7 @@ const BooksSeries = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Books Series | LMS System'}/>
                 <h5 className="page-heading">Books Series</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>

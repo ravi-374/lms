@@ -10,6 +10,7 @@ import BookItems from '../book-items/BookItems';
 import {prepareAuthor, prepareBookLanguage, preparePublisher} from '../books/prepareArray';
 import {toggleModal} from '../../../store/action/modalAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BookDetail = props => {
     const { book, bookLanguages, publishers, toggleModal, history } = props;
@@ -45,6 +46,7 @@ const BookDetail = props => {
     const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'Book-Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">Book Details</h5>

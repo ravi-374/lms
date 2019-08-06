@@ -12,6 +12,7 @@ import {fetchPublishers} from '../../store/actions/publisherAction';
 import {fetchTags} from '../../store/actions/tagAction';
 import {prepareAuthor, preparePublisher, prepareBookLanguage} from './prepareArray';
 import prepareFormData from './prepareFormData';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const CreateBook = (props) => {
     useEffect(() => {
@@ -47,6 +48,7 @@ const CreateBook = (props) => {
     };
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'New Book | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">New Book</h5>

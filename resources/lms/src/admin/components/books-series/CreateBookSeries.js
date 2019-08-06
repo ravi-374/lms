@@ -6,6 +6,7 @@ import Toasts from '../../../shared/toast/Toasts';
 import {addBookSeries} from '../../store/actions/bookSeriesAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import BookSeriesForm from './BookSeriesForm';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const CreateBookSeries = (props) => {
     useEffect(() => {
@@ -33,6 +34,7 @@ const CreateBookSeries = (props) => {
     };
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'New Books Series | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">New Book Series</h5>

@@ -13,6 +13,7 @@ import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchGenres} from '../../store/actions/genreAction';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Genres = (props) => {
     const [isEditMode, setEditMode] = useState(false);
@@ -36,6 +37,7 @@ const Genres = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Genres | LMS System'}/>
                 <h5 className="page-heading">Genres</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>

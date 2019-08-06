@@ -11,6 +11,7 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import Book from './Book';
 import './Books.scss';
 import {prepareFullNames} from '../../../shared/sharedMethod';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Books = (props) => {
     const {isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors} = props;
@@ -34,6 +35,7 @@ const Books = (props) => {
     const prepareFormOption = {books, authors, onSearchBook};
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'Books | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">Books</h5>

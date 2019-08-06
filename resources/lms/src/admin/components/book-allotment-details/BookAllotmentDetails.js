@@ -14,6 +14,7 @@ import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
 import {bookFormatOptions} from '../../constants';
 import {Routes} from "../../../constants";
 import BookStatus from "../../../shared/book-status/book-status";
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BookAllotmentDetail = props => {
     const [isToggle, setIsToggle] = useState(false);
@@ -52,6 +53,7 @@ const BookAllotmentDetail = props => {
     const { book } = book_item;
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'Book Allotment Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">Book Allotment Details</h5>

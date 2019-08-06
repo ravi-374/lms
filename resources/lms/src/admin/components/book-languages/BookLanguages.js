@@ -13,6 +13,7 @@ import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BookLanguages = (props) => {
     const [isEditMode, setEditMode] = useState(false);
@@ -36,6 +37,7 @@ const BookLanguages = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Book Languages | LMS System'}/>
                 <h5 className="page-heading">Book Languages</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>

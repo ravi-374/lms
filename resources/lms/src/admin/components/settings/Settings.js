@@ -6,6 +6,7 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from "../../../shared/toast/Toasts";
 import SettingsForm from "./SettingsForm";
 import {settingsKey} from '../../constants';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Settings = (props) => {
     const {currencies, selectedCurrency, isLoading} = props;
@@ -26,6 +27,7 @@ const Settings = (props) => {
     }
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'Settings | LMS System'}/>
             <Row>
                 <Col xs={12}>
                     <div className="">

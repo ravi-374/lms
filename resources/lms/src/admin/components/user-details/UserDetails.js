@@ -6,6 +6,7 @@ import {fetchUser} from '../../store/actions/userAction';
 import apiConfig from '../../config/apiConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const UserDetail = props => {
     const [countries, setCountries] = useState([]);
@@ -56,6 +57,7 @@ const UserDetail = props => {
     }
     return (
         <div className="animated fadeIn">
+            <HeaderTitle title={'User Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">User Details</h5>

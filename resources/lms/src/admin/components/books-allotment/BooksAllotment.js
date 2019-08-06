@@ -16,6 +16,7 @@ import {fetchBooksAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 import {prepareFullNames} from '../../../shared/sharedMethod';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
@@ -41,6 +42,7 @@ const BooksAllotment = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Books Allotments | LMS System'}/>
                 <h5 className="page-heading">Books Allotment</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>

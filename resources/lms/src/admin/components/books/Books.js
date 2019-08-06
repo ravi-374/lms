@@ -1,6 +1,6 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Row, Col, Card, CardBody} from 'reactstrap';
+import {Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import {fetchBooks} from '../../store/actions/bookAction';
 import SearchField from '../../../shared/components/SearchField';
@@ -13,10 +13,11 @@ import Toasts from '../../../shared/toast/Toasts';
 import Book from './Book';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Books = (props) => {
     const [book, setBook] = useState(null);
-    const {books, history, sortAction, sortObject, isLoading, toggleModal} = props;
+    const { books, history, sortAction, sortObject, isLoading, toggleModal } = props;
     useEffect(() => {
         props.fetchBooks(props.history);
     }, []);
@@ -46,6 +47,7 @@ const Books = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Books | LMS System'}/>
                 <h5 className="page-heading">Books</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
@@ -70,7 +72,7 @@ const Books = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {books, searchText, sortObject, isLoading, filterObject} = state;
+    const { books, searchText, sortObject, isLoading, filterObject } = state;
     let booksArray = Object.values(books);
     if (searchText) {
         booksArray = searchFilter(booksArray, searchText);

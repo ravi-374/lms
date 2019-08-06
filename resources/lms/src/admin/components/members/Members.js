@@ -14,6 +14,7 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const members = (props) => {
     const [isCreateMode, setCreateMode] = useState(false);
@@ -43,6 +44,7 @@ const members = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Members | LMS System'}/>
                 <h5 className="page-heading">Members</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>

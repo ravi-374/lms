@@ -15,6 +15,7 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {fetchUsers} from '../../store/actions/userAction';
 import {fetchRoles} from '../../store/actions/roleAction';
 import {ErrorBoundary} from "react-beautiful-dnd";
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Users = (props) => {
     const [isEditMode, setEditMode] = useState(false);
@@ -44,6 +45,7 @@ const Users = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <HeaderTitle title={'Users | LMS System'}/>
                 <h5 className="page-heading">Users</h5>
                 <div className="d-flex justify-content-end">
                     <SearchField/>
