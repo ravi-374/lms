@@ -114,7 +114,7 @@ class AuthorAPIControllerTest extends TestCase
 
         $response = $this->deleteJson("api/b1/authors/$author->id");
 
-        $this->assertSuccessMessageResponse($response, 'Author deleted successfully.');
+        $this->assertSuccessDataResponse($response, $author->toArray(), 'Author deleted successfully.');
     }
 
     /** @test */
