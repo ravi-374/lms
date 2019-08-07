@@ -6,13 +6,12 @@ use App\Models\Setting;
 use App\Models\Tag;
 use App\Repositories\SettingRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
 class SettingAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     /** @var MockInterface */
     protected $settingRepo;
@@ -21,7 +20,7 @@ class SettingAPIControllerTest extends TestCase
     {
         parent::setUp();
         $this->signInWithDefaultAdminUser();
-        $this->withHeaders(['X-Requested-With' => 'XMLHttpRequest']);
+        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     private function mockRepository()
@@ -34,6 +33,30 @@ class SettingAPIControllerTest extends TestCase
     {
         parent::tearDown();
         \Mockery::close();
+    }
+
+    /** @test */
+    public function test_can_get_all_settings()
+    {
+        $this->mockRepository();
+
+        $settings = factory(Setting::class)->times(5)->create();
+
+        $this->settingRepo->shouldReceive('all')
+            ->once()
+            ->andReturn($settings);
+
+        $response = $this->getJson('api/b1/settings');
+
+        $this->assertSuccessMessageResponse($response, 'Settings retrieved successfully.');
+        $this->assertCount(5, $response->original['data']);
+
+        $keys = \Arr::pluck($response->original['data'], 'key');
+        $values = \Arr::pluck($response->original['data'], 'value');
+        $settings->map(function (Setting $setting) use ($keys, $values) {
+            $this->assertContains($setting->key, $keys);
+            $this->assertContains($setting->value, $values);
+        });
     }
 
     /** @test */
@@ -54,6 +77,25 @@ class SettingAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function it_can_update_setting()
+    {
+        $this->mockRepository();
+
+        /** @var Setting $setting */
+        $setting = factory(Setting::class)->create();
+        $updateRecord = factory(Setting::class)->make();
+
+        $this->settingRepo->shouldReceive('update')
+            ->once()
+            ->with($updateRecord->toArray(), $setting->id)
+            ->andReturn($updateRecord);
+
+        $response = $this->putJson('api/b1/settings/'.$setting->id, $updateRecord->toArray());
+
+        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Setting updated successfully.');
+    }
+
+    /** @test */
     public function it_can_retrieve_setting()
     {
         /** @var Tag $setting */
@@ -61,7 +103,7 @@ class SettingAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/settings/'.$setting->id);
 
-        $this->assertSuccessMessageResponse($response, 'Setting retrieved successfully.');
+        $this->assertSuccessDataResponse($response, $setting->toArray(), 'Setting retrieved successfully.');
     }
 
     /** @test */
@@ -72,6 +114,6 @@ class SettingAPIControllerTest extends TestCase
 
         $response = $this->deleteJson("api/b1/settings/$setting->id");
 
-        $this->assertSuccessMessageResponse($response, 'Setting deleted successfully.');
+        $this->assertSuccessDataResponse($response, $setting->toArray(), 'Setting deleted successfully.');
     }
 }
