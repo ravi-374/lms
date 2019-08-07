@@ -57,7 +57,7 @@ class AccountAPIController extends AppBaseController
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = $url .'?'. $encodedToken;
+        $data['link'] = $url .'?token='. $encodedToken;
         $data['first_name'] = $user->first_name;
         $data['last_name'] = $user->last_name;
         $data['email'] = $user->email;
