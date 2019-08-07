@@ -66,4 +66,13 @@ abstract class TestCase extends BaseTestCase
     {
         $this->assertEquals($message, $response->exception->getMessage());
     }
+
+    public function assertErrorMessageResponse(TestResponse $response, string $message)
+    {
+        $response->assertStatus(422)
+            ->assertJson([
+                'success' => false,
+                'message' => $message,
+            ]);
+    }
 }
