@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\B1;
+namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
@@ -139,8 +139,9 @@ class MemberAuthController extends AppBaseController
      */
     public function sendResetPasswordLink(Request $request)
     {
-        $request->validate(['email' => 'required']);
+        $request->validate(['email' => 'required', 'url' => 'required']);
 
+        $url = $request->url;
         $data = [];
         /** @var User $member */
         $member = Member::whereEmail($request->get('email'))->first();
@@ -151,7 +152,7 @@ class MemberAuthController extends AppBaseController
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = URL::to('/#/reset-password?'.$encodedToken);
+        $data['link'] = $url .'?token'. $encodedToken;
         $data['first_name'] = $member->first_name;
         $data['last_name'] = $member->last_name;
         $data['email'] = $member->email;

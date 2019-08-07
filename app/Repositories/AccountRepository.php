@@ -51,7 +51,7 @@ class AccountRepository
                 });
 
         } catch (Exception $e) {
-            throw new Exception('Unable to send password reset mail.');
+            throw new Exception('Unable to send password reset mail, Please contact to your administrator');
         }
 
         return true;
