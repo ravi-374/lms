@@ -80,7 +80,7 @@ const UserDetail = props => {
                                             <div className="user-detail__item">
                                                 <span className="user-detail__item-heading">Name</span>
                                                 <span>
-                                                    {user.first_name + ' ' + user.last_name ? user.last_name : ''}
+                                                    {user.first_name + ' ' + user.last_name}
                                                 </span>
                                             </div>
                                             <div className="user-detail__item">
