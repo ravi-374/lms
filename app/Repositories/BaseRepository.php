@@ -89,6 +89,10 @@ abstract class BaseRepository
             }
         }
 
+        if (!is_null($search['order_by'])) {
+            $query->orderBy($search['order_by'], $search['direction']);
+        }
+
         if (!is_null($skip)) {
             $query->skip($skip);
         }
