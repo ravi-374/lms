@@ -44,8 +44,9 @@ class AccountAPIController extends AppBaseController
      */
     public function sendResetPasswordLink(Request $request)
     {
-        $request->validate(['email' => 'required']);
+        $request->validate(['email' => 'required', 'url' => 'required']);
 
+        $url = $request->url;
         $data = [];
         /** @var User $user */
         $user = User::whereEmail($request->get('email'))->first();
@@ -56,7 +57,7 @@ class AccountAPIController extends AppBaseController
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = URL::to('/#/reset-password?'.$encodedToken);
+        $data['link'] = $url .'?'. $encodedToken;
         $data['first_name'] = $user->first_name;
         $data['last_name'] = $user->last_name;
         $data['email'] = $user->email;
