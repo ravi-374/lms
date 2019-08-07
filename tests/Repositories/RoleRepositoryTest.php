@@ -2,14 +2,8 @@
 
 namespace Tests\Repositories;
 
-use App\Models\Book;
-use App\Models\BookLanguage;
-use App\Models\BookSeries;
 use App\Models\Permission;
-use App\Models\Publisher;
 use App\Models\Role;
-use App\Repositories\BookRepository;
-use App\Repositories\BookSeriesRepository;
 use App\Repositories\RoleRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
