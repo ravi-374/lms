@@ -4,15 +4,16 @@ namespace Tests\Controllers;
 
 use App\Models\ActivityType;
 use App\Models\Author;
+use App\Models\Book;
+use App\Models\Client;
 use App\Repositories\AuthorRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
 class AuthorAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     /** @var MockInterface */
     protected $authorRepo;
@@ -21,7 +22,7 @@ class AuthorAPIControllerTest extends TestCase
     {
         parent::setUp();
         $this->signInWithDefaultAdminUser();
-        $this->withHeaders(['X-Requested-With' => 'XMLHttpRequest']);
+        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     private function mockRepository()
@@ -33,7 +34,6 @@ class AuthorAPIControllerTest extends TestCase
     public function tearDown(): void
     {
         parent::tearDown();
-
         \Mockery::close();
     }
 
@@ -78,6 +78,24 @@ class AuthorAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function it_can_update_author()
+    {
+        $this->mockRepository();
+
+        $author = factory(Author::class)->create();
+        $updateRecord = factory(Author::class)->make();
+
+        $this->authorRepo->shouldReceive('update')
+            ->once()
+            ->with($updateRecord->toArray(), $author->id)
+            ->andReturn($updateRecord);
+
+        $response = $this->putJson('api/b1/authors/'.$author->id, $updateRecord->toArray());
+
+        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Author updated successfully.');
+    }
+
+    /** @test */
     public function test_can_retrieve_author()
     {
         /** @var Author $author */
@@ -85,7 +103,7 @@ class AuthorAPIControllerTest extends TestCase
 
         $response = $this->getJson("api/b1/authors/$author->id");
 
-        $this->assertSuccessMessageResponse($response, 'Author retrieved successfully.');
+        $this->assertSuccessDataResponse($response, $author->toArray(), 'Author retrieved successfully.');
     }
 
     /** @test */
@@ -97,5 +115,19 @@ class AuthorAPIControllerTest extends TestCase
         $response = $this->deleteJson("api/b1/authors/$author->id");
 
         $this->assertSuccessMessageResponse($response, 'Author deleted successfully.');
+    }
+
+    /** @test */
+    public function test_unable_to_delete_author_when_is_assigned_to_user()
+    {
+        $book = factory(Book::class)->create();
+
+        /** @var Author $author */
+        $author = factory(Author::class)->create();
+        $author->books()->sync([$book->id]);
+
+        $response = $this->deleteJson("api/b1/authors/$author->id");
+
+        $this->assertExceptionMessage($response, 'Author can not be delete, it is used in one or more books.');
     }
 }
