@@ -38,8 +38,7 @@ class GenreAPIController extends AppBaseController
         $genres = $this->genreRepository->all(
             $request->except(['skip', 'limit']),
             $request->get('skip'),
-            $request->get('limit'),
-            $request->get('order_by')
+            $request->get('limit')
         );
 
         return $this->sendResponse($genres->toArray(), 'Genres retrieved successfully.');
