@@ -31,6 +31,10 @@ export const Routes = {
 };
 
 export const Tokens = {
-    ADMIN:'authtoken',
-    MEMBER:'memberToken'
+    ADMIN: 'authtoken',
+    MEMBER: 'memberToken'
+};
+
+export const Roles = {
+    ADMIN_ROLE_NAME: 'admin'
 };

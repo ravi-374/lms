@@ -31,11 +31,13 @@ export default {
             if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED
                 || error.response.data.message === errorMessage.TOKEN_INVALID
                 || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
-                || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
+                || error.response.data.message === errorMessage.TOKEN_EXPIRED
+                || error.response.data.message === errorMessage.USER_DEACTIVATE
+            ) {
                 window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
                 localStorage.removeItem(Tokens.ADMIN);
             }
-            return Promise.reject({ ...error })
+            return Promise.reject({...error})
         };
         const successHandler = (response) => {
             return response;

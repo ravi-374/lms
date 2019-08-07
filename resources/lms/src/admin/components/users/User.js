@@ -10,7 +10,7 @@ import './Users.scss';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
-import {Routes} from "../../../constants";
+import {Routes, Roles} from "../../../constants";
 
 const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setActiveInactive, history}) => {
     const isActive = users.length > 0 ? users.map(({is_active}) => is_active) : [];
@@ -31,7 +31,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
         })
     };
     const goToUserDetail = (userId) => {
-        history.push(`${Routes.USERS +userId}/details`);
+        history.push(`${Routes.USERS + userId}/details`);
     };
     return (
         <Table hover bordered striped responsive size="md">
@@ -45,6 +45,7 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
                         const role = roles.find(role => role.id === +user.roles[0].id);
                         if (role) {
                             user.role_name = role.display_name;
+                            user.role = role.name;
                         }
                     }
                     user.name = user.first_name + ' ' + user.last_name;
@@ -59,11 +60,12 @@ const User = ({users, roles, onOpenModal, sortAction, sortObject, addToast, setA
                             <td className="align-middle">{user.role_name ? user.role_name : ' '}</td>
                             <td className="text-center user-table-row__switch">
                                 <div className="user-form__switch" onClick={(e) => e.stopPropagation()}>
-                                    <Field name="is_active" checked={isActive[index]} component={ToggleSwitch}
-                                           onChange={() => onChecked(index, user.id)}/>
+                                    {user.role !== Roles.ADMIN_ROLE_NAME ?
+                                        <Field name="is_active" checked={isActive[index]} component={ToggleSwitch}
+                                               onChange={() => onChecked(index, user.id)}/> : null
+                                    }
                                 </div>
                             </td>
-
                             <td className="align-middle text-center">
                                 <ModalAction onOpenModal={onOpenModal} item={user}/>
                             </td>
