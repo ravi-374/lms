@@ -75,9 +75,10 @@ abstract class BaseRepository
      * @param array $search
      * @param int|null $skip
      * @param int|null $limit
+     * @param string|null $order
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function allQuery($search = [], $skip = null, $limit = null)
+    public function allQuery($search = [], $skip = null, $limit = null, $order = null)
     {
         $query = $this->model->newQuery();
 
@@ -87,6 +88,10 @@ abstract class BaseRepository
                     $query->where($key, $value);
                 }
             }
+        }
+
+        if (!is_null($order)) {
+            $query->orderBy($order, 'asc');
         }
 
         if (!is_null($skip)) {
@@ -113,13 +118,14 @@ abstract class BaseRepository
      * @param array $search
      * @param int|null $skip
      * @param int|null $limit
+     * @param string |null $order
      * @param array $columns
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
+    public function all($search = [], $skip = null, $limit = null, $order = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit);
+        $query = $this->allQuery($search, $skip, $limit, $order);
 
         return $query->get($columns);
     }
