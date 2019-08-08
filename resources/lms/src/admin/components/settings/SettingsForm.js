@@ -9,7 +9,7 @@ import {addToast} from '../../../store/action/toastAction';
 import {mapCurrencyCode} from '../../../shared/sharedMethod';
 
 const SettingsForm = (props) => {
-    const {currencies,initialValues} = props;
+    const { currencies, initialValues } = props;
     const [groupText, setGroupText] = useState(mapCurrencyCode(initialValues.currencySetting ? initialValues.currencySetting.id : null));
     const onSelectCurrency = (option) => {
         setGroupText(mapCurrencyCode(option.id))
@@ -25,17 +25,9 @@ const SettingsForm = (props) => {
     return (
         <Row>
             <Col xs={6}>
-                <Field
-                    name='currencySetting'
-                    label="Currency"
-                    required
-                    groupText={groupText}
-                    options={currencies}
-                    onChange={onSelectCurrency}
-                    component={Select}
-                    isSearchable={true}
-                    isAuto={true}
-                />
+                <Field name='currencySetting' label="Currency" required groupText={groupText} options={currencies}
+                       onChange={onSelectCurrency} component={Select} isSearchable={true} isAuto={true}
+                       autoFocus={!!initialValues}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveSettings)} {...props}/>
@@ -44,5 +36,5 @@ const SettingsForm = (props) => {
     );
 };
 
-const form = reduxForm({form: 'settingsForm', validate: settingsFormValidate})(SettingsForm);
-export default connect(null, {addToast})(form);
+const form = reduxForm({ form: 'settingsForm', validate: settingsFormValidate })(SettingsForm);
+export default connect(null, { addToast })(form);

@@ -9,7 +9,7 @@ import {
     Input
 } from 'reactstrap';
 
-export default ({input, label, type = "text", min, max, required, readOnly, groupText, customGroupText = '', addOnType = 'prepend', placeholder, meta: {touched, error}}) => {
+export default ({input, label, type = "text", min, max, required, readOnly,autoFocus, groupText, customGroupText = '', addOnType = 'prepend', placeholder, meta: {touched, error}}) => {
     const inputClass = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
     const formClass = type === 'hidden' ? 'input-form-group' : '';
@@ -25,7 +25,7 @@ export default ({input, label, type = "text", min, max, required, readOnly, grou
                     </InputGroupAddon>
                     : null
                 }
-                <Input type={type} {...input} min={min} max={max} readOnly={readOnly} required={required}
+                <Input type={type} {...input} min={min} max={max} readOnly={readOnly} autoFocus={autoFocus} required={required}
                        className={inputClass} placeholder={label} autoComplete="off"/>
                 {touched && ((error && <FormFeedback>{error}</FormFeedback>))}
             </InputGroup>

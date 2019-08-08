@@ -103,7 +103,8 @@ const BookForm = (props) => {
                 <hr style={{marginTop: '0px'}}/>
                 <Row>
                     <Col xs={12}>
-                        <Field name="name" label="Name" required groupText="book" component={InputGroup}/>
+                        <Field name="name" label="Name" required autoFocus={!!initialValues} groupText="book"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={12}>
                         <TypeAhead

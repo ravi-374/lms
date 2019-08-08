@@ -44,11 +44,11 @@ const filteredBooks = (books, seriesItems) => {
     }));
 };
 const BookSeriesForm = props => {
-    const {initialValues, books, change, seriesItems, toggleModal} = props;
+    const { initialValues, books, change, seriesItems, toggleModal } = props;
     const [items, setItems] = useState(getItems(initialValues ? initialValues.series_items : [{
         id: 1,
         sequence: 1,
-        book_id: {id: null}
+        book_id: { id: null }
     }]));
     const onDragEnd = (result) => {
         if (!result.destination) {
@@ -68,7 +68,7 @@ const BookSeriesForm = props => {
         seriesItem.forEach((item, index) => {
             seriesItems.forEach((i) => {
                 if (item.sequence === +i.sequence) {
-                    array.push({sequence: index + 1, book_id: i.book_id})
+                    array.push({ sequence: index + 1, book_id: i.book_id })
                 }
             });
         });
@@ -77,7 +77,7 @@ const BookSeriesForm = props => {
     };
     useEffect(() => {
         if (!initialValues) {
-            props.initialize({series_items: [{sequence: 1}]});
+            props.initialize({ series_items: [{ sequence: 1 }] });
         }
     }, []);
     const prepareFormData = (formValues) => {
@@ -92,19 +92,15 @@ const BookSeriesForm = props => {
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="title" label="Title" required groupText="television" component={InputGroup}/>
+                <Field name="title" label="Title" required autoFocus={!!initialValues} groupText="television"
+                       component={InputGroup}/>
             </Col>
             <Col xs={12} className="mt-3">
                 <h5>Book Series Item Details</h5>
                 <FieldArray name="series_items" component={renderBookSeriesItems}
-                            books={filteredBooks(books, seriesItems, initialValues)}
-                            change={change}
-                            onDragEnd={onDragEnd}
-                            setItems={setItems}
-                            items={items}
-                            toggleModal={toggleModal}
-                            seriesItems={seriesItems}
-                />
+                            books={filteredBooks(books, seriesItems, initialValues)} change={change}
+                            onDragEnd={onDragEnd} setItems={setItems} items={items} toggleModal={toggleModal}
+                            seriesItems={seriesItems}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveBookSeries)} {...props}/>
@@ -112,17 +108,17 @@ const BookSeriesForm = props => {
         </Row>
     );
 };
-const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, change, items, setItems, books, toggleModal, seriesItems}) => {
+const renderBookSeriesItems = ({ fields, meta: { error, submitFailed }, onDragEnd, change, items, setItems, books, toggleModal, seriesItems }) => {
     const [index, setIndex] = useState(null);
     const onAddSubFields = () => {
-        setItems([...items, {id: `item-${items.length + 1}`, sequence: items.length + 1, book_id: null}]);
-        return fields.push({sequence: items.length + 1, book_id: null});
+        setItems([...items, { id: `item-${items.length + 1}`, sequence: items.length + 1, book_id: null }]);
+        return fields.push({ sequence: items.length + 1, book_id: null });
     };
     const onRemoveSubFields = (index) => {
         setIndex(index);
         toggleModal();
     };
-    const cardModalProps = {fields, seriesItems, items, setItems, index, setIndex, toggleModal};
+    const cardModalProps = { fields, seriesItems, items, setItems, index, setIndex, toggleModal };
     if (fields.length === 0) {
         return <EmptyComponent isShort={true} title="No books series items yet..."/>
     }
@@ -139,46 +135,31 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable">
                         {(provided, snapshot) => (
-                            <tbody
-                                ref={provided.innerRef}
-                                style={getListStyle(snapshot.isDraggingOver)}
-                                {...provided.droppableProps}
+                            <tbody ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}
+                                   {...provided.droppableProps}
                             >
                             {fields.map((item, index) => {
                                 return (
-                                    <Draggable
-                                        key={items[index].id}
-                                        draggableId={items[index].id}
-                                        index={index}
-                                    >
+                                    <Draggable key={items[index].id} draggableId={items[index].id} index={index}>
                                         {(provided, snapshot) => (
-                                            <tr
-                                                ref={provided.innerRef}
+                                            <tr ref={provided.innerRef}
                                                 {...provided.dragHandleProps}
-                                                {...provided.draggableProps}
-                                                style={getItemStyle(
-                                                    provided.draggableProps.style,
-                                                    snapshot.isDragging
-                                                )}
-                                            >
-                                                <td style={{width: '720px'}}>
+                                                {...provided.draggableProps} style={getItemStyle(
+                                                provided.draggableProps.style,
+                                                snapshot.isDragging
+                                            )}>
+                                                <td style={{ width: '720px' }}>
                                                     <Field name={`${item}.sequence`} readOnly={true}
-                                                           placeholder="Sequence"
-                                                           groupText="file-text" component={CustomInput}/>
+                                                           placeholder="Sequence" groupText="file-text"
+                                                           component={CustomInput}/>
                                                 </td>
-                                                <td style={{width: '720px'}}>
-                                                    <Field
-                                                        name={`${item}.book_id`}
-                                                        required
-                                                        options={books}
-                                                        placeholder="Select Book"
-                                                        groupText="book"
-                                                        component={Select}
-                                                        isSearchable={true}
-                                                    />
+                                                <td style={{ width: '720px' }}>
+                                                    <Field name={`${item}.book_id`} required options={books}
+                                                           placeholder="Select Book" groupText="book" component={Select}
+                                                           isSearchable={true}/>
                                                 </td>
                                                 <td className="text-center">
-                                                    <Button size="sm" color="danger" style={{marginTop: '10px'}}
+                                                    <Button size="sm" color="danger" style={{ marginTop: '10px' }}
                                                             onClick={() => onRemoveSubFields(index, item)}>
                                                         <i className="cui-trash icon font-md"/>
                                                     </Button>
@@ -203,7 +184,7 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
     )
 };
 
-let bookSeriesForm = reduxForm({form: 'bookSeriesForm', validate: bookSeriesValidate})(BookSeriesForm);
+let bookSeriesForm = reduxForm({ form: 'bookSeriesForm', validate: bookSeriesValidate })(BookSeriesForm);
 const selector = formValueSelector('bookSeriesForm');
 bookSeriesForm = connect(
     state => {
@@ -212,6 +193,6 @@ bookSeriesForm = connect(
             seriesItems
         }
     },
-    {toggleModal})(bookSeriesForm);
+    { toggleModal })(bookSeriesForm);
 
 export default bookSeriesForm;

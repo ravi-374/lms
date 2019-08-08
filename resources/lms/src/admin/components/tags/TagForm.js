@@ -12,7 +12,8 @@ const TagForm = props => {
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="name" label="Name" required groupText="tag" component={InputGroup}/>
+                <Field name="name" label="Name" required autoFocus={!!props.initialValues} groupText="tag"
+                       component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveTag)} {...props}/>
@@ -21,4 +22,4 @@ const TagForm = props => {
     );
 };
 
-export default reduxForm({form: 'tagForm', validate: tagValidate})(TagForm);
+export default reduxForm({ form: 'tagForm', validate: tagValidate })(TagForm);

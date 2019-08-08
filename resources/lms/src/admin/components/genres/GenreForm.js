@@ -13,7 +13,8 @@ const GenreForm = props => {
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="name" label="Name" required groupText="list-alt" component={InputGroup}/>
+                <Field name="name" label="Name" required autoFocus={!!props.initialValues} groupText="list-alt"
+                       component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="description" label="Description" component={TextArea}/>
@@ -25,4 +26,4 @@ const GenreForm = props => {
     );
 };
 
-export default reduxForm({form: 'genreForm', validate: genreValidate})(GenreForm);
+export default reduxForm({ form: 'genreForm', validate: genreValidate })(GenreForm);
