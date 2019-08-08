@@ -87,13 +87,14 @@ abstract class BaseRepository
                 if (in_array($key, $searchableFields)) {
                     $query->where($key, $value);
                 }
-                if($key == 'search'){
-                    $query->where(function ($q) use ($searchableFields, $value) {
-                        foreach ($searchableFields as $field){
-                            $q->orWhere($field, 'LIKE', "%$value%");
-                        }
-                    });
-                }
+            }
+
+            if(!empty($search['search'])){
+                $query->where(function ($q) use ($searchableFields, $value) {
+                    foreach ($searchableFields as $field){
+                        $q->orWhereRaw("lower($field) like ?", ['%'.$value.'%']);
+                    }
+                });
             }
 
             if (!empty($search['order_by'])) {
