@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Eloquent;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
 use Validator;
@@ -22,11 +23,16 @@ class AppBaseController extends Controller
     /**
      * @param  array|mixed  $result
      * @param  string  $message
+     * @param  array  $extraFields
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sendResponse($result, $message)
+    public function sendResponse($result, $message, $extraFields = [])
     {
-        return Response::json(ResponseUtil::makeResponse($message, $result));
+        $response = ResponseUtil::makeResponse($message, $result);
+        $response = array_merge($extraFields, $response);
+
+        return Response::json($response);
     }
 
     /**
@@ -51,4 +57,19 @@ class AppBaseController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Eloquent|string $model
+     * @param array $input
+     * @param array $records
+     *
+     * @return array
+     */
+    public function getTotalRecords($model, $input = [], $records = [])
+    {
+        if (!empty($input['search'])) {
+            return ['totalRecords' => count($records)];
+        }
+
+        return ['totalRecords' => $model::count()];
+    }
 }
