@@ -22,11 +22,16 @@ class AppBaseController extends Controller
     /**
      * @param  array|mixed  $result
      * @param  string  $message
+     * @param  array  $extraFields
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sendResponse($result, $message)
+    public function sendResponse($result, $message, $extraFields = [])
     {
-        return Response::json(ResponseUtil::makeResponse($message, $result));
+        $response = ResponseUtil::makeResponse($message, $result);
+        $response = array_merge($extraFields, $response);
+
+        return Response::json($response);
     }
 
     /**
