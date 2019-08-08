@@ -128,8 +128,6 @@ abstract class BaseRepository
 
         $result = $query->get($columns);
 
-        $result['totalRecord'] = $result->count();
-
         return $result;
     }
 
