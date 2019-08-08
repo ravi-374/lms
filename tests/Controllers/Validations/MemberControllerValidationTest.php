@@ -47,14 +47,14 @@ class MemberControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function test_create_member_fails_when_password_length_is_less_than_six()
+    public function test_create_member_fails_when_password_length_is_less_than_six_character()
     {
         $this->post('api/b1/members', ['password' => 12345])
             ->assertSessionHasErrors(['password' => 'The password must be at least 6 characters.']);
     }
 
     /** @test */
-    public function test_create_member_fails_when_member_ship_plan_id_is_not_passed()
+    public function test_create_member_fails_when_membership_plan_id_is_not_passed()
     {
         $this->post('api/b1/members', ['membership_plan_id' => ''])
             ->assertSessionHasErrors(['membership_plan_id' => 'The membership plan id field is required.']);
