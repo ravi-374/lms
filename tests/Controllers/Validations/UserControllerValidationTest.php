@@ -5,7 +5,6 @@ namespace Tests\Controllers\Validations;
 use App\Models\Role;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class UserControllerValidationTest extends TestCase
@@ -15,7 +14,6 @@ class UserControllerValidationTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
@@ -49,6 +47,27 @@ class UserControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function test_create_user_fails_when_password_length_is_less_than_six_character()
+    {
+        $this->post('api/b1/users', ['password' => 12345])
+            ->assertSessionHasErrors(['password' => 'The password must be at least 6 characters.']);
+    }
+
+    /** @test */
+    public function test_create_user_fails_when_role_is_not_passed()
+    {
+        $this->post('api/b1/users', ['role_id' => ''])
+            ->assertSessionHasErrors(['role_id' => 'User must have at least one role.']);
+    }
+
+    /** @test */
+    public function test_create_user_fails_when_role_is_not_valid()
+    {
+        $this->post('api/b1/users', ['role_id' => 'string'])
+            ->assertSessionHasErrors(['role_id' => 'The role id must be an integer.']);
+    }
+
+    /** @test */
     public function test_create_user_fails_when_email_is_duplicate()
     {
         $ankit = factory(User::class)->create();
@@ -73,6 +92,34 @@ class UserControllerValidationTest extends TestCase
 
         $this->post('api/b1/users/'.$ankit->id, ['last_name' => ''])
             ->assertSessionHasErrors(['last_name' => 'The last name field is required.']);
+    }
+
+    /** @test */
+    public function test_update_user_fails_when_email_is_not_passed()
+    {
+        $farhan = factory(User::class)->create();
+
+        $this->post('api/b1/users/'.$farhan->id, ['email' => ''])
+            ->assertSessionHasErrors(['email' => 'The email field is required.']);
+    }
+
+    /** @test */
+    public function test_update_user_fails_when_email_is_duplicate()
+    {
+        $farhan = factory(User::class)->create();
+        $vishal = factory(User::class)->create();
+
+        $this->post('api/b1/users/'.$vishal->id, ['email' => $farhan->email])
+            ->assertSessionHasErrors(['email' => 'The email has already been taken.']);
+    }
+
+    /** @test */
+    public function test_update_user_fails_when_role_is_not_valid()
+    {
+        $farhan = factory(User::class)->create();
+
+        $this->post('api/b1/users/'.$farhan->id, ['role_id' => 'string'])
+            ->assertSessionHasErrors(['role_id' => 'The role id must be an integer.']);
     }
 
     /** @test */
@@ -118,6 +165,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_can_activate_user()
     {
+        /** @var User $user */
         $user = factory(User::class)->create(['is_active' => 0]);
 
         $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
@@ -129,6 +177,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_can_de_activate_user()
     {
+        /** @var User $user */
         $user = factory(User::class)->create(['is_active' => 1]);
 
         $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
