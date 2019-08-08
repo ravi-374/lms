@@ -126,7 +126,11 @@ abstract class BaseRepository
     {
         $query = $this->allQuery($search, $skip, $limit);
 
-        return $query->get($columns);
+        $result = $query->get($columns);
+
+        $result['totalRecord'] = $result->count();
+
+        return $result;
     }
 
     /**
