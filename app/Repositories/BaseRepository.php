@@ -87,10 +87,11 @@ abstract class BaseRepository
                     $query->where($key, $value);
                 }
             }
-        }
 
-        if (!is_null($search['order_by'])) {
-            $query->orderBy($search['order_by'], $search['direction']);
+            if (!empty($search['order_by'])) {
+                $direction = (!empty($search['direction'])) ? $search['direction'] : 'asc';
+                $query->orderBy($search['order_by'], $direction);
+            }
         }
 
         if (!is_null($skip)) {
