@@ -10,10 +10,14 @@ export default (formValues) => {
     if (!formValues.password) {
         errors.password = 'Password must be required !'
     }
-    if (formValues.password) {
-        if (formValues.password.length < 6) {
-            errors.password = 'Password length must be greater than 6 !';
-        }
+    if (formValues.password && formValues.password.length < 6) {
+        errors.password = 'Password must be greater than 5 characters.';
+    }
+    if (!formValues.confirm_password) {
+        errors.confirm_password = 'Confirm password must be required !'
+    }
+    if (formValues.confirm_password !== formValues.password) {
+        errors.confirm_password = 'Confirm password must be matched.';
     }
     return errors;
 };
