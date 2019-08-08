@@ -2,6 +2,7 @@
 
 namespace Tests\Repositories;
 
+use App\Models\Address;
 use App\Models\Role;
 use App\Repositories\UserRepository;
 use App\User;
@@ -24,6 +25,33 @@ class UserRepositoryTest extends TestCase
     {
         parent::setUp();
         $this->userRepo = app(UserRepository::class);
+    }
+
+
+    /** @test */
+    public function test_can_get_all_users()
+    {
+        /** @var User $users */
+        $users = factory(User::class)->times(2)->create();
+
+        /** @var Role $role */
+        $role = factory(Role::class)->create();
+
+        $users[0]->roles()->sync([$role->id]);
+        $users[1]->roles()->sync([$role->id]);
+
+        $address = factory(Address::class)->create();
+
+        $users[0]->address()->save($address);
+        $users[1]->address()->save($address);
+
+        $userList = $this->userRepo->all([]);
+
+        $this->assertEquals($users[0]->id, $userList[1]->id);
+        $this->assertEquals($users[1]->id, $userList[0]->id);
+
+        $this->assertNotEmpty($userList[0]->roles);
+        $this->assertNotEmpty($userList[0]->address);
     }
 
     /** @test */
