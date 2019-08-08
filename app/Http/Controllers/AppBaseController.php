@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Eloquent;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
 use Validator;
@@ -56,4 +57,19 @@ class AppBaseController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Eloquent|string $model
+     * @param array $input
+     * @param array $records
+     *
+     * @return array
+     */
+    public function getTotalRecords($model, $input = [], $records = [])
+    {
+        if (!empty($input['search'])) {
+            return ['totalRecords' => count($records)];
+        }
+
+        return ['totalRecords' => $model::count()];
+    }
 }
