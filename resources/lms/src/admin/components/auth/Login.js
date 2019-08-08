@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import apiConfig from '../../config/apiConfigWithoutToken';
 import {Field, reduxForm} from 'redux-form';
+import {Link} from 'react-router-dom';
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
@@ -53,11 +54,11 @@ const Login = (props) => {
             } else {
                 props.history.push(Routes.ADMIN_DEFAULT);
             }
-        }).catch(({ response }) =>
-            props.addToast({ text: response.data.message, type: 'error' })
+        }).catch(({response}) =>
+            props.addToast({text: response.data.message, type: 'error'})
         );
     };
-    const { handleSubmit, invalid } = props;
+    const {handleSubmit, invalid} = props;
     return (
         <div className="app flex-row align-items-center">
             <HeaderTitle title={'Login | LMS System'}/>
@@ -70,9 +71,9 @@ const Login = (props) => {
                                     <h1>Login</h1>
                                     <p className="text-muted">Sign In to your account</p>
 
-                                    <Field name="email" type="email" groupText="icon-user"
+                                    <Field name="email" type="email" placeholder="Email" groupText="icon-user"
                                            component={CustomInputGroup}/>
-                                    <Field name="password" type="password" groupText="icon-lock"
+                                    <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <div>
                                         <Field name="remember_me" checked={isRemember} onChange={onRememberChange}
@@ -83,8 +84,10 @@ const Login = (props) => {
                                             <Button color="primary" disabled={invalid} className="px-4">Login
                                             </Button>
                                         </Col>
-                                        <Col xs="6" className="text-right">
-                                            <Button color="link" className="px-0">Forgot password?</Button>
+                                        <Col xs="6" className="text-right mt-2">
+                                            <Link to={Routes.ADMIN_FORGOT_PASSWORD} color="link" className="px-0">
+                                                Forgot password?
+                                            </Link>
                                         </Col>
                                     </Row>
                                 </Form>
@@ -98,6 +101,6 @@ const Login = (props) => {
     );
 };
 
-const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(Login);
+const form = reduxForm({form: 'loginForm', validate: loginFormValidate})(Login);
 
-export default connect(null, { addToast })(form);
+export default connect(null, {addToast})(form);

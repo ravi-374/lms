@@ -28,6 +28,10 @@ export const Routes = {
     MEMBERS: '/app/admin/members/',
     BOOK_ALLOTMENTS: '/app/admin/books-allotment/',
     USERS: '/app/admin/users/',
+    MEMBER_FORGOT_PASSWORD: '/app/forgot-password',
+    MEMBER_RESET_PASSWORD: '/app/reset-password',
+    ADMIN_FORGOT_PASSWORD: '/app/admin/forgot-password',
+    ADMIN_RESET_PASSWORD: '/app/admin/reset-password',
 };
 
 export const Tokens = {
