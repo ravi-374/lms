@@ -35,14 +35,14 @@ const ForgotPassword = (props) => {
                             <CardBody>
                                 <Form onSubmit={handleSubmit(onSubmit)}>
                                     <h1>Forgot Password</h1>
-                                    <p className="text-muted">Forgot password</p>
+                                    <p className="text-muted">Enter your email for rest a password</p>
                                     <Field name="email" type="email" placeholder="Email" groupText="icon-user"
                                            component={CustomInputGroup}/>
                                     <Row>
-                                        <Col className="mt-2 d-flex justify-content-between">
+                                        <Col className="mt-2 d-flex justify-content-end">
                                             <Button color="primary" disabled={invalid} className="px-4">Submit
                                             </Button>
-                                            <Link to={Routes.ADMIN_LOGIN} className="btn btn-secondary ml-2">Back</Link>
+                                            <Link to={Routes.ADMIN_LOGIN} className="btn btn-secondary ml-2">Cancel</Link>
                                         </Col>
                                     </Row>
                                 </Form>

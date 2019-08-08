@@ -37,18 +37,18 @@ const ResetPassword = (props) => {
                             <CardBody>
                                 <Form onSubmit={handleSubmit(onSubmit)}>
                                     <h1>Reset Password</h1>
-                                    <p className="text-muted">Reset password</p>
+                                    <p className="text-muted">Enter new password</p>
                                     <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <Field name="confirm_password" type="password" placeholder="Repeat Password"
                                            groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <Row>
-                                        <Col className="mt-2 d-flex justify-content-between">
-                                            <Button color="primary" disabled={invalid} className="px-4">Submit
+                                        <Col className="mt-2 d-flex justify-content-end">
+                                            <Button color="primary" disabled={invalid} className="px-4">Reset
                                             </Button>
                                             <Link to={Routes.ADMIN_FORGOT_PASSWORD}
-                                                  className="btn btn-secondary ml-2">Back</Link>
+                                                  className="btn btn-secondary ml-2">Cancel</Link>
                                         </Col>
                                     </Row>
                                 </Form>
