@@ -47,21 +47,21 @@ class UserControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function test_create_user_fails_when_password_length_is_less_than_six()
+    public function test_create_user_fails_when_password_length_is_less_than_six_character()
     {
         $this->post('api/b1/users', ['password' => 12345])
             ->assertSessionHasErrors(['password' => 'The password must be at least 6 characters.']);
     }
 
     /** @test */
-    public function test_create_user_fails_when_role_id_is_not_passed()
+    public function test_create_user_fails_when_role_is_not_passed()
     {
         $this->post('api/b1/users', ['role_id' => ''])
             ->assertSessionHasErrors(['role_id' => 'User must have at least one role.']);
     }
 
     /** @test */
-    public function test_create_user_fails_when_role_id_is_not_valid()
+    public function test_create_user_fails_when_role_is_not_valid()
     {
         $this->post('api/b1/users', ['role_id' => 'string'])
             ->assertSessionHasErrors(['role_id' => 'The role id must be an integer.']);
@@ -114,7 +114,7 @@ class UserControllerValidationTest extends TestCase
     }
 
     /** @test */
-    public function test_update_user_fails_when_role_id_is_not_valid()
+    public function test_update_user_fails_when_role_is_not_valid()
     {
         $farhan = factory(User::class)->create();
 
