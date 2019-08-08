@@ -48,15 +48,7 @@ class SettingAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/settings');
 
-        $this->assertSuccessMessageResponse($response, 'Settings retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
-
-        $keys = \Arr::pluck($response->original['data'], 'key');
-        $values = \Arr::pluck($response->original['data'], 'value');
-        $settings->map(function (Setting $setting) use ($keys, $values) {
-            $this->assertContains($setting->key, $keys);
-            $this->assertContains($setting->value, $values);
-        });
+        $this->assertSuccessDataResponse($response, $settings->toArray(), 'Settings retrieved successfully.');
     }
 
     /** @test */
@@ -83,16 +75,16 @@ class SettingAPIControllerTest extends TestCase
 
         /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
-        $updateRecord = factory(Setting::class)->make();
+        $fakeSetting = factory(Setting::class)->make();
 
         $this->settingRepo->shouldReceive('update')
             ->once()
-            ->with($updateRecord->toArray(), $setting->id)
-            ->andReturn($updateRecord);
+            ->with($fakeSetting->toArray(), $setting->id)
+            ->andReturn($fakeSetting);
 
-        $response = $this->putJson('api/b1/settings/'.$setting->id, $updateRecord->toArray());
+        $response = $this->putJson('api/b1/settings/'.$setting->id, $fakeSetting->toArray());
 
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Setting updated successfully.');
+        $this->assertSuccessDataResponse($response, $fakeSetting->toArray(), 'Setting updated successfully.');
     }
 
     /** @test */
@@ -115,5 +107,6 @@ class SettingAPIControllerTest extends TestCase
         $response = $this->deleteJson("api/b1/settings/$setting->id");
 
         $this->assertSuccessDataResponse($response, $setting->toArray(), 'Setting deleted successfully.');
+        $this->assertEmpty(Setting::find($setting->id));
     }
 }
