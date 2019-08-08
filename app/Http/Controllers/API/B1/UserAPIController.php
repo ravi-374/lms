@@ -37,13 +37,18 @@ class UserAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $users = $this->userRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($users->toArray(), 'Users retrieved successfully.');
+        return $this->sendResponse(
+            $users->toArray(),
+            'Users retrieved successfully.',
+            $this->getTotalRecords(User::class, $input, $users)
+        );
     }
 
     /**

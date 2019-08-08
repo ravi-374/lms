@@ -82,10 +82,19 @@ abstract class BaseRepository
         $query = $this->model->newQuery();
 
         if (count($search)) {
+            $searchableFields = $this->getFieldsSearchable();
             foreach ($search as $key => $value) {
-                if (in_array($key, $this->getFieldsSearchable())) {
+                if (in_array($key, $searchableFields)) {
                     $query->where($key, $value);
                 }
+            }
+
+            if(!empty($search['search'])){
+                $query->where(function ($q) use ($searchableFields, $value) {
+                    foreach ($searchableFields as $field){
+                        $q->orWhereRaw("lower($field) like ?", ['%'.$value.'%']);
+                    }
+                });
             }
 
             if (!empty($search['order_by'])) {

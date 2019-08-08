@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Eloquent;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
-use Validator;
 
 /**
  * @SWG\Swagger(
