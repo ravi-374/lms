@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Eloquent;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
 use Validator;
@@ -22,11 +23,16 @@ class AppBaseController extends Controller
     /**
      * @param  array|mixed  $result
      * @param  string  $message
+     * @param  array  $extraFields
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sendResponse($result, $message)
+    public function sendResponse($result, $message, $extraFields = [])
     {
-        return Response::json(ResponseUtil::makeResponse($message, $result));
+        $response = ResponseUtil::makeResponse($message, $result);
+        $response = array_merge($extraFields, $response);
+
+        return Response::json($response);
     }
 
     /**
@@ -52,21 +58,18 @@ class AppBaseController extends Controller
     }
 
     /**
-     * @param $result
-     * @param $message
-     * @return \Illuminate\Http\JsonResponse
+     * @param Eloquent|string $model
+     * @param array $input
+     * @param array $records
+     *
+     * @return array
      */
-    public function sendCustomResponce($result, $message){
-        $responce = [
-            'success' => true,
-            'message' => $message
-        ];
-        if(isset($result['totalRecord'])) {
-            $responce['totalRecord'] = $result['totalRecord'];
-            unset($result['totalRecord']);
+    public function getTotalRecords($model, $input = [], $records = [])
+    {
+        if (!empty($input['search'])) {
+            return ['totalRecords' => count($records)];
         }
-        $responce['data'] = $result;
-        return Response::json($responce, 200);
-    }
 
+        return ['totalRecords' => $model::count()];
+    }
 }
