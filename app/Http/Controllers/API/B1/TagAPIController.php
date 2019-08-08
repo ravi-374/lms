@@ -34,13 +34,18 @@ class TagAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $tags = $this->tagRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendCustomResponce($tags->toArray(), 'Tags retrieved successfully.');
+        return $this->sendResponse(
+            $tags->toArray(),
+            'Tags retrieved successfully.',
+            $this->getTotalRecords(Tag::class, $input, $tags)
+        );
     }
 
     /**

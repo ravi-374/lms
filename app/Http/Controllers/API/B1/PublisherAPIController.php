@@ -35,13 +35,18 @@ class PublisherAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $publishers = $this->publisherRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendCustomResponce($publishers->toArray(), 'Publishers retrieved successfully.');
+        return $this->sendResponse(
+            $publishers->toArray(),
+            'Publishers retrieved successfully.',
+            $this->getTotalRecords(Publisher::class, $input, $publishers)
+        );
     }
 
     /**

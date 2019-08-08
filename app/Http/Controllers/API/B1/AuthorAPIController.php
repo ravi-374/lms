@@ -34,13 +34,18 @@ class AuthorAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $authors = $this->authorRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendCustomResponce($authors->toArray(), 'Authors retrieved successfully.');
+        return $this->sendResponse(
+            $authors->toArray(),
+            'Authors retrieved successfully.',
+            $this->getTotalRecords(Author::class, $input, $authors)
+        );
     }
 
     /**
