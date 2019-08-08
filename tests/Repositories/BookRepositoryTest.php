@@ -4,8 +4,6 @@ namespace Tests\Repositories;
 
 use App\Models\Book;
 use App\Models\BookItem;
-use App\Models\BookLanguage;
-use App\Models\Publisher;
 use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -30,83 +28,74 @@ class BookRepositoryTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    /** @test
-     */
+   /** @test */
     public function it_can_store_book()
     {
-        $input = [
-            'name' => $this->faker->name,
-            'isbn' => $this->faker->isbn10,
-        ];
+        $fakeBook = factory(Book::class)->make()->toArray();
 
-        $bookResult = $this->bookRepo->store($input)->toArray();
+        $bookResult = $this->bookRepo->store($fakeBook);
 
-        $this->assertArrayHasKey('id', $bookResult);
-        $this->assertEquals($input['name'], $bookResult['name']);
+        $this->assertNotEmpty($bookResult);
+        $this->assertEquals($fakeBook['name'], $bookResult->name);
     }
 
     /** @test */
     public function it_can_update_book()
     {
         $book = factory(Book::class)->create();
-        $inputs = [
-            'name' => $this->faker->name,
-            'isbn' => $this->faker->isbn10,
-        ];
+        $fakeBook = factory(Book::class)->make()->toArray();
 
-        $book = $this->bookRepo->update($inputs, $book->id)->toArray();
+        $result = $this->bookRepo->update($fakeBook, $book->id)->toArray();
 
-        $this->assertArrayHasKey('id', $book);
-        $this->assertEquals($inputs['name'], $book['name']);
-        $this->assertEquals($inputs['isbn'], $book['isbn']);
+        $this->assertNotEmpty($result);
+        $this->assertEquals($fakeBook['name'], $book->fresh()->name);
+        $this->assertEquals($fakeBook['isbn'], $book->fresh()->isbn);
     }
 
     /** @test */
-    public function test_can_create_book()
+    public function test_can_create_book_items()
     {
-        $book = factory(Book::class)->create([
-            'name' => $this->faker->name,
-            'isbn' => $this->faker->isbn10,
-        ]);
-        $language = factory(BookLanguage::class)->create();
-        $publisher = factory(Publisher::class)->create();
-        $inputs[] = factory(BookItem::class)->make([
-            'book_id'      => $this->faker->uuid,
-            'book_code'    => $this->faker->word,
-            'price'        => 15,
-            'language_id'  => $language->id,
-            'publisher_id' => $publisher->id,
-            'format'       => 1,
-        ]);
+        $book = factory(Book::class)->create();
 
-        $createBookItems = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
+        $inputs[] = factory(BookItem::class)->make()->toArray();
+        $inputs[] = factory(BookItem::class)->make()->toArray();
 
-        $this->assertEquals($book['book_id'], $createBookItems['book_id']);
+        $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
+
+        $this->assertTrue($result);
+
+        $book = Book::with('items')->findOrFail($book->id);
+        $this->assertCount(2, $book->items);
+        $this->assertEquals($inputs[0]['book_code'], $book->items[0]->book_code);
+        $this->assertEquals($inputs[1]['book_code'], $book->items[1]->book_code);
     }
 
     /** @test */
-    public function it_can_add_book_item()
+    public function it_can_update_book_items()
     {
-        $book = factory(Book::class)->create([
-            'name' => $this->faker->name,
-            'isbn' => $this->faker->isbn10,
-        ]);
-        $language = factory(BookLanguage::class)->create([
-            'language_name' => $this->faker->name,
-            'language_code' => $this->faker->word,
-        ]);
-        $publisher = factory(Publisher::class)->create();
-        $inputs[] = factory(BookItem::class)->make([
-            'book_id'      => $this->faker->uuid,
-            'book_code'    => 12345678,
-            'price'        => 15,
-            'language_id'  => $language->id,
-            'publisher_id' => $publisher->id,
-            'format'       => 1,
-        ]);
+        $book = factory(Book::class)->create();
+        $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
+        $inputs[] = factory(BookItem::class)->make(['book_id' => $book->id, 'id' => $bookItem->id])->toArray();
 
-        $bookItem = $this->bookRepo->addBookItems($book,$inputs);
+        $result = $this->bookRepo->createOrUpdateBookItems($book,$inputs);
+        $this->assertTrue($result);
 
-        $this->assertEquals($book['book_id'], $bookItem['book_id']);
+        $book = Book::with('items')->findOrFail($book->id);
+        $this->assertCount(1, $book->items);
+        $this->assertEquals($inputs[0]['price'], $book->items[0]->price);
+    }
+
+    /** @test */
+    public function test_can_update_book_items_by_deleting_old_one()
+    {
+        $book = factory(Book::class)->create();
+        $oldBookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
+        $inputs[] = factory(BookItem::class)->make()->toArray();
+
+        $result = $this->bookRepo->createOrUpdateBookItems($book,$inputs);
+        $this->assertTrue($result);
+
+        $book = Book::with('items')->findOrFail($book->id);
+        $this->assertCount(1, $book->items, 'Old item was deleted.');
     }
 }
