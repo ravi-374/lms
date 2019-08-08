@@ -58,4 +58,13 @@ class MembershipPlanRepositoryTest extends TestCase
         $this->assertArrayHasKey('id', $membershipPlan);
         $this->assertEquals($inputs['name'], $membershipPlan['name']);
     }
+
+    /** @test */
+    public function test_can_generate_membership_plan_id()
+    {
+        $generatedMemberShipPlanId = $this->membershipPlanRepo->generateMembershipPlanId();
+
+        $this->assertNotEmpty($generatedMemberShipPlanId);
+    }
+
 }
