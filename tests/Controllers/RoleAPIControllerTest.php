@@ -49,13 +49,7 @@ class RoleAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/roles');
 
-        $this->assertSuccessMessageResponse($response, 'Roles retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
-
-        $data = \Arr::pluck($response->original['data'], 'name');
-        $roles->map(function (Role $role) use ($data) {
-            $this->assertContains($role->name, $data);
-        });
+        $this->assertSuccessDataResponse($response,$roles->toArray(), 'Roles retrieved successfully.');
     }
 
     /** @test */
