@@ -125,6 +125,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_user()
     {
+        $user = factory(User::class)->create();
         $fakeUser = factory(User::class)->make()->toArray();
         $role = factory(Role::class)->create();
         $fakeUser['roles'] = $role->id;
@@ -134,6 +135,7 @@ class UserControllerValidationTest extends TestCase
         ]));
 
         $this->assertSuccessMessageResponse($response, 'User saved successfully.');
+        $user->fresh()->roles;
         $this->assertNotEmpty(User::whereEmail($fakeUser['email'])->first());
     }
 
