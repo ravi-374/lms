@@ -49,7 +49,7 @@ class MemberAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($members->toArray(), 'Members retrieved successfully.');
+        return $this->sendCustomResponce($members->toArray(), 'Members retrieved successfully.');
     }
 
     /**

@@ -40,7 +40,7 @@ class TagAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($tags->toArray(), 'Tags retrieved successfully.');
+        return $this->sendCustomResponce($tags->toArray(), 'Tags retrieved successfully.');
     }
 
     /**

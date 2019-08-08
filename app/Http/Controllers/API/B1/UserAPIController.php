@@ -43,7 +43,7 @@ class UserAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($users->toArray(), 'Users retrieved successfully.');
+        return $this->sendCustomResponce($users->toArray(), 'Users retrieved successfully.');
     }
 
     /**

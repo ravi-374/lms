@@ -40,7 +40,7 @@ class AuthorAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($authors->toArray(), 'Authors retrieved successfully.');
+        return $this->sendCustomResponce($authors->toArray(), 'Authors retrieved successfully.');
     }
 
     /**

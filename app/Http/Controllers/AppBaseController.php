@@ -51,4 +51,22 @@ class AppBaseController extends Controller
         ], 200);
     }
 
+    /**
+     * @param $result
+     * @param $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendCustomResponce($result, $message){
+        $responce = [
+            'success' => true,
+            'message' => $message
+        ];
+        if(isset($result['totalRecord'])) {
+            $responce['totalRecord'] = $result['totalRecord'];
+            unset($result['totalRecord']);
+        }
+        $responce['data'] = $result;
+        return Response::json($responce, 200);
+    }
+
 }

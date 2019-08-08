@@ -41,7 +41,7 @@ class GenreAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($genres->toArray(), 'Genres retrieved successfully.');
+        return $this->sendCustomResponce($genres->toArray(), 'Genres retrieved successfully.');
     }
 
     /**

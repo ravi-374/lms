@@ -41,7 +41,7 @@ class PublisherAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($publishers->toArray(), 'Publishers retrieved successfully.');
+        return $this->sendCustomResponce($publishers->toArray(), 'Publishers retrieved successfully.');
     }
 
     /**
