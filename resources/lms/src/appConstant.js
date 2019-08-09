@@ -7,7 +7,8 @@ export const errorMessage = {
     TOKEN_NOT_PROVIDED: 'Token not provided',
     TOKEN_EXPIRED: 'Token has expired',
     TOKEN_INVALID: 'Could not decode token: Error while decoding to JSON: Syntax error',
-    TOKEN_INVALID_SIGNATURE: 'Token Signature could not be verified.'
+    TOKEN_INVALID_SIGNATURE: 'Token Signature could not be verified.',
+    USER_DEACTIVATE:'Your account is not active.'
 };
 
 export const publicImagePath = {

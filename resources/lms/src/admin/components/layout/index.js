@@ -74,9 +74,9 @@ const prepareNavigation = (permissions) => {
 const renderAppHeader = (props) => {
     const signOut = (e) => {
         e.preventDefault();
-        props.history.push(Routes.ADMIN_LOGIN);
         localStorage.removeItem('user');
         localStorage.removeItem(Tokens.ADMIN);
+        props.history.push(Routes.ADMIN_LOGIN);
     };
     return (
         <AppHeader fixed>
