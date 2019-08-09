@@ -41,8 +41,7 @@ const ResetPassword = (props) => {
                                     <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <Field name="confirm_password" type="password" placeholder="Repeat Password"
-                                           groupText="icon-lock"
-                                           component={CustomInputGroup}/>
+                                           groupText="icon-lock" component={CustomInputGroup}/>
                                     <Row>
                                         <Col className="mt-2 d-flex justify-content-end">
                                             <Button color="primary" disabled={invalid} className="px-4">Reset

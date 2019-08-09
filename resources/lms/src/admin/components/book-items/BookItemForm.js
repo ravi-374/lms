@@ -11,7 +11,7 @@ import Select from "../../../shared/components/Select";
 import {enableDisableUserInput} from "../../../shared/sharedMethod";
 
 const BookItemForm = (props) => {
-    const {bookLanguages, publishers, saveBookItem} = props;
+    const {bookLanguages, publishers, saveBookItem,initialValues} = props;
     const onSaveBookItems = (formValues) => {
         const {book_code, edition, format, language, publisher, location, price} = formValues;
         saveBookItem({
@@ -27,7 +27,7 @@ const BookItemForm = (props) => {
     return (
         <Row className="animated fadeIn book-form m-3">
             <Col xs={12}>
-                <Field name="book_code" label="Book Code" min="1"
+                <Field name="book_code" label="Book Code" min="1" autoFocus={!!initialValues}
                        onChange={(e) => enableDisableUserInput(e, maxDigits.BOOK_CODE)}
                        type="number" groupText="file-text" component={InputGroup}/>
             </Col>

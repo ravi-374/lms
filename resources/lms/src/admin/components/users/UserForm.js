@@ -11,7 +11,7 @@ import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 
 const UserForm = (props) => {
-    const {initialValues, change, roles, countries} = props;
+    const { initialValues, change, roles, countries } = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
@@ -53,7 +53,7 @@ const UserForm = (props) => {
     const onChecked = () => {
         setActive(!isActive);
     };
-    const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
+    const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
     return (
         <Row className="animated fadeIn user-form m-3">
             <Col xs={8} className="primary-detail">
@@ -66,11 +66,11 @@ const UserForm = (props) => {
                         </div>
                     </div>
                 </div>
-                <hr style={{marginTop: '0px'}}/>
+                <hr style={{ marginTop: '0px' }}/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="first_name" label="First Name" required groupText="user-circle-o"
-                               component={InputGroup}/>
+                        <Field name="first_name" label="First Name" required autoFocus={!!initialValues}
+                               groupText="user-circle-o" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
@@ -80,24 +80,14 @@ const UserForm = (props) => {
                     </Col>
                     <Col xs={6}>
                         <Field name={initialValues ? 'password_new' : 'password'} label="Password"
-                               required={!initialValues} type="password" groupText="lock"
-                               component={InputGroup}/>
+                               required={!initialValues} type="password" groupText="lock" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="phone" label="Phone No." type="number" groupText="phone" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field
-                            name="role"
-                            label="Role"
-                            required
-                            options={roles}
-                            placeholder="Select Role"
-                            groupText="tasks"
-                            component={Select}
-                            isSearchable={true}
-                            isMini={true}
-                        />
+                        <Field name="role" label="Role" required options={roles} placeholder="Select Role"
+                               groupText="tasks" component={Select} isSearchable={true} isMini={true}/>
                     </Col>
                 </Row>
             </Col>
@@ -126,16 +116,8 @@ const UserForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field
-                            name="country"
-                            label="Country"
-                            options={countries}
-                            placeholder="Select Country"
-                            groupText="flag"
-                            component={Select}
-                            isSearchable={true}
-                            isMini={true}
-                        />
+                        <Field name="country" label="Country" options={countries} placeholder="Select Country"
+                               groupText="flag" component={Select} isSearchable={true} isMini={true}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
@@ -149,4 +131,4 @@ const UserForm = (props) => {
     );
 };
 
-export default reduxForm({form: 'userForm', validate: userValidate})(UserForm);
+export default reduxForm({ form: 'userForm', validate: userValidate })(UserForm);

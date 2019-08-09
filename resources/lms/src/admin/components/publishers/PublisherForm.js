@@ -10,15 +10,16 @@ const PublisherForm = props => {
         props.onSavePublisher(formValues);
     };
     return (
-            <Row className="animated fadeIn m-3">
-                <Col xs={12}>
-                    <Field name="name" label="Name" required groupText="user-circle-o" component={InputGroup}/>
-                </Col>
-                <Col xs={12}>
-                    <SaveAction onSave={props.handleSubmit(onSavePublisher)} {...props}/>
-                </Col>
-            </Row>
+        <Row className="animated fadeIn m-3">
+            <Col xs={12}>
+                <Field name="name" label="Name" required autoFocus={!!props.initialValues} groupText="user-circle-o"
+                       component={InputGroup}/>
+            </Col>
+            <Col xs={12}>
+                <SaveAction onSave={props.handleSubmit(onSavePublisher)} {...props}/>
+            </Col>
+        </Row>
     );
 };
 
-export default reduxForm({form: 'publisherForm', validate: publisherValidate})(PublisherForm);
+export default reduxForm({ form: 'publisherForm', validate: publisherValidate })(PublisherForm);

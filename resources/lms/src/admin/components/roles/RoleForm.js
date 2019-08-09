@@ -10,21 +10,22 @@ import CheckBox from "../../../shared/components/CheckBox";
 const RoleForm = props => {
     const [permissions] = useState(props.permissions);
     const onSaveRole = formValues => {
-        formValues.permissionArray = formValues.permissions.filter(perm => perm.isChecked === true).map((({id}) => id));
+        formValues.permissionArray = formValues.permissions.filter(perm => perm.isChecked === true).map((({ id }) => id));
         props.onSaveRole(formValues);
     };
     useEffect(() => {
         if (props.initialValues) {
-            const {name, display_name, description} = props.initialValues;
-            props.initialize({name, display_name, description, permissions: [...permissions]})
+            const { name, display_name, description } = props.initialValues;
+            props.initialize({ name, display_name, description, permissions: [...permissions] })
         } else {
-            props.initialize({permissions: [...permissions]})
+            props.initialize({ permissions: [...permissions] })
         }
     }, []);
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="name" label="Name" required groupText="list" component={InputGroup}/>
+                <Field name="name" label="Name" required autoFocus={!!props.initialValues} groupText="list"
+                       component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="display_name" label="Display Name" required groupText="list-alt" component={InputGroup}/>
@@ -46,7 +47,7 @@ const RoleForm = props => {
         </Row>
     );
 };
-const renderPermissionsItems = ({fields, meta: {error, submitFailed}, permissions}) => {
+const renderPermissionsItems = ({ fields, meta: { error, submitFailed }, permissions }) => {
     const handleChanged = (index) => {
         permissions[index].selected = !permissions[index].selected;
     };
@@ -56,8 +57,7 @@ const renderPermissionsItems = ({fields, meta: {error, submitFailed}, permission
                     return (
                         <Col xs={6} key={index}>
                             <Field name={`${item}.isChecked`} checked={permissions[index].selected}
-                                   label={permissions[index].name}
-                                   onChange={() => handleChanged(index)}
+                                   label={permissions[index].name} onChange={() => handleChanged(index)}
                                    component={CheckBox}/>
                         </Col>
                     )
@@ -68,4 +68,4 @@ const renderPermissionsItems = ({fields, meta: {error, submitFailed}, permission
     );
 };
 
-export default reduxForm({form: 'roleForm', validate: roleValidate})(RoleForm);
+export default reduxForm({ form: 'roleForm', validate: roleValidate })(RoleForm);

@@ -110,7 +110,7 @@ const BookForm = (props) => {
                 <hr style={{marginTop: '0px'}}/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="isbn" label="ISBN No" required groupText="id-card" component={InputGroup}/>
+                        <Field name="isbn" label="ISBN No" required autoFocus groupText="id-card" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <TypeAhead

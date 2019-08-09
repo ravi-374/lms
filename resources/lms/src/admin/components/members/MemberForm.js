@@ -11,7 +11,7 @@ import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 
 const MemberForm = (props) => {
-    const {initialValues, membershipPlans, countries, change} = props;
+    const { initialValues, membershipPlans, countries, change } = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
@@ -53,7 +53,7 @@ const MemberForm = (props) => {
     const onChecked = () => {
         setActive(!isActive);
     };
-    const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
+    const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
     return (
         <Row className="animated fadeIn member-form m-3">
             <Col xs={8} className="primary-detail">
@@ -66,11 +66,11 @@ const MemberForm = (props) => {
                         </div>
                     </div>
                 </div>
-                <hr style={{marginTop: '0px'}}/>
+                <hr style={{ marginTop: '0px' }}/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="first_name" label="First Name" required groupText="user-circle-o"
-                               component={InputGroup}/>
+                        <Field name="first_name" label="First Name" required autoFocus={!!initialValues}
+                               groupText="user-circle-o" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
@@ -80,25 +80,15 @@ const MemberForm = (props) => {
                     </Col>
                     <Col xs={6}>
                         <Field name={initialValues ? 'password_new' : 'password'} label="Password"
-                               required={!initialValues} type="password" groupText="lock"
-                               component={InputGroup}/>
+                               required={!initialValues} type="password" groupText="lock" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="phone" type="number" label="Phone No." groupText="phone"
-                               component={InputGroup}/>
+                        <Field name="phone" type="number" label="Phone No." groupText="phone" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field
-                            name="membership_plan"
-                            label="Membership Plan"
-                            required
-                            options={membershipPlans}
-                            placeholder="Select Membership Plan"
-                            groupText="tasks"
-                            component={Select}
-                            isSearchable={true}
-                            isMini={true}
-                        />
+                        <Field name="membership_plan" label="Membership Plan" required options={membershipPlans}
+                               placeholder="Select Membership Plan" groupText="tasks" component={Select}
+                               isSearchable={true} isMini={true}/>
                     </Col>
                 </Row>
             </Col>
@@ -127,16 +117,8 @@ const MemberForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field
-                            name="country"
-                            label="Country"
-                            options={countries}
-                            placeholder="Select Country"
-                            groupText="flag"
-                            component={Select}
-                            isSearchable={true}
-                            isMini={true}
-                        />
+                        <Field name="country" label="Country" options={countries} placeholder="Select Country"
+                               groupText="flag" component={Select} isSearchable={true} isMini={true}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
@@ -150,4 +132,4 @@ const MemberForm = (props) => {
     );
 };
 
-export default reduxForm({form: 'memberForm', validate: memberValidate})(MemberForm);
+export default reduxForm({ form: 'memberForm', validate: memberValidate })(MemberForm);

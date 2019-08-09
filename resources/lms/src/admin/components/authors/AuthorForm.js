@@ -13,7 +13,8 @@ const AuthorForm = props => {
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="first_name" label="First Name" required groupText="user-circle-o" component={InputGroup}/>
+                <Field name="first_name" label="First Name" required autoFocus={!!props.initialValues}
+                       groupText="user-circle-o" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="last_name" label="Last Name" groupText="user" component={InputGroup}/>

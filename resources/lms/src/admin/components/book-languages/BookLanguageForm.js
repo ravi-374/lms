@@ -13,7 +13,7 @@ const BookLanguageForm = props => {
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="language_name" label="Name" required groupText="language" component={InputGroup}/>
+                <Field name="language_name" label="Name" required autoFocus={!!props.initialValues} groupText="language" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="language_code" readOnly={isDisabled} label="Code" required groupText="code"
