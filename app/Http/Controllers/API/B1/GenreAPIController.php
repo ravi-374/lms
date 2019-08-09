@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
@@ -34,13 +35,18 @@ class GenreAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $genres = $this->genreRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($genres->toArray(), 'Genres retrieved successfully.');
+        return $this->sendResponse(
+            $genres->toArray(),
+            'Genres retrieved successfully.',
+            $this->getTotalRecords(Genre::class, $input, $genres)
+        );
     }
 
     /**

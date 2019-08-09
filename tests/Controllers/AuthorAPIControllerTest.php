@@ -2,10 +2,8 @@
 
 namespace Tests\Controllers;
 
-use App\Models\ActivityType;
 use App\Models\Author;
 use App\Models\Book;
-use App\Models\Client;
 use App\Repositories\AuthorRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -38,7 +36,7 @@ class AuthorAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_authors()
+    public function it_can_get_all_authors()
     {
         $this->mockRepository();
 
@@ -50,13 +48,7 @@ class AuthorAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/authors');
 
-        $this->assertSuccessMessageResponse($response, 'Authors retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
-
-        $data = \Arr::pluck($response->original['data'], 'first_name');
-        $authors->map(function (Author $author) use ($data) {
-            $this->assertContains($author->first_name, $data);
-        });
+        $this->assertSuccessDataResponse($response, $authors->toArray(), 'Authors retrieved successfully.');
     }
 
     /** @test */
@@ -82,6 +74,7 @@ class AuthorAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Author $author */
         $author = factory(Author::class)->create();
         $updateRecord = factory(Author::class)->make();
 
@@ -96,7 +89,7 @@ class AuthorAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_retrieve_author()
+    public function it_can_retrieve_author()
     {
         /** @var Author $author */
         $author = factory(Author::class)->create();
@@ -114,7 +107,8 @@ class AuthorAPIControllerTest extends TestCase
 
         $response = $this->deleteJson("api/b1/authors/$author->id");
 
-        $this->assertSuccessMessageResponse($response, 'Author deleted successfully.');
+        $this->assertSuccessDataResponse($response, $author->toArray(), 'Author deleted successfully.');
+        $this->assertEmpty(Author::find($author->id));
     }
 
     /** @test */
