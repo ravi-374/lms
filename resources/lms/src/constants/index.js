@@ -39,6 +39,17 @@ export const Tokens = {
     MEMBER: 'memberToken'
 };
 
+export const Filters = {
+    PAGE: 1,
+    OBJ: {
+        order_By: '',
+        limit: 10,
+        skip: 0,
+        direction: 'asc',
+        search: ''
+    }
+};
+
 export const Roles = {
     ADMIN_ROLE_NAME: 'admin'
 };

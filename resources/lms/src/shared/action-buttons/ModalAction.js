@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {Button} from 'reactstrap';
 
-export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDeleteIcon = false, isHideEditIcon = false}) => {
+export default ({ onOpenModal, item, isEditMode = false, goToEditItem, goToDetailScreen = null, isHideDeleteIcon = false, isHideEditIcon = false, isHideDetailIcon = true }) => {
     return (
         isEditMode ?
             <Fragment>
@@ -11,6 +11,14 @@ export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDele
                         goToEditItem(item.id)
                     }}>
                         <i className="cui-pencil icons font-md"/>
+                    </Button> : null
+                }
+                {!isHideDetailIcon ?
+                    <Button className="ml-2" color="primary" size="sm" onClick={(e) => {
+                        e.stopPropagation();
+                        goToDetailScreen(item.id)
+                    }}>
+                        <i className="cui-eye icons font-md"/>
                     </Button> : null
                 }
                 <Button className="ml-2" color="danger" size="sm" onClick={(e) => {
@@ -27,6 +35,14 @@ export default ({onOpenModal, item, isEditMode = false, goToEditItem, isHideDele
                 }}>
                     <i className="cui-pencil icons font-md"/>
                 </Button>
+                {!isHideDetailIcon ?
+                    <Button className="ml-2" color="primary" size="sm" onClick={(e) => {
+                        e.stopPropagation();
+                        goToDetailScreen(item.id)
+                    }}>
+                        <i className="fa fa-eye fa-sm"/>
+                    </Button> : null
+                }
                 {!isHideDeleteIcon ?
                     <Button className="ml-2" color="danger" size="sm" onClick={(e) => {
                         e.stopPropagation();
