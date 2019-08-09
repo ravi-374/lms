@@ -142,6 +142,9 @@ class UserAPIController extends AppBaseController
         $user->is_active = ($user->is_active) ? 0 : 1;
         $user->save();
 
+        $user->roles;
+        $user->address;
+
         return $this->sendResponse($user->toArray(), 'User updated successfully.');
     }
 
