@@ -140,9 +140,8 @@ class MemberAPIController extends AppBaseController
     {
         $member->is_active = ($member->is_active) ? 0 : 1;
         $member->save();
-        $message = "Member has been ".(($member->is_active) ? 'activated' : 'deactivated')." successfully.";
 
-        return $this->sendSuccess($message);
+        return $this->sendResponse($member->toArray(), 'Member updated successfully.');
     }
 
     /**
