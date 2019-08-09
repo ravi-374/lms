@@ -141,9 +141,8 @@ class UserAPIController extends AppBaseController
     {
         $user->is_active = ($user->is_active) ? 0 : 1;
         $user->save();
-        $message = "User has been ".(($user->is_active) ? 'activated' : 'deactivated')." successfully.";
 
-        return $this->sendSuccess($message);
+        return $this->sendResponse($user->toArray(), 'User updated successfully.');
     }
 
     /**
