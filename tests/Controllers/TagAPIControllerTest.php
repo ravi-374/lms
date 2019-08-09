@@ -5,13 +5,12 @@ namespace Tests\Controllers;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
 class TagAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     /** @var MockInterface */
     protected $tagRepository;
@@ -19,8 +18,6 @@ class TagAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
-        $this->withHeaders(['X-Requested-With' => 'XMLHttpRequest']);
     }
 
     private function mockRepository()
@@ -33,6 +30,22 @@ class TagAPIControllerTest extends TestCase
     {
         parent::tearDown();
         \Mockery::close();
+    }
+
+    /** @test */
+    public function test_can_get_all_tags()
+    {
+        $this->mockRepository();
+
+        $tags = factory(Tag::class)->times(5)->create();
+
+        $this->tagRepository->shouldReceive('all')
+            ->once()
+            ->andReturn($tags);
+
+        $response = $this->getJson('api/b1/tags');
+
+        $this->assertSuccessDataResponse($response, $tags->toArray(), 'Tags retrieved successfully.');
     }
 
     /** @test */
@@ -53,6 +66,25 @@ class TagAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function it_can_update_tag()
+    {
+        $this->mockRepository();
+
+        /** @var Tag $tag */
+        $tag = factory(Tag::class)->create();
+        $fakeTag = factory(Tag::class)->make();
+
+        $this->tagRepository->shouldReceive('update')
+            ->once()
+            ->with($fakeTag->toArray(), $tag->id)
+            ->andReturn($fakeTag);
+
+        $response = $this->putJson('api/b1/tags/'.$tag->id, $fakeTag->toArray());
+
+        $this->assertSuccessDataResponse($response, $fakeTag->toArray(), 'Tag updated successfully.');
+    }
+
+    /** @test */
     public function it_can_retrieve_tag()
     {
         /** @var Tag $tag */
@@ -60,7 +92,7 @@ class TagAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/tags/'.$tag->id);
 
-        $this->assertSuccessMessageResponse($response, 'Tag retrieved successfully.');
+        $this->assertSuccessDataResponse($response, $tag->toArray(), 'Tag retrieved successfully.');
     }
 
     /** @test */
@@ -71,6 +103,7 @@ class TagAPIControllerTest extends TestCase
 
         $response = $this->deleteJson("api/b1/tags/$tag->id");
 
-        $this->assertSuccessMessageResponse($response, 'Tag deleted successfully.');
+        $this->assertSuccessDataResponse($response, $tag->toArray(), 'Tag deleted successfully.');
+        $this->assertEmpty(Tag::find($tag->id));
     }
 }
