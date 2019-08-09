@@ -28,7 +28,7 @@ class BookRepositoryTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-   /** @test */
+    /** @test */
     public function it_can_store_book()
     {
         $fakeBook = factory(Book::class)->make()->toArray();
@@ -77,7 +77,7 @@ class BookRepositoryTest extends TestCase
         $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
         $inputs[] = factory(BookItem::class)->make(['book_id' => $book->id, 'id' => $bookItem->id])->toArray();
 
-        $result = $this->bookRepo->createOrUpdateBookItems($book,$inputs);
+        $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
         $this->assertTrue($result);
 
         $book = Book::with('items')->findOrFail($book->id);
@@ -92,10 +92,18 @@ class BookRepositoryTest extends TestCase
         $oldBookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
         $inputs[] = factory(BookItem::class)->make()->toArray();
 
-        $result = $this->bookRepo->createOrUpdateBookItems($book,$inputs);
+        $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
         $this->assertTrue($result);
 
         $book = Book::with('items')->findOrFail($book->id);
         $this->assertCount(1, $book->items, 'Old item was deleted.');
+    }
+
+    /** @test */
+    public function test_can_generate_unique_book_code()
+    {
+        $uniqueBookCode = $this->bookRepo->generateUniqueBookCode();
+
+        $this->assertNotEmpty($uniqueBookCode);
     }
 }

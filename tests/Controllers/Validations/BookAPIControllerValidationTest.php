@@ -3,7 +3,9 @@
 namespace Tests\Controllers\Validations;
 
 use App\Models\Book;
+use App\Models\BookItem;
 use App\Models\Genre;
+use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -106,6 +108,150 @@ class BookAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function it_can_not_store_book_with_non_existing_tag()
+    {
+        $input = array_merge($this->prepareBookInputs(), ['tags' => [999]]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Tag not found.');
+    }
+
+    /** @test */
+    public function it_can_not_store_book_with_non_existing_genres()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $input = array_merge($this->prepareBookInputs(['tags' => [$tag->id]]), ['genres' => [999]]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Genre not found.');
+    }
+
+    /** @test */
+    public function it_can_not_store_book_with_empty_book_item_language_id()
+    {
+        $input = array_merge($this->prepareBookInputs(), ['items' => ['language_id' => null]]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Language is required.');
+    }
+
+    /** @test */
+    public function it_can_not_store_book_with_invalid_book_item_format()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->make();
+
+        $input = array_merge($this->prepareBookInputs(), [
+            'items' =>
+                [
+                    [
+                        'language_id' => $bookItem->language_id,
+                        'format'      => 10,
+                    ],
+                ],
+        ]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Invalid Book Format.');
+    }
+
+    /** @test */
+    public function it_can_not_store_book_without_book_item_price()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->make();
+
+        $input = array_merge($this->prepareBookInputs(), [
+            'items' =>
+                [
+                    [
+                        'language_id' => $bookItem->language_id,
+                        'format'      => BookItem::FORMAT_HARDCOVER,
+                        'price'       => null,
+                    ],
+                ],
+        ]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Please enter book item price.');
+    }
+
+    /** @test */
+    public function it_can_not_store_book_when_book_item_code_is_more_than_eight_character()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->make();
+
+        $input = array_merge($this->prepareBookInputs(), [
+            'items' =>
+                [
+                    [
+                        'language_id' => $bookItem->language_id,
+                        'format'      => BookItem::FORMAT_HARDCOVER,
+                        'price'       => 100,
+                        'book_code'   => 'too many character',
+                    ],
+                ],
+        ]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Book code must be 8 character long.');
+    }
+
+    /** @test */
+    public function it_can_not_store_book_when_book_item_code_is_less_than_eight_character()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->make();
+
+        $input = array_merge($this->prepareBookInputs(), [
+            'items' =>
+                [
+                    [
+                        'language_id' => $bookItem->language_id,
+                        'format'      => BookItem::FORMAT_HARDCOVER,
+                        'price'       => 100,
+                        'book_code'   => 'small',
+                    ],
+                ],
+        ]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Book code must be 8 character long.');
+    }
+
+    /** @test */
+    public function it_can_not_store_book_when_book_item_code_is_already_exist()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create(['book_code' => 'rndm_txt']);
+
+        $input = array_merge($this->prepareBookInputs(), [
+            'items' =>
+                [
+                    [
+                        'language_id' => $bookItem->language_id,
+                        'format'      => BookItem::FORMAT_HARDCOVER,
+                        'price'       => 100,
+                        'book_code'   => $bookItem->book_code,
+                    ],
+                ],
+        ]);
+
+        $response = $this->postJson('api/b1/books', $input);
+
+        $this->assertExceptionMessage($response, 'Given book code is already exist.');
+    }
+
+    /** @test */
     public function it_can_store_book()
     {
         $response = $this->postJson('api/b1/books', $this->prepareBookInputs());
@@ -122,6 +268,34 @@ class BookAPIControllerValidationTest extends TestCase
         $response = $this->putJson('api/b1/books/'.$book->id, $this->prepareBookInputs());
 
         $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
+    }
+
+    /** @test */
+    public function it_can_not_update_book_with_non_existing_tag()
+    {
+        /** @var Book $book */
+        $book = factory(Book::class)->create();
+
+        $input = array_merge($this->prepareBookInputs(), ['tags' => [999]]);
+
+        $response = $this->putJson('api/b1/books/'.$book->id, $input);
+
+        $this->assertExceptionMessage($response, 'Tag not found.');
+    }
+
+    /** @test */
+    public function it_can_not_update_book_with_non_existing_genres()
+    {
+        /** @var Book $book */
+        $book = factory(Book::class)->create();
+
+        $tag = factory(Tag::class)->create();
+
+        $input = array_merge($this->prepareBookInputs(['tags' => [$tag->id]]), ['genres' => [999]]);
+
+        $response = $this->putJson('api/b1/books/'.$book->id, $input);
+
+        $this->assertExceptionMessage($response, 'Genre not found.');
     }
 
     /**
