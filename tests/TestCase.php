@@ -9,12 +9,12 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    use CreatesApplication;
+
     /** @var \Faker\Generator */
     public $faker;
 
     public $loggedInUserId;
-
-    use CreatesApplication;
 
     public function signInWithDefaultAdminUser()
     {

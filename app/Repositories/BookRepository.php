@@ -44,9 +44,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     protected $fieldSearchable = [
         'name',
         'published_on',
-        'price',
         'isbn',
-        'url',
         'is_featured',
     ];
 
