@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
@@ -8,7 +9,6 @@ use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Repositories\BookItemRepository;
 use App\Repositories\IssuedBookRepository;
-use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,8 +38,9 @@ class IssuedBookAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $issuedBooks = $this->issuedBookRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
@@ -48,7 +49,11 @@ class IssuedBookAPIController extends AppBaseController
             return $issuedBook->apiObj();
         });
 
-        return $this->sendResponse($issuedBooks, 'Issued Books retrieved successfully');
+        return $this->sendResponse(
+            $issuedBooks,
+            'Issued Books retrieved successfully.',
+            $this->getTotalRecords(IssuedBook::class, $input, $issuedBooks)
+        );
     }
 
     /**
