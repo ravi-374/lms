@@ -2,6 +2,7 @@
 
 namespace Tests\Controllers;
 
+use App\Models\BookItem;
 use App\Models\Publisher;
 use App\Repositories\PublisherRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -19,7 +20,6 @@ class PublisherAPIControllerTest extends TestCase
     {
         parent::setUp();
         $this->signInWithDefaultAdminUser();
-        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     private function mockRepository()
@@ -47,13 +47,7 @@ class PublisherAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/publishers');
 
-        $this->assertSuccessMessageResponse($response, 'Publishers retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
-
-        $data = \Arr::pluck($response->original['data'], 'name');
-        $publishers->map(function (Publisher $author) use ($data) {
-            $this->assertContains($author->name, $data);
-        });
+        $this->assertSuccessDataResponse($response, $publishers->toArray(), 'Publishers retrieved successfully.');
     }
 
     /** @test */
@@ -113,5 +107,17 @@ class PublisherAPIControllerTest extends TestCase
         $response = $this->deleteJson("api/b1/publishers/$publisher->id");
 
         $this->assertSuccessDataResponse($response, $publisher->toArray(), 'Publisher deleted successfully.');
+        $this->assertEmpty(Publisher::find($publisher->id));
+    }
+
+    /** @test */
+    public function test_unable_to_delete_publisher_when_its_used_in_one_or_more_book_items()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->deleteJson("api/b1/publishers/$bookItem->publisher_id");
+
+        $this->assertExceptionMessage($response, 'Publisher can not be delete, it is used in one or more book items.');
     }
 }
