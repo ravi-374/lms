@@ -1,46 +1,63 @@
-import React, {useState, useEffect} from 'react';
-import {Row, Col, Button, Card, CardBody} from 'reactstrap';
+import React, {useState} from 'react';
+import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
-import SearchField from '../../../shared/components/SearchField';
-import searchFilter from '../../../shared/searchFilter';
-import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../../store/action/sortAction';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import TagModal from './TagModal';
-import Tag from './Tag';
 import './Tags.scss';
 import Toasts from '../../../shared/toast/Toasts';
-import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchTags} from '../../store/actions/tagAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import ModalAction from "../../../shared/action-buttons/ModalAction";
+import ReactDataTable from "../../../shared/table/ReactDataTable";
+import PublisherModal from "../publishers/PublisherModal";
 
 const Tags = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [tag, setTag] = useState(null);
-    const {tags, sortAction, sortObject, toggleModal} = props;
-    useEffect(() => {
-        props.fetchTags();
-    }, []);
-    const cardModalProps = {tag, isDeleteMode, isEditMode, toggleModal};
+    const { tags, toggleModal, totalRecord, isLoading } = props;
+    const cardModalProps = { tag, isDeleteMode, isEditMode, toggleModal };
+
     const onOpenModal = (isEdit, tag = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setTag(tag);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, tags, onOpenModal};
-    if (props.isLoading) {
-        return <ProgressBar/>
-    }
+
+    const fetchTags = (filter) => {
+        props.fetchTags(filter);
+    };
+
+    const onChange = (filter) => {
+        fetchTags(filter);
+    };
+
+    const columns = [
+        {
+            name: 'Name',
+            selector: 'name',
+            sortable: true,
+        },
+        {
+            name: 'Action',
+            selector: 'id',
+            right: true,
+            cell: row => <ModalAction onOpenModal={onOpenModal} item={row}/>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+    ];
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <ProgressBar/>
                 <HeaderTitle title={'Tags | LMS System'}/>
                 <h5 className="page-heading">Tags</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Tag
                     </Button>
@@ -50,8 +67,9 @@ const Tags = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            {tags.length > 0 ? <Tag {...cardBodyProps}/> :
-                                <EmptyComponent title="No tags yet..."/>}
+                            <ReactDataTable items={tags} columns={columns} loading={isLoading} totalRows={totalRecord}
+                                            onOpenModal={onOpenModal} onChange={onChange}/>
+                            <PublisherModal {...cardModalProps}/>
                             <TagModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -63,15 +81,9 @@ const Tags = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {tags, searchText, sortObject, isLoading} = state;
+    const { tags, isLoading, totalRecord } = state;
     let tagsArray = Object.values(tags);
-    if (searchText) {
-        tagsArray = searchFilter(tagsArray, searchText);
-    }
-    if (sortObject) {
-        tagsArray = sortFilter(tagsArray, sortObject);
-    }
-    return {tags: tagsArray, sortObject, isLoading};
+    return { tags: tagsArray, isLoading, totalRecord };
 };
 
-export default connect(mapStateToProps, {fetchTags, sortAction, toggleModal})(Tags);
+export default connect(mapStateToProps, { fetchTags, toggleModal })(Tags);
