@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import apiConfig from '../../config/apiConfigWithoutToken';
 import {Field, reduxForm} from 'redux-form';
+import {Link} from 'react-router-dom';
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
@@ -8,7 +9,7 @@ import CheckBox from '../../../shared/components/CheckBox';
 import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
-import {Tokens} from "../../../constants";
+import {Routes, Tokens} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Login = (props) => {
@@ -81,9 +82,11 @@ const Login = (props) => {
                                             <Button color="primary" disabled={invalid} className="px-4">Login
                                             </Button>
                                         </Col>
-                                        {/*<Col xs="6" className="text-right">*/}
-                                        {/*<Button color="link" className="px-0">Forgot password?</Button>*/}
-                                        {/*</Col>*/}
+                                        <Col xs="6" className="text-right mt-2">
+                                            <Link to={Routes.MEMBER_FORGOT_PASSWORD} color="link" className="px-0">
+                                                Forgot password?
+                                            </Link>
+                                        </Col>
                                     </Row>
                                 </Form>
                                 <Toasts/>
