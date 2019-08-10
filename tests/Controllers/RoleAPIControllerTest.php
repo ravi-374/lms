@@ -20,7 +20,7 @@ class RoleAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware($this->skipMiddleware());
+        $this->signInWithDefaultAdminUser();
     }
 
     private function mockRepository()
@@ -48,7 +48,7 @@ class RoleAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/roles');
 
-        $this->assertSuccessDataResponse($response,$roles->toArray(), 'Roles retrieved successfully.');
+        $this->assertSuccessDataResponse($response, $roles->toArray(), 'Roles retrieved successfully.');
     }
 
     /** @test */
@@ -81,7 +81,10 @@ class RoleAPIControllerTest extends TestCase
         /** @var Role $role */
         $role = factory(Role::class)->create();
 
-        $updateRole = array_merge($role->toArray(), ['permissions' => [$permission->id]]);
+        $updateRole = array_merge(
+            factory(Role::class)->make(['id' => $role->id])->toArray(),
+            ['permissions' => [$permission->id]]
+        );
 
         $this->roleRepository->shouldReceive('update')
             ->once()
