@@ -21,5 +21,6 @@ $factory->define(BookItem::class, function (Faker $faker) {
         'language_id'  => $bookLanguage->id,
         'publisher_id' => $publisher->id,
         'format'       => BookItem::FORMAT_PAPERBACK,
+        'is_available' => BookItem::STATUS_AVAILABLE,
     ];
 });
