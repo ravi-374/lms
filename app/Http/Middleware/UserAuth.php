@@ -32,7 +32,7 @@ class UserAuth
      */
     public function handle($request, Closure $next)
     {
-        $payload = JWTAuth::getPayload()->get('issued_for');
+        $payload = JWTAuth::parseToken()->getPayload()->get('issued_for');
         if ($payload != 'user') {
             throw new UnprocessableEntityHttpException('Invalid token given.');
         }
