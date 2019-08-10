@@ -4,6 +4,8 @@ namespace Tests\Repositories;
 
 use App\Models\Book;
 use App\Models\BookItem;
+use App\Models\BookLanguage;
+use App\Models\Tag;
 use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -105,5 +107,157 @@ class BookRepositoryTest extends TestCase
         $uniqueBookCode = $this->bookRepo->generateUniqueBookCode();
 
         $this->assertNotEmpty($uniqueBookCode);
+    }
+
+    /**
+     * @test
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage  Tag not found
+     */
+    public function it_can_not_store_book_with_non_existing_tag()
+    {
+        $input['tags'] = [999];
+
+        $this->bookRepo->validateInput($input);
+    }
+
+    /**
+     * @test
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage  Genre not found
+     */
+    public function it_can_not_store_book_with_non_existing_genres()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $input['tags'] = [$tag->id];
+        $input['genres'] = [999];
+
+        $this->bookRepo->validateInput($input);
+    }
+
+    /**
+     * @test
+     * @expectedException App\Exceptions\MissingPropertyException
+     * @expectedExceptionMessage  Language is required.
+     */
+    public function it_can_not_store_book_with_empty_book_item_language_id()
+    {
+        $input['items'] = ['language_id' => null];
+
+        $this->bookRepo->validateInput($input);
+    }
+
+    /**
+     * @test
+     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Invalid Book Format.
+     */
+    public function it_can_not_store_book_with_invalid_book_item_format()
+    {
+        /** @var BookItem $bookLanguage */
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $input['items'] =
+            [
+                [
+                    'language_id' => $bookLanguage->id,
+                    'format'      => 10,
+                ],
+            ];
+
+        $this->bookRepo->validateInput($input);
+    }
+
+    /**
+     * @test
+     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Please enter book item price.
+     */
+    public function it_can_not_store_book_without_book_item_price()
+    {
+        /** @var BookItem $bookLanguage */
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $input['items'] =
+            [
+                [
+                    'language_id' => $bookLanguage->id,
+                    'format'      => BookItem::FORMAT_HARDCOVER,
+                    'price'       => null,
+                ],
+            ];
+
+        $this->bookRepo->validateInput($input);
+
+    }
+
+    /**
+     * @test
+     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Book code must be 8 character long.
+     */
+    public function it_can_not_store_book_when_book_item_code_is_more_than_eight_character()
+    {
+        /** @var BookItem $bookLanguage */
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $input['items'] =
+            [
+                [
+                    'language_id' => $bookLanguage->id,
+                    'format'      => BookItem::FORMAT_HARDCOVER,
+                    'price'       => 100,
+                    'book_code'   => 'too many character',
+                ],
+            ];
+
+        $this->bookRepo->validateInput($input);
+    }
+
+    /**
+     * @test
+     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Book code must be 8 character long.
+     */
+    public function it_can_not_store_book_when_book_item_code_is_less_than_eight_character()
+    {
+        /** @var BookItem $bookLanguage */
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $input['items'] =
+            [
+                [
+                    'language_id' => $bookLanguage->id,
+                    'format'      => BookItem::FORMAT_HARDCOVER,
+                    'price'       => 100,
+                    'book_code'   => 'small',
+                ],
+            ];
+
+        $this->bookRepo->validateInput($input);
+    }
+
+    /**
+     * @test
+     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Given book code is already exist.
+     */
+    public function it_can_not_store_book_when_book_item_code_is_already_exist()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create(['book_code' => 'rndm_txt']);
+
+        $input['items'] =
+            [
+                [
+                    'language_id' => $bookItem->language_id,
+                    'format'      => BookItem::FORMAT_HARDCOVER,
+                    'price'       => 100,
+                    'book_code'   => $bookItem->book_code,
+                ],
+            ];
+
+        $this->bookRepo->validateInput($input);
     }
 }
