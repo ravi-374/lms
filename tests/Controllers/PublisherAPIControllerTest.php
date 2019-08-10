@@ -51,7 +51,7 @@ class PublisherAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_publisher()
+    public function it_can_create_publisher()
     {
         $this->mockRepository();
 
@@ -75,7 +75,7 @@ class PublisherAPIControllerTest extends TestCase
 
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->create();
-        $updateRecord = factory(Publisher::class)->make();
+        $updateRecord = factory(Publisher::class)->make(['id' => $publisher->id]);
 
         $this->publisherRepo->shouldReceive('update')
             ->once()
