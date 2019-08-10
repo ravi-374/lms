@@ -20,7 +20,6 @@ class RoleAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
         $this->withoutMiddleware($this->skipMiddleware());
     }
 
@@ -57,7 +56,7 @@ class RoleAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $permission = factory(Role::class)->create();
+        $permission = factory(Permission::class)->create();
 
         /** @var Role $role */
         $role = factory(Role::class)->make(['permissions' => [$permission->id]]);
@@ -77,7 +76,7 @@ class RoleAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $permission = factory(Role::class)->create();
+        $permission = factory(Permission::class)->create();
 
         /** @var Role $role */
         $role = factory(Role::class)->create();
