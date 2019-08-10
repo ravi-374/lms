@@ -66,7 +66,8 @@ const mapStateToProps = (state) => {
     const {tags, searchText, sortObject, isLoading} = state;
     let tagsArray = Object.values(tags);
     if (searchText) {
-        tagsArray = searchFilter(tagsArray, searchText);
+        const filterKeys = ['name'];
+        tagsArray = searchFilter(tagsArray, searchText,filterKeys);
     }
     if (sortObject) {
         tagsArray = sortFilter(tagsArray, sortObject);

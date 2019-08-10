@@ -19,18 +19,18 @@ const MembershipPlans = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [membershipPlan, setMembershipPlan] = useState(null);
-    const {membershipPlans, sortAction, sortObject, toggleModal} = props;
+    const { membershipPlans, sortAction, sortObject, toggleModal } = props;
     useEffect(() => {
         props.fetchMembershipPlans();
     }, []);
-    const cardModalProps = {membershipPlan, isDeleteMode, isEditMode, toggleModal};
+    const cardModalProps = { membershipPlan, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, membershipPlan = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setMembershipPlan(membershipPlan);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, membershipPlans, onOpenModal};
+    const cardBodyProps = { sortAction, sortObject, membershipPlans, onOpenModal };
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -63,10 +63,11 @@ const MembershipPlans = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {membershipPlans, searchText, sortObject, isLoading} = state;
+    const { membershipPlans, searchText, sortObject, isLoading } = state;
     let membershipPlansArray = Object.values(membershipPlans);
     if (searchText) {
-        membershipPlansArray = searchFilter(membershipPlansArray, searchText);
+        const filterKeys = ['name', 'price', 'frequency_name'];
+        membershipPlansArray = searchFilter(membershipPlansArray, searchText, filterKeys);
     }
     if (sortObject) {
         membershipPlansArray = sortFilter(membershipPlansArray, sortObject);
@@ -74,4 +75,4 @@ const mapStateToProps = (state) => {
     return {membershipPlans: membershipPlansArray, sortObject, isLoading};
 };
 
-export default connect(mapStateToProps, {fetchMembershipPlans, sortAction, toggleModal})(MembershipPlans);
+export default connect(mapStateToProps, { fetchMembershipPlans, sortAction, toggleModal })(MembershipPlans);
