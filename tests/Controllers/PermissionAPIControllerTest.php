@@ -52,7 +52,7 @@ class PermissionAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_permission()
+    public function it_can_create_permission()
     {
         $this->mockRepository();
 
@@ -76,7 +76,7 @@ class PermissionAPIControllerTest extends TestCase
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create();
-        $fakePermission = factory(Permission::class)->make();
+        $fakePermission = factory(Permission::class)->make(['id' => $permission->id]);
 
         $this->permissionRepo->shouldReceive('update')
             ->once()
@@ -85,8 +85,11 @@ class PermissionAPIControllerTest extends TestCase
 
         $response = $this->putJson('api/b1/permissions/'.$permission->id, $fakePermission->toArray());
 
-        $this->assertSuccessDataResponse($response, $fakePermission->toArray(),
-            'Permission updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $fakePermission->toArray(),
+            'Permission updated successfully.'
+        );
     }
 
     /** @test */
