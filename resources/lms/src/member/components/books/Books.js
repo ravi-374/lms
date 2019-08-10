@@ -30,9 +30,8 @@ const Books = (props) => {
     }
     const onSearchBook = (params) => {
         findBooks(params);
-        setSearch(true);
     };
-    const prepareFormOption = {books, authors, onSearchBook};
+    const prepareFormOption = {books, authors, onSearchBook,setSearch};
     return (
         <div className="animated fadeIn">
             <HeaderTitle title={'Books | LMS System'}/>
