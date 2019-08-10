@@ -49,7 +49,7 @@ class TagAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_tag()
+    public function it_can_create_tag()
     {
         $this->mockRepository();
 
@@ -72,7 +72,7 @@ class TagAPIControllerTest extends TestCase
 
         /** @var Tag $tag */
         $tag = factory(Tag::class)->create();
-        $fakeTag = factory(Tag::class)->make();
+        $fakeTag = factory(Tag::class)->make(['id' => $tag->id]);
 
         $this->tagRepository->shouldReceive('update')
             ->once()
