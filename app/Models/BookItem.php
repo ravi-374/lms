@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -71,6 +72,15 @@ class BookItem extends Model
     ];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_available' => 'boolean',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function book()
@@ -116,11 +126,13 @@ class BookItem extends Model
         $lastIssuedBook = $this->lastIssuedBook;
         if (!empty($lastIssuedBook)) {
             if ($lastIssuedBook->status == IssuedBook::STATUS_RESERVED) {
-                 $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
-                 
-                 return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
-            } else if ($lastIssuedBook->status == IssuedBook::STATUS_ISSUED) {
-                return $lastIssuedBook->return_due_date;
+                $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
+
+                return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
+            } else {
+                if ($lastIssuedBook->status == IssuedBook::STATUS_ISSUED) {
+                    return $lastIssuedBook->return_due_date;
+                }
             }
         }
     }
