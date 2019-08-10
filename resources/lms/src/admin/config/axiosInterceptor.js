@@ -32,7 +32,7 @@ export default {
                 || error.response.data.message === errorMessage.TOKEN_INVALID
                 || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
                 || error.response.data.message === errorMessage.TOKEN_EXPIRED
-                || error.response.data.message === errorMessage.USER_DEACTIVATE
+                || error.response.data.message === errorMessage.MEMBER_OR_USER_DEACTIVATE
             ) {
                 window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
                 localStorage.removeItem(Tokens.ADMIN);
