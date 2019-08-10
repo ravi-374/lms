@@ -3,7 +3,6 @@
 namespace Tests\Controllers\Validations;
 
 use App\Models\BookLanguage;
-use App\Models\Setting;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -68,6 +67,25 @@ class BookLanguageAPIControllerValidationTest extends TestCase
 
         $this->put('api/b1/book-languages/'.$bookLanguage2->id, ['language_name' => $bookLanguage1->language_name])
             ->assertSessionHasErrors(['language_name' => 'The language name has already been taken.']);
+    }
+
+    /** @test */
+    public function test_update_book_language_fails_when_language_code_is_not_passed()
+    {
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $this->put('api/b1/book-languages/'.$bookLanguage->id, ['language_code' => ''])
+            ->assertSessionHasErrors(['language_code' => 'The language code field is required.']);
+    }
+
+    /** @test */
+    public function test_update_book_language_fails_when_language_code_is_duplicate()
+    {
+        $bookLanguage1 = factory(BookLanguage::class)->create();
+        $bookLanguage2 = factory(BookLanguage::class)->create();
+
+        $this->put('api/b1/book-languages/'.$bookLanguage2->id, ['language_code' => $bookLanguage1->language_code])
+            ->assertSessionHasErrors(['language_code' => 'The language code has already been taken.']);
     }
 
     /** @test */

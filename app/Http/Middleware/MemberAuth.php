@@ -8,6 +8,7 @@ use Auth;
 use Closure;
 use Config;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Validation\UnauthorizedException;
 use JWTAuth;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -47,6 +48,10 @@ class MemberAuth
         /** @var App\Models\Member $member */
         $member = JWTAuth::parseToken()->authenticate();
         Auth::loginUsingId($member->id);
+
+        if (!$member->is_active) {
+            throw new UnauthorizedException('Your account is not active.', 401);
+        }
 
         return $next($request);
     }
