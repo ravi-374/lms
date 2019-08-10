@@ -15,7 +15,6 @@ class AuthAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     /** @test */
