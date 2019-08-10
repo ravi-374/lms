@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 import './App.scss';
 import ProgressBar from '../shared/progress-bar/ProgressBar';

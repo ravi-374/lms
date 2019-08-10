@@ -50,3 +50,16 @@ export const enableDisableUserInput = (event, digit) => {
         event.preventDefault();
     }
 };
+
+export const checkExistingRoute = (lastLocation, history) => {
+    history.listen(location => {
+        lastLocation = location;
+    });
+    const prevHistoryPush = history.push;
+    history.push = (pathname) => {
+        if (!lastLocation || pathname !== lastLocation.pathname + lastLocation.search + lastLocation.hash
+        ) {
+            prevHistoryPush(pathname)
+        }
+    };
+};

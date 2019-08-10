@@ -16,6 +16,7 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from '../../routes';
 import {Routes, Tokens} from "../../../constants";
+import {checkExistingRoute} from "../../../shared/sharedMethod";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
@@ -26,7 +27,7 @@ const Layout = (props) => {
             {renderAppHeader(props)}
             <div className="app-body">
                 {renderAppSidebar(props)}
-                {renderMainSection()}
+                {renderMainSection(props.location)}
             </div>
             {renderAppFooter()}
         </div>
@@ -63,13 +64,13 @@ const renderAppSidebar = (props) => {
     );
 };
 
-const renderMainSection = () => {
+const renderMainSection = (location) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes()}
+                        {renderRoutes(location)}
                         <Redirect from="/" to={Routes.MEMBER_DEFAULT}/>
                     </Switch>
                 </Suspense>
@@ -79,7 +80,7 @@ const renderMainSection = () => {
     )
 };
 
-const renderRoutes = () => {
+const renderRoutes = (location) => {
     if (!localStorage.getItem(Tokens.MEMBER)) {
         sessionStorage.setItem('prevMemberPrevUrl', window.location.href)
     } else {
@@ -87,11 +88,11 @@ const renderRoutes = () => {
     }
     return routes.map((route, index) => {
         return route.component ? (
-            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={(props) => (
-                localStorage.getItem(Tokens.MEMBER)
-                    ? <route.component {...props} />
-                    : <Redirect to={Routes.MEMBER_LOGIN}/>
-            )}/>
+            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
+                checkExistingRoute(location, props.history);
+                return localStorage.getItem(Tokens.MEMBER) ? <route.component {...props} /> :
+                    <Redirect to={Routes.MEMBER_LOGIN}/>
+            }}/>
         ) : (null);
     });
 };
