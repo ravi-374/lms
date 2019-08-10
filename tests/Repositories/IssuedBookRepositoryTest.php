@@ -11,19 +11,19 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 /**
- * Class IssuedRepositoryTest.
+ * Class IssuedBookRepositoryTest.
  */
 class IssuedBookRepositoryTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @var IssuedBookRepository */
-    protected $issueBookRepo;
+    protected $issuedBookRepo;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->issueBookRepo = app(IssuedBookRepository::class);
+        $this->issuedBookRepo = app(IssuedBookRepository::class);
         $this->signInWithDefaultAdminUser();
     }
 
@@ -38,7 +38,7 @@ class IssuedBookRepositoryTest extends TestCase
             'book_item_id' => $fakeIssueBook->book_item_id,
         ];
 
-        $issuedBook = $this->issueBookRepo->issueBook($input);
+        $issuedBook = $this->issuedBookRepo->issueBook($input);
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBook->status);
@@ -56,7 +56,7 @@ class IssuedBookRepositoryTest extends TestCase
     {
         $date = date('Y-m-d h:i:s', strtotime('+2 day'));
 
-        $this->issueBookRepo->issueBook(['issued_on' => $date]);
+        $this->issuedBookRepo->issueBook(['issued_on' => $date]);
     }
 
     /**
@@ -66,7 +66,7 @@ class IssuedBookRepositoryTest extends TestCase
      */
     public function test_unable_to_issue_book_with_non_existing_book_item_id()
     {
-        $this->issueBookRepo->issueBook(['book_item_id' => 9999]);
+        $this->issuedBookRepo->issueBook(['book_item_id' => 9999]);
     }
 
     /**
@@ -87,7 +87,7 @@ class IssuedBookRepositoryTest extends TestCase
             'member_id'    => $issuedBook2->member_id,
         ];
 
-        $this->issueBookRepo->issueBook($input);
+        $this->issuedBookRepo->issueBook($input);
     }
 
     /**
@@ -107,7 +107,7 @@ class IssuedBookRepositoryTest extends TestCase
             'member_id'    => $issuedBook->member_id,
         ];
 
-        $this->issueBookRepo->issueBook($input);
+        $this->issuedBookRepo->issueBook($input);
     }
 
     /** @test */
@@ -120,7 +120,7 @@ class IssuedBookRepositoryTest extends TestCase
             'member_id'    => $member->id,
         ];
 
-        $issuedBook = $this->issueBookRepo->store($input)->toArray();
+        $issuedBook = $this->issuedBookRepo->store($input)->toArray();
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals($input['book_item_id'], $issuedBook['book_item_id']);
@@ -138,7 +138,7 @@ class IssuedBookRepositoryTest extends TestCase
             'member_id'    => $member->id,
         ];
 
-        $response = $this->issueBookRepo->validateBook($input);
+        $response = $this->issuedBookRepo->validateBook($input);
         $this->assertTrue($response, 'Book is not available');
     }
 
@@ -148,7 +148,7 @@ class IssuedBookRepositoryTest extends TestCase
         /** @var  IssuedBook $fakeReserveBook */
         $fakeReserveBook = factory(IssuedBook::class)->make(['status' => IssuedBook::STATUS_RETURNED]);
 
-        $issuedBook = $this->issueBookRepo->reserveBook($fakeReserveBook->toArray());
+        $issuedBook = $this->issuedBookRepo->reserveBook($fakeReserveBook->toArray());
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_RESERVED, $issuedBook->status);
@@ -167,7 +167,7 @@ class IssuedBookRepositoryTest extends TestCase
             'book_item_id' => $bookItem->id,
         ]);
 
-        $issuedBook = $this->issueBookRepo->returnBook($fakeIssueBook->toArray());
+        $issuedBook = $this->issuedBookRepo->returnBook($fakeIssueBook->toArray());
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_RETURNED, $issuedBook->status);
@@ -186,7 +186,7 @@ class IssuedBookRepositoryTest extends TestCase
             'status'       => IssuedBook::STATUS_RESERVED,
             'book_item_id' => $bookItem->id,
         ]);
-        $issuedBook = $this->issueBookRepo->unReserveBook($bookItem, $fakeIssueBook->toArray());
+        $issuedBook = $this->issuedBookRepo->unReserveBook($bookItem, $fakeIssueBook->toArray());
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $issuedBook->status);
