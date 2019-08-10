@@ -18,8 +18,6 @@ class RoleRepositoryTest extends TestCase
     /** @var RoleRepository */
     protected $roleRepo;
 
-    private $defaultUserId = 1;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -38,6 +36,7 @@ class RoleRepositoryTest extends TestCase
         $take3 = $this->roleRepo->all([], null, 3);
         $skip2 = $this->roleRepo->all([], 2, 4);
 
+        // 2 Default roles
         $this->assertCount(5, $allBookSeries);
         $this->assertCount(3, $take3);
         $this->assertCount(3, $skip2);
@@ -49,8 +48,8 @@ class RoleRepositoryTest extends TestCase
     {
         $permission = factory(Permission::class)->create();
         $fakeRole = factory(Role::class)->make()->toArray();
-        $fakeRole['permissions'][] =['name' => $this->faker->name];
-        $fakeRole['permissions'][] =['name' => $this->faker->name];
+        $fakeRole['permissions'][] = ['permissions' => $permission->id];
+        $fakeRole['permissions'][] = ['permissions' => $permission->id];
         $input = [
             'name'        => $this->faker->name,
             'permissions' => [$permission->id],
@@ -60,7 +59,7 @@ class RoleRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $roleResult);
         $this->assertEquals($input['name'], $roleResult['name']);
-        $this->assertCount(2, $fakeRole->permissions);
+        $this->assertCount(2, $roleResult->perms);
     }
 
     /** @test */
@@ -68,8 +67,8 @@ class RoleRepositoryTest extends TestCase
     {
         $permission = factory(Permission::class)->create();
         $role = factory(Role::class)->make()->toArray();
-        $role['permissions'][] =['name' => $this->faker->name];
-        $role['permissions'][] =['name' => $this->faker->name];
+        $fakeRole['permissions'][] = ['permissions' => $permission->id];
+        $fakeRole['permissions'][] = ['permissions' => $permission->id];
         $inputs = [
             'name'        => $this->faker->name,
             'permissions' => [$permission->id],
