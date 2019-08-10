@@ -127,8 +127,7 @@ class MemberControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'Member has been activated successfully.');
-        $this->assertTrue($member->fresh()->is_active);
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
 
     /** @test */
@@ -138,8 +137,7 @@ class MemberControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'Member has been deactivated successfully.');
-        $this->assertFalse($member->fresh()->is_active);
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
 
     /** @test */
