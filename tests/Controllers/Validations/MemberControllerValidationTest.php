@@ -3,9 +3,7 @@
 namespace Tests\Controllers\Validations;
 
 use App\Models\Member;
-use App\Models\MembershipPlan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class MemberControllerValidationTest extends TestCase
@@ -16,7 +14,6 @@ class MemberControllerValidationTest extends TestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
 
@@ -46,6 +43,20 @@ class MemberControllerValidationTest extends TestCase
     {
         $this->post('api/b1/members', ['password' => ''])
             ->assertSessionHasErrors(['password' => 'The password field is required.']);
+    }
+
+    /** @test */
+    public function test_create_member_fails_when_password_length_is_less_than_six_character()
+    {
+        $this->post('api/b1/members', ['password' => 12345])
+            ->assertSessionHasErrors(['password' => 'The password must be at least 6 characters.']);
+    }
+
+    /** @test */
+    public function test_create_member_fails_when_membership_plan_id_is_not_passed()
+    {
+        $this->post('api/b1/members', ['membership_plan_id' => ''])
+            ->assertSessionHasErrors(['membership_plan_id' => 'The membership plan id field is required.']);
     }
 
     /** @test */
@@ -115,8 +126,7 @@ class MemberControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'Member has been activated successfully.');
-        $this->assertTrue($member->fresh()->is_active);
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
 
     /** @test */
@@ -126,16 +136,16 @@ class MemberControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'Member has been deactivated successfully.');
-        $this->assertFalse($member->fresh()->is_active);
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
 
     /** @test */
     public function test_can_get_details_of_logged_in_member()
     {
+        $this->signInWithMember();
         $response = $this->get('api/v1/member-details');
 
         $this->assertNotEmpty($response);
-        $this->assertEquals($this->loggedInUserId, $response->original['data']->id);
+        $this->assertEquals($this->loggedInMemberId, $response->original['data']->id);
     }
 }

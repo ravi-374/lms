@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Requests\API;
 
 use InfyOm\Generator\Request\APIRequest;
@@ -23,6 +24,7 @@ class UpdateBookLanguageAPIRequest extends APIRequest
     public function rules()
     {
         $rules['language_name'] = 'required|unique:book_languages,language_name,'.$this->route('book_language')->id;
+        $rules['language_code'] = 'required|unique:book_languages,language_code,'.$this->route('book_language')->id;
 
         return $rules;
     }
