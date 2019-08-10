@@ -70,7 +70,7 @@ class AuthAPIController extends AppBaseController
         }
 
         if (!$member->is_active) {
-            return $this->sendError('Your account is not active', 422);
+            return $this->sendError('Your account is not active', 401);
         }
 
         $token = JWTAuth::fromUser($member);
