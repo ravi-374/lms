@@ -19,7 +19,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property string $email
  * @property string $password
  * @property float $phone
- * @property int $is_active
+ * @property boolean $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Address $address
@@ -87,6 +87,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_active'         => 'boolean',
     ];
 
     public static $createRules = [

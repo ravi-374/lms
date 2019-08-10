@@ -14,7 +14,6 @@ class AuthorAPIControllerValidationTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->signInWithDefaultAdminUser();
     }
 
@@ -23,6 +22,16 @@ class AuthorAPIControllerValidationTest extends TestCase
     {
         $this->post('api/b1/authors', ['first_name' => ''])
             ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
+    }
+
+    /** @test */
+    public function test_create_author_with_valid_input()
+    {
+        $author = factory(Author::class)->make();
+
+        $response = $this->postJson('api/b1/authors', $author->toArray());
+
+        $this->assertSuccessDataResponse($response, $author->toArray(), 'Author saved successfully.');
     }
 
     /** @test */

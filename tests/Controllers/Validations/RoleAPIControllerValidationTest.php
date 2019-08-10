@@ -36,6 +36,13 @@ class RoleAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function test_create_role_fails_when_permissions_not_passed()
+    {
+        $this->post('api/b1/roles/', ['permissions' => []])
+            ->assertSessionHasErrors(['permissions' => 'Role must have at least one permission.']);
+    }
+
+    /** @test */
     public function test_update_role_fails_when_name_is_not_passed()
     {
         $role = factory(Role::class)->create();
@@ -52,6 +59,15 @@ class RoleAPIControllerValidationTest extends TestCase
 
         $this->put('api/b1/roles/'.$role2->id, ['name' => $role1->name])
             ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+    }
+
+    /** @test */
+    public function test_update_role_fails_when_permissions_not_passed()
+    {
+        $role = factory(Role::class)->create();
+
+        $this->put('api/b1/roles/'.$role->id, ['permissions' => []])
+            ->assertSessionHasErrors(['permissions' => 'Role must have at least one permission.']);
     }
 
     /** @test */
