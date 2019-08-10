@@ -54,7 +54,7 @@ class BookLanguageAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_book_language()
+    public function it_can_create_book_language()
     {
         $this->mockRepository();
 
@@ -78,7 +78,7 @@ class BookLanguageAPIControllerTest extends TestCase
 
         /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
-        $fakeBookLanguage = factory(BookLanguage::class)->make();
+        $fakeBookLanguage = factory(BookLanguage::class)->make(['id' => $bookLanguage->id]);
 
         $this->bookLanguageRepo->shouldReceive('update')
             ->once()
