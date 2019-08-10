@@ -9,7 +9,7 @@ import {resetSearchBooks} from "../../store/actions/bookSearchAction";
 import './Books.scss';
 
 const BookSearchForm = (props) => {
-    const {books, authors, change, onSearchBook, resetSearchBooks} = props;
+    const { books, authors, change, onSearchBook, resetSearchBooks, setSearch } = props;
     const [isAuthorChecked, setIsAuthorChecked] = useState(false);
     const [isBookChecked, setIsBookChecked] = useState(true);
     const [isDisabled, setIsDisabled] = useState(true);
@@ -23,23 +23,23 @@ const BookSearchForm = (props) => {
     };
     const searchBook = (formValues) => {
         onSearchBook(prepareParams(formValues.item));
+        setSearch(true);
     };
     const onSelectItem = (option) => {
-        if (option.length > 0) {
-            change('item', option);
-            setIsDisabled(false);
-        } else {
-            change('item', null);
-            setIsDisabled(true);
-        }
+        change('item', option);
+        setIsDisabled(false);
     };
     const onCheckedBook = () => {
+        setIsDisabled(true);
+        setSearch(false);
         setIsBookChecked(!isBookChecked);
         typeAheadRef.current.getInstance().clear();
         setIsAuthorChecked(false);
         resetSearchBooks();
     };
     const onCheckedAuthor = () => {
+        setIsDisabled(true);
+        setSearch(false);
         setIsAuthorChecked(!isAuthorChecked);
         typeAheadRef.current.getInstance().clear();
         setIsBookChecked(false);
@@ -49,9 +49,10 @@ const BookSearchForm = (props) => {
         change('item', null);
         typeAheadRef.current.getInstance().clear();
         setIsDisabled(true);
+        setSearch(false);
         resetSearchBooks();
     };
-    const {handleSubmit} = props;
+    const { handleSubmit } = props;
     return (
         <Row className="animated fadeIn flex-column">
             <div className="d-flex">
@@ -76,14 +77,10 @@ const BookSearchForm = (props) => {
                     <Col xs={12}>
                         <span className="book-form__input-label">{isBookChecked ? 'Book' : 'Author'} Name</span>
                         <div className="book-form__input-book">
-                            <TypeAhead
-                                id="item"
-                                options={isBookChecked ? books : authors}
-                                placeholder={`Select ${isBookChecked ? 'Book' : 'Author' }`}
-                                onChange={onSelectItem}
-                                groupText={isBookChecked ? 'book' : 'user-circle-o'}
-                                reference={typeAheadRef}
-                            />
+                            <TypeAhead id="item" options={isBookChecked ? books : authors}
+                                       placeholder={`Select ${isBookChecked ? 'Book' : 'Author' }`}
+                                       onChange={onSelectItem} groupText={isBookChecked ? 'book' : 'user-circle-o'}
+                                       reference={typeAheadRef}/>
                             <Field name="item" type="hidden" component={InputGroup}/>
                         </div>
                     </Col>
@@ -97,5 +94,5 @@ const BookSearchForm = (props) => {
     )
 };
 
-const bookSearchForm = reduxForm({form: 'bookSearchForm'})(BookSearchForm);
-export default connect(null, {resetSearchBooks})(bookSearchForm);
+const bookSearchForm = reduxForm({ form: 'bookSearchForm' })(BookSearchForm);
+export default connect(null, { resetSearchBooks })(bookSearchForm);
