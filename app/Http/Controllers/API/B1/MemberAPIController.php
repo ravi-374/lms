@@ -141,6 +141,8 @@ class MemberAPIController extends AppBaseController
         $member->is_active = ($member->is_active) ? 0 : 1;
         $member->save();
 
+        $member->address;
+
         return $this->sendResponse($member->toArray(), 'Member updated successfully.');
     }
 
