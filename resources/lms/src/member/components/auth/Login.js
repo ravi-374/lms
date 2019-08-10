@@ -68,10 +68,9 @@ const Login = (props) => {
                                 <Form onSubmit={handleSubmit(onLogin)}>
                                     <h1>Login</h1>
                                     <p className="text-muted">Sign In to your account</p>
-
-                                    <Field name="email" type="email" groupText="icon-user"
+                                    <Field name="email" type="email" placeholder="Email" groupText="icon-user"
                                            component={CustomInputGroup}/>
-                                    <Field name="password" type="password" groupText="icon-lock"
+                                    <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <div>
                                         <Field name="remember_me" checked={isRemember} onChange={onRememberChange}

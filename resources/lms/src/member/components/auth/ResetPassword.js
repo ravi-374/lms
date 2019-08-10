@@ -37,7 +37,7 @@ const ResetPassword = (props) => {
                             <CardBody>
                                 <Form onSubmit={handleSubmit(onSubmit)}>
                                     <h1>Reset Password</h1>
-                                    <p className="text-muted">Reset password</p>
+                                    <p className="text-muted">Enter new password</p>
                                     <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <Field name="confirm_password" type="password" placeholder="Repeat Password"
