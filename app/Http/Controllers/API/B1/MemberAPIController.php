@@ -43,13 +43,18 @@ class MemberAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $members = $this->memberRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($members->toArray(), 'Members retrieved successfully.');
+        return $this->sendResponse(
+            $members->toArray(),
+            'Members retrieved successfully.',
+            $this->getTotalRecords(Member::class, $input, $members)
+        );
     }
 
     /**
@@ -135,9 +140,10 @@ class MemberAPIController extends AppBaseController
     {
         $member->is_active = ($member->is_active) ? 0 : 1;
         $member->save();
-        $message = "Member has been ".(($member->is_active) ? 'activated' : 'deactivated')." successfully.";
 
-        return $this->sendSuccess($message);
+        $member->address;
+
+        return $this->sendResponse($member->toArray(), 'Member updated successfully.');
     }
 
     /**
