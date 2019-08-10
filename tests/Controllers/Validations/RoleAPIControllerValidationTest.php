@@ -15,7 +15,6 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
 
