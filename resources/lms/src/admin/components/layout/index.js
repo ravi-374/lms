@@ -18,12 +18,13 @@ import Toasts from '../../../shared/toast/Toasts';
 import routes from "../../routes";
 import {fetchConfig} from "../../store/actions/configAction";
 import {Routes, Tokens} from "../../../constants";
+import {checkExistingRoute} from "../../../shared/sharedMethod";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const {permissions} = props;
+    const { permissions } = props;
     const newRoutes = prepareRoutes(permissions);
     useEffect(() => {
         if (!localStorage.getItem(Tokens.ADMIN)) {
@@ -41,7 +42,7 @@ const Layout = (props) => {
             {renderAppHeader(props)}
             <div className="app-body">
                 {renderAppSidebar(props, prepareNavigation(permissions))}
-                {renderMainSection(newRoutes)}
+                {renderMainSection(newRoutes, props.location)}
             </div>
             {renderAppFooter()}
         </div>
@@ -101,13 +102,13 @@ const renderAppSidebar = (props, sideMenuList) => {
     );
 };
 
-const renderMainSection = (newRoutes) => {
+const renderMainSection = (newRoutes, location) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes(newRoutes)}
+                        {renderRoutes(newRoutes, location)}
                         <Redirect from="/" to={Routes.ADMIN_DEFAULT}/>
                     </Switch>
                 </Suspense>
@@ -117,14 +118,14 @@ const renderMainSection = (newRoutes) => {
     )
 };
 
-const renderRoutes = (newRoutes) => {
+const renderRoutes = (newRoutes, location) => {
     return newRoutes.map((route, index) => {
         return route.component ? (
-            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={(props) => (
-                localStorage.getItem(Tokens.ADMIN)
-                    ? <route.component {...props} />
-                    : <Redirect to={Routes.ADMIN_LOGIN}/>
-            )}/>
+            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
+                checkExistingRoute(location, props.history);
+                return localStorage.getItem(Tokens.ADMIN) ? <route.component {...props} /> :
+                    <Redirect to={Routes.ADMIN_LOGIN}/>
+            }}/>
         ) : (null);
     });
 };
@@ -151,4 +152,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {fetchConfig})(Layout);
+export default connect(mapStateToProps, { fetchConfig })(Layout);
