@@ -31,13 +31,14 @@ class MembershipPlanRepositoryTest extends TestCase
      */
     public function it_can_store_membership_plan()
     {
+        $fakePlan = factory(MembershipPlan::class)->make()->toArray();
         $input = [
             'name'      => $this->faker->name,
             'price'     => $this->faker->word,
             'frequency' => MembershipPlan::MONTHLY_FREQUENCY,
         ];
 
-        $membershipPlanResult = $this->membershipPlanRepo->store($input)->toArray();
+        $membershipPlanResult = $this->membershipPlanRepo->store($input);
 
         $this->assertArrayHasKey('id', $membershipPlanResult);
         $this->assertEquals($input['name'], $membershipPlanResult['name']);
@@ -46,6 +47,7 @@ class MembershipPlanRepositoryTest extends TestCase
     /** @test */
     public function it_can_update_membership_plan()
     {
+        $fakePlan = factory(MembershipPlan::class)->create()->toArray();
         $membershipPlan = factory(MembershipPlan::class)->create();
         $inputs = [
             'name'      => $this->faker->name,
@@ -53,7 +55,7 @@ class MembershipPlanRepositoryTest extends TestCase
             'frequency' => MembershipPlan::MONTHLY_FREQUENCY,
         ];
 
-        $membershipPlan = $this->membershipPlanRepo->update($inputs, $membershipPlan->id)->toArray();
+        $membershipPlan = $this->membershipPlanRepo->update($inputs, $membershipPlan->id);
 
         $this->assertArrayHasKey('id', $membershipPlan);
         $this->assertEquals($inputs['name'], $membershipPlan['name']);
@@ -67,4 +69,18 @@ class MembershipPlanRepositoryTest extends TestCase
         $this->assertNotEmpty($generatedMemberShipPlanId);
     }
 
+    /** @test */
+    public function test_can_invalid_frequency()
+    {
+        $fakePlan = factory(MembershipPlan::class)->create()->toArray();
+        $membershipPlan = factory(MembershipPlan::class)->create();
+        $inputs = [
+            'name'      => $this->faker->name,
+            'price'     => $this->faker->word,
+            'frequency' => 'invalid frequency',
+        ];
+
+        $response = $this->membershipPlanRepo->validateMembershipPlan($inputs);
+        $this->assertTrue($response, 'invalid frequency');
+    }
 }
