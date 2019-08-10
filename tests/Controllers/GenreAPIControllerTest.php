@@ -56,7 +56,7 @@ class GenreAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_genre()
+    public function it_can_create_genre()
     {
         $this->mockRepository();
 
@@ -80,7 +80,7 @@ class GenreAPIControllerTest extends TestCase
 
         /** @var Genre $genre */
         $genre = factory(Genre::class)->create();
-        $fakeGenre = factory(Genre::class)->make();
+        $fakeGenre = factory(Genre::class)->make(['id' => $genre->id]);
 
         $this->genreRepository->shouldReceive('update')
             ->once()
