@@ -14,7 +14,6 @@ class MemberControllerValidationTest extends TestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
 
@@ -127,8 +126,7 @@ class MemberControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'Member has been activated successfully.');
-        $this->assertTrue($member->fresh()->is_active);
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
 
     /** @test */
@@ -138,16 +136,16 @@ class MemberControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'Member has been deactivated successfully.');
-        $this->assertFalse($member->fresh()->is_active);
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
 
     /** @test */
     public function test_can_get_details_of_logged_in_member()
     {
+        $this->signInWithMember();
         $response = $this->get('api/v1/member-details');
 
         $this->assertNotEmpty($response);
-        $this->assertEquals($this->loggedInUserId, $response->original['data']->id);
+        $this->assertEquals($this->loggedInMemberId, $response->original['data']->id);
     }
 }

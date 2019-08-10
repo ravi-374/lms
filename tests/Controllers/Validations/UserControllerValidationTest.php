@@ -14,7 +14,6 @@ class UserControllerValidationTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
 
@@ -170,7 +169,7 @@ class UserControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'User has been activated successfully.');
+        $this->assertSuccessDataResponse($response, $user->fresh()->toArray(), 'User updated successfully.');
         $this->assertTrue($user->fresh()->is_active);
     }
 
@@ -182,7 +181,7 @@ class UserControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
 
-        $this->assertSuccessMessageResponse($response, 'User has been deactivated successfully.');
+        $this->assertSuccessDataResponse($response, $user->fresh()->toArray(), 'User updated successfully.');
         $this->assertFalse($user->fresh()->is_active);
     }
 
