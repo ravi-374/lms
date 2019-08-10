@@ -28,16 +28,8 @@ use Illuminate\Database\Eloquent\Model as Model;
  */
 class Author extends Model
 {
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'first_name' => 'required',
-    ];
-
     public $table = 'authors';
+
     public $fillable = [
         'first_name',
         'last_name',
@@ -54,6 +46,15 @@ class Author extends Model
         'first_name'  => 'string',
         'last_name'   => 'string',
         'description' => 'string',
+    ];
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'first_name' => 'required',
     ];
 
     /**
