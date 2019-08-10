@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
@@ -12,7 +13,7 @@ use JWTAuth;
 class AuthAPIController extends AppBaseController
 {
     /**
-     * @param  Request $request
+     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -36,7 +37,7 @@ class AuthAPIController extends AppBaseController
         }
 
         if (!$user->is_active) {
-            return $this->sendError('Your account is not active', 422);
+            return $this->sendError('Your account is not active', 401);
         }
 
         $token = JWTAuth::fromUser($user);
@@ -66,6 +67,10 @@ class AuthAPIController extends AppBaseController
 
         if (!Hash::check($password, $member->password)) {
             return $this->sendError('Invalid email or password.', 422);
+        }
+
+        if (!$member->is_active) {
+            return $this->sendError('Your account is not active', 401);
         }
 
         $token = JWTAuth::fromUser($member);
