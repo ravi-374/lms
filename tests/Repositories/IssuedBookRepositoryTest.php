@@ -2,7 +2,6 @@
 
 namespace Tests\Repositories;
 
-use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
@@ -28,23 +27,20 @@ class IssuedBookRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_issue_book()
+    public function test_member_can_issue_book()
     {
-        /** @var  IssuedBook $fakeIssueBook */
-        $fakeIssueBook = factory(IssuedBook::class)->make();
+        /** @var Member $member */
+        $member = factory(Member::class)->create();
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
 
-        $input = [
-            'member_id'    => $fakeIssueBook->member_id,
-            'book_item_id' => $fakeIssueBook->book_item_id,
-        ];
+        $input = ['member_id' => $member->id, 'book_item_id' => $bookItem->id];
 
         $issuedBook = $this->issuedBookRepo->issueBook($input);
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBook->status);
-
-        $this->assertEquals($fakeIssueBook->book_item_id, $issuedBook->bookItem->id);
-        $this->assertFalse($issuedBook->bookItem->is_available);
+        $this->assertFalse($bookItem->fresh()->is_available);
     }
 
     /**
@@ -76,18 +72,12 @@ class IssuedBookRepositoryTest extends TestCase
      */
     public function test_unable_to_issue_book_when_its_reserved_by_another_member()
     {
-        /** @var  IssuedBook $issuedBook1 */
-        $issuedBook1 = factory(IssuedBook::class)->create([
-            'status' => IssuedBook::STATUS_RESERVED,
-        ]);
-        $issuedBook2 = factory(IssuedBook::class)->make();
+        $vishal = factory(Member::class)->create();
+        $mitul = factory(Member::class)->create();
+        $bookItem = factory(BookItem::class)->create();
 
-        $input = [
-            'book_item_id' => $issuedBook1->book_item_id,
-            'member_id'    => $issuedBook2->member_id,
-        ];
-
-        $this->issuedBookRepo->issueBook($input);
+        $reserved = $this->issuedBookRepo->reserveBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
+        $issuedBook = $this->issuedBookRepo->issueBook(['book_item_id' => $bookItem->id, 'member_id' => $mitul->id]);
     }
 
     /**
@@ -97,17 +87,11 @@ class IssuedBookRepositoryTest extends TestCase
      */
     public function test_unable_to_issue_book_when_its_already_issued()
     {
-        /** @var  IssuedBook $issuedBook */
-        $issuedBook = factory(IssuedBook::class)->create([
-            'status' => IssuedBook::STATUS_ISSUED,
-        ]);
+        $vishal = factory(Member::class)->create();
+        $bookItem = factory(BookItem::class)->create();
 
-        $input = [
-            'book_item_id' => $issuedBook->book_item_id,
-            'member_id'    => $issuedBook->member_id,
-        ];
-
-        $this->issuedBookRepo->issueBook($input);
+        $this->issuedBookRepo->issueBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
+        $this->issuedBookRepo->issueBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
     }
 
     /** @test */
@@ -115,83 +99,120 @@ class IssuedBookRepositoryTest extends TestCase
     {
         $bookItem = factory(BookItem::class)->create();
         $member = factory(Member::class)->create();
-        $input = [
-            'book_item_id' => $bookItem->id,
-            'member_id'    => $member->id,
-        ];
+        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
 
-        $issuedBook = $this->issuedBookRepo->store($input)->toArray();
+        /** @var IssuedBook $issuedBook */
+        $issuedBook = $this->issuedBookRepo->store($input);
 
         $this->assertArrayHasKey('id', $issuedBook);
-        $this->assertEquals($input['book_item_id'], $issuedBook['book_item_id']);
-        $this->assertEquals($input['member_id'], $issuedBook['member_id']);
+        $this->assertEquals($input['book_item_id'], $issuedBook->book_item_id);
+        $this->assertEquals($input['member_id'], $issuedBook->member_id);
+    }
+
+    /**
+     * @test
+     * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Book is not available
+     */
+    public function test_can_validate_issue_book_data()
+    {
+        $issuedBook = factory(IssuedBook::class)->create();
+
+        $this->issuedBookRepo->validateBook($issuedBook->toArray());
     }
 
     /** @test */
-    public function test_can_validate_book()
+    public function test_member_can_reserve_book()
     {
-        $book = factory(Book::class)->create();
-        $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
         $member = factory(Member::class)->create();
-        $input = [
-            'book_item_id' => $bookItem->id,
-            'member_id'    => $member->id,
-        ];
+        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
 
-        $response = $this->issuedBookRepo->validateBook($input);
-        $this->assertTrue($response, 'Book is not available');
+        $reserveBook = $this->issuedBookRepo->reserveBook($input);
+
+        $this->assertArrayHasKey('id', $reserveBook);
+        $this->assertEquals(IssuedBook::STATUS_RESERVED, $reserveBook->status);
+        $this->assertFalse($bookItem->fresh()->is_available);
+    }
+
+    /**
+     * @test
+     * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Book is not available
+     */
+    public function test_unable_to_reserve_book_when_it_is_not_available()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create(['is_available' => false]);
+        $member = factory(Member::class)->create();
+        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
+
+        $reserveBook = $this->issuedBookRepo->reserveBook($input);
     }
 
     /** @test */
-    public function it_can_reserve_book()
+    public function test_member_can_return_book()
     {
-        /** @var  IssuedBook $fakeReserveBook */
-        $fakeReserveBook = factory(IssuedBook::class)->make(['status' => IssuedBook::STATUS_RETURNED]);
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+        $member = factory(Member::class)->create();
+        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
 
-        $issuedBook = $this->issuedBookRepo->reserveBook($fakeReserveBook->toArray());
+        $issuedBook = $this->issuedBookRepo->issueBook($input);
+        $returnBook = $this->issuedBookRepo->returnBook($input);
 
         $this->assertArrayHasKey('id', $issuedBook);
-        $this->assertEquals(IssuedBook::STATUS_RESERVED, $issuedBook->status);
+        $this->assertEquals(IssuedBook::STATUS_RETURNED, $returnBook->status);
+        $this->assertTrue($bookItem->fresh()->is_available);
+    }
 
-        $this->assertEquals($fakeReserveBook->book_item_id, $issuedBook->bookItem->id);
+    /**
+     * @test
+     * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Book must be issued before returning it.
+     */
+    public function test_unable_to_return_book_when_it_is_not_issued()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+        $member = factory(Member::class)->create();
+        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
+
+        $returnBook = $this->issuedBookRepo->returnBook($input);
     }
 
     /** @test */
-    public function it_can_return_book()
+    public function test_member_can_un_reserve_book()
     {
-        $book = factory(Book::class)->create();
-        $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
-        /** @var  IssuedBook $fakeIssueBook */
-        $fakeIssueBook = factory(IssuedBook::class)->create([
-            'status'       => IssuedBook::STATUS_RESERVED,
-            'book_item_id' => $bookItem->id,
-        ]);
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+        $member = factory(Member::class)->create();
+        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
 
-        $issuedBook = $this->issuedBookRepo->returnBook($fakeIssueBook->toArray());
+        $issuedBook = $this->issuedBookRepo->reserveBook($input);
+        $returnBook = $this->issuedBookRepo->unReserveBook($bookItem->fresh(), $input);
 
         $this->assertArrayHasKey('id', $issuedBook);
-        $this->assertEquals(IssuedBook::STATUS_RETURNED, $issuedBook->status);
-
-        $this->assertEquals($fakeIssueBook->book_item_id, $issuedBook->bookItem->id);
-        $this->assertTrue($issuedBook->bookItem->is_available);
+        $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $returnBook->status);
+        $this->assertTrue($bookItem->fresh()->is_available);
     }
 
-    /** @test */
-    public function it_can_un_reserve_book()
+    /**
+     * @test
+     * @expectedException  Illuminate\Validation\UnauthorizedException
+     * @expectedExceptionMessage You can un-reserve only your books.
+     */
+    public function test_member_can_only_un_reserve_their_books()
     {
-        $book = factory(Book::class)->create();
-        $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
-        /** @var  IssuedBook $fakeIssueBook */
-        $fakeIssueBook = factory(IssuedBook::class)->create([
-            'status'       => IssuedBook::STATUS_RESERVED,
-            'book_item_id' => $bookItem->id,
-        ]);
-        $issuedBook = $this->issuedBookRepo->unReserveBook($bookItem, $fakeIssueBook->toArray());
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+        $vishal = factory(Member::class)->create();
+        $mitul = factory(Member::class)->create();
 
-        $this->assertArrayHasKey('id', $issuedBook);
-        $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $issuedBook->status);
-
-        $this->assertEquals($fakeIssueBook->book_item_id, $issuedBook->bookItem->id);
-        $this->assertTrue($issuedBook->bookItem->is_available);
+        $issuedBook = $this->issuedBookRepo->reserveBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
+        $returnBook = $this->issuedBookRepo->unReserveBook(
+            $bookItem, ['book_item_id' => $bookItem->id, 'member_id' => $mitul->id]
+        );
     }
 }
