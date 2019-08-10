@@ -14,7 +14,6 @@ class MemberControllerValidationTest extends TestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
 
@@ -143,9 +142,10 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function test_can_get_details_of_logged_in_member()
     {
+        $this->signInWithMember();
         $response = $this->get('api/v1/member-details');
 
         $this->assertNotEmpty($response);
-        $this->assertEquals($this->loggedInUserId, $response->original['data']->id);
+        $this->assertEquals($this->loggedInMemberId, $response->original['data']->id);
     }
 }
