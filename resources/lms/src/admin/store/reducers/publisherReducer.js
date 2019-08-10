@@ -4,7 +4,7 @@ import _ from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
         case publisherActionType.FETCH_PUBLISHERS:
-            return {..._.mapKeys(action.payload, 'id')};
+            return {...state, ..._.mapKeys(action.payload, 'id')};
         case publisherActionType.FETCH_PUBLISHER:
         case publisherActionType.EDIT_PUBLISHER:
         case publisherActionType.ADD_PUBLISHER:

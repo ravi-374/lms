@@ -9,31 +9,17 @@ export const priceFormatter = (price, format) => {
 };
 
 export const dateFormatter = (date) => {
-    if (!date) {
-        return '';
-    }
-    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('Do MMM, YYYY');
+    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('Do MMMM, YYYY');
 };
 
 export const timeFormatter = (date) => {
-    if (!date) {
-        return '';
-    }
     return moment(date, 'YYYY-MM-DD hh:mm:ss').format('hh:mma');
 };
-
-export const dateTimeFormatter = (date) => {
-    if (!date) {
-        return '';
-    }
-    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD hh:mma');
-};
-
 
 export const prepareFullNames = (members) => {
     let memberArray = [];
     members.forEach(member => {
-        memberArray.push({ id: member.id, name: member.first_name + ' ' + member.last_name });
+        memberArray.push({id: member.id, name: member.first_name + ' ' + member.last_name});
     });
     return memberArray;
 };
