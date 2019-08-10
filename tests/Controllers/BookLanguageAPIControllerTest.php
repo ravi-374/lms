@@ -20,7 +20,6 @@ class BookLanguageAPIControllerTest extends TestCase
     {
         parent::setUp();
         $this->signInWithDefaultAdminUser();
-        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     private function mockRepository()
@@ -49,8 +48,9 @@ class BookLanguageAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/book-languages');
 
-        $this->assertSuccessDataResponse($response, $bookLanguages->toArray(),
-            'Book Languages retrieved successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $bookLanguages->toArray(), 'Book Languages retrieved successfully.'
+        );
     }
 
     /** @test */
@@ -68,7 +68,9 @@ class BookLanguageAPIControllerTest extends TestCase
 
         $response = $this->postJson('api/b1/book-languages', $bookLanguage->toArray());
 
-        $this->assertSuccessDataResponse($response, $bookLanguage->toArray(), 'Book Language saved successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $bookLanguage->toArray(), 'Book Language saved successfully.'
+        );
     }
 
     /** @test */
@@ -87,8 +89,9 @@ class BookLanguageAPIControllerTest extends TestCase
 
         $response = $this->putJson('api/b1/book-languages/'.$bookLanguage->id, $fakeBookLanguage->toArray());
 
-        $this->assertSuccessDataResponse($response, $fakeBookLanguage->toArray(),
-            'Book Language updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $fakeBookLanguage->toArray(), 'Book Language updated successfully.'
+        );
     }
 
     /** @test */
@@ -99,7 +102,9 @@ class BookLanguageAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/book-languages/'.$bookLanguage->id);
 
-        $this->assertSuccessDataResponse($response, $bookLanguage->toArray(), 'Book Language retrieved successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $bookLanguage->toArray(), 'Book Language retrieved successfully.'
+        );
     }
 
     /** @test */
@@ -110,7 +115,9 @@ class BookLanguageAPIControllerTest extends TestCase
 
         $response = $this->deleteJson("api/b1/book-languages/$bookLanguage->id");
 
-        $this->assertSuccessDataResponse($response, $bookLanguage->toArray(), 'Book Language deleted successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $bookLanguage->toArray(), 'Book Language deleted successfully.'
+        );
         $this->assertEmpty(BookLanguage::find($bookLanguage->id));
     }
 
