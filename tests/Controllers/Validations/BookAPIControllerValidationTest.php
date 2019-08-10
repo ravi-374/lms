@@ -3,9 +3,7 @@
 namespace Tests\Controllers\Validations;
 
 use App\Models\Book;
-use App\Models\BookItem;
 use App\Models\Genre;
-use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

@@ -141,7 +141,7 @@ class BookRepositoryTest extends TestCase
      * @expectedException App\Exceptions\MissingPropertyException
      * @expectedExceptionMessage  Language is required.
      */
-    public function it_can_not_store_book_with_empty_book_item_language_id()
+    public function test_can_not_store_book_when_book_item_does_not_have_language()
     {
         $input['items'] = ['language_id' => null];
 
@@ -158,13 +158,7 @@ class BookRepositoryTest extends TestCase
         /** @var BookItem $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $input['items'] =
-            [
-                [
-                    'language_id' => $bookLanguage->id,
-                    'format'      => 10,
-                ],
-            ];
+        $input['items'] = [['language_id' => $bookLanguage->id, 'format' => 10,],];
 
         $this->bookRepo->validateInput($input);
     }
