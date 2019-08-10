@@ -17,8 +17,6 @@ class MembershipPlanRepositoryTest extends TestCase
     /** @var MembershipPlanRepository */
     protected $membershipPlanRepo;
 
-    private $defaultUserId = 1;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -27,38 +25,27 @@ class MembershipPlanRepositoryTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    /** @test
-     */
+    /** @test */
     public function it_can_store_membership_plan()
     {
         $fakePlan = factory(MembershipPlan::class)->make()->toArray();
-        $input = [
-            'name'      => $this->faker->name,
-            'price'     => $this->faker->word,
-            'frequency' => MembershipPlan::MONTHLY_FREQUENCY,
-        ];
 
-        $membershipPlanResult = $this->membershipPlanRepo->store($input);
+        $plan = $this->membershipPlanRepo->store($fakePlan);
 
-        $this->assertArrayHasKey('id', $membershipPlanResult);
-        $this->assertEquals($input['name'], $membershipPlanResult['name']);
+        $this->assertArrayHasKey('id', $plan);
+        $this->assertEquals($fakePlan['name'], $plan['name']);
     }
 
     /** @test */
     public function it_can_update_membership_plan()
     {
-        $fakePlan = factory(MembershipPlan::class)->create()->toArray();
-        $membershipPlan = factory(MembershipPlan::class)->create();
-        $inputs = [
-            'name'      => $this->faker->name,
-            'price'     => $this->faker->word,
-            'frequency' => MembershipPlan::MONTHLY_FREQUENCY,
-        ];
+        $plan = factory(MembershipPlan::class)->create();
+        $fakePlan = factory(MembershipPlan::class)->make()->toArray();
 
-        $membershipPlan = $this->membershipPlanRepo->update($inputs, $membershipPlan->id);
+        $updatedPlan = $this->membershipPlanRepo->update($fakePlan, $plan->id);
 
-        $this->assertArrayHasKey('id', $membershipPlan);
-        $this->assertEquals($inputs['name'], $membershipPlan['name']);
+        $this->assertArrayHasKey('id', $updatedPlan);
+        $this->assertEquals($fakePlan['name'], $updatedPlan['name']);
     }
 
     /** @test */
@@ -69,18 +56,15 @@ class MembershipPlanRepositoryTest extends TestCase
         $this->assertNotEmpty($generatedMemberShipPlanId);
     }
 
-    /** @test */
-    public function test_can_invalid_frequency()
+    /**
+     * @test
+     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage invalid frequency.
+     */
+    public function test_can_validate_membership_input()
     {
-        $fakePlan = factory(MembershipPlan::class)->create()->toArray();
-        $membershipPlan = factory(MembershipPlan::class)->create();
-        $inputs = [
-            'name'      => $this->faker->name,
-            'price'     => $this->faker->word,
-            'frequency' => 'invalid frequency',
-        ];
+        $fakePlan = factory(MembershipPlan::class)->make(['frequency' => 99])->toArray();
 
-        $response = $this->membershipPlanRepo->validateMembershipPlan($inputs);
-        $this->assertTrue($response, 'invalid frequency');
+        $this->membershipPlanRepo->validateMembershipPlan($fakePlan);
     }
 }
