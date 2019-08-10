@@ -2,6 +2,7 @@
 
 namespace Tests\Repositories;
 
+use App\Models\Book;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
 use App\Repositories\BookSeriesRepository;
@@ -32,47 +33,66 @@ class BookSeriesRepositoryTest extends TestCase
     public function test_can_get_all_book_series()
     {
         /** @var BookSeries $bookSeries */
-        $bookSeries = factory(BookSeries::class)->times(2)->create();
+        $bookSeries = factory(BookSeries::class)->times(5)->create();
 
-        $seriesBook = factory(SeriesBook::class)->create();
+        $allBookSeries = $this->bookSeriesRepo->all();
+        $take3 = $this->bookSeriesRepo->all([], null, 3);
+        $skip2 = $this->bookSeriesRepo->all([], 2, 4);
 
-        $bookSeries[0]->seriesItems()->save($seriesBook);
-        $bookSeries[1]->seriesItems()->save($seriesBook);
-
-        $bookSeriesList = $this->bookSeriesRepo->all([]);
-
-        $this->assertEquals($bookSeries[0]->id, $bookSeriesList[1]->id);
-        $this->assertEquals($bookSeries[1]->id, $bookSeriesList[0]->id);
-
-        $this->assertNotEmpty($bookSeriesList[0]->sequence);
+        $this->assertCount(5, $allBookSeries);
+        $this->assertCount(3, $take3);
+        $this->assertCount(3, $skip2);
     }
-
 
     /** @test
      */
     public function it_can_store_book_series()
     {
-        $input = [
-            'title' => $this->faker->word,
-        ];
+        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
 
-        $bookResult = $this->bookSeriesRepo->store($input)->toArray();
+        $bookResult = $this->bookSeriesRepo->store($fakeBookSeries);
 
         $this->assertArrayHasKey('id', $bookResult);
-        $this->assertEquals($input['title'], $bookResult['title']);
+        $this->assertEquals($fakeBookSeries['title'], $bookResult->title);
     }
 
     /** @test */
     public function it_can_update_book_series()
     {
         $bookSeries = factory(BookSeries::class)->create();
-        $inputs = [
-            'title' => $this->faker->word,
-        ];
+        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
 
-        $bookSeries = $this->bookSeriesRepo->update($inputs, $bookSeries->id)->toArray();
+        $bookSeries = $this->bookSeriesRepo->update($fakeBookSeries, $bookSeries->id);
 
         $this->assertArrayHasKey('id', $bookSeries);
-        $this->assertEquals($inputs['title'], $bookSeries['title']);
+        $this->assertEquals($fakeBookSeries['title'], $bookSeries->title);
+    }
+
+    /** @test */
+    public function test_can_create_book_series_with_series_items()
+    {
+        $book = factory(Book::class)->create();
+        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
+
+        $fakeBookSeries['series_items'][] = ['book_id' => $book->id, 'sequence' => 1];
+        $fakeBookSeries['series_items'][] = ['book_id' => $book->id, 'sequence' => 2];
+
+        $bookSeries = $this->bookSeriesRepo->store($fakeBookSeries);
+
+        $this->assertArrayHasKey('id', $bookSeries);
+        $this->assertCount(2, $bookSeries->seriesItems);
+    }
+
+    /** @test */
+    public function test_can_update_book_series_with_series_items()
+    {
+        $bookSeries = factory(BookSeries::class)->create()->toArray();
+        $seriesItem = factory(SeriesBook::class)->create(['series_id' => $bookSeries['id']])->toArray();
+        $bookSeries['series_items'][] = array_merge($seriesItem, ['sequence' => 5]);
+
+        $bookSeries = $this->bookSeriesRepo->update($bookSeries, $bookSeries['id']);
+        $this->assertArrayHasKey('id', $bookSeries);
+        $this->assertCount(1, $bookSeries->seriesItems);
+        $this->assertEquals(5, $bookSeries->seriesItems[0]->sequence);
     }
 }
