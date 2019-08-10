@@ -6,8 +6,7 @@ export const constants = {
     TOGGLE_ACTION: 'TOGGLE_ACTION',
     ADD_TOAST: 'ADD_TOAST',
     REMOVE_TOAST: 'REMOVE_TOAST',
-    ERROR_ACTION: 'ERROR_ACTION',
-    SET_TOTAL_RECORD: 'SET_TOTAL_RECORD',
+    ERROR_ACTION: 'ERROR_ACTION'
 };
 
 export const genreActionType = {
@@ -64,8 +63,8 @@ export const membershipPlanFrequency = {
 };
 
 export const membershipPlanFrequencyOptions = [
-    { id: 1, name: 'Monthly' },
-    { id: 2, name: 'Yearly' },
+    {id: 1, name: 'Monthly'},
+    {id: 2, name: 'Yearly'},
 ];
 
 export const bookActionType = {
@@ -92,16 +91,16 @@ export const bookStatusConstant = {
 };
 
 export const bookFormatOptions = [
-    { id: 1, name: 'Hardcover' },
-    { id: 2, name: 'Paperback' }
+    {id: 1, name: 'Hardcover'},
+    {id: 2, name: 'Paperback'}
 ];
 
 export const bookStatusOptions = [
-    { id: 1, name: 'Reserved' },
-    { id: 2, name: 'Issued' },
-    { id: 3, name: 'Returned' },
-    { id: 4, name: 'Available' },
-    { id: 5, name: 'Unreserved' }
+    {id: 1, name: 'Reserved'},
+    {id: 2, name: 'Issued'},
+    {id: 3, name: 'Returned'},
+    {id: 4, name: 'Available'},
+    {id: 5, name: 'Unreserved'}
 ];
 
 export const errorMessage = {
@@ -114,7 +113,6 @@ export const userActionType = {
     FETCH_USER: 'FETCH_USER',
     ADD_USER: 'ADD_USER',
     EDIT_USER: 'EDIT_USER',
-    SET_ACTIVE_DE_ACTIVE: 'SET_ACTIVE_DE_ACTIVE',
     DELETE_USER: 'DELETE_USER'
 };
 
@@ -123,8 +121,7 @@ export const memberActionType = {
     FETCH_MEMBER: 'FETCH_MEMBER',
     ADD_MEMBER: 'ADD_MEMBER',
     EDIT_MEMBER: 'EDIT_MEMBER',
-    DELETE_MEMBER: 'DELETE_MEMBER',
-    SET_ACTIVE_DE_ACTIVE: 'SET_ACTIVE_DE_ACTIVE'
+    DELETE_MEMBER: 'DELETE_MEMBER'
 };
 
 export const roleActionType = {
@@ -148,9 +145,9 @@ export const bookAllotmentActionType = {
 };
 
 export const bookAllotmentStatusOptions = [
-    { id: 1, name: 'Reserve' },
-    { id: 2, name: 'Issue' },
-    { id: 3, name: 'Return' },
+    {id: 1, name: 'Reserve'},
+    {id: 2, name: 'Issue'},
+    {id: 3, name: 'Return'},
     // {id: 4, name: 'Lost'},
     // {id: 5, name: 'Damaged'},
 ];

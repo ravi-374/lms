@@ -3,21 +3,12 @@ import apiConfig from '../../config/apiConfig';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
-import requestParam from "../../../shared/requestParam";
-import {setTotalRecord} from "./totalRecordAction";
 
-export const fetchTags = (filter) => async (dispatch) => {
+export const fetchTags = () => async (dispatch) => {
     dispatch(setLoading(true));
-    let url = 'tags';
-
-    if (filter.limit || filter.order_By || filter.search) {
-        url += requestParam(filter);
-    }
-
-    await apiConfig.get(url)
+    await apiConfig.get('tags')
         .then((response) => {
             dispatch({type: tagActionType.FETCH_TAGS, payload: response.data.data});
-            dispatch(setTotalRecord(response.data.totalRecords));
             dispatch(setLoading(false));
         })
         .catch(({response}) => {

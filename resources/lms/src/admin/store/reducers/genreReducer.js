@@ -4,7 +4,7 @@ import _ from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
         case genreActionType.FETCH_GENRES:
-            return {..._.mapKeys(action.payload, 'id')};
+            return {...state, ..._.mapKeys(action.payload, 'id')};
         case genreActionType.FETCH_GENRE:
         case genreActionType.EDIT_GENRE:
         case genreActionType.ADD_GENRE:
