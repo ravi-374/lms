@@ -52,6 +52,13 @@ class BookAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function test_create_book_fails_when_genres_is_not_passed()
+    {
+        $this->post('api/b1/books/', ['genres' => []])
+            ->assertSessionHasErrors(['genres' => 'The genres field is required.']);
+    }
+
+    /** @test */
     public function test_update_book_fails_when_name_is_not_passed()
     {
         $book = factory(Book::class)->create();
@@ -67,6 +74,15 @@ class BookAPIControllerValidationTest extends TestCase
 
         $this->put('api/b1/books/'.$book->id, ['isbn' => ''])
             ->assertSessionHasErrors(['isbn' => 'The isbn field is required.']);
+    }
+
+    /** @test */
+    public function test_update_book_fails_when_genres_is_not_passed()
+    {
+        $book = factory(Book::class)->create();
+
+        $this->post('api/b1/books/'.$book->id, ['genres' => []])
+            ->assertSessionHasErrors(['genres' => 'The genres field is required.']);
     }
 
     /** @test */
@@ -108,14 +124,19 @@ class BookAPIControllerValidationTest extends TestCase
         $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
     }
 
+    /**
+     * @param array $input
+     *
+     * @return array
+     */
     public function prepareBookInputs($input = [])
     {
         $genre = factory(Genre::class)->create();
 
         return array_merge([
-            'name' => $this->faker->name,
-            'isbn' => $this->faker->isbn10,
-            'genres' => [$genre->id]
+            'name'   => $this->faker->name,
+            'isbn'   => $this->faker->isbn10,
+            'genres' => [$genre->id],
         ], $input);
     }
 }
