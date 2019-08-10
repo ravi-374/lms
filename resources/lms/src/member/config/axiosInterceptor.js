@@ -31,7 +31,8 @@ export default {
             if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED
                 || error.response.data.message === errorMessage.TOKEN_INVALID
                 || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
-                || error.response.data.message === errorMessage.TOKEN_EXPIRED) {
+                || error.response.data.message === errorMessage.TOKEN_EXPIRED
+                || error.response.data.message === errorMessage.MEMBER_OR_USER_DEACTIVATE) {
                 window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
                 localStorage.removeItem(Tokens.MEMBER);
             }
