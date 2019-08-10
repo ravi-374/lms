@@ -20,7 +20,6 @@ class AuthorAPIControllerTest extends TestCase
     {
         parent::setUp();
         $this->signInWithDefaultAdminUser();
-        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     private function mockRepository()
