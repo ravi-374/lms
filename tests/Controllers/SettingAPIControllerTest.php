@@ -90,7 +90,7 @@ class SettingAPIControllerTest extends TestCase
     /** @test */
     public function it_can_retrieve_setting()
     {
-        /** @var Tag $setting */
+        /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
 
         $response = $this->getJson('api/b1/settings/'.$setting->id);
