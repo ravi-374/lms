@@ -2,7 +2,6 @@
 
 namespace Tests\Controllers;
 
-use App\Models\Book;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
 use App\Repositories\BookSeriesRepository;
@@ -50,8 +49,11 @@ class BookSeriesAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/book-series');
 
-        $this->assertSuccessDataResponse($response, $bookSeries->toArray(),
-            'Book Series retrieved successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $bookSeries->toArray(),
+            'Book Series retrieved successfully.'
+        );
     }
 
     /** @test */
@@ -79,7 +81,7 @@ class BookSeriesAPIControllerTest extends TestCase
 
         /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->create();
-        $fakeBookSeries = factory(BookSeries::class)->make();
+        $fakeBookSeries = factory(BookSeries::class)->make(['id' => $bookSeries->id]);
 
         $this->bookSeriesRepo->shouldReceive('update')
             ->once()
@@ -98,12 +100,7 @@ class BookSeriesAPIControllerTest extends TestCase
         /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->create();
 
-        $book = factory(Book::class)->create();
-        $seriesBook = SeriesBook::create([
-            'series_id' => $bookSeries->id,
-            'book_id'   => $book->id,
-            'sequence'  => 3,
-        ]);
+        $seriesBook = SeriesBook::create(['series_id' => $bookSeries->id]);
 
         $response = $this->getJson('api/b1/book-series/'.$bookSeries->id);
 

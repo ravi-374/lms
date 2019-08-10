@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(BookSeries::class, function (Faker $faker) {
 
     return [
-        'title' => $faker->unique()->word,
+        'title' => $faker->unique()->name,
     ];
 });
