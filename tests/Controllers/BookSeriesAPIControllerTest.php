@@ -20,7 +20,6 @@ class BookSeriesAPIControllerTest extends TestCase
     {
         parent::setUp();
         $this->signInWithDefaultAdminUser();
-        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     private function mockRepository()
@@ -100,7 +99,7 @@ class BookSeriesAPIControllerTest extends TestCase
         /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->create();
 
-        $seriesBook = SeriesBook::create(['series_id' => $bookSeries->id]);
+        $seriesBook = factory(SeriesBook::class)->create(['series_id' => $bookSeries->id]);
 
         $response = $this->getJson('api/b1/book-series/'.$bookSeries->id);
 
