@@ -37,13 +37,18 @@ class UserAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $users = $this->userRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($users->toArray(), 'Users retrieved successfully.');
+        return $this->sendResponse(
+            $users->toArray(),
+            'Users retrieved successfully.',
+            $this->getTotalRecords(User::class, $input, $users)
+        );
     }
 
     /**
@@ -136,9 +141,11 @@ class UserAPIController extends AppBaseController
     {
         $user->is_active = ($user->is_active) ? 0 : 1;
         $user->save();
-        $message = "User has been ".(($user->is_active) ? 'activated' : 'deactivated')." successfully.";
 
-        return $this->sendSuccess($message);
+        $user->roles;
+        $user->address;
+
+        return $this->sendResponse($user->toArray(), 'User updated successfully.');
     }
 
     /**
