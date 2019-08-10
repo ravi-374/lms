@@ -20,7 +20,6 @@ class GenreAPIControllerTest extends TestCase
     {
         parent::setUp();
         $this->signInWithDefaultAdminUser();
-        $this->withoutMiddleware($this->skipMiddleware());
     }
 
     private function mockRepository()
@@ -50,9 +49,6 @@ class GenreAPIControllerTest extends TestCase
         $response = $this->getJson('api/b1/genres');
 
         $this->assertSuccessDataResponse($response, $genres->toArray(), 'Genres retrieved successfully.');
-
-        $genresList = Genre::all()->count();
-        $this->assertEquals($genresList, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -89,8 +85,7 @@ class GenreAPIControllerTest extends TestCase
 
         $response = $this->putJson('api/b1/genres/'.$genre->id, $fakeGenre->toArray());
 
-        $this->assertSuccessDataResponse($response, $fakeGenre->toArray(),
-            'Genre updated successfully.');
+        $this->assertSuccessDataResponse($response, $fakeGenre->toArray(), 'Genre updated successfully.');
     }
 
     /** @test */
