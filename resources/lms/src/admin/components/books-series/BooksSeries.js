@@ -60,15 +60,16 @@ const BooksSeries = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {booksSeries, books, searchText, sortObject, isLoading} = state;
+    const { booksSeries, books, searchText, sortObject, isLoading } = state;
     let booksSeriesArray = Object.values(booksSeries);
     if (searchText) {
-        booksSeriesArray = searchFilter(booksSeriesArray, searchText);
+        const filterKeys = ['title'];
+        booksSeriesArray = searchFilter(booksSeriesArray, searchText, filterKeys);
     }
     if (sortObject) {
         booksSeriesArray = sortFilter(booksSeriesArray, sortObject);
     }
-    return {booksSeries: booksSeriesArray, sortObject, isLoading, books: Object.values(books)};
+    return { booksSeries: booksSeriesArray, sortObject, isLoading, books: Object.values(books) };
 };
 
-export default connect(mapStateToProps, {fetchBooksSeries, fetchBooks, sortAction, toggleModal})(BooksSeries);
+export default connect(mapStateToProps, { fetchBooksSeries, fetchBooks, sortAction, toggleModal })(BooksSeries);

@@ -6,13 +6,13 @@ import ModalAction from '../../../shared/action-buttons/ModalAction';
 import PriceFormatter from '../../../shared/PriceFormatter';
 import {membershipPlanFrequency} from '../../constants';
 
-export default ({membershipPlans, onOpenModal, sortAction, sortObject}) => {
+export default ({ membershipPlans, onOpenModal, sortAction, sortObject }) => {
     const headers = [
-        {id: 'name', name: 'Name'},
-        {id: 'frequency_name', name: 'Frequency'},
-        {id: 'price', name: 'Price'}
+        { id: 'name', name: 'Name' },
+        { id: 'frequency_name', name: 'Frequency' },
+        { id: 'price', name: 'Price' }
     ];
-    const headerProps = {sortAction, sortObject, sortConfig, headers};
+    const headerProps = { sortAction, sortObject, sortConfig, headers };
     const renderMemberShipPlanFrequency = (membershipPlan) => {
         switch (membershipPlan.frequency) {
             case membershipPlanFrequency.MONTHLY:

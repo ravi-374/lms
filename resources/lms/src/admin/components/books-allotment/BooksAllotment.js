@@ -15,27 +15,27 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBooksAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
-import {prepareFullNames} from '../../../shared/sharedMethod';
+import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
-    const {booksAllotment, members, books, sortAction, sortObject, toggleModal, history} = props;
+    const { booksAllotment, members, books, sortAction, sortObject, toggleModal, history } = props;
     useEffect(() => {
         props.fetchBooksAllotment();
         props.fetchMembers();
         props.fetchBooks();
     }, []);
-    const cardModalProps = {bookAllotment, members, books, isEditMode, isDeleteMode, toggleModal};
+    const cardModalProps = { bookAllotment, members, books, isEditMode, isDeleteMode, toggleModal };
     const onOpenModal = (isEdit, booksAllotment = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setBookAllotment(booksAllotment);
         toggleModal();
     };
-    const cardBodyProps = {members, sortAction, sortObject, booksAllotment, onOpenModal, history};
+    const cardBodyProps = { members, sortAction, sortObject, booksAllotment, onOpenModal, history };
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -66,19 +66,32 @@ const BooksAllotment = (props) => {
         </Row>
     );
 };
+const prepareBookAllotment = (booksAllotment) => {
+    const booksAllotmentArray = [];
+    booksAllotment.forEach(bookAllotment => {
+        bookAllotment.book_name = bookAllotment.book_item.book.name;
+        bookAllotment.book_code = bookAllotment.book_item.edition + ` (${bookAllotment.book_item.book_code})`;
+        bookAllotment.readable_issue_date = bookAllotment.issued_on ? dateFormatter(bookAllotment.issued_on) : '';
+        bookAllotment.readable_return_date = bookAllotment.return_date ? dateFormatter(bookAllotment.return_date) : '';
+        booksAllotmentArray.push(bookAllotment);
+    });
+    return booksAllotmentArray;
+};
 
 const mapStateToProps = (state) => {
-    const {booksAllotment, members, books, searchText, sortObject, isLoading} = state;
+    const { booksAllotment, members, books, searchText, sortObject, isLoading } = state;
     let booksAllotmentArray = Object.values(booksAllotment);
+    let membersArray = prepareFullNames(Object.values(members));
     if (searchText) {
-        booksAllotmentArray = searchFilter(booksAllotmentArray, searchText);
+        const filterKeys = ['book_name', 'book_code', 'member_name', 'readable_issue_date', 'readable_return_date', 'status_name'];
+        booksAllotmentArray = searchFilter(booksAllotmentArray, searchText, filterKeys);
     }
     if (sortObject) {
         booksAllotmentArray = sortFilter(booksAllotmentArray, sortObject);
     }
     return {
-        booksAllotment: booksAllotmentArray,
-        members: prepareFullNames(Object.values(members)),
+        booksAllotment: prepareBookAllotment(booksAllotmentArray),
+        members: membersArray,
         books: Object.values(books),
         sortObject,
         isLoading

@@ -66,7 +66,8 @@ const mapStateToProps = (state) => {
     const {roles, searchText, sortObject, isLoading} = state;
     let rolesArray = Object.values(roles);
     if (searchText) {
-        rolesArray = searchFilter(rolesArray, searchText);
+        const filterKeys = ['name', 'display_name'];
+        rolesArray = searchFilter(rolesArray, searchText,filterKeys);
     }
     if (sortObject) {
         rolesArray = sortFilter(rolesArray, sortObject);

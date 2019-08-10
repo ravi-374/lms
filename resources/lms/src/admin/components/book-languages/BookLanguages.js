@@ -19,18 +19,18 @@ const BookLanguages = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookLanguage, setBookLanguage] = useState(null);
-    const {bookLanguages, sortAction, sortObject, toggleModal} = props;
+    const { bookLanguages, sortAction, sortObject, toggleModal } = props;
     useEffect(() => {
         props.fetchBookLanguages();
     }, []);
-    const cardModalProps = {bookLanguage, isDeleteMode, isEditMode, toggleModal};
+    const cardModalProps = { bookLanguage, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, bookLanguage = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setBookLanguage(bookLanguage);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, bookLanguages, onOpenModal};
+    const cardBodyProps = { sortAction, sortObject, bookLanguages, onOpenModal };
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -63,15 +63,16 @@ const BookLanguages = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {bookLanguages, searchText, sortObject, isLoading} = state;
+    const { bookLanguages, searchText, sortObject, isLoading } = state;
     let bookLanguagesArray = Object.values(bookLanguages);
     if (searchText) {
-        bookLanguagesArray = searchFilter(bookLanguagesArray, searchText);
+        const filterKeys = ['language_name', 'language_code'];
+        bookLanguagesArray = searchFilter(bookLanguagesArray, searchText, filterKeys);
     }
     if (sortObject) {
         bookLanguagesArray = sortFilter(bookLanguagesArray, sortObject);
     }
-    return {bookLanguages: bookLanguagesArray, sortObject, isLoading};
+    return { bookLanguages: bookLanguagesArray, sortObject, isLoading };
 };
 
-export default connect(mapStateToProps, {fetchBookLanguages, sortAction, toggleModal})(BookLanguages);
+export default connect(mapStateToProps, { fetchBookLanguages, sortAction, toggleModal })(BookLanguages);

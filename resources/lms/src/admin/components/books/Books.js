@@ -14,6 +14,8 @@ import Book from './Book';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {prepareObject} from "../../../shared/sharedMethod";
+import {prepareAuthor} from "./prepareArray";
 
 const Books = (props) => {
     const [book, setBook] = useState(null);
@@ -72,16 +74,14 @@ const Books = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { books, searchText, sortObject, isLoading, filterObject } = state;
+    const { books, searchText, sortObject, isLoading } = state;
     let booksArray = Object.values(books);
     if (searchText) {
-        booksArray = searchFilter(booksArray, searchText);
+        const filterKeys = ['name', 'authors_name', 'isbn'];
+        booksArray = searchFilter(booksArray, searchText, filterKeys);
     }
     if (sortObject) {
         booksArray = sortFilter(booksArray, sortObject);
-    }
-    if (filterObject && filterObject.type && filterObject.type === 'book') {
-        booksArray = booksArray.filter(book => book.status === filterObject.filterField);
     }
     return {
         books: booksArray, sortObject, isLoading,
