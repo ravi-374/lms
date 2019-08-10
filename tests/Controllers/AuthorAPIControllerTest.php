@@ -52,7 +52,7 @@ class AuthorAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_author()
+    public function it_can_create_author()
     {
         $this->mockRepository();
 
@@ -76,7 +76,7 @@ class AuthorAPIControllerTest extends TestCase
 
         /** @var Author $author */
         $author = factory(Author::class)->create();
-        $updateRecord = factory(Author::class)->make();
+        $updateRecord = factory(Author::class)->make(['id' => $author->id]);
 
         $this->authorRepo->shouldReceive('update')
             ->once()
@@ -112,13 +112,13 @@ class AuthorAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_unable_to_delete_author_when_is_assigned_to_user()
+    public function test_unable_to_delete_author_when_author_is_assigned_to_one_or_more_books()
     {
         $book = factory(Book::class)->create();
 
         /** @var Author $author */
         $author = factory(Author::class)->create();
-        $author->books()->sync([$book->id]);
+        $book->authors()->sync([$author->id]);
 
         $response = $this->deleteJson("api/b1/authors/$author->id");
 
