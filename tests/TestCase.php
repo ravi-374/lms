@@ -51,8 +51,11 @@ abstract class TestCase extends BaseTestCase
     public function skipMiddleware()
     {
         return [
+            \Illuminate\Auth\Middleware\Authenticate::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\UserAuth::class,
-            \App\Http\Middleware\MemberAuth::class,
+            \Zizaco\Entrust\Middleware\EntrustRole::class,
+            \Zizaco\Entrust\Middleware\EntrustPermission::class,
         ];
     }
 
