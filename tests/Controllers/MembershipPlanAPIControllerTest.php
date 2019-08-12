@@ -99,8 +99,9 @@ class MembershipPlanAPIControllerTest extends TestCase
 
         $response = $this->getJson("api/b1/membership-plans/$membershipPlan->id");
 
-        $this->assertSuccessDataResponse($response, $membershipPlan->toArray(),
-            'Membership Plan retrieved successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $membershipPlan->toArray(), 'Membership Plan retrieved successfully.'
+        );
     }
 
     /** @test */
@@ -111,8 +112,9 @@ class MembershipPlanAPIControllerTest extends TestCase
 
         $response = $this->deleteJson("api/b1/membership-plans/$membershipPlan->id");
 
-        $this->assertSuccessDataResponse($response, $membershipPlan->toArray(),
-            'Membership Plan deleted successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $membershipPlan->toArray(), 'Membership Plan deleted successfully.'
+        );
         $this->assertEmpty(MembershipPlan::find($membershipPlan->id));
     }
 
