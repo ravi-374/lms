@@ -30,22 +30,12 @@ class SeriesBookRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function test_can_create_series_book()
+    public function test_can_create_series_book_items()
     {
-        $bookSeries = factory(BookSeries::class)->create([
-            'title' => $this->faker->unique()->word,
-        ]);
-        $book = factory(Book::class)->create([
-            'name' => $this->faker->unique()->name,
-            'isbn' => $this->faker->unique()->isbn10,
-        ]);
-        $inputs[] = factory(SeriesBook::class)->make([
-            'series_id' => $bookSeries->id,
-            'book_id'   => $book->id,
-            'sequence'  => $this->faker->uuid,
-        ])->toArray();
+        $bookSeries = factory(BookSeries::class)->create();
+        $fakeSeriesBook = factory(SeriesBook::class)->make()->toArray();
 
-        $createSeriesBook = $this->seriesBookRepo->createOrUpdateSeriesItems($bookSeries, $inputs);
+        $createSeriesBook = $this->seriesBookRepo->createOrUpdateSeriesItems($bookSeries, $fakeSeriesBook);
 
         $this->assertEquals($bookSeries['book_id'], $createSeriesBook['book_id']);
     }
@@ -60,14 +50,15 @@ class SeriesBookRepositoryTest extends TestCase
             'name' => $this->faker->unique()->name,
             'isbn' => $this->faker->unique()->isbn10,
         ]);
-        $inputs[] = factory(SeriesBook::class)->make([
+        $inputs = factory(SeriesBook::class)->make([
             'series_id' => $bookSeries->id,
             'book_id'   => $book->id,
             'sequence'  => 1,
         ])->toArray();
-        $inputs[] = factory(SeriesBook::class)->make([
+        $inputs = factory(SeriesBook::class)->make([
             'series_id' => $bookSeries->id,
             'book_id'   => $book->id,
+            'sequence'  => 1,
         ])->toArray();
 
         $response = $this->seriesBookRepo->validateSeriesItems($inputs);
@@ -78,7 +69,7 @@ class SeriesBookRepositoryTest extends TestCase
     /** @test */
     public function test_can_not_create_series_book_when_book_is_not_passed()
     {
-        $bookSeries = factory(BookSeries::class)->create([
+        $bookSeries = factory(BookSeries::class)->make([
             'title' => $this->faker->unique()->word,
         ]);
         $inputs[] = factory(SeriesBook::class)->make([
@@ -110,12 +101,12 @@ class SeriesBookRepositoryTest extends TestCase
             'book_id'   => $book->id,
             'sequence'  => 1,
         ])->toArray();
-        $inputs[] = factory(SeriesBook::class)->make([
+        $input[] = factory(SeriesBook::class)->make([
             'series_id' => $bookSeries->id,
             'book_id'   => $book->id,
         ])->toArray();
 
-        $response = $this->seriesBookRepo->validateSeriesItems($inputs);
+        $response = $this->seriesBookRepo->validateSeriesItems($input);
 
         $this->assertTrue($response, 'Sequence is required');
     }
