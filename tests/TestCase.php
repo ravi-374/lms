@@ -56,7 +56,7 @@ abstract class TestCase extends BaseTestCase
             \Illuminate\Auth\Middleware\Authenticate::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             UserAuth::class,
-            MemberAuth::class.
+            MemberAuth::class,
             \Zizaco\Entrust\Middleware\EntrustRole::class,
             \Zizaco\Entrust\Middleware\EntrustPermission::class,
         ];
