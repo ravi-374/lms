@@ -17,8 +17,6 @@ class UserAPIControllerTest extends TestCase
     /** @var MockInterface */
     protected $userRepo;
 
-    protected $defaultUserId = 1;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -113,7 +111,6 @@ class UserAPIControllerTest extends TestCase
         $address = factory(Address::class)->create();
         $farhan->address()->save($address);
 
-
         $response = $this->getJson("api/b1/users/$farhan->id");
 
         $this->assertSuccessDataResponse(
@@ -121,11 +118,12 @@ class UserAPIControllerTest extends TestCase
             $farhan->toArray(),
             'User retrieved successfully.'
         );
-        $this->assertNotEmpty($response->original['data']['roles']);
-        $this->assertEquals($role->id, $response->original['data']['roles'][0]['id']);
+        $response = $response->original['data'];
+        $this->assertNotEmpty($response['roles']);
+        $this->assertEquals($role->id, $response['roles'][0]['id']);
 
-        $this->assertNotEmpty($response->original['data']['address']);
-        $this->assertEquals($address->id, $response->original['data']['address']['id']);
+        $this->assertNotEmpty($response['address']);
+        $this->assertEquals($address->id, $response['address']['id']);
     }
 
     /** @test */
@@ -149,13 +147,11 @@ class UserAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var User $farhan */
-        $farhan = factory(User::class)->create();
-        $updateRecord = factory(User::class)->make(['id' => $farhan->id]);
+        $updateRecord = factory(User::class)->make(['id' => $this->loggedInUserId]);
 
         $this->userRepo->shouldReceive('update')
             ->once()
-            ->with($updateRecord->toArray(), $this->defaultUserId)
+            ->with($updateRecord->toArray(), $this->loggedInUserId)
             ->andReturn($updateRecord);
 
         $response = $this->postJson('api/b1/update-user-profile', $updateRecord->toArray());
