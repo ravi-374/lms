@@ -21,7 +21,7 @@ $factory->define(IssuedBook::class, function (Faker $faker) {
         'return_due_date' => $faker->dateTime,
         'note'            => $faker->sentence,
         'return_date'     => $faker->dateTime,
-        'status'          => $faker->dateTime,
+        'status'          => IssuedBook::STATUS_AVAILABLE,
         'issuer_id'       => $user->id,
         'returner_id'     => $user->id,
     ];
