@@ -76,10 +76,10 @@ const UserForm = (props) => {
                         <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="email" label="Email" required groupText="envelope" component={InputGroup}/>
+                        <Field name="email" label="Email" required groupText="envelope" autoFocus={false} component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name={initialValues ? 'password_new' : 'password'} label="Password"
+                        <Field name={initialValues ? 'password_new' : 'password'} label="Password" autoFocus={false}
                                required={!initialValues} type="password" groupText="lock" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
