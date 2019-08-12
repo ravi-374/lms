@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Http\Middleware\MemberAuth;
+use App\Http\Middleware\UserAuth;
 use App\Models\Member;
 use App\User;
 use Faker\Factory;
@@ -53,7 +55,8 @@ abstract class TestCase extends BaseTestCase
         return [
             \Illuminate\Auth\Middleware\Authenticate::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \App\Http\Middleware\UserAuth::class,
+            UserAuth::class,
+            MemberAuth::class.
             \Zizaco\Entrust\Middleware\EntrustRole::class,
             \Zizaco\Entrust\Middleware\EntrustPermission::class,
         ];
