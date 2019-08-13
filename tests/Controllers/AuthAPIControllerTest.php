@@ -5,10 +5,13 @@ namespace Tests\Controllers;
 use App\Models\Permission;
 use App\Models\Role;
 use App\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class AuthAPIControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var $authRepository */
     protected $authRepository;
 
