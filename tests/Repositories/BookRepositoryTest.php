@@ -20,8 +20,6 @@ class BookRepositoryTest extends TestCase
     /** @var BookRepository */
     protected $bookRepo;
 
-    private $defaultUserId = 1;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -104,9 +102,13 @@ class BookRepositoryTest extends TestCase
     /** @test */
     public function test_can_generate_unique_book_code()
     {
+        $bookCode = $this->bookRepo->generateUniqueBookCode();
+        $bookItem = factory(BookItem::class)->create(['book_code' => $bookCode]);
+
         $uniqueBookCode = $this->bookRepo->generateUniqueBookCode();
 
         $this->assertNotEmpty($uniqueBookCode);
+        $this->assertNotEquals($bookCode, $uniqueBookCode);
     }
 
     /**
@@ -158,7 +160,7 @@ class BookRepositoryTest extends TestCase
         /** @var BookItem $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $input['items'] = [['language_id' => $bookLanguage->id, 'format' => 10,],];
+        $input['items'] = [['language_id' => $bookLanguage->id, 'format' => 10]];
 
         $this->bookRepo->validateInput($input);
     }
@@ -173,17 +175,9 @@ class BookRepositoryTest extends TestCase
         /** @var BookItem $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $input['items'] =
-            [
-                [
-                    'language_id' => $bookLanguage->id,
-                    'format'      => BookItem::FORMAT_HARDCOVER,
-                    'price'       => null,
-                ],
-            ];
+        $input['items'] = [['language_id' => $bookLanguage->id, 'price' => null]];
 
         $this->bookRepo->validateInput($input);
-
     }
 
     /**
@@ -196,15 +190,7 @@ class BookRepositoryTest extends TestCase
         /** @var BookItem $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $input['items'] =
-            [
-                [
-                    'language_id' => $bookLanguage->id,
-                    'format'      => BookItem::FORMAT_HARDCOVER,
-                    'price'       => 100,
-                    'book_code'   => 'too many character',
-                ],
-            ];
+        $input['items'] = [['language_id' => $bookLanguage->id, 'price' => 100, 'book_code' => 'SXBFHYEDYEL']];
 
         $this->bookRepo->validateInput($input);
     }
@@ -219,15 +205,7 @@ class BookRepositoryTest extends TestCase
         /** @var BookItem $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $input['items'] =
-            [
-                [
-                    'language_id' => $bookLanguage->id,
-                    'format'      => BookItem::FORMAT_HARDCOVER,
-                    'price'       => 100,
-                    'book_code'   => 'small',
-                ],
-            ];
+        $input['items'] = [['language_id' => $bookLanguage->id, 'price' => 100, 'book_code' => 'SXBFHY']];
 
         $this->bookRepo->validateInput($input);
     }
@@ -240,17 +218,9 @@ class BookRepositoryTest extends TestCase
     public function it_can_not_store_book_when_book_item_code_is_already_exist()
     {
         /** @var BookItem $bookItem */
-        $bookItem = factory(BookItem::class)->create(['book_code' => 'rndm_txt']);
+        $bookItem = factory(BookItem::class)->create();
 
-        $input['items'] =
-            [
-                [
-                    'language_id' => $bookItem->language_id,
-                    'format'      => BookItem::FORMAT_HARDCOVER,
-                    'price'       => 100,
-                    'book_code'   => $bookItem->book_code,
-                ],
-            ];
+        $input['items'] = [['language_id' => $bookItem->language_id, 'price' => 100, 'book_code' => $bookItem->book_code]];
 
         $this->bookRepo->validateInput($input);
     }
