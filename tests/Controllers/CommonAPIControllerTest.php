@@ -2,10 +2,13 @@
 
 namespace Tests\Controllers;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class CommonAPIControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function setUp(): void
     {
         parent::setUp();
