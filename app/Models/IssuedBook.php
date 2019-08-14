@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\User;
@@ -36,6 +37,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\BookItem $bookItem
+ * @property-read \App\Models\Member $member
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook reserve()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofMember($memberId)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofBookItem($bookItemId)
@@ -59,6 +61,8 @@ class IssuedBook extends Model
     const STATUS_UN_RESERVED = 5;
     const STATUS_LOST = 6;
     const STATUS_DAMAGED = 7;
+
+    const STATUS_IN_STRING = ['issued', 'reserved', 'returned', 'un-reserved'];
 
     /**
      * Validation rules
@@ -161,14 +165,14 @@ class IssuedBook extends Model
     public function getIssuerNameAttribute()
     {
         if (!empty($this->issuer_id)) {
-            return $this->issuer->first_name. " ".$this->issuer->last_name;
+            return $this->issuer->first_name." ".$this->issuer->last_name;
         }
     }
 
     public function getReturnerNameAttribute()
     {
         if (!empty($this->returner_id)) {
-            return $this->returner->first_name. " ".$this->returner->last_name;
+            return $this->returner->first_name." ".$this->returner->last_name;
         }
     }
 
@@ -180,7 +184,7 @@ class IssuedBook extends Model
         $record = $this->toArray();
         $record['issuer_name'] = $this->issuer_name;
         $record['returner_name'] = $this->returner_name;
-        if(isset($record['book_item']['last_issued_book'])) {
+        if (isset($record['book_item']['last_issued_book'])) {
             $record['expected_available_date'] = $this->getExpectedAvailableDate($record['book_item']['last_issued_book']);
         }
         unset($record['issuer']);
@@ -196,7 +200,8 @@ class IssuedBook extends Model
                 $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
 
                 return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
-            } else if ($lastIssuedBook['status'] == IssuedBook::STATUS_ISSUED) {
+            }
+            if ($lastIssuedBook['status'] == IssuedBook::STATUS_ISSUED) {
                 return $lastIssuedBook['return_due_date'];
             }
         }
@@ -231,5 +236,31 @@ class IssuedBook extends Model
     {
         return $query->where('status', '!=', self::STATUS_RETURNED)
             ->where('status', '!=', self::STATUS_UN_RESERVED);
+    }
+
+    /**
+     * @param string $statusInString
+     *
+     * @return int|null
+     */
+    public static function getStatusFromString($statusInString)
+    {
+        $status = null;
+        switch ($statusInString) {
+            case 'issued' :
+                $status = self::STATUS_ISSUED;
+                break;
+            case 'returned' :
+                $status = self::STATUS_RETURNED;
+                break;
+            case 'reserved' :
+                $status = self::STATUS_RESERVED;
+                break;
+            case 'un-reserved' :
+                $status = self::STATUS_UN_RESERVED;
+                break;
+        }
+
+        return $status;
     }
 }
