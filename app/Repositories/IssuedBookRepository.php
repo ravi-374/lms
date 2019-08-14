@@ -23,8 +23,6 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @var array
      */
     protected $fieldSearchable = [
-        'book_item_id',
-        'member_id',
         'reserve_date',
         'issued_on',
         'return_due_date',
@@ -60,15 +58,41 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
+        $orderBy = null;
+        if (!empty($search['order_by']) && in_array($search['order_by'], ['name', 'book_code'])) {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
+        if (!empty($search['search']) && in_array($search['search'], IssuedBook::STATUS_IN_STRING)) {
+            $search['status'] = IssuedBook::getStatusFromString($search['search']);
+            unset($search['search']);
+        }
+
+
         $with = ['issuer', 'returner', 'bookItem.book','member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
         });
+
         $bookRecords = $query->orderByDesc('id')->get();
 
-        return $bookRecords;
+        if (!empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = '';
+
+            if ($orderBy == 'name') {
+                $orderString = 'bookItem.book.name';
+            } else if ($orderBy == 'book_code') {
+                $orderString = 'bookItem.book_code';
+            }
+
+            $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        };
+
+        return $bookRecords->values();
     }
 
     /**
@@ -79,7 +103,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function find($id, $columns = ['*'])
     {
-        return $this->findOrFail($id, ['bookItem.book']);
+        return $this->findOrFail($id, ['bookItem.book', 'member']);
     }
 
     /**
