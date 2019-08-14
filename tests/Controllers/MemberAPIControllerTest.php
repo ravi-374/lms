@@ -120,8 +120,6 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function test_can_activate_member()
     {
-        $this->mockRepository();
-
         /** @var Member $member */
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id, 'is_active' => 0]);
@@ -133,8 +131,6 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function test_can_de_activate_member()
     {
-        $this->mockRepository();
-
         /** @var Member $member */
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id, 'is_active' => 1]);
