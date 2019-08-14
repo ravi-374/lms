@@ -2,7 +2,6 @@
 
 namespace Tests\V1\Controllers;
 
-use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\MembershipPlanRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
