@@ -3,9 +3,7 @@
 namespace Tests\V1\Controllers;
 
 use App\Models\Member;
-use App\Models\MembershipPlan;
 use App\Repositories\MemberRepository;
-use App\Repositories\MembershipPlanRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
 use Tests\TestCase;
@@ -33,26 +31,6 @@ class MemberAPIControllerTest extends TestCase
     {
         parent::tearDown();
         \Mockery::close();
-    }
-
-    /** @test */
-    public function test_can_get_all_membership_plans()
-    {
-        $this->mockRepository();
-
-        $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
-
-        $this->memberRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($membershipPlan);
-
-        $response = $this->getJson('api/v1/membership-plans');
-
-        $this->assertSuccessDataResponse(
-            $response,
-            $membershipPlan->toArray(),
-            'Membership Plans retrieved successfully.'
-        );
     }
 
     /** @test */
