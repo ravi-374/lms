@@ -79,7 +79,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function find($id, $columns = ['*'])
     {
-        return $this->findOrFail($id, ['bookItem.book']);
+        return $this->findOrFail($id, ['bookItem.book', 'member']);
     }
 
     /**

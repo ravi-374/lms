@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\BookItem $bookItem
+ * @property-read \App\Models\Member $member
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook reserve()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofMember($memberId)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofBookItem($bookItemId)
