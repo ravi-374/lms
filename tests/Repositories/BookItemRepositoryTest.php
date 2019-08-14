@@ -30,8 +30,7 @@ class BookItemRepositoryTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    /** @test
-     */
+    /** @test */
     public function it_can_get_book_items_of_book_for_given_member()
     {
         $reserveBook = factory(IssuedBook::class)->create([
@@ -50,39 +49,6 @@ class BookItemRepositoryTest extends TestCase
 
         $this->assertCount(1, $bookItems);
         $this->assertEquals($reserveBook->book_item_id, $bookItems[0]->id);
-    }
-
-    /** @test */
-    public function it_can_search_books()
-    {
-        /** @var IssuedBook $issuedBook */
-        $issuedBook = factory(IssuedBook::class)->create();
-
-        $search['book_item_id'] = $issuedBook->book_item_id;
-        $bookItems = $this->bookItemRepo->searchBooks($search);
-
-        $bookItem = $bookItems->last();
-
-        $this->assertEquals($issuedBook->book_item_id, $bookItem->id);
-
-        $this->assertNotEmpty($bookItem->book);
-        $this->assertNotEmpty($bookItem->lastIssuedBook);
-        $this->assertNotEmpty($bookItem->publisher);
-        $this->assertNotEmpty($bookItem->language);
-    }
-
-    /** @test */
-    public function it_can_search_books_with_given_book_id()
-    {
-        /** @var IssuedBook $issuedBook */
-        $issuedBook = factory(IssuedBook::class)->create();
-
-        $search['id'] = $issuedBook->bookItem->book->id;
-
-        $bookItems = $this->bookItemRepo->searchBooks($search);
-        $bookItem = $bookItems->last();
-
-        $this->assertEquals($search['id'], $bookItem->book_id);
     }
 
     /** @test */
@@ -109,7 +75,7 @@ class BookItemRepositoryTest extends TestCase
         $book->authors()->sync([$author->id]);
 
         $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
-        $issuedBooks = factory(IssuedBook::class)->create(['book_item_id' => $bookItem->id]);
+        $issuedBook = factory(IssuedBook::class)->create(['book_item_id' => $bookItem->id]);
 
         $search['id'] = $author->id;
         $search['search_by_author'] = [$author->id];
