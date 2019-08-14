@@ -92,7 +92,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
         };
 
-        return $bookRecords;
+        return $bookRecords->values();
     }
 
     /**
