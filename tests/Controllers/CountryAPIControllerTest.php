@@ -39,7 +39,7 @@ class CountryAPIControllerTest extends TestCase
         $this->mockRepository();
 
         /** @var Country $countries */
-        $countries = factory(Country::class)->times(5)->create();
+        $countries = factory(Country::class)->times(2)->create();
 
         $this->countryRepo->shouldReceive('all')
             ->once()
