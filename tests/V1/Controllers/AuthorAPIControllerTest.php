@@ -3,7 +3,6 @@
 namespace Tests\V1\Controllers;
 
 use App\Models\Author;
-use App\Models\Book;
 use App\Repositories\AuthorRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;

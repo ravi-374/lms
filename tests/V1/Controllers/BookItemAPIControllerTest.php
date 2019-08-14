@@ -2,10 +2,8 @@
 
 namespace Tests\V1\Controllers;
 
-use App\Models\Book;
 use App\Models\BookItem;
 use App\Repositories\BookItemRepository;
-use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
 use Tests\TestCase;
