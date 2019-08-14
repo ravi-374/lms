@@ -14,7 +14,6 @@ class TagAPIControllerValidationTest extends TestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware($this->skipMiddleware());
         $this->signInWithDefaultAdminUser();
     }
 
@@ -41,6 +40,15 @@ class TagAPIControllerValidationTest extends TestCase
 
         $this->put('api/b1/tags/'.$tag->id, ['name' => ''])
             ->assertSessionHasErrors(['name' => 'The name field is required.']);
+    }
+
+    /** @test */
+    public function test_update_tag_fails_when_name_is_duplicated()
+    {
+        $tags = factory(Tag::class)->times(2)->create();
+
+        $this->put('api/b1/tags/'.$tags[1]->id, ['name' => $tags[0]->name])
+            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
     }
 
     /** @test */

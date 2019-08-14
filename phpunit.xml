@@ -7,18 +7,27 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false">
+         stopOnFailure="false"
+         stopOnError="false">
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
-
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+            <directory suffix="UnitTest.php">./tests/Unit</directory>
         </testsuite>
 
         <testsuite name="Integration">
             <directory suffix="Test.php">./tests/Integration/Models</directory>
+        </testsuite>
+
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Controllers/Validations</directory>
+        </testsuite>
+
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Controllers</directory>
+        </testsuite>
+
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Repositories</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -27,11 +36,13 @@
         </whitelist>
     </filter>
     <php>
-        <server name="APP_ENV" value="testing"/>
-        <server name="BCRYPT_ROUNDS" value="4"/>
-        <server name="CACHE_DRIVER" value="array"/>
-        <server name="MAIL_DRIVER" value="array"/>
-        <server name="QUEUE_CONNECTION" value="sync"/>
-        <server name="SESSION_DRIVER" value="array"/>
+        <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="sqlite_testing"/>
+        <env name="APP_KEY" value="base64:duSm1Ywy+n2dmywbjZ9bmYoayxbro3/EQ1JIJ6+VmYU="/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="MAIL_DRIVER" value="array"/>
     </php>
 </phpunit>

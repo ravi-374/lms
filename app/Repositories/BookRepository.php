@@ -44,9 +44,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     protected $fieldSearchable = [
         'name',
         'published_on',
-        'price',
         'isbn',
-        'url',
         'is_featured',
     ];
 
@@ -212,12 +210,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
             if (isset($item['format'])) {
                 if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
-                    throw new Exception('Invalid Book Format.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new UnprocessableEntityHttpException('Invalid Book Format.');
                 }
             }
 
             if (!isset($item['price']) || empty($item['price'])) {
-                throw new Exception('Please enter book item price.', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+                throw new UnprocessableEntityHttpException('Please enter book item price.');
             }
 
             if (isset($item['book_code'])) {
@@ -231,8 +229,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     $bookItem->where('id', '!=', $item['id']);
                 }
                 if ($bookItem->exists()) {
-                    throw new Exception('Given book code is already exist.',
-                        HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new UnprocessableEntityHttpException('Given book code is already exist.');
                 }
             }
         }
