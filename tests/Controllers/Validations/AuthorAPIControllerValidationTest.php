@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class AuthorAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {

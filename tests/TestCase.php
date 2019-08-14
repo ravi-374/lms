@@ -2,6 +2,9 @@
 
 namespace Tests;
 
+use App\Http\Middleware\MemberAuth;
+use App\Http\Middleware\UserAuth;
+use App\Models\Member;
 use App\User;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\TestResponse;
@@ -15,13 +18,22 @@ abstract class TestCase extends BaseTestCase
     public $faker;
 
     public $loggedInUserId;
+    public $loggedInMemberId;
 
     public function signInWithDefaultAdminUser()
     {
-        $user = factory(User::class)->create();
+        $user = User::first();
         $this->loggedInUserId = $user->id;
 
         return $this->actingAs($user);
+    }
+
+    public function signInWithMember()
+    {
+        $member = factory(Member::class)->create();
+        $this->loggedInMemberId = $member->id;
+
+        return $this->actingAs($member);
     }
 
     public function __construct($name = null, array $data = [], $dataName = '')
@@ -31,13 +43,20 @@ abstract class TestCase extends BaseTestCase
         $this->faker = Factory::create();
     }
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutMiddleware($this->skipMiddleware());
+    }
+
     public function skipMiddleware()
     {
         return [
             \Illuminate\Auth\Middleware\Authenticate::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \App\Http\Middleware\UserAuth::class,
-            \App\Http\Middleware\MemberAuth::class,
+            UserAuth::class,
+            MemberAuth::class,
             \Zizaco\Entrust\Middleware\EntrustRole::class,
             \Zizaco\Entrust\Middleware\EntrustPermission::class,
         ];
@@ -65,5 +84,14 @@ abstract class TestCase extends BaseTestCase
     public function assertExceptionMessage(TestResponse $response, string $message)
     {
         $this->assertEquals($message, $response->exception->getMessage());
+    }
+
+    public function assertErrorMessageResponse(TestResponse $response, string $message)
+    {
+        $response->assertStatus(422)
+            ->assertJson([
+                'success' => false,
+                'message' => $message,
+            ]);
     }
 }
