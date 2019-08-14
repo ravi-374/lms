@@ -7,7 +7,6 @@ use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\Genre;
 use App\Models\Tag;
-use App\Repositories\BookItemRepository;
 use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -20,9 +19,6 @@ class BookAPIControllerTest extends TestCase
     /** @var MockInterface */
     protected $bookRepository;
 
-    /** @var MockInterface */
-    protected $bookItemRepository;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -33,8 +29,6 @@ class BookAPIControllerTest extends TestCase
     {
         $this->bookRepository = \Mockery::mock(BookRepository::class);
         app()->instance(BookRepository::class, $this->bookRepository);
-        $this->bookItemRepository = \Mockery::mock(BookItemRepository::class);
-        app()->instance(BookItemRepository::class, $this->bookRepository);
     }
 
     public function tearDown(): void
