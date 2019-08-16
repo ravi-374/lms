@@ -29,7 +29,7 @@ const ResetPassword = (props) => {
     };
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle title={'ResetPassword | LMS System'}/>
+            <HeaderTitle title={'Reset Password | LMS System'}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">

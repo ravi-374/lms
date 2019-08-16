@@ -4,13 +4,21 @@ import apiConfigWthFormData from '../../config/apiConfigWthFormData';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import requestParam from "../../../shared/requestParam";
+import {setTotalRecord} from "./totalRecordAction";
 
-export const fetchUsers = () => async (dispatch) => {
-    dispatch(setLoading(true));
-    await apiConfig.get('users')
+export const fetchUsers = (filter = {}, isLoading = false) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
+    let url = 'users';
+    if (filter.limit || filter.order_By || filter.search) {
+        url += requestParam(filter);
+    }
+
+    await apiConfig.get(url)
         .then((response) => {
             dispatch({type: userActionType.FETCH_USERS, payload: response.data.data});
-            dispatch(setLoading(false));
+            dispatch(setTotalRecord(response.data.totalRecords));
+            isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
@@ -59,6 +67,17 @@ export const deleteUser = (userId) => async (dispatch) => {
             dispatch({type: userActionType.DELETE_USER, payload: userId});
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
+        })
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: 'error'}));
+        });
+};
+
+export const activeDeactiveUser = (userId) => async (dispatch) => {
+    await apiConfigWthFormData.get(`users/${userId}/update-status`)
+        .then((response) => {
+            dispatch({type: userActionType.SET_ACTIVE_DE_ACTIVE, payload: response.data.data});
+            dispatch(addToast({text: response.data.message}));
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));

@@ -1,0 +1,110 @@
+@import "../../scss/variables";
+
+.rdt_TableHead {
+    vertical-align: bottom;
+    border-bottom: 1px solid #c8ced3;
+
+    .rdt_TableHeadRow {
+        .sc-ifAKCX {
+            border-left: 1px solid #c8ced3 !important;
+            min-height: 54px;
+            &:first-child {
+                border-left: 0 !important;
+            }
+        }
+    }
+}
+
+.dwInao {
+    height: 35px;
+    width: 35px;
+    padding: 0;
+    margin: 0;
+    border-radius: 0 !important;
+}
+
+.sc-hSdWYo {
+    border: 1px solid $pagination-border-color;
+    margin: 0;
+}
+
+.innQGC {
+    border: 1px solid $pagination-border-color;
+    border-right: 0;
+    padding: 8px;
+    border-radius: 5px;
+
+    &:first-child {
+        border-radius: 5px 0 0 5px;
+    }
+}
+
+.stWhL {
+    margin: 0;
+    padding-right: 8px;
+    border-radius: 0 5px 5px 0;
+    border-top: 1px solid $pagination-border-color;
+    border-bottom: 1px solid $pagination-border-color;
+
+    svg {
+        margin-top: 5px;
+    }
+}
+
+.ESHtS {
+    height: 35px !important;
+}
+
+#pagination-first-page {
+    border-left: 1px solid $pagination-border-color;
+
+    &:hover:not(:disabled) {
+        svg {
+            fill: $white;
+        }
+    }
+}
+
+#pagination-previous-page {
+    border-left: 1px solid $pagination-border-color;
+
+    &:hover:not(:disabled) {
+        svg {
+            fill: $white;
+        }
+    }
+}
+
+#pagination-next-page {
+    border-left: 1px solid $pagination-border-color;
+
+    &:hover:not(:disabled) {
+        svg {
+            fill: $white;
+        }
+    }
+}
+
+#pagination-last-page {
+    border-left: 1px solid #c8ced3;
+
+    &:hover:not(:disabled) {
+        svg {
+            fill: $white;
+        }
+    }
+}
+
+.rdt_TableRow {
+    .rdt_TableCell {
+        border-left: 1px solid #c8ced3;
+        font-size: 14px;
+        min-height: 54px;
+        color: rgb(35, 40, 44);
+
+        &:first-child {
+            border-left: 0;
+        }
+    }
+}
+

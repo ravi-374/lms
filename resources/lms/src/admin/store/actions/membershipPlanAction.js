@@ -4,12 +4,12 @@ import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 
-export const fetchMembershipPlans = () => async (dispatch) => {
-    dispatch(setLoading(true));
+export const fetchMembershipPlans = (isLoading = false) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
     await apiConfig.get('membership-plans')
         .then((response) => {
             dispatch({type: membershipPlanActionType.FETCH_MEMBERSHIP_PLANS, payload: response.data.data});
-            dispatch(setLoading(false));
+            isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));

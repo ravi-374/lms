@@ -4,12 +4,12 @@ import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 
-export const fetchBookLanguages = () => async (dispatch) => {
-    dispatch(setLoading(true));
+export const fetchBookLanguages = (isLoading = false) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
     await apiConfig.get('book-languages')
         .then((response) => {
             dispatch({type: bookLanguageActionType.FETCH_BOOK_LANGUAGES, payload: response.data.data});
-            dispatch(setLoading(false));
+            isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));

@@ -1,30 +1,28 @@
-import React, {useState, useEffect} from 'react';
-import {Row, Col, Card, CardBody, Button} from 'reactstrap';
+import React, {useEffect, useState} from 'react';
+import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
-import SearchField from '../../../shared/components/SearchField';
-import searchFilter from '../../../shared/searchFilter';
-import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../../store/action/sortAction';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import BookAllotmentModal from './BookAllotmentModal';
-import BookAllotment from './BookAllotment';
 import './BooksAllotment.scss';
 import Toasts from '../../../shared/toast/Toasts';
-import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBooksAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
-import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
+import {dateTimeFormatter, prepareFullNames} from '../../../shared/sharedMethod';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import ModalAction from "../../../shared/action-buttons/ModalAction";
+import BookStatus from "../../../shared/book-status/book-status";
+import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {Routes} from "../../../constants";
 
 const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
-    const { booksAllotment, members, books, sortAction, sortObject, toggleModal, history } = props;
+    const { booksAllotment, members, books, toggleModal, history, isLoading, totalRecord } = props;
+
     useEffect(() => {
-        props.fetchBooksAllotment();
         props.fetchMembers();
         props.fetchBooks();
     }, []);
@@ -35,17 +33,91 @@ const BooksAllotment = (props) => {
         setBookAllotment(booksAllotment);
         toggleModal();
     };
-    const cardBodyProps = { members, sortAction, sortObject, booksAllotment, onOpenModal, history };
-    if (props.isLoading) {
-        return <ProgressBar/>
+
+    const fetchBooksAllotment = (filter) => {
+        props.fetchBooksAllotment(filter);
+    };
+
+    const onChange = (filter) => {
+        fetchBooksAllotment(filter);
+    };
+
+    const gotToBookHistoryDetail = (bookAllotmentId) => {
+        history.push(`${Routes.BOOK_ALLOTMENTS + bookAllotmentId}/details`);
+    };
+
+    const columns = [
+        {
+            name: 'Book',
+            selector: 'name',
+            sortable: true,
+            wrap:true,
+            cell: row => row.book_item.book.name
+        },
+        {
+            name: 'Book Item',
+            selector: 'book_code',
+            width: '120px',
+            sortable: true,
+            cell: row => row.book_item.book_code
+        },
+        {
+            name: 'Member',
+            selector: 'first_name',
+            width: '140px',
+            sortable: true,
+            cell: row => {
+                const member = members.find(member => member.id === +row.member_id);
+                if (member) {
+                    row.members_name = member.name;
+                }
+                return <span>{row.members_name}</span>
+            },
+        },
+        {
+            name: 'Issue Date',
+            selector: 'issued_on',
+            width: '160px',
+            sortable: true,
+            cell: row => <span>{dateTimeFormatter(row.issued_on)}</span>
+        },
+        {
+            name: 'Return Date',
+            selector: 'return_date',
+            width: '160px',
+            sortable: true,
+            cell: row => <span>{dateTimeFormatter(row.return_date)} </span>
+        },
+        {
+            name: 'Status',
+            width: '100px',
+            center: true,
+            selector: 'status',
+            sortable: true,
+            cell: row => <BookStatus status={row.status} item={row}/>
+        },
+        {
+            name: 'Action',
+            selector: 'id',
+            right: true,
+            cell: row => <ModalAction isHideDeleteIcon={true} isHideDetailIcon={false}
+                                      goToDetailScreen={gotToBookHistoryDetail} onOpenModal={onOpenModal} item={row}/>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+    ];
+
+    if (!booksAllotment && members.length === 0) {
+        return null;
     }
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <ProgressBar/>
                 <HeaderTitle title={'Books Allotments | LMS System'}/>
                 <h5 className="page-heading">Books Allotment</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Book Allotment
                     </Button>
@@ -55,8 +127,8 @@ const BooksAllotment = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            {booksAllotment.length > 0 ? <BookAllotment {...cardBodyProps}/> :
-                                <EmptyComponent title="No books allotment yet..."/>}
+                            <ReactDataTable items={booksAllotment} columns={columns} loading={isLoading}
+                                            totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <BookAllotmentModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -66,35 +138,17 @@ const BooksAllotment = (props) => {
         </Row>
     );
 };
-const prepareBookAllotment = (booksAllotment) => {
-    const booksAllotmentArray = [];
-    booksAllotment.forEach(bookAllotment => {
-        bookAllotment.book_name = bookAllotment.book_item.book.name;
-        bookAllotment.book_code = bookAllotment.book_item.edition + ` (${bookAllotment.book_item.book_code})`;
-        bookAllotment.readable_issue_date = bookAllotment.issued_on ? dateFormatter(bookAllotment.issued_on) : '';
-        bookAllotment.readable_return_date = bookAllotment.return_date ? dateFormatter(bookAllotment.return_date) : '';
-        booksAllotmentArray.push(bookAllotment);
-    });
-    return booksAllotmentArray;
-};
 
 const mapStateToProps = (state) => {
-    const { booksAllotment, members, books, searchText, sortObject, isLoading } = state;
+    const { booksAllotment, members, books, isLoading, totalRecord } = state;
     let booksAllotmentArray = Object.values(booksAllotment);
-    let membersArray = prepareFullNames(Object.values(members));
-    if (searchText) {
-        const filterKeys = ['book_name', 'book_code', 'member_name', 'readable_issue_date', 'readable_return_date', 'status_name'];
-        booksAllotmentArray = searchFilter(booksAllotmentArray, searchText, filterKeys);
-    }
-    if (sortObject) {
-        booksAllotmentArray = sortFilter(booksAllotmentArray, sortObject);
-    }
+
     return {
-        booksAllotment: prepareBookAllotment(booksAllotmentArray),
-        members: membersArray,
+        booksAllotment: booksAllotmentArray,
+        members: prepareFullNames(Object.values(members)),
         books: Object.values(books),
-        sortObject,
-        isLoading
+        isLoading,
+        totalRecord
     };
 };
 
@@ -102,6 +156,5 @@ export default connect(mapStateToProps, {
     fetchBooksAllotment,
     fetchMembers,
     fetchBooks,
-    sortAction,
     toggleModal
 })(BooksAllotment);

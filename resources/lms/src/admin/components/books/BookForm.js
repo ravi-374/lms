@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,createRef} from 'react';
 import {connect} from 'react-redux';
 import {Field, FieldArray, reduxForm} from 'redux-form';
 import {Col, Row, Button, Table} from 'reactstrap';
@@ -30,6 +30,7 @@ const BookForm = (props) => {
     const [isValidAuthor, setIsValidAuthor] = useState(false);
     const [isValidGenre, setIsValidGenre] = useState(false);
     const [items, setItems] = useState(initialValues ? initialValues.items : [{}]);
+    const inputRef = createRef();
     useEffect(() => {
         if (initialValues && initialValues.is_featured) {
             setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
@@ -45,6 +46,7 @@ const BookForm = (props) => {
             }
         } else {
             props.initialize({items: [{}]});
+            inputRef.current.focus();
         }
 
     }, []);
@@ -110,7 +112,8 @@ const BookForm = (props) => {
                 <hr style={{marginTop: '0px'}}/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="isbn" label="ISBN No" required autoFocus groupText="id-card" component={InputGroup}/>
+                        <Field name="isbn" label="ISBN No" required inputRef={inputRef} groupText="id-card"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <TypeAhead

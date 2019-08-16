@@ -4,7 +4,7 @@ import CreatePublisher from './CreatePublisher';
 import EditPublisher from './EditPublisher';
 
 export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, publisher} = props;
+    const {isEditMode, toggleModal, isDeleteMode,isCreateMode, publisher} = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'publisher-modal',
@@ -14,7 +14,11 @@ export default (props) => {
         if (isEditMode) {
             return <EditPublisher {...prepareModalOption} publisher={publisher}/>
         }
-        return <CreatePublisher {...prepareModalOption}/>
+        if(isCreateMode) {
+            return <CreatePublisher {...prepareModalOption}/>
+        }
+        return null;
+
     }
     if (isDeleteMode) {
         const prepareModalOption = {

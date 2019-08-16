@@ -5,7 +5,7 @@ import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import {dateFormatter, timeFormatter} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
-import TooltipItem from "../../../shared/tooltip/TolltipItem";
+import TooltipItem from "../../../shared/tooltip/TooltipItem";
 
 export default ({ books, memberBookHistory, onOpenModal, sortAction, sortObject }) => {
     const headers = [
@@ -31,6 +31,9 @@ export default ({ books, memberBookHistory, onOpenModal, sortAction, sortObject 
         );
     };
 
+    if (!books || (books && books.length === 0)) {
+        return null;
+    }
     return (
         <Table hover bordered striped responsive size="md">
             <thead>

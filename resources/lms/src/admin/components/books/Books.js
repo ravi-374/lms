@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import {fetchBooks} from '../../store/actions/bookAction';
-import SearchField from '../../../shared/components/SearchField';
+import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
@@ -14,14 +14,12 @@ import Book from './Book';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {prepareObject} from "../../../shared/sharedMethod";
-import {prepareAuthor} from "./prepareArray";
 
 const Books = (props) => {
     const [book, setBook] = useState(null);
     const { books, history, sortAction, sortObject, isLoading, toggleModal } = props;
     useEffect(() => {
-        props.fetchBooks(props.history);
+        props.fetchBooks(history, true);
     }, []);
     const cardModalProps = {
         book,
@@ -52,7 +50,7 @@ const Books = (props) => {
                 <HeaderTitle title={'Books | LMS System'}/>
                 <h5 className="page-heading">Books</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
+                    <CustomSearchField/>
                     <Link to="/app/admin/books/new" size="md" className="btn btn-primary ml-2">New Book</Link>
                 </div>
             </Col>

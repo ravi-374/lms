@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,createRef} from 'react';
 import {Col, Row, Button, Table} from 'reactstrap';
 import {connect} from 'react-redux';
 import {Field, FieldArray, reduxForm, formValueSelector} from 'redux-form';
@@ -50,6 +50,7 @@ const BookSeriesForm = props => {
         sequence: 1,
         book_id: { id: null }
     }]));
+    const inputRef = createRef();
     const onDragEnd = (result) => {
         if (!result.destination) {
             return;
@@ -78,6 +79,7 @@ const BookSeriesForm = props => {
     useEffect(() => {
         if (!initialValues) {
             props.initialize({ series_items: [{ sequence: 1 }] });
+            inputRef.current.focus();
         }
     }, []);
     const prepareFormData = (formValues) => {
@@ -92,7 +94,7 @@ const BookSeriesForm = props => {
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="title" label="Title" required autoFocus={!!initialValues} groupText="television"
+                <Field name="title" label="Title" required inputRef={inputRef} groupText="television"
                        component={InputGroup}/>
             </Col>
             <Col xs={12} className="mt-3">

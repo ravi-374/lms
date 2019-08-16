@@ -10,7 +10,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const CreateBookSeries = (props) => {
     useEffect(() => {
-        props.fetchBooks();
+        props.fetchBooks({}, true);
     }, []);
     const onSaveBookSeries = (formValues) => {
         props.addBookSeries(formValues, props.history);
@@ -18,7 +18,7 @@ const CreateBookSeries = (props) => {
     const goBack = () => {
         props.history.push('/app/admin/books-series');
     };
-    const {isLoading, books} = props;
+    const { isLoading, books } = props;
     if (isLoading) {
         return (
             <Fragment>
@@ -56,10 +56,10 @@ const CreateBookSeries = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {isLoading, books} = state;
+    const { isLoading, books } = state;
     return {
         isLoading,
         books: Object.values(books),
     }
 };
-export default connect(mapStateToProps, {addBookSeries, fetchBooks})(CreateBookSeries);
+export default connect(mapStateToProps, { addBookSeries, fetchBooks })(CreateBookSeries);

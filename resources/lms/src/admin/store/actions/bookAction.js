@@ -5,12 +5,12 @@ import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 
-export const fetchBooks = (history = null) => async (dispatch) => {
-    dispatch(setLoading(true));
+export const fetchBooks = (history = null, isLoading = false) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
     await apiConfig.get('books')
         .then((response) => {
-            dispatch({type: bookActionType.FETCH_BOOKS, payload: response.data.data});
-            dispatch(setLoading(false));
+            dispatch({ type: bookActionType.FETCH_BOOKS, payload: response.data.data });
+            isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({response}) => {
             if (response) {

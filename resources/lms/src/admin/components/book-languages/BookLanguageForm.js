@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createRef, useEffect} from 'react';
 import {Col, Row} from 'reactstrap';
 import {Field, reduxForm} from 'redux-form';
 import bookLanguageValidate from './bookLanguageValidate';
@@ -7,13 +7,20 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 
 const BookLanguageForm = props => {
     const isDisabled = !!props.initialValues;
+    const inputRef = createRef();
+    useEffect(() => {
+        if (!props.initialValues) {
+            inputRef.current.focus();
+        }
+    }, []);
     const onSaveBookLanguage = formValues => {
         props.onSaveBookLanguage(formValues);
     };
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="language_name" label="Name" required autoFocus={!!props.initialValues} groupText="language" component={InputGroup}/>
+                <Field name="language_name" label="Name" required inputRef={inputRef} groupText="language"
+                       component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="language_code" readOnly={isDisabled} label="Code" required groupText="code"

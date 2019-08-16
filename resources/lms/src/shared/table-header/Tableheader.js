@@ -14,7 +14,7 @@ const TableHeader = (props) => {
     };
     const renderActionColumn = () => {
         if (isAction) {
-            return <th style={{width: '100px', textAlign: 'center'}}>Action</th>;
+            return <th style={{width: '110px', textAlign: 'center'}}>Action</th>;
         }
     };
     const renderStaticColumn = () => {

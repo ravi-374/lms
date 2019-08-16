@@ -3,13 +3,23 @@ import apiConfig from '../../config/apiConfig';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import requestParam from "../../../shared/requestParam";
+import {setTotalRecord} from "./totalRecordAction";
+import _ from 'lodash';
 
-export const fetchPublishers = () => async (dispatch) => {
-    dispatch(setLoading(true));
-    await apiConfig.get('publishers')
+export const fetchPublishers = (filter = {}, isLoading = false) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
+    let url = 'publishers';
+
+    if (_.isEmpty(filter) && filter.limit || filter.order_By || filter.search) {
+        url += requestParam(filter);
+    }
+
+    await apiConfig.get(url)
         .then((response) => {
             dispatch({type: publisherActionType.FETCH_PUBLISHERS, payload: response.data.data});
-            dispatch(setLoading(false));
+            dispatch(setTotalRecord(response.data.totalRecords));
+            isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));

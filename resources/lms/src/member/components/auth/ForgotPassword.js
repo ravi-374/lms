@@ -29,7 +29,7 @@ const ForgotPassword = (props) => {
     };
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle title={'ForgotPassword | LMS System'}/>
+            <HeaderTitle title={'Forgot Password | LMS System'}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">
@@ -38,7 +38,7 @@ const ForgotPassword = (props) => {
                                 {!isFormSubmitted ?
                                     < Form onSubmit={handleSubmit(onSubmit)}>
                                         <h1>Forgot Password</h1>
-                                        <p className="text-muted">Enter your email for rest a password</p>
+                                        <p className="text-muted">Enter your email for reset a password</p>
                                         <Field name="email" type="email" placeholder="Email" groupText="icon-user"
                                                component={CustomInputGroup}/>
                                         <Row>
