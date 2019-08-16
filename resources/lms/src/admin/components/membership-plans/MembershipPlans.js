@@ -40,7 +40,6 @@ const MembershipPlans = (props) => {
                 <HeaderTitle title={'Membership Plans | LMS System'}/>
                 <h5 className="page-heading">Membership Plans</h5>
                 <div className="d-flex justify-content-end">
-                    <CustomSearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Membership Plan
                     </Button>
@@ -50,6 +49,9 @@ const MembershipPlans = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
+                            <div className="d-flex justify-content-end mb-2">
+                                <CustomSearchField/>
+                            </div>
                             {membershipPlans.length > 0 ? <MembershipPlan {...cardBodyProps}/> :
                                 <EmptyComponent title="No membership-plans yet..."/>}
                             <MembershipPlanModal {...cardModalProps}/>
