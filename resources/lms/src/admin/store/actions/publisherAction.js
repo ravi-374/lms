@@ -11,7 +11,7 @@ export const fetchPublishers = (filter = {}, isLoading = false) => async (dispat
     isLoading ? dispatch(setLoading(true)) : null;
     let url = 'publishers';
 
-    if (_.isEmpty(filter) && filter.limit || filter.order_By || filter.search) {
+    if (!_.isEmpty(filter) && filter.limit || filter.order_By || filter.search) {
         url += requestParam(filter);
     }
 
