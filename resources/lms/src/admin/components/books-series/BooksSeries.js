@@ -39,7 +39,6 @@ const BooksSeries = (props) => {
                 <HeaderTitle title={'Books Series | LMS System'}/>
                 <h5 className="page-heading">Books Series</h5>
                 <div className="d-flex justify-content-end">
-                    <CustomSearchField/>
                     <Link to="/app/admin/books-series/new" size="md" className="btn btn-primary ml-2">New Book Series</Link>
                 </div>
             </Col>
@@ -47,7 +46,9 @@ const BooksSeries = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
+                            {booksSeries.length > 0 ? <div>
+                            <div className="d-flex justify-content-end mb-2">
+                                <CustomSearchField/></div><BookSeries {...cardBodyProps}/></div>:
                                 <EmptyComponent title="No books series yet..."/>}
                             <DeleteBookSeries {...cardModalProps}/>
                             <Toasts/>
