@@ -13,7 +13,6 @@ use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -76,9 +75,28 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
+        $orderBy = null;
+        if (!empty($search['order_by']) && ($search['order_by'] == 'author_name')) {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
         $query = $this->allQuery($search, $skip, $limit)->with(['authors', 'items.publisher', 'items.language']);
 
-        return $query->get();
+        $bookRecords = $query->get();
+
+        if (!empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = '';
+
+            if ($orderBy == 'author_name') {
+                $orderString = 'authors_name';
+            }
+
+            $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        }
+
+        return $bookRecords->values();
     }
 
     /**
