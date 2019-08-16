@@ -76,11 +76,13 @@ const UserForm = (props) => {
                         <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="email" label="Email" required groupText="envelope" component={InputGroup}/>
+                        <Field name="email" label="Email" autoComplete={initialValues ? 'off' : 'new-email'} required
+                               groupText="envelope" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name={initialValues ? 'password_new' : 'password'} label="Password"
-                               required={!initialValues} type="password" groupText="lock" component={InputGroup}/>
+                               required={!initialValues} autoComplete={initialValues ? 'off' : 'new-password'}
+                               type="password" groupText="lock" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="phone" label="Phone No." type="number" groupText="phone" component={InputGroup}/>
