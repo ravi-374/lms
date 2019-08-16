@@ -38,7 +38,7 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUrl($value)
  * @mixin \Eloquent
  * @property-read string $image_path
- * @property-read string $author_name
+ * @property-read string $authors_name
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Author[] $authors
  */
 class Book extends Model
@@ -183,15 +183,10 @@ class Book extends Model
     /**
      * @return string
      */
-    public function getAuthorNameAttribute()
+    public function getAuthorsNameAttribute()
     {
-        if (!empty($this->authors)) {
-            $name = '';
-            foreach ($this->authors as $author) {
-                $name .= $author->first_name.",";
-            }
+        $authors = $this->authors->pluck('first_name')->toArray();
 
-            return $name;
-        }
+        return implode(',', $authors);
     }
 }

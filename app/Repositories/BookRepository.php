@@ -90,7 +90,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $orderString = '';
 
             if ($orderBy == 'author_name') {
-                $orderString = 'author_name';
+                $orderString = 'authors_name';
             }
 
             $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
