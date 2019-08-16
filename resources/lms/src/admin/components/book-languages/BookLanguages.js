@@ -14,6 +14,7 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import SearchField from "../../../shared/components/SearchField";
 
 const BookLanguages = (props) => {
     const [isEditMode, setEditMode] = useState(false);
@@ -40,7 +41,6 @@ const BookLanguages = (props) => {
                 <HeaderTitle title={'Book Languages | LMS System'}/>
                 <h5 className="page-heading">Book Languages</h5>
                 <div className="d-flex justify-content-end">
-                    <CustomSearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Book Language
                     </Button>
@@ -50,6 +50,9 @@ const BookLanguages = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
+                            <div className="d-flex justify-content-end mb-2">
+                                <CustomSearchField/>
+                            </div>
                             {bookLanguages.length > 0 ? <BookLanguage {...cardBodyProps}/> :
                                 <EmptyComponent title="No book languages yet..."/>}
                             <BookLanguageModal {...cardModalProps}/>
