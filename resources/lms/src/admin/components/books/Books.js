@@ -1,26 +1,24 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import {fetchBooks} from '../../store/actions/bookAction';
-import CustomSearchField from '../../../shared/components/CustomSearchField';
-import searchFilter from '../../../shared/searchFilter';
-import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../../store/action/sortAction';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import DeleteBook from './DeleteBook';
 import Toasts from '../../../shared/toast/Toasts';
-import Book from './Book';
-import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import ModalAction from "../../../shared/action-buttons/ModalAction";
+import {Routes} from "../../../constants";
+import {prepareFullNames} from "../../../shared/sharedMethod";
+import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 
 const Books = (props) => {
     const [book, setBook] = useState(null);
-    const { books, history, sortAction, sortObject, isLoading, toggleModal } = props;
-    useEffect(() => {
-        props.fetchBooks(history, true);
-    }, []);
+
+    const { books, history, isLoading, toggleModal, totalRecord } = props;
+
     const cardModalProps = {
         book,
         toggleModal,
@@ -29,37 +27,71 @@ const Books = (props) => {
         setBook(book);
         toggleModal();
     };
-    const cardBodyProps = {
-        books,
-        history,
-        sortAction,
-        sortObject,
-        onOpenModal
+    const goToBookDetail = (bookId) => {
+        history.push(`${Routes.BOOKS + bookId}/details`);
     };
-    if (isLoading) {
-        return (
-            <Fragment>
-                <Toasts/>
-                <ProgressBar/>
-            </Fragment>
-        )
-    }
+    const columns = [
+        {
+            name: 'Cover',
+            selector: 'image',
+            width: '95px',
+            cell: row => {
+                const imageUrl = row.image ? publicImagePathURL.BOOK_AVATAR_URL + row.image : publicImagePath.BOOK_AVATAR;
+                return <img className="book-table-row__cover-img" src={imageUrl} alt={imageUrl}/>
+            },
+        },
+        {
+            name: 'ISBN No.',
+            selector: 'isbn',
+            width: '120px',
+            sortable: true,
+            cell: row => row.isbn
+        },
+        {
+            name: 'Book',
+            selector: 'name',
+            sortable: true,
+            wrap: true,
+            cell: row => row.name
+        },
+        {
+            name: 'Authors',
+            selector: 'author_name',
+            sortable: true,
+            cell: row => <span>{prepareFullNames(row.authors).map((({ name }) => name)).join(',  ')}</span>
+        },
+        {
+            name: 'Action',
+            selector: 'id',
+            center: true,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+            width: '100px',
+            cell: row => <ModalAction isHideEditIcon={true} isHideDetailIcon={false} goToDetailScreen={goToBookDetail}
+                                      onOpenModal={onOpenModal} item={row} isEditMode={true}/>,
+        },
+    ];
+    const onChange = (filter) => {
+        props.fetchBooks(filter, history, true);
+    };
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <ProgressBar/>
                 <HeaderTitle title={'Books | LMS System'}/>
                 <h5 className="page-heading">Books</h5>
                 <div className="d-flex justify-content-end">
-                    <CustomSearchField/>
-                    <Link to="/app/admin/books/new" size="md" className="btn btn-primary ml-2">New Book</Link>
+                    <Link to={`${Routes.BOOKS}new`} size="md" className="btn btn-primary ml-2">New Book</Link>
                 </div>
             </Col>
             <Col sm={12}>
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            {books.length > 0 ? <Book {...cardBodyProps}/> :
-                                <EmptyComponent title="No books yet..."/>}
+                            <ReactDataTable items={books} columns={columns} loading={isLoading} totalRows={totalRecord}
+                                            onOpenModal={onOpenModal} onChange={onChange}/>
                             <DeleteBook {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -72,20 +104,13 @@ const Books = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { books, searchText, sortObject, isLoading } = state;
+    const { books, isLoading, totalRecord } = state;
     let booksArray = Object.values(books);
-    if (searchText) {
-        const filterKeys = ['name', 'authors_name', 'isbn'];
-        booksArray = searchFilter(booksArray, searchText, filterKeys);
-    }
-    if (sortObject) {
-        booksArray = sortFilter(booksArray, sortObject);
-    }
     return {
-        books: booksArray, sortObject, isLoading,
+        books: booksArray, isLoading, totalRecord
     };
 };
 
 export default connect(mapStateToProps, {
-    fetchBooks, sortAction, toggleModal
+    fetchBooks, toggleModal
 })(Books);
