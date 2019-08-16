@@ -76,11 +76,13 @@ const MemberForm = (props) => {
                         <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="email" label="Email" required groupText="envelope" autofill={''} component={InputGroup}/>
+                        <Field name="email" label="Email" required groupText="envelope"
+                               autoComplete={initialValues ? 'off' : 'new-email'} component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name={initialValues ? 'password_new' : 'password'} label="Password" autofill={''}
-                               required={!initialValues} type="password" groupText="lock" component={InputGroup}/>
+                        <Field name={initialValues ? 'password_new' : 'password'} label="Password"
+                               autoComplete={initialValues ? 'off' : 'new-password'} required={!initialValues}
+                               type="password" groupText="lock" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="phone" type="number" label="Phone No." groupText="phone" component={InputGroup}/>
