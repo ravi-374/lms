@@ -40,7 +40,6 @@ const Roles = (props) => {
                 <HeaderTitle title={'Roles | LMS System'}/>
                 <h5 className="page-heading">Roles</h5>
                 <div className="d-flex justify-content-end">
-                    <CustomSearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Role
                     </Button>
@@ -50,6 +49,9 @@ const Roles = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
+                            <div className="d-flex justify-content-end mb-2">
+                                <CustomSearchField/>
+                            </div>
                             {roles.length > 0 ? <Role {...cardBodyProps}/> :
                                 <EmptyComponent title="No roles yet..."/>}
                             <RoleModal {...cardModalProps}/>
