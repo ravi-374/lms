@@ -4,7 +4,7 @@ import CreateTag from './CreateTag';
 import EditTag from './EditTag';
 
 export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, tag} = props;
+    const {isEditMode, toggleModal, isDeleteMode,isCreateTag, tag} = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'tag-modal',
@@ -14,7 +14,10 @@ export default (props) => {
         if (isEditMode) {
             return <EditTag {...prepareModalOption} tag={tag}/>
         }
-        return <CreateTag {...prepareModalOption}/>
+        if(isCreateTag) {
+            return <CreateTag {...prepareModalOption}/>
+        }
+        return null;
     }
     if (isDeleteMode) {
         const prepareModalOption = {

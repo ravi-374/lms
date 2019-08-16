@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createRef} from 'react';
 import {Col, Row} from 'reactstrap';
 import {Field, reduxForm, FieldArray} from 'redux-form';
 import roleValidate from './roleValidate';
@@ -9,6 +9,7 @@ import CheckBox from "../../../shared/components/CheckBox";
 
 const RoleForm = props => {
     const [permissions] = useState(props.permissions);
+    const inputRef = createRef();
     const onSaveRole = formValues => {
         formValues.permissionArray = formValues.permissions.filter(perm => perm.isChecked === true).map((({ id }) => id));
         props.onSaveRole(formValues);
@@ -18,14 +19,15 @@ const RoleForm = props => {
             const { name, display_name, description } = props.initialValues;
             props.initialize({ name, display_name, description, permissions: [...permissions] })
         } else {
-            props.initialize({ permissions: [...permissions] })
+            props.initialize({ permissions: [...permissions] });
+            inputRef.current.focus();
         }
     }, []);
+
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="name" label="Name" required autoFocus={!!props.initialValues} groupText="list"
-                       component={InputGroup}/>
+                <Field name="name" label="Name" required inputRef={inputRef} groupText="list" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="display_name" label="Display Name" required groupText="list-alt" component={InputGroup}/>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {createRef, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
@@ -11,6 +11,10 @@ import {mapCurrencyCode} from '../../../shared/sharedMethod';
 const SettingsForm = (props) => {
     const { currencies, initialValues } = props;
     const [groupText, setGroupText] = useState(mapCurrencyCode(initialValues.currencySetting ? initialValues.currencySetting.id : null));
+    const settingRef = createRef();
+    useEffect(() => {
+        settingRef.current.select.focus();
+    }, []);
     const onSelectCurrency = (option) => {
         setGroupText(mapCurrencyCode(option.id))
     };
@@ -27,7 +31,7 @@ const SettingsForm = (props) => {
             <Col xs={6}>
                 <Field name='currencySetting' label="Currency" required groupText={groupText} options={currencies}
                        onChange={onSelectCurrency} component={Select} isSearchable={true} isAuto={true}
-                       autoFocus={!!initialValues}/>
+                       innerRef={settingRef}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveSettings)} {...props}/>

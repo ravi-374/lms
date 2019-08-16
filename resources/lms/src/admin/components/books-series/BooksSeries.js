@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Row, Col, Card, CardBody} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import SearchField from '../../../shared/components/SearchField';
+import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
@@ -39,7 +39,7 @@ const BooksSeries = (props) => {
                 <HeaderTitle title={'Books Series | LMS System'}/>
                 <h5 className="page-heading">Books Series</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
+                    <CustomSearchField/>
                     <Link to="/app/admin/books-series/new" size="md" className="btn btn-primary ml-2">New Book Series</Link>
                 </div>
             </Col>

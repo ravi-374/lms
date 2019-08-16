@@ -35,7 +35,7 @@ const MemberDetail = props => {
         })
     }, []);
     const {member, memberBookHistory, membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading} = props;
-    if (!member || !members || !books || isLoading || (books && books.length === 0)) {
+    if (!member || !members || isLoading) {
         return (
             <Fragment>
                 <ProgressBar/>

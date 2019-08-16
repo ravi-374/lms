@@ -3,14 +3,13 @@ import {connect} from 'react-redux';
 import {Button, Table} from 'reactstrap';
 import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
-import {bookStatusConstant} from '../../constants';
 import {addToast} from '../../../store/action/toastAction';
 import {reserveBook} from '../../store/actions/bookSearchAction';
 
 const Book = ({ books, addToast, reserveBook }) => {
     const renderActionButton = (book, index) => {
         switch (book.is_available) {
-            case bookStatusConstant.STATUS_AVAILABLE:
+            case true:
                 return <Button color="primary" onClick={() => reserveBook(book.id, index)}>Reserve</Button>;
             default:
                 return null;

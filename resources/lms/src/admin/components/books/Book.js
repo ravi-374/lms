@@ -8,13 +8,13 @@ import './Books.scss';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 
-export default ({books, onOpenModal, history, sortAction, sortObject}) => {
+export default ({ books, onOpenModal, history, sortAction, sortObject }) => {
     const headers = [
-        {id: 'isbn', name: 'ISBN No.'},
-        {id: 'name', name: 'Book Name'},
-        {id: 'authors_name', name: 'Authors'},
+        { id: 'isbn', name: 'ISBN No.' },
+        { id: 'name', name: 'Book Name' },
+        { id: 'authors_name', name: 'Authors' },
     ];
-    const headerProps = {staticField: 'Cover', sortAction, sortObject, sortConfig, headers};
+    const headerProps = { staticField: 'Cover', sortAction, sortObject, sortConfig, headers };
     const goToBookDetail = (bookId) => {
         history.push(`${Routes.BOOKS + bookId}/details`);
     };
@@ -26,9 +26,9 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
             <tbody>
             {books.map((book) => {
                 const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
-                book.authors_name = prepareAuthor(book.authors).map((({name}) => name)).join(',  ');
+                book.authors_name = prepareAuthor(book.authors).map((({ name }) => name)).join(',  ');
                 return (
-                    <tr className="book-table-row" key={book.id.toString()} onClick={() => goToBookDetail(book.id)}>
+                    <tr className="book-table-row" key={book.id.toString()}>
                         <td className="text-center book-table-row__cover">
                             <img className="book-table-row__cover-img" src={imageUrl} alt={imageUrl}/>
                         </td>
@@ -36,7 +36,8 @@ export default ({books, onOpenModal, history, sortAction, sortObject}) => {
                         <td className="align-middle">{book.name}</td>
                         <td className="align-middle">{book.authors_name}</td>
                         <td className="align-middle text-center">
-                            <ModalAction onOpenModal={onOpenModal} isHideEditIcon={true} item={book} isEditMode={true}/>
+                            <ModalAction onOpenModal={onOpenModal} isHideEditIcon={true} isHideDetailIcon={false}
+                                         goToDetailScreen={goToBookDetail} item={book} isEditMode={true}/>
                         </td>
                     </tr>
                 )

@@ -1,46 +1,57 @@
-import React, {useState, useEffect} from 'react';
-import {Row, Col, Button, Card, CardBody} from 'reactstrap';
+import React, {useState} from 'react';
+import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
-import SearchField from '../../../shared/components/SearchField';
-import searchFilter from '../../../shared/searchFilter';
-import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../../store/action/sortAction';
-import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import GenreModal from './GenerModal';
-import Genre from './Genre';
 import './Genres.scss';
 import Toasts from '../../../shared/toast/Toasts';
-import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchGenres} from '../../store/actions/genreAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import ModalAction from "../../../shared/action-buttons/ModalAction";
+import ProgressBar from "../../../shared/progress-bar/ProgressBar";
+import GenreModal from "./GenerModal";
+import ReactDataTable from "../../../shared/table/ReactDataTable";
 
 const Genres = (props) => {
+    const { genres, toggleModal, isLoading, totalRecord } = props;
+    const [genre, setGenre] = useState(null);
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
-    const [genre, setGenre] = useState(null);
-    const {genres, sortAction, sortObject, toggleModal} = props;
-    useEffect(() => {
-        props.fetchGenres();
-    }, []);
-    const cardModalProps = {genre, isDeleteMode, isEditMode, toggleModal};
+    const cardModalProps = { genre, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, genre = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setGenre(genre);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, genres, onOpenModal};
-    if (props.isLoading) {
-        return <ProgressBar/>
-    }
+
+    const onChange = (filter) => {
+        props.fetchGenres(filter, true);
+    };
+
+    const columns = [
+        {
+            name: 'Name',
+            selector: 'name',
+            sortable: true,
+        },
+        {
+            name: 'Action',
+            selector: 'id',
+            right: true,
+            cell: row => <ModalAction onOpenModal={onOpenModal} item={row}/>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+    ];
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
+                <ProgressBar/>
                 <HeaderTitle title={'Genres | LMS System'}/>
                 <h5 className="page-heading">Genres</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Genre
                     </Button>
@@ -50,8 +61,8 @@ const Genres = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            {genres.length > 0 ? <Genre {...cardBodyProps}/> :
-                                <EmptyComponent title="No genres yet..."/>}
+                            <ReactDataTable items={genres} columns={columns} loading={isLoading} totalRows={totalRecord}
+                                            onOpenModal={onOpenModal} onChange={onChange}/>
                             <GenreModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -63,15 +74,9 @@ const Genres = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {genres, searchText, sortObject, isLoading} = state;
+    const { genres, isLoading, totalRecord } = state;
     let genresArray = Object.values(genres);
-    if (searchText) {
-        genresArray = searchFilter(genresArray, searchText);
-    }
-    if (sortObject) {
-        genresArray = sortFilter(genresArray, sortObject);
-    }
-    return {genres: genresArray, sortObject, isLoading};
+    return { genres: genresArray, isLoading, totalRecord };
 };
 
-export default connect(mapStateToProps, {fetchGenres, sortAction, toggleModal})(Genres);
+export default connect(mapStateToProps, { fetchGenres, toggleModal })(Genres);

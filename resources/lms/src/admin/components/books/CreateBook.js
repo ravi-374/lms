@@ -19,7 +19,7 @@ const CreateBook = (props) => {
         props.fetchAuthors();
         props.fetchPublishers();
         props.fetchGenres();
-        props.fetchBookLanguages();
+        props.fetchBookLanguages(true);
         props.fetchTags();
     }, []);
     const onSaveBook = (formValues) => {

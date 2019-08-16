@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createRef, useEffect} from 'react';
 import {Col, Row} from 'reactstrap';
 import {Field, reduxForm} from 'redux-form';
 import publisherValidate from './publisherValidate';
@@ -6,13 +6,19 @@ import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 
 const PublisherForm = props => {
+    const inputRef = createRef();
+    useEffect(() => {
+        if (!props.initialValues) {
+            inputRef.current.focus();
+        }
+    }, []);
     const onSavePublisher = formValues => {
         props.onSavePublisher(formValues);
     };
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="name" label="Name" required autoFocus={!!props.initialValues} groupText="user-circle-o"
+                <Field name="name" label="Name" required inputRef={inputRef} groupText="user-circle-o"
                        component={InputGroup}/>
             </Col>
             <Col xs={12}>

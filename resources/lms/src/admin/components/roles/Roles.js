@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
-import SearchField from '../../../shared/components/SearchField';
+import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
@@ -21,7 +21,7 @@ const Roles = (props) => {
     const [role, setRole] = useState(null);
     const {roles, sortAction, sortObject, toggleModal} = props;
     useEffect(() => {
-        props.fetchRoles();
+        props.fetchRoles(true);
     }, []);
     const cardModalProps = {role, isDeleteMode, isEditMode, toggleModal};
     const onOpenModal = (isEdit, role = null, isDelete = false) => {
@@ -40,7 +40,7 @@ const Roles = (props) => {
                 <HeaderTitle title={'Roles | LMS System'}/>
                 <h5 className="page-heading">Roles</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
+                    <CustomSearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Role
                     </Button>

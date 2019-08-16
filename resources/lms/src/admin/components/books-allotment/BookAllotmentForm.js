@@ -89,6 +89,7 @@ const BookAllotmentForm = props => {
         getBooks();
     };
     const onSelectBookStatus = (option) => {
+        setSelectedDate(moment().toDate());
         setStatus(option.id);
     };
     const onSelectDate = (date) => {

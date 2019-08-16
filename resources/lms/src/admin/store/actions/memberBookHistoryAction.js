@@ -16,7 +16,7 @@ export const fetchMemberBooksHistory = (memberId) => async (dispatch) => {
 export const editMemberBookHistory = (book) => async (dispatch) => {
     await apiConfig.post(`books/${book.book_item_id}/${getApiRoute(book.status)}`, book)
         .then((response) => {
-            dispatch({type: memberBookHistoryActionType.EDIt_MEMBER_BOOK_HISTORY, payload: response.data.data});
+            dispatch({type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_HISTORY, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })

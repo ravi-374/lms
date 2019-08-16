@@ -3,12 +3,20 @@ import apiConfig from '../../config/apiConfig';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import requestParam from "../../../shared/requestParam";
+import {setTotalRecord} from "./totalRecordAction";
 
-export const fetchBooksAllotment = () => async (dispatch) => {
+export const fetchBooksAllotment = (filter = {}) => async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConfig.get('books-history')
+    let url = 'books-history';
+
+    if (filter.limit || filter.order_By || filter.search) {
+        url += requestParam(filter);
+    }
+    await apiConfig.get(url)
         .then((response) => {
             dispatch({type: bookAllotmentActionType.FETCH_BOOKS_ALLOTMENT, payload: response.data.data});
+            dispatch(setTotalRecord(response.data.totalRecords));
             dispatch(setLoading(false));
         })
         .catch(({response}) => {

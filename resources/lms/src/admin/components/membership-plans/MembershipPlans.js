@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
-import SearchField from '../../../shared/components/SearchField';
+import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
@@ -21,7 +21,7 @@ const MembershipPlans = (props) => {
     const [membershipPlan, setMembershipPlan] = useState(null);
     const { membershipPlans, sortAction, sortObject, toggleModal } = props;
     useEffect(() => {
-        props.fetchMembershipPlans();
+        props.fetchMembershipPlans(true);
     }, []);
     const cardModalProps = { membershipPlan, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, membershipPlan = null, isDelete = false) => {
@@ -40,7 +40,7 @@ const MembershipPlans = (props) => {
                 <HeaderTitle title={'Membership Plans | LMS System'}/>
                 <h5 className="page-heading">Membership Plans</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
+                    <CustomSearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Membership Plan
                     </Button>
@@ -72,7 +72,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         membershipPlansArray = sortFilter(membershipPlansArray, sortObject);
     }
-    return {membershipPlans: membershipPlansArray, sortObject, isLoading};
+    return { membershipPlans: membershipPlansArray, sortObject, isLoading };
 };
 
 export default connect(mapStateToProps, { fetchMembershipPlans, sortAction, toggleModal })(MembershipPlans);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createRef, useEffect} from 'react';
 import {Col, Row} from 'reactstrap';
 import {Field, reduxForm} from 'redux-form';
 import authorValidate from './authorValidate';
@@ -7,14 +7,20 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import TextArea from '../../../shared/components/TextArea';
 
 const AuthorForm = props => {
+    const inputRef = createRef();
+    useEffect(() => {
+        if (!props.initialValues) {
+            inputRef.current.focus();
+        }
+    }, []);
     const onSaveAuthor = formValues => {
         props.onSaveAuthor(formValues);
     };
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="first_name" label="First Name" required autoFocus={!!props.initialValues}
-                       groupText="user-circle-o" component={InputGroup}/>
+                <Field name="first_name" label="First Name" required inputRef={inputRef} groupText="user-circle-o"
+                       component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <Field name="last_name" label="Last Name" groupText="user" component={InputGroup}/>
@@ -29,4 +35,4 @@ const AuthorForm = props => {
     );
 };
 
-export default reduxForm({form: 'authorForm', validate: authorValidate})(AuthorForm);
+export default reduxForm({ form: 'authorForm', validate: authorValidate })(AuthorForm);

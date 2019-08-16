@@ -19,6 +19,7 @@ import routes from "../../routes";
 import {fetchConfig} from "../../store/actions/configAction";
 import {Routes, Tokens} from "../../../constants";
 import {checkExistingRoute} from "../../../shared/sharedMethod";
+import {environment} from "../../../environment";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
@@ -29,10 +30,11 @@ const Layout = (props) => {
     useEffect(() => {
         if (!localStorage.getItem(Tokens.ADMIN)) {
             sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
+            window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
         } else {
             sessionStorage.removeItem('prevAdminPrevUrl');
+            props.fetchConfig();
         }
-        props.fetchConfig();
     }, []);
     if (permissions.length === 0) {
         return null;

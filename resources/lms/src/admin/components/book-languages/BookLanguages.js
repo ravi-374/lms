@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
-import SearchField from '../../../shared/components/SearchField';
+import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
@@ -21,7 +21,7 @@ const BookLanguages = (props) => {
     const [bookLanguage, setBookLanguage] = useState(null);
     const { bookLanguages, sortAction, sortObject, toggleModal } = props;
     useEffect(() => {
-        props.fetchBookLanguages();
+        props.fetchBookLanguages(true);
     }, []);
     const cardModalProps = { bookLanguage, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, bookLanguage = null, isDelete = false) => {
@@ -40,7 +40,7 @@ const BookLanguages = (props) => {
                 <HeaderTitle title={'Book Languages | LMS System'}/>
                 <h5 className="page-heading">Book Languages</h5>
                 <div className="d-flex justify-content-end">
-                    <SearchField/>
+                    <CustomSearchField/>
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                         New Book Language
                     </Button>

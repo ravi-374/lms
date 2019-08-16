@@ -3,11 +3,18 @@ import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {toggleModal} from "../../../store/action/modalAction";
+import {setTotalRecord} from "../../../admin/store/actions/totalRecordAction";
+import requestParam from "../../../shared/requestParam";
 
-export const fetchBooksHistory = () => async (dispatch) => {
+export const fetchBooksHistory = (filter) => async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConfig.get(`books-history`).then((response) => {
+    let url = 'books-history';
+    if (filter.limit || filter.order_By || filter.search) {
+        url += requestParam(filter);
+    }
+    await apiConfig.get(url).then((response) => {
         dispatch({type: bookHistoryActionType.FETCH_MEMBER_BOOK_HISTORY, payload: response.data.data});
+        dispatch(setTotalRecord(response.data.totalRecords));
         dispatch(setLoading(false));
     }).catch(({response}) => {
         dispatch(setLoading(false));

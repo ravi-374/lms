@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import userValidate from './userValidate';
@@ -16,11 +16,10 @@ const UserForm = (props) => {
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
+    const inputRef = createRef();
     useEffect(() => {
         if (initialValues) {
-            if (initialValues.is_active) {
-                setActive(initialValues.is_active ? initialValues.is_active : false)
-            }
+            setActive(initialValues.is_active);
             if (initialValues.image) {
                 change('file_name', true);
                 setImage(publicImagePathURL.USER_AVATAR_URL + initialValues.image);
@@ -28,6 +27,7 @@ const UserForm = (props) => {
             }
         } else {
             change('is_active', true);
+            inputRef.current.focus();
         }
     }, []);
     const onSaveUser = (formValues) => {
@@ -69,17 +69,17 @@ const UserForm = (props) => {
                 <hr style={{ marginTop: '0px' }}/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="first_name" label="First Name" required autoFocus={!!initialValues}
+                        <Field name="first_name" label="First Name" required inputRef={inputRef}
                                groupText="user-circle-o" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="email" label="Email" required groupText="envelope" autofill={''} component={InputGroup}/>
+                        <Field name="email" label="Email" required groupText="envelope" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name={initialValues ? 'password_new' : 'password'} label="Password" autofill={''}
+                        <Field name={initialValues ? 'password_new' : 'password'} label="Password"
                                required={!initialValues} type="password" groupText="lock" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>

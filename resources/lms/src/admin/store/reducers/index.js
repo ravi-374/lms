@@ -26,6 +26,7 @@ import userProfileReducer from './userProfileReducer';
 import countryReducer from './countryReducer';
 import settingReducer from './settingReducer';
 import bookItemReducer from './bookItemReducer';
+import totalRecordReduce from './totalRecordReduce';
 
 export default combineReducers({
     genres: genreReducer,
@@ -55,4 +56,5 @@ export default combineReducers({
     isToggle: modalReducer,
     permissions: permissionReducer,
     config: configReducer,
+    totalRecord: totalRecordReduce
 });
