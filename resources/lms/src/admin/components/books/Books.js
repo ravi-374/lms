@@ -2,6 +2,7 @@ import React, {Fragment, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
+import './Books.scss';
 import {fetchBooks} from '../../store/actions/bookAction';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import DeleteBook from './DeleteBook';
