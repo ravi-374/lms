@@ -88,7 +88,7 @@ class BookItemRepository extends BaseRepository
         ]);
         $query = $this->applyDynamicSearch($search, $query);
 
-        $query->orderByDesc('status');
+        $query->orderBy('status');
 
         $records = $query->get();
         $records = $this->sortByReturnDueDate($records);

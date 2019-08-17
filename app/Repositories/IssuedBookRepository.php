@@ -85,10 +85,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
             if ($orderBy == 'name') {
                 $orderString = 'bookItem.book.name';
-            } else {
-                if ($orderBy == 'book_code') {
-                    $orderString = 'bookItem.book_code';
-                }
+            }
+
+            if ($orderBy == 'book_code') {
+                $orderString = 'bookItem.book_code';
             }
 
             $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
