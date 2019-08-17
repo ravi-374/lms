@@ -18,7 +18,7 @@ class MemberAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithMember();
+        $this->signInWithDefaultAdminUser();
     }
 
     private function mockRepository()
@@ -142,23 +142,5 @@ class MemberAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
         $this->assertFalse($member->fresh()->is_active);
-    }
-
-    /** @test */
-    public function it_can_update_member_profile()
-    {
-        $this->mockRepository();
-
-        $updateRecord = factory(Member::class)->make(['id' => $this->loggedInMemberId]);
-        unset($updateRecord['email']);
-
-        $this->memberRepo->shouldReceive('update')
-            ->once()
-            ->with($updateRecord->toArray(), $this->loggedInMemberId)
-            ->andReturn($updateRecord);
-
-        $response = $this->postJson('api/v1/update-member-profile', $updateRecord->toArray());
-
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member profile updated successfully.');
     }
 }

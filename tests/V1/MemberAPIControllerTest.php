@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\V1\Controllers;
+namespace Tests\V1;
 
 use App\Models\Member;
 use App\Repositories\MemberRepository;
@@ -18,7 +18,7 @@ class MemberAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
+        $this->signInWithMember();
     }
 
     private function mockRepository()
@@ -38,14 +38,15 @@ class MemberAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $updateRecord = factory(Member::class)->make(['id' => $this->loggedInUserId]);
+        $updateRecord = factory(Member::class)->make(['id' => $this->loggedInMemberId]);
+        unset($updateRecord->email);
 
         $this->memberRepo->shouldReceive('update')
             ->once()
-            ->with($updateRecord->toArray(), $this->loggedInUserId)
+            ->with($updateRecord->toArray(), $this->loggedInMemberId)
             ->andReturn($updateRecord);
 
-        $response = $this->postJson('api/b1/update-member-profile', $updateRecord->toArray());
+        $response = $this->postJson('api/v1/update-member-profile', $updateRecord->toArray());
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member profile updated successfully.');
     }
