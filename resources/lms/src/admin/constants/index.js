@@ -232,3 +232,17 @@ export const bookItemActionType = {
 export const maxDigits = {
     BOOK_CODE: 8
 };
+
+export const bookItemStatusConstants = {
+    AVAILABLE: 1,
+    UNAVAILABLE: 2,
+    LOST: 3,
+    DAMAGE: 4
+};
+
+export const bookItemStatusOptions = [
+    { id: 1, name: 'Available' },
+    { id: 2, name: 'Unavailable' },
+    { id: 3, name: 'Lost' },
+    { id: 4, name: 'Damaged' },
+];
