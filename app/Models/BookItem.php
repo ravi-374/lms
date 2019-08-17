@@ -47,8 +47,8 @@ class BookItem extends Model
 {
     const STATUS_AVAILABLE = 1;
     const STATUS_NOT_AVAILABLE = 2;
-    const STATUS_LOST = 3;
-    const STATUS_DAMAGE = 4;
+    const STATUS_LOST = 6;
+    const STATUS_DAMAGE = 7;
 
     const STATUS_ARRAY = [
         self::STATUS_AVAILABLE,

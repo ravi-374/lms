@@ -44,7 +44,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 
         // add book items
         Route::post('books/{book}/items', 'BookAPIController@addItems');
-//        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
+        //        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
         // Get available books
         Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
     });
@@ -96,6 +96,9 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
     // Un-Reserve Book
     Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook');
+
+    // Update book status
+    Route::put('books/{book_item}/update-book-status', 'IssuedBookAPIController@updateBookStatus');
 
     // books history
     Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
