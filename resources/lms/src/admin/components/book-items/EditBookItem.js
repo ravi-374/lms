@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import BookItemForm from './BookItemForm';
 import Modal from '../../../shared/components/Modal';
 import {addBookItem} from '../../store/actions/bookItemAction';
-import {bookFormatOptions} from '../../constants';
+import {bookFormatOptions, bookItemStatusOptions} from '../../constants';
 
 const EditBookItem = (props) => {
-    const {bookLanguages, publishers, bookItems, bookItem, toggleModal, addBookItem, bookId} = props;
-    const {id, book_code, edition, format, location, price, language_id, publisher_id} = bookItem;
+    const { bookLanguages, publishers, bookItems, bookItem, toggleModal, addBookItem, bookId } = props;
+    const { id, book_code, edition, format, location, price, language_id, publisher_id, status } = bookItem;
     const saveBookItem = (formValues) => {
         formValues.id = id;
         const bookItemArray = [...bookItems];
@@ -24,6 +24,7 @@ const EditBookItem = (props) => {
         language: bookLanguages.find(language => language.id === language_id),
         publisher: publishers.find(publisher => publisher.id === publisher_id),
         format: bookFormatOptions.find(bookFormat => bookFormat.id === format),
+        status: bookItemStatusOptions.find(bookItemStatus => bookItemStatus.id === +status)
     };
     const prepareFormOption = {
         saveBookItem,
@@ -34,4 +35,4 @@ const EditBookItem = (props) => {
     return <Modal {...props} content={<BookItemForm{...prepareFormOption}/>}/>
 };
 
-export default connect(null, {addBookItem})(EditBookItem);
+export default connect(null, { addBookItem })(EditBookItem);
