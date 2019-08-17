@@ -2,11 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\BookItem;
 use App\Models\Book;
+use App\Models\BookItem;
 use App\Models\BookLanguage;
 use App\Models\Publisher;
-
 use Faker\Generator as Faker;
 
 $factory->define(BookItem::class, function (Faker $faker) {
@@ -22,5 +21,6 @@ $factory->define(BookItem::class, function (Faker $faker) {
         'publisher_id' => $publisher->id,
         'format'       => BookItem::FORMAT_PAPERBACK,
         'is_available' => BookItem::STATUS_AVAILABLE,
+        'edition'      => 1,
     ];
 });

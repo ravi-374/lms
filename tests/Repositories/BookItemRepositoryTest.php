@@ -20,8 +20,6 @@ class BookItemRepositoryTest extends TestCase
     /** @var BookItemRepository */
     protected $bookItemRepo;
 
-    private $defaultUserId = 1;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -31,7 +29,7 @@ class BookItemRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_book_items_of_book_for_given_member()
+    public function test_can_return_reserve_book_items_of_given_member()
     {
         $reserveBook = factory(IssuedBook::class)->create([
             'status' => IssuedBook::STATUS_RESERVED,
@@ -42,7 +40,7 @@ class BookItemRepositoryTest extends TestCase
             'member_id' => $reserveBook->member_id,
         ]);
 
-        $search['for_member'] = $reserveBook->member_id;
+        $search['for_member'] = true;
         $search['member_id'] = $reserveBook->member_id;
 
         $bookItems = $this->bookItemRepo->all($search);
@@ -52,18 +50,30 @@ class BookItemRepositoryTest extends TestCase
     }
 
     /** @test */
+    public function test_can_return_all_book_items()
+    {
+        $bookItems = factory(BookItem::class)->times(10)->create();
+
+        $allBookItems = $this->bookItemRepo->all();
+        $take3 = $this->bookItemRepo->all([], null, 3);
+        $skip2 = $this->bookItemRepo->all([], 2, 5);
+
+        $this->assertCount(10, $allBookItems);
+        $this->assertCount(3, $take3);
+        $this->assertCount(5, $skip2);
+    }
+
+    /** @test */
     public function it_can_search_books_with_given_book_ids()
     {
-        $book = factory(IssuedBook::class)->create();
+        $bookItems = factory(BookItem::class)->times(2)->create();
 
-        $issuedBooks = factory(IssuedBook::class)->times(2)->create();
+        $search['id'] = $bookItems[0]->book_id;
+        $search['search_by_book'] = [$bookItems[0]->book_id, $bookItems[1]->book_id];
 
-        $search['id'] = $book->bookItem->book->id;
-        $search['search_by_book'] = [$issuedBooks[0]->bookItem->book->id, $issuedBooks[1]->bookItem->book->id];
+        $allBookItems = $this->bookItemRepo->searchBooks($search);
 
-        $bookItems = $this->bookItemRepo->searchBooks($search);
-
-        $bookItem = $bookItems->last();
+        $bookItem = $allBookItems->last();
         $this->assertEquals($search['id'], $bookItem->book_id);
     }
 
@@ -75,7 +85,6 @@ class BookItemRepositoryTest extends TestCase
         $book->authors()->sync([$author->id]);
 
         $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
-        $issuedBook = factory(IssuedBook::class)->create(['book_item_id' => $bookItem->id]);
 
         $search['id'] = $author->id;
         $search['search_by_author'] = [$author->id];
