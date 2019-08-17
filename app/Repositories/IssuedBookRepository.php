@@ -255,41 +255,39 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      *
      * @return IssuedBook
      */
-    public function updateBookStatus($input)
+    public function updateIssuedBookStatus($input)
     {
+        if (!in_array($input['status'], [
+            IssuedBook::STATUS_DAMAGED,
+            IssuedBook::STATUS_LOST,
+        ])) {
+            throw new UnprocessableEntityHttpException('Invalid status.');
+        }
+
+        /** @var BookItem $bookItem */
+        $bookItem = BookItem::findOrFail($input['book_item_id']);
+
         /** @var IssuedBook $issueBook */
         $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
             ->lastIssuedBook()
             ->first();
 
-        /** @var BookItem $bookItem */
-        $bookItem = BookItem::findOrFail($input['book_item_id']);
-
-        if (!in_array($input['status'], [
-            IssuedBook::STATUS_DAMAGED,
-            BookItem::STATUS_DAMAGE,
-            IssuedBook::STATUS_LOST,
-            BookItem::STATUS_LOST,
-        ])) {
-            throw new UnprocessableEntityHttpException('Invalid status.');
-        }
-
         if (empty($issueBook)) {
-            $issuedOn = Carbon::now();
-            $createdIssueBook = IssuedBook::create([
-                'book_item_id'    => $input['book_item_id'],
-                'member_id'       => $input['member_id'],
-                'status'          => $input['status'],
-                'issued_on'       => $issuedOn,
-                'return_due_date' => Carbon::parse($issuedOn)->addDays(15),
-                'issuer_id'       => Auth::id(),
-            ]);
-
-            return $this->find($createdIssueBook->id);
+            throw new UnprocessableEntityHttpException('Book is not issued.');
         }
 
         $issueBook->update(['status' => $input['status']]);
-        $bookItem->update(['status' => $input['status']]);
+
+        $status = '';
+        if ($input['status'] == BookItem::STATUS_LOST) {
+            $status = BookItem::STATUS_LOST;
+        }
+
+        if ($input['status'] == BookItem::STATUS_DAMAGED) {
+            $status = BookItem::STATUS_DAMAGED;
+        }
+
+        $bookItem->update(['status' => $status]);
 
         return $this->find($issueBook->id);
     }

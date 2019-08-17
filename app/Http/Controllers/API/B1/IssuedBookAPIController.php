@@ -117,14 +117,14 @@ class IssuedBookAPIController extends AppBaseController
      *
      * @return JsonResponse
      */
-    public function updateBookStatus(BookItem $bookItem, Request $request)
+    public function updateIssuedBookStatus(BookItem $bookItem, Request $request)
     {
         $input = $request->all();
         $input['book_item_id'] = $bookItem->id;
 
-        $result = $this->issuedBookRepository->updateBookStatus($input);
+        $result = $this->issuedBookRepository->updateIssuedBookStatus($input);
 
-        return $this->sendResponse($result->apiObj(), 'Book status updated successfully.');
+        return $this->sendResponse($result->apiObj(), 'Issued Book status updated successfully.');
     }
 
     /**

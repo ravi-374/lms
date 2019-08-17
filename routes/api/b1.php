@@ -47,6 +47,9 @@ Route::group(['middleware' => 'user.auth'], function () {
         //        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
         // Get available books
         Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
+
+        // Update book status
+        Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus');
     });
 
     // Book search
@@ -97,8 +100,8 @@ Route::group(['middleware' => 'user.auth'], function () {
     // Un-Reserve Book
     Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook');
 
-    // Update book status
-    Route::put('books/{book_item}/update-book-status', 'IssuedBookAPIController@updateBookStatus');
+    // Update issued book status
+    Route::put('books/{book_item}/update-issued-book-status', 'IssuedBookAPIController@updateIssuedBookStatus');
 
     // books history
     Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
