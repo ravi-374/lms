@@ -2,7 +2,6 @@
 
 namespace Tests\Repositories;
 
-use App\Models\Address;
 use App\Models\Role;
 use App\Repositories\UserRepository;
 use App\User;
@@ -27,43 +26,30 @@ class UserRepositoryTest extends TestCase
         $this->userRepo = app(UserRepository::class);
     }
 
-
     /** @test */
     public function test_can_get_all_users()
     {
-        /** @var User $users */
-        $users = factory(User::class)->times(2)->create();
+        factory(User::class)->times(10)->create();
 
-        /** @var Role $role */
-        $role = factory(Role::class)->create();
+        $users = $this->userRepo->all();
+        $take3 = $this->userRepo->all([], null, 3);
+        $skip4 = $this->userRepo->all([], 4, 5);
 
-        $users[0]->roles()->sync([$role->id]);
-        $users[1]->roles()->sync([$role->id]);
-
-        $address = factory(Address::class)->create();
-
-        $users[0]->address()->save($address);
-        $users[1]->address()->save($address);
-
-        $userList = $this->userRepo->all([]);
-
-        $this->assertEquals($users[0]->id, $userList[1]->id);
-        $this->assertEquals($users[1]->id, $userList[0]->id);
-
-        $this->assertNotEmpty($userList[0]->roles);
-        $this->assertNotEmpty($userList[0]->address);
+        $this->assertCount(11, $users, '1 default user');
+        $this->assertCount(3, $take3);
+        $this->assertCount(5, $skip4);
     }
 
     /** @test */
     public function test_can_store_user()
     {
         /** @var User $farhan */
-        $farhan = factory(User::class)->make(['password' => 123456]);
+        $farhan = factory(User::class)->raw(['password' => 123456]);
 
         /** @var Role $role */
         $role = factory(Role::class)->create();
 
-        $input = array_merge($farhan->toArray(), [
+        $input = array_merge($farhan, [
             'password'  => 123456,
             'role_id'   => $role->id,
             'address_1' => $this->faker->address,
@@ -71,10 +57,8 @@ class UserRepositoryTest extends TestCase
         $user = $this->userRepo->store($input);
 
         $this->assertArrayHasKey('id', $user);
-
         $this->assertCount(1, $user->roles);
         $this->assertEquals($role->id, $user->roles[0]->id);
-
         $this->assertNotEmpty($user->address);
     }
 
@@ -95,11 +79,9 @@ class UserRepositoryTest extends TestCase
         $user = $this->userRepo->update($inputs, $farhan->id);
 
         $this->assertArrayHasKey('id', $user);
-
         $this->assertEquals('random name', $user->first_name);
         $this->assertCount(1, $user->roles);
         $this->assertEquals($role->id, $user->roles[0]->id);
-
         $this->assertNotEmpty($user->address);
     }
 }

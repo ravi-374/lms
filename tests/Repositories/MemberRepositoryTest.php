@@ -2,7 +2,6 @@
 
 namespace Tests\Repositories;
 
-use App\Models\Address;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -29,28 +28,23 @@ class MemberRepositoryTest extends TestCase
     /** @test */
     public function test_can_get_all_members()
     {
-        /** @var Member $members */
-        $members = factory(Member::class)->times(2)->create();
+        factory(Member::class)->times(10)->create();
 
-        $address = factory(Address::class)->create();
+        $members = $this->memberRepo->all();
+        $take3 = $this->memberRepo->all([], null, 3);
+        $skip4 = $this->memberRepo->all([], 4, 5);
 
-        $members[0]->address()->save($address);
-        $members[1]->address()->save($address);
-
-        $memberList = $this->memberRepo->all([]);
-
-        $this->assertEquals($members[0]->id, $memberList[1]->id);
-        $this->assertEquals($members[1]->id, $memberList[0]->id);
-
-        $this->assertNotEmpty($memberList[0]->address);
+        $this->assertCount(10, $members);
+        $this->assertCount(3, $take3);
+        $this->assertCount(5, $skip4);
     }
 
     /** @test */
     public function test_can_store_member()
     {
         /** @var Member $member */
-        $member = factory(Member::class)->make();
-        $input = array_merge($member->toArray(), [
+        $member = factory(Member::class)->raw();
+        $input = array_merge($member, [
             'password'  => 123456,
             'address_1' => $this->faker->address,
         ]);
@@ -58,7 +52,6 @@ class MemberRepositoryTest extends TestCase
         $member = $this->memberRepo->store($input);
 
         $this->assertArrayHasKey('id', $member);
-
         $this->assertNotEmpty($member->address);
     }
 
@@ -75,16 +68,18 @@ class MemberRepositoryTest extends TestCase
         $updatedMember = $this->memberRepo->update($inputs, $member->id);
 
         $this->assertArrayHasKey('id', $updatedMember);
-        $this->assertEquals('random name', $updatedMember->first_name);
-
+        $this->assertEquals('random name', $updatedMember->fresh()->first_name);
         $this->assertNotEmpty($updatedMember->address);
     }
 
     /** @test */
     public function test_can_generate_member_id()
     {
+        /** @var Member $member */
+        $member = factory(Member::class)->create();
         $generatedMemberId = $this->memberRepo->generateMemberId();
 
         $this->assertNotEmpty($generatedMemberId);
+        $this->assertNotEquals($member->member_id, $generatedMemberId);
     }
 }
