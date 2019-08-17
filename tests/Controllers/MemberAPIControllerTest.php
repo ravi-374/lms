@@ -121,27 +121,30 @@ class MemberAPIControllerTest extends TestCase
     public function test_can_activate_member()
     {
         /** @var Member $member */
-        $member = factory(Member::class)->create();
-        $updateRecord = factory(Member::class)->make(['id' => $member->id, 'is_active' => 0]);
+        $member = factory(Member::class)->create(['is_active' => false]);
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member updated successfully.');
+
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
+        $this->assertTrue($member->fresh()->is_active);
     }
 
     /** @test */
     public function test_can_de_activate_member()
     {
         /** @var Member $member */
-        $member = factory(Member::class)->create();
-        $updateRecord = factory(Member::class)->make(['id' => $member->id, 'is_active' => 1]);
+        $member = factory(Member::class)->create(['is_active' => true]);
 
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member updated successfully.');
+
+        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
+        $this->assertFalse($member->fresh()->is_active);
     }
 
     /** @test */
     public function it_can_update_member_profile()
     {
+        $this->signInWithMember();
         $this->mockRepository();
 
         $updateRecord = factory(Member::class)->make(['id' => $this->loggedInUserId]);
