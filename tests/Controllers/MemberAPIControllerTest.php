@@ -18,7 +18,7 @@ class MemberAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
+        $this->signInWithMember();
     }
 
     private function mockRepository()
@@ -81,6 +81,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id]);
+        unset($updateRecord['email']);
 
         $this->memberRepo->shouldReceive('update')
             ->once()
@@ -146,14 +147,14 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_member_profile()
     {
-        $this->signInWithMember();
         $this->mockRepository();
 
-        $updateRecord = factory(Member::class)->make(['id' => $this->loggedInUserId]);
+        $updateRecord = factory(Member::class)->make(['id' => $this->loggedInMemberId]);
+        unset($updateRecord['email']);
 
         $this->memberRepo->shouldReceive('update')
             ->once()
-            ->with($updateRecord->toArray(), $this->loggedInUserId)
+            ->with($updateRecord->toArray(), $this->loggedInMemberId)
             ->andReturn($updateRecord);
 
         $response = $this->postJson('api/v1/update-member-profile', $updateRecord->toArray());
