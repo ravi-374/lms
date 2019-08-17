@@ -2,11 +2,9 @@
 
 namespace Tests\Controllers;
 
-use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\Genre;
-use App\Models\Tag;
 use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -97,36 +95,23 @@ class BookAPIControllerTest extends TestCase
 
         $response = $this->putJson('api/b1/books/'.$book->id, $fakeBook->toArray());
 
-        $this->assertSuccessDataResponse($response, $fakeBook->toArray(),
-            'Book updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response, $fakeBook->toArray(), 'Book updated successfully.'
+        );
     }
 
     /** @test */
     public function it_can_retrieve_book()
     {
-        $tag = factory(Tag::class)->create();
         $genre = factory(Genre::class)->create();
-        $author = factory(Author::class)->create();
-        $item = factory(BookItem::class)->create();
-
         /** @var Book $book */
         $book = factory(Book::class)->create();
-
-        $book->authors()->sync([$author->id]);
-        $book->tags()->sync([$tag->id]);
         $book->genres()->sync([$genre->id]);
-        $book->items()->save($item);
 
         $response = $this->getJson('api/b1/books/'.$book->id);
 
-        $this->assertSuccessDataResponse($response, $book->toArray(), 'Book retrieved successfully.');
-
-        $this->assertEquals($book->id, $response->original['data']['id']);
-
-        $this->assertNotEmpty($response->original['data']['tags']);
-        $this->assertNotEmpty($response->original['data']['genres']);
-        $this->assertNotEmpty($response->original['data']['items']);
-        $this->assertNotEmpty($response->original['data']['authors']);
+        $this->assertSuccessDataResponse($response, $book->fresh()->toArray(), 'Book retrieved successfully.');
+        $this->assertNotEmpty($book->genres);
     }
 
     /** @test */
