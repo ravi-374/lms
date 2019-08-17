@@ -22,5 +22,6 @@ $factory->define(BookItem::class, function (Faker $faker) {
         'publisher_id' => $publisher->id,
         'format'       => BookItem::FORMAT_PAPERBACK,
         'is_available' => BookItem::STATUS_AVAILABLE,
+        'edition'      => $faker->randomDigit,
     ];
 });

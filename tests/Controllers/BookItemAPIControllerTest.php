@@ -40,8 +40,6 @@ class BookItemAPIControllerTest extends TestCase
         $this->mockRepository();
 
         $bookItem = factory(BookItem::class)->create();
-
-        /** @var IssuedBook $reserveBook */
         $reserveBook = factory(IssuedBook::class)->create([
             'book_item_id' => $bookItem->id,
             'status'       => IssuedBook::STATUS_RESERVED,
