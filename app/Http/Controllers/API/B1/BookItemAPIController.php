@@ -42,7 +42,7 @@ class BookItemAPIController extends AppBaseController
     {
         $search = $request->only(['member_id']);
         $search['book_id'] = $book->id;
-        $search['is_available'] = true;
+        $search['status'] = BookItem::STATUS_AVAILABLE;
         $search['for_member'] = true;
 
         $records = $this->bookItemRepo->all(
@@ -63,7 +63,7 @@ class BookItemAPIController extends AppBaseController
      */
     public function destroy(BookItem $bookItem)
     {
-        if (!$bookItem->is_available) {
+        if ($bookItem->status == BookItem::STATUS_NOT_AVAILABLE ) {
             throw new BadRequestHttpException('BookItem can not be delete, it is reserved OR issued by someone.');
         }
         $bookItem->delete();

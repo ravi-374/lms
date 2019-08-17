@@ -70,7 +70,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
 
-        $with = ['issuer', 'returner', 'bookItem.book','member'];
+        $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
@@ -85,8 +85,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
             if ($orderBy == 'name') {
                 $orderString = 'bookItem.book.name';
-            } else if ($orderBy == 'book_code') {
-                $orderString = 'bookItem.book_code';
+            } else {
+                if ($orderBy == 'book_code') {
+                    $orderString = 'bookItem.book_code';
+                }
             }
 
             $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
@@ -114,7 +116,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function store($input)
     {
         $this->validateBook($input);
-        
+
         /** @var IssuedBook $issueBooked */
         $issueBooked = IssuedBook::create($input);
 
@@ -146,7 +148,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function issueBook($input)
     {
-        $issuedOn = (!empty($input['issued_on'])) ? Carbon::parse($input['issued_on'] ) : Carbon::now();
+        $issuedOn = (!empty($input['issued_on'])) ? Carbon::parse($input['issued_on']) : Carbon::now();
         if ($issuedOn->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
             throw new UnprocessableEntityHttpException('Issue date must be less or equal to today\'s date.');
         }
@@ -182,7 +184,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         $issueBook = IssuedBook::create($input);
-        $bookItem->update(['is_available' => false]);
+        $bookItem->update(['status' => BookItem::STATUS_NOT_AVAILABLE]);
 
         return $this->find($issueBook->id);
     }
@@ -201,7 +203,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
-        if (!empty($issueBook) || !$bookItem->is_available) {
+        if (!empty($issueBook) || $bookItem->status == BookItem::STATUS_NOT_AVAILABLE) {
             throw new UnprocessableEntityHttpException('Book is not available.');
         }
 
@@ -213,7 +215,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'reserve_date' => $reserveDate,
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
-        $bookItem->update(['is_available' => false]);
+        $bookItem->update(['status' => BookItem::STATUS_NOT_AVAILABLE]);
 
         return $this->find($issueBook->id);
     }
@@ -243,7 +245,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'status'      => IssuedBook::STATUS_RETURNED,
             'returner_id' => Auth::id(),
         ]);
-        $bookItem->update(['is_available' => true]);
+        $bookItem->update(['status' => BookItem::STATUS_AVAILABLE]);
 
         return $this->find($issueBook->id);
     }
@@ -266,7 +268,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         $issueBook->update(['status' => IssuedBook::STATUS_UN_RESERVED]);
-        $bookItem->update(['is_available' => true]);
+        $bookItem->update(['status' => BookItem::STATUS_AVAILABLE]);
 
         return $this->find($issueBook->id);
     }
