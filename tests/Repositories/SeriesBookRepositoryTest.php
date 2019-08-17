@@ -2,7 +2,6 @@
 
 namespace Tests\Repositories;
 
-use App\Models\Book;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
 use App\Repositories\SeriesBookRepository;
@@ -32,57 +31,48 @@ class SeriesBookRepositoryTest extends TestCase
     {
         $bookSeries = factory(BookSeries::class)->create();
         $fakeSeriesBook[] = factory(SeriesBook::class)->raw();
+        $fakeSeriesBook[] = factory(SeriesBook::class)->raw();
 
         $createSeriesBook = $this->seriesBookRepo->createOrUpdateSeriesItems($bookSeries, $fakeSeriesBook);
 
         $this->assertArrayHasKey('id', $bookSeries);
-        $this->assertCount(0, $bookSeries->seriesItems);
-        $this->assertEquals($bookSeries['book_id'], $createSeriesBook['book_id']);
+        $this->assertCount(2, $bookSeries->fresh()->seriesItems);
     }
 
-    /** @test */
-    public function test_can_not_create_series_book_item_when_sequence_is_duplicated()
+    /**
+     * @test
+     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Sequence is duplicated
+     */
+    public function test_can_not_create_series_book_item_when_sequence_is_duplicate()
     {
-        $bookSeries = factory(BookSeries::class)->create();
-        $book = factory(Book::class)->create([
-            'name' => $this->faker->unique()->name,
-            'isbn' => $this->faker->unique()->isbn10,
-        ]);
-        $inputs = factory(SeriesBook::class)->make(['sequence' => 1])->toArray();
-        $inputs = factory(SeriesBook::class)->make(['sequence' => 1])->toArray();
+        $inputs[] = factory(SeriesBook::class)->raw(['sequence' => 1]);
+        $inputs[] = factory(SeriesBook::class)->raw(['sequence' => 1]);
 
-        $response = $this->seriesBookRepo->validateSeriesItems($inputs);
-
-        $this->assertTrue($response, 'Sequence is duplicated');
+        $this->seriesBookRepo->validateSeriesItems($inputs);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException App\Exceptions\MissingPropertyException
+     * @expectedExceptionMessage Book is required.
+     */
     public function test_can_not_create_series_book_when_book_is_not_passed()
     {
-        $bookSeries = factory(BookSeries::class)->make();
         $inputs[] = factory(SeriesBook::class)->make(['book_id' => null])->toArray();
 
-        $response = $this->seriesBookRepo->validateSeriesItems($inputs);
-
-        $this->assertTrue($response, 'Book is required');
+        $this->seriesBookRepo->validateSeriesItems($inputs);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException App\Exceptions\MissingPropertyException
+     * @expectedExceptionMessage Sequence is required.
+     */
     public function test_can_not_create_series_book_when_sequence_is_not_passed()
     {
-        $bookSeries = factory(BookSeries::class)->create();
-        $book = factory(Book::class)->create([
-            'name' => $this->faker->unique()->name,
-            'isbn' => $this->faker->unique()->isbn10,
-        ]);
-        $inputs[] = factory(SeriesBook::class)->make([
-            'series_id' => $bookSeries->id,
-            'book_id'   => $book->id,
-            'sequence'  => null,
-        ])->toArray();
+        $inputs[] = factory(SeriesBook::class)->raw(['sequence' => null]);
 
-        $response = $this->seriesBookRepo->validateSeriesItems($inputs);
-
-        $this->assertTrue($response, 'Sequence is required');
+        $this->seriesBookRepo->validateSeriesItems($inputs);
     }
 }
