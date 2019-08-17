@@ -61,12 +61,14 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->make();
 
+        $input = array_merge($member->toArray(), ['password' => 12345678]);
+
         $this->memberRepo->shouldReceive('store')
             ->once()
-            ->with($member->toArray())
+            ->with($input)
             ->andReturn($member);
 
-        $response = $this->postJson('api/b1/members', $member->toArray());
+        $response = $this->postJson('api/b1/members', $input);
 
         $this->assertSuccessDataResponse($response, $member->toArray(), 'Member saved successfully.');
     }
@@ -85,7 +87,7 @@ class MemberAPIControllerTest extends TestCase
             ->with($updateRecord->toArray(), $member->id)
             ->andReturn($updateRecord);
 
-        $response = $this->putJson('api/b1/members/'.$member->id, $updateRecord->toArray());
+        $response = $this->postJson('api/b1/members/'.$member->id, $updateRecord->toArray());
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member updated successfully.');
     }
