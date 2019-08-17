@@ -7,6 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
+use App\User;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -30,6 +31,7 @@ class MemberAPIController extends AppBaseController
      */
     public function getLoggedInMemberDetails()
     {
+        /** @var Member $member */
         $member = Auth::user();
         $member->address;
 

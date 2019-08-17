@@ -150,6 +150,6 @@ class Member extends Authenticatable implements JWTSubject
      */
     public function address()
     {
-        return $this->morphOne(Address::class, 'owner');
+        return $this->morphOne(Address::class, 'owner')->with('country');
     }
 }
