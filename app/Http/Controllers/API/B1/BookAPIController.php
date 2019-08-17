@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -36,13 +37,18 @@ class BookAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $books = $this->bookRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($books->toArray(), 'Books retrieved successfully.');
+        return $this->sendResponse(
+            $books->toArray(),
+            'Books retrieved successfully.',
+            $this->getTotalRecords(Book::class, $input, $books)
+        );
     }
 
     /**
