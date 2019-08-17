@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Address[] $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Country $country
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address query()
@@ -69,5 +70,13 @@ class Address extends Model
     public function owner()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
     }
 }
