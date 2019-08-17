@@ -317,7 +317,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 } else {
                     $item = new BookItem();
                     $item->book_code = isset($bookItem['book_code']) ? $bookItem['book_code'] : $this->generateUniqueBookCode();
-                    $item->is_available = BookItem::STATUS_AVAILABLE;
+                    $item->status = BookItem::STATUS_AVAILABLE;
                 }
 
                 $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
