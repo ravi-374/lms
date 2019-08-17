@@ -49,7 +49,7 @@ const BookDetail = props => {
             <HeaderTitle title={'Book-Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">Book Details</h5>
+                    <h5 className="page-heading">{book.name}</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
                             Edit Book Details

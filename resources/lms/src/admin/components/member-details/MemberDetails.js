@@ -31,10 +31,10 @@ const MemberDetail = props => {
         props.fetchMembers();
         apiConfig.get('countries').then(response =>
             setCountries([...countries, ...response.data.data])
-        ).catch(({response}) => {
+        ).catch(({ response }) => {
         })
     }, []);
-    const {member, memberBookHistory, membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading} = props;
+    const { member, memberBookHistory, membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
     if (!member || !members || isLoading) {
         return (
             <Fragment>
@@ -53,7 +53,7 @@ const MemberDetail = props => {
     const goBack = () => {
         history.push('/app/admin/members');
     };
-    const cardBodyProps = {books, members, sortAction, sortObject, memberBookHistory, onOpenModal};
+    const cardBodyProps = { books, members, sortAction, sortObject, memberBookHistory, onOpenModal };
     const cardModalProps = {
         bookHistory,
         books,
@@ -66,7 +66,7 @@ const MemberDetail = props => {
         member
     };
     const imageUrl = member.image ? 'uploads/members/' + member.image : 'images/user-avatar.png';
-    const {address} = member;
+    const { address } = member;
     let fullAddress = '';
     const memberPlan = membershipPlans.find(memberPlan => memberPlan.id === +member.membership_plan_id);
     if (memberPlan) {
@@ -100,7 +100,7 @@ const MemberDetail = props => {
             <HeaderTitle title={'Member Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">Member Details</h5>
+                    <h5 className="page-heading">{member.first_name + ' ' + member.last_name}</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal(false)}>
                             Edit Member Details
@@ -169,7 +169,7 @@ const MemberDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const {members, memberBookHistory, membershipPlans, books, sortObject, isLoading} = state;
+    const { members, memberBookHistory, membershipPlans, books, sortObject, isLoading } = state;
     let bookHistoryArray = Object.values(memberBookHistory);
     if (sortObject) {
         bookHistoryArray = sortFilter(bookHistoryArray, sortObject);
@@ -187,7 +187,7 @@ const mapStateToProps = (state, ownProp) => {
 const prepareMembers = (members) => {
     let memberArray = [];
     members.forEach(member => {
-        memberArray.push({id: member.id, name: member.first_name + ' ' + member.last_name});
+        memberArray.push({ id: member.id, name: member.first_name + ' ' + member.last_name });
     });
     return memberArray;
 };
