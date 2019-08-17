@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\V1\Controllers;
+namespace Tests\V1;
 
 use App\Models\IssuedBook;
 use App\Repositories\IssuedBookRepository;
@@ -46,6 +46,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/v1/books-history');
 
-        $this->assertSuccessDataResponse($response, $bookItems->toArray(), 'Books history retrieved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
+        $this->assertCount(5, $response->original['data']);
     }
 }

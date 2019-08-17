@@ -99,7 +99,7 @@ class IssuedBookRepositoryTest extends TestCase
     {
         $bookItem = factory(BookItem::class)->create();
         $member = factory(Member::class)->create();
-        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
+        $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id, 'status' => IssuedBook::STATUS_ISSUED];
 
         /** @var IssuedBook $issuedBook */
         $issuedBook = $this->issuedBookRepo->store($input);
