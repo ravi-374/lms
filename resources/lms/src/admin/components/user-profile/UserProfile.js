@@ -6,22 +6,20 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import UserProfileForm from './UserProfileForm';
 import {fetchUserProfile, editUserProfile} from '../../store/actions/userProfileAction';
-import {fetchRoles} from '../../store/actions/roleAction';
 import {fetchCountries} from '../../store/actions/countryAction';
 import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MemberProfile = props => {
-    const {isLoading, countries, userProfile, roles, fetchUserProfile, fetchRoles, fetchCountries, editUserProfile} = props;
+    const { isLoading, countries, userProfile, roles, fetchUserProfile, fetchCountries, editUserProfile } = props;
     useEffect(() => {
         fetchUserProfile();
-        fetchRoles();
         fetchCountries();
     }, []);
     const onSaveProfile = (formValues) => {
         editUserProfile(prepareFormData(formValues));
     };
-    if (!userProfile || isLoading || !userProfile.id || roles.length === 0) {
+    if (!userProfile || isLoading || !userProfile.id) {
         return (
             <Fragment>
                 <ProgressBar/>
@@ -29,7 +27,7 @@ const MemberProfile = props => {
             </Fragment>
         )
     }
-    const {id, is_active, first_name, last_name, email, password, phone, address, image} = userProfile;
+    const { id, is_active, first_name, last_name, email, password, phone, address, image } = userProfile;
     const changeAbleFields = {
         id,
         is_active,
@@ -38,14 +36,13 @@ const MemberProfile = props => {
         email,
         password,
         image,
-        role: userProfile.roles.length > 0 ? {id: userProfile.roles[0].id, name: userProfile.roles[0].name} : {},
         phone
     };
     if (address) {
-        const {address_1, address_2, country_id, city, state, zip} = address;
+        const { address_1, address_2, country, city, state, zip } = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country_id ? countries.find(country => country.id === +country_id) : {};
+        changeAbleFields.country = country ? country : {};
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
@@ -80,12 +77,11 @@ const MemberProfile = props => {
 };
 
 const mapStateToProps = (state) => {
-    const {userProfile, roles, countries} = state;
-    return {userProfile, roles: Object.values(roles), countries}
+    const { userProfile, countries } = state;
+    return { userProfile, countries }
 };
 export default connect(mapStateToProps, {
     fetchUserProfile,
-    fetchRoles,
     fetchCountries,
     editUserProfile
 })(MemberProfile);

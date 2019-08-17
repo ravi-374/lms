@@ -163,20 +163,12 @@
     }
     &__input {
         height: 45px;
+        width: calc(100% - 38px);
 
         input {
             height: auto;
         }
 
-        &--inline {
-            width: 97.7%;
-        }
-        &--modal {
-            width: 93.8%;
-        }
-        &--mini {
-            width: 86.8%
-        }
         .css-1uccc91-singleValue {
             top: 45% !important;
         }
