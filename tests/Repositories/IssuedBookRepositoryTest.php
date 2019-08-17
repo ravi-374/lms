@@ -40,7 +40,7 @@ class IssuedBookRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBook->status);
-        $this->assertFalse($bookItem->fresh()->is_available);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
     /**
@@ -133,7 +133,7 @@ class IssuedBookRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $reserveBook);
         $this->assertEquals(IssuedBook::STATUS_RESERVED, $reserveBook->status);
-        $this->assertFalse($bookItem->fresh()->is_available);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
     /**
@@ -144,7 +144,7 @@ class IssuedBookRepositoryTest extends TestCase
     public function test_unable_to_reserve_book_when_it_is_not_available()
     {
         /** @var BookItem $bookItem */
-        $bookItem = factory(BookItem::class)->create(['is_available' => false]);
+        $bookItem = factory(BookItem::class)->create(['status' => BookItem::STATUS_NOT_AVAILABLE]);
         $member = factory(Member::class)->create();
         $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
 
@@ -164,7 +164,7 @@ class IssuedBookRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_RETURNED, $returnBook->status);
-        $this->assertTrue($bookItem->fresh()->is_available);
+        $this->assertEquals(BookItem::STATUS_AVAILABLE, $bookItem->fresh()->status);
     }
 
     /**
@@ -195,7 +195,7 @@ class IssuedBookRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $returnBook->status);
-        $this->assertTrue($bookItem->fresh()->is_available);
+        $this->assertEquals(BookItem::STATUS_AVAILABLE, $bookItem->fresh()->status);
     }
 
     /**
