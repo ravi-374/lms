@@ -7,8 +7,8 @@ use App\Http\Middleware\UserAuth;
 use App\Models\Member;
 use App\User;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestResponse;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -62,6 +62,10 @@ abstract class TestCase extends BaseTestCase
         ];
     }
 
+    /**
+     * @param TestResponse $response
+     * @param string $message
+     */
     public function assertSuccessMessageResponse(TestResponse $response, string $message)
     {
         $response->assertStatus(200)
@@ -71,6 +75,11 @@ abstract class TestCase extends BaseTestCase
             ]);
     }
 
+    /**
+     * @param TestResponse $response
+     * @param array $data
+     * @param string $message
+     */
     public function assertSuccessDataResponse(TestResponse $response, array $data, string $message)
     {
         $response->assertStatus(200)
@@ -81,11 +90,19 @@ abstract class TestCase extends BaseTestCase
             ]);
     }
 
+    /**
+     * @param TestResponse $response
+     * @param string $message
+     */
     public function assertExceptionMessage(TestResponse $response, string $message)
     {
         $this->assertEquals($message, $response->exception->getMessage());
     }
 
+    /**
+     * @param TestResponse $response
+     * @param string $message
+     */
     public function assertErrorMessageResponse(TestResponse $response, string $message)
     {
         $response->assertStatus(422)
@@ -93,5 +110,17 @@ abstract class TestCase extends BaseTestCase
                 'success' => false,
                 'message' => $message,
             ]);
+    }
+
+    /**
+     * @param TestResponse $response
+     * @param string $message
+     */
+    public function assertJsonErrorMessageResponse(TestResponse $response, string $message)
+    {
+        $response->assertJson([
+            'success' => false,
+            'message' => $message,
+        ]);
     }
 }
