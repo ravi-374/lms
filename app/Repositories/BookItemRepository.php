@@ -6,6 +6,7 @@
  * Date: 01-07-2019
  * Time: 11:57 AM
  */
+
 namespace App\Repositories;
 
 use App\Models\Author;
@@ -13,7 +14,6 @@ use App\Models\Book;
 use App\Models\BookItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use NeonMobile\Models\Menu\DB\MenuCategoryTable;
 
 /**
  * Class BookItemRepository
@@ -27,7 +27,7 @@ class BookItemRepository extends BaseRepository
     protected $fieldSearchable = [
         'edition',
         'format',
-        'is_available',
+        'status',
         'book_id',
         'book_code',
     ];
@@ -80,10 +80,15 @@ class BookItemRepository extends BaseRepository
      */
     public function searchBooks($search = [], $skip = null, $limit = null)
     {
-        $query = $this->allQuery($search, $skip, $limit)->with(['book.authors', 'lastIssuedBook', 'publisher', 'language']);
+        $query = $this->allQuery($search, $skip, $limit)->with([
+            'book.authors',
+            'lastIssuedBook',
+            'publisher',
+            'language',
+        ]);
         $query = $this->applyDynamicSearch($search, $query);
 
-        $query->orderByDesc('is_available');
+        $query->orderBy('status');
 
         $records = $query->get();
         $records = $this->sortByReturnDueDate($records);
@@ -98,8 +103,8 @@ class BookItemRepository extends BaseRepository
      */
     public function sortByReturnDueDate($records)
     {
-        $available = collect($records->where('is_available' , 1));
-        $notAvailable = collect($records->where('is_available' , 0))
+        $available = collect($records->where('status', BookItem::STATUS_AVAILABLE));
+        $notAvailable = collect($records->where('status', BookItem::STATUS_NOT_AVAILABLE))
             ->sortBy('lastIssuedBook.return_due_date');
 
         $records = $available->merge($notAvailable);
@@ -115,8 +120,8 @@ class BookItemRepository extends BaseRepository
      */
     public function applyDynamicSearch($search, $query)
     {
-        $query->when(!empty($search['id']), function (Builder $query) use($search) {
-            $query->whereHas('book', function (Builder $query)  use ($search) {
+        $query->when(!empty($search['id']), function (Builder $query) use ($search) {
+            $query->whereHas('book', function (Builder $query) use ($search) {
                 $ids = explode_trim_remove_empty_values_from_array($search['id'], ' ');
 
                 // search by book's Id
