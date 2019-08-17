@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\Traits\ImageTrait;
@@ -37,6 +38,7 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUrl($value)
  * @mixin \Eloquent
  * @property-read string $image_path
+ * @property-read string $authors_name
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Author[] $authors
  */
 class Book extends Model
@@ -176,5 +178,15 @@ class Book extends Model
         });
 
         return $query;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorsNameAttribute()
+    {
+        $authors = $this->authors->pluck('first_name')->toArray();
+
+        return implode(',', $authors);
     }
 }
