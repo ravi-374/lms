@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $book_code
  * @property string $edition
  * @property int $format
- * @property bool $is_available
+ * @property int $status
  * @property string $location
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereFormat($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereLocation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereIsAvailable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Book $book
@@ -47,10 +47,14 @@ class BookItem extends Model
 {
     const STATUS_AVAILABLE = 1;
     const STATUS_NOT_AVAILABLE = 2;
+    const STATUS_LOST = 3;
+    const STATUS_DAMAGE = 4;
 
     const STATUS_ARRAY = [
         self::STATUS_AVAILABLE,
         self::STATUS_NOT_AVAILABLE,
+        self::STATUS_LOST,
+        self::STATUS_DAMAGE,
     ];
 
     const FORMAT_HARDCOVER = 1;
@@ -64,7 +68,7 @@ class BookItem extends Model
         'book_code',
         'edition',
         'format',
-        'is_available',
+        'status',
         'location',
         'price',
         'language_id',
@@ -77,7 +81,7 @@ class BookItem extends Model
      * @var array
      */
     protected $casts = [
-        'is_available' => 'boolean',
+        'status' => 'integer',
     ];
 
     /**
