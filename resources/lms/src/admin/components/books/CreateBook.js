@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardBody,Button} from 'reactstrap';
+import {Row, Col, Card, CardBody, Button} from 'reactstrap';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import BookForm from './BookForm';
@@ -13,6 +13,7 @@ import {fetchTags} from '../../store/actions/tagAction';
 import {prepareAuthor, preparePublisher, prepareBookLanguage} from './prepareArray';
 import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {Routes} from "../../../constants";
 
 const CreateBook = (props) => {
     useEffect(() => {
@@ -26,17 +27,9 @@ const CreateBook = (props) => {
         props.addBook(prepareFormData(formValues), props.history);
     };
     const goBack = () => {
-        props.history.push('/app/admin/books');
+        props.history.push(Routes.BOOKS);
     };
-    const {authors, publishers, tags, bookLanguages, genres, isLoading} = props;
-    if (isLoading) {
-        return (
-            <Fragment>
-                <ProgressBar/>
-                <Toasts/>
-            </Fragment>
-        )
-    }
+    const { authors, publishers, tags, bookLanguages, genres, isLoading } = props;
     const prepareFormOption = {
         authors,
         publishers,
@@ -48,6 +41,7 @@ const CreateBook = (props) => {
     };
     return (
         <div className="animated fadeIn">
+            {isLoading ? <ProgressBar/> : null}
             <HeaderTitle title={'New Book | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
@@ -70,7 +64,7 @@ const CreateBook = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {isLoading, authors, publishers, tags, bookLanguages, genres} = state;
+    const { isLoading, authors, publishers, tags, bookLanguages, genres } = state;
     return {
         isLoading,
         authors: prepareAuthor(Object.values(authors)),
