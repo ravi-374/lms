@@ -3,10 +3,12 @@
 namespace Tests\Controllers;
 
 use App\Models\Member;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class MemberAuthControllerTest extends TestCase
 {
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
@@ -21,10 +23,7 @@ class MemberAuthControllerTest extends TestCase
 
         $key = $member->email.'|'.date('Y-m-d H:i:s');
         $token = encrypt($key);
-        $input = [
-            'token'    => $token,
-            'password' => '1nfy0m',
-        ];
+        $input = ['token' => $token, 'password' => '1nfy0m'];
 
         $response = $this->postJson('api/v1/reset-member-password', $input);
 
@@ -36,10 +35,7 @@ class MemberAuthControllerTest extends TestCase
     {
         $key = $this->faker->email.'|'.date('Y-m-d H:i:s');
         $token = encrypt($key);
-        $input = [
-            'token'    => $token,
-            'password' => '1nfy0m',
-        ];
+        $input = ['token' => $token, 'password' => '1nfy0m'];
 
         $response = $this->postJson('api/v1/reset-member-password', $input);
 
@@ -54,10 +50,7 @@ class MemberAuthControllerTest extends TestCase
 
         $key = $member->email.'|'.date('Y-m-d H:i:s', strtotime('-1 day'));
         $token = encrypt($key);
-        $input = [
-            'token'    => $token,
-            'password' => '1nfy0m',
-        ];
+        $input = ['token' => $token, 'password' => '1nfy0m'];
 
         $response = $this->postJson('api/v1/reset-member-password', $input);
 
@@ -76,12 +69,16 @@ class MemberAuthControllerTest extends TestCase
     public function test_can_verify_and_activate_member_account()
     {
         /** @var Member $member */
-        $member = factory(Member::class)->create(['activation_code' => 123456]);
+        $member = factory(Member::class)->create([
+            'activation_code' => 123456,
+            'is_active'       => false,
+        ]);
         $key = $member->id.'|'.$member->activation_code;
         $token = encrypt($key);
 
         $response = $this->getJson("api/v1/activate-member?token=$token");
 
         $this->assertSuccessMessageResponse($response, 'Your account has been activated successfully.');
+        $this->assertTrue($member->fresh()->is_active);
     }
 }
