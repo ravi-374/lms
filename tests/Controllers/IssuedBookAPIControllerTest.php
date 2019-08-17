@@ -10,6 +10,10 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
+/**
+ * Class IssuedBookAPIControllerTest
+ * @package Tests\Controllers
+ */
 class IssuedBookAPIControllerTest extends TestCase
 {
     use DatabaseTransactions;
@@ -48,14 +52,8 @@ class IssuedBookAPIControllerTest extends TestCase
             ->andReturn($issuedBooks);
 
         $response = $this->getJson('api/b1/books-history');
-
         $this->assertSuccessMessageResponse($response, 'Issued Books retrieved successfully.');
         $this->assertCount(5, $response->original['data']);
-
-        $response = \Arr::pluck($response->original['data'], 'id');
-        $issuedBooks->map(function (IssuedBook $issuedBook) use ($response) {
-            $this->assertContains($issuedBook->id, $response);
-        });
     }
 
     /** @test */
@@ -83,7 +81,6 @@ class IssuedBookAPIControllerTest extends TestCase
         $response = $this->postJson("api/b1/books/$bookItem->id/issue-book", $input);
 
         $this->assertSuccessMessageResponse($response, 'Book issued successfully.');
-
         $this->assertEquals($issueBook->member_id, $response->original['data']['member_id']);
         $this->assertEquals($issueBook->book_item_id, $response->original['data']['book_item_id']);
     }
@@ -106,7 +103,6 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $this->assertSuccessMessageResponse($response, 'Book return successfully.');
-
         $this->assertEquals($issueBook->book_item_id, $response->original['data']['book_item_id']);
     }
 
@@ -119,11 +115,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $response = $this->getJson('api/b1/issued-books/'.$issuedBook->id);
 
         $this->assertSuccessMessageResponse($response, 'Issued Book retrieved successfully.');
-
         $this->assertEquals($issuedBook->id, $response->original['data']['id']);
-
-        $this->assertNotEmpty($response->original['data']['member']);
-        $this->assertNotEmpty($response->original['data']['book_item']);
     }
 
     /** @test */
@@ -146,10 +138,5 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
         $this->assertCount(5, $response->original['data']);
-
-        $response = \Arr::pluck($response->original['data'], 'member_id');
-        $issuedBooks->map(function (IssuedBook $issuedBook) use ($response) {
-            $this->assertContains($issuedBook->member_id, $response);
-        });
     }
 }
