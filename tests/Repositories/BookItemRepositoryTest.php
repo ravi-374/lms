@@ -29,7 +29,7 @@ class BookItemRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function test_can_return_reserve_book_items_of_given_member()
+    public function test_can_return_only_reserve_book_items_of_given_member()
     {
         $reserveBook = factory(IssuedBook::class)->create([
             'status' => IssuedBook::STATUS_RESERVED,
@@ -66,31 +66,33 @@ class BookItemRepositoryTest extends TestCase
     /** @test */
     public function it_can_search_books_with_given_book_ids()
     {
-        $bookItems = factory(BookItem::class)->times(2)->create();
+        $bookItems = factory(BookItem::class)->times(5)->create();
 
-        $search['id'] = $bookItems[0]->book_id;
-        $search['search_by_book'] = [$bookItems[0]->book_id, $bookItems[1]->book_id];
+        $search['id'] = $bookItems[0]->book_id." ".$bookItems[1]->book_id;
+        $search['search_by_book'] = true;
 
         $allBookItems = $this->bookItemRepo->searchBooks($search);
 
-        $bookItem = $allBookItems->last();
-        $this->assertEquals($search['id'], $bookItem->book_id);
+        $this->assertCount(2, $allBookItems);
+        $this->assertEquals($search['id'], $allBookItems[0]->book_id." ".$allBookItems[1]->book_id);
     }
 
     /** @test */
     public function it_can_search_books_with_given_book_author()
     {
         $author = factory(Author::class)->create();
-        $book = factory(Book::class)->create();
-        $book->authors()->sync([$author->id]);
+        $book1 = factory(Book::class)->create();
+        $book1->authors()->sync([$author->id]);
 
-        $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
+        $book2 = factory(Book::class)->create();
+        $bookItem = factory(BookItem::class)->create(['book_id' => $book1->id]);
 
         $search['id'] = $author->id;
-        $search['search_by_author'] = [$author->id];
+        $search['search_by_author'] = true;
 
         $bookItem = $this->bookItemRepo->searchBooks($search);
 
-        $this->assertEquals($author->id, $bookItem[0]->book->authors[0]->id);
+        $this->assertCount(1, $bookItem);
+        $this->assertEquals($search['id'], $bookItem[0]->book->authors[0]->id);
     }
 }
