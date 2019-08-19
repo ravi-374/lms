@@ -21,8 +21,9 @@ class RoleAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_role_fails_when_name_is_not_passed()
     {
-        $this->post('api/b1/roles', ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->postJson('api/b1/roles', ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -30,15 +31,17 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $this->post('api/b1/roles/', ['name' => $role->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->postJson('api/b1/roles/', ['name' => $role->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
     public function test_create_role_fails_when_permissions_not_passed()
     {
-        $this->post('api/b1/roles/', ['permissions' => []])
-            ->assertSessionHasErrors(['permissions' => 'Role must have at least one permission.']);
+        $response = $this->postJson('api/b1/roles/', ['name' => $this->faker->name, 'permissions' => []]);
+
+        $this->assertExceptionMessage($response, 'Role must have at least one permission.');
     }
 
     /** @test */
@@ -46,8 +49,9 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $this->put('api/b1/roles/'.$role->id, ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->putJson('api/b1/roles/'.$role->id, ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -56,8 +60,9 @@ class RoleAPIControllerValidationTest extends TestCase
         $role1 = factory(Role::class)->create();
         $role2 = factory(Role::class)->create();
 
-        $this->put('api/b1/roles/'.$role2->id, ['name' => $role1->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->putJson('api/b1/roles/'.$role2->id, ['name' => $role1->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
@@ -65,8 +70,9 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $this->put('api/b1/roles/'.$role->id, ['permissions' => []])
-            ->assertSessionHasErrors(['permissions' => 'Role must have at least one permission.']);
+        $response = $this->putJson('api/b1/roles/'.$role->id, ['name' => $this->faker->name, 'permissions' => []]);
+
+        $this->assertExceptionMessage($response, 'Role must have at least one permission.');
     }
 
     /** @test */

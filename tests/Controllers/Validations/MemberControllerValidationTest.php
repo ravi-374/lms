@@ -20,43 +20,65 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function test_create_member_fails_when_first_name_is_not_passed()
     {
-        $this->post('api/b1/members', ['first_name' => ''])
-            ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
+        $response = $this->postJson('api/b1/members', ['first_name' => '']);
+
+        $this->assertExceptionMessage($response, 'The first name field is required.');
     }
 
     /** @test */
     public function test_create_member_fails_when_last_name_is_not_passed()
     {
-        $this->post('api/b1/members', ['last_name' => ''])
-            ->assertSessionHasErrors(['last_name' => 'The last name field is required.']);
+        $response = $this->postJson('api/b1/members', ['first_name' => $this->faker->name, 'last_name' => '']);
+
+        $this->assertExceptionMessage($response, 'The last name field is required.');
     }
 
     /** @test */
     public function test_create_member_fails_when_email_is_not_passed()
     {
-        $this->post('api/b1/members', ['email' => ''])
-            ->assertSessionHasErrors(['email' => 'The email field is required.']);
+        $response = $this->postJson('api/b1/members',
+            ['first_name' => $this->faker->name, 'last_name' => $this->faker->name, 'email' => '']
+        );
+
+        $this->assertExceptionMessage($response, 'The email field is required.');
     }
 
     /** @test */
     public function test_create_member_fails_when_password_is_not_passed()
     {
-        $this->post('api/b1/members', ['password' => ''])
-            ->assertSessionHasErrors(['password' => 'The password field is required.']);
+        $response = $this->postJson('api/b1/members',
+            ['first_name' => $this->faker->name, 'last_name' => $this->faker->name, 'email' => $this->faker->email]
+        );
+
+        $this->assertExceptionMessage($response, 'The password field is required.');
     }
 
     /** @test */
     public function test_create_member_fails_when_password_length_is_less_than_six_character()
     {
-        $this->post('api/b1/members', ['password' => 12345])
-            ->assertSessionHasErrors(['password' => 'The password must be at least 6 characters.']);
+        $response = $this->postJson('api/b1/members',
+            [
+                'first_name' => $this->faker->name,
+                'last_name'  => $this->faker->name,
+                'email'      => $this->faker->email,
+                'password'   => 12345,
+            ]
+        );
+
+        $this->assertExceptionMessage($response, 'The password must be at least 6 characters.');
     }
 
     /** @test */
     public function test_create_member_fails_when_membership_plan_id_is_not_passed()
     {
-        $this->post('api/b1/members', ['membership_plan_id' => ''])
-            ->assertSessionHasErrors(['membership_plan_id' => 'The membership plan id field is required.']);
+        $response = $this->postJson('api/b1/members', [
+            'first_name' => $this->faker->name,
+            'last_name'  => $this->faker->name,
+            'email'      => $this->faker->email,
+            'password'   => 1234567,
+        ]);
+
+        $this->assertExceptionMessage($response, 'The membership plan id field is required.');
     }
 
     /** @test */
@@ -64,8 +86,14 @@ class MemberControllerValidationTest extends TestCase
     {
         $ankit = factory(Member::class)->create();
 
-        $this->post('api/b1/members', ['email' => $ankit->email])
-            ->assertSessionHasErrors(['email' => 'The email has already been taken.']);
+        $response = $this->postJson('api/b1/members', [
+            'first_name' => $this->faker->name,
+            'last_name'  => $this->faker->name,
+            'email'      => $ankit->email,
+            'password'   => 1234567,
+        ]);
+
+        $this->assertExceptionMessage($response, 'The email has already been taken.');
     }
 
     /** @test */
@@ -73,8 +101,9 @@ class MemberControllerValidationTest extends TestCase
     {
         $ankit = factory(Member::class)->create();
 
-        $this->post('api/b1/members/'.$ankit->id, ['first_name' => ''])
-            ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
+        $response = $this->postJson('api/b1/members/'.$ankit->id, ['first_name' => '']);
+
+        $this->assertExceptionMessage($response, 'The first name field is required.');
     }
 
     /** @test */
@@ -82,8 +111,11 @@ class MemberControllerValidationTest extends TestCase
     {
         $ankit = factory(Member::class)->create();
 
-        $this->post('api/b1/members/'.$ankit->id, ['last_name' => ''])
-            ->assertSessionHasErrors(['last_name' => 'The last name field is required.']);
+        $response = $this->postJson('api/b1/members/'.$ankit->id,
+            ['first_name' => $this->faker->name, 'last_name' => '']
+        );
+
+        $this->assertExceptionMessage($response, 'The last name field is required.');
     }
 
     /** @test */
@@ -137,15 +169,5 @@ class MemberControllerValidationTest extends TestCase
         $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
 
         $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
-    }
-
-    /** @test */
-    public function test_can_get_details_of_logged_in_member()
-    {
-        $this->signInWithMember();
-        $response = $this->get('api/v1/member-details');
-
-        $this->assertNotEmpty($response);
-        $this->assertEquals($this->loggedInMemberId, $response->original['data']->id);
     }
 }

@@ -20,8 +20,9 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_book_series_fails_when_title_is_not_passed()
     {
-        $this->post('api/b1/book-series', ['title' => ''])
-            ->assertSessionHasErrors(['title' => 'The title field is required.']);
+        $response = $this->postJson('api/b1/book-series', ['title' => '']);
+
+        $this->assertExceptionMessage($response, 'The title field is required.');
     }
 
     /** @test */
@@ -29,8 +30,9 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     {
         $bookSeries = factory(BookSeries::class)->create();
 
-        $this->post('api/b1/book-series/', ['title' => $bookSeries->title])
-            ->assertSessionHasErrors(['title' => 'The title has already been taken.']);
+        $response = $this->postJson('api/b1/book-series/', ['title' => $bookSeries->title]);
+
+        $this->assertExceptionMessage($response, 'The title has already been taken.');
     }
 
     /** @test */
@@ -38,8 +40,9 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     {
         $bookSeries = factory(BookSeries::class)->create();
 
-        $this->put('api/b1/book-series/'.$bookSeries->id, ['title' => ''])
-            ->assertSessionHasErrors(['title' => 'The title field is required.']);
+        $response = $this->putJson('api/b1/book-series/'.$bookSeries->id, ['title' => '']);
+
+        $this->assertExceptionMessage($response, 'The title field is required.');
     }
 
     /** @test */
