@@ -9,12 +9,13 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBooksAllotment} from '../../store/actions/bookAllotmentAction';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
-import {dateTimeFormatter, prepareFullNames} from '../../../shared/sharedMethod';
+import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
 import BookStatus from "../../../shared/book-status/book-status";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {Routes} from "../../../constants";
+import {bookAllotmentFilterOptions} from "../../constants";
 
 const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
@@ -73,14 +74,14 @@ const BooksAllotment = (props) => {
             selector: 'issued_on',
             width: '160px',
             sortable: true,
-            cell: row => <span>{dateTimeFormatter(row.issued_on)}</span>
+            cell: row => <span>{dateFormatter(row.issued_on)}</span>
         },
         {
             name: 'Return Date',
             selector: 'return_date',
             width: '160px',
             sortable: true,
-            cell: row => <span>{dateTimeFormatter(row.return_date)} </span>
+            cell: row => <span>{dateFormatter(row.return_date)} </span>
         },
         {
             name: 'Status',
@@ -118,8 +119,10 @@ const BooksAllotment = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={booksAllotment} columns={columns} loading={isLoading}
-                                            totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
+                            <ReactDataTable items={booksAllotment} isShowFilterField
+                                            filterOptions={bookAllotmentFilterOptions} columns={columns}
+                                            loading={isLoading} totalRows={totalRecord} onOpenModal={onOpenModal}
+                                            onChange={onChange}/>
                             <BookAllotmentModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>

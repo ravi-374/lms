@@ -47,7 +47,7 @@ const Book = ({ books, addToast, reserveBook }) => {
                             {prepareFullNames(book.book.authors).map((({ name }) => name)).join(',  ')}
                         </td>
                         <td className="align-middle">
-                            {book.publisher.name ? book.publisher.name : ''}
+                            {book.publisher? book.publisher.name : ''}
                         </td>
                         <td className="align-middle book__table-row-language">
                             {book.language.language_name}

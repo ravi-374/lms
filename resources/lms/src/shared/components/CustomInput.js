@@ -4,12 +4,14 @@ import {
     InputGroupAddon,
     InputGroupText,
 } from 'reactstrap';
+import './Component.scss';
 
 export default ({input, label, type, min,max, required, groupText, isCustom, customGroupText = '', addOnType = 'prepend', placeholder, readOnly, meta: {touched, error}}) => {
+    const formGroupClass = isCustom ? 'custom-input-search mb-0' : '';
     const className = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
     return (
-        <FormGroup className={isCustom ? 'mb-0' : ''}>
+        <FormGroup className={formGroupClass}>
             <div className="controls">
                 <Row>
                     <Col xs={6}>

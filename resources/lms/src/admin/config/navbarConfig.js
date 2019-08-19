@@ -71,7 +71,7 @@ export default {
         {
             name: 'Books Allotment',
             url: '/app/admin/books-allotment',
-            icon: 'icon-book-open',
+            icon: 'icon-notebook',
             permission: Permissions.MANAGE_BOOKS
         },
         {

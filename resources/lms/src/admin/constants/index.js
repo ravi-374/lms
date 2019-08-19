@@ -246,3 +246,10 @@ export const bookItemStatusOptions = [
     { id: 3, name: 'Lost' },
     { id: 4, name: 'Damaged' },
 ];
+
+export const bookAllotmentFilterOptions = [
+    { id: 1, name: 'All' },
+    { id: 2, name: 'Issue' },
+    { id: 3, name: 'Return' },
+    { id: 4, name: 'Lost' }
+];

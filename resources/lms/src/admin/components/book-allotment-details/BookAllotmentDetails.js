@@ -18,6 +18,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BookAllotmentDetail = props => {
     const [isToggle, setIsToggle] = useState(false);
+    const user = ''
     useEffect(() => {
         props.fetchBookAllotment(+props.match.params.id);
         props.fetchBooks();
@@ -125,14 +126,20 @@ const BookAllotmentDetail = props => {
                                                 <div className="book-history-detail__item">
                                                     <span className="book-history-detail__item-heading">Issuer</span>
                                                     <span>
-                                                    {bookHistory.issuer_name}
-                                                </span>
+                                                         <Link to={`${Routes.USERS + bookHistory.issuer_id}/details`}>
+                                                          {bookHistory.issuer_name}
+                                                         </Link>
+                                                    </span>
                                                 </div> : null
                                             }
                                             {bookHistory.returner_name ?
                                                 <div className="book-history-detail__item">
                                                     <span className="book-history-detail__item-heading">Returner</span>
-                                                    <span>{bookHistory.returner_name}</span>
+                                                    <span>
+                                                         <Link to={`${Routes.USERS + bookHistory.returner_id}/details`}>
+                                                          {bookHistory.returner_name}
+                                                         </Link>
+                                                    </span>
                                                 </div> : null
                                             }
                                             {bookHistory.issued_on ?
