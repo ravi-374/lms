@@ -7,7 +7,6 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
-use App\User;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -34,6 +33,7 @@ class MemberAPIController extends AppBaseController
         /** @var Member $member */
         $member = Auth::user();
         $member->address;
+        $member->membershipPlan;
 
         return $this->sendResponse($member, 'Member details retrieved successfully.');
     }
