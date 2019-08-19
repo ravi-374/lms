@@ -6,7 +6,7 @@ import {toggleModal} from '../../store/action/modalAction';
 const GlobalModal = (props) => {
     const className = `modal-primary primary ${props.className}`;
     return (
-        <Modal isOpen={props.isToggle} toggle={props.toggleModal} centered={!!props.actions}
+        <Modal id={props.id} isOpen={props.isToggle} toggle={props.toggleModal} centered={!!props.actions}
                className={className}>
             <ModalHeader toggle={props.toggleModal}>{props.title}</ModalHeader>
             <ModalBody>

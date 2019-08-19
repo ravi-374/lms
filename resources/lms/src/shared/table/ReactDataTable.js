@@ -72,13 +72,14 @@ export default (props) => {
             <div className="d-flex justify-content-end">
                 <SearchField handleSearch={handleSearch}/>
             </div>
-            <DataTable
-                noDataComponent={<EmptyComponent isMedium isLoading={loading} paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                                                 title={loading ? 'Loading......' : 'No records yet'}/>}
-                pagination={true} paginationServer={true} onSort={customSort} striped={true} highlightOnHover={true}
-                className={'table-bordered table-striped mt-2'} customTheme={darkTheme} paginationTotalRows={totalRows}
-                onChangeRowsPerPage={handlePerRowsChange} defaultSortAsc={false} onChangePage={handlePageChange}
-                noHeader={true} columns={tableColumns} data={items}/>
+            <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading}
+                                                        paginationRowsPerPageOptions={[10, 25, 50, 100]}
+                                                        title={loading ? 'Loading......' : 'No records yet'}/>}
+                       pagination={true} paginationServer={true} sortServer={true} onSort={customSort}
+                       striped={true} highlightOnHover={true} className={'table-bordered table-striped mt-2'}
+                       customTheme={darkTheme} paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange}
+                       defaultSortAsc={false} onChangePage={handlePageChange} noHeader={true} columns={tableColumns}
+                       data={items}/>
         </Fragment>
     )
 }

@@ -14,11 +14,11 @@ import PublisherModal from "../publishers/PublisherModal";
 
 const Tags = (props) => {
     const [isCreateTag, setCreateMode] = useState(false);
-    const [isEditMode, setEditMode] = useState(false);
+    const [isEditTag, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [tag, setTag] = useState(null);
     const { tags, toggleModal, totalRecord, isLoading } = props;
-    const cardModalProps = { tag, isDeleteMode, isEditMode, isCreateTag, toggleModal };
+    const cardModalProps = { tag, isDeleteMode, isEditTag, isCreateTag, toggleModal };
 
     const onOpenModal = (isEdit, tag = null, isDelete = false) => {
         setEditMode(isEdit);
