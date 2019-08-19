@@ -1,20 +1,19 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers\Validations;
 
 use App\Models\Book;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class BookAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
+        $this->signInWithMember();
     }
 
     /** @test */

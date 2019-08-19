@@ -1,24 +1,23 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers\Validations;
 
 use App\Models\BookItem;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class BookItemAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
+        $this->signInWithMember();
     }
 
     /** @test */
-    public function test_can_get_all_book_items()
+    public function test_can_get_search_books()
     {
         $bookItems = factory(BookItem::class)->times(5)->create();
 

@@ -1,15 +1,14 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers\Validations;
 
 use App\Models\MembershipPlan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class MembershipPlansAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
@@ -24,7 +23,7 @@ class MembershipPlansAPIControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/v1/membership-plans');
 
-        $this->assertSuccessDataResponse($response, $membershipPlans->toArray(),
-            'Membership Plans retrieved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Membership Plans retrieved successfully.');
+        $this->assertCount(7, $response->original['data'], '2 Default');
     }
 }

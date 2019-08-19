@@ -1,20 +1,19 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers\Validations;
 
 use App\Models\Author;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class AuthorAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
+        $this->withHeaders(['X-Requested-With' => 'XMLHttpRequest']);
     }
 
     /** @test */
@@ -25,6 +24,7 @@ class AuthorAPIControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/v1/authors');
 
-        $this->assertSuccessDataResponse($response, $authors->toArray(), 'Authors retrieved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Authors retrieved successfully.');
+        $this->assertCount(15, $response->original['data'], '10 Default');
     }
 }

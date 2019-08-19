@@ -15,7 +15,7 @@
         </testsuite>
 
         <testsuite name="Integration">
-            <directory suffix="Test.php">./tests/Integration/Models</directory>
+            <directory suffix="Test.php">./tests/Models</directory>
         </testsuite>
 
         <testsuite name="Integration">
@@ -23,7 +23,15 @@
         </testsuite>
 
         <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/V1/Controllers/Validations</directory>
+        </testsuite>
+
+        <testsuite name="Integration">
             <directory suffix="Test.php">./tests/Controllers</directory>
+        </testsuite>
+
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/V1/Controllers</directory>
         </testsuite>
 
         <testsuite name="Integration">

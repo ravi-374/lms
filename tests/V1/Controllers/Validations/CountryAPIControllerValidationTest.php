@@ -1,20 +1,18 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers\Validations;
 
 use App\Models\Country;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class CountryAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */
@@ -24,6 +22,6 @@ class CountryAPIControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/v1/countries');
 
-        $this->assertSuccessDataResponse($response, $countries->toArray(), 'Countries retrieved successfully.');
+        $this->assertCount(251, $response->original['data'], '246 Default');
     }
 }

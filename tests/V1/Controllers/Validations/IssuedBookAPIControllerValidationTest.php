@@ -1,21 +1,20 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers\Validations;
 
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class IssuedBookAPIControllerValidationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
+        $this->signInWithMember();
     }
 
     /** @test */
@@ -25,26 +24,30 @@ class IssuedBookAPIControllerValidationTest extends TestCase
 
         $response = $this->getJson('api/v1/books-history');
 
-        $this->assertSuccessDataResponse($response, $issuedBook->toArray(), 'Books history retrieved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
+        $this->assertCount(5, $response->original['data']);
     }
 
     /** @test */
     public function test_can_reserve_book()
     {
-        $issuedBook = factory(IssuedBook::class)->times(5)->create();
         $bookItem = factory(BookItem::class)->create();
 
         $reserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/reserve-book');
-        $this->assertSuccessDataResponse($reserveBook, $issuedBook->toArray(), 'Book reserved successfully.');
+
+        $this->assertSuccessMessageResponse($reserveBook, 'Book reserved successfully.');
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
     /** @test */
     public function test_can_un_reserve_book()
     {
-        $issuedBook = factory(IssuedBook::class)->times(5)->create();
         $bookItem = factory(BookItem::class)->create();
 
-        $reserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/un-reserve-book');
-        $this->assertSuccessDataResponse($reserveBook, $issuedBook->toArray(), 'Book un-reserved successfully.');
+        $reserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/reserve-book');
+        $unReserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/un-reserve-book');
+
+        $this->assertSuccessMessageResponse($unReserveBook, 'Book un-reserved successfully.');
+        $this->assertEquals(BookItem::STATUS_AVAILABLE, $bookItem->fresh()->status);
     }
 }
