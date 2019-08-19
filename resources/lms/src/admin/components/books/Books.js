@@ -59,7 +59,10 @@ const Books = (props) => {
             name: 'Authors',
             selector: 'author_name',
             sortable: true,
-            cell: row => <span>{prepareFullNames(row.authors).map((({ name }) => name)).join(',  ')}</span>
+            cell: row => {
+                row.author_name = prepareFullNames(row.authors).map((({ name }) => name)).join(',  ');
+                return <span>{row.author_name}</span>
+            }
         },
         {
             name: 'Action',
