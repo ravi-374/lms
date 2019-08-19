@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 
 /**
@@ -54,5 +55,22 @@ class Publisher extends Model
     public function bookItems()
     {
         return $this->hasMany(BookItem::class, 'publisher_id');
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByName(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(name) LIKE ?', [trim(strtolower($keyword))]);
+            }
+        });
+
+        return $query;
     }
 }

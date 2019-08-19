@@ -136,6 +136,7 @@ class MemberRepository extends BaseRepository
     {
         MembershipPlan::findOrFail($input['membership_plan_id']);
         try {
+            DB::beginTransaction();
             if (!empty($input['password'])) {
                 $input['password'] = Hash::make($input['password']);
             }
