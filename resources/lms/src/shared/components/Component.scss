@@ -163,6 +163,9 @@
     &__input {
         width: calc(100% - 38px);
 
+        input {
+            height: auto;
+        }
         &--primary {
             height: 45px;
 
