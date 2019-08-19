@@ -8,7 +8,7 @@ export default {
         {
             name: 'Book History',
             url: '/app/book-history',
-            icon: 'icon-book-open'
+            icon: 'icon-notebook'
         }
     ]
 };
