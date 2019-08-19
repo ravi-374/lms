@@ -39,12 +39,13 @@ class IssuedBookRepositoryTest extends TestCase
         $bookItem2 = factory(BookItem::class)->create(['book_id' => $book2->id]);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
-        $search['order_by'] = 'name';
-        $search['direction'] = 'desc';
-        $issuedBooks = $this->issuedBookRepo->all($search);
+        $resultAsc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'asc']);
+        $resultDesc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'desc']);
 
-        $this->assertCount(2, $issuedBooks);
-        $this->assertEquals($book2->name, $issuedBooks[0]->bookItem->book->name);
+        $this->assertCount(2, $resultAsc);
+        $this->assertCount(2, $resultDesc);
+        $this->assertEquals($book1->id, $resultAsc[0]->bookItem->book->id);
+        $this->assertEquals($book2->id, $resultDesc[0]->bookItem->book->id);
     }
 
     /** @test */
@@ -56,49 +57,45 @@ class IssuedBookRepositoryTest extends TestCase
         $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZERO']);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
-        $search['order_by'] = 'book_code';
-        $search['direction'] = 'desc';
-        $issuedBooks = $this->issuedBookRepo->all($search);
+        $resultAsc = $this->issuedBookRepo->all(['order_by' => 'book_code', 'direction' => 'asc']);
+        $resultDesc = $this->issuedBookRepo->all(['order_by' => 'book_code', 'direction' => 'desc']);
 
-        $this->assertCount(2, $issuedBooks);
-        $this->assertEquals('ZERO', $issuedBooks[0]->bookItem->book_code);
+        $this->assertEquals($bookItem1->id, $resultAsc[0]->bookItem->book->id);
+        $this->assertEquals($bookItem2->id, $resultDesc[0]->bookItem->book->id);
     }
 
     /** @test */
     public function test_can_search_issue_book_by_status()
     {
-        $issuedBook1 = factory(IssuedBook::class)->create([
-            'status' => IssuedBook::STATUS_ISSUED,
-        ]);
-        $issuedBook2 = factory(IssuedBook::class)->create();
+        $reserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
+        $unReserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_UN_RESERVED]);
 
-        $search['search'] = 'issue';
-        $search['direction'] = 'desc';
-        $issuedBooks = $this->issuedBookRepo->all($search);
+        $issuedBooks = $this->issuedBookRepo->all(['search' => 'issue']);
+        $unReserveBooks = $this->issuedBookRepo->all(['search' => 'un-reserve']);
 
-        $this->assertEquals($issuedBook1->id, $issuedBooks[0]->id);
-        $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBooks[0]->status);
+        $this->assertCount(1, $issuedBooks);
+        $this->assertCount(1, $unReserveBooks);
+        $this->assertEquals($reserveBookItem->id, $issuedBooks[0]->id);
+        $this->assertEquals($unReserveBookItem->id, $unReserveBooks[0]->id);
     }
 
     /** @test */
     public function test_can_search_issue_book_by_return_due_date()
     {
-        $today = Carbon::now();
-        $returnDueDate = Carbon::parse($today)->addDays(15)->toDateString();
+        $returnDueDate = Carbon::now()->addDays(15)->toDateString();
         /** @var IssuedBook $issuedBook1 */
         $issuedBook1 = factory(IssuedBook::class)->create([
             'status'          => IssuedBook::STATUS_ISSUED,
-            'issued_on'       => $today,
+            'issued_on'       => Carbon::now(),
             'return_due_date' => $returnDueDate,
         ]);
+
         $issuedBook2 = factory(IssuedBook::class)->create();
 
-        $search['due_date'] = $returnDueDate;
-        $search['direction'] = 'desc';
-        $issuedBooks = $this->issuedBookRepo->all($search);
+        $issuedBooks = $this->issuedBookRepo->all(['due_date' => $returnDueDate]);
 
+        $this->assertCount(1, $issuedBooks);
         $this->assertEquals($issuedBook1->id, $issuedBooks[0]->id);
-        $this->assertEquals($returnDueDate, $issuedBooks[0]->return_due_date);
     }
 
     /** @test */
