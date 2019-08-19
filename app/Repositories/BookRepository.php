@@ -373,6 +373,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
                 $item->publisher_id = isset($bookItem['publisher_id']) ? $bookItem['publisher_id'] : null;
                 $item->language_id = isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
+                $item->status = isset($bookItem['status']) ? $bookItem['status'] : BookItem::STATUS_AVAILABLE;
 
                 $book->items()->save($item);
             }
