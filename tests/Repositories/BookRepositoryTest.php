@@ -2,6 +2,7 @@
 
 namespace Tests\Repositories;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\BookLanguage;
@@ -37,13 +38,32 @@ class BookRepositoryTest extends TestCase
         $allBooks = $this->bookRepo->all();
         $take3 = $this->bookRepo->all([], null, 3);
         $skip4 = $this->bookRepo->all([], 4, 5);
-        
+
         $this->assertCount(5, $allBooks);
         $this->assertCount(3, $take3);
         $this->assertCount(1, $skip4);
     }
 
-   /** @test */
+    /** @test */
+    public function test_can_sort_book_by_author_name()
+    {
+        $author1 = factory(Author::class)->create(['first_name' => 'ABC']);
+        $book1 = factory(Book::class)->create();
+        $author1->books()->sync([$book1->id]);
+
+        $author2 = factory(Author::class)->create(['first_name' => 'ZYX']);
+        $book2 = factory(Book::class)->create();
+        $author2->books()->sync([$book2->id]);
+
+        $search['order_by'] = 'author_name';
+        $search['direction'] = 'desc';
+        $books = $this->bookRepo->all($search);
+
+        $this->assertCount(2, $books);
+        $this->assertEquals($author2->first_name, $books[0]->authors[0]->first_name);
+    }
+
+    /** @test */
     public function it_can_store_book()
     {
         $fakeBook = factory(Book::class)->make()->toArray();
@@ -235,7 +255,13 @@ class BookRepositoryTest extends TestCase
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $input['items'] = [['language_id' => $bookItem->language_id, 'price' => 100, 'book_code' => $bookItem->book_code]];
+        $input['items'] = [
+            [
+                'language_id' => $bookItem->language_id,
+                'price'       => 100,
+                'book_code'   => $bookItem->book_code,
+            ],
+        ];
 
         $this->bookRepo->validateInput($input);
     }
