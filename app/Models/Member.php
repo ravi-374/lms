@@ -1,9 +1,9 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\ImageTrait;
-use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -38,6 +38,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUpdatedAt($value)
  * @property string $member_id
  * @property-read \App\Models\Address $address
+ * @property-read \App\Models\MembershipPlan $membershipPlan
  * @property string|null $activation_code
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereActivationCode($value)
  */
@@ -104,8 +105,8 @@ class Member extends Authenticatable implements JWTSubject
     ];
 
     public static $memberRules = [
-        'first_name'         => 'required',
-        'last_name'          => 'required',
+        'first_name' => 'required',
+        'last_name'  => 'required',
     ];
 
     /**
@@ -151,5 +152,13 @@ class Member extends Authenticatable implements JWTSubject
     public function address()
     {
         return $this->morphOne(Address::class, 'owner')->with('country');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function membershipPlan()
+    {
+        return $this->belongsTo(MembershipPlan::class, 'membership_plan_id');
     }
 }
