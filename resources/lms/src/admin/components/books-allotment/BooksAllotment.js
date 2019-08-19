@@ -51,7 +51,7 @@ const BooksAllotment = (props) => {
             name: 'Book',
             selector: 'name',
             sortable: true,
-            wrap:true,
+            wrap: true,
             cell: row => row.book_item.book.name
         },
         {
@@ -63,16 +63,10 @@ const BooksAllotment = (props) => {
         },
         {
             name: 'Member',
-            selector: 'first_name',
+            selector: 'member',
             width: '140px',
             sortable: true,
-            cell: row => {
-                const member = members.find(member => member.id === +row.member_id);
-                if (member) {
-                    row.members_name = member.name;
-                }
-                return <span>{row.members_name}</span>
-            },
+            cell: row => <span>{row.member.first_name + ' ' + row.member.last_name}</span>
         },
         {
             name: 'Issue Date',
@@ -108,9 +102,6 @@ const BooksAllotment = (props) => {
         },
     ];
 
-    if (!booksAllotment && members.length === 0) {
-        return null;
-    }
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
@@ -142,7 +133,6 @@ const BooksAllotment = (props) => {
 const mapStateToProps = (state) => {
     const { booksAllotment, members, books, isLoading, totalRecord } = state;
     let booksAllotmentArray = Object.values(booksAllotment);
-
     return {
         booksAllotment: booksAllotmentArray,
         members: prepareFullNames(Object.values(members)),
