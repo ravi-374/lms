@@ -60,16 +60,12 @@ class MemberRepositoryTest extends TestCase
     {
         /** @var Member $member */
         $member = factory(Member::class)->create();
-        $inputs = [
-            'first_name' => 'random name',
-            'address_1'  => $this->faker->address,
-        ];
+        $fakeMember = factory(Member::class)->raw(['id' => $member->id]);
 
-        $updatedMember = $this->memberRepo->update($inputs, $member->id);
+        $updatedMember = $this->memberRepo->update($fakeMember, $member->id);
 
         $this->assertArrayHasKey('id', $updatedMember);
-        $this->assertEquals('random name', $updatedMember->fresh()->first_name);
-        $this->assertNotEmpty($updatedMember->address);
+        $this->assertEquals($fakeMember['first_name'], $updatedMember->fresh()->first_name);
     }
 
     /** @test */

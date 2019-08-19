@@ -55,7 +55,7 @@ class MemberRepository extends BaseRepository
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('address');
+        $query = $this->allQuery($search, $skip, $limit)->with('address', 'membershipPlan');
 
         /** @var Member[] $members */
         $members = $query->orderByDesc('id')->get();
@@ -104,7 +104,7 @@ class MemberRepository extends BaseRepository
             }
             DB::commit();
 
-            return Member::with('address')->findOrFail($member->id);
+            return Member::with('address', 'membershipPlan')->findOrFail($member->id);
         } catch (Exception $e) {
             DB::rollBack();
             throw  new ApiOperationFailedException($e->getMessage());
@@ -119,7 +119,7 @@ class MemberRepository extends BaseRepository
      */
     public function find($id, $columns = ['*'])
     {
-        $member = $this->findOrFail($id, ['address']);
+        $member = $this->findOrFail($id, ['address', 'membershipPlan']);
 
         return $member;
     }
@@ -136,6 +136,7 @@ class MemberRepository extends BaseRepository
     {
         MembershipPlan::findOrFail($input['membership_plan_id']);
         try {
+            DB::beginTransaction();
             if (!empty($input['password'])) {
                 $input['password'] = Hash::make($input['password']);
             }
@@ -168,7 +169,7 @@ class MemberRepository extends BaseRepository
             }
             DB::commit();
 
-            return Member::with('address')->findOrFail($member->id);
+            return Member::with('address', 'membershipPlan')->findOrFail($member->id);
         } catch (Exception $e) {
             DB::rollBack();
             throw  new ApiOperationFailedException($e->getMessage());

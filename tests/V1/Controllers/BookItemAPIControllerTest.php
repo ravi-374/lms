@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers;
 
 use App\Models\BookItem;
 use App\Repositories\BookItemRepository;
