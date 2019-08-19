@@ -4,11 +4,13 @@ namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Exceptions\MissingPropertyException;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Traits\ImageTrait;
 use Arr;
+use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
@@ -355,5 +357,61 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         return $itemId;
+    }
+
+    /**
+     * @param string $isbn
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return array
+     */
+    public function getBookDetailsFromISBN($isbn)
+    {
+        $url = \Config::get('services.openlib.api');
+        $url = str_replace('{ISBN_NO}', $isbn, $url);
+        $bookDetails = [];
+
+        try {
+            $data = file_get_contents($url);
+            $data = json_decode($data, true);
+
+            if (empty($data)) {
+                return $bookDetails;
+            }
+            $data = $data['ISBN:'.$isbn];
+
+            $bookDetails['name'] = $data['title'];
+            $bookDetails['published_on'] = Carbon::parse($data['publish_date'])->toDateTimeString();
+            $bookDetails['description'] = (isset($data['notes'])) ? $data['notes'] : null;
+            $bookDetails['isbn'] = $isbn;
+            $bookDetails['is_featured'] = false;
+
+            if (isset($data['cover']['large'])) {
+                $bookDetails['image_url'] = $data['cover']['large'];
+            }
+
+            if (isset($data['ebooks'][0]['preview_url'])) {
+                $bookDetails['url'] = $data['ebooks'][0]['preview_url'];
+            }
+
+            if (isset($data['authors'])) {
+                foreach ($data['authors'] as $author) {
+                    list($firstName, $lastName) = explode(' ', $author['name']);
+
+                    $authorDBRecord = Author::whereFirstName($firstName)->whereLastName($lastName)->first();
+                    if (!empty($authorDBRecord)) {
+                        $bookDetails['authors'][] = $authorDBRecord->id;
+                    } else {
+                        $bookDetails['authors'][] = $author['name'];
+                    }
+                }
+            }
+
+            return $bookDetails;
+
+        } catch (Exception $e) {
+            throw new ApiOperationFailedException('Unable to get book details : '.$e->getMessage());
+        }
     }
 }
