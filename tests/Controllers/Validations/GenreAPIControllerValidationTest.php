@@ -74,4 +74,15 @@ class GenreAPIControllerValidationTest extends TestCase
         $this->assertSuccessMessageResponse($response, 'Genre updated successfully.');
         $this->assertEquals($newName, $genre->fresh()->name);
     }
+
+    /** @test */
+    public function it_can_delete_genre()
+    {
+        $genre = factory(Genre::class)->create();
+
+        $response = $this->deleteJson('api/b1/genres/'.$genre->id);
+
+        $this->assertSuccessMessageResponse($response, 'Genre deleted successfully.');
+        $this->assertEmpty(Genre::find($genre->id));
+    }
 }
