@@ -153,7 +153,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $book = Book::create($input);
 
             $this->attachTagsAndGenres($book, $input);
-            $this->attachAuthors($book, $input);
+            if (!empty($input['authors'])) {
+                $this->attachAuthors($book, $input);
+            }
 
             if (isset($input['items'])) {
                 $this->createOrUpdateBookItems($book, $input['items']);
