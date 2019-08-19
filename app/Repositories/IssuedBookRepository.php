@@ -251,6 +251,47 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
+     * @param array $input
+     *
+     * @return IssuedBook
+     */
+    public function updateIssuedBookStatus($input)
+    {
+        if (!in_array($input['status'], [
+            IssuedBook::STATUS_DAMAGED,
+            IssuedBook::STATUS_LOST,
+        ])) {
+            throw new UnprocessableEntityHttpException('Invalid status.');
+        }
+
+        /** @var BookItem $bookItem */
+        $bookItem = BookItem::findOrFail($input['book_item_id']);
+
+        /** @var IssuedBook $issueBook */
+        $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
+            ->lastIssuedBook()
+            ->first();
+
+        if (empty($issueBook)) {
+            throw new UnprocessableEntityHttpException('Book is not issued.');
+        }
+
+        $issueBook->update(['status' => $input['status']]);
+
+        if ($input['status'] == IssuedBook::STATUS_LOST) {
+            $input['status'] = BookItem::STATUS_LOST;
+        }
+
+        if ($input['status'] == IssuedBook::STATUS_DAMAGED) {
+            $input['status'] = BookItem::STATUS_DAMAGED;
+        }
+
+        $bookItem->update(['status' => $input['status']]);
+
+        return $this->find($issueBook->id);
+    }
+
+    /**
      * @param BookItem $bookItem
      * @param array $input
      *
