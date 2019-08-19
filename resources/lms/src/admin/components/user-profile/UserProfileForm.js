@@ -10,7 +10,7 @@ import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 
 const UserProfileForm = (props) => {
-    const {initialValues, change, roles, countries} = props;
+    const { initialValues, change, countries } = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
@@ -41,7 +41,7 @@ const UserProfileForm = (props) => {
         setImage(defaultImage);
         setIsDefaultImage(true);
     };
-    const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
+    const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
     return (
         <Row className="animated fadeIn user-form m-3">
             <Col xs={8} className="primary-detail">
@@ -62,8 +62,7 @@ const UserProfileForm = (props) => {
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="phone" type="number" label="Phone No." groupText="phone"
-                               component={InputGroup}/>
+                        <Field name="phone" type="number" label="Phone No." groupText="phone" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="password" label="Password" type="password" groupText="lock"
@@ -72,18 +71,6 @@ const UserProfileForm = (props) => {
                     <Col xs={6}>
                         <Field name="confirm_password" label="Confirm Password" type="password" groupText="lock"
                                component={InputGroup}/>
-                    </Col>
-                    <Col xs={12}>
-                        <Field
-                            name="role"
-                            label="Role"
-                            required
-                            options={roles}
-                            placeholder="Select Role"
-                            groupText="tasks"
-                            component={Select}
-                            isSearchable={true}
-                        />
                     </Col>
                 </Row>
             </Col>
@@ -112,17 +99,9 @@ const UserProfileForm = (props) => {
                         <Field name="state" label="State" groupText="square" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field
-                            name="country"
-                            label="Country"
-                            options={countries}
-                            placeholder="Select Country"
-                            groupText="flag"
-                            component={Select}
-                            isSearchable={true}
-                            isMini={true}
-                            menuPlacement="top"
-                        />
+                        <Field name="country" label="Country" options={countries} placeholder="Select Country"
+                               groupText="flag" component={Select} isSearchable={true} menuPlacement="top"
+                               inScreen={true}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
@@ -136,4 +115,4 @@ const UserProfileForm = (props) => {
     );
 };
 
-export default reduxForm({form: 'userProfileForm', validate: userProfileValidate})(UserProfileForm);
+export default reduxForm({ form: 'userProfileForm', validate: userProfileValidate })(UserProfileForm);
