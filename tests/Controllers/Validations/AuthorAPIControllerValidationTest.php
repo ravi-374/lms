@@ -4,7 +4,6 @@ namespace Tests\Controllers\Validations;
 
 use App\Models\Author;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class AuthorAPIControllerValidationTest extends TestCase
