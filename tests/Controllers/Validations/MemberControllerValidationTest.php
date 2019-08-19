@@ -138,14 +138,4 @@ class MemberControllerValidationTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
-
-    /** @test */
-    public function test_can_get_details_of_logged_in_member()
-    {
-        $this->signInWithMember();
-        $response = $this->get('api/v1/member-details');
-
-        $this->assertNotEmpty($response);
-        $this->assertEquals($this->loggedInMemberId, $response->original['data']->id);
-    }
 }
