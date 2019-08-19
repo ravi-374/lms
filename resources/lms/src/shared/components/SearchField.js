@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {searchFilter} from '../../store/action/searchAction';
 import CustomInput from './CustomInput';
 
 const SearchField = (props) => {
@@ -21,5 +19,4 @@ const SearchField = (props) => {
     );
 };
 
-const form = reduxForm({form: 'searchForm'})(SearchField);
-export default connect(null, {searchFilter})(form);
+export default reduxForm({ form: 'searchForm' })(SearchField);

@@ -39,17 +39,17 @@ export default (props) => {
         },
         {
             sortable: true,
-            selector: 'reserved_on',
-            name: 'Reserved Date',
-            width: '150px',
-            cell: row => renderDate(row.reserve_date)
-        },
-        {
-            sortable: true,
             selector: 'issued_due_on',
             name: 'Issue Due Date',
             width: '150px',
             cell: row => renderDate(row.issue_due_date)
+        },
+        {
+            sortable: true,
+            selector: 'reserved_on',
+            name: 'Reserved Date',
+            width: '150px',
+            cell: row => renderDate(row.reserve_date)
         },
         {
             sortable: true,
