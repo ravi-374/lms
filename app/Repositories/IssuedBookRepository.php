@@ -278,6 +278,14 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         $issueBook->update(['status' => $input['status']]);
 
+        if ($input['status'] == IssuedBook::STATUS_LOST) {
+            $input['status'] = BookItem::STATUS_LOST;
+        }
+
+        if ($input['status'] == IssuedBook::STATUS_DAMAGED) {
+            $input['status'] = BookItem::STATUS_DAMAGED;
+        }
+
         $bookItem->update(['status' => $input['status']]);
 
         return $this->find($issueBook->id);
