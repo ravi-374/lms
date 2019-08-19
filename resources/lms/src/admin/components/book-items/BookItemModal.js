@@ -1,7 +1,7 @@
 import React from 'react';
 import DeleteBookItem from './DeleteBookItem';
 import CreateBookItem from './CreateBookItem';
-import EditAuthor from './EditBookItem';
+import EditBookItem from './EditBookItem';
 
 export default (props) => {
     const {isEditMode, isCreateMode, toggleModal, isDeleteMode, bookItem, bookLanguages, publishers, bookItems, bookId} = props;
@@ -13,7 +13,7 @@ export default (props) => {
         };
         const formOptions = {bookLanguages, publishers, bookItems, bookId};
         if (isEditMode) {
-            return <EditAuthor {...prepareModalOption} {...formOptions} bookItem={bookItem}/>
+            return <EditBookItem {...prepareModalOption} {...formOptions} bookItem={bookItem}/>
         }
         if (isCreateMode) {
             return <CreateBookItem {...prepareModalOption} {...formOptions}/>
