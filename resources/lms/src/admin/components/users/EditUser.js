@@ -1,23 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../shared/components/Modal';
 import {editUser} from '../../store/actions/userAction';
 import UserForm from './UserForm';
 import prepareFormData from './prepareFormData';
-import apiConfig from '../../config/apiConfig';
+import {fetchCountries} from "../../store/actions/countryAction";
 
 const EditUser = (props) => {
-    const [countries, setCountries] = useState([]);
+    const { countries } = props;
     useEffect(() => {
-        apiConfig.get('countries').then(response =>
-            setCountries([...countries, ...response.data.data])
-        ).catch(({response}) => {
-        })
+        props.fetchCountries();
     }, []);
     const onSaveUser = (formValues) => {
         props.editUser(props.user.id, prepareFormData(formValues));
     };
-    const {id, is_active, first_name, last_name, email, phone, roles, address, image} = props.user;
+    const { id, is_active, first_name, last_name, email, phone, roles, address, image } = props.user;
     const changeAbleFields = {
         id,
         is_active,
@@ -26,16 +23,13 @@ const EditUser = (props) => {
         email,
         phone,
         image,
-        role: {id: roles[0].id, name: roles[0].display_name},
+        role: { id: roles[0].id, name: roles[0].display_name },
     };
-    if (countries.length <= 1) {
-        return null;
-    }
     if (address) {
-        const {address_1, address_2, country_id, city, state, zip} = address;
+        const { address_1, address_2, country, city, state, zip } = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country_id ? countries.find(country => country.id === +country_id) : null;
+        changeAbleFields.country = country ? country : {};
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
@@ -50,4 +44,4 @@ const EditUser = (props) => {
     return <Modal {...props} content={<UserForm {...prepareFormOption}/>}/>
 };
 
-export default connect(null, {editUser})(EditUser);
+export default connect(null, { editUser, fetchCountries })(EditUser);
