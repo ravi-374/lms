@@ -110,6 +110,24 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
+     * @param BookItem $bookItem
+     * @param Request $request
+     *
+     * @throws Exception
+     *
+     * @return JsonResponse
+     */
+    public function updateIssuedBookStatus(BookItem $bookItem, Request $request)
+    {
+        $input = $request->all();
+        $input['book_item_id'] = $bookItem->id;
+
+        $result = $this->issuedBookRepository->updateIssuedBookStatus($input);
+
+        return $this->sendResponse($result->apiObj(), 'Issued Book status updated successfully.');
+    }
+
+    /**
      * @param IssuedBook $issuedBook
      *
      * @return JsonResponse
@@ -127,7 +145,7 @@ class IssuedBookAPIController extends AppBaseController
         $book->authors;
         $book->tags;
 
-        return $this->sendResponse($issuedBook->apiObj(), 'Issued Book retrieved successfully');
+        return $this->sendResponse($issuedBook->apiObj(), 'Issued Book retrieved successfully.');
     }
 
     /**
@@ -144,7 +162,7 @@ class IssuedBookAPIController extends AppBaseController
 
         $issuedBook = $this->issuedBookRepository->update($input, $id);
 
-        return $this->sendResponse($issuedBook->toArray(), 'Issued Book updated successfully');
+        return $this->sendResponse($issuedBook->toArray(), 'Issued Book updated successfully.');
     }
 
     /**
@@ -162,7 +180,7 @@ class IssuedBookAPIController extends AppBaseController
 
         $issuedBook->delete();
 
-        return $this->sendResponse($id, 'Issued Book deleted successfully');
+        return $this->sendResponse($id, 'Issued Book deleted successfully.');
     }
 
     /**

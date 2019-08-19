@@ -8,7 +8,6 @@ import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
-import apiConfig from '../../config/apiConfig';
 import MemberBookHistory from './MemberBookAllotment';
 import BookHistoryModal from './BookHistoryModal';
 import {sortAction} from '../../../store/action/sortAction';
@@ -16,25 +15,23 @@ import sortFilter from '../../../shared/sortFilter';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {prepareFullNames} from "../../../shared/sharedMethod";
+import {publicImagePathURL, publicImagePath} from "../../../appConstant";
+import {Routes} from "../../../constants";
 
 const MemberDetail = props => {
     const [isEditMode, setEditMode] = useState(false);
     const [isEditMember, setIsEditMember] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookHistory, setBookHistory] = useState(null);
-    const [countries, setCountries] = useState([]);
     useEffect(() => {
         props.fetchMember(+props.match.params.id);
         props.fetchMemberBooksHistory(+props.match.params.id);
         props.fetchMembershipPlans();
         props.fetchBooks();
         props.fetchMembers();
-        apiConfig.get('countries').then(response =>
-            setCountries([...countries, ...response.data.data])
-        ).catch(({ response }) => {
-        })
     }, []);
-    const { member, memberBookHistory, membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
+    const { member, memberBookHistory,membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
     if (!member || !members || isLoading) {
         return (
             <Fragment>
@@ -51,9 +48,9 @@ const MemberDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push('/app/admin/members');
+        history.push(Routes.MEMBERS);
     };
-    const cardBodyProps = { books, members, sortAction, sortObject, memberBookHistory, onOpenModal };
+    const cardBodyProps = { books, members, sortAction, sortObject, memberBookHistory, onOpenModal, history };
     const cardModalProps = {
         bookHistory,
         books,
@@ -65,7 +62,7 @@ const MemberDetail = props => {
         membershipPlans,
         member
     };
-    const imageUrl = member.image ? 'uploads/members/' + member.image : 'images/user-avatar.png';
+    const imageUrl = member.image ? publicImagePathURL.MEMBER_AVATAR_URL + member.image : publicImagePath.USER_AVATAR;
     const { address } = member;
     let fullAddress = '';
     const memberPlan = membershipPlans.find(memberPlan => memberPlan.id === +member.membership_plan_id);
@@ -85,11 +82,8 @@ const MemberDetail = props => {
         if (address.state) {
             fullAddress += ',  ' + address.state;
         }
-        if (address.country_id) {
-            const country = countries.find(country => country.id === +address.country_id);
-            if (country) {
-                fullAddress += ',  ' + country.name;
-            }
+        if (address.country) {
+            fullAddress += ',  ' + address.country.name;
         }
         if (address.zip) {
             fullAddress += '-' + address.zip;
@@ -173,17 +167,10 @@ const mapStateToProps = (state, ownProp) => {
         memberBookHistory: bookHistoryArray,
         membershipPlans: Object.values(membershipPlans),
         books: Object.values(books),
-        members: prepareMembers(Object.values(members)),
+        members: prepareFullNames(Object.values(members)),
         sortObject,
         isLoading
     }
-};
-const prepareMembers = (members) => {
-    let memberArray = [];
-    members.forEach(member => {
-        memberArray.push({ id: member.id, name: member.first_name + ' ' + member.last_name });
-    });
-    return memberArray;
 };
 
 export default connect(mapStateToProps, {
