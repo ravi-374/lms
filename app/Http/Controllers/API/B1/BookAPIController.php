@@ -156,4 +156,20 @@ class BookAPIController extends AppBaseController
 
         return $this->sendSuccess('Book image removed successfully.');
     }
+
+    /**
+     * @param Request $request
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return JsonResponse
+     */
+    public function getBookDetails(Request $request)
+    {
+        $request->validate(['isbn' => 'required']);
+
+        $bookDetails = $this->bookRepository->getBookDetailsFromISBN($request->get('isbn'));
+
+        return \Response::json($bookDetails, 200);
+    }
 }

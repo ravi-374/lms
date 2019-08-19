@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration\Models;
+namespace Tests\Models;
 
 use App\Models\BookItem;
 use App\Models\IssuedBook;

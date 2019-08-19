@@ -62,7 +62,7 @@ class IssuedBook extends Model
     const STATUS_LOST = 6;
     const STATUS_DAMAGED = 7;
 
-    const STATUS_IN_STRING = ['issued', 'reserved', 'returned', 'un-reserved'];
+    const STATUS_IN_STRING = ['issue', 'reserve', 'return', 'un-reserve', 'lost', 'damage'];
 
     /**
      * Validation rules
@@ -247,17 +247,23 @@ class IssuedBook extends Model
     {
         $status = null;
         switch ($statusInString) {
-            case 'issued' :
+            case 'issue' :
                 $status = self::STATUS_ISSUED;
                 break;
-            case 'returned' :
+            case 'return' :
                 $status = self::STATUS_RETURNED;
                 break;
-            case 'reserved' :
+            case 'reserve' :
                 $status = self::STATUS_RESERVED;
                 break;
-            case 'un-reserved' :
+            case 'un-reserve' :
                 $status = self::STATUS_UN_RESERVED;
+                break;
+            case 'lost' :
+                $status = self::STATUS_LOST;
+                break;
+            case 'damage' :
+                $status = self::STATUS_DAMAGED;
                 break;
         }
 
