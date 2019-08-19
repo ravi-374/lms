@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import bookItemValidate from './bookItemValidate';
@@ -13,6 +13,11 @@ import {bookItemStatusOptions} from "../../constants";
 
 const BookItemForm = (props) => {
     const { bookLanguages, publishers, saveBookItem, initialValues } = props;
+    useEffect(() => {
+        if (!initialValues) {
+            props.change('status', { ...bookItemStatusOptions[0] });
+        }
+    }, []);
     const onSaveBookItems = (formValues) => {
         const { book_code, edition, format, language, publisher, location, price, status } = formValues;
         saveBookItem({
@@ -21,7 +26,7 @@ const BookItemForm = (props) => {
             format: format.id,
             language_id: language.id,
             publisher_id: publisher ? publisher.id : null,
-            status: status ? status.id : null,
+            status: status.id,
             location,
             price
         });
@@ -51,16 +56,14 @@ const BookItemForm = (props) => {
                 <Field name="language" label="Language" required options={bookLanguages} placeholder="Select Language"
                        groupText="language" component={Select} isSearchable={true}/>
             </Col>
-            <Col xs={initialValues ? 6 : 12}>
+            <Col>
                 <Field name="publisher" label="Publisher" options={publishers} placeholder="Select Publisher"
                        groupText="user-circle-o" component={Select} isSearchable={true}/>
             </Col>
-            {initialValues ?
-                <Col xs={6}>
-                    <Field name="status" label="Status" options={bookItemStatusOptions} placeholder="Select Status"
-                           groupText="user-circle-o" component={Select} isSearchable={true}/>
-                </Col> : null
-            }
+            <Col xs={6}>
+                <Field name="status" label="Status" disabled={!initialValues} options={bookItemStatusOptions}
+                       placeholder="Select Status" groupText="user-circle-o" component={Select} isSearchable={true}/>
+            </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveBookItems)} {...props}/>
             </Col>
