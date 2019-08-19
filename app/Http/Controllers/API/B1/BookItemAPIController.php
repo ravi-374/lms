@@ -17,6 +17,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class BookItemAPIController
@@ -42,7 +43,7 @@ class BookItemAPIController extends AppBaseController
     {
         $search = $request->only(['member_id']);
         $search['book_id'] = $book->id;
-        $search['is_available'] = true;
+        $search['status'] = BookItem::STATUS_AVAILABLE;
         $search['for_member'] = true;
 
         $records = $this->bookItemRepo->all(
@@ -63,12 +64,38 @@ class BookItemAPIController extends AppBaseController
      */
     public function destroy(BookItem $bookItem)
     {
-        if (!$bookItem->is_available) {
+        if ($bookItem->status == BookItem::STATUS_NOT_AVAILABLE) {
             throw new BadRequestHttpException('BookItem can not be delete, it is reserved OR issued by someone.');
         }
         $bookItem->delete();
 
         return $this->sendSuccess('BookItem deleted successfully.');
+    }
+
+    /**
+     * @param BookItem $bookItem
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function updateBookStatus(BookItem $bookItem, Request $request)
+    {
+        $input = $request->all();
+
+        if (!in_array($input['status'], [
+            BookItem::STATUS_AVAILABLE,
+            BookItem::STATUS_NOT_AVAILABLE,
+            BookItem::STATUS_LOST,
+            BookItem::STATUS_DAMAGED,
+        ])) {
+            throw new UnprocessableEntityHttpException('Invalid status.');
+        }
+
+        $bookItem->status = $input['status'];
+        $bookItem->save();
+
+        return $this->sendResponse($bookItem->toArray(), 'Book status updated successfully.');
     }
 
     /**

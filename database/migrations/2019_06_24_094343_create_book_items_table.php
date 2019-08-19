@@ -18,7 +18,7 @@ class CreateBookItemsTable extends Migration
             $table->string('book_code')->unique();
             $table->string('edition');
             $table->integer('format');
-            $table->boolean('is_available')->default(1);
+            $table->integer('status')->default(1);
             $table->string('location')->nullable();
             $table->float('price');
             $table->unsignedInteger('publisher_id')->nullable();
