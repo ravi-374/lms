@@ -87,6 +87,7 @@ class MemberAPIController extends AppBaseController
     public function show(Member $member)
     {
         $member->address;
+        $member->membershipPlan;
 
         return $this->sendResponse($member->toArray(), 'Member retrieved successfully.');
     }
