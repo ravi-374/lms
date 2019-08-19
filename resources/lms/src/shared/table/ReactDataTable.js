@@ -1,17 +1,21 @@
 import React, {Fragment, useEffect, useMemo, useState} from 'react';
 import DataTable from "react-data-table-component";
+import {Row, Col} from 'reactstrap';
 import {Filters} from "../../constants";
 import SearchField from "../components/SearchField";
+import FilterField from "../components/FilterField";
 import './ReactDataTable.scss';
 import EmptyComponent from "../empty-component/EmptyComponent";
+import {bookAllotmentFilterOptions} from "../../admin/constants";
 
 export default (props) => {
-    const { items, onChange, columns, loading, totalRows } = props;
+    const { items, onChange, columns, loading, totalRows, isShowFilterField, filterOptions } = props;
     const [perPage, setPerPages] = useState(Filters.OBJ.limit);
     const [orderBy, setOrderBy] = useState(Filters.OBJ.order_By);
     const [direction, setDirection] = useState(Filters.OBJ.direction);
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState(isShowFilterField ? 'issue' : '');
+    const filterKey = isShowFilterField ? { ...bookAllotmentFilterOptions[1] } : {};
     const tableColumns = useMemo(
         () => columns, []
     );
@@ -27,7 +31,7 @@ export default (props) => {
     };
 
     const handleSearch = (searchText) => {
-        setSearchText(searchText);
+        setSearchText(isShowFilterField && searchText !== 'All' ? searchText.toLowerCase() : '');
     };
 
     const customSort = (field, directionBy) => {
@@ -69,17 +73,23 @@ export default (props) => {
 
     return (
         <Fragment>
-            <div className="d-flex justify-content-end">
-                <SearchField handleSearch={handleSearch}/>
-            </div>
+            <Row className="justify-content-end">
+                <Col xs={2}>
+                    {isShowFilterField ?
+                        <FilterField options={filterOptions} initialValues={{ filter_key: filterKey }}
+                                     handleFilter={handleSearch}/> : null}
+                </Col>
+                <Col xs={2}>
+                    <SearchField handleSearch={handleSearch}/>
+                </Col>
+            </Row>
             <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading}
                                                         paginationRowsPerPageOptions={[10, 25, 50, 100]}
                                                         title={loading ? 'Loading......' : 'No records yet'}/>}
-                       pagination={true} paginationServer={true} sortServer={true} onSort={customSort}
-                       striped={true} highlightOnHover={true} className={'table-bordered table-striped mt-2'}
-                       customTheme={darkTheme} paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange}
-                       defaultSortAsc={false} onChangePage={handlePageChange} noHeader={true} columns={tableColumns}
-                       data={items}/>
+                       pagination={true} paginationServer={true} onSort={customSort} striped={true}
+                       highlightOnHover={true} className={'table-bordered table-striped mt-2'} customTheme={darkTheme}
+                       paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange} defaultSortAsc={false}
+                       onChangePage={handlePageChange} noHeader={true} columns={tableColumns} data={items}/>
         </Fragment>
     )
 }

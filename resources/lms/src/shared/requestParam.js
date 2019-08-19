@@ -2,7 +2,7 @@ import {Filters} from "../constants";
 
 export default (filters = Filters.OBJ) => {
     let url = '?';
-    if (filters.order_By !== '' && filters.order_By !== null) {
+    if (filters.order_By !== '' && !filters.order_By) {
         url = url + 'order_by=' + filters.order_By + '&direction=' + filters.direction;
     }
     if (filters.limit > 0) {

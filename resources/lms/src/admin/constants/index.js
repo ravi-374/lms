@@ -232,3 +232,10 @@ export const bookItemActionType = {
 export const maxDigits = {
     BOOK_CODE: 8
 };
+
+export const bookAllotmentFilterOptions = [
+    { id: 1, name: 'All' },
+    { id: 2, name: 'Issue' },
+    { id: 3, name: 'Return' },
+    { id: 4, name: 'Lost' },
+];

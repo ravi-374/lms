@@ -13,12 +13,15 @@ import './Component.scss';
 export default (props) => {
     const {
         input, placeholder, required, label, groupText, isSearchable = false,
-        autoFocus, innerRef, defaultValue = {}, disabled, menuPlacement = "auto",
+        autoFocus, innerRef, defaultValue = {}, disabled, menuPlacement = "auto", isCustom,
         meta: { touched, error }, options
     } = props;
+    const formGroupClass = isCustom ? 'react-select mb-0' : 'react-select';
     const labelClass = required ? 'control-label' : '';
+    const inputClass = isCustom ? 'react-select__input react-select__input--secondary' :
+        'react-select__input react-select__input--primary';
     return (
-        <FormGroup className="react-select">
+        <FormGroup className={formGroupClass}>
             {label ? <Label className={labelClass}>{label}</Label> : null}
             <InputGroup>
                 <InputGroupAddon addonType="prepend">
@@ -27,7 +30,7 @@ export default (props) => {
                     </InputGroupText>
                 </InputGroupAddon>
                 <Select
-                    {...input} className="react-select__input" placeholder={placeholder} value={input.value}
+                    {...input} className={inputClass} placeholder={placeholder} value={input.value}
                     onChange={(value) => input.onChange(value)} isDisabled={disabled}
                     onBlur={() => input.onBlur(input.value)} options={options} getOptionLabel={(option) => option.name}
                     getOptionValue={(option) => option.id} defaultValue={defaultValue} isSearchable={isSearchable}
