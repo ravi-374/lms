@@ -4,12 +4,20 @@ import apiConfigWthFormData from '../../config/apiConfigWthFormData';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import requestParam from "../../../shared/requestParam";
+import {setTotalRecord} from "./totalRecordAction";
+import _ from 'lodash';
 
-export const fetchBooks = (history = null, isLoading = false) => async (dispatch) => {
+export const fetchBooks = (filter = {}, history = null, isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
-    await apiConfig.get('books')
+    let url = 'books';
+    if (!_.isEmpty(filter) && (filter.limit || filter.order_By || filter.search)) {
+        url += requestParam(filter);
+    }
+    await apiConfig.get(url)
         .then((response) => {
             dispatch({ type: bookActionType.FETCH_BOOKS, payload: response.data.data });
+            dispatch(setTotalRecord(response.data.totalRecords));
             isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({response}) => {
