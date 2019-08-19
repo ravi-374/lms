@@ -2,10 +2,12 @@
 
 namespace Tests\Repositories;
 
+use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Repositories\IssuedBookRepository;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -24,6 +26,76 @@ class IssuedBookRepositoryTest extends TestCase
         parent::setUp();
         $this->issuedBookRepo = app(IssuedBookRepository::class);
         $this->signInWithDefaultAdminUser();
+    }
+
+    /** @test */
+    public function test_can_sort_issued_book_by_book_name()
+    {
+        $book1 = factory(Book::class)->create(['name' => 'ABC']);
+        $bookItem1 = factory(BookItem::class)->create(['book_id' => $book1->id]);
+        $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
+
+        $book2 = factory(Book::class)->create(['name' => 'ZYX']);
+        $bookItem2 = factory(BookItem::class)->create(['book_id' => $book2->id]);
+        $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
+
+        $resultAsc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'asc']);
+        $resultDesc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'desc']);
+
+        $this->assertCount(2, $resultAsc);
+        $this->assertCount(2, $resultDesc);
+        $this->assertEquals($book1->id, $resultAsc[0]->bookItem->book->id);
+        $this->assertEquals($book2->id, $resultDesc[0]->bookItem->book->id);
+    }
+
+    /** @test */
+    public function test_can_sort_issued_book_by_book_code()
+    {
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'ABCDE']);
+        $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
+
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZERO']);
+        $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
+
+        $resultAsc = $this->issuedBookRepo->all(['order_by' => 'book_code', 'direction' => 'asc']);
+        $resultDesc = $this->issuedBookRepo->all(['order_by' => 'book_code', 'direction' => 'desc']);
+
+        $this->assertEquals($bookItem1->id, $resultAsc[0]->bookItem->book->id);
+        $this->assertEquals($bookItem2->id, $resultDesc[0]->bookItem->book->id);
+    }
+
+    /** @test */
+    public function test_can_search_issue_book_by_status()
+    {
+        $reserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
+        $unReserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_UN_RESERVED]);
+
+        $issuedBooks = $this->issuedBookRepo->all(['search' => 'issue']);
+        $unReserveBooks = $this->issuedBookRepo->all(['search' => 'un-reserve']);
+
+        $this->assertCount(1, $issuedBooks);
+        $this->assertCount(1, $unReserveBooks);
+        $this->assertEquals($reserveBookItem->id, $issuedBooks[0]->id);
+        $this->assertEquals($unReserveBookItem->id, $unReserveBooks[0]->id);
+    }
+
+    /** @test */
+    public function test_can_search_issue_book_by_return_due_date()
+    {
+        $returnDueDate = Carbon::now()->addDays(15)->toDateString();
+        /** @var IssuedBook $issuedBook1 */
+        $issuedBook1 = factory(IssuedBook::class)->create([
+            'status'          => IssuedBook::STATUS_ISSUED,
+            'issued_on'       => Carbon::now(),
+            'return_due_date' => $returnDueDate,
+        ]);
+
+        $issuedBook2 = factory(IssuedBook::class)->create();
+
+        $issuedBooks = $this->issuedBookRepo->all(['due_date' => $returnDueDate]);
+
+        $this->assertCount(1, $issuedBooks);
+        $this->assertEquals($issuedBook1->id, $issuedBooks[0]->id);
     }
 
     /** @test */
