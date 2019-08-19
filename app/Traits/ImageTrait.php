@@ -43,9 +43,9 @@ trait ImageTrait
      * @param UploadedFile $file
      * @param string $path
      *
-     * @return string
      * @throws ApiOperationFailedException
      *
+     * @return string
      */
     public static function makeImage($file, $path)
     {
@@ -60,6 +60,33 @@ trait ImageTrait
                 $fileName = $date.'_'.uniqid().'.'.$extension;
                 Storage::putFileAs($path, $file, $fileName, 'public');
             }
+
+            return $fileName;
+        } catch (Exception $e) {
+            Log::info($e->getMessage());
+            throw new ApiOperationFailedException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * @param string $url
+     * @param string $path
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return string
+     */
+    public static function makeImageFromURL($url, $path)
+    {
+        try {
+            $extension = pathinfo($url, PATHINFO_EXTENSION); //$ext will be gif
+            if (!in_array(strtolower($extension), ['jpg', 'gif', 'png', 'jpeg'])) {
+                throw  new ApiOperationFailedException('invalid image', Response::HTTP_BAD_REQUEST);
+            }
+            $date = Carbon::now()->format('Y-m-d');
+            $fileName = $date.'_'.uniqid().'.'.$extension;
+            $content = file_get_contents($url);
+            Storage::put($path.DIRECTORY_SEPARATOR.$fileName, $content);
 
             return $fileName;
         } catch (Exception $e) {

@@ -7,6 +7,7 @@ use App\Exceptions\MissingPropertyException;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
+use App\Models\Publisher;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Traits\ImageTrait;
 use Arr;
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -84,6 +86,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         $query = $this->allQuery($search, $skip, $limit)->with(['authors', 'items.publisher', 'items.language']);
+        $this->applyDynamicSearch($search, $query);
 
         $bookRecords = $query->get();
 
@@ -99,6 +102,29 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         return $bookRecords->values();
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orWhereHas('authors', function (Builder $query) use ($keywords) {
+                Author::filterByName($query, $keywords);
+            });
+
+            $query->orwhereHas('items.publisher', function (Builder $query) use ($keywords) {
+                Publisher::filterByName($query, $keywords);
+            });
+        });
+
+        return $query;
     }
 
     /**
@@ -119,17 +145,20 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $input['image'] = ImageTrait::makeImage($input['photo'], Book::IMAGE_PATH);
             }
 
+            if (!empty($input['image_url'])) {
+                $input['image'] = ImageTrait::makeImageFromURL($input['image_url'], Book::IMAGE_PATH);
+            }
+
             /** @var Book $book */
             $book = Book::create($input);
 
             $this->attachTagsAndGenres($book, $input);
+            if (!empty($input['authors'])) {
+                $this->attachAuthors($book, $input);
+            }
 
             if (isset($input['items'])) {
                 $this->createOrUpdateBookItems($book, $input['items']);
-            }
-
-            if (!empty($input['authors'])) {
-                $book->authors()->sync($input['authors']);
             }
 
             DB::commit();
@@ -277,6 +306,22 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         return $book;
     }
 
+    public function attachAuthors($book, $input)
+    {
+        $authors = [];
+        foreach ($input['authors'] as $author) {
+            $result = explode(' ', $author);
+            if (count($result) > 1) {
+                $author = Author::create(['first_name' => $result[0], 'last_name' => $result[1]]);
+                $authors[] = $author->id;
+            } else {
+                $authors[] = (int) $author;
+            }
+        }
+
+        $book->authors()->sync($authors);
+    }
+
     /**
      * @param Book $book
      * @param array $items
@@ -328,6 +373,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
                 $item->publisher_id = isset($bookItem['publisher_id']) ? $bookItem['publisher_id'] : null;
                 $item->language_id = isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
+                $item->status = isset($bookItem['status']) ? $bookItem['status'] : BookItem::STATUS_AVAILABLE;
 
                 $book->items()->save($item);
             }

@@ -99,4 +99,21 @@ class Author extends Model
 
         return $query;
     }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByName(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(first_name) LIKE ?', [trim(strtolower($keyword))]);
+            }
+        });
+
+        return $query;
+    }
 }
