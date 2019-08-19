@@ -31,7 +31,7 @@ const MemberDetail = props => {
         props.fetchBooks();
         props.fetchMembers();
     }, []);
-    const { member, memberBookHistory, membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
+    const { member, memberBookHistory,membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
     if (!member || !members || isLoading) {
         return (
             <Fragment>
@@ -94,7 +94,7 @@ const MemberDetail = props => {
             <HeaderTitle title={'Member Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">Member Details</h5>
+                    <h5 className="page-heading">{member.first_name + ' ' + member.last_name}</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal(false)}>
                             Edit Member Details
@@ -114,12 +114,6 @@ const MemberDetail = props => {
                                     </div>
                                     <div className="member-detail">
                                         <div className="member-detail__item-container">
-                                            <div className="member-detail__item">
-                                                <span className="member-detail__item-heading">Name</span>
-                                                <span>
-                                                    {member.first_name + ' ' + member.last_name}
-                                                </span>
-                                            </div>
                                             <div className="member-detail__item">
                                                 <span className="member-detail__item-heading">Email</span>
                                                 <span>{member.email}</span>
@@ -178,6 +172,7 @@ const mapStateToProps = (state, ownProp) => {
         isLoading
     }
 };
+
 export default connect(mapStateToProps, {
     fetchMember,
     fetchMemberBooksHistory,
