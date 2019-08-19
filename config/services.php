@@ -44,4 +44,8 @@ return [
         ],
     ],
 
+    'openlib' => [
+        'api' => 'https://openlibrary.org/api/books?bibkeys=ISBN:{ISBN_NO}&jscmd=data&format=json'
+    ]
+
 ];
