@@ -119,17 +119,18 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $input['image'] = ImageTrait::makeImage($input['photo'], Book::IMAGE_PATH);
             }
 
+            if (!empty($input['image_url'])) {
+                $input['image'] = ImageTrait::makeImageFromURL($input['image_url'], Book::IMAGE_PATH);
+            }
+
             /** @var Book $book */
             $book = Book::create($input);
 
             $this->attachTagsAndGenres($book, $input);
+            $this->attachAuthors($book, $input);
 
             if (isset($input['items'])) {
                 $this->createOrUpdateBookItems($book, $input['items']);
-            }
-
-            if (!empty($input['authors'])) {
-                $book->authors()->sync($input['authors']);
             }
 
             DB::commit();
@@ -275,6 +276,22 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         return $book;
+    }
+
+    public function attachAuthors($book, $input)
+    {
+        $authors = [];
+        foreach ($input['authors'] as $author) {
+            $result = explode(' ', $author);
+            if (count($result) > 1) {
+                $author = Author::create(['first_name' => $result[0], 'last_name' => $result[1]]);
+                $authors[] = $author->id;
+            } else {
+                $authors[] = (int) $author;
+            }
+        }
+
+        $book->authors()->sync($authors);
     }
 
     /**
