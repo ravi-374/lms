@@ -59,7 +59,7 @@ const UserDetail = props => {
             <HeaderTitle title={'User Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="pull-left text-dark">User Details</h5>
+                    <h5 className="pull-left text-dark">{user.first_name + ' ' + user.last_name}</h5>
                     <div className="d-flex">
                         <Button onClick={() => goBack()}>Back</Button>
                     </div>
@@ -76,12 +76,6 @@ const UserDetail = props => {
                                     </div>
                                     <div className="user-detail">
                                         <div className="user-detail__item-container">
-                                            <div className="user-detail__item">
-                                                <span className="user-detail__item-heading">Name</span>
-                                                <span>
-                                                    {user.first_name + ' ' + user.last_name}
-                                                </span>
-                                            </div>
                                             <div className="user-detail__item">
                                                 <span className="user-detail__item-heading">Email</span>
                                                 <span>{user.email}</span>
