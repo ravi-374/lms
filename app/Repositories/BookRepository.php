@@ -7,6 +7,7 @@ use App\Exceptions\MissingPropertyException;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
+use App\Models\Publisher;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Traits\ImageTrait;
 use Arr;
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -84,6 +86,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         $query = $this->allQuery($search, $skip, $limit)->with(['authors', 'items.publisher', 'items.language']);
+        $this->applyDynamicSearch($search, $query);
 
         $bookRecords = $query->get();
 
@@ -99,6 +102,29 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         return $bookRecords->values();
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orWhereHas('authors', function (Builder $query) use ($keywords) {
+                Author::filterByName($query, $keywords);
+            });
+
+            $query->orwhereHas('items.publisher', function (Builder $query) use ($keywords) {
+                Publisher::filterByName($query, $keywords);
+            });
+        });
+
+        return $query;
     }
 
     /**
