@@ -4,10 +4,16 @@ namespace Tests\Controllers;
 
 use App\Models\Member;
 use App\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class AccountAPIControllerTest
+ * @package Tests\Controllers
+ */
 class AccountAPIControllerTest extends TestCase
 {
+    use DatabaseTransactions;
 
     public function setUp(): void
     {
@@ -19,13 +25,8 @@ class AccountAPIControllerTest extends TestCase
     {
         /** @var Member $member */
         $member = factory(User::class)->create();
-
-        $key = $member->email.'|'.date('Y-m-d H:i:s');
-        $token = encrypt($key);
-        $input = [
-            'token'    => $token,
-            'password' => 'InfyOm',
-        ];
+        $token = encrypt($member->email.'|'.date('Y-m-d H:i:s'));
+        $input = ['token' => $token, 'password' => $this->faker->password];
 
         $response = $this->postJson('api/b1/reset-password', $input);
 
@@ -35,12 +36,8 @@ class AccountAPIControllerTest extends TestCase
     /** @test */
     public function test_unable_to_reset_password_of_non_existing_email()
     {
-        $key = $this->faker->email.'|'.date('Y-m-d H:i:s');
-        $token = encrypt($key);
-        $input = [
-            'token'    => $token,
-            'password' => 'InfyOm',
-        ];
+        $token = encrypt($this->faker->email.'|'.date('Y-m-d H:i:s'));
+        $input = ['token' => $token, 'password' => $this->faker->password];
 
         $response = $this->postJson('api/b1/reset-password', $input);
 
@@ -52,13 +49,8 @@ class AccountAPIControllerTest extends TestCase
     {
         /** @var Member $member */
         $member = factory(User::class)->create();
-
-        $key = $member->email.'|'.date('Y-m-d H:i:s', strtotime('-1 day'));
-        $token = encrypt($key);
-        $input = [
-            'token'    => $token,
-            'password' => 'InfyOm',
-        ];
+        $token = encrypt($member->email.'|'.date('Y-m-d H:i:s', strtotime('-1 day')));
+        $input = ['token' => $token, 'password' => $this->faker->password];
 
         $response = $this->postJson('api/b1/reset-password', $input);
 
