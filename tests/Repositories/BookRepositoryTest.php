@@ -55,12 +55,13 @@ class BookRepositoryTest extends TestCase
         $book2 = factory(Book::class)->create();
         $author2->books()->sync([$book2->id]);
 
-        $search['order_by'] = 'author_name';
-        $search['direction'] = 'desc';
-        $books = $this->bookRepo->all($search);
+        $resultAsc = $this->bookRepo->all(['order_by' => 'author_name', 'direction' => 'asc']);
+        $resultDesc = $this->bookRepo->all(['order_by' => 'author_name', 'direction' => 'desc']);
 
-        $this->assertCount(2, $books);
-        $this->assertEquals($author2->first_name, $books[0]->authors[0]->first_name);
+        $this->assertCount(2, $resultAsc);
+        $this->assertCount(2, $resultDesc);
+        $this->assertEquals($author1->id, $resultAsc[0]->authors[0]->id);
+        $this->assertEquals($author2->id, $resultDesc[0]->authors[0]->id);
     }
 
     /** @test */

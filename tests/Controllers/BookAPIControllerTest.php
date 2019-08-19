@@ -68,7 +68,8 @@ class BookAPIControllerTest extends TestCase
         $take3 = $this->getJson('api/b1/books?limit=3');
         $skip2 = $this->getJson('api/b1/books?skip=2&limit=2');
 
-        $this->assertCount(5, $response->original['data']);
+        $response = $response->original['data'];
+        $this->assertCount(5, $response);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
@@ -87,11 +88,16 @@ class BookAPIControllerTest extends TestCase
         $book2 = factory(Book::class)->create();
         $author2->books()->sync([$book2->id]);
 
-        $response = $this->getJson('api/b1/books?order_by=author_name&direction=desc');
+        $responseAsc = $this->getJson('api/b1/books?order_by=author_name&direction=asc');
+        $responseDesc = $this->getJson('api/b1/books?order_by=author_name&direction=desc');
 
-        $response = $response->original['data'];
-        $this->assertCount(2, $response);
-        $this->assertEquals($author2->first_name, $response[0]['authors'][0]['first_name']);
+        $responseAsc = $responseAsc->original['data'];
+        $responseDesc = $responseDesc->original['data'];
+        $this->assertCount(2, $responseAsc);
+        $this->assertEquals($author1->first_name, $responseAsc[0]['authors'][0]['first_name']);
+
+        $this->assertCount(2, $responseDesc);
+        $this->assertEquals($author2->first_name, $responseDesc[0]['authors'][0]['first_name']);
     }
 
     /** @test */
