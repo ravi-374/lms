@@ -9,6 +9,7 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
+import {getCurrentUser} from "../../shared/sharedMethod";
 
 const UserForm = (props) => {
     const { initialValues, change, roles, countries } = props;
@@ -54,19 +55,22 @@ const UserForm = (props) => {
         setActive(!isActive);
     };
     const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
+    const isVisibleSwitch = initialValues && initialValues.id !== getCurrentUser().id || !initialValues;
     return (
         <Row className="animated fadeIn user-form m-3">
             <Col xs={8} className="primary-detail">
                 <div className="d-flex justify-content-between">
                     <h5>Primary Details</h5>
-                    <div className="d-flex">
-                        <div>
-                            <Field name="is_active" checked={isActive} label="Is Active" component={ToggleSwitch}
-                                   onChange={onChecked}/>
-                        </div>
-                    </div>
+                    {isVisibleSwitch ?
+                        <div className="d-flex">
+                            <div>
+                                <Field name="is_active" checked={isActive} label="Is Active" component={ToggleSwitch}
+                                       onChange={onChecked}/>
+                            </div>
+                        </div> : null
+                    }
                 </div>
-                <hr style={{ marginTop: '0px' }}/>
+                <hr className={isVisibleSwitch ? 'user-form__divider--mt-0' : 'user-form__divider--mt-10'}/>
                 <Row>
                     <Col xs={6}>
                         <Field name="first_name" label="First Name" required inputRef={inputRef}

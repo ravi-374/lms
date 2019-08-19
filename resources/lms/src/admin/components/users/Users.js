@@ -10,6 +10,7 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {activeDeactiveUser, fetchUsers} from '../../store/actions/userAction';
 import {fetchRoles} from '../../store/actions/roleAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {prepareRoles} from "../../shared/sharedMethod";
 
 const Users = (props) => {
     const [isEditMode, setEditMode] = useState(false);
@@ -83,6 +84,6 @@ const Users = (props) => {
 
 const mapStateToProps = (state) => {
     const { users, roles, isLoading, totalRecord } = state;
-    return { users: Object.values(users), roles: Object.values(roles), isLoading, totalRecord };
+    return { users: Object.values(users), roles: prepareRoles(Object.values(roles)), isLoading, totalRecord };
 };
 export default connect(mapStateToProps, { fetchUsers, activeDeactiveUser, fetchRoles, toggleModal })(Users);

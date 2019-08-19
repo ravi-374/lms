@@ -4,7 +4,7 @@ import _ from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
         case bookActionType.FETCH_BOOKS:
-            return {...state, ..._.mapKeys(action.payload, 'id')};
+            return {..._.mapKeys(action.payload, 'id')};
         case bookActionType.FETCH_BOOKS_BY_MEMBER:
             return {...state, bookItems: _.mapKeys(action.payload, 'id')};
         case bookActionType.FETCH_BOOK:

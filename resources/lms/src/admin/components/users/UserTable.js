@@ -8,6 +8,7 @@ import {addToast} from '../../../store/action/toastAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {getCurrentUser} from "../../shared/sharedMethod";
 
 const UserTable = (props) => {
     const { users, onOpenModal, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
@@ -51,11 +52,14 @@ const UserTable = (props) => {
         {
             name: 'Status',
             selector: 'status',
-            cell: (row) => renderStatus(row),
-            width: '100px',
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
+            width: '90px',
+            center: true,
+            cell: (row) =>
+                getCurrentUser().id !== row.id ?
+                    <div className="user-form__switch">
+                        <Field name="is_active" checked={row.is_active} component={ToggleSwitch}
+                               onChange={() => onChecked(row)}/>
+                    </div> : null
         },
         {
             name: 'Action',
@@ -71,19 +75,6 @@ const UserTable = (props) => {
 
     const onChecked = (user) => {
         setActiveInactive(user.id);
-    };
-
-    const renderStatus = (row) => {
-        const user = JSON.parse(atob(localStorage.getItem('user')));
-        if (user.id === row.id) {
-            return '';
-        }
-        return (
-            <span className="user-form__switch">
-                <Field name="is_active" checked={row.is_active} component={ToggleSwitch}
-                       onChange={() => onChecked(row)}/>
-            </span>
-        );
     };
 
     const goToUserDetail = (userId) => {

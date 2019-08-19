@@ -26,7 +26,7 @@ const EditUser = (props) => {
         email,
         phone,
         image,
-        role: {id: roles[0].id, name: roles[0].name},
+        role: {id: roles[0].id, name: roles[0].display_name},
     };
     if (countries.length <= 1) {
         return null;
