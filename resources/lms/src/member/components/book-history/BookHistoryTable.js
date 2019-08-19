@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'reactstrap';
 import {bookAllotmentStatusConstant,} from '../../constants';
-import {dateTimeFormatter} from '../../../shared/sharedMethod';
+import {dateFormatter} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
 import './BookHistory.scss';
 import ReactDataTable from "../../../shared/table/ReactDataTable";
@@ -102,7 +102,7 @@ export default (props) => {
     };
     const renderDate = (date) => {
         return (
-            <span>{date ? dateTimeFormatter(date) : ''}</span>
+            <span>{date ? dateFormatter(date) : ''}</span>
         );
     };
     return (
