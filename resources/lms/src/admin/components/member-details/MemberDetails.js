@@ -121,12 +121,6 @@ const MemberDetail = props => {
                                     <div className="member-detail">
                                         <div className="member-detail__item-container">
                                             <div className="member-detail__item">
-                                                <span className="member-detail__item-heading">Name</span>
-                                                <span>
-                                                    {member.first_name + ' ' + member.last_name}
-                                                </span>
-                                            </div>
-                                            <div className="member-detail__item">
                                                 <span className="member-detail__item-heading">Email</span>
                                                 <span>{member.email}</span>
                                             </div>

@@ -1,23 +1,21 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
 import './UserDetails.scss';
 import {fetchUser} from '../../store/actions/userAction';
-import apiConfig from '../../config/apiConfig';
+import {fetchCountries} from "../../store/actions/countryAction";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {publicImagePath, publicImagePathURL} from "../../../appConstant";
+import {Routes} from "../../../constants";
 
 const UserDetail = props => {
-    const [countries, setCountries] = useState([]);
+    const { user, countries, history, isLoading } = props;
     useEffect(() => {
         props.fetchUser(+props.match.params.id);
-        apiConfig.get('countries').then(response =>
-            setCountries([...countries, ...response.data.data])
-        ).catch(({ response }) => {
-        })
+        props.fetchCountries();
     }, []);
-    const { user, history, isLoading } = props;
     if (!user || isLoading) {
         return (
             <Fragment>
@@ -26,10 +24,11 @@ const UserDetail = props => {
             </Fragment>
         )
     }
+
     const goBack = () => {
-        history.push('/app/admin/users');
+        history.push(Routes.USERS);
     };
-    const imageUrl = user.image ? 'uploads/users/' + user.image : 'images/user-avatar.png';
+    const imageUrl = user.image ? publicImagePathURL.USER_AVATAR_URL + user.image : publicImagePath.USER_AVATAR;
     const { address } = user;
     let fullAddress = '';
     if (address) {
@@ -78,12 +77,6 @@ const UserDetail = props => {
                                     <div className="user-detail">
                                         <div className="user-detail__item-container">
                                             <div className="user-detail__item">
-                                                <span className="user-detail__item-heading">Name</span>
-                                                <span>
-                                                    {user.first_name + ' ' + user.last_name}
-                                                </span>
-                                            </div>
-                                            <div className="user-detail__item">
                                                 <span className="user-detail__item-heading">Email</span>
                                                 <span>{user.email}</span>
                                             </div>
@@ -120,13 +113,15 @@ const UserDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { users, isLoading } = state;
+    const { users, countries, isLoading } = state;
     return {
         user: users[ownProp.match.params.id],
+        countries,
         isLoading
     }
 };
 
 export default connect(mapStateToProps, {
     fetchUser,
+    fetchCountries,
 })(UserDetail);

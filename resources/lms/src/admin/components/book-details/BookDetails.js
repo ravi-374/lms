@@ -70,10 +70,6 @@ const BookDetail = props => {
                                     <div className="book-detail">
                                         <div className="book-detail__item-container">
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-title-heading">Title</span>
-                                                <span>{book.name}</span>
-                                            </div>
-                                            <div className="book-detail__item">
                                                 <span className="book-detail__item-isbn-heading">ISBN</span>
                                                 <span>{book.isbn}</span>
                                             </div>
