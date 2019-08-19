@@ -106,30 +106,4 @@ class BookLanguageAPIControllerTest extends TestCase
             $response, $bookLanguage->toArray(), 'Book Language retrieved successfully.'
         );
     }
-
-    /** @test */
-    public function it_can_delete_book_language()
-    {
-        /** @var BookLanguage $bookLanguage */
-        $bookLanguage = factory(BookLanguage::class)->create();
-
-        $response = $this->deleteJson("api/b1/book-languages/$bookLanguage->id");
-
-        $this->assertSuccessDataResponse(
-            $response, $bookLanguage->toArray(), 'Book Language deleted successfully.'
-        );
-        $this->assertEmpty(BookLanguage::find($bookLanguage->id));
-    }
-
-    /** @test */
-    public function test_unable_to_delete_book_language_when_its_used_in_one_or_more_book_item()
-    {
-        /** @var BookItem $bookItem */
-        $bookItem = factory(BookItem::class)->create();
-
-        $response = $this->deleteJson("api/b1/book-languages/$bookItem->language_id");
-
-        $this->assertExceptionMessage($response,
-            'Book Language can not be delete, it is used in one or more book items.');
-    }
 }
