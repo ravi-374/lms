@@ -1,20 +1,24 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
+import UserDetailModal from './UserDetailModal';
 import './UserDetails.scss';
 import {fetchUser} from '../../store/actions/userAction';
-import {fetchCountries} from "../../store/actions/countryAction";
+import {fetchRoles} from "../../store/actions/roleAction";
+import {toggleModal} from "../../../store/action/modalAction";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {Routes} from "../../../constants";
+import {prepareRoles} from "../../shared/sharedMethod";
 
 const UserDetail = props => {
-    const { user, countries, history, isLoading } = props;
+    const [isToggle, setIsToggle] = useState(true);
+    const { user, roles, history, isLoading, toggleModal } = props;
     useEffect(() => {
         props.fetchUser(+props.match.params.id);
-        props.fetchCountries();
+        props.fetchRoles();
     }, []);
     if (!user || isLoading) {
         return (
@@ -24,7 +28,10 @@ const UserDetail = props => {
             </Fragment>
         )
     }
-
+    const onOpenModal = () => {
+        setIsToggle(true);
+        toggleModal();
+    };
     const goBack = () => {
         history.push(Routes.USERS);
     };
@@ -44,11 +51,8 @@ const UserDetail = props => {
         if (address.state) {
             fullAddress += ',  ' + address.state;
         }
-        if (address.country_id) {
-            const country = countries.find(country => country.id === +address.country_id);
-            if (country) {
-                fullAddress += ',  ' + country.name;
-            }
+        if (address.country) {
+            fullAddress += ',  ' + address.country.name;
         }
         if (address.zip) {
             fullAddress += '-' + address.zip;
@@ -61,6 +65,9 @@ const UserDetail = props => {
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">User Details</h5>
                     <div className="d-flex">
+                        <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
+                            Edit User Details
+                        </Button>
                         <Button onClick={() => goBack()}>Back</Button>
                     </div>
                 </Col>
@@ -109,6 +116,8 @@ const UserDetail = props => {
                                         </div>
                                     </div>
                                 </Row>
+                                <UserDetailModal user={user} roles={roles} isEditMode={isToggle}
+                                                 toggleModal={toggleModal}/>
                             </CardBody>
                         </Card>
                     </div>
@@ -119,15 +128,16 @@ const UserDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { users, countries, isLoading } = state;
+    const { users, roles, isLoading } = state;
     return {
         user: users[ownProp.match.params.id],
-        countries,
+        roles: prepareRoles(Object.values(roles)),
         isLoading
     }
 };
 
 export default connect(mapStateToProps, {
     fetchUser,
-    fetchCountries,
+    fetchRoles,
+    toggleModal
 })(UserDetail);
