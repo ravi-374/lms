@@ -215,4 +215,58 @@ class IssuedBookRepositoryTest extends TestCase
             $bookItem, ['book_item_id' => $bookItem->id, 'member_id' => $mitul->id]
         );
     }
+
+    /** @test */
+    public function test_can_update_issued_book_status_with_book_item_status()
+    {
+        /** @var IssuedBook $issuedBook */
+        $issuedBook = factory(IssuedBook::class)->create();
+        $input = [
+            'member_id'    => $issuedBook->member_id,
+            'book_item_id' => $issuedBook->book_item_id,
+            'status'       => IssuedBook::STATUS_LOST,
+        ];
+        $updatedStatus = $this->issuedBookRepo->updateIssuedBookStatus($input);
+
+        $this->assertEquals($issuedBook->id, $updatedStatus->id);
+        $this->assertEquals(IssuedBook::STATUS_LOST, $updatedStatus->status);
+        $this->assertEquals(BookItem::STATUS_LOST, $updatedStatus->bookItem->status);
+    }
+
+    /**
+     * @test
+     * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Invalid status.
+     */
+    public function test_unable_to_update_invalid_issued_book_status()
+    {
+        $this->issuedBookRepo->updateIssuedBookStatus(['status' => 10]);
+    }
+
+    /**
+     * @test
+     * @expectedException  Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage No query results for model [App\Models\BookItem] 999
+     */
+    public function test_unable_to_update_issued_book_with_non_existing_member_id()
+    {
+        $input = ['book_item_id' => 999, 'status' => IssuedBook::STATUS_LOST];
+
+        $this->issuedBookRepo->updateIssuedBookStatus($input);
+    }
+
+    /**
+     * @test
+     * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Book is not issued.
+     */
+    public function test_unable_to_update_non_existing_issued_book()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $input = ['book_item_id' => $bookItem->id, 'status' => IssuedBook::STATUS_LOST];
+
+        $this->issuedBookRepo->updateIssuedBookStatus($input);
+    }
 }
