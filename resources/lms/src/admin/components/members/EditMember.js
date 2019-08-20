@@ -1,24 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../shared/components/Modal';
 import {editMember} from '../../store/actions/memberAction';
+import {fetchCountries} from "../../../member/store/actions/countryAction";
+import {fetchMembershipPlans} from "../../store/actions/membershipPlanAction";
 import MemberForm from './MemberForm';
 import prepareFormData from './prepareFormData';
-import apiConfig from '../../config/apiConfig';
 
 const EditMember = (props) => {
-    const [countries, setCountries] = useState([]);
+    const { countries, fetchCountries, fetchMembershipPlans, membershipPlans } = props;
     useEffect(() => {
-        apiConfig.get('countries').then(response =>
-            setCountries([...countries, ...response.data.data])
-        ).catch(({response}) => {
-        })
+        fetchMembershipPlans(false);
+        fetchCountries();
     }, []);
     const onSaveMember = (formValues) => {
         formValues.roles = [];
         props.editMember(props.member.id, prepareFormData(formValues));
     };
-    const {id, is_active, first_name, last_name, email, password, membership_plan_id, phone, address, image} = props.member;
+    const { id, is_active, first_name, last_name, email, password, membership_plan, phone, address, image } = props.member;
     const changeAbleFields = {
         id,
         is_active,
@@ -27,17 +26,14 @@ const EditMember = (props) => {
         email,
         password,
         image,
-        membership_plan: props.membershipPlans.find(memberPlan => memberPlan.id === membership_plan_id),
+        membership_plan,
         phone
     };
-    if (countries.length <= 1) {
-        return null;
-    }
     if (address) {
-        const {address_1, address_2, country_id, city, state, zip} = address;
+        const { address_1, address_2, country, city, state, zip } = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country_id ? countries.find(country => country.id === +country_id) : null;
+        changeAbleFields.country = country ? country : null;
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
@@ -46,10 +42,17 @@ const EditMember = (props) => {
         onSaveMember,
         onCancel: props.toggleModal,
         initialValues: changeAbleFields,
-        membershipPlans: props.membershipPlans,
+        membershipPlans,
         countries
     };
     return <Modal {...props} content={<MemberForm {...prepareFormOption} />}/>
 };
 
-export default connect(null, {editMember})(EditMember);
+const mapStateToProps = (state) => {
+    const { membershipPlans, countries } = state;
+    return {
+        membershipPlans: Object.values(membershipPlans), countries
+    };
+};
+
+export default connect(mapStateToProps, { editMember, fetchMembershipPlans, fetchCountries })(EditMember);

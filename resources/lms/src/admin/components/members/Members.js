@@ -16,11 +16,7 @@ const members = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [member, setMember] = useState(null);
-    const { members, membershipPlans, toggleModal, history, isLoading, totalRecord } = props;
-
-    useEffect(() => {
-        props.fetchMembershipPlans();
-    }, []);
+    const { members, toggleModal, history, isLoading, totalRecord } = props;
 
     const setActiveInactive = (id) => {
         if (id)
@@ -33,7 +29,7 @@ const members = (props) => {
     const onChangeData = (filter) => {
         fetchMembers(filter);
     };
-    const cardModalProps = { member, membershipPlans, isEditMode, isDeleteMode, isCreateMode, toggleModal };
+    const cardModalProps = { member, isEditMode, isDeleteMode, isCreateMode, toggleModal };
     const onOpenModal = (isEdit, member = null, isDelete = false) => {
         setCreateMode(!isEdit);
         setEditMode(isEdit);
@@ -43,7 +39,6 @@ const members = (props) => {
     };
     const cardBodyProps = {
         members,
-        membershipPlans,
         setActiveInactive,
         onOpenModal,
         history,
@@ -52,9 +47,6 @@ const members = (props) => {
         onChangeData
     };
 
-    if (membershipPlans.length === 0) {
-        return null;
-    }
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
@@ -83,16 +75,14 @@ const members = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { members, membershipPlans, isLoading, totalRecord } = state;
+    const { members, isLoading, totalRecord } = state;
     return {
-        members: Object.values(members),
-        membershipPlans: Object.values(membershipPlans), isLoading, totalRecord
+        members: Object.values(members), isLoading, totalRecord
     };
 };
 
 export default connect(mapStateToProps, {
     fetchMembers,
     activDeactiveMember,
-    fetchMembershipPlans,
     toggleModal
 })(members);

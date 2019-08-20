@@ -7,7 +7,7 @@ import ModalAction from '../../../shared/action-buttons/ModalAction';
 import BookStatus from "../../../shared/book-status/book-status";
 import {Routes} from "../../../constants";
 
-export default ({ memberBookHistory, onOpenModal, sortAction, sortObject ,history}) => {
+export default ({ memberBookHistory, onOpenModal, sortAction, sortObject, history }) => {
     const headers = [
         { id: 'book_name', name: 'Book' },
         { id: 'book_code', name: 'Book Item' },
@@ -22,6 +22,9 @@ export default ({ memberBookHistory, onOpenModal, sortAction, sortObject ,histor
         history.push(`${Routes.BOOK_ALLOTMENTS + bookAllotmentId}/details`);
     };
 
+    if (!memberBookHistory && memberBookHistory.length === 0) {
+        return null;
+    }
     return (
         <Table hover bordered striped responsive size="md">
             <thead>

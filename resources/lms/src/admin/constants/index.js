@@ -199,8 +199,8 @@ export const Permissions = {
 };
 
 export const memberBookHistoryActionType = {
-    FETCH_MEMBER_BOOK_HISTORY: 'FETCH_AVAILABLE_BOOKS',
-    EDIT_MEMBER_BOOK_HISTORY: 'EDIt_MEMBER_BOOK_HISTORY',
+    FETCH_MEMBER_BOOK_ALLOTMENT: 'FETCH_MEMBER_BOOK_ALLOTMENT',
+    EDIT_MEMBER_BOOK_ALLOTMENT: 'EDIt_MEMBER_BOOK_ALLOTMENT',
 };
 
 export const countryActionType = {
