@@ -66,15 +66,4 @@ class BookSeriesAPIControllerValidationTest extends TestCase
         $this->assertSuccessMessageResponse($response, 'Book Series updated successfully.');
         $this->assertEquals($fakeBookSeries['title'], $bookSeries->fresh()->title);
     }
-
-    /** @test */
-    public function it_can_delete_book_series()
-    {
-        $bookSeries = factory(BookSeries::class)->create();
-
-        $response = $this->deleteJson('api/b1/book-series/'.$bookSeries->id);
-
-        $this->assertSuccessMessageResponse($response, 'Book Series deleted successfully.');
-        $this->assertEmpty(BookSeries::where('title', $bookSeries->title)->first());
-    }
 }

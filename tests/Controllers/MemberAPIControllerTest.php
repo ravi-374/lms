@@ -54,6 +54,26 @@ class MemberAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_get_members()
+    {
+        /** @var Member $members */
+        $members = factory(Member::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/members');
+        $search = $this->getJson('api/b1/members?search='.$members[0]->first_name);
+        $take3 = $this->getJson('api/b1/members?limit=3');
+        $skip2 = $this->getJson('api/b1/members?skip=2&limit=2');
+
+        $response = $response->original['data'];
+        $this->assertCount(5, $response);
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $this->assertCount(1, $search->original['data']);
+        $this->assertEquals($members[0]->first_name, $search->original['data'][0]['first_name']);
+    }
+
+    /** @test */
     public function it_can_create_member()
     {
         $this->mockRepository();
