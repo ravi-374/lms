@@ -5,11 +5,12 @@ import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {addToast} from '../../../store/action/toastAction';
 import {reserveBook} from '../../store/actions/bookSearchAction';
+import {bookItemStatusConstants} from "../../constants";
 
 const Book = ({ books, addToast, reserveBook }) => {
     const renderActionButton = (book, index) => {
-        switch (book.is_available) {
-            case true:
+        switch (book.status) {
+            case bookItemStatusConstants.AVAILABLE:
                 return <Button color="primary" onClick={() => reserveBook(book.id, index)}>Reserve</Button>;
             default:
                 return null;
@@ -56,7 +57,8 @@ const Book = ({ books, addToast, reserveBook }) => {
                             {book.expected_available_date ? dateFormatter(book.expected_available_date) : null}
                         </td>
                         <td className="align-middle book__table-row-status">
-                            {book.is_available ? <span className="text-success"> Available</span> :
+                            {book.status === bookItemStatusConstants.AVAILABLE ?
+                                <span className="text-success"> Available</span> :
                                 <span className="text-danger"> Unavailable</span>}
                         </td>
                         <td className="text-center align-middle book__table-row-action">{renderActionButton(book, index)}</td>

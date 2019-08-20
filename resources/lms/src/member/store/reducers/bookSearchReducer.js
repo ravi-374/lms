@@ -7,7 +7,7 @@ export default (state = [], action) => {
             return [...action.payload];
         case bookActionType.RESERVE_BOOK:
             const data = [...state];
-            data[action.payload.index].is_available = action.payload.status;
+            data[action.payload.index].status = action.payload.status;
             data[action.payload.index].expected_available_date = action.payload.expectedAvailableDate;
             return [...data];
         default:
