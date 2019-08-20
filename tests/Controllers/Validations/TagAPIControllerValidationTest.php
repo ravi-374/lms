@@ -20,8 +20,9 @@ class TagAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_tag_fails_when_name_is_not_passed()
     {
-        $this->post('api/b1/tags', ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->postJson('api/b1/tags', ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -29,8 +30,9 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tag = factory(Tag::class)->create();
 
-        $this->post('api/b1/tags/', ['name' => $tag->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->postJson('api/b1/tags/', ['name' => $tag->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
@@ -38,8 +40,9 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tag = factory(Tag::class)->create();
 
-        $this->put('api/b1/tags/'.$tag->id, ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->putJson('api/b1/tags/'.$tag->id, ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -47,8 +50,9 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tags = factory(Tag::class)->times(2)->create();
 
-        $this->put('api/b1/tags/'.$tags[1]->id, ['name' => $tags[0]->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->putJson('api/b1/tags/'.$tags[1]->id, ['name' => $tags[0]->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
