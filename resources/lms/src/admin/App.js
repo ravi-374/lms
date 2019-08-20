@@ -1,6 +1,5 @@
 import React from 'react';
-import {HashRouter, Route, Switch} from 'react-router-dom';
-import './App.scss';
+import {Route, Switch} from 'react-router-dom';
 import ProgressBar from '../shared/progress-bar/ProgressBar';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
