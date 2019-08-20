@@ -25,11 +25,12 @@ export const reserveBook = (bookItemId, index) => async (dispatch) => {
             dispatch({
                 type: bookActionType.RESERVE_BOOK,
                 payload: {
-                    status: response.data.data.book_item.is_available,
+                    status: response.data.data.book_item.status,
                     index,
                     expectedAvailableDate: response.data.data.expected_available_date
                 }
             });
+            dispatch(addToast({ text: response.data.message }));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

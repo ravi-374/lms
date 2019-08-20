@@ -64,3 +64,11 @@ export const bookStatusConstant = {
     STATUS_NOT_AVAILABLE: 0,
     STATUS_AVAILABLE: 1
 };
+
+export const bookItemStatusConstants = {
+    AVAILABLE: 1,
+    UNAVAILABLE: 2,
+    LOST: 3,
+    DAMAGE: 4
+};
+
