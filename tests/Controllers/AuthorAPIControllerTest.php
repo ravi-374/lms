@@ -55,15 +55,16 @@ class AuthorAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $author = factory(Author::class)->raw();
+        $author = factory(Author::class)->make();
 
         $this->authorRepo->shouldReceive('create')
             ->once()
-            ->with($author);
+            ->with($author->toArray())
+            ->andReturn($author);
 
-        $response = $this->postJson('api/b1/authors', $author);
+        $response = $this->postJson('api/b1/authors', $author->toArray());
 
-        $this->assertSuccessDataResponse($response, $author, 'Author saved successfully.');
+        $this->assertSuccessDataResponse($response, $author->toArray(), 'Author saved successfully.');
     }
 
     /** @test */
