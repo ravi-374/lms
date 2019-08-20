@@ -20,8 +20,9 @@ class PermissionAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_permission_fails_when_name_is_not_passed()
     {
-        $this->post('api/b1/permissions', ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->postJson('api/b1/permissions', ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -29,8 +30,9 @@ class PermissionAPIControllerValidationTest extends TestCase
     {
         $permission = factory(Permission::class)->create();
 
-        $this->post('api/b1/permissions/', ['name' => $permission->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->postJson('api/b1/permissions/', ['name' => $permission->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
@@ -38,8 +40,9 @@ class PermissionAPIControllerValidationTest extends TestCase
     {
         $permission = factory(Permission::class)->create();
 
-        $this->put('api/b1/permissions/'.$permission->id, ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->putJson('api/b1/permissions/'.$permission->id, ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -48,8 +51,9 @@ class PermissionAPIControllerValidationTest extends TestCase
         $permission1 = factory(Permission::class)->create();
         $permission2 = factory(Permission::class)->create();
 
-        $this->put('api/b1/permissions/'.$permission2->id, ['name' => $permission1->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->putJson('api/b1/permissions/'.$permission2->id, ['name' => $permission1->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */

@@ -20,8 +20,9 @@ class GenreAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_genre_fails_when_name_is_not_passed()
     {
-        $this->post('api/b1/genres/', ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->postJson('api/b1/genres/', ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -29,8 +30,9 @@ class GenreAPIControllerValidationTest extends TestCase
     {
         $genre = factory(Genre::class)->create();
 
-        $this->put('api/b1/genres/'.$genre->id, ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->putJson('api/b1/genres/'.$genre->id, ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -38,8 +40,9 @@ class GenreAPIControllerValidationTest extends TestCase
     {
         $genre = factory(Genre::class)->create();
 
-        $this->post('api/b1/genres/', ['name' => $genre->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->postJson('api/b1/genres/', ['name' => $genre->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
@@ -48,8 +51,9 @@ class GenreAPIControllerValidationTest extends TestCase
         $genre1 = factory(Genre::class)->create();
         $genre2 = factory(Genre::class)->create();
 
-        $this->put('api/b1/genres/'.$genre2->id, ['name' => $genre1->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->putJson('api/b1/genres/'.$genre2->id, ['name' => $genre1->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
