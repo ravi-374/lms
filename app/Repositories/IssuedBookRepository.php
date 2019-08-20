@@ -59,7 +59,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
-        if (!empty($search['order_by']) && in_array($search['order_by'], ['name', 'book_code'])) {
+        if (!empty($search['order_by']) && in_array($search['order_by'], ['name', 'book_code', 'member_name'])) {
             $orderBy = $search['order_by'];
             unset($search['order_by']);
         }
@@ -68,7 +68,6 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             $search['status'] = IssuedBook::getStatusFromString($search['search']);
             unset($search['search']);
         }
-
 
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
@@ -89,6 +88,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
             if ($orderBy == 'book_code') {
                 $orderString = 'bookItem.book_code';
+            }
+
+            if ($orderBy == 'member_name') {
+                $orderString = 'member.first_name';
             }
 
             $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
