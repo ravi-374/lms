@@ -126,6 +126,30 @@ const BookAllotmentForm = props => {
         )
     };
 
+    const renderBookStatusOption = () => {
+        if (initialValues) {
+            switch (initialValues.status.id) {
+                case bookAllotmentStatusConstant.BOOK_RESERVED:
+                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
+                        || bookStatus.id === bookAllotmentStatusConstant.BOOK_UN_RESERVED);
+                case bookAllotmentStatusConstant.BOOK_UN_RESERVED:
+                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
+                        || bookStatus.id === bookAllotmentStatusConstant.BOOK_RESERVED);
+                case bookAllotmentStatusConstant.BOOK_ISSUED:
+                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED
+                        || bookStatus.id === bookAllotmentStatusConstant.BOOK_LOST);
+                case bookAllotmentStatusConstant.BOOK_RETURNED :
+                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_LOST);
+                case  bookAllotmentStatusConstant.BOOK_LOST:
+                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED);
+                default:
+                    return [];
+            }
+        } else {
+            return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
+                || bookStatus.id === bookAllotmentStatusConstant.BOOK_RESERVED);
+        }
+    };
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
@@ -144,8 +168,9 @@ const BookAllotmentForm = props => {
                        disabled={isDisabledItem}/>
             </Col>
             <Col xs={12}>
-                <Field name="status" label="Status" required options={bookStatusOptions} placeholder="Select Status"
-                       onChange={onSelectBookStatus} groupText="info-circle" component={Select}/>
+                <Field name="status" label="Status" required options={renderBookStatusOption()}
+                       placeholder="Select Status" onChange={onSelectBookStatus} groupText="info-circle"
+                       component={Select}/>
             </Col>
             <Col xs={12}>
                 {renderDatePicker(status)}
