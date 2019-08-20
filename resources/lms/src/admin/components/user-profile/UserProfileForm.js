@@ -8,9 +8,10 @@ import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
+import {Routes} from "../../../constants";
 
 const UserProfileForm = (props) => {
-    const { initialValues, change, countries } = props;
+    const { initialValues, change, countries, history } = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
@@ -40,6 +41,9 @@ const UserProfileForm = (props) => {
         setFile(null);
         setImage(defaultImage);
         setIsDefaultImage(true);
+    };
+    const goToHomePage = () => {
+        history.push(Routes.BOOKS);
     };
     const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
     return (
@@ -109,7 +113,7 @@ const UserProfileForm = (props) => {
                 </Row>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveProfile)} {...props}/>
+                <SaveAction onSave={props.handleSubmit(onSaveProfile)} onCancel={goToHomePage} {...props}/>
             </Col>
         </Row>
     );
