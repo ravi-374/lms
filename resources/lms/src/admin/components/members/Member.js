@@ -40,13 +40,9 @@ const Member = ({ members, membershipPlans, onOpenModal, addToast, setActiveInac
             accessor: (d) => d.membership_plan_name,
             sortable: true,
             cell: row => {
-                const memberPlan = membershipPlans.find(memberPlan => memberPlan.id === row.membership_plan_id);
-                if (memberPlan) {
-                    row.membership_plan_name = memberPlan.name;
-                    return <span>{row.membership_plan_name}</span>
-                }
-               return '';
-            },
+                row.membership_plan_name = row.membership_plan.name;
+                return <span>{row.membership_plan_name}</span>
+            }
         },
         {
             name: 'Status',

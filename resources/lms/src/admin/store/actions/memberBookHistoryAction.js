@@ -6,7 +6,7 @@ import {toggleModal} from "../../../store/action/modalAction";
 export const fetchMemberBooksHistory = (memberId) => async (dispatch) => {
     await apiConfig.get(`members/${memberId}/books-history`)
         .then((response) => {
-            dispatch({type: memberBookHistoryActionType.FETCH_MEMBER_BOOK_HISTORY, payload: response.data.data});
+            dispatch({type: memberBookHistoryActionType.FETCH_MEMBER_BOOK_ALLOTMENT, payload: response.data.data});
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
@@ -16,7 +16,7 @@ export const fetchMemberBooksHistory = (memberId) => async (dispatch) => {
 export const editMemberBookHistory = (book) => async (dispatch) => {
     await apiConfig.post(`books/${book.book_item_id}/${getApiRoute(book.status)}`, book)
         .then((response) => {
-            dispatch({type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_HISTORY, payload: response.data.data});
+            dispatch({type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_ALLOTMENT, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })

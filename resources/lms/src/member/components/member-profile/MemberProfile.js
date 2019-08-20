@@ -12,7 +12,7 @@ import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MemberProfile = props => {
-    const {isLoading, countries, member, membershipPlans, history} = props;
+    const { isLoading, countries, member, history } = props;
     useEffect(() => {
         props.fetchMember();
         props.fetchMembershipPlans();
@@ -21,7 +21,7 @@ const MemberProfile = props => {
     const onSaveMemberProfile = (formValues) => {
         props.editMember(prepareFormData(formValues), history);
     };
-    const {id, is_active, first_name, last_name, email, password, membership_plan_id, phone, address, image} = member;
+    const { id, is_active, first_name, last_name, email, password, membership_plan, phone, address, image } = member;
     const changeAbleFields = {
         id,
         is_active,
@@ -29,30 +29,28 @@ const MemberProfile = props => {
         last_name,
         email,
         password,
-        membership_plan_id,
         image,
-        membership_plan: props.membershipPlans.find(memberPlan => memberPlan.id === membership_plan_id),
+        membership_plan,
         phone
     };
     if (address) {
-        const {address_1, address_2, country_id, city, state, zip} = address;
+        const { address_1, address_2, country, city, state, zip } = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country_id ? countries.find(country => country.id === +country_id) : null;
-        changeAbleFields.selectedCountry = country_id ? countries.filter(country => country.id === +country_id) : [];
+        changeAbleFields.country = country ? country : {};
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
     }
     const prepareFormOption = {
         initialValues: changeAbleFields,
-        membershipPlans,
+        membershipPlans: props.membershipPlans,
         countries,
         history,
         onSaveMemberProfile
     };
 
-    if (!member || isLoading || !member.id || address && address.country_id && changeAbleFields.selectedCountry.length === 0) {
+    if (!member || isLoading || !member.id) {
         return (
             <Fragment>
                 <ProgressBar/>
@@ -84,7 +82,12 @@ const MemberProfile = props => {
 };
 
 const mapStateToProps = (state) => {
-    const {member, membershipPlans, countries} = state;
-    return {member, membershipPlans, countries}
+    const { member, membershipPlans, countries } = state;
+    return { member, membershipPlans, countries }
 };
-export default connect(mapStateToProps, {fetchMember, fetchMembershipPlans, fetchCountries, editMember})(MemberProfile);
+export default connect(mapStateToProps, {
+    fetchMember,
+    fetchMembershipPlans,
+    fetchCountries,
+    editMember
+})(MemberProfile);

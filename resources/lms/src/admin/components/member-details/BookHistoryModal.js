@@ -4,9 +4,9 @@ import EditBookAllotment from '../books-allotment/EditBookAllotment';
 import EditMember from '../members/EditMember';
 
 export default (props) => {
-    const {bookHistory, books, members, isEditMode, isDeleteMode, isEditMember, toggleModal, member, membershipPlans} = props;
+    const { bookHistory, books, members, isEditBookAllotment, isDeleteMode, isEditMember, toggleModal, member } = props;
     if (!isDeleteMode) {
-        if (isEditMode) {
+        if (isEditBookAllotment) {
             const prepareModalOption = {
                 toggleModal,
                 className: 'books-allotment-modal',
@@ -21,7 +21,7 @@ export default (props) => {
                 className: 'member-modal',
                 title: 'Edit Member',
             };
-            return <EditMember {...prepareModalOption} member={member} membershipPlans={membershipPlans}/>
+            return <EditMember {...prepareModalOption} member={member}/>
         }
         return null;
     }

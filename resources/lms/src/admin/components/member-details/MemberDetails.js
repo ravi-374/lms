@@ -7,7 +7,6 @@ import {fetchMemberBooksHistory} from '../../store/actions/memberBookHistoryActi
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
 import {toggleModal} from '../../../store/action/modalAction';
-import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
 import MemberBookHistory from './MemberBookAllotment';
 import BookHistoryModal from './BookHistoryModal';
 import {sortAction} from '../../../store/action/sortAction';
@@ -20,18 +19,17 @@ import {publicImagePathURL, publicImagePath} from "../../../appConstant";
 import {Routes} from "../../../constants";
 
 const MemberDetail = props => {
-    const [isEditMode, setEditMode] = useState(false);
+    const [isEditBookAllotment, setIsEditBookAllotment] = useState(false);
     const [isEditMember, setIsEditMember] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookHistory, setBookHistory] = useState(null);
     useEffect(() => {
         props.fetchMember(+props.match.params.id);
         props.fetchMemberBooksHistory(+props.match.params.id);
-        props.fetchMembershipPlans();
         props.fetchBooks();
         props.fetchMembers();
     }, []);
-    const { member, memberBookHistory,membershipPlans, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
+    const { member, memberBookHistory, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
     if (!member || !members || isLoading) {
         return (
             <Fragment>
@@ -42,7 +40,7 @@ const MemberDetail = props => {
     }
     const onOpenModal = (isEdit, bookHistory = null, isDelete = false) => {
         setIsEditMember(!isEdit);
-        setEditMode(isEdit);
+        setIsEditBookAllotment(isEdit);
         setDeleteMode(isDelete);
         setBookHistory(bookHistory);
         toggleModal();
@@ -55,20 +53,15 @@ const MemberDetail = props => {
         bookHistory,
         books,
         members,
-        isEditMode,
+        isEditBookAllotment,
         isDeleteMode,
         isEditMember,
         toggleModal,
-        membershipPlans,
         member
     };
     const imageUrl = member.image ? publicImagePathURL.MEMBER_AVATAR_URL + member.image : publicImagePath.USER_AVATAR;
     const { address } = member;
     let fullAddress = '';
-    const memberPlan = membershipPlans.find(memberPlan => memberPlan.id === +member.membership_plan_id);
-    if (memberPlan) {
-        member.membership_plan_name = memberPlan.name;
-    }
     if (address) {
         if (address.address_1) {
             fullAddress += address.address_1;
@@ -132,7 +125,7 @@ const MemberDetail = props => {
                                             }
                                             <div className="member-detail__item">
                                                 <span className="member-detail__item-heading">Membership Plan</span>
-                                                <span>{member.membership_plan_name}</span>
+                                                <span>{member.membership_plan.name}</span>
                                             </div>
                                             <div className="member-detail__item">
                                                 <span className="member-detail__item-heading">Status</span>
@@ -157,7 +150,7 @@ const MemberDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { members, memberBookHistory, membershipPlans, books, sortObject, isLoading } = state;
+    const { members, memberBookHistory, books, sortObject, isLoading } = state;
     let bookHistoryArray = Object.values(memberBookHistory);
     if (sortObject) {
         bookHistoryArray = sortFilter(bookHistoryArray, sortObject);
@@ -165,7 +158,6 @@ const mapStateToProps = (state, ownProp) => {
     return {
         member: members[ownProp.match.params.id],
         memberBookHistory: bookHistoryArray,
-        membershipPlans: Object.values(membershipPlans),
         books: Object.values(books),
         members: prepareFullNames(Object.values(members)),
         sortObject,
@@ -176,7 +168,6 @@ const mapStateToProps = (state, ownProp) => {
 export default connect(mapStateToProps, {
     fetchMember,
     fetchMemberBooksHistory,
-    fetchMembershipPlans,
     fetchBooks,
     fetchMembers,
     sortAction,
