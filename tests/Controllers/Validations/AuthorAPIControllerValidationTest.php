@@ -27,11 +27,11 @@ class AuthorAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_author_with_valid_input()
     {
-        $author = factory(Author::class)->make();
+        $author = factory(Author::class)->raw();
 
-        $response = $this->postJson('api/b1/authors', $author->toArray());
+        $response = $this->postJson('api/b1/authors', $author);
 
-        $this->assertSuccessDataResponse($response, $author->toArray(), 'Author saved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Author saved successfully.');
     }
 
     /** @test */

@@ -121,7 +121,7 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_member()
     {
-        $fakeMember = factory(Member::class)->make()->toArray();
+        $fakeMember = factory(Member::class)->raw();
         $response = $this->postJson('api/b1/members', array_merge($fakeMember, ['password' => $this->faker->password]));
 
         $this->assertSuccessMessageResponse($response, 'Member saved successfully.');
@@ -132,7 +132,7 @@ class MemberControllerValidationTest extends TestCase
     public function it_can_update_member()
     {
         $member = factory(Member::class)->create();
-        $fakeMember = factory(Member::class)->make()->toArray();
+        $fakeMember = factory(Member::class)->raw();
 
         $response = $this->postJson('api/b1/members/'.$member->id, $fakeMember);
 
