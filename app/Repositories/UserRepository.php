@@ -8,6 +8,7 @@ use App\User;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 /**
@@ -56,6 +57,12 @@ class UserRepository extends BaseRepository
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $query = $this->allQuery($search, $skip, $limit)->with('roles', 'address');
+
+        if (!empty($search['search'])) {
+            $query = $query->orWhereHas('roles', function (Builder $q) use ($search) {
+                $q->whereRaw("lower(name) like ?", ['%'.$search['search'].'%']);
+            });
+        }
 
         /** @var User[] $users */
         $users = $query->orderByDesc('id')->get();

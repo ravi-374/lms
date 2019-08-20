@@ -69,9 +69,14 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             unset($search['search']);
         }
 
-
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
+
+        if (!empty($search['search'])) {
+            $query = $query->orWhereHas('member', function (Builder $q) use ($search) {
+                $q->whereRaw("lower(first_name) like ?", ['%'.$search['search'].'%']);
+            });
+        }
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
