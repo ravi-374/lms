@@ -60,6 +60,18 @@ export const editBookAllotment = (book) => async (dispatch) => {
         });
 };
 
+export const editBookAllotmentStatus = (book) => async (dispatch) => {
+    await apiConfig.put(`books/${book.book_item_id}/update-issued-book-status`, { status: book.status })
+        .then((response) => {
+            dispatch({ type: bookAllotmentActionType.EDIT_BOOK_ALLOTMENT, payload: response.data.data });
+            dispatch(addToast({ text: response.data.message }));
+            dispatch(toggleModal());
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        });
+};
+
 export const deleteBookAllotment = (bookId) => async (dispatch) => {
     await apiConfig.delete(`books-history/${bookId}`)
         .then((response) => {
@@ -78,7 +90,9 @@ const getApiRoute = (status) => {
             return 'reserve-book';
         case bookAllotmentStatusConstant.BOOK_ISSUED:
             return 'issue-book';
-        default:
+        case bookAllotmentStatusConstant.BOOK_RETURNED:
             return 'return-book';
+        default:
+            return 'un-reserve-book';
     }
 };

@@ -101,7 +101,9 @@ export const bookStatusOptions = [
     { id: 2, name: 'Issued' },
     { id: 3, name: 'Returned' },
     { id: 4, name: 'Available' },
-    { id: 5, name: 'Unreserved' }
+    { id: 5, name: 'Unreserved' },
+    { id: 6, name: 'Lost' },
+    { id: 7, name: 'Damage' }
 ];
 
 export const errorMessage = {
