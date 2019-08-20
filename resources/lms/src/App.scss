@@ -8,7 +8,7 @@
 // Import Simple Line Icons Set
 @import '~simple-line-icons/css/simple-line-icons.css';
 // Import Main styles for this application
-@import '../scss/style.scss';
+@import './scss/style.scss';
 // Styles
 // CoreUI Icons Set
 @import '~@coreui/icons/css/coreui-icons.css';
@@ -19,7 +19,7 @@
 // Import Simple Line Icons Set
 @import '~simple-line-icons/css/simple-line-icons.css';
 // Import Main styles for this application
-@import '../scss/style.scss';
+@import './scss/style.scss';
 // Import react boostrap typeahed scss
 @import '~react-bootstrap-typeahead/css/Typeahead.css';
 @import "~react-datepicker/dist/react-datepicker.css";
@@ -68,6 +68,10 @@ code {
             }
         }
     }
+}
+
+.sidebar .nav-link .nav-icon {
+    font-size: 13px !important;
 }
 
 .sort-arrow-group {
@@ -197,7 +201,7 @@ select {
 
 .table-multi-item-responsive {
 
-    @media (max-width: 1399px){
+    @media (max-width: 1399px) {
         input.form-control {
             border-top-left-radius: .25rem !important;
             border-bottom-left-radius: .25rem !important;

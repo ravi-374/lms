@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 import MemberApp from './member/App';
 import AdminApp from './admin/App';
+import './App.scss';
 
 const App = () => {
     return (

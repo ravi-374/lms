@@ -44,7 +44,7 @@ const BookHistory = props => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <BookHistoryTable {...cardBodyProps}/> :
+                            <BookHistoryTable {...cardBodyProps}/>
                             <UnReserveBook {...cardModalProps}/>
                         </CardBody>
                     </Card>
