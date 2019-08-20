@@ -52,6 +52,26 @@ class GenreAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_get_genres()
+    {
+        /** @var Genre $genres */
+        $genres = factory(Genre::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/genres');
+        $search = $this->getJson('api/b1/genres?search='.$genres[0]->name);
+        $take3 = $this->getJson('api/b1/genres?limit=3');
+        $skip2 = $this->getJson('api/b1/genres?skip=2&limit=2');
+
+        $response = $response->original['data'];
+        $this->assertCount(34, $response, '29 default');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $this->assertCount(1, $search->original['data']);
+        $this->assertEquals($genres[0]->name, $search->original['data'][0]['name']);
+    }
+
+    /** @test */
     public function it_can_create_genre()
     {
         $this->mockRepository();
