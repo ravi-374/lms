@@ -28,6 +28,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         'return_due_date',
         'return_date',
         'status',
+        'member_id'
     ];
 
     /**
