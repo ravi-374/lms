@@ -76,6 +76,19 @@ class BookAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function it_can_store_book_with_items()
+    {
+        /** @var Book $book */
+        $book = factory(Book::class)->create();
+
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->postJson("api/b1/books/$book->id/items", ['items' => [$bookItem]]);
+
+        $this->assertSuccessDataResponse($response, $book->toArray(), 'Book items added successfully.');
+    }
+
+    /** @test */
     public function it_can_update_book()
     {
         $this->mockRepository();

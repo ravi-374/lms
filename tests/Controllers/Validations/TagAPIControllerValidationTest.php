@@ -78,15 +78,4 @@ class TagAPIControllerValidationTest extends TestCase
         $this->assertSuccessMessageResponse($response, 'Tag updated successfully.');
         $this->assertEquals($fakeTag['name'], $tag->fresh()->name);
     }
-
-    /** @test */
-    public function it_can_delete_tag()
-    {
-        $tag = factory(Tag::class)->create();
-
-        $response = $this->deleteJson('api/b1/tags/'.$tag->id);
-
-        $this->assertSuccessMessageResponse($response, 'Tag deleted successfully.');
-        $this->assertEmpty(Tag::where('name', $tag->name)->first());
-    }
 }
