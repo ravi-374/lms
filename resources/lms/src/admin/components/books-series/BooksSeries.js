@@ -19,17 +19,17 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BooksSeries = (props) => {
     const [bookSeries, setBookSeries] = useState(null);
-    const {booksSeries, sortAction, sortObject, toggleModal,history} = props;
+    const { booksSeries, sortAction, sortObject, toggleModal, history } = props;
     useEffect(() => {
         props.fetchBooksSeries();
         props.fetchBooks();
     }, []);
-    const cardModalProps = {bookSeries, toggleModal};
+    const cardModalProps = { bookSeries, toggleModal };
     const onOpenModal = (bookSeries = null) => {
         setBookSeries(bookSeries);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, booksSeries, onOpenModal,history};
+    const cardBodyProps = { sortAction, sortObject, booksSeries, onOpenModal, history };
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -46,9 +46,10 @@ const BooksSeries = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            {booksSeries.length > 0 ? <div>
                             <div className="d-flex justify-content-end mb-2">
-                                <CustomSearchField/></div><BookSeries {...cardBodyProps}/></div>:
+                                <CustomSearchField/>
+                            </div>
+                            {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
                                 <EmptyComponent title="No books series yet..."/>}
                             <DeleteBookSeries {...cardModalProps}/>
                             <Toasts/>

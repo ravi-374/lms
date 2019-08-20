@@ -31,6 +31,10 @@ export default (props) => {
     };
 
     const handleSearch = (searchText) => {
+        setSearchText(searchText);
+    };
+
+    const handleFilter = (searchText) => {
         setSearchText(isShowFilterField && searchText !== 'All' ? searchText.toLowerCase() : '');
     };
 
@@ -77,7 +81,7 @@ export default (props) => {
                 <Col xs={2}>
                     {isShowFilterField ?
                         <FilterField options={filterOptions} initialValues={{ filter_key: filterKey }}
-                                     handleFilter={handleSearch}/> : null}
+                                     handleFilter={handleFilter}/> : null}
                 </Col>
                 <Col xs={2}>
                     <SearchField handleSearch={handleSearch}/>
