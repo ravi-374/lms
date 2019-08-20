@@ -51,6 +51,26 @@ class PermissionAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_get_permissions()
+    {
+        /** @var Permission $permissions */
+        $permissions = factory(Permission::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/permissions');
+        $search = $this->getJson('api/b1/permissions?search='.$permissions[0]->name);
+        $take3 = $this->getJson('api/b1/permissions?limit=3');
+        $skip2 = $this->getJson('api/b1/permissions?skip=2&limit=2');
+
+        $response = $response->original['data'];
+        $this->assertCount(19, $response, '14 defaults');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $this->assertCount(1, $search->original['data']);
+        $this->assertEquals($permissions[0]->name, $search->original['data'][0]['name']);
+    }
+
+    /** @test */
     public function it_can_create_permission()
     {
         $this->mockRepository();

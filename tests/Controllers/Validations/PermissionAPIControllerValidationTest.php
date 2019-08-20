@@ -13,7 +13,6 @@ class PermissionAPIControllerValidationTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->signInWithDefaultAdminUser();
     }
 
@@ -72,20 +71,9 @@ class PermissionAPIControllerValidationTest extends TestCase
         $permission = factory(Permission::class)->create();
         $fakePermission = factory(Permission::class)->make()->toArray();
 
-        $response = $this->putJson('api/b1/permissions/'.$permission->id,$fakePermission);
+        $response = $this->putJson('api/b1/permissions/'.$permission->id, $fakePermission);
 
         $this->assertSuccessMessageResponse($response, 'Permission updated successfully.');
         $this->assertEquals($fakePermission['name'], $permission->fresh()->name);
-    }
-
-    /** @test */
-    public function it_can_delete_permission()
-    {
-        $permission = factory(Permission::class)->create();
-
-        $response = $this->deleteJson('api/b1/permissions/'.$permission->id);
-
-        $this->assertSuccessMessageResponse($response, 'Permission deleted successfully.');
-        $this->assertEmpty(Permission::where('name', $permission->name)->first());
     }
 }
