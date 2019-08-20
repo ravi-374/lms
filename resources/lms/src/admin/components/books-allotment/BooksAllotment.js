@@ -53,18 +53,18 @@ const BooksAllotment = (props) => {
             selector: 'name',
             sortable: true,
             wrap: true,
-            cell: row => row.book_item.book.name
+            cell: row => row.name = row.book_item.book.name
         },
         {
             name: 'Book Item',
             selector: 'book_code',
             width: '120px',
             sortable: true,
-            cell: row => row.book_item.book_code
+            cell: row => row.book_code = row.book_item.book_code
         },
         {
             name: 'Member',
-            selector: 'member',
+            selector: 'member_name',
             width: '140px',
             sortable: true,
             cell: row => <span>{row.member.first_name + ' ' + row.member.last_name}</span>
