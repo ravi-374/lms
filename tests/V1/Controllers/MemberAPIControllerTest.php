@@ -50,4 +50,22 @@ class MemberAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member profile updated successfully.');
     }
+
+    /** @test */
+    public function test_can_get_details_of_logged_in_member()
+    {
+        $response = $this->get('api/v1/member-details');
+
+        $this->assertSuccessMessageResponse($response, 'Member details retrieved successfully.');
+        $this->assertNotEmpty($response);
+        $this->assertEquals($this->loggedInMemberId, $response->original['data']->id);
+    }
+
+    /** @test */
+    public function test_can_remove_image()
+    {
+        $response = $this->postJson('api/v1/remove-image');
+
+        $this->assertSuccessMessageResponse($response, 'Member image removed successfully.');
+    }
 }
