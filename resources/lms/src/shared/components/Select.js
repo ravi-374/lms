@@ -16,7 +16,7 @@ export default (props) => {
         autoFocus, innerRef, defaultValue = {}, disabled, menuPlacement = "auto", isCustom,
         meta: { touched, error }, options
     } = props;
-    const formGroupClass = isCustom ? 'react-select mb-0' : 'react-select';
+    const formGroupClass = isCustom ? 'react-select mb-0 mt-1' : 'react-select';
     const labelClass = required ? 'control-label' : '';
     const inputClass = isCustom ? 'react-select__input react-select__input--secondary' :
         'react-select__input react-select__input--primary';

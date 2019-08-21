@@ -7,7 +7,7 @@ import {
 import './Component.scss';
 
 export default ({input, label, type, min,max, required, groupText, isCustom, customGroupText = '', addOnType = 'prepend', placeholder, readOnly, meta: {touched, error}}) => {
-    const formGroupClass = isCustom ? 'custom-input-search mb-0' : '';
+    const formGroupClass = isCustom ? 'custom-input-search mb-0 mt-1' : '';
     const className = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
     return (

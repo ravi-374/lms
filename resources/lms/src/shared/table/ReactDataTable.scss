@@ -30,7 +30,7 @@
 
 .innQGC {
     border: 1px solid $pagination-border-color;
-    border-right: 0;
+    margin-right: 13px;
     padding: 8px;
     border-radius: 5px;
 
@@ -40,11 +40,12 @@
 }
 
 .stWhL {
-    margin: 0 0 0 -13px;
+    margin: 0 13px 0 -13px;
     padding-right: 0;
     border-radius: 0 5px 5px 0;
     border-top: 1px solid $pagination-border-color;
     border-bottom: 1px solid $pagination-border-color;
+    border-right: 1px solid $pagination-border-color;
 
     svg {
         margin-top: 5px;
