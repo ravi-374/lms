@@ -1,16 +1,15 @@
 import {publisherActionType} from '../../constants';
-import _ from 'lodash';
 
-export default (state = {}, action) => {
+export default (state = [], action) => {
     switch (action.type) {
         case publisherActionType.FETCH_PUBLISHERS:
-            return {..._.mapKeys(action.payload, 'id')};
-        case publisherActionType.FETCH_PUBLISHER:
+            return action.payload;
         case publisherActionType.EDIT_PUBLISHER:
+            return state.map(item => item.id === +action.payload.id ? action.payload : item);
         case publisherActionType.ADD_PUBLISHER:
-            return {...state, [action.payload.id]: action.payload};
+            return [...state, action.payload];
         case publisherActionType.DELETE_PUBLISHER:
-            return _.omit(state, action.payload);
+            return state.filter(item => item.id !== action.payload);
         default:
             return state;
     }

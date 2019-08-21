@@ -27,12 +27,8 @@ const Publishers = (props) => {
         toggleModal();
     };
 
-    const fetchPublishers = (filter) => {
-        props.fetchPublishers(filter, true);
-    };
-
     const onChange = (filter) => {
-        fetchPublishers(filter);
+        props.fetchPublishers(filter, true);
     };
 
     const columns = [
@@ -82,8 +78,7 @@ const Publishers = (props) => {
 
 const mapStateToProps = (state) => {
     const { publishers, isLoading, totalRecord } = state;
-    let publishersArray = Object.values(publishers);
-    return { publishers: publishersArray, isLoading, totalRecord };
+    return { publishers, isLoading, totalRecord };
 };
 
 export default connect(mapStateToProps, { fetchPublishers, toggleModal })(Publishers);
