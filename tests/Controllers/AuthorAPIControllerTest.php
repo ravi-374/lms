@@ -62,7 +62,7 @@ class AuthorAPIControllerTest extends TestCase
         $skip2 = $this->getJson('api/b1/authors?skip=2&limit=2');
 
         $response = $response->original['data'];
-        $this->assertCount(15, $response,'10 default');
+        $this->assertCount(15, $response, '10 default');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
