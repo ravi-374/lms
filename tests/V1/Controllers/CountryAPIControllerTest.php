@@ -49,4 +49,24 @@ class CountryAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $countries->toArray(), 'Countries retrieve successfully.');
     }
+
+    /** @test */
+    public function test_can_get_countries()
+    {
+        /** @var Country $countries */
+        $countries = factory(Country::class)->times(5)->create();
+
+        $response = $this->getJson('api/v1/countries');
+        $search = $this->getJson('api/v1/countries?search='.$countries[0]->name);
+        $take3 = $this->getJson('api/v1/countries?limit=3');
+        $skip2 = $this->getJson('api/v1/countries?skip=2&limit=2');
+
+        $response = $response->original['data'];
+        $this->assertCount(251, $response);
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $this->assertCount(1, $search->original['data']);
+        $this->assertEquals($countries[0]->name, $search->original['data'][0]['name']);
+    }
 }

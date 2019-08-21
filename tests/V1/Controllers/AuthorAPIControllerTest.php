@@ -48,4 +48,24 @@ class AuthorAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $authors->toArray(), 'Authors retrieved successfully.');
     }
+
+    /** @test */
+    public function test_can_get_authors()
+    {
+        /** @var Author $authors */
+        $authors = factory(Author::class)->times(5)->create();
+
+        $response = $this->getJson('api/v1/authors');
+        $search = $this->getJson('api/v1/authors?search='.$authors[0]->first_name);
+        $take3 = $this->getJson('api/v1/authors?limit=3');
+        $skip2 = $this->getJson('api/v1/authors?skip=2&limit=2');
+
+        $response = $response->original['data'];
+        $this->assertCount(15, $response, '10 defaults');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $this->assertCount(1, $search->original['data']);
+        $this->assertEquals($authors[0]->first_name, $search->original['data'][0]['first_name']);
+    }
 }
