@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
@@ -10,19 +10,14 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {activeDeactiveUser, fetchUsers} from '../../store/actions/userAction';
 import {fetchRoles} from '../../store/actions/roleAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {prepareRoles} from "../../shared/sharedMethod";
 
 const Users = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isCreateMode, setCreateMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [user, setUser] = useState(null);
-    const { users, roles, toggleModal, history, isLoading, totalRecord } = props;
-    const cardModalProps = { user, roles, isDeleteMode, isEditMode, isCreateMode, toggleModal };
-
-    useEffect(() => {
-        props.fetchRoles();
-    }, []);
+    const { users, toggleModal, history, isLoading, totalRecord } = props;
+    const cardModalProps = { user, isDeleteMode, isEditMode, isCreateMode, toggleModal };
 
     const setActiveInactive = (id) => {
         if (id) {
@@ -47,7 +42,6 @@ const Users = (props) => {
 
     const cardBodyProps = {
         users,
-        roles,
         setActiveInactive,
         onOpenModal,
         history,
@@ -83,7 +77,7 @@ const Users = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { users, roles, isLoading, totalRecord } = state;
-    return { users: Object.values(users), roles: prepareRoles(Object.values(roles)), isLoading, totalRecord };
+    const { users, isLoading, totalRecord } = state;
+    return { users: Object.values(users), isLoading, totalRecord };
 };
 export default connect(mapStateToProps, { fetchUsers, activeDeactiveUser, fetchRoles, toggleModal })(Users);
