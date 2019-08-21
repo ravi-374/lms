@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../shared/components/Modal';
 import {editMember} from '../../store/actions/memberAction';
-import {fetchCountries} from "../../../member/store/actions/countryAction";
+import {fetchCountries} from "../../store/actions/countryAction";
 import {fetchMembershipPlans} from "../../store/actions/membershipPlanAction";
 import MemberForm from './MemberForm';
 import prepareFormData from './prepareFormData';
