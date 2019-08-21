@@ -11,7 +11,7 @@ import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MemberProfile = props => {
-    const { isLoading, countries, userProfile, roles, fetchUserProfile, fetchCountries, editUserProfile } = props;
+    const { isLoading, countries, userProfile, roles, fetchUserProfile, fetchCountries, editUserProfile,history } = props;
     useEffect(() => {
         fetchUserProfile();
         fetchCountries();
@@ -51,7 +51,8 @@ const MemberProfile = props => {
         initialValues: changeAbleFields,
         roles,
         countries,
-        onSaveProfile
+        onSaveProfile,
+        history
     };
     return (
         <div className="animated fadeIn">
