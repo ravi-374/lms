@@ -28,7 +28,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_user_fails_when_last_name_is_not_passed()
     {
-        $input = $this->userInput(['last_name' => '']);
+        $input = factory(User::class)->raw(['last_name' => '']);
 
         $response = $this->postJson('api/b1/users', $input);
 
@@ -38,7 +38,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_user_fails_when_email_is_not_passed()
     {
-        $input = $this->userInput(['email' => '']);
+        $input = factory(User::class)->raw(['email' => '']);
 
         $response = $this->postJson('api/b1/users', $input);
 
@@ -48,7 +48,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_users_fails_when_password_is_not_passed()
     {
-        $input = $this->userInput(['password' => '']);
+        $input = factory(User::class)->raw(['password' => '']);
 
         $response = $this->postJson('api/b1/users', $input);
 
@@ -58,7 +58,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_user_fails_when_password_length_is_less_than_six_character()
     {
-        $input = $this->userInput(['password' => 12345]);
+        $input = factory(User::class)->raw(['password' => 12345]);
 
         $response = $this->postJson('api/b1/users', $input);
 
@@ -68,9 +68,9 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_user_fails_when_role_is_not_passed()
     {
-        $input = $this->userInput(['role_id' => '']);
+        $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users', $input);
+        $response = $this->postJson('api/b1/users', array_merge($input, ['role_id' => '']));
 
         $this->assertExceptionMessage($response, 'User must have at least one role.');
     }
@@ -78,9 +78,9 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_user_fails_when_role_is_not_valid()
     {
-        $input = $this->userInput(['role_id' => 'string']);
+        $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users', $input);
+        $response = $this->postJson('api/b1/users', array_merge($input, ['role_id' => 'string']));
 
         $this->assertExceptionMessage($response, 'The role id must be an integer.');
     }
@@ -89,7 +89,7 @@ class UserControllerValidationTest extends TestCase
     public function test_create_user_fails_when_email_is_duplicate()
     {
         $ankit = factory(User::class)->create();
-        $input = $this->userInput(['email' => $ankit->email]);
+        $input = factory(User::class)->raw(['email' => $ankit->email]);
 
         $response = $this->postJson('api/b1/users', $input);
 
@@ -110,7 +110,7 @@ class UserControllerValidationTest extends TestCase
     public function test_update_user_fails_when_last_name_is_not_passed()
     {
         $ankit = factory(User::class)->create();
-        $input = $this->userInput(['last_name' => '']);
+        $input = factory(User::class)->raw(['last_name' => '']);
 
         $response = $this->postJson('api/b1/users/'.$ankit->id, $input);
 
@@ -121,7 +121,7 @@ class UserControllerValidationTest extends TestCase
     public function test_update_user_fails_when_email_is_not_passed()
     {
         $farhan = factory(User::class)->create();
-        $input = $this->userInput(['email' => '']);
+        $input = factory(User::class)->raw(['email' => '']);
 
         $response = $this->postJson('api/b1/users/'.$farhan->id, $input);
 
@@ -133,7 +133,7 @@ class UserControllerValidationTest extends TestCase
     {
         $farhan = factory(User::class)->create();
         $vishal = factory(User::class)->create();
-        $input = $this->userInput(['email' => $farhan->email]);
+        $input = factory(User::class)->raw(['email' =>  $farhan->email]);
 
         $response = $this->postJson('api/b1/users/'.$vishal->id, $input);
 
@@ -144,9 +144,9 @@ class UserControllerValidationTest extends TestCase
     public function test_update_user_fails_when_role_is_not_valid()
     {
         $farhan = factory(User::class)->create();
-        $input = $this->userInput(['role_id' => 'string']);
+        $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users/'.$farhan->id, $input);
+        $response = $this->postJson('api/b1/users/'.$farhan->id, array_merge($input, ['role_id' =>'string']));
 
         $this->assertExceptionMessage($response, 'The role id must be an integer.');
     }
@@ -155,9 +155,10 @@ class UserControllerValidationTest extends TestCase
     public function it_can_store_user()
     {
         $user = factory(User::class)->create();
-        $fakeUser = factory(User::class)->make()->toArray();
+        $fakeUser = factory(User::class)->raw(['id' => $user->id]);
         $role = factory(Role::class)->create();
         $fakeUser['roles'] = $role->id;
+
         $response = $this->postJson('api/b1/users', array_merge($fakeUser, [
             'password' => $this->faker->password,
             'role_id'  => $role->id,
@@ -222,20 +223,5 @@ class UserControllerValidationTest extends TestCase
 
         $this->assertNotEmpty($response);
         $this->assertEquals($this->loggedInUserId, $response->original['data']->id);
-    }
-
-    /**
-     * @param array $input
-     *
-     * @return array
-     */
-    public function userInput($input = [])
-    {
-        return array_merge([
-            'first_name' => $this->faker->firstName,
-            'last_name'  => $this->faker->firstName,
-            'email'      => $this->faker->email,
-            'password'   => $this->faker->password,
-        ], $input);
     }
 }
