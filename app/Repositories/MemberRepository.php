@@ -62,15 +62,32 @@ class MemberRepository extends BaseRepository
         $query = $this->allQuery($search, $skip, $limit)->with('address', 'membershipPlan');
 
         if (!empty($search['search'])) {
-            $query = $query->orWhereHas('membershipPlan', function (Builder $q) use ($search) {
-                $q->whereRaw("lower(name) like ?", ['%'.$search['search'].'%']);
-            });
+            $query = $this->applyDynamicSearch($search, $query);
         }
 
         /** @var Member[] $members */
         $members = $query->orderByDesc('id')->get();
 
         return $members;
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orWhereHas('membershipPlan', function (Builder $query) use ($keywords) {
+                MembershipPlan::filterByPlanName($query, $keywords);
+            });
+        });
+
+        return $query;
     }
 
     /**

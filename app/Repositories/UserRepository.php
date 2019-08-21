@@ -59,15 +59,32 @@ class UserRepository extends BaseRepository
         $query = $this->allQuery($search, $skip, $limit)->with('roles', 'address');
 
         if (!empty($search['search'])) {
-            $query = $query->orWhereHas('roles', function (Builder $q) use ($search) {
-                $q->whereRaw("lower(name) like ?", ['%'.$search['search'].'%']);
-            });
+            $query = $this->applyDynamicSearch($search, $query);
         }
 
         /** @var User[] $users */
         $users = $query->orderByDesc('id')->get();
 
         return $users;
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orWhereHas('roles', function (Builder $query) use ($keywords) {
+                User::filterByRoleName($query, $keywords);
+            });
+        });
+
+        return $query;
     }
 
     /**

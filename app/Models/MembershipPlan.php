@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 use Str;
 
@@ -90,5 +92,22 @@ class MembershipPlan extends Model
     public function member()
     {
         return $this->hasOne(Member::class, 'membership_plan_id');
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByPlanName(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(name) LIKE ?', [trim(strtolower($keyword))]);
+            }
+        });
+
+        return $query;
     }
 }

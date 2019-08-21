@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\ImageTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -160,5 +161,23 @@ class Member extends Authenticatable implements JWTSubject
     public function membershipPlan()
     {
         return $this->belongsTo(MembershipPlan::class, 'membership_plan_id');
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByMemberName(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(first_name) LIKE ?', [trim(strtolower($keyword))]);
+                $query->orWhereRaw('lower(last_name) LIKE ?', [trim(strtolower($keyword))]);
+            }
+        });
+
+        return $query;
     }
 }

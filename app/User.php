@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Address;
 use App\Traits\ImageTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -150,5 +151,22 @@ class User extends Authenticatable implements JWTSubject
     public function address()
     {
         return $this->morphOne(Address::class, 'owner')->with('country');
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByRoleName(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(name) LIKE ?', [trim(strtolower($keyword))]);
+            }
+        });
+
+        return $query;
     }
 }
