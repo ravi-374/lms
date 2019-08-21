@@ -81,17 +81,16 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         if (!empty($orderBy)) {
             $sortDescending = ($search['direction'] == 'asc') ? false : true;
             $orderString = '';
-
-            if ($orderBy == 'name') {
-                $orderString = 'bookItem.book.name';
-            }
-
-            if ($orderBy == 'book_code') {
-                $orderString = 'bookItem.book_code';
-            }
-
-            if ($orderBy == 'member_name') {
-                $orderString = 'member.first_name';
+            switch ($orderBy) {
+                case 'name' :
+                    $orderString = 'bookItem.book.name';
+                    break;
+                case 'book_code' :
+                    $orderString = 'bookItem.book_code';
+                    break;
+                case 'member_name' :
+                    $orderString = 'member.first_name';
+                    break;
             }
 
             $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
