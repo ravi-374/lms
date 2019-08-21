@@ -109,9 +109,8 @@ const Books = (props) => {
 
 const mapStateToProps = (state) => {
     const { books, isLoading, totalRecord } = state;
-    let booksArray = Object.values(books);
     return {
-        books: booksArray, isLoading, totalRecord
+        books, isLoading, totalRecord
     };
 };
 
