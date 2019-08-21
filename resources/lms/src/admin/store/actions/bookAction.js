@@ -21,12 +21,8 @@ export const fetchBooks = (filter = {}, history = null, isLoading = false) => as
             isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({response}) => {
-            if (response) {
-                dispatch(addToast({text: response.data.message, type: 'error'}));
-            } else if (history) {
-                dispatch(addToast({text: 'Something went wrong !', type: 'error'}));
-                history.push('/app/admin/error');
-            }
+            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 
@@ -39,6 +35,7 @@ export const fetchBook = (bookId, isLoading = true) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 
@@ -53,6 +50,7 @@ export const addBook = (book, history) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 
@@ -71,6 +69,7 @@ export const editBook = (bookId, book, history = null) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 

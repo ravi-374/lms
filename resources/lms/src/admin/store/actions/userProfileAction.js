@@ -14,6 +14,7 @@ export const fetchUserProfile = () => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+            dispatch(setLoading(false));
         });
 };
 
@@ -27,5 +28,6 @@ export const editUserProfile = (user) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+            dispatch(setLoading(false));
         });
 };

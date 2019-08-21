@@ -13,6 +13,7 @@ export const fetchRoles = (isLoading = false) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 

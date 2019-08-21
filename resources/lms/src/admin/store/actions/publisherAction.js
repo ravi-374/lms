@@ -23,6 +23,7 @@ export const fetchPublishers = (filter = {}, isLoading = false) => async (dispat
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 
