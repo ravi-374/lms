@@ -49,6 +49,7 @@ class MemberAPIController extends AppBaseController
     {
         $input = $request->all();
         unset($input['email']);
+        unset($input['membership_plan']);
 
         $updateMember = $this->memberRepository->update($input, Auth::id());
 
