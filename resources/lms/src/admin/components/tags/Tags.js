@@ -15,15 +15,15 @@ import PublisherModal from "../publishers/PublisherModal";
 const Tags = (props) => {
     const [isCreateTag, setCreateMode] = useState(false);
     const [isEditTag, setEditMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
+    const [isDeleteTag, setDeleteTag] = useState(false);
     const [tag, setTag] = useState(null);
     const { tags, toggleModal, totalRecord, isLoading } = props;
-    const cardModalProps = { tag, isDeleteMode, isEditTag, isCreateTag, toggleModal };
+    const cardModalProps = { tag, isDeleteTag, isEditTag, isCreateTag, toggleModal };
 
     const onOpenModal = (isEdit, tag = null, isDelete = false) => {
         setEditMode(isEdit);
         setCreateMode(!isEdit);
-        setDeleteMode(isDelete);
+        setDeleteTag(isDelete);
         setTag(tag);
         toggleModal();
     };
@@ -84,8 +84,7 @@ const Tags = (props) => {
 
 const mapStateToProps = (state) => {
     const { tags, isLoading, totalRecord } = state;
-    let tagsArray = Object.values(tags);
-    return { tags: tagsArray, isLoading, totalRecord };
+    return { tags, isLoading, totalRecord };
 };
 
 export default connect(mapStateToProps, { fetchTags, toggleModal })(Tags);
