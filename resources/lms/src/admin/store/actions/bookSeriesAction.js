@@ -13,6 +13,7 @@ export const fetchBooksSeries = () => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 
@@ -25,6 +26,7 @@ export const fetchBookSeries = (bookSeriesId) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 
@@ -39,6 +41,7 @@ export const addBookSeries = (bookSeries, history) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 
@@ -53,6 +56,7 @@ export const editBookSeries = (bookSeriesId, bookSeries, history) => async (disp
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 

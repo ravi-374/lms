@@ -14,6 +14,7 @@ export const fetchMember = () => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+            dispatch(setLoading(false));
         });
 };
 
@@ -28,5 +29,6 @@ export const editMember = (member, history) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+            dispatch(setLoading(false));
         });
 };

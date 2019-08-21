@@ -17,8 +17,8 @@ export const fetchBooksHistory = (filter) => async (dispatch) => {
         dispatch(setTotalRecord(response.data.totalRecords));
         dispatch(setLoading(false));
     }).catch(({response}) => {
-        dispatch(setLoading(false));
         dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+        dispatch(setLoading(false));
     });
 };
 

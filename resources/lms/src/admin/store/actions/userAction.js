@@ -22,6 +22,7 @@ export const fetchUsers = (filter = {}, isLoading = false) => async (dispatch) =
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 
@@ -34,6 +35,7 @@ export const fetchUser = (userId) => async (dispatch) => {
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
+            dispatch(setLoading(false));
         });
 };
 
