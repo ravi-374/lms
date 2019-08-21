@@ -12,7 +12,7 @@ export const dateFormatter = (date) => {
     if (!date) {
         return '';
     }
-    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('Do MMMM, YYYY');
+    return moment(date, 'YYYY-MM-DD hh:mm:ss').format('Do MMM, YYYY');
 };
 
 export const timeFormatter = (date) => {

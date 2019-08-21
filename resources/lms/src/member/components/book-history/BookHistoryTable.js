@@ -96,7 +96,7 @@ export default (props) => {
                 onOpenModal(bookHistory)
             }}>
                 Unreserve
-            </Button>;
+            </Button>
         }
         return '';
     };
