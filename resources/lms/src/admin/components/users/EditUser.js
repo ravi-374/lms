@@ -5,11 +5,14 @@ import {editUser} from '../../store/actions/userAction';
 import UserForm from './UserForm';
 import prepareFormData from './prepareFormData';
 import {fetchCountries} from "../../store/actions/countryAction";
+import {fetchRoles} from "../../store/actions/roleAction";
+import {prepareRoles} from "../../shared/sharedMethod";
 
 const EditUser = (props) => {
     const { countries } = props;
     useEffect(() => {
         props.fetchCountries();
+        props.fetchRoles();
     }, []);
     const onSaveUser = (formValues) => {
         props.editUser(props.user.id, prepareFormData(formValues));
@@ -29,7 +32,7 @@ const EditUser = (props) => {
         const { address_1, address_2, country, city, state, zip } = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country ? country : {};
+        changeAbleFields.country = country ? country : null;
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
@@ -44,4 +47,8 @@ const EditUser = (props) => {
     return <Modal {...props} content={<UserForm {...prepareFormOption}/>}/>
 };
 
-export default connect(null, { editUser, fetchCountries })(EditUser);
+const mapStateToProps = (state) => {
+    const { roles, countries } = state;
+    return { roles: prepareRoles(Object.values(roles)), countries }
+};
+export default connect(mapStateToProps, { editUser, fetchCountries, fetchRoles })(EditUser);

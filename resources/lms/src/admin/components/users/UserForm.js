@@ -123,7 +123,7 @@ const UserForm = (props) => {
                     </Col>
                     <Col xs={6}>
                         <Field name="country" label="Country" options={countries} placeholder="Select Country"
-                               groupText="flag" component={Select} isSearchable={true} isMini={true}/>
+                               groupText="flag" component={Select} isSearchable={true}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>

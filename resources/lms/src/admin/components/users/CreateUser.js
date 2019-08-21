@@ -1,33 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../shared/components/Modal';
 import {addUser} from '../../store/actions/userAction';
 import UserForm from './UserForm';
 import prepareFormData from './prepareFormData';
-import apiConfig from '../../config/apiConfig';
+import {fetchCountries} from "../../store/actions/countryAction";
+import {fetchRoles} from "../../store/actions/roleAction";
+import {prepareRoles} from "../../shared/sharedMethod";
 
 const CreateUser = (props) => {
-    const [countries, setCountries] = useState([]);
+    const { countries, roles } = props;
     useEffect(() => {
-        apiConfig.get('countries').then(response =>
-            setCountries([...countries, ...response.data.data])
-        ).catch(({response}) => {
-        })
     }, []);
-    if (countries.length <= 1) {
-        return null;
-    }
     const onSaveUser = (formValues) => {
-        formValues.roles = [{id: 1}, {id: 2}];
         props.addUser(prepareFormData(formValues));
     };
     const prepareFormOption = {
         onSaveUser,
         onCancel: props.toggleModal,
-        roles: props.roles,
+        roles: roles,
         countries: countries
     };
     return <Modal {...props} content={<UserForm{...prepareFormOption}/>}/>
 };
 
-export default connect(null, {addUser})(CreateUser);
+const mapStateToProps = (state) => {
+    const { roles, countries } = state;
+    return { roles: prepareRoles(Object.values(roles)), countries }
+};
+export default connect(mapStateToProps, { addUser, fetchCountries, fetchRoles })(CreateUser);
