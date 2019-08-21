@@ -38,14 +38,15 @@ export default (props) => {
         setSearchText(isShowFilterField && searchText !== 'All' ? searchText.toLowerCase() : '');
     };
 
-    const customSort = (field, directionBy) => {
-        if (field.selector && (orderBy !== field.selector || direction !== directionBy)) {
-            setOrderBy(field.selector);
-            setDirection(directionBy);
+    const customSort = (rows, field, direction) => {
+        if (field) {
+            setOrderBy(field);
+            setDirection(direction);
         }
+        return rows;
     };
 
-    const handlePerRowsChange = async (recordPerPage, page) => {
+    const handlePerRowsChange = async (recordPerPage) => {
         if (perPage !== recordPerPage) {
             setPerPages(recordPerPage);
         }
@@ -90,9 +91,9 @@ export default (props) => {
             <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading}
                                                         paginationRowsPerPageOptions={[10, 25, 50, 100]}
                                                         title={loading ? 'Loading......' : 'No records yet'}/>}
-                       pagination={true} paginationServer={true} onSort={customSort} striped={true}
+                       pagination={true} paginationServer={true} sortFunction={customSort} striped={true}
                        highlightOnHover={true} className={'table-bordered table-striped mt-2'} customTheme={darkTheme}
-                       paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange} defaultSortAsc={false}
+                       paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange}
                        onChangePage={handlePageChange} noHeader={true} columns={tableColumns} data={items}/>
         </Fragment>
     )
