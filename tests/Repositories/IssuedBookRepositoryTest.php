@@ -193,6 +193,21 @@ class IssuedBookRepositoryTest extends TestCase
         $this->issuedBookRepo->validateBook($issuedBook->toArray());
     }
 
+    /**
+     * @test
+     */
+    public function test_validate_issue_book_data()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->issuedBookRepo->validateBook([
+            'book_item_id' => $bookItem->id,
+        ]);
+
+        $this->assertTrue($response);
+    }
+
     /** @test */
     public function test_member_can_reserve_book()
     {

@@ -55,6 +55,16 @@ class MemberRepositoryTest extends TestCase
         $this->assertNotEmpty($member->address);
     }
 
+    /**
+     * @test
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage No query results for model [App\Models\MembershipPlan] 999
+     */
+    public function test_unable_to_create_member_with_non_existing_membership_plan_id()
+    {
+        $this->memberRepo->store(['membership_plan_id' => 999]);
+    }
+
     /** @test */
     public function test_can_update_member()
     {
@@ -66,6 +76,32 @@ class MemberRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $updatedMember);
         $this->assertEquals($fakeMember['first_name'], $updatedMember->fresh()->first_name);
+    }
+
+    /**
+     * @test
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage No query results for model [App\Models\MembershipPlan] 999
+     */
+    public function test_unable_to_update_member_with_non_existing_membership_plan_id()
+    {
+        /** @var Member $member */
+        $member = factory(Member::class)->create();
+
+        $this->memberRepo->update(['membership_plan_id' => 999], $member->id);
+    }
+
+    /**
+     * @test
+     * @expectedException App\Exceptions\ApiOperationFailedException
+     * @expectedExceptionMessage Member not found
+     */
+    public function test_unable_to_update_member_with_non_existing_member_id()
+    {
+        /** @var Member $member */
+        $member = factory(Member::class)->raw();
+
+        $this->memberRepo->update($member, 999);
     }
 
     /** @test */

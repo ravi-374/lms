@@ -2,6 +2,7 @@
 
 namespace Tests\Repositories;
 
+use App\Models\Member;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Repositories\RoleRepository;
@@ -54,6 +55,19 @@ class RoleRepositoryTest extends TestCase
         $this->assertArrayHasKey('id', $result);
         $this->assertEquals($fakeRole['name'], $result['name']);
         $this->assertCount(1, $result->perms);
+    }
+
+    /**
+     * @test
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage Role not found.
+     */
+    public function test_unable_to_update_role_with_non_existing_role_id()
+    {
+        /** @var Member $member */
+        $member = factory(Member::class)->raw();
+
+        $this->roleRepo->update($member, 999);
     }
 
     /** @test */
