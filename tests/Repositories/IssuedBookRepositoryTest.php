@@ -70,7 +70,7 @@ class IssuedBookRepositoryTest extends TestCase
         $reserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
         $unReserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_UN_RESERVED]);
 
-        $issuedBooks = $this->issuedBookRepo->all(['search' => 'issue']);
+        $issuedBooks = $this->issuedBookRepo->all(['search' => 'issued']);
         $unReserveBooks = $this->issuedBookRepo->all(['search' => 'un-reserve']);
 
         $this->assertCount(1, $issuedBooks);
@@ -289,7 +289,7 @@ class IssuedBookRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function test_can_update_issued_book_status_with_book_item_status()
+    public function test_can_update_given_issued_book_status()
     {
         /** @var IssuedBook $issuedBook */
         $issuedBook = factory(IssuedBook::class)->create();
@@ -300,9 +300,8 @@ class IssuedBookRepositoryTest extends TestCase
         ];
         $updatedStatus = $this->issuedBookRepo->updateIssuedBookStatus($input);
 
-        $this->assertEquals($issuedBook->id, $updatedStatus->id);
-        $this->assertEquals(IssuedBook::STATUS_LOST, $updatedStatus->status);
-        $this->assertEquals(BookItem::STATUS_LOST, $updatedStatus->bookItem->status);
+        $this->assertEquals(IssuedBook::STATUS_LOST, $issuedBook->fresh()->status);
+        $this->assertEquals(BookItem::STATUS_LOST, $issuedBook->bookItem->status);
     }
 
     /**
@@ -320,7 +319,7 @@ class IssuedBookRepositoryTest extends TestCase
      * @expectedException  Illuminate\Database\Eloquent\ModelNotFoundException
      * @expectedExceptionMessage No query results for model [App\Models\BookItem] 999
      */
-    public function test_unable_to_update_issued_book_with_non_existing_member_id()
+    public function test_unable_to_update_issued_book_status_with_non_existing_member()
     {
         $input = ['book_item_id' => 999, 'status' => IssuedBook::STATUS_LOST];
 
@@ -332,7 +331,7 @@ class IssuedBookRepositoryTest extends TestCase
      * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
      * @expectedExceptionMessage Book is not issued.
      */
-    public function test_unable_to_update_non_existing_issued_book()
+    public function test_only_update_issued_book_status_when_book_is_allotted_to_user()
     {
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();

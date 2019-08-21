@@ -73,7 +73,9 @@ class IssuedBookAPIControllerTest extends TestCase
             $issuedBook->fresh()->toArray(),
             'Issued Book status updated successfully.'
         );
-        $this->assertEquals(BookItem::STATUS_LOST, $response->original['data']['book_item']['status']);
+
+        $this->assertEquals(IssuedBook::STATUS_LOST, $issuedBook->fresh()->status);
+        $this->assertEquals(BookItem::STATUS_LOST, $issuedBook->bookItem->status);
     }
 
     /** @test */

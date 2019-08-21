@@ -83,12 +83,13 @@ class BookItemAPIControllerTest extends TestCase
         $bookItem = factory(BookItem::class)->create();
 
         $response = $this->putJson("api/b1/books/$bookItem->id/update-book-status", [
-            'status' => BookItem::STATUS_NOT_AVAILABLE,
+            'status' => BookItem::STATUS_DAMAGED,
         ]);
 
         $this->assertSuccessDataResponse(
             $response, $bookItem->fresh()->toArray(), 'Book status updated successfully.'
         );
+        $this->assertEquals(BookItem::STATUS_DAMAGED,$response->original['data']['status']);
     }
 
     /** @test */
