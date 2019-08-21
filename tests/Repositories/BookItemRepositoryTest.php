@@ -74,7 +74,7 @@ class BookItemRepositoryTest extends TestCase
         $allBookItems = $this->bookItemRepo->searchBooks($search);
 
         $this->assertCount(2, $allBookItems);
-        $this->assertEquals($search['id'], $allBookItems[0]->book_id." ".$allBookItems[1]->book_id);
+        $this->assertContains($search['id'], $allBookItems[0]->book_id." ".$allBookItems[1]->book_id);
     }
 
     /** @test */
