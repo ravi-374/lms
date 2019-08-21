@@ -10,7 +10,6 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
-import {Routes} from "../../../constants";
 import {prepareRoles} from "../../shared/sharedMethod";
 
 const UserDetail = props => {
@@ -33,7 +32,7 @@ const UserDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push(Routes.USERS);
+        history.goBack();
     };
     const imageUrl = user.image ? publicImagePathURL.USER_AVATAR_URL + user.image : publicImagePath.USER_AVATAR;
     const { address } = user;

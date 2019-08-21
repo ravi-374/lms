@@ -16,7 +16,7 @@ const CreateBookSeries = (props) => {
         props.addBookSeries(formValues, props.history);
     };
     const goBack = () => {
-        props.history.push('/app/admin/books-series');
+        props.history.goBack();
     };
     const { isLoading, books } = props;
     if (isLoading) {

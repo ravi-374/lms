@@ -13,7 +13,6 @@ import {fetchTags} from '../../store/actions/tagAction';
 import {prepareAuthor, preparePublisher, prepareBookLanguage} from './prepareArray';
 import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {Routes} from "../../../constants";
 
 const CreateBook = (props) => {
     useEffect(() => {
@@ -27,7 +26,7 @@ const CreateBook = (props) => {
         props.addBook(prepareFormData(formValues), props.history);
     };
     const goBack = () => {
-        props.history.push(Routes.BOOKS);
+        props.history.goBack();
     };
     const { authors, publishers, tags, bookLanguages, genres, isLoading } = props;
     const prepareFormOption = {

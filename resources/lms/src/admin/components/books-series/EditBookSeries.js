@@ -10,7 +10,7 @@ import {setLoading} from '../../../store/action/progressBarAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const EditBookSeries = (props) => {
-    const {books, bookSeries, isLoading} = props;
+    const { books, bookSeries, isLoading, history } = props;
     useEffect(() => {
         props.fetchBookSeries(+props.match.params.id);
         props.fetchBooks();
@@ -19,7 +19,7 @@ const EditBookSeries = (props) => {
         props.editBookSeries(props.bookSeries.id, formValues, props.history);
     };
     const goBack = () => {
-        props.history.push('/app/admin/books-series');
+        history.goBack();
     };
     if (isLoading || !bookSeries || !books || (books && books.length === 0) ||
         (bookSeries && !bookSeries.series_items) ||

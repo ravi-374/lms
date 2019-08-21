@@ -30,7 +30,7 @@ const BookDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push('/app/admin/books');
+        history.goBack();
     };
     const bookFormOptions = { book, toggleModal };
     const bookItemFormOptions = {

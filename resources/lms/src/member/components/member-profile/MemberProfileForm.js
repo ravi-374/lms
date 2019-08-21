@@ -43,7 +43,7 @@ const MemberForm = (props) => {
         setIsDefaultImage(true);
     };
     const goToHomePage = () => {
-        history.push('/');
+        history.goBack();
     };
     const imagePickerOptions = {image, isDefaultImage, onRemovePhoto, onFileChange};
     return (
