@@ -2,9 +2,9 @@
 
 namespace Tests\Controllers\Validations;
 
+use App\Models\BookItem;
 use App\Models\Publisher;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class PublisherAPIControllerValidationTest extends TestCase
@@ -21,8 +21,9 @@ class PublisherAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_publisher_fails_when_name_is_not_passed()
     {
-        $this->post('api/b1/publishers', ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->postJson('api/b1/publishers', ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -30,8 +31,9 @@ class PublisherAPIControllerValidationTest extends TestCase
     {
         $publisher = factory(Publisher::class)->create();
 
-        $this->post('api/b1/publishers/', ['name' => $publisher->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response = $this->postJson('api/b1/publishers/', ['name' => $publisher->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
@@ -39,8 +41,9 @@ class PublisherAPIControllerValidationTest extends TestCase
     {
         $publisher = factory(Publisher::class)->create();
 
-        $this->put('api/b1/publishers/'.$publisher->id, ['name' => ''])
-            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        $response = $this->putJson('api/b1/publishers/'.$publisher->id, ['name' => '']);
+
+        $this->assertExceptionMessage($response, 'The name field is required.');
     }
 
     /** @test */
@@ -49,8 +52,9 @@ class PublisherAPIControllerValidationTest extends TestCase
         $publisher1 = factory(Publisher::class)->create();
         $publisher2 = factory(Publisher::class)->create();
 
-        $this->put('api/b1/publishers/'.$publisher2->id, ['name' => $publisher1->name])
-            ->assertSessionHasErrors(['name' => 'The name has already been taken.']);
+        $response =  $this->putJson('api/b1/publishers/'.$publisher2->id, ['name' => $publisher1->name]);
+
+        $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
 
     /** @test */
@@ -72,5 +76,27 @@ class PublisherAPIControllerValidationTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Publisher updated successfully.');
         $this->assertEquals($newName, $publisher->fresh()->name);
+    }
+
+    /** @test */
+    public function test_can_not_delete_publisher_when_publisher_is_used_to_one_more_book_items()
+    {
+        $publisher = factory(Publisher::class)->create();
+        $bookItem = factory(BookItem::class)->create(['publisher_id' => $publisher->id]);
+
+        $response = $this->deleteJson('api/b1/publishers/'.$publisher->id);
+
+        $this->assertExceptionMessage($response, 'Publisher can not be delete, it is used in one or more book items.');
+    }
+
+    /** @test */
+    public function it_can_delete_publisher()
+    {
+        $publisher = factory(Publisher::class)->create();
+
+        $response = $this->deleteJson('api/b1/publishers/'.$publisher->id);
+
+        $this->assertSuccessMessageResponse($response, 'Publisher deleted successfully.');
+        $this->assertEmpty(Publisher::where('name', $publisher->name)->first());
     }
 }

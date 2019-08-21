@@ -4,7 +4,6 @@ namespace Tests\Controllers\Validations;
 
 use App\Models\Author;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class AuthorAPIControllerValidationTest extends TestCase
@@ -20,8 +19,9 @@ class AuthorAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_author_fails_when_first_name_is_not_passed()
     {
-        $this->post('api/b1/authors', ['first_name' => ''])
-            ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
+        $response = $this->postJson('api/b1/authors', ['first_name' => '']);
+
+        $this->assertExceptionMessage($response, 'The first name field is required.');
     }
 
     /** @test */

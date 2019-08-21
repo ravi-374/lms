@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\V1;
+namespace Tests\V1\Controllers;
 
 use App\Models\Member;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
