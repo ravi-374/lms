@@ -6,7 +6,6 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import MemberProfileForm from './MemberProfileForm';
 import {fetchMember, editMember} from '../../store/actions/memberAction';
-import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
 import {fetchCountries} from '../../store/actions/countryAction';
 import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
@@ -15,13 +14,12 @@ const MemberProfile = props => {
     const { isLoading, countries, member, history } = props;
     useEffect(() => {
         props.fetchMember();
-        props.fetchMembershipPlans();
         props.fetchCountries();
     }, []);
     const onSaveMemberProfile = (formValues) => {
         props.editMember(prepareFormData(formValues), history);
     };
-    const { id, is_active, first_name, last_name, email, password, membership_plan, phone, address, image } = member;
+    const { id, is_active, first_name, last_name, email, password, phone, address, image } = member;
     const changeAbleFields = {
         id,
         is_active,
@@ -30,21 +28,19 @@ const MemberProfile = props => {
         email,
         password,
         image,
-        membership_plan,
         phone
     };
     if (address) {
         const { address_1, address_2, country, city, state, zip } = address;
         changeAbleFields.address_1 = address_1 ? address_1 : '';
         changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country ? country : {};
+        changeAbleFields.country = country ? country : null;
         changeAbleFields.city = city ? city : '';
         changeAbleFields.state = state ? state : '';
         changeAbleFields.zip = zip ? zip : '';
     }
     const prepareFormOption = {
         initialValues: changeAbleFields,
-        membershipPlans: props.membershipPlans,
         countries,
         history,
         onSaveMemberProfile
@@ -82,12 +78,11 @@ const MemberProfile = props => {
 };
 
 const mapStateToProps = (state) => {
-    const { member, membershipPlans, countries } = state;
-    return { member, membershipPlans, countries }
+    const { member, countries } = state;
+    return { member, countries }
 };
 export default connect(mapStateToProps, {
     fetchMember,
-    fetchMembershipPlans,
     fetchCountries,
     editMember
 })(MemberProfile);
