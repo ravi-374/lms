@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App;
+use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
@@ -112,6 +113,14 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         $query->when(!empty($search['search']), function (Builder $query) use ($search) {
             $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orWhereHas('bookItem', function (Builder $query) use ($keywords) {
+                BookItem::filterByBookCode($query, $keywords);
+            });
+
+            $query->orWhereHas('bookItem.book', function (Builder $query) use ($keywords) {
+                Book::filterByKeywords($query, $keywords);
+            });
 
             $query->orWhereHas('member', function (Builder $query) use ($keywords) {
                 Member::filterByMemberName($query, $keywords);

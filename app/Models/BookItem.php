@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -160,5 +161,22 @@ class BookItem extends Model
         }
 
         return IssuedBook::STATUS_AVAILABLE;
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByBookCode(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(book_code) LIKE ?', ['%'.strtolower(trim($keyword)).'%']);
+            }
+        });
+
+        return $query;
     }
 }
