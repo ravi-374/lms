@@ -10,7 +10,7 @@ import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 
 const MemberForm = (props) => {
-    const {initialValues, change, membershipPlans, countries, history} = props;
+    const {initialValues, change, countries, history} = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
@@ -76,19 +76,6 @@ const MemberForm = (props) => {
                     <Col xs={6}>
                         <Field name="confirm_password" label="Confirm Password" type="password" groupText="lock"
                                component={InputGroup}/>
-                    </Col>
-                    <Col xs={12}>
-                        <Field
-                            name="membership_plan"
-                            label="Membership Plan"
-                            required
-                            options={membershipPlans}
-                            placeholder="Select Membership Plan"
-                            groupText="tasks"
-                            component={Select}
-                            isSearchable={true}
-                            isMini={true}
-                        />
                     </Col>
                 </Row>
             </Col>
