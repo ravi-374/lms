@@ -39,7 +39,8 @@ class AuthorAPIControllerValidationTest extends TestCase
     {
         $author = factory(Author::class)->create();
 
-        $this->put('api/b1/authors/'.$author->id, ['first_name' => ''])
-            ->assertSessionHasErrors(['first_name' => 'The first name field is required.']);
+        $response = $this->putJson('api/b1/authors/'.$author->id, ['first_name' => '']);
+
+        $this->assertExceptionMessage($response, 'The first name field is required.');
     }
 }
