@@ -1,16 +1,15 @@
 import {genreActionType} from '../../constants';
-import _ from 'lodash';
 
-export default (state = {}, action) => {
+export default (state = [], action) => {
     switch (action.type) {
         case genreActionType.FETCH_GENRES:
-            return {..._.mapKeys(action.payload, 'id')};
-        case genreActionType.FETCH_GENRE:
+            return action.payload;
         case genreActionType.EDIT_GENRE:
+            return state.map(item => item.id === +action.payload.id ? action.payload : item);
         case genreActionType.ADD_GENRE:
-            return {...state, [action.payload.id]: action.payload};
+            return [...state, action.payload];
         case genreActionType.DELETE_GENRE:
-            return _.omit(state, action.payload);
+            return state.filter(item => item.id !== action.payload);
         default:
             return state;
     }
