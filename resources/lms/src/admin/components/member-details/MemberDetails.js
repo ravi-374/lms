@@ -156,7 +156,7 @@ const mapStateToProps = (state, ownProp) => {
         bookHistoryArray = sortFilter(bookHistoryArray, sortObject);
     }
     return {
-        member: members[ownProp.match.params.id],
+        member: members.find(member => member.id === +ownProp.match.params.id),
         memberBookHistory: bookHistoryArray,
         books: Object.values(books),
         members: prepareFullNames(Object.values(members)),
