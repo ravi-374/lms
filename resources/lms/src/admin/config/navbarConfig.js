@@ -47,13 +47,13 @@ export default {
         {
             name: 'Roles',
             url: '/app/admin/roles',
-            icon: 'icon-grid',
+            icon: 'icon-badge',
             permission: Permissions.MANAGE_ROLES,
         },
         {
             name: 'Membership Plans',
             url: '/app/admin/membership-plans',
-            icon: 'icon-briefcase',
+            icon: 'icon-docs',
             permission: Permissions.MANAGE_PLANS,
         },
         {
@@ -65,7 +65,7 @@ export default {
         {
             name: 'Members',
             url: '/app/admin/members',
-            icon: 'icon-user',
+            icon: 'icon-people',
             permission: Permissions.MANAGE_MEMBERS,
         },
         {
