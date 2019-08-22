@@ -91,7 +91,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        /** @var BookItem $member */
+        /** @var Member $member */
         $member = factory(Member::class)->create();
 
         $response = $this->postJson("api/b1/books/$bookItem->id/reserve-book", [
@@ -101,8 +101,14 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Book reserved successfully.');
         $this->assertArrayHasKey('id', $response->original['data']);
-        $this->assertEquals(IssuedBook::STATUS_RESERVED, $response->original['data']['status']);
-        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $response->original['data']['book_item']['status']);
+
+        $issuedBook = IssuedBook::with('bookItem')
+            ->where('member_id', $member->id)
+            ->where('book_item_id', $bookItem->id)
+            ->first();
+
+        $this->assertEquals(IssuedBook::STATUS_RESERVED, $issuedBook->status);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $issuedBook->bookItem->status);
     }
 
     /** @test */
@@ -116,8 +122,8 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $this->assertSuccessMessageResponse($response, 'Book un-reserved successfully.');
-        $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $response->original['data']['status']);
-        $this->assertEquals(BookItem::STATUS_AVAILABLE, $response->original['data']['book_item']['status']);
+        $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $issueBook->fresh()->status);
+        $this->assertEquals(BookItem::STATUS_AVAILABLE, $issueBook->bookItem->status);
     }
 
     /** @test */

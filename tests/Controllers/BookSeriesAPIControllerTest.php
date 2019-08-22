@@ -56,23 +56,23 @@ class BookSeriesAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_book_series()
+    public function test_can_search_and_get_book_series()
     {
-        /** @var BookSeries $bookSeries */
+        /** @var BookSeries[] $bookSeries */
         $bookSeries = factory(BookSeries::class)->times(5)->create();
 
         $response = $this->getJson('api/b1/book-series');
-        $search = $this->getJson('api/b1/book-series?search='.$bookSeries[0]->title);
+        $searchByTitle = $this->getJson('api/b1/book-series?search='.$bookSeries[0]->title);
         $take3 = $this->getJson('api/b1/book-series?limit=3');
         $skip2 = $this->getJson('api/b1/book-series?skip=2&limit=2');
 
-        $response = $response->original['data'];
-        $this->assertCount(5, $response);
+        $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
-        $this->assertCount(1, $search->original['data']);
-        $this->assertEquals($bookSeries[0]->title, $search->original['data'][0]['title']);
+        $search = $searchByTitle->original['data'];
+        $this->assertCount(1, $search);
+        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one Book Series');
     }
 
     /** @test */
