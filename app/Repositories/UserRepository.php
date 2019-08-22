@@ -8,6 +8,7 @@ use App\User;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 /**
@@ -56,11 +57,29 @@ class UserRepository extends BaseRepository
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $query = $this->allQuery($search, $skip, $limit)->with('roles', 'address');
+        $query = $this->applyDynamicSearch($search, $query);
 
         /** @var User[] $users */
         $users = $query->orderByDesc('id')->get();
 
         return $users;
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $query->orWhereHas('roles', function (Builder $query) use ($search) {
+                filterByColumns($query, $search['search'], ['name']);
+            });
+        });
+
+        return $query;
     }
 
     /**
