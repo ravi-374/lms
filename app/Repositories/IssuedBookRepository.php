@@ -31,7 +31,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         'return_due_date',
         'return_date',
         'status',
-        'member_id'
+        'member_id',
     ];
 
     /**
@@ -116,7 +116,11 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
 
             $query->orWhereHas('bookItem', function (Builder $query) use ($keywords) {
-                BookItem::filterByBookCode($query, $keywords);
+                $query->where(function (Builder $query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->orWhereRaw('lower(book_code) LIKE ?', ['%'.strtolower(trim($keyword)).'%']);
+                    }
+                });
             });
 
             $query->orWhereHas('bookItem.book', function (Builder $query) use ($keywords) {
