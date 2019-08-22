@@ -13,24 +13,28 @@ import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
+import {fetchSettings} from "../../store/actions/settingAction";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MembershipPlans = (props) => {
+    const [isCreateMode, setCreateMode] = useState(false);
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [membershipPlan, setMembershipPlan] = useState(null);
-    const { membershipPlans, sortAction, sortObject, toggleModal } = props;
+    const { membershipPlans, sortAction, sortObject, toggleModal, currency, fetchMembershipPlans, fetchSettings } = props;
     useEffect(() => {
-        props.fetchMembershipPlans(true);
+        fetchMembershipPlans(true);
+        fetchSettings(false);
     }, []);
-    const cardModalProps = { membershipPlan, isDeleteMode, isEditMode, toggleModal };
+    const cardModalProps = { membershipPlan, isCreateMode, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, membershipPlan = null, isDelete = false) => {
+        setCreateMode(!isEdit);
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setMembershipPlan(membershipPlan);
         toggleModal();
     };
-    const cardBodyProps = { sortAction, sortObject, membershipPlans, onOpenModal };
+    const cardBodyProps = { sortAction, sortObject, membershipPlans, onOpenModal, currency };
     if (props.isLoading) {
         return <ProgressBar/>
     }
@@ -65,7 +69,7 @@ const MembershipPlans = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { membershipPlans, searchText, sortObject, isLoading } = state;
+    const { membershipPlans, searchText, sortObject, isLoading, currency } = state;
     let membershipPlansArray = Object.values(membershipPlans);
     if (searchText) {
         const filterKeys = ['name', 'price', 'frequency_name'];
@@ -74,7 +78,12 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         membershipPlansArray = sortFilter(membershipPlansArray, sortObject);
     }
-    return { membershipPlans: membershipPlansArray, sortObject, isLoading };
+    return { membershipPlans: membershipPlansArray, sortObject, isLoading, currency };
 };
 
-export default connect(mapStateToProps, { fetchMembershipPlans, sortAction, toggleModal })(MembershipPlans);
+export default connect(mapStateToProps, {
+    fetchMembershipPlans,
+    sortAction,
+    toggleModal,
+    fetchSettings
+})(MembershipPlans);

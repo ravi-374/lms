@@ -6,7 +6,8 @@ export const constants = {
     TOGGLE_ACTION: 'TOGGLE_ACTION',
     ADD_TOAST: 'ADD_TOAST',
     REMOVE_TOAST: 'REMOVE_TOAST',
-    ERROR_ACTION: 'ERROR_ACTION'
+    ERROR_ACTION: 'ERROR_ACTION',
+    GET_SET_CURRENCY:'GET_SET_CURRENCY'
 };
 
 export const countryCode = {

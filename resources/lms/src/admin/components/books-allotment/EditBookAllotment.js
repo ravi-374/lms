@@ -1,22 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../shared/components/Modal';
 import {editBookAllotment, editBookAllotmentStatus} from '../../store/actions/bookAllotmentAction';
 import {editMemberBookHistory} from '../../store/actions/memberBookHistoryAction';
 import BookAllotmentForm from './BookAllotmentForm';
-import {fetchBook} from '../../store/actions/bookAction';
-import {bookStatusOptions} from '../../constants';
+import {fetchBooks} from '../../store/actions/bookAction';
+import {fetchMembers} from '../../store/actions/memberAction';
+import {bookAllotmentStatusConstant, bookStatusOptions} from '../../constants';
 import moment from 'moment';
-import {bookAllotmentStatusConstant} from "../../constants";
+import {prepareFullNames} from "../../../shared/sharedMethod";
 import {dateFormat} from "../../../constants";
 
 const EditBookAllotment = (props) => {
-    const { toggleModal, className, title, books, selectedBook, bookAllotment, onSelectBook, bookId, members, bookItems, isMemberBookHistory } = props;
+    const { toggleModal, className, title, books, bookAllotment, onSelectBook, bookId, members, bookItems, isMemberBookHistory } = props;
     const modalOption = { toggleModal, className, title };
     const formOption = { books, onSelectBook, bookId, members };
     const { note, reserve_date, issued_on, return_date } = bookAllotment;
     const changeAbleFields = {
-        selectedBook,
         book: bookAllotment.book_item.book,
         note,
         reserve_date: reserve_date ? moment(reserve_date, dateFormat.DEFAULT_MOMENT).format(dateFormat.NATIVE) : '',
@@ -30,6 +30,12 @@ const EditBookAllotment = (props) => {
         member: members.find(member => member.id === +bookAllotment.member_id),
         status: bookStatusOptions.find(circular => circular.id === +bookAllotment.status)
     };
+
+    useEffect(() => {
+        props.fetchBooks();
+        props.fetchMembers();
+    }, []);
+
     const onSaveBookAllotment = (formValues) => {
         if (!isMemberBookHistory) {
             switch (formValues.status) {
@@ -56,10 +62,14 @@ const EditBookAllotment = (props) => {
     return <Modal {...modalOption} content={<BookAllotmentForm {...prepareFormOption} {...formOption} />}/>
 };
 const mapStateToProps = (state, ownProps) => {
-    const filterArray = ownProps.books.filter(book => book.id === +ownProps.bookAllotment.book_item.book.id);
+    const { books, members } = state;
+    const booksArray = Object.values(books);
+    const membersArray = prepareFullNames(Object.values(members));
+    const filterArray = booksArray.filter(book => book.id === +ownProps.bookAllotment.book_item.book.id);
     return {
-        selectedBook: filterArray,
         bookItems: prepareBookItems(filterArray),
+        books: booksArray,
+        members: membersArray
     }
 };
 
@@ -77,4 +87,6 @@ export default connect(mapStateToProps, {
     editBookAllotment,
     editMemberBookHistory,
     editBookAllotmentStatus,
+    fetchBooks,
+    fetchMembers
 })(EditBookAllotment);

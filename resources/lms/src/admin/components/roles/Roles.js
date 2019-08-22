@@ -16,6 +16,7 @@ import {fetchRoles} from '../../store/actions/roleAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Roles = (props) => {
+    const [isCreateMode, setCreateMode] = useState(false);
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [role, setRole] = useState(null);
@@ -23,8 +24,9 @@ const Roles = (props) => {
     useEffect(() => {
         props.fetchRoles(true);
     }, []);
-    const cardModalProps = {role, isDeleteMode, isEditMode, toggleModal};
+    const cardModalProps = { role,isCreateMode, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, role = null, isDelete = false) => {
+        setCreateMode(!isEdit);
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setRole(role);

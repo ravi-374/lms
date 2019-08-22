@@ -4,7 +4,7 @@ import CreateRole from './CreateRole';
 import EditRole from './EditRole';
 
 export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, role} = props;
+    const { isCreateMode, isEditMode, toggleModal, isDeleteMode, role } = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'role-modal',
@@ -14,7 +14,10 @@ export default (props) => {
         if (isEditMode) {
             return <EditRole {...prepareModalOption} role={role}/>
         }
-        return <CreateRole {...prepareModalOption}/>
+        if (isCreateMode) {
+            return <CreateRole {...prepareModalOption}/>
+        }
+        return null;
     }
     if (isDeleteMode) {
         const prepareModalOption = {

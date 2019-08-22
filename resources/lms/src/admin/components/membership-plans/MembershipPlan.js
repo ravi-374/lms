@@ -3,10 +3,10 @@ import {Table} from 'reactstrap';
 import {sortConfig} from '../../../config/sortConfig';
 import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
-import PriceFormatter from '../../../shared/PriceFormatter';
 import {membershipPlanFrequency} from '../../constants';
+import {priceFormatter} from "../../../shared/sharedMethod";
 
-export default ({ membershipPlans, onOpenModal, sortAction, sortObject }) => {
+export default ({ membershipPlans, onOpenModal, sortAction, sortObject, currency }) => {
     const headers = [
         { id: 'name', name: 'Name' },
         { id: 'frequency_name', name: 'Frequency' },
@@ -34,7 +34,7 @@ export default ({ membershipPlans, onOpenModal, sortAction, sortObject }) => {
                         <tr key={membershipPlan.id.toString()}>
                             <td>{membershipPlan.name}</td>
                             <td>{renderMemberShipPlanFrequency(membershipPlan)}</td>
-                            <td className="text-right">{<PriceFormatter price={membershipPlan.price}/>}</td>
+                            <td className="text-right">{priceFormatter(membershipPlan.price, currency)}</td>
                             <td className="text-center">
                                 <ModalAction onOpenModal={onOpenModal} item={membershipPlan}/>
                             </td>
