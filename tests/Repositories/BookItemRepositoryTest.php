@@ -40,10 +40,7 @@ class BookItemRepositoryTest extends TestCase
             'member_id' => $reserveBook->member_id,
         ]);
 
-        $search['for_member'] = true;
-        $search['member_id'] = $reserveBook->member_id;
-
-        $bookItems = $this->bookItemRepo->all($search);
+        $bookItems = $this->bookItemRepo->all(['for_member' => true, 'member_id' => $reserveBook->member_id]);
 
         $this->assertCount(1, $bookItems);
         $this->assertEquals($reserveBook->book_item_id, $bookItems[0]->id);
@@ -73,8 +70,10 @@ class BookItemRepositoryTest extends TestCase
 
         $allBookItems = $this->bookItemRepo->searchBooks($search);
 
-        $this->assertCount(2, $allBookItems);
-        $this->assertContains($search['id'], $allBookItems[0]->book_id." ".$allBookItems[1]->book_id);
+        $ids = $allBookItems->pluck('id')->toArray();
+        $this->assertCount(2, $ids);
+        $this->assertContains($bookItems[0]->book_id, $ids);
+        $this->assertContains($bookItems[1]->book_id, $ids);
     }
 
     /** @test */
@@ -87,12 +86,9 @@ class BookItemRepositoryTest extends TestCase
         $book2 = factory(Book::class)->create();
         $bookItem = factory(BookItem::class)->create(['book_id' => $book1->id]);
 
-        $search['id'] = $author->id;
-        $search['search_by_author'] = true;
-
-        $bookItem = $this->bookItemRepo->searchBooks($search);
+        $bookItem = $this->bookItemRepo->searchBooks(['id' => $author->id, 'search_by_author' => true]);
 
         $this->assertCount(1, $bookItem);
-        $this->assertEquals($search['id'], $bookItem[0]->book->authors[0]->id);
+        $this->assertEquals($author->id, $bookItem[0]->book->authors[0]->id);
     }
 }
