@@ -8,7 +8,6 @@ import './Members.scss';
 import Toasts from '../../../shared/toast/Toasts';
 import {toggleModal} from '../../../store/action/modalAction';
 import {activDeactiveMember, fetchMembers} from '../../store/actions/memberAction';
-import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const members = (props) => {
@@ -77,7 +76,7 @@ const members = (props) => {
 const mapStateToProps = (state) => {
     const { members, isLoading, totalRecord } = state;
     return {
-        members: Object.values(members), isLoading, totalRecord
+        members, isLoading, totalRecord
     };
 };
 
