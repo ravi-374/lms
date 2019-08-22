@@ -18,7 +18,6 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BookAllotmentDetail = props => {
     const [isToggle, setIsToggle] = useState(false);
-    const user = ''
     useEffect(() => {
         props.fetchBookAllotment(+props.match.params.id);
         props.fetchBooks();
@@ -38,7 +37,7 @@ const BookAllotmentDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push(Routes.BOOK_ALLOTMENTS);
+        history.goBack();
     };
     const renderBookStatus = (bookHistory) => {
         const statusProps = { status: bookHistory.status, item: bookHistory };

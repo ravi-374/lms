@@ -16,7 +16,6 @@ import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {prepareFullNames} from "../../../shared/sharedMethod";
 import {publicImagePathURL, publicImagePath} from "../../../appConstant";
-import {Routes} from "../../../constants";
 
 const MemberDetail = props => {
     const [isEditBookAllotment, setIsEditBookAllotment] = useState(false);
@@ -46,7 +45,7 @@ const MemberDetail = props => {
         toggleModal();
     };
     const goBack = () => {
-        history.push(Routes.MEMBERS);
+        history.goBack();
     };
     const cardBodyProps = { books, members, sortAction, sortObject, memberBookHistory, onOpenModal, history };
     const cardModalProps = {

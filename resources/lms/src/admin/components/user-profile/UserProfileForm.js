@@ -8,7 +8,6 @@ import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
-import {Routes} from "../../../constants";
 
 const UserProfileForm = (props) => {
     const { initialValues, change, countries, history } = props;
@@ -43,7 +42,7 @@ const UserProfileForm = (props) => {
         setIsDefaultImage(true);
     };
     const goToHomePage = () => {
-        history.push(Routes.BOOKS);
+        history.goBack();
     };
     const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
     return (
