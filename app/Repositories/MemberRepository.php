@@ -60,10 +60,7 @@ class MemberRepository extends BaseRepository
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $query = $this->allQuery($search, $skip, $limit)->with('address', 'membershipPlan');
-
-        if (!empty($search['search'])) {
-            $query = $this->applyDynamicSearch($search, $query);
-        }
+        $query = $this->applyDynamicSearch($search, $query);
 
         /** @var Member[] $members */
         $members = $query->orderByDesc('id')->get();
@@ -83,7 +80,9 @@ class MemberRepository extends BaseRepository
             $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
 
             $query->orWhereHas('membershipPlan', function (Builder $query) use ($keywords) {
-                MembershipPlan::filterByPlanName($query, $keywords);
+                foreach ($keywords as $keyword) {
+                    $query->orWhereRaw('lower(name) LIKE ?', [trim(strtolower($keyword))]);
+                }
             });
         });
 

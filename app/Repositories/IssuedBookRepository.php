@@ -74,10 +74,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
-
-        if (!empty($search['search'])) {
-            $query = $this->applyDynamicSearch($search, $query);
-        }
+        $query = $this->applyDynamicSearch($search, $query);
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
