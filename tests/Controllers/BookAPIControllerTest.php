@@ -81,11 +81,12 @@ class BookAPIControllerTest extends TestCase
         /** @var Book $book */
         $book = factory(Book::class)->create();
 
-        $bookItem = factory(BookItem::class)->create();
+        $bookItem = factory(BookItem::class)->raw();
 
         $response = $this->postJson("api/b1/books/$book->id/items", ['items' => [$bookItem]]);
 
         $this->assertSuccessDataResponse($response, $book->toArray(), 'Book items added successfully.');
+        $this->assertCount(1, $response->original['data']['items']);
     }
 
     /** @test */
