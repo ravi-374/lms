@@ -53,7 +53,7 @@ class AuthorAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_and_get_authors()
     {
-        /** @var Author $authors */
+        /** @var Author[] $authors */
         $authors = factory(Author::class)->times(5)->create();
 
         $response = $this->getJson('api/b1/authors');

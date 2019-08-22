@@ -54,7 +54,7 @@ class GenreAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_and_get_genres()
     {
-        /** @var Genre $genres */
+        /** @var Genre[] $genres */
         $genres = factory(Genre::class)->times(5)->create();
 
         $response = $this->getJson('api/b1/genres');

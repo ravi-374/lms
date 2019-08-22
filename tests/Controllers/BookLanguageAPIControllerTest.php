@@ -56,7 +56,7 @@ class BookLanguageAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_and_get_book_languages()
     {
-        /** @var BookLanguage $bookLanguage */
+        /** @var BookLanguage[] $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->times(5)->create();
 
         $response = $this->getJson('api/b1/book-languages');
