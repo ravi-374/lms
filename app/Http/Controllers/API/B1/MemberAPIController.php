@@ -143,6 +143,7 @@ class MemberAPIController extends AppBaseController
         $member->save();
 
         $member->address;
+        $member->membershipPlan;
 
         return $this->sendResponse($member->toArray(), 'Member updated successfully.');
     }
