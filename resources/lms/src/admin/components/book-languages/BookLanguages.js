@@ -14,7 +14,6 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import SearchField from "../../../shared/components/SearchField";
 
 const BookLanguages = (props) => {
     const [isEditMode, setEditMode] = useState(false);
