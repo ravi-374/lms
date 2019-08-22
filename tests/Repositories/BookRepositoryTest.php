@@ -45,26 +45,6 @@ class BookRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function test_can_sort_book_by_author_name()
-    {
-        $author1 = factory(Author::class)->create(['first_name' => 'ABC']);
-        $book1 = factory(Book::class)->create();
-        $author1->books()->sync([$book1->id]);
-
-        $author2 = factory(Author::class)->create(['first_name' => 'ZYX']);
-        $book2 = factory(Book::class)->create();
-        $author2->books()->sync([$book2->id]);
-
-        $resultAsc = $this->bookRepo->all(['order_by' => 'author_name', 'direction' => 'asc']);
-        $resultDesc = $this->bookRepo->all(['order_by' => 'author_name', 'direction' => 'desc']);
-
-        $this->assertCount(2, $resultAsc);
-        $this->assertCount(2, $resultDesc);
-        $this->assertEquals($author1->id, $resultAsc[0]->authors[0]->id);
-        $this->assertEquals($author2->id, $resultDesc[0]->authors[0]->id);
-    }
-
-    /** @test */
     public function it_can_store_book()
     {
         $fakeBook = factory(Book::class)->make()->toArray();
