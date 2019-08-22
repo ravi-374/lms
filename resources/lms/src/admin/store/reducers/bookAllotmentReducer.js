@@ -1,16 +1,17 @@
 import {bookAllotmentActionType} from '../../constants';
-import _ from 'lodash';
 
-export default (state = {}, action) => {
+export default (state = [], action) => {
     switch (action.type) {
         case bookAllotmentActionType.FETCH_BOOKS_ALLOTMENT:
-            return {..._.mapKeys(action.payload, 'id')};
+            return action.payload;
         case bookAllotmentActionType.FETCH_BOOK_ALLOTMENT:
+            return [action.payload];
         case bookAllotmentActionType.ADD_BOOK_ALLOTMENT:
+            return [...state, action.payload];
         case bookAllotmentActionType.EDIT_BOOK_ALLOTMENT:
-            return {...state, [action.payload.id]: action.payload};
+            return state.map(item => item.id === +action.payload.id ? action.payload : item);
         case bookAllotmentActionType.DELETE_BOOK_ALLOTMENT:
-            return _.omit(state, action.payload);
+            return state.filter(item => item.id !== action.payload);
         default:
             return state;
     }

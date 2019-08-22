@@ -198,7 +198,7 @@ const BookAllotmentDetail = props => {
 const mapStateToProps = (state, ownProp) => {
     const { members, booksAllotment, membershipPlans, books, isLoading } = state;
     return {
-        bookHistory: booksAllotment[ownProp.match.params.id],
+        bookHistory: booksAllotment.find(bookAllotment => bookAllotment.id === +ownProp.match.params.id),
         membershipPlans: Object.values(membershipPlans),
         books: Object.values(books),
         members: prepareFullNames(Object.values(members)),

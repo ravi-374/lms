@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../shared/components/Modal';
 import {editBookAllotment, editBookAllotmentStatus} from '../../store/actions/bookAllotmentAction';
@@ -29,9 +29,6 @@ const EditBookAllotment = (props) => {
         member: members.find(member => member.id === +bookAllotment.member_id),
         status: bookStatusOptions.find(circular => circular.id === +bookAllotment.status)
     };
-    useEffect(() => {
-        props.fetchBook(bookAllotment.book_item.book.id, false);
-    }, []);
     const onSaveBookAllotment = (formValues) => {
         if (!isMemberBookHistory) {
             switch (formValues.status) {
@@ -79,5 +76,4 @@ export default connect(mapStateToProps, {
     editBookAllotment,
     editMemberBookHistory,
     editBookAllotmentStatus,
-    fetchBook
 })(EditBookAllotment);

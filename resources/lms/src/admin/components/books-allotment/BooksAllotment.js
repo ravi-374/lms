@@ -135,9 +135,8 @@ const BooksAllotment = (props) => {
 
 const mapStateToProps = (state) => {
     const { booksAllotment, members, books, isLoading, totalRecord } = state;
-    let booksAllotmentArray = Object.values(booksAllotment);
     return {
-        booksAllotment: booksAllotmentArray,
+        booksAllotment,
         members: prepareFullNames(Object.values(members)),
         books: Object.values(books),
         isLoading,
