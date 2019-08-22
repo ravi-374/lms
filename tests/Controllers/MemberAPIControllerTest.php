@@ -3,6 +3,7 @@
 namespace Tests\Controllers;
 
 use App\Models\Member;
+use App\Models\MembershipPlan;
 use App\Repositories\MemberRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -142,5 +143,24 @@ class MemberAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
         $this->assertFalse($member->fresh()->is_active);
+    }
+
+    /** @test */
+    public function test_can_search_members_records_by_membership_plan_name()
+    {
+        /** @var MembershipPlan $membershipPlan1 */
+        $membershipPlan1 = factory(MembershipPlan::class)->create(['name' => 'Dynami']);
+        /** @var Member $member1 */
+        $member1 = factory(Member::class)->create(['membership_plan_id' => $membershipPlan1->id]);
+
+        $membershipPlan2 = factory(MembershipPlan::class)->create();
+        /** @var Member $member2 */
+        $member2 = factory(Member::class)->create(['membership_plan_id' => $membershipPlan2->id]);
+
+        $response = $this->getJson("api/b1/members?search=$membershipPlan1->name");
+
+        $response = $response->original['data'];
+        $this->assertCount(1, $response);
+        $this->assertEquals($membershipPlan1->name, $response[0]['membership_plan']['name']);
     }
 }

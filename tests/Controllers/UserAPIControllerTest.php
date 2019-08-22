@@ -158,4 +158,28 @@ class UserAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'User profile updated successfully.');
     }
+
+    /** @test */
+    public function test_can_search_users_records_by_role_name()
+    {
+        /** @var User $farhan */
+        $farhan = factory(User::class)->create();
+
+        /** @var Role $firstRole */
+        $firstRole = factory(Role::class)->create(['name' => 'editor']);
+        $farhan->roles()->sync([$firstRole->id]);
+
+        /** @var User $vishal */
+        $vishal = factory(User::class)->create();
+
+        /** @var Role $secondRole */
+        $secondRole = factory(Role::class)->create(['name' => 'manager']);
+        $vishal->roles()->sync([$secondRole->id]);
+
+        $response = $this->getJson("api/b1/users?search=$firstRole->name");
+
+        $response = $response->original['data'];
+        $this->assertCount(1, $response);
+        $this->assertEquals($firstRole->name, $response[0]['roles'][0]['name']);
+    }
 }

@@ -77,12 +77,8 @@ class MemberRepository extends BaseRepository
     public function applyDynamicSearch($search, $query)
     {
         $query->when(!empty($search['search']), function (Builder $query) use ($search) {
-            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
-
-            $query->orWhereHas('membershipPlan', function (Builder $query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $query->orWhereRaw('lower(name) LIKE ?', [trim(strtolower($keyword))]);
-                }
+            $query->orWhereHas('membershipPlan', function (Builder $query) use ($search) {
+                filterByColumns($query, $search['search'], ['name']);
             });
         });
 

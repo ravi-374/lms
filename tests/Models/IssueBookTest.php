@@ -78,4 +78,16 @@ class IssueBookTest extends TestCase
         $this->assertEquals($book1->id, $firstIssuedBooks->id);
         $this->assertEquals($bookItem1->id, $firstIssuedBooks->book_item_id);
     }
+
+    /** @test */
+    public function it_can_get_last_issued_book()
+    {
+        $book1 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
+
+        $book2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
+
+        $issuedBooks = IssuedBook::lastIssuedBook()->get();
+        $this->assertCount(1, $issuedBooks);
+        $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBooks[0]->status);
+    }
 }
