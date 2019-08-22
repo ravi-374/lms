@@ -70,7 +70,7 @@ class IssuedBookRepositoryTest extends TestCase
         $reserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
         $unReserveBookItem = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_UN_RESERVED]);
 
-        $issuedBooks = $this->issuedBookRepo->all(['search' => 'issue']);
+        $issuedBooks = $this->issuedBookRepo->all(['search' => 'issued']);
         $unReserveBooks = $this->issuedBookRepo->all(['search' => 'un-reserve']);
 
         $this->assertCount(1, $issuedBooks);
