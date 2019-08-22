@@ -132,7 +132,7 @@ const BookDetail = props => {
 const mapStateToProps = (state, ownProp) => {
     const { books, publishers, bookLanguages } = state;
     return {
-        book: books[ownProp.match.params.id],
+        book: books.find(book => book.id === +ownProp.match.params.id),
         bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),
         publishers: preparePublisher(Object.values(publishers))
     }

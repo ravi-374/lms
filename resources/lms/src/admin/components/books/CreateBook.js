@@ -67,7 +67,7 @@ const mapStateToProps = (state) => {
         isLoading,
         authors: prepareAuthor(Object.values(authors)),
         publishers: preparePublisher(Object.values(publishers)),
-        tags: Object.values(tags),
+        tags,
         bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),
         genres: Object.values(genres)
     }
