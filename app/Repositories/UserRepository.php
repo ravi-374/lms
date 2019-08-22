@@ -75,7 +75,7 @@ class UserRepository extends BaseRepository
     {
         $query->when(!empty($search['search']), function (Builder $query) use ($search) {
             $query->orWhereHas('roles', function (Builder $query) use ($search) {
-                filterByColumns($query, $search['name'], ['name']);
+                filterByColumns($query, $search['search'], ['name']);
             });
         });
 
