@@ -56,16 +56,15 @@ class AuthorAPIControllerTest extends TestCase
         $authors = factory(Author::class)->times(5)->create();
 
         $response = $this->getJson('api/v1/authors');
-        $searchByName = $this->getJson('api/v1/authors?search='.$authors[0]->first_name);
         $take3 = $this->getJson('api/v1/authors?limit=3');
         $skip2 = $this->getJson('api/v1/authors?skip=2&limit=2');
+        $searchByName = $this->getJson('api/v1/authors?search='.$authors[0]->first_name);
 
         $this->assertCount(15, $response->original['data'], '10 default');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
         $search = $searchByName->original['data'];
-        $this->assertCount(1, $search);
-        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one Author');
+        $this->assertTrue(count($search) > 0 && count($search) < 15);
     }
 }

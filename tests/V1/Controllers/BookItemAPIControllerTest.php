@@ -56,16 +56,15 @@ class BookItemAPIControllerTest extends TestCase
         $bookItems = factory(BookItem::class)->times(5)->create();
 
         $response = $this->getJson('api/v1/search-books');
-        $searchByBookCode = $this->getJson('api/v1/search-books?search='.$bookItems[0]->book_code);
         $take3 = $this->getJson('api/v1/search-books?limit=3');
         $skip2 = $this->getJson('api/v1/search-books?skip=2&limit=2');
+        $searchByBookCode = $this->getJson('api/v1/search-books?search='.$bookItems[0]->book_code);
 
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
         $search = $searchByBookCode->original['data'];
-        $this->assertCount(1, $search);
-        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one Book Language');
+        $this->assertTrue(count($search) > 0 && count($search) < 5);
     }
 }
