@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
@@ -7,9 +7,7 @@ import './BooksAllotment.scss';
 import Toasts from '../../../shared/toast/Toasts';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBooksAllotment} from '../../store/actions/bookAllotmentAction';
-import {fetchBooks} from '../../store/actions/bookAction';
-import {fetchMembers} from '../../store/actions/memberAction';
-import {dateFormatter, prepareFullNames} from '../../../shared/sharedMethod';
+import {dateFormatter} from '../../../shared/sharedMethod';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
 import BookStatus from "../../../shared/book-status/book-status";
@@ -18,17 +16,14 @@ import {Routes} from "../../../constants";
 import {bookAllotmentFilterOptions} from "../../constants";
 
 const BooksAllotment = (props) => {
+    const [isCreateMode, setCreateMode] = useState(false);
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
     const { booksAllotment, members, books, toggleModal, history, isLoading, totalRecord } = props;
-
-    useEffect(() => {
-        props.fetchMembers();
-        props.fetchBooks();
-    }, []);
-    const cardModalProps = { bookAllotment, members, books, isEditMode, isDeleteMode, toggleModal };
+    const cardModalProps = { bookAllotment, members, books, isEditMode, isDeleteMode, isCreateMode, toggleModal };
     const onOpenModal = (isEdit, booksAllotment = null, isDelete = false) => {
+        setCreateMode(!isEdit);
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setBookAllotment(booksAllotment);
@@ -134,11 +129,10 @@ const BooksAllotment = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { booksAllotment, members, books, isLoading, totalRecord } = state;
+    const { booksAllotment, isLoading, totalRecord } = state;
+    let booksAllotmentArray = Object.values(booksAllotment);
     return {
-        booksAllotment,
-        members: prepareFullNames(Object.values(members)),
-        books: Object.values(books),
+        booksAllotment: booksAllotmentArray,
         isLoading,
         totalRecord
     };
@@ -146,7 +140,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     fetchBooksAllotment,
-    fetchMembers,
-    fetchBooks,
     toggleModal
 })(BooksAllotment);

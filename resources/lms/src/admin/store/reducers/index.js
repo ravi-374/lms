@@ -6,6 +6,7 @@ import sortReducer from '../../../store/reducers/sortReducer';
 import genreReducer from './genreReducer';
 import toastReducer from '../../../store/reducers/toastReducer';
 import modalReducer from '../../../store/reducers/modalReducer';
+import priceReducer from '../../../store/reducers/currencyReducer';
 import tagReducer from './tagReducer';
 import authorReducer from './authorReducer';
 import publisherReducer from './publisherReducer';
@@ -56,5 +57,6 @@ export default combineReducers({
     isToggle: modalReducer,
     permissions: permissionReducer,
     config: configReducer,
-    totalRecord: totalRecordReduce
+    totalRecord: totalRecordReduce,
+    currency:priceReducer
 });
