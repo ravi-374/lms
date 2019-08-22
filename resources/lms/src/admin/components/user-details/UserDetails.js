@@ -123,7 +123,7 @@ const UserDetail = props => {
 const mapStateToProps = (state, ownProp) => {
     const { users, roles, isLoading } = state;
     return {
-        user: users[ownProp.match.params.id],
+        user: users.find(user => user.id === +ownProp.match.params.id),
         roles: prepareRoles(Object.values(roles)),
         isLoading
     }

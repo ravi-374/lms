@@ -78,6 +78,6 @@ const Users = (props) => {
 
 const mapStateToProps = (state) => {
     const { users, isLoading, totalRecord } = state;
-    return { users: Object.values(users), isLoading, totalRecord };
+    return { users, isLoading, totalRecord };
 };
 export default connect(mapStateToProps, { fetchUsers, activeDeactiveUser, fetchRoles, toggleModal })(Users);
