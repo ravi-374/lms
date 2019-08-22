@@ -54,7 +54,7 @@ class BookLanguageAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_book_languages()
+    public function test_can_search_and_get_book_languages()
     {
         /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->times(5)->create();
@@ -64,13 +64,13 @@ class BookLanguageAPIControllerTest extends TestCase
         $take3 = $this->getJson('api/b1/book-languages?limit=3');
         $skip2 = $this->getJson('api/b1/book-languages?skip=2&limit=2');
 
-        $response = $response->original['data'];
-        $this->assertCount(23, $response,'18 default');
+        $this->assertCount(23, $response->original['data'], '18 default');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
-        $this->assertCount(1, $search->original['data']);
-        $this->assertEquals($bookLanguage[0]->language_name, $search->original['data'][0]['language_name']);
+        $search = $search->original['data'];
+        $this->assertCount(1, $search);
+        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one Book Language');
     }
 
     /** @test */
