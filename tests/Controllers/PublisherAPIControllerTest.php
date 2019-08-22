@@ -51,6 +51,25 @@ class PublisherAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_publishers()
+    {
+        /** @var Publisher[] $publishers */
+        $publishers = factory(Publisher::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/publishers');
+        $take3 = $this->getJson('api/b1/publishers?limit=3');
+        $skip2 = $this->getJson('api/b1/publishers?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/publishers?search='.$publishers[0]->name);
+
+        $this->assertCount(17, $response->original['data'], '12 defaults');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 17, 'Must return at lease one publisher');
+    }
+
+    /** @test */
     public function it_can_create_publisher()
     {
         $this->mockRepository();
