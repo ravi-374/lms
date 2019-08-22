@@ -31,7 +31,7 @@ class AuthorAPIControllerValidationTest extends TestCase
 
         $response = $this->postJson('api/b1/authors', $author);
 
-        $this->assertSuccessMessageResponse($response, 'Author saved successfully.');
+        $this->assertSuccessDataResponse($response, $author, 'Author saved successfully.');
     }
 
     /** @test */
