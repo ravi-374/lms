@@ -51,23 +51,22 @@ class PermissionAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_search_and_get_permission()
+    public function test_can_search_and_get_permissions()
     {
         /** @var Permission[] $permissions */
         $permissions = factory(Permission::class)->times(5)->create();
 
         $response = $this->getJson('api/b1/permissions');
-        $searchByName = $this->getJson('api/b1/permissions?search='.$permissions[0]->name);
         $take3 = $this->getJson('api/b1/permissions?limit=3');
         $skip2 = $this->getJson('api/b1/permissions?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/permissions?search='.$permissions[0]->name);
 
         $this->assertCount(19, $response->original['data'], '14 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
         $search = $searchByName->original['data'];
-        $this->assertCount(1, $search);
-        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one permission');
+        $this->assertTrue(count($search) > 0 && count($search) < 19);
     }
 
     /** @test */
