@@ -58,7 +58,7 @@ class PermissionAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_permission()
     {
-        $fakePermission = factory(Permission::class)->make()->toArray();
+        $fakePermission = factory(Permission::class)->raw();
         $response = $this->postJson('api/b1/permissions', $fakePermission);
 
         $this->assertSuccessMessageResponse($response, 'Permission saved successfully.');
@@ -69,7 +69,7 @@ class PermissionAPIControllerValidationTest extends TestCase
     public function it_can_update_permission()
     {
         $permission = factory(Permission::class)->create();
-        $fakePermission = factory(Permission::class)->make()->toArray();
+        $fakePermission = factory(Permission::class)->raw();
 
         $response = $this->putJson('api/b1/permissions/'.$permission->id, $fakePermission);
 

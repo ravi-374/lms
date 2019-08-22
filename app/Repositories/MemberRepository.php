@@ -6,9 +6,12 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
 use App\Models\Member;
 use App\Models\MembershipPlan;
+use App\Models\Task;
+use App\Models\User;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 /**
@@ -25,6 +28,7 @@ class MemberRepository extends BaseRepository
         'first_name',
         'last_name',
         'email',
+        'phone',
     ];
 
     /**
@@ -56,11 +60,33 @@ class MemberRepository extends BaseRepository
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $query = $this->allQuery($search, $skip, $limit)->with('address', 'membershipPlan');
+        $query = $this->applyDynamicSearch($search, $query);
 
         /** @var Member[] $members */
         $members = $query->orderByDesc('id')->get();
 
         return $members;
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orWhereHas('membershipPlan', function (Builder $query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhereRaw('lower(name) LIKE ?', [trim(strtolower($keyword))]);
+                }
+            });
+        });
+
+        return $query;
     }
 
     /**
