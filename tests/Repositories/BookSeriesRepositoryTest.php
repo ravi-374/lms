@@ -103,7 +103,7 @@ class BookSeriesRepositoryTest extends TestCase
      */
     public function test_can_not_update_book_series_with_non_existing_book()
     {
-        $bookSeries = factory(BookSeries::class)->create()->toArray();
+        $bookSeries = factory(BookSeries::class)->raw();
 
         $this->bookSeriesRepo->update($bookSeries, 999);
     }

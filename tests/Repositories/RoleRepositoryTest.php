@@ -2,7 +2,6 @@
 
 namespace Tests\Repositories;
 
-use App\Models\Member;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Repositories\RoleRepository;
@@ -64,10 +63,10 @@ class RoleRepositoryTest extends TestCase
      */
     public function test_unable_to_update_role_with_non_existing_role_id()
     {
-        /** @var Member $member */
-        $member = factory(Member::class)->raw();
+        /** @var Role $role */
+        $role = factory(Role::class)->raw();
 
-        $this->roleRepo->update($member, 999);
+        $this->roleRepo->update($role, 999);
     }
 
     /** @test */
