@@ -54,22 +54,22 @@ class MembershipPlanAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_membership_plans()
+    public function test_can_search_and_get_membership_plans()
     {
-        /** @var MembershipPlan $plans */
-        $plans = factory(MembershipPlan::class)->times(5)->create();
+        /** @var MembershipPlan[] $membershipPlans */
+        $membershipPlans = factory(MembershipPlan::class)->times(5)->create();
 
         $response = $this->getJson('api/v1/membership-plans');
-        $search = $this->getJson('api/v1/membership-plans?search='.$plans[0]->name);
+        $searchByName = $this->getJson('api/v1/membership-plans?search='.$membershipPlans[0]->name);
         $take3 = $this->getJson('api/v1/membership-plans?limit=3');
         $skip2 = $this->getJson('api/v1/membership-plans?skip=2&limit=2');
 
-        $response = $response->original['data'];
-        $this->assertCount(7, $response);
+        $this->assertCount(7, $response->original['data'], '2 defaults plan');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
-        $this->assertCount(1, $search->original['data']);
-        $this->assertEquals($plans[0]->name, $search->original['data'][0]['name']);
+        $search = $searchByName->original['data'];
+        $this->assertCount(1, $search);
+        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one plan');
     }
 }
