@@ -51,22 +51,22 @@ class CountryAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_countries()
+    public function test_can_search_and_get_countries()
     {
-        /** @var Country $countries */
+        /** @var Country[] $countries */
         $countries = factory(Country::class)->times(5)->create();
 
         $response = $this->getJson('api/v1/countries');
-        $search = $this->getJson('api/v1/countries?search='.$countries[0]->name);
+        $searchByName = $this->getJson('api/v1/countries?search='.$countries[0]->name);
         $take3 = $this->getJson('api/v1/countries?limit=3');
         $skip2 = $this->getJson('api/v1/countries?skip=2&limit=2');
 
-        $response = $response->original['data'];
-        $this->assertCount(251, $response);
+        $this->assertCount(251, $response->original['data'], '246 default');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
-        $this->assertCount(1, $search->original['data']);
-        $this->assertEquals($countries[0]->name, $search->original['data'][0]['name']);
+        $search = $searchByName->original['data'];
+        $this->assertCount(1, $search);
+        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one Country');
     }
 }

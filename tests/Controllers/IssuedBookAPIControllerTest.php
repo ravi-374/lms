@@ -59,15 +59,14 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_get_book_history()
     {
-        /** @var IssuedBook $IssuedBooks */
+        /** @var IssuedBook[] $IssuedBooks */
         $IssuedBooks = factory(IssuedBook::class)->times(5)->create();
 
         $response = $this->getJson('api/b1/books-history');
         $take3 = $this->getJson('api/b1/books-history?limit=3');
         $skip2 = $this->getJson('api/b1/books-history?skip=2&limit=2');
 
-        $response = $response->original['data'];
-        $this->assertCount(5, $response);
+        $this->assertCount(5, $response->original['data']);
 
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);

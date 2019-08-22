@@ -54,7 +54,7 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_get_book_history()
     {
-        /** @var IssuedBook $IssuedBooks */
+        /** @var IssuedBook[] $IssuedBooks */
         $IssuedBooks = factory(IssuedBook::class)
             ->times(5)
             ->create(['member_id' => $this->loggedInUserId]);
@@ -87,9 +87,15 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Book reserved successfully.');
         $this->assertArrayHasKey('id', $response->original['data']);
-        $this->assertEquals(IssuedBook::STATUS_RESERVED, $response->original['data']['status']);
-        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $response->original['data']['book_item']['status']);
-        $this->assertEquals($member->id, $response->original['data']['member_id']);
+
+        $issuedBook = IssuedBook::with('bookItem')
+            ->where('member_id', $member->id)
+            ->where('book_item_id', $bookItem->id)
+            ->first();
+
+        $this->assertEquals(IssuedBook::STATUS_RESERVED, $issuedBook->status);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $issuedBook->bookItem->status);
+        $this->assertEquals($member->id, $issuedBook->member_id);
     }
 
     /** @test */
@@ -103,8 +109,8 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $this->assertSuccessMessageResponse($response, 'Book un-reserved successfully.');
-        $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $response->original['data']['status']);
-        $this->assertEquals(BookItem::STATUS_AVAILABLE, $response->original['data']['book_item']['status']);
-        $this->assertEquals($this->loggedInUserId, $response->original['data']['member_id']);
+        $this->assertEquals(IssuedBook::STATUS_UN_RESERVED, $issueBook->fresh()->status);
+        $this->assertEquals(BookItem::STATUS_AVAILABLE, $issueBook->bookItem->status);
+        $this->assertEquals($this->loggedInUserId, $issueBook->member_id);
     }
 }

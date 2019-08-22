@@ -50,22 +50,22 @@ class BookItemAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_book_items()
+    public function test_can_search_and_get_book_items()
     {
-        /** @var BookItem $bookItems */
+        /** @var BookItem[] $bookItems */
         $bookItems = factory(BookItem::class)->times(5)->create();
 
         $response = $this->getJson('api/v1/search-books');
-        $search = $this->getJson('api/v1/search-books?search='.$bookItems[0]->book_code);
+        $searchByBookCode = $this->getJson('api/v1/search-books?search='.$bookItems[0]->book_code);
         $take3 = $this->getJson('api/v1/search-books?limit=3');
         $skip2 = $this->getJson('api/v1/search-books?skip=2&limit=2');
 
-        $response = $response->original['data'];
-        $this->assertCount(5, $response);
+        $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
-        $this->assertCount(1, $search->original['data']);
-        $this->assertEquals($bookItems[0]->book_code, $search->original['data'][0]['book_code']);
+        $search = $searchByBookCode->original['data'];
+        $this->assertCount(1, $search);
+        $this->assertTrue(count($search) > 0 && count($search) < 5, 'Must return at lease one Book Language');
     }
 }
