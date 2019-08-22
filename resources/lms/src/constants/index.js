@@ -53,3 +53,8 @@ export const Filters = {
 export const Roles = {
     ADMIN_ROLE_NAME: 'admin'
 };
+
+export const dateFormat = {
+    DEFAULT_MOMENT:'YYYY-MM-DD hh:mm:ss',
+    NATIVE:'YYYY-MM-DD'
+};

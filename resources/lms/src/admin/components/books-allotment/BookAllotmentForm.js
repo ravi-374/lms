@@ -12,6 +12,7 @@ import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
 import moment from 'moment';
 import DatePicker from '../../../shared/components/DatePicker';
 import Select from "../../../shared/components/Select";
+import {dateFormat} from "../../../constants";
 
 let bookId = null;
 let memberId = null;
@@ -55,13 +56,15 @@ const BookAllotmentForm = props => {
         };
         switch (status) {
             case bookAllotmentStatusConstant.BOOK_RESERVED:
-                formData.reserve_date = selectedDate ? moment(selectedDate).format('YYYY-MM-DD hh:mm:ss') : "";
+                formData.reserve_date = selectedDate ? moment(selectedDate).format(dateFormat.DEFAULT_MOMENT) : '';
                 break;
             case bookAllotmentStatusConstant.BOOK_ISSUED:
-                formData.issued_on = selectedDate ? moment(selectedDate).format('YYYY-MM-DD hh:mm:ss') : "";
+                formData.issued_on = selectedDate ? moment(selectedDate).format(dateFormat.DEFAULT_MOMENT) : '';
+                break;
+            case bookAllotmentStatusConstant.BOOK_RETURNED:
+                formData.return_date = selectedDate ? moment(selectedDate).format(dateFormat.DEFAULT_MOMENT) : '';
                 break;
             default:
-                formData.return_date = selectedDate ? moment(selectedDate).format('YYYY-MM-DD hh:mm:ss') : "";
                 break;
         }
         return formData;
@@ -112,10 +115,12 @@ const BookAllotmentForm = props => {
                 field = 'issued_on';
                 maxDate = moment().toDate();
                 break;
-            default:
+            case bookAllotmentStatusConstant.BOOK_RETURNED:
                 label = 'Return Date';
                 field = 'return_date';
                 break;
+            default:
+                return null;
         }
         return (
             <Fragment>

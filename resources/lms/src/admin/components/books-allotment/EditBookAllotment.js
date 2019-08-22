@@ -8,6 +8,7 @@ import {fetchBook} from '../../store/actions/bookAction';
 import {bookStatusOptions} from '../../constants';
 import moment from 'moment';
 import {bookAllotmentStatusConstant} from "../../constants";
+import {dateFormat} from "../../../constants";
 
 const EditBookAllotment = (props) => {
     const { toggleModal, className, title, books, selectedBook, bookAllotment, onSelectBook, bookId, members, bookItems, isMemberBookHistory } = props;
@@ -18,9 +19,9 @@ const EditBookAllotment = (props) => {
         selectedBook,
         book: bookAllotment.book_item.book,
         note,
-        reserve_date: reserve_date ? moment(reserve_date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
-        issued_on: issued_on ? moment(issued_on, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
-        return_date: return_date ? moment(return_date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD') : '',
+        reserve_date: reserve_date ? moment(reserve_date, dateFormat.DEFAULT_MOMENT).format(dateFormat.NATIVE) : '',
+        issued_on: issued_on ? moment(issued_on, dateFormat.DEFAULT_MOMENT).format(dateFormat.NATIVE) : '',
+        return_date: return_date ? moment(return_date, dateFormat.DEFAULT_MOMENT).format(dateFormat.NATIVE) : '',
         book_item: {
             id: bookAllotment.book_item.id,
             name: bookAllotment.book_item.edition + ` (${bookAllotment.book_item.book_code})`
