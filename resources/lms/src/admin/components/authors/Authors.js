@@ -18,12 +18,8 @@ const Authors = (props) => {
     const { authors, toggleModal, totalRecord, isLoading } = props;
     const cardModalProps = { author, isDeleteMode, isEditMode, toggleModal };
 
-    const fetchAuthors = (filter) => {
-        props.fetchAuthors(filter, true);
-    };
-
     const onChange = (filter) => {
-        fetchAuthors(filter);
+        props.fetchAuthors(filter, true);
     };
 
     const onOpenModal = (isEdit, author = null, isDelete = false) => {
@@ -79,8 +75,7 @@ const Authors = (props) => {
 
 const mapStateToProps = (state) => {
     const { authors, isLoading, totalRecord } = state;
-    let authorsArray = Object.values(authors);
-    return { authors: authorsArray, isLoading, totalRecord };
+    return { authors, isLoading, totalRecord };
 };
 
 export default connect(mapStateToProps, { fetchAuthors, toggleModal })(Authors);

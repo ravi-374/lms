@@ -4,7 +4,7 @@ import CreateAuthor from './CreateAuthor';
 import EditAuthor from './EditAuthor';
 
 export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, author} = props;
+    const { isEditMode, toggleModal, isDeleteMode, author } = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'author-modal',
@@ -21,7 +21,7 @@ export default (props) => {
             authorId: author.id,
             title: 'Delete Author',
             toggleModal,
-            content: `Are you sure you want to delete "${author.name}" ?`,
+            content: `Are you sure you want to delete "${author.first_name + ' ' + author.last_name}" ?`,
         };
         return <DeleteAuthor {...prepareModalOption}/>
     }
