@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
+use App\Models\Member;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Carbon\Carbon;
@@ -72,6 +74,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
+        $query = $this->applyDynamicSearch($search, $query);
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
@@ -98,6 +101,25 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         };
 
         return $bookRecords->values();
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orWhereHas('member', function (Builder $query) use ($keywords) {
+                Member::filterByMemberName($query, $keywords);
+            });
+        });
+
+        return $query;
     }
 
     /**
