@@ -75,8 +75,7 @@ const Genres = (props) => {
 
 const mapStateToProps = (state) => {
     const { genres, isLoading, totalRecord } = state;
-    let genresArray = Object.values(genres);
-    return { genres: genresArray, isLoading, totalRecord };
+    return { genres, isLoading, totalRecord };
 };
 
 export default connect(mapStateToProps, { fetchGenres, toggleModal })(Genres);
