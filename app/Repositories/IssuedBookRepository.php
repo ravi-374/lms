@@ -113,22 +113,17 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function applyDynamicSearch($search, $query)
     {
         $query->when(!empty($search['search']), function (Builder $query) use ($search) {
-            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
-
-            $query->orWhereHas('bookItem', function (Builder $query) use ($keywords) {
-                $query->where(function (Builder $query) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $query->orWhereRaw('lower(book_code) LIKE ?', ['%'.strtolower(trim($keyword)).'%']);
-                    }
-                });
+            $searchString = $search['search'];
+            $query->orWhereHas('bookItem', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['book_code']);
             });
 
-            $query->orWhereHas('bookItem.book', function (Builder $query) use ($keywords) {
-                Book::filterByKeywords($query, $keywords);
+            $query->orWhereHas('bookItem.book', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['name']);
             });
 
-            $query->orWhereHas('member', function (Builder $query) use ($keywords) {
-                Member::filterByMemberName($query, $keywords);
+            $query->orWhereHas('member', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['first_name', 'last_name']);
             });
         });
 
