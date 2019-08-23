@@ -12,19 +12,21 @@ import ModalAction from "../../../shared/action-buttons/ModalAction";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 
 const Authors = (props) => {
-    const [isEditMode, setEditMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
+    const [isCreateAuthor, setCreateAuthor] = useState(false);
+    const [isEdiAuthor, setEditAuthor] = useState(false);
+    const [isDeleteAuthor, setDeleteAuthor] = useState(false);
     const [author, setAuthor] = useState(null);
-    const { authors, toggleModal, totalRecord, isLoading } = props;
-    const cardModalProps = { author, isDeleteMode, isEditMode, toggleModal };
+    const { authors, toggleModal, totalRecord, isLoading, fetchAuthors } = props;
+    const cardModalProps = { author, isCreateAuthor, isDeleteAuthor, isEdiAuthor, toggleModal };
 
     const onChange = (filter) => {
-        props.fetchAuthors(filter, true);
+        fetchAuthors(filter, true);
     };
 
     const onOpenModal = (isEdit, author = null, isDelete = false) => {
-        setEditMode(isEdit);
-        setDeleteMode(isDelete);
+        setCreateAuthor(!isEdit);
+        setEditAuthor(isEdit);
+        setDeleteAuthor(isDelete);
         setAuthor(author);
         toggleModal();
     };
