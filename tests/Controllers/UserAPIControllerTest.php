@@ -56,6 +56,25 @@ class UserAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_users()
+    {
+        /** @var User[] $users */
+        $users = factory(User::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/users');
+        $take3 = $this->getJson('api/b1/users?limit=3');
+        $skip2 = $this->getJson('api/b1/users?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/users?search='.$users[0]->first_name);
+
+        $this->assertCount(6, $response->original['data'], '1 defaults');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 6);
+    }
+
+    /** @test */
     public function it_can_create_user()
     {
         $this->mockRepository();
@@ -181,5 +200,38 @@ class UserAPIControllerTest extends TestCase
         $response = $response->original['data'];
         $this->assertCount(1, $response);
         $this->assertEquals($firstRole->name, $response[0]['roles'][0]['name']);
+    }
+
+    /** @test */
+    public function test_can_activate_user()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->create(['is_active' => 0]);
+
+        $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
+
+        $this->assertSuccessDataResponse($response, $user->fresh()->toArray(), 'User updated successfully.');
+        $this->assertTrue($user->fresh()->is_active);
+    }
+
+    /** @test */
+    public function test_can_de_activate_user()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->create(['is_active' => 1]);
+
+        $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
+
+        $this->assertSuccessDataResponse($response, $user->fresh()->toArray(), 'User updated successfully.');
+        $this->assertFalse($user->fresh()->is_active);
+    }
+
+    /** @test */
+    public function test_can_get_details_of_logged_in_user()
+    {
+        $response = $this->get('api/b1/user-details');
+
+        $this->assertNotEmpty($response);
+        $this->assertEquals($this->loggedInUserId, $response->original['data']->id);
     }
 }
