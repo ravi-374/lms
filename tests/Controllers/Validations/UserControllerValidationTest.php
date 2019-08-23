@@ -133,7 +133,7 @@ class UserControllerValidationTest extends TestCase
     {
         $farhan = factory(User::class)->create();
         $vishal = factory(User::class)->create();
-        $input = factory(User::class)->raw(['email' =>  $farhan->email]);
+        $input = factory(User::class)->raw(['email' => $farhan->email]);
 
         $response = $this->postJson('api/b1/users/'.$vishal->id, $input);
 
@@ -146,7 +146,7 @@ class UserControllerValidationTest extends TestCase
         $farhan = factory(User::class)->create();
         $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users/'.$farhan->id, array_merge($input, ['role_id' =>'string']));
+        $response = $this->postJson('api/b1/users/'.$farhan->id, array_merge($input, ['role_id' => 'string']));
 
         $this->assertExceptionMessage($response, 'The role id must be an integer.');
     }
@@ -173,7 +173,7 @@ class UserControllerValidationTest extends TestCase
     public function it_can_update_user()
     {
         $user = factory(User::class)->create();
-        $fakeUser = factory(User::class)->make()->toArray();
+        $fakeUser = factory(User::class)->raw();
 
         $response = $this->postJson('api/b1/users/'.$user->id, $fakeUser);
 
