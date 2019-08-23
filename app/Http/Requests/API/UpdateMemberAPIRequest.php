@@ -23,6 +23,9 @@ class UpdateMemberAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Member::$memberRules;
+        $rules = Member::$memberRules;
+        $rules['email'] = 'required|unique:members,email,' . $this->route('member')->id;
+
+        return $rules;
     }
 }

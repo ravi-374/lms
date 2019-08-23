@@ -108,7 +108,7 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_book_language()
     {
-        $fakeBookLanguage = factory(BookLanguage::class)->make()->toArray();
+        $fakeBookLanguage = factory(BookLanguage::class)->raw();
 
         $response = $this->postJson('api/b1/book-languages', $fakeBookLanguage);
 
@@ -120,7 +120,7 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     public function it_can_update_book_language()
     {
         $bookLanguage = factory(BookLanguage::class)->create();
-        $fakeBookLanguage = factory(BookLanguage::class)->make()->toArray();
+        $fakeBookLanguage = factory(BookLanguage::class)->raw();
 
         $response = $this->putJson('api/b1/book-languages/'.$bookLanguage->id, $fakeBookLanguage);
 

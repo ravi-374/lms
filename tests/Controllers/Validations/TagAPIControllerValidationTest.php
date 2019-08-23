@@ -58,7 +58,7 @@ class TagAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_tag()
     {
-        $fakeTag = factory(Tag::class)->make()->toArray();
+        $fakeTag = factory(Tag::class)->raw();
 
         $response = $this->postJson('api/b1/tags', $fakeTag);
 
@@ -71,7 +71,7 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tag = factory(Tag::class)->create();
 
-        $fakeTag = factory(Tag::class)->make()->toArray();
+        $fakeTag = factory(Tag::class)->raw();
 
         $response = $this->putJson('api/b1/tags/'.$tag->id, $fakeTag);
 

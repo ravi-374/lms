@@ -2,6 +2,7 @@
 
 namespace Tests\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\Genre;
@@ -54,6 +55,45 @@ class BookAPIControllerTest extends TestCase
             $books->toArray(),
             'Books retrieved successfully.'
         );
+    }
+
+    /** @test */
+    public function test_can_search_and_get_books()
+    {
+        /** @var Book[] $books */
+        $books = factory(Book::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/books');
+        $take3 = $this->getJson('api/b1/books?limit=3');
+        $skip2 = $this->getJson('api/b1/books?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/books?search='.$books[0]->name);
+
+        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 5);
+    }
+
+    /** @test */
+    public function test_can_sort_books_records_by_author_name()
+    {
+        $author1 = factory(Author::class)->create(['first_name' => 'ABC']);
+        $book1 = factory(Book::class)->create();
+        $author1->books()->sync([$book1->id]);
+
+        $author2 = factory(Author::class)->create(['first_name' => 'ZYX']);
+        $book2 = factory(Book::class)->create();
+        $author2->books()->sync([$book2->id]);
+
+        $responseAsc = $this->getJson('api/b1/books?order_by=author_name&direction=asc');
+        $responseDesc = $this->getJson('api/b1/books?order_by=author_name&direction=desc');
+
+        $responseAsc = $responseAsc->original['data'];
+        $responseDesc = $responseDesc->original['data'];
+        $this->assertEquals($author1->first_name, $responseAsc[0]['authors'][0]['first_name']);
+        $this->assertEquals($author2->first_name, $responseDesc[0]['authors'][0]['first_name']);
     }
 
     /** @test */

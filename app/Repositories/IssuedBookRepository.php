@@ -2,8 +2,11 @@
 
 namespace App\Repositories;
 
+use App;
+use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
+use App\Models\Member;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Carbon\Carbon;
@@ -28,7 +31,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         'return_due_date',
         'return_date',
         'status',
-        'member_id'
+        'member_id',
     ];
 
     /**
@@ -72,6 +75,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
+        $query = $this->applyDynamicSearch($search, $query);
 
         $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
@@ -98,6 +102,32 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         };
 
         return $bookRecords->values();
+    }
+
+    /**
+     * @param array $search
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+            $searchString = $search['search'];
+            $query->orWhereHas('bookItem', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['book_code']);
+            });
+
+            $query->orWhereHas('bookItem.book', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['name']);
+            });
+
+            $query->orWhereHas('member', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['first_name', 'last_name']);
+            });
+        });
+
+        return $query;
     }
 
     /**

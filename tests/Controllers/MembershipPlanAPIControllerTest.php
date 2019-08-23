@@ -55,6 +55,25 @@ class MembershipPlanAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_membership_plans()
+    {
+        /** @var MembershipPlan[] $membershipPlans */
+        $membershipPlans = factory(MembershipPlan::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/membership-plans');
+        $take3 = $this->getJson('api/b1/membership-plans?limit=3');
+        $skip2 = $this->getJson('api/b1/membership-plans?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/membership-plans?search='.$membershipPlans[0]->name);
+
+        $this->assertCount(7, $response->original['data'], '2 defaults plan');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 7);
+    }
+
+    /** @test */
     public function it_can_create_membership_plan()
     {
         $this->mockRepository();

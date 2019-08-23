@@ -101,17 +101,11 @@ class RoleAPIControllerValidationTest extends TestCase
         $this->assertEquals($inputs['name'], $response->original['data']['name']);
     }
 
-    /** @test */
-    public function it_can_delete_role()
-    {
-        $role = factory(Role::class)->create();
-
-        $response = $this->deleteJson('api/b1/roles/'.$role->id);
-
-        $this->assertSuccessMessageResponse($response, 'Role deleted successfully.');
-        $this->assertEmpty(Role::where('name', $role->name)->first());
-    }
-
+    /**
+     * @param array $input
+     *
+     * @return array
+     */
     public function prepareRoleInputs($input = [])
     {
         $permission = factory(Permission::class)->create();
