@@ -116,17 +116,16 @@ class BookAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_store_book_with_items()
+    public function test_can_store_book_items_to_given_book()
     {
         /** @var Book $book */
         $book = factory(Book::class)->create();
+        $bookItems = factory(BookItem::class)->times(2)->raw();
 
-        $bookItem = factory(BookItem::class)->raw();
-
-        $response = $this->postJson("api/b1/books/$book->id/items", ['items' => [$bookItem]]);
+        $response = $this->postJson("api/b1/books/$book->id/items", ['items' => $bookItems]);
 
         $this->assertSuccessDataResponse($response, $book->toArray(), 'Book items added successfully.');
-        $this->assertCount(1, $response->original['data']['items']);
+        $this->assertCount(2, $book->fresh()->items);
     }
 
     /** @test */
