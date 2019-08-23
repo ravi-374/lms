@@ -87,13 +87,13 @@ class IssuedBookAPIControllerTest extends TestCase
     {
         $member = factory(Member::class)->create();
 
-        $bookItem1 = factory(BookItem::class)->create();
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'ABCD3453']);
         $issuedBook1 = factory(IssuedBook::class)->create([
             'book_item_id' => $bookItem1->id,
             'member_id'    => $member->id,
         ]);
 
-        $bookItem2 = factory(BookItem::class)->create();
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZWQ34543']);
         $issuedBook2 = factory(IssuedBook::class)->create([
             'book_item_id' => $bookItem2->id,
             'member_id'    => $member->id,
@@ -155,7 +155,7 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_issued_book_records_by_book_name()
     {
-        $book1 = factory(Book::class)->create();
+        $book1 = factory(Book::class)->create(['name' => 'Be Unique']);
         $bookItem1 = factory(BookItem::class)->create(['book_id' => $book1->id]);
         $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
 
@@ -173,12 +173,10 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_issued_book_records_by_book_code()
     {
-        $book1 = factory(Book::class)->create();
-        $bookItem1 = factory(BookItem::class)->create(['book_id' => $book1->id]);
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'XRTD6y45U']);
         $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
 
-        $book2 = factory(Book::class)->create();
-        $bookItem2 = factory(BookItem::class)->create(['book_id' => $book2->id]);
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'IRE6484O']);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
         $response = $this->getJson("api/v1/books-history?search=$bookItem1->book_code");
@@ -191,10 +189,10 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_issued_book_records_by_member_name()
     {
-        $member1 = factory(Member::class)->create();
+        $member1 = factory(Member::class)->create(['first_name' => 'Jhon']);
         $issuedBook1 = factory(IssuedBook::class)->create(['member_id' => $member1->id]);
 
-        $member2 = factory(Member::class)->create();
+        $member2 = factory(Member::class)->create(['first_name' => 'Steve']);
         $issuedBook2 = factory(IssuedBook::class)->create(['member_id' => $member2->id]);
 
         $response = $this->getJson("api/v1/books-history?search=$member1->first_name");
