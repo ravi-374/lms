@@ -4,19 +4,22 @@ import CreateAuthor from './CreateAuthor';
 import EditAuthor from './EditAuthor';
 
 export default (props) => {
-    const { isEditMode, toggleModal, isDeleteMode, author } = props;
-    if (!isDeleteMode) {
+    const { author, isCreateAuthor, isEdiAuthor, isDeleteAuthor, toggleModal } = props;
+    if (!isDeleteAuthor) {
         const prepareModalOption = {
             className: 'author-modal',
-            title: isEditMode ? 'Edit Author' : 'New Author',
+            title: isEdiAuthor ? 'Edit Author' : 'New Author',
             toggleModal,
         };
-        if (isEditMode) {
+        if (isEdiAuthor) {
             return <EditAuthor {...prepareModalOption} author={author}/>
         }
-        return <CreateAuthor {...prepareModalOption}/>
+        if (isCreateAuthor) {
+            return <CreateAuthor {...prepareModalOption}/>
+        }
+        return null;
     }
-    if (isDeleteMode) {
+    if (isDeleteAuthor) {
         const prepareModalOption = {
             authorId: author.id,
             title: 'Delete Author',
