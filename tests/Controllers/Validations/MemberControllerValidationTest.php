@@ -97,6 +97,18 @@ class MemberControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function test_update_member_fails_when_email_is_duplicate()
+    {
+        $ankit = factory(Member::class)->create();
+        $farhan = factory(Member::class)->create();
+
+        $response = $this->postJson("api/b1/members/$farhan->id",
+            array_merge($farhan->toArray(), ['email' => $ankit->email]));
+
+        $this->assertExceptionMessage($response, 'The email has already been taken.');
+    }
+
+    /** @test */
     public function test_update_member_fails_when_first_name_is_not_passed()
     {
         $ankit = factory(Member::class)->create();
@@ -137,7 +149,6 @@ class MemberControllerValidationTest extends TestCase
         $response = $this->postJson('api/b1/members/'.$member->id, $fakeMember);
 
         $this->assertSuccessMessageResponse($response, 'Member updated successfully.');
-        $this->assertNotEquals($fakeMember['email'], $member->fresh()->email, 'Email should not update');
     }
 
     /** @test */
