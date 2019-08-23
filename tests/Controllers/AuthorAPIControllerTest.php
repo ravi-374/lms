@@ -74,7 +74,6 @@ class AuthorAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var Author $author */
         $author = factory(Author::class)->make();
 
         $this->authorRepo->shouldReceive('create')

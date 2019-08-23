@@ -83,7 +83,7 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_membership_plan()
     {
-        $fakeMembershipPlan = factory(MembershipPlan::class)->make()->toArray();
+        $fakeMembershipPlan = factory(MembershipPlan::class)->raw();
 
         $response = $this->postJson('api/b1/membership-plans', $fakeMembershipPlan);
 
@@ -95,34 +95,11 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
     public function it_can_update_membership_plan()
     {
         $membershipPlan = factory(MembershipPlan::class)->create();
-        $fakeMembershipPlan = factory(MembershipPlan::class)->make()->toArray();
+        $fakeMembershipPlan = factory(MembershipPlan::class)->raw();
 
         $response = $this->putJson('api/b1/membership-plans/'.$membershipPlan->id, $fakeMembershipPlan);
 
         $this->assertSuccessMessageResponse($response, 'Membership Plan updated successfully.');
         $this->assertEquals($fakeMembershipPlan['name'], $membershipPlan->fresh()->name);
-    }
-
-    /** @test */
-    public function test_can_not_delete_membership_plan_when_plan_is_assigned_to_member()
-    {
-        $plan = factory(MembershipPlan::class)->create();
-        $vishal = factory(Member::class)->create(['membership_plan_id' => $plan->id]);
-
-        $response = $this->deleteJson('api/b1/membership-plans/'.$plan->id);
-
-        $this->assertExceptionMessage($response,
-            'Membership Plan can not be delete, it is assigned to one or more members.');
-    }
-
-    /** @test */
-    public function it_can_delete_membership_plan()
-    {
-        $membershipPlan = factory(MembershipPlan::class)->create();
-
-        $response = $this->deleteJson('api/b1/membership-plans/'.$membershipPlan->id);
-
-        $this->assertSuccessMessageResponse($response, 'Membership Plan deleted successfully.');
-        $this->assertEmpty(MembershipPlan::where('name', $membershipPlan->name)->first());
     }
 }

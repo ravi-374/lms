@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Genre;
@@ -16,7 +17,6 @@ class GenreRepository extends BaseRepository implements GenreRepositoryInterface
      */
     protected $fieldSearchable = [
         'name',
-        'description',
     ];
 
     /**

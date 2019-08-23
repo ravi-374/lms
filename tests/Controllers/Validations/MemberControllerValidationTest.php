@@ -97,6 +97,18 @@ class MemberControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function test_update_member_fails_when_email_is_duplicate()
+    {
+        $ankit = factory(Member::class)->create();
+        $farhan = factory(Member::class)->create();
+
+        $response = $this->postJson("api/b1/members/$farhan->id",
+            array_merge($farhan->toArray(), ['email' => $ankit->email]));
+
+        $this->assertExceptionMessage($response, 'The email has already been taken.');
+    }
+
+    /** @test */
     public function test_update_member_fails_when_first_name_is_not_passed()
     {
         $ankit = factory(Member::class)->create();
@@ -121,7 +133,7 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_member()
     {
-        $fakeMember = factory(Member::class)->make()->toArray();
+        $fakeMember = factory(Member::class)->raw();
         $response = $this->postJson('api/b1/members', array_merge($fakeMember, ['password' => $this->faker->password]));
 
         $this->assertSuccessMessageResponse($response, 'Member saved successfully.');
@@ -132,42 +144,10 @@ class MemberControllerValidationTest extends TestCase
     public function it_can_update_member()
     {
         $member = factory(Member::class)->create();
-        $fakeMember = factory(Member::class)->make()->toArray();
+        $fakeMember = factory(Member::class)->raw();
 
         $response = $this->postJson('api/b1/members/'.$member->id, $fakeMember);
 
         $this->assertSuccessMessageResponse($response, 'Member updated successfully.');
-        $this->assertNotEquals($fakeMember['email'], $member->fresh()->email, 'Email should not update');
-    }
-
-    /** @test */
-    public function test_can_delete_member()
-    {
-        $member = factory(Member::class)->create();
-
-        $response = $this->deleteJson('api/b1/members/'.$member->id);
-
-        $this->assertSuccessMessageResponse($response, 'Member deleted successfully.');
-        $this->assertEmpty(Member::find($member->id));
-    }
-
-    /** @test */
-    public function test_can_activate_member()
-    {
-        $member = factory(Member::class)->create(['is_active' => 0]);
-
-        $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
-
-        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
-    }
-
-    /** @test */
-    public function test_can_de_activate_member()
-    {
-        $member = factory(Member::class)->create(['is_active' => 1]);
-
-        $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
-
-        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
     }
 }
