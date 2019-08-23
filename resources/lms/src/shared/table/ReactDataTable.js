@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useMemo, useState} from 'react';
 import DataTable from "react-data-table-component";
-import {Row, Col} from 'reactstrap';
+import {Col, Row} from 'reactstrap';
 import {Filters} from "../../constants";
 import SearchField from "../components/SearchField";
 import FilterField from "../components/FilterField";
@@ -76,6 +76,10 @@ export default (props) => {
         },
     };
 
+    const loadEmptyComponent = () => {
+        return (<EmptyComponent isMedium isLoading={loading} title={loading ? 'Loading......' : 'No records yet'}/>);
+    };
+
     return (
         <Fragment>
             <Row className="justify-content-end">
@@ -88,9 +92,7 @@ export default (props) => {
                     <SearchField handleSearch={handleSearch}/>
                 </Col>
             </Row>
-            <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading}
-                                                        paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                                                        title={loading ? 'Loading......' : 'No records yet'}/>}
+            <DataTable noDataComponent={loadEmptyComponent} paginationRowsPerPageOptions={[10, 15, 25, 50, 100]}
                        pagination={true} paginationServer={true} sortFunction={customSort} striped={true}
                        highlightOnHover={true} className={'table-bordered table-striped mt-2'} customTheme={darkTheme}
                        paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange}
