@@ -319,7 +319,7 @@ class IssuedBookRepositoryTest extends TestCase
      * @expectedException  Illuminate\Database\Eloquent\ModelNotFoundException
      * @expectedExceptionMessage No query results for model [App\Models\BookItem] 999
      */
-    public function test_unable_to_update_issued_book_status_with_non_existing_member()
+    public function test_unable_to_update_issued_book_status_with_non_existing_book_item_id()
     {
         $input = ['book_item_id' => 999, 'status' => IssuedBook::STATUS_LOST];
 
@@ -331,7 +331,7 @@ class IssuedBookRepositoryTest extends TestCase
      * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
      * @expectedExceptionMessage Book is not issued.
      */
-    public function test_only_update_issued_book_status_when_book_is_allotted_to_user()
+    public function test_not_allow_to_update_issued_book_status_when_book_is_not_issued()
     {
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
