@@ -8,6 +8,7 @@ use App\Http\Requests\API\CreateMemberAPIRequest;
 use App\Http\Requests\API\UpdateMemberAPIRequest;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
 use App\Models\Member;
+use App\Models\MembershipPlan;
 use App\Repositories\MemberRepository;
 use App\Repositories\UserRepository;
 use Auth;
@@ -108,6 +109,10 @@ class MemberAPIController extends AppBaseController
     {
         $input = $request->all();
 
+        /** @var MembershipPlan $membershipPlan */
+        $membershipPlan = MembershipPlan::findOrFail($input['membership_plan_id']);
+        $input['membership_plan_id'] = $membershipPlan->id;
+
         $member = $this->memberRepository->update($input, $member->id);
 
         return $this->sendResponse($member->toArray(), 'Member updated successfully.');
@@ -180,6 +185,10 @@ class MemberAPIController extends AppBaseController
     {
         $input = $request->all();
         unset($input['email']);
+
+        /** @var MembershipPlan $membershipPlan */
+        $membershipPlan = MembershipPlan::findOrFail($input['membership_plan_id']);
+        $input['membership_plan_id'] = $membershipPlan->id;
 
         $updateMember = $this->memberRepository->update($input, Auth::id());
 
