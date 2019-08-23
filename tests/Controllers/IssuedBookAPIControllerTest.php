@@ -84,7 +84,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $bookItem1 = factory(BookItem::class)->create(['book_code' => 'AB1234XYZ']);
         $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
 
-        $bookItem2 = factory(BookItem::class)->create();
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZAD587RE']);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
         $responseAsc = $this->getJson('api/b1/books-history?order_by=book_code&direction=asc');
