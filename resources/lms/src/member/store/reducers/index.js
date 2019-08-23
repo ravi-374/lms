@@ -12,6 +12,7 @@ import bookHistoryReducer from './bookHistoryReducer';
 import bookReducer from './bookReducer';
 import bookSearchReducer from './bookSearchReducer';
 import authorReducer from './authorReducer';
+import userProfileReducer from '../../../store/reducers/userProfileReducer';
 
 export default combineReducers({
     isLoading: progressReduce,
@@ -27,4 +28,5 @@ export default combineReducers({
     books: bookReducer,
     searchBooks: bookSearchReducer,
     authors: authorReducer,
+    userProfile:userProfileReducer
 });

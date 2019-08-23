@@ -7,7 +7,7 @@ export const constants = {
     ADD_TOAST: 'ADD_TOAST',
     REMOVE_TOAST: 'REMOVE_TOAST',
     ERROR_ACTION: 'ERROR_ACTION',
-    GET_SET_CURRENCY:'GET_SET_CURRENCY'
+    GET_SET_CURRENCY: 'GET_SET_CURRENCY'
 };
 
 export const countryCode = {
@@ -55,7 +55,12 @@ export const Roles = {
     ADMIN_ROLE_NAME: 'admin'
 };
 
+export const userProfileActionType = {
+    GET_PROFILE: 'GET_PROFILE',
+    SET_PROFILE: 'SET_PROFILE'
+};
+
 export const dateFormat = {
-    DEFAULT_MOMENT:'YYYY-MM-DD hh:mm:ss',
-    NATIVE:'YYYY-MM-DD'
+    DEFAULT_MOMENT: 'YYYY-MM-DD hh:mm:ss',
+    NATIVE: 'YYYY-MM-DD'
 };

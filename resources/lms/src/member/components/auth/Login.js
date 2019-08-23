@@ -11,6 +11,7 @@ import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
 import {Routes, Tokens} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {setUserProfile} from "../../../store/action/userProfileAction";
 
 const Login = (props) => {
     let remember = true;
@@ -46,7 +47,7 @@ const Login = (props) => {
             }
             localStorage.setItem(Tokens.MEMBER, response.data.data.token);
             localStorage.setItem('is_member_remember', isRemember);
-            localStorage.setItem('member', btoa(JSON.stringify(response.data.data.user)));
+            props.setUserProfile('member',response.data.data.user);
             if (sessionStorage.getItem('prevMemberPrevUrl')) {
                 window.location.href = sessionStorage.getItem('prevMemberPrevUrl');
             } else {
@@ -100,4 +101,4 @@ const Login = (props) => {
 
 const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(Login);
 
-export default connect(null, { addToast })(form);
+export default connect(null, { addToast, setUserProfile })(form);
