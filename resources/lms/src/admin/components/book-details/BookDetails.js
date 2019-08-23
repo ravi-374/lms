@@ -8,18 +8,24 @@ import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import {fetchBook} from '../../store/actions/bookAction';
 import BookItems from '../book-items/BookItems';
 import {prepareAuthor, prepareBookLanguage, preparePublisher} from '../books/prepareArray';
+import {fetchSettings} from "../../store/actions/settingAction";
 import {toggleModal} from '../../../store/action/modalAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 
 const BookDetail = props => {
-    const { book, bookLanguages, publishers, toggleModal, history } = props;
+    const {
+        book, bookLanguages, publishers, toggleModal, history,
+        fetchBook, fetchBookLanguages, fetchPublishers, fetchSettings, currency
+    } = props;
     const [isToggle, setIsToggle] = useState(false);
     const [isParentToggle, setIsParentToggle] = useState(false);
     useEffect(() => {
-        props.fetchBook(+props.match.params.id);
-        props.fetchBookLanguages();
-        props.fetchPublishers();
+        fetchBook(+props.match.params.id);
+        fetchBookLanguages();
+        fetchPublishers();
+        fetchSettings(false);
     }, []);
     if (!book || !book.genres) {
         return null;
@@ -41,11 +47,13 @@ const BookDetail = props => {
         goBack,
         isParentToggle,
         setIsParentToggle,
+        currency
     };
 
     const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
     return (
         <div className="animated fadeIn">
+            <ProgressBar/>
             <HeaderTitle title={'Book-Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
@@ -130,16 +138,18 @@ const BookDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { books, publishers, bookLanguages } = state;
+    const { books, publishers, bookLanguages, currency } = state;
     return {
         book: books.find(book => book.id === +ownProp.match.params.id),
         bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),
-        publishers: preparePublisher(Object.values(publishers))
+        publishers: preparePublisher(Object.values(publishers)),
+        currency
     }
 };
 export default connect(mapStateToProps, {
     fetchBook,
     fetchBookLanguages,
     fetchPublishers,
-    toggleModal
+    toggleModal,
+    fetchSettings
 })(BookDetail);
