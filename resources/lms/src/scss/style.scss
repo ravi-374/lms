@@ -1,3 +1,5 @@
+// If you want to override variables do it here
+@import "variables";
 // Import styles
 @import "~@coreui/coreui/scss/coreui.scss";
 // Temp fix for reactstrap
@@ -6,8 +8,6 @@
 @import "custom";
 // ie fixes
 @import "ie-fix";
-// If you want to override variables do it here
-@import "variables";
 
 .form-control:focus {
     outline: none;
