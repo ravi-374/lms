@@ -7,6 +7,7 @@ import FilterField from "../components/FilterField";
 import './ReactDataTable.scss';
 import EmptyComponent from "../empty-component/EmptyComponent";
 import {bookAllotmentFilterOptions} from "../../admin/constants";
+import {renderSortIcons} from "../../config/sortConfig";
 
 export default (props) => {
     const { items, onChange, columns, loading, totalRows, isShowFilterField, filterOptions } = props;
@@ -75,7 +76,7 @@ export default (props) => {
             buttonHoverBackground: '#f5981c',
         },
     };
-    
+
     return (
         <Fragment>
             <Row className="justify-content-end">
@@ -88,8 +89,9 @@ export default (props) => {
                     <SearchField handleSearch={handleSearch}/>
                 </Col>
             </Row>
-            <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading} title={loading ? 'Loading......' : 'No records yet'}/>}
-                       paginationRowsPerPageOptions={[10, 15, 25, 50, 100]}
+            <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading}
+                                                        title={loading ? 'Loading......' : 'No records yet'}/>}
+                       paginationRowsPerPageOptions={[10, 15, 25, 50, 100]} sortIcon={renderSortIcons(direction)}
                        pagination={true} paginationServer={true} sortFunction={customSort} striped={true}
                        highlightOnHover={true} className={'table-bordered table-striped mt-2'} customTheme={darkTheme}
                        paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange}

@@ -3,14 +3,14 @@ import React from 'react'
 const setOrder = (filedName, sortObject) => {
     if (sortObject.orderBy === filedName) {
         if (sortObject.order === 'asc') {
-            return {order: 'asc'}
+            return { order: 'asc' }
         }
         else if (sortObject.order === 'desc') {
-            return {order: 'desc'}
+            return { order: 'desc' }
         }
-        return {order: 'none'}
+        return { order: 'none' }
     }
-    return {order: 'none'};
+    return { order: 'none' };
 };
 
 const renderSortIcon = (order) => {
@@ -35,3 +35,5 @@ export const sortConfig = (filedName, sortObject) => {
             return renderSortIcon('none');
     }
 };
+
+export const renderSortIcons = renderSortIcon;
