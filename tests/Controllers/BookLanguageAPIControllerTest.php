@@ -54,6 +54,25 @@ class BookLanguageAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_book_languages()
+    {
+        /** @var BookLanguage[] $bookLanguage */
+        $bookLanguage = factory(BookLanguage::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/book-languages');
+        $take3 = $this->getJson('api/b1/book-languages?limit=3');
+        $skip2 = $this->getJson('api/b1/book-languages?skip=2&limit=2');
+        $search = $this->getJson('api/b1/book-languages?search='.$bookLanguage[0]->language_name);
+
+        $this->assertCount(23, $response->original['data'], '18 default');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $search->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 23);
+    }
+
+    /** @test */
     public function it_can_create_book_language()
     {
         $this->mockRepository();
@@ -105,5 +124,28 @@ class BookLanguageAPIControllerTest extends TestCase
         $this->assertSuccessDataResponse(
             $response, $bookLanguage->toArray(), 'Book Language retrieved successfully.'
         );
+    }
+
+    /** @test */
+    public function it_can_delete_book_language()
+    {
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $response = $this->deleteJson('api/b1/book-languages/'.$bookLanguage->id);
+
+        $this->assertSuccessMessageResponse($response, 'Book Language deleted successfully.');
+        $this->assertEmpty(BookLanguage::where('language_name', $bookLanguage->language_name)->first());
+    }
+
+    /** @test */
+    public function test_can_not_delete_book_language_when_book_is_used_one_more_book_items()
+    {
+        $bookLanguage = factory(BookLanguage::class)->create();
+        $bookItem = factory(BookItem::class)->create(['language_id' => $bookLanguage->id]);
+
+        $response = $this->deleteJson('api/b1/book-languages/'.$bookLanguage->id);
+
+        $this->assertExceptionMessage($response,
+            'Book Language can not be delete, it is used in one or more book items.');
     }
 }
