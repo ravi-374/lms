@@ -6,7 +6,6 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMemberAPIRequest;
 use App\Http\Requests\API\UpdateMemberAPIRequest;
-use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\MemberRepository;
@@ -109,9 +108,7 @@ class MemberAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        /** @var MembershipPlan $membershipPlan */
-        $membershipPlan = MembershipPlan::findOrFail($input['membership_plan_id']);
-        $input['membership_plan_id'] = $membershipPlan->id;
+        MembershipPlan::findOrFail($input['membership_plan_id']);
 
         $member = $this->memberRepository->update($input, $member->id);
 
@@ -172,26 +169,5 @@ class MemberAPIController extends AppBaseController
         $member = Auth::user();
 
         return $this->sendResponse($member, 'Member details retrieved successfully.');
-    }
-
-    /**
-     * @param UpdateMemberProfileAPIRequest $request
-     *
-     * @throws ApiOperationFailedException
-     * @throws Exception
-     * @return JsonResponse
-     */
-    public function updateMemberProfile(UpdateMemberProfileAPIRequest $request)
-    {
-        $input = $request->all();
-        unset($input['email']);
-
-        /** @var MembershipPlan $membershipPlan */
-        $membershipPlan = MembershipPlan::findOrFail($input['membership_plan_id']);
-        $input['membership_plan_id'] = $membershipPlan->id;
-
-        $updateMember = $this->memberRepository->update($input, Auth::id());
-
-        return $this->sendResponse($updateMember->toArray(), 'Member profile updated successfully.');
     }
 }
