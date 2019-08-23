@@ -17,7 +17,6 @@ class AuthorRepository extends BaseRepository implements AuthorRepositoryInterfa
     protected $fieldSearchable = [
         'first_name',
         'last_name',
-        'description',
     ];
 
     /**

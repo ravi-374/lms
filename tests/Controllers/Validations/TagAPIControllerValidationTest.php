@@ -58,7 +58,7 @@ class TagAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_tag()
     {
-        $fakeTag = factory(Tag::class)->make()->toArray();
+        $fakeTag = factory(Tag::class)->raw();
 
         $response = $this->postJson('api/b1/tags', $fakeTag);
 
@@ -71,22 +71,11 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tag = factory(Tag::class)->create();
 
-        $fakeTag = factory(Tag::class)->make()->toArray();
+        $fakeTag = factory(Tag::class)->raw();
 
         $response = $this->putJson('api/b1/tags/'.$tag->id, $fakeTag);
 
         $this->assertSuccessMessageResponse($response, 'Tag updated successfully.');
         $this->assertEquals($fakeTag['name'], $tag->fresh()->name);
-    }
-
-    /** @test */
-    public function it_can_delete_tag()
-    {
-        $tag = factory(Tag::class)->create();
-
-        $response = $this->deleteJson('api/b1/tags/'.$tag->id);
-
-        $this->assertSuccessMessageResponse($response, 'Tag deleted successfully.');
-        $this->assertEmpty(Tag::where('name', $tag->name)->first());
     }
 }

@@ -133,7 +133,7 @@ class UserControllerValidationTest extends TestCase
     {
         $farhan = factory(User::class)->create();
         $vishal = factory(User::class)->create();
-        $input = factory(User::class)->raw(['email' =>  $farhan->email]);
+        $input = factory(User::class)->raw(['email' => $farhan->email]);
 
         $response = $this->postJson('api/b1/users/'.$vishal->id, $input);
 
@@ -146,7 +146,7 @@ class UserControllerValidationTest extends TestCase
         $farhan = factory(User::class)->create();
         $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users/'.$farhan->id, array_merge($input, ['role_id' =>'string']));
+        $response = $this->postJson('api/b1/users/'.$farhan->id, array_merge($input, ['role_id' => 'string']));
 
         $this->assertExceptionMessage($response, 'The role id must be an integer.');
     }
@@ -173,55 +173,11 @@ class UserControllerValidationTest extends TestCase
     public function it_can_update_user()
     {
         $user = factory(User::class)->create();
-        $fakeUser = factory(User::class)->make()->toArray();
+        $fakeUser = factory(User::class)->raw();
 
         $response = $this->postJson('api/b1/users/'.$user->id, $fakeUser);
 
         $this->assertSuccessMessageResponse($response, 'User updated successfully.');
         $this->assertEquals($fakeUser['email'], $user->fresh()->email);
-    }
-
-    /** @test */
-    public function test_can_delete_user()
-    {
-        $user = factory(User::class)->create();
-
-        $response = $this->deleteJson('api/b1/users/'.$user->id);
-
-        $this->assertSuccessMessageResponse($response, 'User deleted successfully.');
-        $this->assertEmpty(User::find($user->id));
-    }
-
-    /** @test */
-    public function test_can_activate_user()
-    {
-        /** @var User $user */
-        $user = factory(User::class)->create(['is_active' => 0]);
-
-        $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
-
-        $this->assertSuccessDataResponse($response, $user->fresh()->toArray(), 'User updated successfully.');
-        $this->assertTrue($user->fresh()->is_active);
-    }
-
-    /** @test */
-    public function test_can_de_activate_user()
-    {
-        /** @var User $user */
-        $user = factory(User::class)->create(['is_active' => 1]);
-
-        $response = $this->getJson('api/b1/users/'.$user->id.'/update-status');
-
-        $this->assertSuccessDataResponse($response, $user->fresh()->toArray(), 'User updated successfully.');
-        $this->assertFalse($user->fresh()->is_active);
-    }
-
-    /** @test */
-    public function test_can_get_details_of_logged_in_user()
-    {
-        $response = $this->get('api/b1/user-details');
-
-        $this->assertNotEmpty($response);
-        $this->assertEquals($this->loggedInUserId, $response->original['data']->id);
     }
 }

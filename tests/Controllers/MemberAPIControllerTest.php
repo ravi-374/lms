@@ -100,7 +100,6 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id]);
-        unset($updateRecord['email']);
 
         $this->memberRepo->shouldReceive('update')
             ->once()
