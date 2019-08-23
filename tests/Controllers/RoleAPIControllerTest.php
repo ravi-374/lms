@@ -52,6 +52,25 @@ class RoleAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_roles()
+    {
+        /** @var Role[] $roles */
+        $roles = factory(Role::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/roles');
+        $take3 = $this->getJson('api/b1/roles?limit=3');
+        $skip2 = $this->getJson('api/b1/roles?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/roles?search='.$roles[0]->name);
+
+        $this->assertCount(7, $response->original['data'], '2 defaults');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 7);
+    }
+
+    /** @test */
     public function it_can_store_role()
     {
         $this->mockRepository();
@@ -109,6 +128,17 @@ class RoleAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $role->toArray(), 'Role retrieved successfully.');
         $this->assertEquals($permission->id, $response->original['data']['perms'][0]['id']);
+    }
+
+    /** @test */
+    public function it_can_delete_role()
+    {
+        $role = factory(Role::class)->create();
+
+        $response = $this->deleteJson('api/b1/roles/'.$role->id);
+
+        $this->assertSuccessMessageResponse($response, 'Role deleted successfully.');
+        $this->assertEmpty(Role::where('name', $role->name)->first());
     }
 
     /** @test */
