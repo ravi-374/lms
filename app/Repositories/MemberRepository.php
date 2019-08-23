@@ -160,7 +160,6 @@ class MemberRepository extends BaseRepository
      */
     public function update($input, $id)
     {
-        MembershipPlan::findOrFail($input['membership_plan_id']);
         try {
             DB::beginTransaction();
             if (!empty($input['password'])) {
