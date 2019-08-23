@@ -76,7 +76,7 @@ class SettingAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_setting()
     {
-        $fakeSetting = factory(Setting::class)->make()->toArray();
+        $fakeSetting = factory(Setting::class)->raw();
         $response = $this->postJson('api/b1/settings', $fakeSetting);
 
         $this->assertSuccessMessageResponse($response, 'Setting saved successfully.');
@@ -87,22 +87,11 @@ class SettingAPIControllerValidationTest extends TestCase
     public function it_can_update_setting()
     {
         $setting = factory(Setting::class)->create();
-        $fakeSetting = factory(Setting::class)->make()->toArray();
+        $fakeSetting = factory(Setting::class)->raw();
 
         $response = $this->putJson('api/b1/settings/'.$setting->id, $fakeSetting);
 
         $this->assertSuccessMessageResponse($response, 'Setting updated successfully.');
         $this->assertEquals($fakeSetting['key'], $setting->fresh()->key);
-    }
-
-    /** @test */
-    public function it_can_delete_setting()
-    {
-        $setting = factory(Setting::class)->create();
-
-        $response = $this->deleteJson('api/b1/settings/'.$setting->id);
-
-        $this->assertSuccessMessageResponse($response, 'Setting deleted successfully.');
-        $this->assertEmpty(Setting::where('key', $setting->key)->first());
     }
 }

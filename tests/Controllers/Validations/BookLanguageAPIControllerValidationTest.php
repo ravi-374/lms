@@ -108,7 +108,7 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_book_language()
     {
-        $fakeBookLanguage = factory(BookLanguage::class)->make()->toArray();
+        $fakeBookLanguage = factory(BookLanguage::class)->raw();
 
         $response = $this->postJson('api/b1/book-languages', $fakeBookLanguage);
 
@@ -120,34 +120,11 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     public function it_can_update_book_language()
     {
         $bookLanguage = factory(BookLanguage::class)->create();
-        $fakeBookLanguage = factory(BookLanguage::class)->make()->toArray();
+        $fakeBookLanguage = factory(BookLanguage::class)->raw();
 
         $response = $this->putJson('api/b1/book-languages/'.$bookLanguage->id, $fakeBookLanguage);
 
         $this->assertSuccessMessageResponse($response, 'Book Language updated successfully.');
         $this->assertEquals($fakeBookLanguage['language_name'], $bookLanguage->fresh()->language_name);
-    }
-
-    /** @test */
-    public function it_can_delete_book_language()
-    {
-        $bookLanguage = factory(BookLanguage::class)->create();
-
-        $response = $this->deleteJson('api/b1/book-languages/'.$bookLanguage->id);
-
-        $this->assertSuccessMessageResponse($response, 'Book Language deleted successfully.');
-        $this->assertEmpty(BookLanguage::where('language_name', $bookLanguage->language_name)->first());
-    }
-
-    /** @test */
-    public function test_can_not_delete_book_language_when_book_is_used_one_more_book_items()
-    {
-        $bookLanguage = factory(BookLanguage::class)->create();
-        $bookItem = factory(BookItem::class)->create(['language_id' => $bookLanguage->id]);
-
-        $response = $this->deleteJson('api/b1/book-languages/'.$bookLanguage->id);
-
-        $this->assertExceptionMessage($response,
-            'Book Language can not be delete, it is used in one or more book items.');
     }
 }

@@ -48,7 +48,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_book_series()
     {
-        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
+        $fakeBookSeries = factory(BookSeries::class)->raw();
         $response = $this->postJson('api/b1/book-series', $fakeBookSeries);
 
         $this->assertSuccessMessageResponse($response, 'Book Series saved successfully.');
@@ -59,22 +59,11 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     public function it_can_update_book_series()
     {
         $bookSeries = factory(BookSeries::class)->create();
-        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
+        $fakeBookSeries = factory(BookSeries::class)->raw();
 
         $response = $this->putJson('api/b1/book-series/'.$bookSeries->id, $fakeBookSeries);
 
         $this->assertSuccessMessageResponse($response, 'Book Series updated successfully.');
         $this->assertEquals($fakeBookSeries['title'], $bookSeries->fresh()->title);
-    }
-
-    /** @test */
-    public function it_can_delete_book_series()
-    {
-        $bookSeries = factory(BookSeries::class)->create();
-
-        $response = $this->deleteJson('api/b1/book-series/'.$bookSeries->id);
-
-        $this->assertSuccessMessageResponse($response, 'Book Series deleted successfully.');
-        $this->assertEmpty(BookSeries::where('title', $bookSeries->title)->first());
     }
 }

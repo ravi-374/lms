@@ -38,8 +38,10 @@ class MemberAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Member $updateRecord */
         $updateRecord = factory(Member::class)->make(['id' => $this->loggedInMemberId]);
         unset($updateRecord->email);
+        unset($updateRecord->membership_plan_id);
 
         $this->memberRepo->shouldReceive('update')
             ->once()

@@ -37,13 +37,13 @@ class BookRepositoryTest extends TestCase
         $allBooks = $this->bookRepo->all();
         $take3 = $this->bookRepo->all([], null, 3);
         $skip4 = $this->bookRepo->all([], 4, 5);
-        
+
         $this->assertCount(5, $allBooks);
         $this->assertCount(3, $take3);
         $this->assertCount(1, $skip4);
     }
 
-   /** @test */
+    /** @test */
     public function it_can_store_book()
     {
         $fakeBook = factory(Book::class)->make()->toArray();
@@ -235,7 +235,13 @@ class BookRepositoryTest extends TestCase
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $input['items'] = [['language_id' => $bookItem->language_id, 'price' => 100, 'book_code' => $bookItem->book_code]];
+        $input['items'] = [
+            [
+                'language_id' => $bookItem->language_id,
+                'price'       => 100,
+                'book_code'   => $bookItem->book_code,
+            ],
+        ];
 
         $this->bookRepo->validateInput($input);
     }
