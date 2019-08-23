@@ -43,7 +43,7 @@ class MemberAPIControllerTest extends TestCase
         unset($updateRecord->email);
         unset($updateRecord->membership_plan_id);
 
-        $this->memberRepo->shouldReceive('update')
+        $this->memberRepo->expects('update')
             ->once()
             ->with($updateRecord->toArray(), $this->loggedInMemberId)
             ->andReturn($updateRecord);

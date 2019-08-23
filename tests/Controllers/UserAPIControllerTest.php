@@ -42,7 +42,7 @@ class UserAPIControllerTest extends TestCase
 
         $users = factory(User::class)->times(5)->create();
 
-        $this->userRepo->shouldReceive('all')
+        $this->userRepo->expects('all')
             ->once()
             ->andReturn($users);
 
@@ -53,6 +53,7 @@ class UserAPIControllerTest extends TestCase
             $users->toArray(),
             'Users retrieved successfully.'
         );
+        $this->assertEquals(6, $response->original['totalRecords'], 'default 1');
     }
 
     /** @test */
@@ -69,7 +70,7 @@ class UserAPIControllerTest extends TestCase
             'role_id'  => $role->id,
         ]);
 
-        $this->userRepo->shouldReceive('store')
+        $this->userRepo->expects('store')
             ->once()
             ->with($input)
             ->andReturn($farhan);
@@ -88,7 +89,7 @@ class UserAPIControllerTest extends TestCase
         $farhan = factory(User::class)->create();
         $updateRecord = factory(User::class)->make(['id' => $farhan->id]);
 
-        $this->userRepo->shouldReceive('update')
+        $this->userRepo->expects('update')
             ->once()
             ->with($updateRecord->toArray(), $farhan->id)
             ->andReturn($updateRecord);
@@ -149,7 +150,7 @@ class UserAPIControllerTest extends TestCase
 
         $updateRecord = factory(User::class)->make(['id' => $this->loggedInUserId]);
 
-        $this->userRepo->shouldReceive('update')
+        $this->userRepo->expects('update')
             ->once()
             ->with($updateRecord->toArray(), $this->loggedInUserId)
             ->andReturn($updateRecord);

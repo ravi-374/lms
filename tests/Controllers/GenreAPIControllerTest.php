@@ -42,13 +42,14 @@ class GenreAPIControllerTest extends TestCase
         /** @var Genre $genres */
         $genres = factory(Genre::class)->times(5)->create();
 
-        $this->genreRepository->shouldReceive('all')
+        $this->genreRepository->expects('all')
             ->once()
             ->andReturn($genres);
 
         $response = $this->getJson('api/b1/genres');
 
         $this->assertSuccessDataResponse($response, $genres->toArray(), 'Genres retrieved successfully.');
+        $this->assertEquals(34, $response->original['totalRecords'], '29 defaults');
     }
 
     /** @test */
@@ -59,7 +60,7 @@ class GenreAPIControllerTest extends TestCase
         /** @var Genre $genre */
         $genre = factory(Genre::class)->make();
 
-        $this->genreRepository->shouldReceive('create')
+        $this->genreRepository->expects('create')
             ->once()
             ->with($genre->toArray())
             ->andReturn($genre);
@@ -78,7 +79,7 @@ class GenreAPIControllerTest extends TestCase
         $genre = factory(Genre::class)->create();
         $fakeGenre = factory(Genre::class)->make(['id' => $genre->id]);
 
-        $this->genreRepository->shouldReceive('update')
+        $this->genreRepository->expects('update')
             ->once()
             ->with($fakeGenre->toArray(), $genre->id)
             ->andReturn($fakeGenre);

@@ -40,13 +40,14 @@ class TagAPIControllerTest extends TestCase
 
         $tags = factory(Tag::class)->times(5)->create();
 
-        $this->tagRepository->shouldReceive('all')
+        $this->tagRepository->expects('all')
             ->once()
             ->andReturn($tags);
 
         $response = $this->getJson('api/b1/tags');
 
         $this->assertSuccessDataResponse($response, $tags->toArray(), 'Tags retrieved successfully.');
+        $this->assertEquals(18, $response->original['totalRecords'], '13 defaults');
     }
 
     /** @test */
@@ -56,7 +57,7 @@ class TagAPIControllerTest extends TestCase
 
         $tag = factory(Tag::class)->make();
 
-        $this->tagRepository->shouldReceive('create')
+        $this->tagRepository->expects('create')
             ->once()
             ->with($tag->toArray())
             ->andReturn($tag);
@@ -75,7 +76,7 @@ class TagAPIControllerTest extends TestCase
         $tag = factory(Tag::class)->create();
         $fakeTag = factory(Tag::class)->make(['id' => $tag->id]);
 
-        $this->tagRepository->shouldReceive('update')
+        $this->tagRepository->expects('update')
             ->once()
             ->with($fakeTag->toArray(), $tag->id)
             ->andReturn($fakeTag);

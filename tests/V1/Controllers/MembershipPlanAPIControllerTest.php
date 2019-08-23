@@ -40,7 +40,7 @@ class MembershipPlanAPIControllerTest extends TestCase
 
         $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
 
-        $this->membershipPlanRepo->shouldReceive('all')
+        $this->membershipPlanRepo->expects('all')
             ->once()
             ->andReturn($membershipPlan);
 

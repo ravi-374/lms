@@ -42,7 +42,7 @@ class BookSeriesAPIControllerTest extends TestCase
         /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->times(5)->create();
 
-        $this->bookSeriesRepo->shouldReceive('all')
+        $this->bookSeriesRepo->expects('all')
             ->once()
             ->andReturn($bookSeries);
 
@@ -63,7 +63,7 @@ class BookSeriesAPIControllerTest extends TestCase
         /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->make();
 
-        $this->bookSeriesRepo->shouldReceive('store')
+        $this->bookSeriesRepo->expects('store')
             ->once()
             ->with($bookSeries->toArray())
             ->andReturn($bookSeries);
@@ -82,7 +82,7 @@ class BookSeriesAPIControllerTest extends TestCase
         $bookSeries = factory(BookSeries::class)->create();
         $fakeBookSeries = factory(BookSeries::class)->make(['id' => $bookSeries->id]);
 
-        $this->bookSeriesRepo->shouldReceive('update')
+        $this->bookSeriesRepo->expects('update')
             ->once()
             ->with($fakeBookSeries->toArray(), $bookSeries->id)
             ->andReturn($fakeBookSeries);

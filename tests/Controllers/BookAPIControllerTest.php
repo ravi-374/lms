@@ -43,7 +43,7 @@ class BookAPIControllerTest extends TestCase
         /** @var Book $books */
         $books = factory(Book::class)->times(5)->create();
 
-        $this->bookRepository->shouldReceive('all')
+        $this->bookRepository->expects('all')
             ->once()
             ->andReturn($books);
 
@@ -54,6 +54,7 @@ class BookAPIControllerTest extends TestCase
             $books->toArray(),
             'Books retrieved successfully.'
         );
+        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -65,7 +66,7 @@ class BookAPIControllerTest extends TestCase
         /** @var Book $book */
         $book = factory(Book::class)->make(['genres' => [$genre->id]]);
 
-        $this->bookRepository->shouldReceive('store')
+        $this->bookRepository->expects('store')
             ->once()
             ->with($book->toArray())
             ->andReturn($book);
@@ -88,7 +89,7 @@ class BookAPIControllerTest extends TestCase
             'genres' => [$genre->id],
         ]);
 
-        $this->bookRepository->shouldReceive('update')
+        $this->bookRepository->expects('update')
             ->once()
             ->with($fakeBook->toArray(), $book->id)
             ->andReturn($fakeBook);

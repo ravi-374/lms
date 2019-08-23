@@ -45,7 +45,7 @@ class BookItemAPIControllerTest extends TestCase
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
 
-        $this->bookItemRepo->shouldReceive('all')
+        $this->bookItemRepo->expects('all')
             ->once()
             ->andReturn($bookItem);
 
@@ -65,7 +65,7 @@ class BookItemAPIControllerTest extends TestCase
 
         $bookItems = factory(BookItem::class)->times(5)->create();
 
-        $this->bookItemRepo->shouldReceive('searchBooks')
+        $this->bookItemRepo->expects('searchBooks')
             ->once()
             ->andReturn(collect($bookItems));
 

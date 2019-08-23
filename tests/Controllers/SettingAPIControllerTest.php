@@ -3,7 +3,6 @@
 namespace Tests\Controllers;
 
 use App\Models\Setting;
-use App\Models\Tag;
 use App\Repositories\SettingRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -41,7 +40,7 @@ class SettingAPIControllerTest extends TestCase
 
         $settings = factory(Setting::class)->times(5)->create();
 
-        $this->settingRepo->shouldReceive('all')
+        $this->settingRepo->expects('all')
             ->once()
             ->andReturn($settings);
 
@@ -57,7 +56,7 @@ class SettingAPIControllerTest extends TestCase
 
         $setting = factory(Setting::class)->make();
 
-        $this->settingRepo->shouldReceive('createOrUpdate')
+        $this->settingRepo->expects('createOrUpdate')
             ->once()
             ->with($setting->toArray())
             ->andReturn($setting);
@@ -76,7 +75,7 @@ class SettingAPIControllerTest extends TestCase
         $setting = factory(Setting::class)->create();
         $fakeSetting = factory(Setting::class)->make();
 
-        $this->settingRepo->shouldReceive('update')
+        $this->settingRepo->expects('update')
             ->once()
             ->with($fakeSetting->toArray(), $setting->id)
             ->andReturn($fakeSetting);

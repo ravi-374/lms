@@ -3,6 +3,7 @@
 namespace Tests\V1\Controllers;
 
 use App\Models\IssuedBook;
+use App\Models\Member;
 use App\Repositories\IssuedBookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -38,15 +39,18 @@ class IssuedBookAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $bookItems = factory(IssuedBook::class)->times(5)->create();
+        $member = factory(Member::class)->create();
+        $bookItems = factory(IssuedBook::class)
+            ->times(5)
+            ->create(['member_id' => $member->id]);
 
-        $this->issuedBookRepo->shouldReceive('all')
+        $this->issuedBookRepo->expects('all')
             ->once()
             ->andReturn($bookItems);
 
         $response = $this->getJson('api/v1/books-history');
 
         $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
+        $this->assertEquals(5, $response->original['totalRecords']);
     }
 }

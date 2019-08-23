@@ -41,7 +41,7 @@ class CountryAPIControllerTest extends TestCase
         /** @var Country $countries */
         $countries = factory(Country::class)->times(2)->create();
 
-        $this->countryRepo->shouldReceive('all')
+        $this->countryRepo->expects('all')
             ->once()
             ->andReturn($countries);
 

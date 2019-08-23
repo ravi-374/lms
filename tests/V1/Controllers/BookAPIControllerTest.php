@@ -40,7 +40,7 @@ class BookAPIControllerTest extends TestCase
 
         $books = factory(Book::class)->times(5)->create();
 
-        $this->bookRepo->shouldReceive('all')
+        $this->bookRepo->expects('all')
             ->once()
             ->andReturn($books);
 

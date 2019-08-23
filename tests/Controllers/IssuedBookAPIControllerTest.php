@@ -47,13 +47,13 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook $issuedBooks */
         $issuedBooks = factory(IssuedBook::class)->times(5)->create();
 
-        $this->issueBookRepo->shouldReceive('all')
+        $this->issueBookRepo->expects('all')
             ->once()
             ->andReturn($issuedBooks);
 
         $response = $this->getJson('api/b1/books-history');
         $this->assertSuccessMessageResponse($response, 'Issued Books retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
+        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -73,7 +73,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'book_item_id' => $bookItem->id,
         ]);
 
-        $this->issueBookRepo->shouldReceive('issueBook')
+        $this->issueBookRepo->expects('issueBook')
             ->once()
             ->with($input)
             ->andReturn($issueBook);
@@ -93,7 +93,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook $issueBook */
         $issueBook = factory(IssuedBook::class)->create();
 
-        $this->issueBookRepo->shouldReceive('returnBook')
+        $this->issueBookRepo->expects('returnBook')
             ->once()
             ->with(['book_item_id' => $issueBook->book_item_id])
             ->andReturn($issueBook);
@@ -130,7 +130,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'member_id' => $member->id,
         ]);
 
-        $this->issueBookRepo->shouldReceive('all')
+        $this->issueBookRepo->expects('all')
             ->once()
             ->andReturn($issuedBooks);
 

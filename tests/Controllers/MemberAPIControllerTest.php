@@ -40,7 +40,7 @@ class MemberAPIControllerTest extends TestCase
 
         $members = factory(Member::class)->times(5)->create();
 
-        $this->memberRepo->shouldReceive('all')
+        $this->memberRepo->expects('all')
             ->once()
             ->andReturn($members);
 
@@ -51,6 +51,7 @@ class MemberAPIControllerTest extends TestCase
             $members->toArray(),
             'Members retrieved successfully.'
         );
+        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -63,7 +64,7 @@ class MemberAPIControllerTest extends TestCase
 
         $input = array_merge($member->toArray(), ['password' => 12345678]);
 
-        $this->memberRepo->shouldReceive('store')
+        $this->memberRepo->expects('store')
             ->once()
             ->with($input)
             ->andReturn($member);
@@ -82,7 +83,7 @@ class MemberAPIControllerTest extends TestCase
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id]);
 
-        $this->memberRepo->shouldReceive('update')
+        $this->memberRepo->expects('update')
             ->once()
             ->with($updateRecord->toArray(), $member->id)
             ->andReturn($updateRecord);
