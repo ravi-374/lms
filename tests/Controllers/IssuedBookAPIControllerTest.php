@@ -99,16 +99,12 @@ class IssuedBookAPIControllerTest extends TestCase
             'member_id'    => $member->id,
         ]);
 
-        $this->assertSuccessMessageResponse($response, 'Book reserved successfully.');
         $this->assertArrayHasKey('id', $response->original['data']);
+        $issuedBook = IssuedBook::ofMember($member->id)->first();
 
-        $issuedBook = IssuedBook::with('bookItem')
-            ->where('member_id', $member->id)
-            ->where('book_item_id', $bookItem->id)
-            ->first();
-
+        $this->assertSuccessMessageResponse($response, 'Book reserved successfully.');
         $this->assertEquals(IssuedBook::STATUS_RESERVED, $issuedBook->status);
-        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $issuedBook->bookItem->status);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
     /** @test */
