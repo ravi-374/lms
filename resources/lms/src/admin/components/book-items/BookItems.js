@@ -12,7 +12,10 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {setBookItems} from '../../store/actions/bookItemAction';
 
 const BookItems = (props) => {
-    const {bookLanguages, publishers, bookItemList, bookItems, sortAction, sortObject, toggleModal, setBookItems, bookId, isParentToggle, setIsParentToggle} = props;
+    const {
+        bookLanguages, publishers, bookItemList, bookItems,
+        sortAction, sortObject, toggleModal, setBookItems, bookId, isParentToggle, setIsParentToggle, currency
+    } = props;
     const [isCreateMode, setCreateMode] = useState(false);
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
@@ -39,7 +42,7 @@ const BookItems = (props) => {
         setBookItem(bookItem);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, bookItems, bookLanguages, publishers, onOpenModal};
+    const cardBodyProps = { sortAction, sortObject, bookItems, bookLanguages, publishers, onOpenModal, currency };
     return (
         <Fragment>
             {bookItems.length > 0 ? <BookItem {...cardBodyProps}/> :
@@ -47,13 +50,13 @@ const BookItems = (props) => {
             <Button className="pull-right" onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
                 New Book Item
             </Button>
-            {!isParentToggle ? <BookItemModal {...cardModalProps}/>:null}
+            {!isParentToggle ? <BookItemModal {...cardModalProps}/> : null}
         </Fragment>
     );
 };
 
 const mapStateToProps = (state) => {
-    const {bookItems, searchText, sortObject, isLoading} = state;
+    const { bookItems, searchText, sortObject, isLoading } = state;
     let bookItemsArray = Object.values(bookItems);
     if (searchText) {
         bookItemsArray = searchFilter(bookItemsArray, searchText);
@@ -61,7 +64,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         bookItemsArray = sortFilter(bookItemsArray, sortObject);
     }
-    return {bookItems: bookItemsArray, sortObject, isLoading};
+    return { bookItems: bookItemsArray, sortObject, isLoading };
 };
 
-export default connect(mapStateToProps, {setBookItems, sortAction, toggleModal})(BookItems);
+export default connect(mapStateToProps, { setBookItems, sortAction, toggleModal })(BookItems);

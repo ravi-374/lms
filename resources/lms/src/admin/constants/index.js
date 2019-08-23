@@ -243,7 +243,10 @@ export const bookItemStatusOptions = [
 
 export const bookAllotmentFilterOptions = [
     { id: 1, name: 'All' },
-    { id: 2, name: 'Issue' },
-    { id: 3, name: 'Return' },
-    { id: 4, name: 'Lost' }
+    { id: 2, name: 'Issued' },
+    { id: 3, name: 'Returned' },
+    { id: 4, name: 'Reserved' },
+    { id: 5, name: 'Unreserved' },
+    { id: 6, name: 'Damage' },
+    { id: 7, name: 'Lost' }
 ];

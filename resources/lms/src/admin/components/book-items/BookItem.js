@@ -5,9 +5,9 @@ import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import {sortConfig} from '../../../config/sortConfig';
 import BookItemStatus from "../../../shared/book-item-status/BookItemStatus";
-import PriceFormatter from '../../../shared/PriceFormatter';
+import {priceFormatter} from "../../../shared/sharedMethod";
 
-export default ({ bookItems, bookLanguages, onOpenModal, sortAction, sortObject }) => {
+export default ({ bookItems, bookLanguages, onOpenModal, sortAction, sortObject, currency }) => {
     const headers = [
         { id: 'book_code', name: 'Book Code' },
         { id: 'edition', name: 'Edition' },
@@ -36,7 +36,7 @@ export default ({ bookItems, bookLanguages, onOpenModal, sortAction, sortObject 
                             <td className="book-item__table-book-code">{bookItem.book_code}</td>
                             <td>{bookItem.edition}</td>
                             <td>{bookItem.language_name}</td>
-                            <td className="book-item__table-price">{<PriceFormatter price={bookItem.price}/>}</td>
+                            <td className="book-item__table-price">{priceFormatter(bookItem.price, currency)}</td>
                             <td className="book-item__table-status">{renderBookItemStatus(bookItem)}</td>
                             <td className="text-center book-item__table-action">
                                 <ModalAction isHideDeleteIcon={true} onOpenModal={onOpenModal} item={bookItem}/>
