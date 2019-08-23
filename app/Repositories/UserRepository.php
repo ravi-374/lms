@@ -56,13 +56,28 @@ class UserRepository extends BaseRepository
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
+        $orderBy = null;
+        if (!empty($search['order_by']) && ($search['order_by'] == 'role_name')) {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
         $query = $this->allQuery($search, $skip, $limit)->with('roles', 'address');
         $query = $this->applyDynamicSearch($search, $query);
-
-        /** @var User[] $users */
         $users = $query->orderByDesc('id')->get();
 
-        return $users;
+        if (!empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = '';
+
+            if ($orderBy == 'role_name') {
+                $orderString = 'roles';
+            }
+
+            $users = $users->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        }
+
+        return $users->values();
     }
 
     /**
