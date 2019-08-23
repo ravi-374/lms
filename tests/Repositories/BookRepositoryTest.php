@@ -2,7 +2,6 @@
 
 namespace Tests\Repositories;
 
-use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\BookLanguage;
