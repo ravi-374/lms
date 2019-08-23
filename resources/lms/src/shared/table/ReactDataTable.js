@@ -75,11 +75,7 @@ export default (props) => {
             buttonHoverBackground: '#f5981c',
         },
     };
-
-    const loadEmptyComponent = () => {
-        return (<EmptyComponent isMedium isLoading={loading} title={loading ? 'Loading......' : 'No records yet'}/>);
-    };
-
+    
     return (
         <Fragment>
             <Row className="justify-content-end">
@@ -92,7 +88,8 @@ export default (props) => {
                     <SearchField handleSearch={handleSearch}/>
                 </Col>
             </Row>
-            <DataTable noDataComponent={loadEmptyComponent} paginationRowsPerPageOptions={[10, 15, 25, 50, 100]}
+            <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading} title={loading ? 'Loading......' : 'No records yet'}/>}
+                       paginationRowsPerPageOptions={[10, 15, 25, 50, 100]}
                        pagination={true} paginationServer={true} sortFunction={customSort} striped={true}
                        highlightOnHover={true} className={'table-bordered table-striped mt-2'} customTheme={darkTheme}
                        paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange}
