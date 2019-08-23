@@ -4,6 +4,7 @@ import apiConfigWthFormData from '../../config/apiConfigWthFormData';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toastType} from '../../constants';
+import {setUserProfile} from "../../../store/action/userProfileAction";
 
 export const fetchMember = () => async (dispatch) => {
     dispatch(setLoading(true));
@@ -25,6 +26,7 @@ export const editMember = (member, history) => async (dispatch) => {
             dispatch({type: memberActionType.EDIT_MEMBER, payload: response.data.data});
             dispatch(addToast({text: response.data.message}));
             dispatch(setLoading(false));
+            dispatch(setUserProfile('member', response.data.data));
             history.push('/');
         })
         .catch(({response}) => {
