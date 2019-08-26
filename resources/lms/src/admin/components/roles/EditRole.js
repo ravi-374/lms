@@ -26,6 +26,9 @@ const EditRole = (props) => {
             description: props.role.description
         }
     };
+    if (props.permissions.length === 0) {
+        return null;
+    }
     return <Modal {...props} content={<RoleForm {...prepareFormOption}/>}/>
 };
 
