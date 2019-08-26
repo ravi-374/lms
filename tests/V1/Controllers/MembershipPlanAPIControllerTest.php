@@ -40,9 +40,7 @@ class MembershipPlanAPIControllerTest extends TestCase
 
         $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
 
-        $this->membershipPlanRepo->expects('all')
-            ->once()
-            ->andReturn($membershipPlan);
+        $this->membershipPlanRepo->expects('all')->andReturn($membershipPlan);
 
         $response = $this->getJson('api/v1/membership-plans');
 

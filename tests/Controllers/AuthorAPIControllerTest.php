@@ -41,9 +41,7 @@ class AuthorAPIControllerTest extends TestCase
 
         $authors = factory(Author::class)->times(5)->create();
 
-        $this->authorRepo->expects('all')
-            ->once()
-            ->andReturn($authors);
+        $this->authorRepo->expects('all')->andReturn($authors);
 
         $response = $this->getJson('api/b1/authors');
 
@@ -78,7 +76,6 @@ class AuthorAPIControllerTest extends TestCase
         $author = factory(Author::class)->make();
 
         $this->authorRepo->expects('create')
-            ->once()
             ->with($author->toArray())
             ->andReturn($author);
 
@@ -97,7 +94,6 @@ class AuthorAPIControllerTest extends TestCase
         $updateRecord = factory(Author::class)->make(['id' => $author->id]);
 
         $this->authorRepo->expects('update')
-            ->once()
             ->with($updateRecord->toArray(), $author->id)
             ->andReturn($updateRecord);
 

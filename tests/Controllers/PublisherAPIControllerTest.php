@@ -41,9 +41,7 @@ class PublisherAPIControllerTest extends TestCase
 
         $publishers = factory(Publisher::class)->times(5)->create();
 
-        $this->publisherRepo->expects('all')
-            ->once()
-            ->andReturn($publishers);
+        $this->publisherRepo->expects('all')->andReturn($publishers);
 
         $response = $this->getJson('api/b1/publishers');
 
@@ -79,7 +77,6 @@ class PublisherAPIControllerTest extends TestCase
         $publisher = factory(Publisher::class)->make();
 
         $this->publisherRepo->expects('create')
-            ->once()
             ->with($publisher->toArray())
             ->andReturn($publisher);
 
@@ -98,7 +95,6 @@ class PublisherAPIControllerTest extends TestCase
         $updateRecord = factory(Publisher::class)->make(['id' => $publisher->id]);
 
         $this->publisherRepo->expects('update')
-            ->once()
             ->with($updateRecord->toArray(), $publisher->id)
             ->andReturn($updateRecord);
 

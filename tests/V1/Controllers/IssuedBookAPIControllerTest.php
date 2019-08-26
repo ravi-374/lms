@@ -47,9 +47,7 @@ class IssuedBookAPIControllerTest extends TestCase
             ->times(5)
             ->create(['member_id' => $member->id]);
 
-        $this->issuedBookRepo->expects('all')
-            ->once()
-            ->andReturn($bookItems);
+        $this->issuedBookRepo->expects('all')->andReturn($bookItems);
 
         $response = $this->getJson('api/v1/books-history');
 

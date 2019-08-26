@@ -44,9 +44,7 @@ class BookAPIControllerTest extends TestCase
         /** @var Book $books */
         $books = factory(Book::class)->times(5)->create();
 
-        $this->bookRepository->expects('all')
-            ->once()
-            ->andReturn($books);
+        $this->bookRepository->expects('all')->andReturn($books);
 
         $response = $this->getJson('api/b1/books');
 
@@ -107,7 +105,6 @@ class BookAPIControllerTest extends TestCase
         $book = factory(Book::class)->make(['genres' => [$genre->id]]);
 
         $this->bookRepository->expects('store')
-            ->once()
             ->with($book->toArray())
             ->andReturn($book);
 
@@ -143,7 +140,6 @@ class BookAPIControllerTest extends TestCase
         ]);
 
         $this->bookRepository->expects('update')
-            ->once()
             ->with($fakeBook->toArray(), $book->id)
             ->andReturn($fakeBook);
 

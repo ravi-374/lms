@@ -2,6 +2,7 @@
 
 namespace Tests\Controllers;
 
+use App\Models\BookItem;
 use App\Models\BookLanguage;
 use App\Repositories\BookLanguageRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -41,9 +42,7 @@ class BookLanguageAPIControllerTest extends TestCase
         /** @var BookLanguage $bookLanguages */
         $bookLanguages = factory(BookLanguage::class)->times(5)->create();
 
-        $this->bookLanguageRepo->expects('all')
-            ->once()
-            ->andReturn($bookLanguages);
+        $this->bookLanguageRepo->expects('all')->andReturn($bookLanguages);
 
         $response = $this->getJson('api/b1/book-languages');
 
@@ -80,7 +79,6 @@ class BookLanguageAPIControllerTest extends TestCase
         $bookLanguage = factory(BookLanguage::class)->make();
 
         $this->bookLanguageRepo->expects('create')
-            ->once()
             ->with($bookLanguage->toArray())
             ->andReturn($bookLanguage);
 
@@ -101,7 +99,6 @@ class BookLanguageAPIControllerTest extends TestCase
         $fakeBookLanguage = factory(BookLanguage::class)->make(['id' => $bookLanguage->id]);
 
         $this->bookLanguageRepo->expects('update')
-            ->once()
             ->with($fakeBookLanguage->toArray(), $bookLanguage->id)
             ->andReturn($fakeBookLanguage);
 

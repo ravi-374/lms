@@ -45,9 +45,7 @@ class BookItemAPIControllerTest extends TestCase
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
 
-        $this->bookItemRepo->expects('all')
-            ->once()
-            ->andReturn($bookItem);
+        $this->bookItemRepo->expects('all')->andReturn($bookItem);
 
         $response = $this->getJson(
             "api/b1/books/$bookItem->book_id/available-books?member_id=$reserveBook->member_id"
@@ -65,9 +63,7 @@ class BookItemAPIControllerTest extends TestCase
 
         $bookItems = factory(BookItem::class)->times(5)->create();
 
-        $this->bookItemRepo->expects('searchBooks')
-            ->once()
-            ->andReturn(collect($bookItems));
+        $this->bookItemRepo->expects('searchBooks')->andReturn(collect($bookItems));
 
         $response = $this->getJson("api/b1/search-books");
 

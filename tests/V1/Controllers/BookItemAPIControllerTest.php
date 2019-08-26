@@ -40,9 +40,7 @@ class BookItemAPIControllerTest extends TestCase
 
         $bookItems = factory(BookItem::class)->times(5)->create();
 
-        $this->bookItemRepo->expects('searchBooks')
-            ->once()
-            ->andReturn($bookItems);
+        $this->bookItemRepo->expects('searchBooks')->andReturn($bookItems);
 
         $response = $this->getJson('api/v1/search-books');
 
