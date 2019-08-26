@@ -19,22 +19,25 @@ const CreateRole = (props) => {
     const prepareFormOption = {
         onSaveRole,
         onCancel: props.toggleModal,
-        permissions: props.permissions
+        permissions: props.permissions,
     };
+    if (props.permissions.length === 0) {
+        return null;
+    }
     return <Modal {...props} content={<RoleForm{...prepareFormOption}/>}/>
 };
 
 const preparePermissions = permissions => {
     let permissionArray = [];
     permissions.forEach(permission => {
-        permissionArray.push({id: permission.id, name: permission.display_name})
+        permissionArray.push({ id: permission.id, name: permission.display_name })
     });
     return permissionArray;
 };
 const mapStateToProps = (state) => {
-    const {permissions} = state;
+    const { permissions } = state;
     return {
         permissions: preparePermissions(permissions)
     }
 };
-export default connect(mapStateToProps, {addRole, fetchPermissions})(CreateRole);
+export default connect(mapStateToProps, { addRole, fetchPermissions })(CreateRole);

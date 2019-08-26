@@ -123,6 +123,7 @@ const BookDetail = props => {
                                     </div>
                                 </Row>
                                 <div className={book.description ? 'mt-3' : 'mt-5'}>
+                                    <h5 className="mb-3">Book Items</h5>
                                     <BookItems {...bookItemFormOptions}/>
                                 </div>
                                 {isToggle && isParentToggle ? <EditBook {...bookFormOptions}/> : null}

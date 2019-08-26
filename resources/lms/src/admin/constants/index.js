@@ -247,6 +247,6 @@ export const bookAllotmentFilterOptions = [
     { id: 3, name: 'Returned' },
     { id: 4, name: 'Reserved' },
     { id: 5, name: 'Unreserved' },
-    { id: 6, name: 'Damage' },
+    { id: 6, name: 'Damaged' },
     { id: 7, name: 'Lost' }
 ];
