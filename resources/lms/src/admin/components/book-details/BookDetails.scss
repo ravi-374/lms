@@ -10,7 +10,7 @@
     }
 }
 
-.image-holder {
+.book-image-holder {
     position: relative;
     height: 250px;
     border-radius: 10px;
@@ -30,7 +30,7 @@
 }
 
 .book-detail {
-   
+
     @media (max-width: 1139px) {
         width: 100%;
         margin: auto;
@@ -84,6 +84,10 @@
 
         &-desc-heading {
             @extend %heading;
+        }
+
+        &-desc-text {
+            width: 1250px;
         }
     }
 

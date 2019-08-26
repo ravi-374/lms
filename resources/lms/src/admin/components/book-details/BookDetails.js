@@ -71,7 +71,7 @@ const BookDetail = props => {
                             <CardBody>
                                 <Row className="book-detail-row no-gutters">
                                     <div className="book-image-container">
-                                        <div className="image-holder">
+                                        <div className="book-image-holder">
                                             <img src={imageUrl} height="250" alt={imageUrl}/>
                                         </div>
                                     </div>
@@ -87,7 +87,6 @@ const BookDetail = props => {
                                                     {book.genres.map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
-
                                             <div className="book-detail__item">
                                                 <span className="book-detail__item-authors-heading">Author(s)</span>
                                                 <span>
@@ -112,13 +111,12 @@ const BookDetail = props => {
                                                      </span>
                                                 </div> : null
                                             }
-
                                             {book.description ?
                                                 <div className="book-detail__item">
                                                     <span className="book-detail__item-desc-heading">Description</span>
-                                                    <span>
+                                                    <span className="book-detail__item-desc-text">
                                                     {book.description}
-                                                </span>
+                                                    </span>
                                                 </div> : null
                                             }
                                         </div>
