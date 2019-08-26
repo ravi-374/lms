@@ -3,6 +3,7 @@
 namespace Tests\Controllers;
 
 use App\Models\Member;
+use App\Models\MembershipPlan;
 use App\Repositories\MemberRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -52,6 +53,25 @@ class MemberAPIControllerTest extends TestCase
             'Members retrieved successfully.'
         );
         $this->assertEquals(5, $response->original['totalRecords']);
+    }
+
+    /** @test */
+    public function test_can_search_and_get_members()
+    {
+        /** @var Member[] $members */
+        $members = factory(Member::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/members');
+        $take3 = $this->getJson('api/b1/members?limit=3');
+        $skip2 = $this->getJson('api/b1/members?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/members?search='.$members[0]->first_name);
+
+        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 5);
     }
 
     /** @test */
@@ -142,5 +162,24 @@ class MemberAPIControllerTest extends TestCase
 
         $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
         $this->assertFalse($member->fresh()->is_active);
+    }
+
+    /** @test */
+    public function test_can_search_members_records_by_membership_plan_name()
+    {
+        /** @var MembershipPlan $membershipPlan1 */
+        $membershipPlan1 = factory(MembershipPlan::class)->create(['name' => 'Dynami']);
+        /** @var Member $member1 */
+        $member1 = factory(Member::class)->create(['membership_plan_id' => $membershipPlan1->id]);
+
+        $membershipPlan2 = factory(MembershipPlan::class)->create();
+        /** @var Member $member2 */
+        $member2 = factory(Member::class)->create(['membership_plan_id' => $membershipPlan2->id]);
+
+        $response = $this->getJson("api/b1/members?search=$membershipPlan1->name");
+
+        $response = $response->original['data'];
+        $this->assertCount(1, $response);
+        $this->assertEquals($membershipPlan1->name, $response[0]['membership_plan']['name']);
     }
 }

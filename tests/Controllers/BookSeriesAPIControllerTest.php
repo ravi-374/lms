@@ -56,6 +56,25 @@ class BookSeriesAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_book_series()
+    {
+        /** @var BookSeries[] $bookSeries */
+        $bookSeries = factory(BookSeries::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/book-series');
+        $take3 = $this->getJson('api/b1/book-series?limit=3');
+        $skip2 = $this->getJson('api/b1/book-series?skip=2&limit=2');
+        $searchByTitle = $this->getJson('api/b1/book-series?search='.$bookSeries[0]->title);
+
+        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByTitle->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 5);
+    }
+
+    /** @test */
     public function it_can_store_book_series()
     {
         $this->mockRepository();

@@ -51,6 +51,25 @@ class TagAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_tags()
+    {
+        /** @var Tag[] $tags */
+        $tags = factory(Tag::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/tags');
+        $take3 = $this->getJson('api/b1/tags?limit=3');
+        $skip2 = $this->getJson('api/b1/tags?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/tags?search='.$tags[0]->name);
+
+        $this->assertCount(18, $response->original['data'], '13 defaults');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 18);
+    }
+
+    /** @test */
     public function it_can_create_tag()
     {
         $this->mockRepository();

@@ -52,6 +52,25 @@ class AuthorAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_and_get_authors()
+    {
+        /** @var Author[] $authors */
+        $authors = factory(Author::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/authors');
+        $take3 = $this->getJson('api/b1/authors?limit=3');
+        $skip2 = $this->getJson('api/b1/authors?skip=2&limit=2');
+        $searchByName = $this->getJson('api/b1/authors?search='.$authors[0]->first_name);
+
+        $this->assertCount(15, $response->original['data'], '10 default');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 15);
+    }
+
+    /** @test */
     public function it_can_create_author()
     {
         $this->mockRepository();
