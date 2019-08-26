@@ -135,7 +135,10 @@ const MemberDetail = props => {
                                 </Row>
                                 <div className="mt-5">
                                     {memberBookHistory.length > 0 ?
-                                        <MemberBookHistory {...cardBodyProps}/> : null
+                                        <Fragment>
+                                            <h5 className="mb-3">Book History</h5>
+                                            <MemberBookHistory {...cardBodyProps}/>
+                                        </Fragment> : null
                                     }
                                 </div>
                                 <BookHistoryModal {...cardModalProps}/>

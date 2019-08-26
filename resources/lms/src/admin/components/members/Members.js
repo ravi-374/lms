@@ -8,6 +8,7 @@ import './Members.scss';
 import Toasts from '../../../shared/toast/Toasts';
 import {toggleModal} from '../../../store/action/modalAction';
 import {activDeactiveMember, fetchMembers} from '../../store/actions/memberAction';
+import {fetchMembershipPlans} from "../../store/actions/membershipPlanAction";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const members = (props) => {
@@ -15,8 +16,11 @@ const members = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [member, setMember] = useState(null);
-    const { members, toggleModal, history, isLoading, totalRecord } = props;
+    const { members, toggleModal, history, isLoading, totalRecord, membershipPlans } = props;
 
+    useEffect(() => {
+        props.fetchMembershipPlans();
+    }, []);
     const setActiveInactive = (id) => {
         if (id)
             props.activDeactiveMember(id);
@@ -43,7 +47,8 @@ const members = (props) => {
         history,
         isLoading,
         totalRecord,
-        onChangeData
+        onChangeData,
+        membershipPlans
     };
 
     return (
@@ -74,14 +79,16 @@ const members = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { members, isLoading, totalRecord } = state;
+    const { members, isLoading, totalRecord, membershipPlans } = state;
     return {
-        members, isLoading, totalRecord
+        members, isLoading, totalRecord,
+        membershipPlans: [{ id: 0, name: 'All' }, ...Object.values((membershipPlans))]
     };
 };
 
 export default connect(mapStateToProps, {
     fetchMembers,
     activDeactiveMember,
+    fetchMembershipPlans,
     toggleModal
 })(members);
