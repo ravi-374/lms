@@ -75,4 +75,33 @@ class BookItemAPIControllerTest extends TestCase
             $response, $bookItems->toArray(), 'BookItem retrieved successfully.'
         );
     }
+
+    /** @test */
+    public function test_can_update_book_item_status()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->putJson("api/b1/books/$bookItem->id/update-book-status", [
+            'status' => BookItem::STATUS_DAMAGED,
+        ]);
+
+        $this->assertSuccessDataResponse(
+            $response, $bookItem->fresh()->toArray(), 'Book status updated successfully.'
+        );
+        $this->assertEquals(BookItem::STATUS_DAMAGED, $bookItem->fresh()->status);
+    }
+
+    /** @test */
+    public function test_unable_to_update_invalid_book_item_status()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->putJson("api/b1/books/$bookItem->id/update-book-status", [
+            'status' => 10,
+        ]);
+
+        $this->assertExceptionMessage($response, 'Invalid status.');
+    }
 }

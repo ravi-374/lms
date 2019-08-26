@@ -302,4 +302,45 @@ class IssuedBookRepositoryTest extends TestCase
             $bookItem, ['book_item_id' => $bookItem->id, 'member_id' => $mitul->id]
         );
     }
+
+    /** @test */
+    public function test_can_update_given_issued_book_status()
+    {
+        /** @var IssuedBook $issuedBook */
+        $issuedBook = factory(IssuedBook::class)->create();
+        $input = [
+            'member_id'    => $issuedBook->member_id,
+            'book_item_id' => $issuedBook->book_item_id,
+            'status'       => IssuedBook::STATUS_LOST,
+        ];
+        $updatedStatus = $this->issuedBookRepo->updateIssuedBookStatus($input);
+
+        $this->assertEquals(IssuedBook::STATUS_LOST, $issuedBook->fresh()->status);
+        $this->assertEquals(BookItem::STATUS_LOST, $issuedBook->bookItem->status);
+    }
+
+    /**
+     * @test
+     * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Invalid status.
+     */
+    public function test_unable_to_update_invalid_issued_book_status()
+    {
+        $this->issuedBookRepo->updateIssuedBookStatus(['status' => 10]);
+    }
+
+    /**
+     * @test
+     * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     * @expectedExceptionMessage Book is not issued.
+     */
+    public function test_not_allow_to_update_issued_book_status_when_book_is_not_issued()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $input = ['book_item_id' => $bookItem->id, 'status' => IssuedBook::STATUS_LOST];
+
+        $this->issuedBookRepo->updateIssuedBookStatus($input);
+    }
 }

@@ -59,6 +59,28 @@ class IssuedBookAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_update_issued_book_status()
+    {
+        /** @var IssuedBook $issuedBook */
+        $issuedBook = factory(IssuedBook::class)->create();
+
+        $input = [
+            'book_item_id' => $issuedBook->book_item_id,
+            'status'       => IssuedBook::STATUS_LOST,
+        ];
+        $response = $this->putJson("api/b1/books/$issuedBook->id/update-issued-book-status", $input);
+
+        $this->assertSuccessDataResponse(
+            $response,
+            $issuedBook->fresh()->toArray(),
+            'Issued Book status updated successfully.'
+        );
+
+        $this->assertEquals(IssuedBook::STATUS_LOST, $issuedBook->fresh()->status);
+        $this->assertEquals(BookItem::STATUS_LOST, $issuedBook->bookItem->status);
+    }
+
+    /** @test */
     public function test_can_get_book_history()
     {
         /** @var IssuedBook[] $IssuedBooks */
