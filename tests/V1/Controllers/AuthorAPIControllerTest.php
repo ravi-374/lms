@@ -40,9 +40,7 @@ class AuthorAPIControllerTest extends TestCase
 
         $authors = factory(Author::class)->times(5)->create();
 
-        $this->authorRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($authors);
+        $this->authorRepo->expects('all')->andReturn($authors);
 
         $response = $this->getJson('api/v1/authors');
 

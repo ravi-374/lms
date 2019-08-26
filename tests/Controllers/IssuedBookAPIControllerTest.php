@@ -49,13 +49,10 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook $issuedBooks */
         $issuedBooks = factory(IssuedBook::class)->times(5)->create();
 
-        $this->issueBookRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($issuedBooks);
+        $this->issueBookRepo->expects('all')->andReturn($issuedBooks);
 
         $response = $this->getJson('api/b1/books-history');
         $this->assertSuccessMessageResponse($response, 'Issued Books retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
     }
 
     /** @test */
@@ -93,6 +90,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -220,8 +218,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'book_item_id' => $bookItem->id,
         ]);
 
-        $this->issueBookRepo->shouldReceive('issueBook')
-            ->once()
+        $this->issueBookRepo->expects('issueBook')
             ->with($input)
             ->andReturn($issueBook);
 
@@ -277,8 +274,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook $issueBook */
         $issueBook = factory(IssuedBook::class)->create();
 
-        $this->issueBookRepo->shouldReceive('returnBook')
-            ->once()
+        $this->issueBookRepo->expects('returnBook')
             ->with(['book_item_id' => $issueBook->book_item_id])
             ->andReturn($issueBook);
 
@@ -314,9 +310,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'member_id' => $member->id,
         ]);
 
-        $this->issueBookRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($issuedBooks);
+        $this->issueBookRepo->expects('all')->andReturn($issuedBooks);
 
         $response = $this->getJson("api/b1/members/$member->id/books-history");
 

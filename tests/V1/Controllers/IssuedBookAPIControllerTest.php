@@ -42,11 +42,12 @@ class IssuedBookAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $bookItems = factory(IssuedBook::class)->times(5)->create();
+        $member = factory(Member::class)->create();
+        $bookItems = factory(IssuedBook::class)
+            ->times(5)
+            ->create(['member_id' => $member->id]);
 
-        $this->issuedBookRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($bookItems);
+        $this->issuedBookRepo->expects('all')->andReturn($bookItems);
 
         $response = $this->getJson('api/v1/books-history');
 
@@ -67,12 +68,14 @@ class IssuedBookAPIControllerTest extends TestCase
         $take3 = $this->getJson('api/v1/books-history?limit=3');
         $skip2 = $this->getJson('api/v1/books-history?skip=2&limit=2');
 
+        $totalRecords = $response->original['totalRecords'];
         $response = $response->original['data'];
         $this->assertCount(5, $response);
         $this->assertContains($this->loggedInUserId, \Arr::pluck($response, 'member_id'));
 
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(5, $totalRecords);
     }
 
     /** @test */
