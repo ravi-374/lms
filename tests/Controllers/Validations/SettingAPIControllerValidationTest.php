@@ -94,15 +94,4 @@ class SettingAPIControllerValidationTest extends TestCase
         $this->assertSuccessMessageResponse($response, 'Setting updated successfully.');
         $this->assertEquals($fakeSetting['key'], $setting->fresh()->key);
     }
-
-    /** @test */
-    public function it_can_delete_setting()
-    {
-        $setting = factory(Setting::class)->create();
-
-        $response = $this->deleteJson('api/b1/settings/'.$setting->id);
-
-        $this->assertSuccessMessageResponse($response, 'Setting deleted successfully.');
-        $this->assertEmpty(Setting::where('key', $setting->key)->first());
-    }
 }

@@ -59,13 +59,28 @@ class MemberRepository extends BaseRepository
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
+        $orderBy = null;
+        if (!empty($search['order_by']) && ($search['order_by'] == 'membership_plan_name')) {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
         $query = $this->allQuery($search, $skip, $limit)->with('address', 'membershipPlan');
         $query = $this->applyDynamicSearch($search, $query);
-
-        /** @var Member[] $members */
         $members = $query->orderByDesc('id')->get();
 
-        return $members;
+        if (!empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = '';
+
+            if ($orderBy == 'membership_plan_name') {
+                $orderString = 'membershipPlan.name';
+            }
+
+            $members = $members->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        }
+
+        return $members->values();
     }
 
     /**
@@ -77,12 +92,8 @@ class MemberRepository extends BaseRepository
     public function applyDynamicSearch($search, $query)
     {
         $query->when(!empty($search['search']), function (Builder $query) use ($search) {
-            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
-
-            $query->orWhereHas('membershipPlan', function (Builder $query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $query->orWhereRaw('lower(name) LIKE ?', [trim(strtolower($keyword))]);
-                }
+            $query->orWhereHas('membershipPlan', function (Builder $query) use ($search) {
+                filterByColumns($query, $search['search'], ['name']);
             });
         });
 
@@ -160,7 +171,6 @@ class MemberRepository extends BaseRepository
      */
     public function update($input, $id)
     {
-        MembershipPlan::findOrFail($input['membership_plan_id']);
         try {
             DB::beginTransaction();
             if (!empty($input['password'])) {
