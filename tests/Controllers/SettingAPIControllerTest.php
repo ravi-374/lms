@@ -73,16 +73,16 @@ class SettingAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $setting = factory(Setting::class)->make();
+        $settings = factory(Setting::class)->times(2)->raw();
 
         $this->settingRepo->shouldReceive('createOrUpdate')
             ->once()
-            ->with($setting->toArray())
-            ->andReturn($setting);
+            ->with($settings)
+            ->andReturn($settings);
 
-        $response = $this->postJson('api/b1/settings', $setting->toArray());
+        $response = $this->postJson('api/b1/settings', $settings);
 
-        $this->assertSuccessDataResponse($response, $setting->toArray(), 'Setting saved successfully.');
+        $this->assertSuccessDataResponse($response, $settings, 'Setting saved successfully.');
     }
 
     /** @test */
