@@ -55,6 +55,10 @@ export const Roles = {
     ADMIN_ROLE_NAME: 'admin'
 };
 
+export const FilterOption = {
+    ALL: 'all'
+};
+
 export const userProfileActionType = {
     GET_PROFILE: 'GET_PROFILE',
     SET_PROFILE: 'SET_PROFILE'

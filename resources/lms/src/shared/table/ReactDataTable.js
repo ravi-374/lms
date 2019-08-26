@@ -1,22 +1,21 @@
 import React, {Fragment, useEffect, useMemo, useState} from 'react';
 import DataTable from "react-data-table-component";
-import {Col, Row} from 'reactstrap';
-import {Filters} from "../../constants";
+import {Row, Col} from 'reactstrap';
+import {Filters, FilterOption} from "../../constants";
 import SearchField from "../components/SearchField";
 import FilterField from "../components/FilterField";
 import './ReactDataTable.scss';
 import EmptyComponent from "../empty-component/EmptyComponent";
-import {bookAllotmentFilterOptions} from "../../admin/constants";
 import {renderSortIcons} from "../../config/sortConfig";
 
 export default (props) => {
-    const { items, onChange, columns, loading, totalRows, isShowFilterField, filterOptions } = props;
+    const { items, onChange, columns, loading, totalRows, isShowFilterField, filterOptions, searchKey = '', filterKey = null } = props;
     const [perPage, setPerPages] = useState(Filters.OBJ.limit);
     const [orderBy, setOrderBy] = useState(Filters.OBJ.order_By);
     const [direction, setDirection] = useState(Filters.OBJ.direction);
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchText, setSearchText] = useState(isShowFilterField ? 'issued' : '');
-    const filterKey = isShowFilterField ? { ...bookAllotmentFilterOptions[1] } : {};
+    const [searchText, setSearchText] = useState(searchKey);
+
     const tableColumns = useMemo(
         () => columns, []
     );
@@ -33,10 +32,6 @@ export default (props) => {
 
     const handleSearch = (searchText) => {
         setSearchText(searchText);
-    };
-
-    const handleFilter = (searchText) => {
-        setSearchText(isShowFilterField && searchText !== 'All' ? searchText.toLowerCase() : '');
     };
 
     const customSort = (rows, field, direction) => {
@@ -59,7 +54,8 @@ export default (props) => {
             limit: perPage,
             skip: searchText !== '' ? 0 : (page - 1) * perPage,
             direction: direction,
-            search: searchText
+            search: isShowFilterField && searchText.toLowerCase() !== FilterOption.ALL ? searchText.toLowerCase() : ''
+            || !isShowFilterField ? searchText.toLowerCase() : ''
         };
         onChange(filters);
     };
@@ -83,7 +79,7 @@ export default (props) => {
                 <Col xs={2}>
                     {isShowFilterField ?
                         <FilterField options={filterOptions} initialValues={{ filter_key: filterKey }}
-                                     handleFilter={handleFilter}/> : null}
+                                     handleFilter={handleSearch}/> : null}
                 </Col>
                 <Col xs={2}>
                     <SearchField handleSearch={handleSearch}/>
