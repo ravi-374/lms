@@ -10,7 +10,7 @@ export const setBookItems = (bookItems) => async (dispatch) => {
 export const addBookItem = (bookId, items) => async (dispatch) => {
     await apiConfig.post(`books/${+bookId}/items`, {items})
         .then((response) => {
-            dispatch({type: bookItemActionType.ADD_BOOK_ITEM, payload: response.data.items});
+            dispatch({ type: bookItemActionType.ADD_BOOK_ITEM, payload: response.data.data.items });
             dispatch(addToast({text: 'Item saved successfully.'}));
             dispatch(toggleModal());
         })
