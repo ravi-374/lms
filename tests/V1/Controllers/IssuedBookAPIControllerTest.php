@@ -61,6 +61,8 @@ class IssuedBookAPIControllerTest extends TestCase
             ->times(5)
             ->create(['member_id' => $this->loggedInUserId]);
 
+        factory(IssuedBook::class); // of another member
+
         $response = $this->getJson('api/v1/books-history');
         $take3 = $this->getJson('api/v1/books-history?limit=3');
         $skip2 = $this->getJson('api/v1/books-history?skip=2&limit=2');
@@ -87,17 +89,10 @@ class IssuedBookAPIControllerTest extends TestCase
             'member_id'    => $member->id,
         ]);
 
+        $issuedBook = IssuedBook::ofMember($member->id)->first();
         $this->assertSuccessMessageResponse($response, 'Book reserved successfully.');
-        $this->assertArrayHasKey('id', $response->original['data']);
-
-        $issuedBook = IssuedBook::with('bookItem')
-            ->where('member_id', $member->id)
-            ->where('book_item_id', $bookItem->id)
-            ->first();
-
         $this->assertEquals(IssuedBook::STATUS_RESERVED, $issuedBook->status);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $issuedBook->bookItem->status);
-        $this->assertEquals($member->id, $issuedBook->member_id);
     }
 
     /** @test */
