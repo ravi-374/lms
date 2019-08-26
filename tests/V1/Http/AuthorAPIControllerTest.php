@@ -18,7 +18,7 @@ class AuthorAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
+        $this->signInWithMember();
     }
 
     private function mockRepository()
