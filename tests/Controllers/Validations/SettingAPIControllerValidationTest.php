@@ -52,6 +52,38 @@ class SettingAPIControllerValidationTest extends TestCase
     }
 
     /** @test */
+    public function test_update_setting_fails_when_key_is_not_passed()
+    {
+        $setting = factory(Setting::class)->create();
+
+        $response = $this->putJson('api/b1/settings/'.$setting->id, ['key' => '']);
+
+        $this->assertExceptionMessage($response, 'The key field is required.');
+    }
+
+    /** @test */
+    public function test_update_setting_fails_when_value_is_not_passed()
+    {
+        $setting = factory(Setting::class)->create();
+
+        $response = $this->putJson('api/b1/settings/'.$setting->id, ['key' => $this->faker->name, 'value' => '']);
+
+        $this->assertExceptionMessage($response, 'The value field is required.');
+    }
+
+    /** @test */
+    public function test_update_setting_fails_when_display_name_is_not_passed()
+    {
+        $setting = factory(Setting::class)->create();
+
+        $response = $this->putJson('api/b1/settings/'.$setting->id,
+            ['key' => $this->faker->name, 'value' => $this->faker->word]
+        );
+
+        $this->assertExceptionMessage($response, 'The display name field is required.');
+    }
+
+    /** @test */
     public function it_can_store_setting()
     {
         $fakeSetting = factory(Setting::class)->times(2)->raw();
