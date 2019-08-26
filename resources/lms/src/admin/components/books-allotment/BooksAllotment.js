@@ -30,12 +30,8 @@ const BooksAllotment = (props) => {
         toggleModal();
     };
 
-    const fetchBooksAllotment = (filter) => {
-        props.fetchBooksAllotment(filter);
-    };
-
     const onChange = (filter) => {
-        fetchBooksAllotment(filter);
+        props.fetchBooksAllotment(filter);
     };
 
     const gotToBookHistoryDetail = (bookAllotmentId) => {
@@ -115,9 +111,10 @@ const BooksAllotment = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={booksAllotment} isShowFilterField
-                                            filterOptions={bookAllotmentFilterOptions} columns={columns}
-                                            loading={isLoading} totalRows={totalRecord} onOpenModal={onOpenModal}
-                                            onChange={onChange}/>
+                                            filterOptions={bookAllotmentFilterOptions}
+                                            filterKey={bookAllotmentFilterOptions[1]} searchKey='issued'
+                                            columns={columns} loading={isLoading} totalRows={totalRecord}
+                                            onOpenModal={onOpenModal} onChange={onChange}/>
                             <BookAllotmentModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -130,11 +127,8 @@ const BooksAllotment = (props) => {
 
 const mapStateToProps = (state) => {
     const { booksAllotment, isLoading, totalRecord } = state;
-    let booksAllotmentArray = Object.values(booksAllotment);
     return {
-        booksAllotment: booksAllotmentArray,
-        isLoading,
-        totalRecord
+        booksAllotment, isLoading, totalRecord
     };
 };
 

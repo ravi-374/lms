@@ -37,7 +37,7 @@ const Member = ({ members, membershipPlans, onOpenModal, addToast, setActiveInac
         },
         {
             name: 'Membership Plan',
-            accessor: (d) => d.membership_plan_name,
+            selector: 'membership_plan_name',
             sortable: true,
             cell: row => {
                 row.membership_plan_name = row.membership_plan.name;
@@ -73,7 +73,8 @@ const Member = ({ members, membershipPlans, onOpenModal, addToast, setActiveInac
         history.push(`${Routes.MEMBERS + memberId}/details`);
     };
     return (
-        <ReactDataTable items={members} columns={columns} loading={isLoading} totalRows={totalRecord}
+        <ReactDataTable items={members} columns={columns} isShowFilterField filterOptions={membershipPlans}
+                        filterKey={membershipPlans[0]} searchKey='all' loading={isLoading} totalRows={totalRecord}
                         onChange={onChangeData}/>
     );
 };
