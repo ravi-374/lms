@@ -28,16 +28,14 @@ class SettingRepositoryTest extends TestCase
     /** @test */
     public function test_can_create_setting()
     {
-        $inputs = [
-            'key'          => $this->faker->word,
-            'value'        => $this->faker->randomDigit,
-            'display_name' => $this->faker->word,
-        ];
+        $settings = factory(Setting::class)->times(2)->raw();
 
-        $setting = $this->settingRepo->createOrUpdate($inputs)->toArray();
+        $settingList = $this->settingRepo->createOrUpdate($settings);
 
-        $this->assertArrayHasKey('id', $setting);
-        $this->assertEquals($inputs['key'], $setting['key']);
+        $this->assertCount(2, $settingList);
+        $this->assertArrayHasKey('id', $settingList[0]);
+        $this->assertArrayHasKey('id', $settingList[1]);
+        $this->assertEquals(\Arr::Pluck($settings, 'key'), \Arr::pluck($settingList, 'key'));
     }
 
     /** @test */
@@ -50,10 +48,10 @@ class SettingRepositoryTest extends TestCase
             'display_name' => $this->faker->word,
         ];
 
-        $setting = $this->settingRepo->createOrUpdate($inputs)->toArray();
+        $settingList = $this->settingRepo->createOrUpdate([$inputs]);
 
-        $this->assertArrayHasKey('id', $setting);
-        $this->assertEquals($inputs['key'], $setting['key']);
-        $this->assertEquals($inputs['value'], $setting['value']);
+        $this->assertArrayHasKey('id', $settingList[0]);
+        $this->assertEquals($inputs['key'], $settingList[0]['key']);
+        $this->assertEquals($inputs['value'], $settingList[0]['value']);
     }
 }
