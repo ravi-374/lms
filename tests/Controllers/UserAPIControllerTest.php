@@ -42,9 +42,7 @@ class UserAPIControllerTest extends TestCase
 
         $users = factory(User::class)->times(5)->create();
 
-        $this->userRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($users);
+        $this->userRepo->expects('all')->andReturn($users);
 
         $response = $this->getJson('api/b1/users');
 
@@ -69,9 +67,11 @@ class UserAPIControllerTest extends TestCase
         $this->assertCount(6, $response->original['data'], '1 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(6, $response->original['totalRecords'], '1 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 6);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */
@@ -107,8 +107,7 @@ class UserAPIControllerTest extends TestCase
             'role_id'  => $role->id,
         ]);
 
-        $this->userRepo->shouldReceive('store')
-            ->once()
+        $this->userRepo->expects('store')
             ->with($input)
             ->andReturn($farhan);
 
@@ -126,8 +125,7 @@ class UserAPIControllerTest extends TestCase
         $farhan = factory(User::class)->create();
         $updateRecord = factory(User::class)->make(['id' => $farhan->id]);
 
-        $this->userRepo->shouldReceive('update')
-            ->once()
+        $this->userRepo->expects('update')
             ->with($updateRecord->toArray(), $farhan->id)
             ->andReturn($updateRecord);
 
@@ -187,8 +185,7 @@ class UserAPIControllerTest extends TestCase
 
         $updateRecord = factory(User::class)->make(['id' => $this->loggedInUserId]);
 
-        $this->userRepo->shouldReceive('update')
-            ->once()
+        $this->userRepo->expects('update')
             ->with($updateRecord->toArray(), $this->loggedInUserId)
             ->andReturn($updateRecord);
 

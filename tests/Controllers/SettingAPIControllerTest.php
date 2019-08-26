@@ -40,9 +40,7 @@ class SettingAPIControllerTest extends TestCase
 
         $settings = factory(Setting::class)->times(5)->create();
 
-        $this->settingRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($settings);
+        $this->settingRepo->expects('all')->andReturn($settings);
 
         $response = $this->getJson('api/b1/settings');
 
@@ -73,16 +71,15 @@ class SettingAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        $setting = factory(Setting::class)->make();
+        $settings = factory(Setting::class)->times(2)->raw();
 
-        $this->settingRepo->shouldReceive('createOrUpdate')
-            ->once()
-            ->with($setting->toArray())
-            ->andReturn($setting);
+        $this->settingRepo->expects('createOrUpdate')
+            ->with($settings)
+            ->andReturn($settings);
 
-        $response = $this->postJson('api/b1/settings', $setting->toArray());
+        $response = $this->postJson('api/b1/settings', $settings);
 
-        $this->assertSuccessDataResponse($response, $setting->toArray(), 'Setting saved successfully.');
+        $this->assertSuccessDataResponse($response, $settings, 'Setting saved successfully.');
     }
 
     /** @test */
@@ -94,8 +91,7 @@ class SettingAPIControllerTest extends TestCase
         $setting = factory(Setting::class)->create();
         $fakeSetting = factory(Setting::class)->make();
 
-        $this->settingRepo->shouldReceive('update')
-            ->once()
+        $this->settingRepo->expects('update')
             ->with($fakeSetting->toArray(), $setting->id)
             ->andReturn($fakeSetting);
 

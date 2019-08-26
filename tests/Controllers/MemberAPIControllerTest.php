@@ -41,9 +41,7 @@ class MemberAPIControllerTest extends TestCase
 
         $members = factory(Member::class)->times(5)->create();
 
-        $this->memberRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($members);
+        $this->memberRepo->expects('all')->andReturn($members);
 
         $response = $this->getJson('api/b1/members');
 
@@ -66,11 +64,13 @@ class MemberAPIControllerTest extends TestCase
         $searchByName = $this->getJson('api/b1/members?search='.$members[0]->first_name);
 
         $this->assertCount(5, $response->original['data']);
+        $this->assertEquals(5, $response->original['totalRecords']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 5);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */
@@ -101,8 +101,7 @@ class MemberAPIControllerTest extends TestCase
 
         $input = array_merge($member->toArray(), ['password' => 12345678]);
 
-        $this->memberRepo->shouldReceive('store')
-            ->once()
+        $this->memberRepo->expects('store')
             ->with($input)
             ->andReturn($member);
 
@@ -120,8 +119,7 @@ class MemberAPIControllerTest extends TestCase
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id]);
 
-        $this->memberRepo->shouldReceive('update')
-            ->once()
+        $this->memberRepo->expects('update')
             ->with($updateRecord->toArray(), $member->id)
             ->andReturn($updateRecord);
 

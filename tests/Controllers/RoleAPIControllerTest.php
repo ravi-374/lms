@@ -42,9 +42,7 @@ class RoleAPIControllerTest extends TestCase
 
         $roles = factory(Role::class)->times(5)->create();
 
-        $this->roleRepository->shouldReceive('all')
-            ->once()
-            ->andReturn($roles);
+        $this->roleRepository->expects('all')->andReturn($roles);
 
         $response = $this->getJson('api/b1/roles');
 
@@ -80,8 +78,7 @@ class RoleAPIControllerTest extends TestCase
         /** @var Role $role */
         $role = factory(Role::class)->make(['permissions' => [$permission->id]]);
 
-        $this->roleRepository->shouldReceive('store')
-            ->once()
+        $this->roleRepository->expects('store')
             ->with($role->toArray())
             ->andReturn($role);
 
@@ -105,8 +102,7 @@ class RoleAPIControllerTest extends TestCase
             ['permissions' => [$permission->id]]
         );
 
-        $this->roleRepository->shouldReceive('update')
-            ->once()
+        $this->roleRepository->expects('update')
             ->with($updateRole, $role->id)
             ->andReturn($role);
 

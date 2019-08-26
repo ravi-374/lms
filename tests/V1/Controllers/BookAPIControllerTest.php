@@ -40,12 +40,29 @@ class BookAPIControllerTest extends TestCase
 
         $books = factory(Book::class)->times(5)->create();
 
-        $this->bookRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($books);
+        $this->bookRepo->expects('all')->andReturn($books);
 
         $response = $this->getJson('api/v1/books');
 
         $this->assertSuccessDataResponse($response, $books->toArray(), 'Books retrieved successfully.');
+    }
+
+    /** @test */
+    public function test_can_search_and_get_books()
+    {
+        /** @var Book[] $books */
+        $books = factory(Book::class)->times(5)->create();
+
+        $response = $this->getJson('api/v1/books');
+        $take3 = $this->getJson('api/v1/books?limit=3');
+        $skip2 = $this->getJson('api/v1/books?skip=2&limit=2');
+        $searchByName = $this->getJson('api/v1/books?search='.$books[0]->name);
+
+        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByName->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 5);
     }
 }
