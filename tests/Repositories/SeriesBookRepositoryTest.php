@@ -79,25 +79,12 @@ class SeriesBookRepositoryTest extends TestCase
     /**
      * @test
      * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
-     * @expectedExceptionMessage No query results for model [App\Models\Book] 999
+     * @expectedExceptionMessage Book not found.
      */
     public function test_can_not_create_series_book_with_non_existing_book()
     {
         $inputs[] = factory(SeriesBook::class)->raw(['book_id' => 999]);
 
         $this->seriesBookRepo->validateSeriesItems($inputs);
-    }
-
-    /**
-     * @test
-     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
-     * @expectedExceptionMessage No query results for model [App\Models\SeriesBook] 999
-     */
-    public function test_unable_to_update_series_with_non_existing_series_book_id()
-    {
-        /** @var SeriesBook $seriesBook */
-        $seriesBook = factory(SeriesBook::class)->raw();
-
-        $this->seriesBookRepo->update($seriesBook, 999);
     }
 }

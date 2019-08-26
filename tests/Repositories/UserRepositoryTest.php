@@ -90,7 +90,7 @@ class UserRepositoryTest extends TestCase
      * @expectedException App\Exceptions\ApiOperationFailedException
      * @expectedExceptionMessage User not found
      */
-    public function test_unable_to_update_user_with_non_existing_user_id()
+    public function test_not_allow_to_update_non_existing_user()
     {
         /** @var User $user */
         $user = factory(User::class)->raw();

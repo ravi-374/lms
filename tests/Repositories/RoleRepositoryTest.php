@@ -61,7 +61,7 @@ class RoleRepositoryTest extends TestCase
      * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
      * @expectedExceptionMessage Role not found.
      */
-    public function test_unable_to_update_role_with_non_existing_role_id()
+    public function test_unable_to_update_non_existing_role()
     {
         /** @var Role $role */
         $role = factory(Role::class)->raw();
