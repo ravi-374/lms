@@ -1,14 +1,15 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Exceptions\MissingPropertyException;
-use App\Models\Book;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
 use Arr;
 use DB;
 use Exception;
+use Illuminate\Container\Container as Application;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -18,6 +19,15 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  */
 class SeriesBookRepository extends BaseRepository
 {
+    /** @var BookRepository */
+    private $bookRepo;
+
+    public function __construct(Application $app, BookRepository $bookRepository)
+    {
+        parent::__construct($app);
+        $this->bookRepo = $bookRepository;
+    }
+
     /**
      * @var array
      */
@@ -107,7 +117,7 @@ class SeriesBookRepository extends BaseRepository
                 throw new MissingPropertyException('Sequence is required.');
             }
 
-            Book::findOrFail($seriesItem['book_id']);
+            $this->bookRepo->findOrFail($seriesItem['book_id']);
         }
 
         return true;

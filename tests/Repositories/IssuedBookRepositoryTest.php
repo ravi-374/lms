@@ -130,7 +130,7 @@ class IssuedBookRepositoryTest extends TestCase
     /**
      * @test
      * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
-     * @expectedExceptionMessage No query results for model [App\Models\BookItem] 9999
+     * @expectedExceptionMessage BookItem not found.
      */
     public function test_unable_to_issue_book_with_non_existing_book_item_id()
     {
@@ -191,6 +191,21 @@ class IssuedBookRepositoryTest extends TestCase
         $issuedBook = factory(IssuedBook::class)->create();
 
         $this->issuedBookRepo->validateBook($issuedBook->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function test_validate_issue_book_data()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->issuedBookRepo->validateBook([
+            'book_item_id' => $bookItem->id,
+        ]);
+
+        $this->assertTrue($response);
     }
 
     /** @test */
