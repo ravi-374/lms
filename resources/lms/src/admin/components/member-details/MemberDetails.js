@@ -16,6 +16,7 @@ import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {prepareFullNames} from "../../../shared/sharedMethod";
 import {publicImagePathURL, publicImagePath} from "../../../appConstant";
+import EmptyComponent from "../../../shared/empty-component/EmptyComponent";
 
 const MemberDetail = props => {
     const [isEditBookAllotment, setIsEditBookAllotment] = useState(false);
@@ -134,11 +135,12 @@ const MemberDetail = props => {
                                     </div>
                                 </Row>
                                 <div className="mt-5">
+                                    <h5 className="mb-3">Book History</h5>
                                     {memberBookHistory.length > 0 ?
                                         <Fragment>
-                                            <h5 className="mb-3">Book History</h5>
                                             <MemberBookHistory {...cardBodyProps}/>
-                                        </Fragment> : null
+                                        </Fragment> :
+                                        <EmptyComponent isShort={true} title="No book history yet..."/>
                                     }
                                 </div>
                                 <BookHistoryModal {...cardModalProps}/>

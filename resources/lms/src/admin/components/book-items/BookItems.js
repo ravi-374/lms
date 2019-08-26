@@ -47,7 +47,7 @@ const BookItems = (props) => {
         <Fragment>
             {bookItems.length > 0 ? <BookItem {...cardBodyProps}/> :
                 <EmptyComponent isShort={true} title="No book Items yet..."/>}
-            <Button className="pull-right" onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
+            <Button className="pull-right mt-3" onClick={() => onOpenModal(false)} size="md" color="primary">
                 New Book Item
             </Button>
             {!isParentToggle ? <BookItemModal {...cardModalProps}/> : null}
