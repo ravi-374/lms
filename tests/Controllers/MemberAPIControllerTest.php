@@ -65,11 +65,13 @@ class MemberAPIControllerTest extends TestCase
         $searchByName = $this->getJson('api/b1/members?search='.$members[0]->first_name);
 
         $this->assertCount(5, $response->original['data']);
+        $this->assertEquals(5, $response->original['totalRecords']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 5);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */
