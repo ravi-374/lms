@@ -6,6 +6,7 @@
  * Date: 12-07-2019
  * Time: 05:57 PM
  */
+
 namespace App\Repositories;
 
 use App\Models\Setting;
@@ -45,21 +46,22 @@ class SettingRepository extends BaseRepository
     /**
      * @param array $input
      *
-     * @return Setting
+     * @return array
      */
     public function createOrUpdate($input)
     {
-        /** @var Setting $setting */
-        $setting = Setting::where('key', $input['key'])->first();
-
-        if (empty($setting)) {
-            $setting = Setting::create($input);
-
-            return $setting;
+        $getSettingKeys = [];
+        foreach ($input as $record) {
+            $getSettingKeys[] = $record['key'];
         }
 
-        $setting->update($input);
+        Setting::whereIn('key', $getSettingKeys)->delete();
 
-        return $setting->fresh();
+        $settings = [];
+        foreach ($input as $data) {
+            $settings[] = Setting::create($data);
+        }
+
+        return $settings;
     }
 }
