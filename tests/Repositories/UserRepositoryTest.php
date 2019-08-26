@@ -84,4 +84,17 @@ class UserRepositoryTest extends TestCase
         $this->assertEquals($role->id, $user->roles[0]->id);
         $this->assertNotEmpty($user->address);
     }
+
+    /**
+     * @test
+     * @expectedException App\Exceptions\ApiOperationFailedException
+     * @expectedExceptionMessage User not found
+     */
+    public function test_not_allow_to_update_non_existing_user()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->raw();
+
+        $this->userRepo->update($user, 999);
+    }
 }

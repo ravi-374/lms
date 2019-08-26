@@ -129,6 +129,18 @@ class BookRepositoryTest extends TestCase
     /**
      * @test
      * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage Book not found.
+     */
+    public function test_not_allow_to_update_non_existing_book()
+    {
+        $book = factory(Book::class)->raw();
+
+        $this->bookRepo->update($book, 999);
+    }
+
+    /**
+     * @test
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
      * @expectedExceptionMessage  Tag not found
      */
     public function it_can_not_store_book_with_non_existing_tag()
