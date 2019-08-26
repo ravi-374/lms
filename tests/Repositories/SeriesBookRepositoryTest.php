@@ -81,7 +81,7 @@ class SeriesBookRepositoryTest extends TestCase
      * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
      * @expectedExceptionMessage Book not found.
      */
-    public function test_can_not_create_series_book_with_non_existing_book()
+    public function test_can_not_create_series_items_with_non_existing_book()
     {
         $inputs[] = factory(SeriesBook::class)->raw(['book_id' => 999]);
 
