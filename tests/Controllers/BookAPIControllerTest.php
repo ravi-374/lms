@@ -53,7 +53,6 @@ class BookAPIControllerTest extends TestCase
             $books->toArray(),
             'Books retrieved successfully.'
         );
-        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -70,9 +69,11 @@ class BookAPIControllerTest extends TestCase
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(5, $response->original['totalRecords']);
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 5);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */

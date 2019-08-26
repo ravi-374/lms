@@ -53,7 +53,6 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $this->getJson('api/b1/books-history');
         $this->assertSuccessMessageResponse($response, 'Issued Books retrieved successfully.');
-        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -69,6 +68,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */

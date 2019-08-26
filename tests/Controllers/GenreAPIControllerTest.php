@@ -47,7 +47,6 @@ class GenreAPIControllerTest extends TestCase
         $response = $this->getJson('api/b1/genres');
 
         $this->assertSuccessDataResponse($response, $genres->toArray(), 'Genres retrieved successfully.');
-        $this->assertEquals(34, $response->original['totalRecords'], '29 defaults');
     }
 
     /** @test */
@@ -64,9 +63,11 @@ class GenreAPIControllerTest extends TestCase
         $this->assertCount(34, $response->original['data'], '29 default');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(34, $response->original['totalRecords'], '29 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 34);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */

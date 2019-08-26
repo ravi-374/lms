@@ -46,7 +46,6 @@ class AuthorAPIControllerTest extends TestCase
         $response = $this->getJson('api/b1/authors');
 
         $this->assertSuccessDataResponse($response, $authors->toArray(), 'Authors retrieved successfully.');
-        $this->assertEquals(15, $response->original['totalRecords'], '10 defaults');
     }
 
     /** @test */
@@ -63,9 +62,11 @@ class AuthorAPIControllerTest extends TestCase
         $this->assertCount(15, $response->original['data'], '10 default');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(15, $response->original['totalRecords'], '10 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 15);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */

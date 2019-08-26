@@ -50,7 +50,6 @@ class MemberAPIControllerTest extends TestCase
             $members->toArray(),
             'Members retrieved successfully.'
         );
-        $this->assertEquals(5, $response->original['totalRecords']);
     }
 
     /** @test */

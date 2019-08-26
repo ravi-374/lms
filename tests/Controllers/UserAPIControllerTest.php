@@ -51,7 +51,6 @@ class UserAPIControllerTest extends TestCase
             $users->toArray(),
             'Users retrieved successfully.'
         );
-        $this->assertEquals(6, $response->original['totalRecords'], 'default 1');
     }
 
     /** @test */
@@ -68,9 +67,11 @@ class UserAPIControllerTest extends TestCase
         $this->assertCount(6, $response->original['data'], '1 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(6, $response->original['totalRecords'], '1 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 6);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */

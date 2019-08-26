@@ -45,7 +45,6 @@ class TagAPIControllerTest extends TestCase
         $response = $this->getJson('api/b1/tags');
 
         $this->assertSuccessDataResponse($response, $tags->toArray(), 'Tags retrieved successfully.');
-        $this->assertEquals(18, $response->original['totalRecords'], '13 defaults');
     }
 
     /** @test */
@@ -62,9 +61,11 @@ class TagAPIControllerTest extends TestCase
         $this->assertCount(18, $response->original['data'], '13 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(18, $response->original['totalRecords'], '13 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 18);
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */
