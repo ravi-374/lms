@@ -5,12 +5,11 @@ namespace App\Repositories;
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
 use App\Models\Member;
-use App\Models\MembershipPlan;
-use App\Models\Task;
 use App\Models\User;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -21,6 +20,15 @@ use Illuminate\Support\Collection;
  */
 class MemberRepository extends BaseRepository
 {
+    /** @var MembershipPlanRepository */
+    private $membershipPlanRepo;
+
+    public function __construct(Application $app, MembershipPlanRepository $membershipRepo)
+    {
+        parent::__construct($app);
+        $this->membershipPlanRepo = $membershipRepo;
+    }
+
     /**
      * @var array
      */
@@ -109,7 +117,7 @@ class MemberRepository extends BaseRepository
      */
     public function store($input)
     {
-        MembershipPlan::findOrFail($input['membership_plan_id']);
+        $this->membershipPlanRepo->findOrFail($input['membership_plan_id']);
 
         return $this->storeMember($input);
     }

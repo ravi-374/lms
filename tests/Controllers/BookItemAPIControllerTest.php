@@ -45,9 +45,7 @@ class BookItemAPIControllerTest extends TestCase
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
 
-        $this->bookItemRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($bookItem);
+        $this->bookItemRepo->expects('all')->andReturn($bookItem);
 
         $response = $this->getJson(
             "api/b1/books/$bookItem->book_id/available-books?member_id=$reserveBook->member_id"
@@ -65,14 +63,41 @@ class BookItemAPIControllerTest extends TestCase
 
         $bookItems = factory(BookItem::class)->times(5)->create();
 
-        $this->bookItemRepo->shouldReceive('searchBooks')
-            ->once()
-            ->andReturn(collect($bookItems));
+        $this->bookItemRepo->expects('searchBooks')->andReturn(collect($bookItems));
 
         $response = $this->getJson("api/b1/search-books");
 
         $this->assertSuccessDataResponse(
             $response, $bookItems->toArray(), 'BookItem retrieved successfully.'
         );
+    }
+
+    /** @test */
+    public function test_can_update_book_item_status()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->putJson("api/b1/books/$bookItem->id/update-book-status", [
+            'status' => BookItem::STATUS_DAMAGED,
+        ]);
+
+        $this->assertSuccessDataResponse(
+            $response, $bookItem->fresh()->toArray(), 'Book status updated successfully.'
+        );
+        $this->assertEquals(BookItem::STATUS_DAMAGED, $bookItem->fresh()->status);
+    }
+
+    /** @test */
+    public function test_unable_to_update_invalid_book_item_status()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        $response = $this->putJson("api/b1/books/$bookItem->id/update-book-status", [
+            'status' => 10,
+        ]);
+
+        $this->assertExceptionMessage($response, 'Invalid status.');
     }
 }

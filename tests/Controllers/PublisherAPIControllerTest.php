@@ -41,9 +41,7 @@ class PublisherAPIControllerTest extends TestCase
 
         $publishers = factory(Publisher::class)->times(5)->create();
 
-        $this->publisherRepo->shouldReceive('all')
-            ->once()
-            ->andReturn($publishers);
+        $this->publisherRepo->expects('all')->andReturn($publishers);
 
         $response = $this->getJson('api/b1/publishers');
 
@@ -64,9 +62,11 @@ class PublisherAPIControllerTest extends TestCase
         $this->assertCount(17, $response->original['data'], '12 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
+        $this->assertEquals(17, $response->original['totalRecords'], '12 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 17, 'Must return at lease one publisher');
+        $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
     /** @test */
@@ -77,8 +77,7 @@ class PublisherAPIControllerTest extends TestCase
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->make();
 
-        $this->publisherRepo->shouldReceive('create')
-            ->once()
+        $this->publisherRepo->expects('create')
             ->with($publisher->toArray())
             ->andReturn($publisher);
 
@@ -96,8 +95,7 @@ class PublisherAPIControllerTest extends TestCase
         $publisher = factory(Publisher::class)->create();
         $updateRecord = factory(Publisher::class)->make(['id' => $publisher->id]);
 
-        $this->publisherRepo->shouldReceive('update')
-            ->once()
+        $this->publisherRepo->expects('update')
             ->with($updateRecord->toArray(), $publisher->id)
             ->andReturn($updateRecord);
 
