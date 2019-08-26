@@ -6,16 +6,17 @@
  * Date: 12-07-2019
  * Time: 05:56 PM
  */
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateSettingAPIRequest;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
 use App\Models\Setting;
 use App\Repositories\SettingRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class SettingAPIController
@@ -54,17 +55,26 @@ class SettingAPIController extends AppBaseController
      * Store a newly created Setting in storage.
      * POST /settings
      *
-     * @param CreateSettingAPIRequest $request
+     * @param Request $request
      *
      * @return JsonResponse
      */
-    public function store(CreateSettingAPIRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
 
-        $setting = $this->settingRepo->createOrUpdate($input);
+        foreach ($input as $data) {
+            $validator = Validator::make($data, Setting::$rules);
+            if ($validator->fails()) {
+                $errors = $validator->errors()->first();
 
-        return $this->sendResponse($setting->toArray(), 'Setting saved successfully.');
+                return $this->sendError($errors, 422);
+            }
+        }
+
+        $settings = $this->settingRepo->createOrUpdate($input);
+
+        return $this->sendResponse($settings, 'Setting saved successfully.');
     }
 
     /**
