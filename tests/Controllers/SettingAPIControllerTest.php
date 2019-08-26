@@ -3,7 +3,6 @@
 namespace Tests\Controllers;
 
 use App\Models\Setting;
-use App\Models\Tag;
 use App\Repositories\SettingRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery\MockInterface;
@@ -48,6 +47,25 @@ class SettingAPIControllerTest extends TestCase
         $response = $this->getJson('api/b1/settings');
 
         $this->assertSuccessDataResponse($response, $settings->toArray(), 'Settings retrieved successfully.');
+    }
+
+    /** @test */
+    public function test_can_search_and_get_settings()
+    {
+        /** @var Setting[] $settings */
+        $settings = factory(Setting::class)->times(5)->create();
+
+        $response = $this->getJson('api/b1/settings');
+        $take3 = $this->getJson('api/b1/settings?limit=3');
+        $skip2 = $this->getJson('api/b1/settings?skip=2&limit=2');
+        $searchByKey = $this->getJson('api/b1/settings?search='.$settings[0]->key);
+
+        $this->assertCount(8, $response->original['data'], '3 defaults');
+        $this->assertCount(3, $take3->original['data']);
+        $this->assertCount(2, $skip2->original['data']);
+
+        $search = $searchByKey->original['data'];
+        $this->assertTrue(count($search) > 0 && count($search) < 8);
     }
 
     /** @test */

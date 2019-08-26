@@ -134,7 +134,7 @@ class BookAPIController extends AppBaseController
      *
      * @throws Exception
      *
-     * @return Book
+     * @return JsonResponse
      */
     public function addItems(Book $book, Request $request)
     {
@@ -142,7 +142,9 @@ class BookAPIController extends AppBaseController
 
         $items = $request->get('items');
 
-        return $this->bookRepository->addBookItems($book, $items);
+        $book = $this->bookRepository->addBookItems($book, $items);
+
+        return $this->sendResponse($book->toArray(), 'Book items added successfully.');
     }
 
     /**
