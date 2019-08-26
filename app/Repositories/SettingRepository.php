@@ -50,12 +50,8 @@ class SettingRepository extends BaseRepository
      */
     public function createOrUpdate($input)
     {
-        $getSettingKeys = [];
-        foreach ($input as $record) {
-            $getSettingKeys[] = $record['key'];
-        }
-
-        Setting::whereIn('key', $getSettingKeys)->delete();
+        $settingKeys = \Arr::pluck($input, 'key');
+        Setting::whereIn('key', $settingKeys)->delete();
 
         $settings = [];
         foreach ($input as $data) {
