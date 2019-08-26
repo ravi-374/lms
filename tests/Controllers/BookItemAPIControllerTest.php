@@ -89,7 +89,7 @@ class BookItemAPIControllerTest extends TestCase
         $this->assertSuccessDataResponse(
             $response, $bookItem->fresh()->toArray(), 'Book status updated successfully.'
         );
-        $this->assertEquals(BookItem::STATUS_DAMAGED,$response->original['data']['status']);
+        $this->assertEquals(BookItem::STATUS_DAMAGED, $bookItem->fresh()->status);
     }
 
     /** @test */
