@@ -75,6 +75,25 @@ class UserAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_sort_user_records_by_role_name()
+    {
+        /** @var User $vishal */
+        $vishal = factory(User::class)->create();
+
+        /** @var Role $role */
+        $role = factory(Role::class)->create(['name' => 'manager']);
+        $vishal->roles()->sync([$role->id]);
+
+        $responseAsc = $this->getJson('api/b1/users?order_by=role_name&direction=asc');
+        $responseDesc = $this->getJson('api/b1/users?order_by=role_name&direction=desc');
+
+        $responseAsc = $responseAsc->original['data'];
+        $responseDesc = $responseDesc->original['data'];
+        $this->assertEquals('admin', $responseAsc[0]['roles'][0]['name'],'default role is admin');
+        $this->assertEquals($role->name, $responseDesc[0]['roles'][0]['name']);
+    }
+
+    /** @test */
     public function it_can_create_user()
     {
         $this->mockRepository();

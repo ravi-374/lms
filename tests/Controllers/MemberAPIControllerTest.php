@@ -74,6 +74,24 @@ class MemberAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_sort_member_records_by_membership_plan_name()
+    {
+        $plan1 = factory(MembershipPlan::class)->create(['name' => 'Basic']);
+        $member1 = factory(Member::class)->create(['membership_plan_id' => $plan1->id]);
+
+        $plan2 = factory(MembershipPlan::class)->create(['name' => 'VIP']);
+        $member2 = factory(Member::class)->create(['membership_plan_id' => $plan2->id]);
+
+        $responseAsc = $this->getJson('api/b1/members?order_by=membership_plan_name&direction=asc');
+        $responseDesc = $this->getJson('api/b1/members?order_by=membership_plan_name&direction=desc');
+
+        $responseAsc = $responseAsc->original['data'];
+        $responseDesc = $responseDesc->original['data'];
+        $this->assertEquals($plan1->name, $responseAsc[0]['membership_plan']['name']);
+        $this->assertEquals($plan2->name, $responseDesc[0]['membership_plan']['name']);
+    }
+
+    /** @test */
     public function it_can_create_member()
     {
         $this->mockRepository();
