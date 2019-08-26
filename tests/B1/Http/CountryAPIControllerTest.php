@@ -18,7 +18,6 @@ class CountryAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->signInWithDefaultAdminUser();
     }
 
     private function mockRepository()
