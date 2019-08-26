@@ -316,18 +316,6 @@ class IssuedBookRepositoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException  Illuminate\Database\Eloquent\ModelNotFoundException
-     * @expectedExceptionMessage No query results for model [App\Models\BookItem] 999
-     */
-    public function test_unable_to_update_issued_book_status_with_non_existing_book_item_id()
-    {
-        $input = ['book_item_id' => 999, 'status' => IssuedBook::STATUS_LOST];
-
-        $this->issuedBookRepo->updateIssuedBookStatus($input);
-    }
-
-    /**
-     * @test
      * @expectedException  Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
      * @expectedExceptionMessage Book is not issued.
      */
