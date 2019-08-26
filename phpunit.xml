@@ -19,19 +19,19 @@
         </testsuite>
 
         <testsuite name="Integration">
-            <directory suffix="Test.php">./tests/B1/Http/Validations</directory>
+            <directory suffix="Test.php">./tests/B1/APIs/Validations</directory>
         </testsuite>
 
         <testsuite name="Integration">
-            <directory suffix="Test.php">./tests/B1/Http</directory>
+            <directory suffix="Test.php">./tests/B1/APIs</directory>
         </testsuite>
 
         <testsuite name="Integration">
-            <directory suffix="Test.php">./tests/V1/Http</directory>
+            <directory suffix="Test.php">./tests/V1/APIs</directory>
         </testsuite>
 
         <testsuite name="Integration">
-            <directory suffix="Test.php">./tests/V1/Http/Validations</directory>
+            <directory suffix="Test.php">./tests/V1/APIs/Validations</directory>
         </testsuite>
 
         <testsuite name="Integration">
