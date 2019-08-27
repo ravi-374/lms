@@ -62,14 +62,14 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::resource('users', 'UserAPIController');
         Route::post('users/{user}', 'UserAPIController@update');
         Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
-        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus');
+        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus')->name('users.update-status');
     });
 
     // get logged in user details
-    Route::get('user-details', 'UserAPIController@getLoggedInUserDetails');
+    Route::get('user-details', 'UserAPIController@getLoggedInUserDetails')->name('users.user-details');
 
     // update logged in user profile
-    Route::post('update-user-profile', 'UserAPIController@updateUserProfile');
+    Route::post('update-user-profile', 'UserAPIController@updateUserProfile')->name('users.update-user-profile');
 
     // Members
     Route::middleware('permission:manage_members')->group(function () {
