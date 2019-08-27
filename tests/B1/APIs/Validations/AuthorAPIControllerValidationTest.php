@@ -18,7 +18,7 @@ class AuthorAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_author_fails_when_first_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/authors', ['first_name' => '']);
+        $response = $this->postJson(route('api.b1.authors.store'), ['first_name' => '']);
 
         $this->assertExceptionMessage($response, 'The first name field is required.');
     }
@@ -28,7 +28,7 @@ class AuthorAPIControllerValidationTest extends TestCase
     {
         $author = factory(Author::class)->raw();
 
-        $response = $this->postJson('api/b1/authors', $author);
+        $response = $this->postJson(route('api.b1.authors.store'), $author);
 
         $this->assertSuccessDataResponse($response, $author, 'Author saved successfully.');
     }
@@ -38,7 +38,7 @@ class AuthorAPIControllerValidationTest extends TestCase
     {
         $author = factory(Author::class)->create();
 
-        $response = $this->putJson('api/b1/authors/'.$author->id, ['first_name' => '']);
+        $response = $this->putJson(route('api.b1.authors.update', $author->id), ['first_name' => '']);
 
         $this->assertExceptionMessage($response, 'The first name field is required.');
     }
