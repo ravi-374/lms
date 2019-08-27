@@ -72,13 +72,12 @@ export default (props) => {
             buttonHoverBackground: '#f5981c',
         },
     };
-
     return (
         <Fragment>
             <Row className="justify-content-end">
                 <Col xs={2}>
                     {isShowFilterField ?
-                        <FilterField options={filterOptions} initialValues={{ filter_key: filterKey }}
+                        <FilterField options={filterOptions} filterKey={filterKey}
                                      handleFilter={handleSearch}/> : null}
                 </Col>
                 <Col xs={2}>
