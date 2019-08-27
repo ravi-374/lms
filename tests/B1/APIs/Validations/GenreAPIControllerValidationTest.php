@@ -18,7 +18,7 @@ class GenreAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_genre_fails_when_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/genres/', ['name' => '']);
+        $response = $this->postJson(route('api.b1.genres.store'), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -28,7 +28,7 @@ class GenreAPIControllerValidationTest extends TestCase
     {
         $genre = factory(Genre::class)->create();
 
-        $response = $this->putJson('api/b1/genres/'.$genre->id, ['name' => '']);
+        $response = $this->putJson(route('api.b1.genres.update', $genre->id), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -38,7 +38,7 @@ class GenreAPIControllerValidationTest extends TestCase
     {
         $genre = factory(Genre::class)->create();
 
-        $response = $this->postJson('api/b1/genres/', ['name' => $genre->name]);
+        $response = $this->postJson(route('api.b1.genres.store'), ['name' => $genre->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -49,7 +49,7 @@ class GenreAPIControllerValidationTest extends TestCase
         $genre1 = factory(Genre::class)->create();
         $genre2 = factory(Genre::class)->create();
 
-        $response = $this->putJson('api/b1/genres/'.$genre2->id, ['name' => $genre1->name]);
+        $response = $this->putJson(route('api.b1.genres.update', $genre2->id), ['name' => $genre1->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -58,7 +58,7 @@ class GenreAPIControllerValidationTest extends TestCase
     public function it_can_store_genre()
     {
         $name = $this->faker->name;
-        $response = $this->postJson('api/b1/genres', ['name' => $name]);
+        $response = $this->postJson(route('api.b1.genres.store'), ['name' => $name]);
 
         $this->assertSuccessMessageResponse($response, 'Genre saved successfully.');
         $this->assertNotEmpty(Genre::whereName($name)->first());
@@ -71,7 +71,7 @@ class GenreAPIControllerValidationTest extends TestCase
         $genre = factory(Genre::class)->create();
 
         $newName = $this->faker->name;
-        $response = $this->putJson('api/b1/genres/'.$genre->id, ['name' => $newName]);
+        $response = $this->putJson(route('api.b1.genres.update', $genre->id), ['name' => $newName]);
 
         $this->assertSuccessMessageResponse($response, 'Genre updated successfully.');
         $this->assertEquals($newName, $genre->fresh()->name);

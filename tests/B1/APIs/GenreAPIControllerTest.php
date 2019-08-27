@@ -43,7 +43,7 @@ class GenreAPIControllerTest extends TestCase
 
         $this->genreRepository->expects('all')->andReturn($genres);
 
-        $response = $this->getJson('api/b1/genres');
+        $response = $this->getJson(route('api.b1.genres.index'));
 
         $this->assertSuccessDataResponse($response, $genres->toArray(), 'Genres retrieved successfully.');
     }
@@ -54,10 +54,10 @@ class GenreAPIControllerTest extends TestCase
         /** @var Genre[] $genres */
         $genres = factory(Genre::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/genres');
-        $take3 = $this->getJson('api/b1/genres?limit=3');
-        $skip2 = $this->getJson('api/b1/genres?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/genres?search='.$genres[0]->name);
+        $response = $this->getJson(route('api.b1.genres.index'));
+        $take3 = $this->getJson(route('api.b1.genres.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.genres.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.genres.index', ['search' => $genres[0]->name]));
 
         $this->assertCount(34, $response->original['data'], '29 default');
         $this->assertCount(3, $take3->original['data']);
@@ -81,7 +81,7 @@ class GenreAPIControllerTest extends TestCase
             ->with($genre->toArray())
             ->andReturn($genre);
 
-        $response = $this->postJson('api/b1/genres', $genre->toArray());
+        $response = $this->postJson(route('api.b1.genres.store'), $genre->toArray());
 
         $this->assertSuccessDataResponse($response, $genre->toArray(), 'Genre saved successfully.');
     }
@@ -99,7 +99,7 @@ class GenreAPIControllerTest extends TestCase
             ->with($fakeGenre->toArray(), $genre->id)
             ->andReturn($fakeGenre);
 
-        $response = $this->putJson('api/b1/genres/'.$genre->id, $fakeGenre->toArray());
+        $response = $this->putJson(route('api.b1.genres.update', $genre->id), $fakeGenre->toArray());
 
         $this->assertSuccessDataResponse($response, $fakeGenre->toArray(), 'Genre updated successfully.');
     }
@@ -110,7 +110,7 @@ class GenreAPIControllerTest extends TestCase
         /** @var Genre $genre */
         $genre = factory(Genre::class)->create();
 
-        $response = $this->getJson('api/b1/genres/'.$genre->id);
+        $response = $this->getJson(route('api.b1.genres.show', $genre->id));
 
         $this->assertSuccessDataResponse($response, $genre->toArray(), 'Genre retrieved successfully.');
 
@@ -126,7 +126,7 @@ class GenreAPIControllerTest extends TestCase
         $genre = factory(Genre::class)->create();
         $genre->books()->sync([$book->id]);
 
-        $response = $this->deleteJson("api/b1/genres/$genre->id");
+        $response = $this->deleteJson(route('api.b1.genres.destroy', $genre->id));
 
         $this->assertExceptionMessage($response, 'Genre can not be delete, it is used in one or more books.');
     }
@@ -137,7 +137,7 @@ class GenreAPIControllerTest extends TestCase
         /** @var Genre $genre */
         $genre = factory(Genre::class)->create();
 
-        $response = $this->deleteJson("api/b1/genres/$genre->id");
+        $response = $this->deleteJson(route('api.b1.genres.destroy', $genre->id));
 
         $this->assertSuccessDataResponse($response, $genre->toArray(), 'Genre deleted successfully.');
         $this->assertEmpty(Genre::find($genre->id));
