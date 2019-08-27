@@ -42,7 +42,7 @@ class MembershipPlanAPIControllerTest extends TestCase
 
         $this->membershipPlanRepo->expects('all')->andReturn($membershipPlan);
 
-        $response = $this->getJson('api/b1/membership-plans');
+        $response = $this->getJson(route('api.b1.membership-plans.index'));
 
         $this->assertSuccessDataResponse(
             $response,
@@ -57,10 +57,11 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var MembershipPlan[] $membershipPlans */
         $membershipPlans = factory(MembershipPlan::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/membership-plans');
-        $take3 = $this->getJson('api/b1/membership-plans?limit=3');
-        $skip2 = $this->getJson('api/b1/membership-plans?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/membership-plans?search='.$membershipPlans[0]->name);
+        $response = $this->getJson(route('api.b1.membership-plans.index'));
+        $take3 = $this->getJson(route('api.b1.membership-plans.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.membership-plans.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.membership-plans.index',
+            ['search' => $membershipPlans[0]->name]));
 
         $this->assertCount(7, $response->original['data'], '2 defaults plan');
         $this->assertCount(3, $take3->original['data']);
@@ -82,9 +83,13 @@ class MembershipPlanAPIControllerTest extends TestCase
             ->with($membershipPlans->toArray())
             ->andReturn($membershipPlans);
 
-        $response = $this->postJson('api/b1/membership-plans', $membershipPlans->toArray());
+        $response = $this->postJson(route('api.b1.membership-plans.store'), $membershipPlans->toArray());
 
-        $this->assertSuccessDataResponse($response, $membershipPlans->toArray(), 'Membership Plan saved successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $membershipPlans->toArray(),
+            'Membership Plan saved successfully.'
+        );
     }
 
     /** @test */
@@ -100,9 +105,13 @@ class MembershipPlanAPIControllerTest extends TestCase
             ->with($updateRecord->toArray(), $membershipPlan->id)
             ->andReturn($updateRecord);
 
-        $response = $this->putJson('api/b1/membership-plans/'.$membershipPlan->id, $updateRecord->toArray());
+        $response = $this->putJson(route('api.b1.membership-plans.update', $membershipPlan->id),
+            $updateRecord->toArray());
 
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Membership Plan updated successfully.');
+        $this->assertSuccessDataResponse($response,
+            $updateRecord->toArray(),
+            'Membership Plan updated successfully.'
+        );
     }
 
     /** @test */
@@ -111,7 +120,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var MembershipPlan $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class)->create();
 
-        $response = $this->getJson("api/b1/membership-plans/$membershipPlan->id");
+        $response = $this->getJson(route('api.b1.membership-plans.show', $membershipPlan->id));
 
         $this->assertSuccessDataResponse(
             $response, $membershipPlan->toArray(), 'Membership Plan retrieved successfully.'
@@ -124,7 +133,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var MembershipPlan $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class)->create();
 
-        $response = $this->deleteJson("api/b1/membership-plans/$membershipPlan->id");
+        $response = $this->deleteJson(route('api.b1.membership-plans.destroy', $membershipPlan->id));
 
         $this->assertSuccessDataResponse(
             $response, $membershipPlan->toArray(), 'Membership Plan deleted successfully.'
@@ -141,7 +150,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create(['membership_plan_id' => $membershipPlan->id]);
 
-        $response = $this->deleteJson("api/b1/membership-plans/$member->membership_plan_id");
+        $response = $this->deleteJson(route('api.b1.membership-plans.destroy', $member->membership_plan_id));
 
         $this->assertExceptionMessage($response,
             'Membership Plan can not be delete, it is assigned to one or more members.');
