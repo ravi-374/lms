@@ -98,25 +98,27 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     // Reserve Book
-    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
+    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')->name('reserve-book');
     // Un-Reserve Book
-    Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook');
+    Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook')->name('un-reserve-book');
 
     // Update issued book status
-    Route::put('books/{book_item}/update-issued-book-status', 'IssuedBookAPIController@updateIssuedBookStatus');
+    Route::put('books/{book_item}/update-issued-book-status', 'IssuedBookAPIController@updateIssuedBookStatus')
+        ->name('update-issued-book-status');
 
     // books history
-    Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
+    Route::get('members/{member}/books-history',
+        'IssuedBookAPIController@memberBooksHistory')->name('members.book-history');
 
     Route::middleware('permission:issue_books')->group(function () {
         // Issue Book
-        Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook');
+        Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook')->name('issue-book');
         // Return Book
-        Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook');
+        Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook')->name('return-book');
 
         // get books history for admin users
-        Route::get('books-history', 'IssuedBookAPIController@index');
-        Route::get('issued-books/{issued_book}', 'IssuedBookAPIController@show');
+        Route::get('books-history', 'IssuedBookAPIController@index')->name('books-history');
+        Route::get('issued-books/{issued_book}', 'IssuedBookAPIController@show')->name('issued-book.show');
     });
 
     /** Get App Config */

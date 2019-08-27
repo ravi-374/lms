@@ -50,7 +50,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->issueBookRepo->expects('all')->andReturn($issuedBooks);
 
-        $response = $this->getJson('api/b1/books-history');
+        $response = $this->getJson(route('api.b1.books-history'));
         $this->assertSuccessMessageResponse($response, 'Issued Books retrieved successfully.');
     }
 
@@ -64,7 +64,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'status'       => IssuedBook::STATUS_LOST,
         ];
 
-        $response = $this->putJson("api/b1/books/$issuedBook->id/update-issued-book-status", $input);
+        $response = $this->putJson(route('api.b1.update-issued-book-status', $issuedBook->id), $input);
 
         $this->assertSuccessDataResponse(
             $response,
@@ -82,9 +82,9 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook[] $IssuedBooks */
         $IssuedBooks = factory(IssuedBook::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/books-history');
-        $take3 = $this->getJson('api/b1/books-history?limit=3');
-        $skip2 = $this->getJson('api/b1/books-history?skip=2&limit=2');
+        $response = $this->getJson(route('api.b1.books-history'));
+        $take3 = $this->getJson(route('api.b1.books-history', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.books-history', ['skip' => 2, 'limit' => 2]));
 
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
@@ -103,8 +103,16 @@ class IssuedBookAPIControllerTest extends TestCase
         $bookItem2 = factory(BookItem::class)->create(['book_id' => $book2->id]);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
-        $responseAsc = $this->getJson('api/b1/books-history?order_by=name&direction=asc');
-        $responseDesc = $this->getJson('api/b1/books-history?order_by=name&direction=desc');
+        $responseAsc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'name',
+                'direction' => 'asc',
+            ]
+        ));
+        $responseDesc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'name',
+                'direction' => 'desc',
+            ]
+        ));
 
         $responseAsc = $responseAsc->original['data'];
         $responseDesc = $responseDesc->original['data'];
@@ -121,8 +129,16 @@ class IssuedBookAPIControllerTest extends TestCase
         $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZAD587RE']);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
-        $responseAsc = $this->getJson('api/b1/books-history?order_by=book_code&direction=asc');
-        $responseDesc = $this->getJson('api/b1/books-history?order_by=book_code&direction=desc');
+        $responseAsc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'book_code',
+                'direction' => 'asc',
+            ]
+        ));
+        $responseDesc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'book_code',
+                'direction' => 'desc',
+            ]
+        ));
 
         $responseAsc = $responseAsc->original['data'];
         $responseDesc = $responseDesc->original['data'];
@@ -139,8 +155,16 @@ class IssuedBookAPIControllerTest extends TestCase
         $member2 = factory(Member::class)->create(['first_name' => 'VISHAL']);
         $issuedBook2 = factory(IssuedBook::class)->create(['member_id' => $member2->id]);
 
-        $responseAsc = $this->getJson('api/b1/books-history?order_by=member_name&direction=asc');
-        $responseDesc = $this->getJson('api/b1/books-history?order_by=member_name&direction=desc');
+        $responseAsc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'member_name',
+                'direction' => 'asc',
+            ]
+        ));
+        $responseDesc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'member_name',
+                'direction' => 'desc',
+            ]
+        ));
 
         $responseAsc = $responseAsc->original['data'];
         $responseDesc = $responseDesc->original['data'];
@@ -154,8 +178,16 @@ class IssuedBookAPIControllerTest extends TestCase
         $issuedBook1 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
         $issuedBook2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RESERVED]);
 
-        $responseIssued = $this->getJson('api/b1/books-history?search=issued&direction=asc');
-        $responseReserved = $this->getJson('api/b1/books-history?search=reserved&direction=desc');
+        $responseIssued = $this->getJson(route('api.b1.books-history', [
+                'search'    => 'issued',
+                'direction' => 'asc',
+            ]
+        ));
+        $responseReserved = $this->getJson(route('api.b1.books-history', [
+                'search'    => 'reserved',
+                'direction' => 'desc',
+            ]
+        ));
 
         $responseIssued = $responseIssued->original['data'];
         $responseReserved = $responseReserved->original['data'];
@@ -175,7 +207,7 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
         $issuedBook2 = factory(IssuedBook::class)->create();
 
-        $response = $this->getJson("api/b1/books-history?due_date=$returnDueDate");
+        $response = $this->getJson(route('api.b1.books-history', ['due_date' => $returnDueDate]));
 
         $response = $response->original['data'];
         $this->assertCount(1, $response);
@@ -193,7 +225,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $bookItem2 = factory(BookItem::class)->create(['book_id' => $book2->id]);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
-        $response = $this->getJson("api/b1/books-history?search=$book1->name");
+        $response = $this->getJson(route('api.b1.books-history', ['search' => $book1->name]));
 
         $response = $response->original['data'];
         $this->assertCount(1, $response);
@@ -221,7 +253,7 @@ class IssuedBookAPIControllerTest extends TestCase
             ->with($input)
             ->andReturn($issueBook);
 
-        $response = $this->postJson("api/b1/books/$bookItem->id/issue-book", $input);
+        $response = $this->postJson(route('api.b1.issue-book', $bookItem->id), $input);
 
         $this->assertSuccessMessageResponse($response, 'Book issued successfully.');
         $this->assertEquals($issueBook->member_id, $response->original['data']['member_id']);
@@ -237,7 +269,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create();
 
-        $response = $this->postJson("api/b1/books/$bookItem->id/reserve-book", [
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
             'book_item_id' => $bookItem->id,
             'member_id'    => $member->id,
         ]);
@@ -256,7 +288,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook $issueBook */
         $issueBook = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RESERVED]);
 
-        $response = $this->postJson("api/b1/books/$issueBook->book_item_id/un-reserve-book", [
+        $response = $this->postJson(route('api.b1.un-reserve-book', $issueBook->book_item_id), [
             'member_id' => $issueBook->member_id,
         ]);
 
@@ -277,7 +309,7 @@ class IssuedBookAPIControllerTest extends TestCase
             ->with(['book_item_id' => $issueBook->book_item_id])
             ->andReturn($issueBook);
 
-        $response = $this->postJson("api/b1/books/$issueBook->book_item_id/return-book", [
+        $response = $this->postJson(route('api.b1.return-book', $issueBook->book_item_id), [
             'book_item_id' => $issueBook->book_item_id,
         ]);
 
@@ -291,7 +323,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook $issuedBook */
         $issuedBook = factory(IssuedBook::class)->create();
 
-        $response = $this->getJson('api/b1/issued-books/'.$issuedBook->id);
+        $response = $this->getJson(route('api.b1.issued-book.show', $issuedBook->id));
 
         $this->assertSuccessMessageResponse($response, 'Issued Book retrieved successfully.');
         $this->assertEquals($issuedBook->id, $response->original['data']['id']);
@@ -309,7 +341,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->issueBookRepo->expects('all')->andReturn($issuedBooks);
 
-        $response = $this->getJson("api/b1/members/$member->id/books-history");
+        $response = $this->getJson(route('api.b1.members.book-history', $member->id));
 
         $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
         $this->assertCount(5, $response->original['data']);
