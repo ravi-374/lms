@@ -54,9 +54,12 @@ class AuthorAPIControllerTest extends TestCase
         $authors = factory(Author::class)->times(5)->create();
 
         $response = $this->getJson(route('api.b1.authors.index'));
-        $take3 = $this->getJson(route('api.b1.authors.index',['limit=3']));
-        $skip2 = $this->getJson('api/b1/authors?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/authors?search='.$authors[0]->first_name);
+        $take3 = $this->getJson(route('api.b1.authors.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.authors.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.authors.index', [
+                'search' => $authors[0]->first_name,
+            ]
+        ));
 
         $this->assertCount(15, $response->original['data'], '10 default');
         $this->assertCount(3, $take3->original['data']);
@@ -97,7 +100,7 @@ class AuthorAPIControllerTest extends TestCase
             ->with($updateRecord->toArray(), $author->id)
             ->andReturn($updateRecord);
 
-        $response = $this->putJson(route('api.b1.authors.update',$author->id), $updateRecord->toArray());
+        $response = $this->putJson(route('api.b1.authors.update', $author->id), $updateRecord->toArray());
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Author updated successfully.');
     }
@@ -108,7 +111,7 @@ class AuthorAPIControllerTest extends TestCase
         /** @var Author $author */
         $author = factory(Author::class)->create();
 
-        $response = $this->getJson(route('api.b1.authors.show',$author->id));
+        $response = $this->getJson(route('api.b1.authors.show', $author->id));
 
         $this->assertSuccessDataResponse($response, $author->toArray(), 'Author retrieved successfully.');
     }
@@ -119,7 +122,7 @@ class AuthorAPIControllerTest extends TestCase
         /** @var Author $author */
         $author = factory(Author::class)->create();
 
-        $response = $this->deleteJson(route('api.b1.authors.destroy',$author->id));
+        $response = $this->deleteJson(route('api.b1.authors.destroy', $author->id));
 
         $this->assertSuccessDataResponse($response, $author->toArray(), 'Author deleted successfully.');
         $this->assertEmpty(Author::find($author->id));
@@ -134,7 +137,7 @@ class AuthorAPIControllerTest extends TestCase
         $author = factory(Author::class)->create();
         $book->authors()->sync([$author->id]);
 
-        $response = $this->deleteJson(route('api.b1.authors.destroy',$author->id));
+        $response = $this->deleteJson(route('api.b1.authors.destroy', $author->id));
 
         $this->assertExceptionMessage($response, 'Author can not be delete, it is used in one or more books.');
     }
