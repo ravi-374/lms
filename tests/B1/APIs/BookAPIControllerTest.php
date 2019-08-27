@@ -45,7 +45,7 @@ class BookAPIControllerTest extends TestCase
 
         $this->bookRepository->expects('all')->andReturn($books);
 
-        $response = $this->getJson('api/b1/books');
+        $response = $this->getJson(route('api.b1.books.index'));
 
         $this->assertSuccessDataResponse(
             $response,
@@ -60,10 +60,10 @@ class BookAPIControllerTest extends TestCase
         /** @var Book[] $books */
         $books = factory(Book::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/books');
-        $take3 = $this->getJson('api/b1/books?limit=3');
-        $skip2 = $this->getJson('api/b1/books?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/books?search='.$books[0]->name);
+        $response = $this->getJson(route('api.b1.books.index'));
+        $take3 = $this->getJson(route('api.b1.books.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.books.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.books.index', ['search' => $books[0]->name]));
 
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
@@ -86,8 +86,16 @@ class BookAPIControllerTest extends TestCase
         $book2 = factory(Book::class)->create();
         $author2->books()->sync([$book2->id]);
 
-        $responseAsc = $this->getJson('api/b1/books?order_by=author_name&direction=asc');
-        $responseDesc = $this->getJson('api/b1/books?order_by=author_name&direction=desc');
+        $responseAsc = $this->getJson(route('api.b1.books.index', [
+                'order_by'  => 'author_name',
+                'direction' => 'asc',
+            ]
+        ));
+        $responseDesc = $this->getJson(route('api.b1.books.index', [
+                'order_by'  => 'author_name',
+                'direction' => 'desc',
+            ]
+        ));
 
         $responseAsc = $responseAsc->original['data'];
         $responseDesc = $responseDesc->original['data'];
@@ -108,7 +116,7 @@ class BookAPIControllerTest extends TestCase
             ->with($book->toArray())
             ->andReturn($book);
 
-        $response = $this->postJson('api/b1/books', $book->toArray());
+        $response = $this->postJson(route('api.b1.books.store'), $book->toArray());
 
         $this->assertSuccessDataResponse($response, $book->toArray(), 'Book saved successfully.');
     }
@@ -143,7 +151,7 @@ class BookAPIControllerTest extends TestCase
             ->with($fakeBook->toArray(), $book->id)
             ->andReturn($fakeBook);
 
-        $response = $this->putJson('api/b1/books/'.$book->id, $fakeBook->toArray());
+        $response = $this->putJson(route('api.b1.books.update', $book->id), $fakeBook->toArray());
 
         $this->assertSuccessDataResponse(
             $response, $fakeBook->toArray(), 'Book updated successfully.'
@@ -158,7 +166,7 @@ class BookAPIControllerTest extends TestCase
         $book = factory(Book::class)->create();
         $book->genres()->sync([$genre->id]);
 
-        $response = $this->getJson('api/b1/books/'.$book->id);
+        $response = $this->getJson(route('api.b1.books.show', $book->id));
 
         $this->assertSuccessDataResponse($response, $book->fresh()->toArray(), 'Book retrieved successfully.');
         $this->assertNotEmpty($book->genres);
@@ -170,7 +178,7 @@ class BookAPIControllerTest extends TestCase
         /** @var Book $book */
         $book = factory(Book::class)->create();
 
-        $response = $this->deleteJson("api/b1/books/$book->id");
+        $response = $this->deleteJson(route('api.b1.books.destroy', $book->id));
 
         $this->assertSuccessDataResponse($response, $book->toArray(), 'Book deleted successfully.');
         $this->assertEmpty(Book::find($book->id));
@@ -182,7 +190,7 @@ class BookAPIControllerTest extends TestCase
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $response = $this->deleteJson("api/b1/books/$bookItem->book_id");
+        $response = $this->deleteJson(route('api.b1.books.destroy', $bookItem->book_id));
 
         $this->assertExceptionMessage($response, 'Book can not be delete, it is has one or more book items.');
     }
