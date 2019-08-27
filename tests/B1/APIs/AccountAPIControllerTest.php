@@ -28,7 +28,7 @@ class AccountAPIControllerTest extends TestCase
         $token = encrypt($member->email.'|'.date('Y-m-d H:i:s'));
         $input = ['token' => $token, 'password' => $this->faker->password];
 
-        $response = $this->postJson('api/b1/reset-password', $input);
+        $response = $this->postJson(route('api.b1.reset-password'), $input);
 
         $this->assertSuccessMessageResponse($response, 'Password updated successfully.');
     }
@@ -39,7 +39,7 @@ class AccountAPIControllerTest extends TestCase
         $token = encrypt($this->faker->email.'|'.date('Y-m-d H:i:s'));
         $input = ['token' => $token, 'password' => $this->faker->password];
 
-        $response = $this->postJson('api/b1/reset-password', $input);
+        $response = $this->postJson(route('api.b1.reset-password'), $input);
 
         $this->assertJsonErrorMessageResponse($response, 'User with given email not available.');
     }
@@ -52,7 +52,7 @@ class AccountAPIControllerTest extends TestCase
         $token = encrypt($member->email.'|'.date('Y-m-d H:i:s', strtotime('-1 day')));
         $input = ['token' => $token, 'password' => $this->faker->password];
 
-        $response = $this->postJson('api/b1/reset-password', $input);
+        $response = $this->postJson(route('api.b1.reset-password'), $input);
 
         $this->assertJsonErrorMessageResponse($response, 'The activate link has expired.');
     }
