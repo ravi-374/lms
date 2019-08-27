@@ -60,8 +60,10 @@ class MembershipPlanAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.membership-plans.index'));
         $take3 = $this->getJson(route('api.b1.membership-plans.index', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.b1.membership-plans.index', ['skip' => 2, 'limit' => 2]));
-        $searchByName = $this->getJson(route('api.b1.membership-plans.index',
-            ['search' => $membershipPlans[0]->name]));
+        $searchByName = $this->getJson(route('api.b1.membership-plans.index', [
+                'search' => $membershipPlans[0]->name,
+            ])
+        );
 
         $this->assertCount(7, $response->original['data'], '2 defaults plan');
         $this->assertCount(3, $take3->original['data']);
@@ -106,7 +108,8 @@ class MembershipPlanAPIControllerTest extends TestCase
             ->andReturn($updateRecord);
 
         $response = $this->putJson(route('api.b1.membership-plans.update', $membershipPlan->id),
-            $updateRecord->toArray());
+            $updateRecord->toArray()
+        );
 
         $this->assertSuccessDataResponse($response,
             $updateRecord->toArray(),

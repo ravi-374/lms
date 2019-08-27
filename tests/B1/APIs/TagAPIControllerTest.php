@@ -55,7 +55,7 @@ class TagAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.tags.index'));
         $take3 = $this->getJson(route('api.b1.tags.index', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.b1.tags.index', ['skip' => 2, 'limit' => 2]));
-        $searchByName = $this->getJson(route('api.b1.tags.index', ['search='.$tags[0]->name]));
+        $searchByName = $this->getJson(route('api.b1.tags.index', ['search' => $tags[0]->name]));
 
         $this->assertCount(18, $response->original['data'], '13 defaults');
         $this->assertCount(3, $take3->original['data']);

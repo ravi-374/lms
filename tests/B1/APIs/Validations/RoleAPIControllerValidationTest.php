@@ -37,7 +37,11 @@ class RoleAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_role_fails_when_permissions_not_passed()
     {
-        $response = $this->postJson(route('api.b1.roles.store', ['name' => $this->faker->name, 'permissions' => []]));
+        $response = $this->postJson(route('api.b1.roles.store', [
+                'name'        => $this->faker->name,
+                'permissions' => [],
+            ]
+        ));
 
         $this->assertExceptionMessage($response, 'Role must have at least one permission.');
     }
@@ -68,8 +72,10 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $response = $this->putJson(route('api.b1.roles.update', $role->id),
-            ['name' => $this->faker->name, 'permissions' => []]);
+        $response = $this->putJson(route('api.b1.roles.update', $role->id), [
+            'name'        => $this->faker->name,
+            'permissions' => [],
+        ]);
 
         $this->assertExceptionMessage($response, 'Role must have at least one permission.');
     }

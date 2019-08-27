@@ -51,13 +51,13 @@ Route::group(['middleware' => 'user.auth'], function () {
 
         // Update book status
         Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus')
-            ->name('books.update-book-status');;
+            ->name('books.update-book-status');
     });
     // Get book details from third-party api
     Route::get('get-book-details', 'BookAPIController@getBookDetails');
 
     // Book search
-    Route::get('search-books', 'BookItemAPIController@searchBooks')->name('books.search-books');;
+    Route::get('search-books', 'BookItemAPIController@searchBooks')->name('books.search-books');
 
     // Users
     Route::middleware('permission:manage_users')->group(function () {
