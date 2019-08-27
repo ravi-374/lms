@@ -11,13 +11,13 @@ import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MemberProfile = props => {
-    const { isLoading, countries, userProfile, roles, fetchUserProfile, fetchCountries, editUserProfile,history } = props;
+    const { isLoading, countries, userProfile, roles, fetchUserProfile, fetchCountries, editUserProfile, history } = props;
     useEffect(() => {
         fetchUserProfile();
         fetchCountries();
     }, []);
     const onSaveProfile = (formValues) => {
-        editUserProfile(prepareFormData(formValues));
+        editUserProfile(prepareFormData(formValues), history);
     };
     if (!userProfile || isLoading || !userProfile.id) {
         return (

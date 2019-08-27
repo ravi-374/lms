@@ -1,11 +1,18 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react'
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {getUserProfile} from "../../../store/action/localStorageAction";
+import {Routes, LocalStorageKey} from "../../../constants";
 
 const Header = (props) => {
-    const user = localStorage.getItem('user') ? JSON.parse(atob(localStorage.getItem('user'))) : null;
+    const { user, getUserProfile, history } = props;
     let imageUrl = publicImagePath.USER_AVATAR;
+    useEffect(() => {
+        getUserProfile(LocalStorageKey.USER);
+    }, []);
+
     if (user) {
         user.name = user.first_name;
         if (user.last_name) {
@@ -16,22 +23,22 @@ const Header = (props) => {
         }
     }
     const goToUserProfile = () => {
-        props.history.push('/app/admin/user-profile');
+        history.push(Routes.USER_PROFILE);
     };
     return (
         <Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile/>
             <AppNavbarBrand>
                 <img className="infy-logo" src={publicImagePath.APP_LOGO} height="19" width="40" alt="InfyOm Logo"/>
-                <span className="ml-2 infy-name" style={{color: '#20a8d8'}}>InfyOm</span>
+                <span className="ml-2 infy-name" style={{ color: '#20a8d8' }}>InfyOm</span>
             </AppNavbarBrand>
             <Nav className="ml-auto" navbar>
                 <AppHeaderDropdown direction="down">
                     <DropdownToggle nav>
                         <img src={imageUrl} className="img-avatar" alt="user-avatar"/>
-                        <span className="mr-3" style={{verticalAlign: 'sub'}}>{user ? user.name : 'User'}</span>
+                        <span className="mr-3" style={{ verticalAlign: 'sub' }}>{user ? user.name : 'User'}</span>
                     </DropdownToggle>
-                    <DropdownMenu right style={{right: 'auto'}}>
+                    <DropdownMenu right style={{ right: 'auto' }}>
                         <DropdownItem onClick={goToUserProfile}><i className="fa fa-cog"/>Profile</DropdownItem>
                         <DropdownItem onClick={e => props.onLogout(e)}><i className="fa fa-lock"/> Logout</DropdownItem>
                     </DropdownMenu>
@@ -40,5 +47,7 @@ const Header = (props) => {
         </Fragment>
     );
 };
-
-export default Header;
+const mapStateToProps = (state) => {
+    return { user: state.profile }
+};
+export default connect(mapStateToProps, { getUserProfile })(Header);

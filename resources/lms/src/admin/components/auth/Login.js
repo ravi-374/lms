@@ -9,8 +9,9 @@ import CheckBox from '../../../shared/components/CheckBox';
 import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
-import {Routes, Tokens} from "../../../constants";
+import {LocalStorageKey, Routes, Tokens} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {setUserProfile} from "../../../store/action/localStorageAction";
 
 const Login = (props) => {
     let remember = true;
@@ -48,17 +49,17 @@ const Login = (props) => {
             }
             localStorage.setItem('is_admin_remember', isRemember);
             localStorage.setItem(Tokens.ADMIN, response.data.data.token);
-            localStorage.setItem('user', btoa(JSON.stringify(response.data.data.user)));
+            props.setUserProfile(LocalStorageKey.USER, response.data.data.user);
             if (sessionStorage.getItem('prevAdminPrevUrl')) {
                 window.location.href = sessionStorage.getItem('prevAdminPrevUrl');
             } else {
                 props.history.push(Routes.ADMIN_DEFAULT);
             }
-        }).catch(({response}) =>
-            props.addToast({text: response.data.message, type: 'error'})
+        }).catch(({ response }) =>
+            props.addToast({ text: response.data.message, type: 'error' })
         );
     };
-    const {handleSubmit, invalid} = props;
+    const { handleSubmit, invalid } = props;
     return (
         <div className="app flex-row align-items-center">
             <HeaderTitle title={'Login | LMS System'}/>
@@ -101,6 +102,6 @@ const Login = (props) => {
     );
 };
 
-const form = reduxForm({form: 'loginForm', validate: loginFormValidate})(Login);
+const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(Login);
 
-export default connect(null, {addToast})(form);
+export default connect(null, { addToast, setUserProfile })(form);
