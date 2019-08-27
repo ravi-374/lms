@@ -120,7 +120,7 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     /** Get App Config */
-    Route::get('config', 'AuthAPIController@getAppConfig');
+    Route::get('config', 'AuthAPIController@getAppConfig')->name('config');
 
     Route::middleware('permission:manage_settings')->group(function () {
         // Settings
