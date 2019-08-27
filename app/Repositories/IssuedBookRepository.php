@@ -3,13 +3,12 @@
 namespace App\Repositories;
 
 use App;
-use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
-use App\Models\Member;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\UnauthorizedException;
@@ -22,6 +21,15 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  */
 class IssuedBookRepository extends BaseRepository implements IssuedBookRepositoryInterface
 {
+    /** @var BookItemRepository */
+    private $bookItemRepo;
+
+    public function __construct(Application $app, BookItemRepository $bookItemRepository)
+    {
+        parent::__construct($app);
+        $this->bookItemRepo = $bookItemRepository;
+    }
+
     /**
      * @var array
      */
@@ -192,7 +200,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             ->first();
 
         /** @var BookItem $bookItem */
-        $bookItem = BookItem::findOrFail($input['book_item_id']);
+        $bookItem = $this->bookItemRepo->findOrFail($input['book_item_id']);
 
         $input = [
             'book_item_id'    => $input['book_item_id'],

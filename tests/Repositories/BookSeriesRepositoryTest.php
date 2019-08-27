@@ -95,4 +95,16 @@ class BookSeriesRepositoryTest extends TestCase
         $this->assertCount(1, $bookSeries->seriesItems);
         $this->assertEquals(5, $bookSeries->seriesItems[0]->sequence);
     }
+
+    /**
+     * @test
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     * @expectedExceptionMessage BookSeries not found.
+     */
+    public function test_not_allow_to_update_non_existing_book_series()
+    {
+        $bookSeries = factory(BookSeries::class)->raw();
+
+        $this->bookSeriesRepo->update($bookSeries, 999);
+    }
 }

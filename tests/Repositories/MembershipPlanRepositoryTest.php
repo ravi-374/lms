@@ -54,6 +54,7 @@ class MembershipPlanRepositoryTest extends TestCase
         $generatedMemberShipPlanId = $this->membershipPlanRepo->generateMembershipPlanId();
 
         $this->assertNotEmpty($generatedMemberShipPlanId);
+        $this->assertIsNumeric($generatedMemberShipPlanId);
     }
 
     /**
@@ -61,10 +62,22 @@ class MembershipPlanRepositoryTest extends TestCase
      * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
      * @expectedExceptionMessage invalid frequency.
      */
-    public function test_can_validate_membership_input()
+    public function test_validate_membership_plan_fails_with_invalid_frequency()
     {
         $fakePlan = factory(MembershipPlan::class)->make(['frequency' => 99])->toArray();
 
         $this->membershipPlanRepo->validateMembershipPlan($fakePlan);
+    }
+
+    /**
+     * @test
+     */
+    public function test_can_validate_membership_input()
+    {
+        $response = $this->membershipPlanRepo->validateMembershipPlan([
+            'frequency' => MembershipPlan::MONTHLY_FREQUENCY,
+        ]);
+
+        $this->assertTrue($response);
     }
 }
