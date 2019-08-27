@@ -46,9 +46,9 @@ class BookItemAPIControllerTest extends TestCase
 
         $this->bookItemRepo->expects('all')->andReturn($bookItem);
 
-        $response = $this->getJson(
-            "api/b1/books/$bookItem->book_id/available-books?member_id=$reserveBook->member_id"
-        );
+        $response = $this->getJson(route('api.b1.books.available-books', $bookItem->book_id), [
+            'member_id' => $reserveBook->member_id,
+        ]);
 
         $this->assertSuccessMessageResponse(
             $response, 'Books history retrieved successfully.'
@@ -64,7 +64,7 @@ class BookItemAPIControllerTest extends TestCase
 
         $this->bookItemRepo->expects('searchBooks')->andReturn(collect($bookItems));
 
-        $response = $this->getJson("api/b1/search-books");
+        $response = $this->getJson(route('api.b1.books.search-books'));
 
         $this->assertSuccessDataResponse(
             $response, $bookItems->toArray(), 'BookItem retrieved successfully.'
@@ -77,7 +77,7 @@ class BookItemAPIControllerTest extends TestCase
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $response = $this->putJson("api/b1/books/$bookItem->id/update-book-status", [
+        $response = $this->putJson(route('api.b1.books.update-book-status', $bookItem->id), [
             'status' => BookItem::STATUS_DAMAGED,
         ]);
 
@@ -93,7 +93,7 @@ class BookItemAPIControllerTest extends TestCase
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $response = $this->putJson("api/b1/books/$bookItem->id/update-book-status", [
+        $response = $this->putJson(route('api.b1.books.update-book-status', $bookItem->id), [
             'status' => 10,
         ]);
 
