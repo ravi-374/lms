@@ -133,12 +133,12 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     // Countries
-    Route::get('countries', 'CountryAPIController@index');
+    Route::get('countries', 'CountryAPIController@index')->name('countries.index');
 
     // Currencies
-    Route::get('currencies', 'CommonAPIController@currencies');
+    Route::get('currencies', 'CommonAPIController@currencies')->name('currencies');
 });
 
 /** Password Reset API's For User */
 Route::post('send-reset-password-link', 'AccountAPIController@sendResetPasswordLink');
-Route::post('reset-password', 'AccountAPIController@resetPassword');
+Route::post('reset-password', 'AccountAPIController@resetPassword')->name('reset-password');
