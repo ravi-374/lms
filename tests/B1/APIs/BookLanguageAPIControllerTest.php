@@ -43,7 +43,7 @@ class BookLanguageAPIControllerTest extends TestCase
 
         $this->bookLanguageRepo->expects('all')->andReturn($bookLanguages);
 
-        $response = $this->getJson('api/b1/book-languages');
+        $response = $this->getJson(route('api.b1.book-languages.index'));
 
         $this->assertSuccessDataResponse(
             $response, $bookLanguages->toArray(), 'Book Languages retrieved successfully.'
@@ -56,10 +56,10 @@ class BookLanguageAPIControllerTest extends TestCase
         /** @var BookLanguage[] $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/book-languages');
-        $take3 = $this->getJson('api/b1/book-languages?limit=3');
-        $skip2 = $this->getJson('api/b1/book-languages?skip=2&limit=2');
-        $search = $this->getJson('api/b1/book-languages?search='.$bookLanguage[0]->language_name);
+        $response = $this->getJson(route('api.b1.book-languages.index'));
+        $take3 = $this->getJson(route('api.b1.book-languages.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.book-languages.index', ['skip' => 2, 'limit' => 2]));
+        $search = $this->getJson(route('api.b1.book-languages.index', ['search' => $bookLanguage[0]->language_name]));
 
         $this->assertCount(23, $response->original['data'], '18 default');
         $this->assertCount(3, $take3->original['data']);
@@ -81,7 +81,7 @@ class BookLanguageAPIControllerTest extends TestCase
             ->with($bookLanguage->toArray())
             ->andReturn($bookLanguage);
 
-        $response = $this->postJson('api/b1/book-languages', $bookLanguage->toArray());
+        $response = $this->postJson(route('api.b1.book-languages.store'), $bookLanguage->toArray());
 
         $this->assertSuccessDataResponse(
             $response, $bookLanguage->toArray(), 'Book Language saved successfully.'
@@ -101,7 +101,8 @@ class BookLanguageAPIControllerTest extends TestCase
             ->with($fakeBookLanguage->toArray(), $bookLanguage->id)
             ->andReturn($fakeBookLanguage);
 
-        $response = $this->putJson('api/b1/book-languages/'.$bookLanguage->id, $fakeBookLanguage->toArray());
+        $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage->id),
+            $fakeBookLanguage->toArray());
 
         $this->assertSuccessDataResponse(
             $response, $fakeBookLanguage->toArray(), 'Book Language updated successfully.'
@@ -114,7 +115,7 @@ class BookLanguageAPIControllerTest extends TestCase
         /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $response = $this->getJson('api/b1/book-languages/'.$bookLanguage->id);
+        $response = $this->getJson(route('api.b1.book-languages.show', $bookLanguage->id));
 
         $this->assertSuccessDataResponse(
             $response, $bookLanguage->toArray(), 'Book Language retrieved successfully.'
@@ -126,7 +127,7 @@ class BookLanguageAPIControllerTest extends TestCase
     {
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $response = $this->deleteJson('api/b1/book-languages/'.$bookLanguage->id);
+        $response = $this->deleteJson(route('api.b1.book-languages.destroy', $bookLanguage->id));
 
         $this->assertSuccessMessageResponse($response, 'Book Language deleted successfully.');
         $this->assertEmpty(BookLanguage::where('language_name', $bookLanguage->language_name)->first());
@@ -138,7 +139,7 @@ class BookLanguageAPIControllerTest extends TestCase
         $bookLanguage = factory(BookLanguage::class)->create();
         $bookItem = factory(BookItem::class)->create(['language_id' => $bookLanguage->id]);
 
-        $response = $this->deleteJson('api/b1/book-languages/'.$bookLanguage->id);
+        $response = $this->deleteJson(route('api.b1.book-languages.destroy', $bookLanguage->id));
 
         $this->assertExceptionMessage($response,
             'Book Language can not be delete, it is used in one or more book items.');
