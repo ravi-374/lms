@@ -41,7 +41,7 @@ class TagAPIControllerTest extends TestCase
 
         $this->tagRepository->expects('all')->andReturn($tags);
 
-        $response = $this->getJson('api/b1/tags');
+        $response = $this->getJson(route('api.b1.tags.index'));
 
         $this->assertSuccessDataResponse($response, $tags->toArray(), 'Tags retrieved successfully.');
     }
@@ -52,10 +52,10 @@ class TagAPIControllerTest extends TestCase
         /** @var Tag[] $tags */
         $tags = factory(Tag::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/tags');
-        $take3 = $this->getJson('api/b1/tags?limit=3');
-        $skip2 = $this->getJson('api/b1/tags?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/tags?search='.$tags[0]->name);
+        $response = $this->getJson(route('api.b1.tags.index'));
+        $take3 = $this->getJson(route('api.b1.tags.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.tags.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.tags.index', ['search='.$tags[0]->name]));
 
         $this->assertCount(18, $response->original['data'], '13 defaults');
         $this->assertCount(3, $take3->original['data']);
@@ -78,7 +78,7 @@ class TagAPIControllerTest extends TestCase
             ->with($tag->toArray())
             ->andReturn($tag);
 
-        $response = $this->postJson('api/b1/tags', $tag->toArray());
+        $response = $this->postJson(route('api.b1.tags.store'), $tag->toArray());
 
         $this->assertSuccessDataResponse($response, $tag->toArray(), 'Tag saved successfully.');
     }
@@ -96,7 +96,7 @@ class TagAPIControllerTest extends TestCase
             ->with($fakeTag->toArray(), $tag->id)
             ->andReturn($fakeTag);
 
-        $response = $this->putJson('api/b1/tags/'.$tag->id, $fakeTag->toArray());
+        $response = $this->putJson(route('api.b1.tags.update', $tag->id), $fakeTag->toArray());
 
         $this->assertSuccessDataResponse($response, $fakeTag->toArray(), 'Tag updated successfully.');
     }
@@ -107,7 +107,7 @@ class TagAPIControllerTest extends TestCase
         /** @var Tag $tag */
         $tag = factory(Tag::class)->create();
 
-        $response = $this->getJson('api/b1/tags/'.$tag->id);
+        $response = $this->getJson(route('api.b1.tags.show', $tag->id));
 
         $this->assertSuccessDataResponse($response, $tag->toArray(), 'Tag retrieved successfully.');
     }
@@ -118,7 +118,7 @@ class TagAPIControllerTest extends TestCase
         /** @var Tag $tag */
         $tag = factory(Tag::class)->create();
 
-        $response = $this->deleteJson("api/b1/tags/$tag->id");
+        $response = $this->deleteJson(route('api.b1.tags.destroy', $tag->id));
 
         $this->assertSuccessDataResponse($response, $tag->toArray(), 'Tag deleted successfully.');
         $this->assertEmpty(Tag::find($tag->id));
