@@ -73,13 +73,13 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     // Members
     Route::middleware('permission:manage_members')->group(function () {
-        Route::delete('members/{member}', 'MemberAPIController@destroy');
+        Route::delete('members/{member}', 'MemberAPIController@destroy')->name('members.destroy');
     });
-    Route::post('members', 'MemberAPIController@store');
-    Route::post('members/{member}', 'MemberAPIController@update')->where('member', '\d+');
-    Route::get('members', 'MemberAPIController@index');
-    Route::get('members/{member}', 'MemberAPIController@show')->where('member', '\d+');
-    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
+    Route::post('members', 'MemberAPIController@store')->name('members.store');
+    Route::post('members/{member}', 'MemberAPIController@update')->where('member', '\d+')->name('members.update');
+    Route::get('members', 'MemberAPIController@index')->name('members.index');
+    Route::get('members/{member}', 'MemberAPIController@show')->where('member', '\d+')->name('members.show');
+    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus')->name('members.update-status');
     Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage');
 
     Route::middleware('permission:manage_book_series')->group(function () {
