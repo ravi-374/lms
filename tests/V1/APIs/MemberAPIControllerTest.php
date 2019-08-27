@@ -47,7 +47,7 @@ class MemberAPIControllerTest extends TestCase
             ->with($updateRecord->toArray(), $this->loggedInMemberId)
             ->andReturn($updateRecord);
 
-        $response = $this->postJson('api/v1/update-member-profile', $updateRecord->toArray());
+        $response = $this->postJson(route('api.v1.update-member-profile.index'),$updateRecord->toArray());
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member profile updated successfully.');
     }
@@ -55,7 +55,7 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function test_can_get_details_of_logged_in_member()
     {
-        $response = $this->get('api/v1/member-details');
+        $response = $this->getJson(route('api.v1.member-details.index'));
 
         $this->assertSuccessMessageResponse($response, 'Member details retrieved successfully.');
         $this->assertNotEmpty($response);
@@ -68,7 +68,7 @@ class MemberAPIControllerTest extends TestCase
         $member = factory(Member::class)->create();
         $fakeMember = factory(Member::class)->raw(['id' => $member->id]);
 
-        $response = $this->postJson('api/v1/update-member-profile', $fakeMember);
+        $response = $this->postJson(route('api.v1.update-member-profile.index'),$fakeMember);
 
         $this->assertSuccessMessageResponse($response, 'Member profile updated successfully.');
         $this->assertNotEquals($fakeMember['email'], $member->fresh()->email, 'Email should not update');
@@ -78,7 +78,7 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function test_can_remove_image()
     {
-        $response = $this->postJson('api/v1/remove-image');
+        $response = $this->postJson(route('api.v1.remove-image.index'));
 
         $this->assertSuccessMessageResponse($response, 'Member image removed successfully.');
     }

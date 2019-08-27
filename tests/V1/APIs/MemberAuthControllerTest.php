@@ -25,7 +25,7 @@ class MemberAuthControllerTest extends TestCase
         $token = encrypt($key);
         $input = ['token' => $token, 'password' => '1nfy0m'];
 
-        $response = $this->postJson('api/v1/reset-member-password', $input);
+        $response = $this->postJson(route('api.v1.reset-member-password.index'),$input);
 
         $this->assertSuccessMessageResponse($response, 'Password updated successfully.');
     }
@@ -37,7 +37,7 @@ class MemberAuthControllerTest extends TestCase
         $token = encrypt($key);
         $input = ['token' => $token, 'password' => '1nfy0m'];
 
-        $response = $this->postJson('api/v1/reset-member-password', $input);
+        $response = $this->postJson(route('api.v1.reset-member-password.index'),$input);
 
         $this->assertJsonErrorMessageResponse($response, 'User with given email not available.');
     }
@@ -52,7 +52,7 @@ class MemberAuthControllerTest extends TestCase
         $token = encrypt($key);
         $input = ['token' => $token, 'password' => '1nfy0m'];
 
-        $response = $this->postJson('api/v1/reset-member-password', $input);
+        $response = $this->postJson(route('api.v1.reset-member-password.index'),$input);
 
         $this->assertJsonErrorMessageResponse($response, 'The activate link has expired.');
     }
@@ -60,7 +60,7 @@ class MemberAuthControllerTest extends TestCase
     /** @test */
     public function test_unable_to_verify_member_account_without_token()
     {
-        $response = $this->getJson('api/v1/activate-member');
+        $response = $this->getJson(route('api.v1.activate-member.index'));
 
         $this->assertJsonErrorMessageResponse($response, 'token not found.');
     }
@@ -76,7 +76,7 @@ class MemberAuthControllerTest extends TestCase
         $key = $member->id.'|'.$member->activation_code;
         $token = encrypt($key);
 
-        $response = $this->getJson("api/v1/activate-member?token=$token");
+        $response = $this->getJson(route('api.v1.activate-member.index', ['token='.$token]));
 
         $this->assertSuccessMessageResponse($response, 'Your account has been activated successfully.');
         $this->assertTrue($member->fresh()->is_active);
