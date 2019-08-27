@@ -41,7 +41,7 @@ class SettingAPIControllerTest extends TestCase
 
         $this->settingRepo->expects('all')->andReturn($settings);
 
-        $response = $this->getJson('api/b1/settings');
+        $response = $this->getJson(route('api.b1.settings.index'));
 
         $this->assertSuccessDataResponse($response, $settings->toArray(), 'Settings retrieved successfully.');
     }
@@ -52,10 +52,10 @@ class SettingAPIControllerTest extends TestCase
         /** @var Setting[] $settings */
         $settings = factory(Setting::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/settings');
-        $take3 = $this->getJson('api/b1/settings?limit=3');
-        $skip2 = $this->getJson('api/b1/settings?skip=2&limit=2');
-        $searchByKey = $this->getJson('api/b1/settings?search='.$settings[0]->key);
+        $response = $this->getJson(route('api.b1.settings.index'));
+        $take3 = $this->getJson(route('api.b1.settings.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.settings.index', ['skip' => 2, 'limit' => 2]));
+        $searchByKey = $this->getJson(route('api.b1.settings.index', ['search' => $settings[0]->key]));
 
         $this->assertCount(8, $response->original['data'], '3 defaults');
         $this->assertCount(3, $take3->original['data']);
@@ -76,7 +76,7 @@ class SettingAPIControllerTest extends TestCase
             ->with($settings)
             ->andReturn($settings);
 
-        $response = $this->postJson('api/b1/settings', $settings);
+        $response = $this->postJson(route('api.b1.settings.store'), $settings);
 
         $this->assertSuccessDataResponse($response, $settings, 'Setting saved successfully.');
     }
@@ -94,7 +94,7 @@ class SettingAPIControllerTest extends TestCase
             ->with($fakeSetting->toArray(), $setting->id)
             ->andReturn($fakeSetting);
 
-        $response = $this->putJson('api/b1/settings/'.$setting->id, $fakeSetting->toArray());
+        $response = $this->putJson(route('api.b1.settings.update', $setting->id), $fakeSetting->toArray());
 
         $this->assertSuccessDataResponse($response, $fakeSetting->toArray(), 'Setting updated successfully.');
     }
@@ -105,7 +105,7 @@ class SettingAPIControllerTest extends TestCase
         /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
 
-        $response = $this->getJson('api/b1/settings/'.$setting->id);
+        $response = $this->getJson(route('api.b1.settings.show', $setting->id));
 
         $this->assertSuccessDataResponse($response, $setting->toArray(), 'Setting retrieved successfully.');
     }
@@ -116,7 +116,7 @@ class SettingAPIControllerTest extends TestCase
         /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
 
-        $response = $this->deleteJson("api/b1/settings/$setting->id");
+        $response = $this->deleteJson(route('api.b1.settings.destroy', $setting->id));
 
         $this->assertSuccessDataResponse($response, $setting->toArray(), 'Setting deleted successfully.');
         $this->assertEmpty(Setting::find($setting->id));
