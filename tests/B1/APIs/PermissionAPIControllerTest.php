@@ -42,7 +42,7 @@ class PermissionAPIControllerTest extends TestCase
 
         $this->permissionRepo->expects('all')->andReturn($permissions);
 
-        $response = $this->getJson('api/b1/permissions');
+        $response = $this->getJson(route('api.b1.permissions.index'));
 
         $this->assertSuccessDataResponse($response, $permissions->toArray(), 'Permissions retrieved successfully.');
     }
@@ -54,9 +54,9 @@ class PermissionAPIControllerTest extends TestCase
         $permissions = factory(Permission::class)->times(5)->create();
 
         $response = $this->getJson('api/b1/permissions');
-        $take3 = $this->getJson('api/b1/permissions?limit=3');
-        $skip2 = $this->getJson('api/b1/permissions?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/permissions?search='.$permissions[0]->name);
+        $take3 = $this->getJson(route('api.b1.permissions.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.permissions.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.permissions.index', ['search' => $permissions[0]->name]));
 
         $this->assertCount(19, $response->original['data'], '14 defaults');
         $this->assertCount(3, $take3->original['data']);
@@ -78,7 +78,7 @@ class PermissionAPIControllerTest extends TestCase
             ->with($permission->toArray())
             ->andReturn($permission);
 
-        $response = $this->postJson('api/b1/permissions', $permission->toArray());
+        $response = $this->postJson(route('api.b1.permissions.store', $permission->toArray()));
 
         $this->assertSuccessDataResponse($response, $permission->toArray(), 'Permission saved successfully.');
     }
@@ -96,7 +96,7 @@ class PermissionAPIControllerTest extends TestCase
             ->with($fakePermission->toArray(), $permission->id)
             ->andReturn($fakePermission);
 
-        $response = $this->putJson('api/b1/permissions/'.$permission->id, $fakePermission->toArray());
+        $response = $this->putJson(route('api.b1.permissions.update', $permission->id), $fakePermission->toArray());
 
         $this->assertSuccessDataResponse(
             $response,
@@ -111,7 +111,7 @@ class PermissionAPIControllerTest extends TestCase
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create();
 
-        $response = $this->getJson('api/b1/permissions/'.$permission->id);
+        $response = $this->getJson(route('api.b1.permissions.show', $permission->id));
 
         $this->assertSuccessDataResponse($response, $permission->toArray(), 'Permission retrieved successfully.');
 
@@ -123,7 +123,7 @@ class PermissionAPIControllerTest extends TestCase
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create();
 
-        $response = $this->deleteJson("api/b1/permissions/$permission->id");
+        $response = $this->deleteJson(route('api.b1.permissions.destroy', $permission->id));
 
         $this->assertSuccessDataResponse($response, $permission->toArray(), 'Permission deleted successfully.');
         $this->assertEmpty(Permission::find($permission->id));
