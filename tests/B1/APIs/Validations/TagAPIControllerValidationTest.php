@@ -18,7 +18,7 @@ class TagAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_tag_fails_when_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/tags', ['name' => '']);
+        $response = $this->postJson(route('api.b1.tags.store'), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -28,7 +28,7 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tag = factory(Tag::class)->create();
 
-        $response = $this->postJson('api/b1/tags/', ['name' => $tag->name]);
+        $response = $this->postJson(route('api.b1.tags.store'), ['name' => $tag->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -38,7 +38,7 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tag = factory(Tag::class)->create();
 
-        $response = $this->putJson('api/b1/tags/'.$tag->id, ['name' => '']);
+        $response = $this->putJson(route('api.b1.tags.update', $tag->id), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -48,7 +48,7 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $tags = factory(Tag::class)->times(2)->create();
 
-        $response = $this->putJson('api/b1/tags/'.$tags[1]->id, ['name' => $tags[0]->name]);
+        $response = $this->putJson(route('api.b1.tags.update', $tags[1]->id), ['name' => $tags[0]->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -58,7 +58,7 @@ class TagAPIControllerValidationTest extends TestCase
     {
         $fakeTag = factory(Tag::class)->raw();
 
-        $response = $this->postJson('api/b1/tags', $fakeTag);
+        $response = $this->postJson(route('api.b1.tags.store'), $fakeTag);
 
         $this->assertSuccessMessageResponse($response, 'Tag saved successfully.');
         $this->assertNotEmpty(Tag::where('name', $fakeTag['name'])->first());
@@ -71,7 +71,7 @@ class TagAPIControllerValidationTest extends TestCase
 
         $fakeTag = factory(Tag::class)->raw();
 
-        $response = $this->putJson('api/b1/tags/'.$tag->id, $fakeTag);
+        $response = $this->putJson(route('api.b1.tags.update', $tag->id), $fakeTag);
 
         $this->assertSuccessMessageResponse($response, 'Tag updated successfully.');
         $this->assertEquals($fakeTag['name'], $tag->fresh()->name);

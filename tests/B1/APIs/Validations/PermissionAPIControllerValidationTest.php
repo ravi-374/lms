@@ -18,7 +18,7 @@ class PermissionAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_permission_fails_when_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/permissions', ['name' => '']);
+        $response = $this->postJson(route('api.b1.permissions.store', ['name' => '']));
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -28,7 +28,7 @@ class PermissionAPIControllerValidationTest extends TestCase
     {
         $permission = factory(Permission::class)->create();
 
-        $response = $this->postJson('api/b1/permissions/', ['name' => $permission->name]);
+        $response = $this->postJson(route('api.b1.permissions.store', ['name' => $permission->name]));
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -38,7 +38,7 @@ class PermissionAPIControllerValidationTest extends TestCase
     {
         $permission = factory(Permission::class)->create();
 
-        $response = $this->putJson('api/b1/permissions/'.$permission->id, ['name' => '']);
+        $response = $this->putJson(route('api.b1.permissions.update', $permission->id), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -49,7 +49,9 @@ class PermissionAPIControllerValidationTest extends TestCase
         $permission1 = factory(Permission::class)->create();
         $permission2 = factory(Permission::class)->create();
 
-        $response = $this->putJson('api/b1/permissions/'.$permission2->id, ['name' => $permission1->name]);
+        $response = $this->putJson(route('api.b1.permissions.update', $permission2->id), [
+            'name' => $permission1->name,
+        ]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -58,7 +60,7 @@ class PermissionAPIControllerValidationTest extends TestCase
     public function it_can_store_permission()
     {
         $fakePermission = factory(Permission::class)->raw();
-        $response = $this->postJson('api/b1/permissions', $fakePermission);
+        $response = $this->postJson(route('api.b1.permissions.store', $fakePermission));
 
         $this->assertSuccessMessageResponse($response, 'Permission saved successfully.');
         $this->assertNotEmpty(Permission::where('name', $fakePermission['name'])->first());
@@ -70,7 +72,7 @@ class PermissionAPIControllerValidationTest extends TestCase
         $permission = factory(Permission::class)->create();
         $fakePermission = factory(Permission::class)->raw();
 
-        $response = $this->putJson('api/b1/permissions/'.$permission->id, $fakePermission);
+        $response = $this->putJson(route('api.b1.permissions.update', $permission->id), $fakePermission);
 
         $this->assertSuccessMessageResponse($response, 'Permission updated successfully.');
         $this->assertEquals($fakePermission['name'], $permission->fresh()->name);

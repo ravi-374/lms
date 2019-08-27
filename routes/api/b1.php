@@ -43,33 +43,35 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::post('books/{book}/remove-image', 'BookAPIController@removeImage');
 
         // add book items
-        Route::post('books/{book}/items', 'BookAPIController@addItems');
+        Route::post('books/{book}/items', 'BookAPIController@addItems')->name('books.add-items');
         //        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
         // Get available books
-        Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
+        Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks')
+            ->name('books.available-books');
 
         // Update book status
-        Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus');
+        Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus')
+            ->name('books.update-book-status');;
     });
     // Get book details from third-party api
     Route::get('get-book-details', 'BookAPIController@getBookDetails');
 
     // Book search
-    Route::get('search-books', 'BookItemAPIController@searchBooks');
+    Route::get('search-books', 'BookItemAPIController@searchBooks')->name('books.search-books');;
 
     // Users
     Route::middleware('permission:manage_users')->group(function () {
         Route::resource('users', 'UserAPIController');
         Route::post('users/{user}', 'UserAPIController@update');
         Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
-        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus');
+        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus')->name('users.update-status');
     });
 
     // get logged in user details
-    Route::get('user-details', 'UserAPIController@getLoggedInUserDetails');
+    Route::get('user-details', 'UserAPIController@getLoggedInUserDetails')->name('users.user-details');
 
     // update logged in user profile
-    Route::post('update-user-profile', 'UserAPIController@updateUserProfile');
+    Route::post('update-user-profile', 'UserAPIController@updateUserProfile')->name('users.update-user-profile');
 
     // Members
     Route::middleware('permission:manage_members')->group(function () {

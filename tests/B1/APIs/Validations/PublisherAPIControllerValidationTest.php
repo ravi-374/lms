@@ -18,7 +18,7 @@ class PublisherAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_publisher_fails_when_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/publishers', ['name' => '']);
+        $response = $this->postJson(route('api.b1.publishers.store'), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -28,7 +28,7 @@ class PublisherAPIControllerValidationTest extends TestCase
     {
         $publisher = factory(Publisher::class)->create();
 
-        $response = $this->postJson('api/b1/publishers/', ['name' => $publisher->name]);
+        $response = $this->postJson(route('api.b1.publishers.store'), ['name' => $publisher->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -38,7 +38,7 @@ class PublisherAPIControllerValidationTest extends TestCase
     {
         $publisher = factory(Publisher::class)->create();
 
-        $response = $this->putJson('api/b1/publishers/'.$publisher->id, ['name' => '']);
+        $response = $this->putJson(route('api.b1.publishers.update', $publisher->id), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -49,7 +49,7 @@ class PublisherAPIControllerValidationTest extends TestCase
         $publisher1 = factory(Publisher::class)->create();
         $publisher2 = factory(Publisher::class)->create();
 
-        $response = $this->putJson('api/b1/publishers/'.$publisher2->id, ['name' => $publisher1->name]);
+        $response = $this->putJson(route('api.b1.publishers.update', $publisher2->id), ['name' => $publisher1->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -57,7 +57,7 @@ class PublisherAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_publisher()
     {
-        $response = $this->postJson('api/b1/publishers', ['name' => $this->faker->name]);
+        $response = $this->postJson(route('api.b1.publishers.store'), ['name' => $this->faker->name]);
 
         $this->assertSuccessMessageResponse($response, 'Publisher saved successfully.');
     }
@@ -69,7 +69,7 @@ class PublisherAPIControllerValidationTest extends TestCase
         $publisher = factory(Publisher::class)->create();
 
         $newName = $this->faker->name;
-        $response = $this->putJson('api/b1/publishers/'.$publisher->id, ['name' => $newName]);
+        $response = $this->putJson(route('api.b1.publishers.update', $publisher->id), ['name' => $newName]);
 
         $this->assertSuccessMessageResponse($response, 'Publisher updated successfully.');
         $this->assertEquals($newName, $publisher->fresh()->name);

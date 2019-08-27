@@ -43,7 +43,7 @@ class RoleAPIControllerTest extends TestCase
 
         $this->roleRepository->expects('all')->andReturn($roles);
 
-        $response = $this->getJson('api/b1/roles');
+        $response = $this->getJson(route('api.b1.roles.index'));
 
         $this->assertSuccessDataResponse($response, $roles->toArray(), 'Roles retrieved successfully.');
     }
@@ -54,10 +54,10 @@ class RoleAPIControllerTest extends TestCase
         /** @var Role[] $roles */
         $roles = factory(Role::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/roles');
-        $take3 = $this->getJson('api/b1/roles?limit=3');
-        $skip2 = $this->getJson('api/b1/roles?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/roles?search='.$roles[0]->name);
+        $response = $this->getJson(route('api.b1.roles.index'));
+        $take3 = $this->getJson(route('api.b1.roles.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.roles.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.roles.index', ['search' => $roles[0]->name]));
 
         $this->assertCount(7, $response->original['data'], '2 defaults');
         $this->assertCount(3, $take3->original['data']);
@@ -81,7 +81,7 @@ class RoleAPIControllerTest extends TestCase
             ->with($role->toArray())
             ->andReturn($role);
 
-        $response = $this->postJson('api/b1/roles', $role->toArray());
+        $response = $this->postJson(route('api.b1.roles.store', $role->toArray()));
 
         $this->assertSuccessDataResponse($response, $role->toArray(), 'Role saved successfully.');
     }
@@ -105,7 +105,7 @@ class RoleAPIControllerTest extends TestCase
             ->with($updateRole, $role->id)
             ->andReturn($role);
 
-        $response = $this->putJson("api/b1/roles/$role->id", $updateRole);
+        $response = $this->putJson(route('api.b1.roles.update', $role->id), $updateRole);
 
         $this->assertSuccessDataResponse($response, $role->toArray(), 'Role updated successfully.');
     }
@@ -119,7 +119,7 @@ class RoleAPIControllerTest extends TestCase
         $role = factory(Role::class)->create();
         $role->perms()->sync([$permission->id]);
 
-        $response = $this->getJson("api/b1/roles/$role->id");
+        $response = $this->getJson(route('api.b1.roles.show', $role->id));
 
         $this->assertSuccessDataResponse($response, $role->toArray(), 'Role retrieved successfully.');
         $this->assertEquals($permission->id, $response->original['data']['perms'][0]['id']);
@@ -130,7 +130,7 @@ class RoleAPIControllerTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $response = $this->deleteJson('api/b1/roles/'.$role->id);
+        $response = $this->deleteJson(route('api.b1.roles.destroy', $role->id));
 
         $this->assertSuccessMessageResponse($response, 'Role deleted successfully.');
         $this->assertEmpty(Role::where('name', $role->name)->first());
@@ -145,7 +145,7 @@ class RoleAPIControllerTest extends TestCase
         $role = factory(Role::class)->create();
         $role->users()->sync([$user->id]);
 
-        $response = $this->deleteJson("api/b1/roles/$role->id");
+        $response = $this->deleteJson(route('api.b1.roles.destroy', $role->id));
 
         $this->assertErrorMessageResponse($response, 'Role is assigned to one or more users.');
     }

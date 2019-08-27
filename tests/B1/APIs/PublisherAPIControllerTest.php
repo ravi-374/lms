@@ -42,7 +42,7 @@ class PublisherAPIControllerTest extends TestCase
 
         $this->publisherRepo->expects('all')->andReturn($publishers);
 
-        $response = $this->getJson('api/b1/publishers');
+        $response = $this->getJson(route('api.b1.publishers.index'));
 
         $this->assertSuccessDataResponse($response, $publishers->toArray(), 'Publishers retrieved successfully.');
     }
@@ -53,10 +53,10 @@ class PublisherAPIControllerTest extends TestCase
         /** @var Publisher[] $publishers */
         $publishers = factory(Publisher::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/publishers');
-        $take3 = $this->getJson('api/b1/publishers?limit=3');
-        $skip2 = $this->getJson('api/b1/publishers?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/publishers?search='.$publishers[0]->name);
+        $response = $this->getJson(route('api.b1.publishers.index'));
+        $take3 = $this->getJson(route('api.b1.publishers.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.publishers.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.publishers.index', ['search='.$publishers[0]->name]));
 
         $this->assertCount(17, $response->original['data'], '12 defaults');
         $this->assertCount(3, $take3->original['data']);
@@ -80,7 +80,7 @@ class PublisherAPIControllerTest extends TestCase
             ->with($publisher->toArray())
             ->andReturn($publisher);
 
-        $response = $this->postJson('api/b1/publishers', $publisher->toArray());
+        $response = $this->postJson(route('api.b1.publishers.store'), $publisher->toArray());
 
         $this->assertSuccessDataResponse($response, $publisher->toArray(), 'Publisher saved successfully.');
     }
@@ -98,7 +98,7 @@ class PublisherAPIControllerTest extends TestCase
             ->with($updateRecord->toArray(), $publisher->id)
             ->andReturn($updateRecord);
 
-        $response = $this->putJson('api/b1/publishers/'.$publisher->id, $updateRecord->toArray());
+        $response = $this->putJson(route('api.b1.publishers.update', $publisher->id), $updateRecord->toArray());
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Publisher updated successfully.');
     }
@@ -109,7 +109,7 @@ class PublisherAPIControllerTest extends TestCase
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->create();
 
-        $response = $this->getJson("api/b1/publishers/$publisher->id");
+        $response = $this->getJson(route('api.b1.publishers.show', $publisher->id));
 
         $this->assertSuccessDataResponse($response, $publisher->toArray(), 'Publisher retrieved successfully.');
     }
@@ -120,7 +120,7 @@ class PublisherAPIControllerTest extends TestCase
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->create();
 
-        $response = $this->deleteJson("api/b1/publishers/$publisher->id");
+        $response = $this->deleteJson(route('api.b1.publishers.destroy', $publisher->id));
 
         $this->assertSuccessDataResponse($response, $publisher->toArray(), 'Publisher deleted successfully.');
         $this->assertEmpty(Publisher::find($publisher->id));
@@ -132,7 +132,7 @@ class PublisherAPIControllerTest extends TestCase
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $response = $this->deleteJson("api/b1/publishers/$bookItem->publisher_id");
+        $response = $this->deleteJson(route('api.b1.publishers.destroy', $bookItem->publisher_id));
 
         $this->assertExceptionMessage($response, 'Publisher can not be delete, it is used in one or more book items.');
     }

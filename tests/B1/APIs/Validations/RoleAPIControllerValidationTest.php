@@ -19,7 +19,7 @@ class RoleAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_role_fails_when_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/roles', ['name' => '']);
+        $response = $this->postJson(route('api.b1.roles.store', ['name' => '']));
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -29,7 +29,7 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $response = $this->postJson('api/b1/roles/', ['name' => $role->name]);
+        $response = $this->postJson(route('api.b1.roles.store', ['name' => $role->name]));
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -37,7 +37,7 @@ class RoleAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_role_fails_when_permissions_not_passed()
     {
-        $response = $this->postJson('api/b1/roles/', ['name' => $this->faker->name, 'permissions' => []]);
+        $response = $this->postJson(route('api.b1.roles.store', ['name' => $this->faker->name, 'permissions' => []]));
 
         $this->assertExceptionMessage($response, 'Role must have at least one permission.');
     }
@@ -47,7 +47,7 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $response = $this->putJson('api/b1/roles/'.$role->id, ['name' => '']);
+        $response = $this->putJson(route('api.b1.roles.update', $role->id), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -58,7 +58,7 @@ class RoleAPIControllerValidationTest extends TestCase
         $role1 = factory(Role::class)->create();
         $role2 = factory(Role::class)->create();
 
-        $response = $this->putJson('api/b1/roles/'.$role2->id, ['name' => $role1->name]);
+        $response = $this->putJson(route('api.b1.roles.update', $role2->id), ['name' => $role1->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -68,7 +68,8 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $role = factory(Role::class)->create();
 
-        $response = $this->putJson('api/b1/roles/'.$role->id, ['name' => $this->faker->name, 'permissions' => []]);
+        $response = $this->putJson(route('api.b1.roles.update', $role->id),
+            ['name' => $this->faker->name, 'permissions' => []]);
 
         $this->assertExceptionMessage($response, 'Role must have at least one permission.');
     }
@@ -78,7 +79,7 @@ class RoleAPIControllerValidationTest extends TestCase
     {
         $inputs = $this->prepareRoleInputs();
 
-        $response = $this->postJson('api/b1/roles', $inputs);
+        $response = $this->postJson(route('api.b1.roles.store', $inputs));
 
         $this->assertSuccessMessageResponse($response, 'Role saved successfully.');
         $this->assertEquals($inputs['name'], $response->original['data']['name']);
@@ -93,7 +94,7 @@ class RoleAPIControllerValidationTest extends TestCase
         $role = factory(Role::class)->create();
 
         $inputs = $this->prepareRoleInputs();
-        $response = $this->putJson('api/b1/roles/'.$role->id, $inputs);
+        $response = $this->putJson(route('api.b1.roles.update', $role->id), $inputs);
 
         $this->assertSuccessMessageResponse($response, 'Role updated successfully.');
         $this->assertEquals($inputs['name'], $response->original['data']['name']);
