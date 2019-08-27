@@ -18,7 +18,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_book_series_fails_when_title_is_not_passed()
     {
-        $response = $this->postJson('api/b1/book-series', ['title' => '']);
+        $response = $this->postJson(route('api.b1.book-series.store'), ['title' => '']);
 
         $this->assertExceptionMessage($response, 'The title field is required.');
     }
@@ -28,7 +28,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     {
         $bookSeries = factory(BookSeries::class)->create();
 
-        $response = $this->postJson('api/b1/book-series/', ['title' => $bookSeries->title]);
+        $response = $this->postJson(route('api.b1.book-series.store'), ['title' => $bookSeries->title]);
 
         $this->assertExceptionMessage($response, 'The title has already been taken.');
     }
@@ -38,7 +38,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     {
         $bookSeries = factory(BookSeries::class)->create();
 
-        $response = $this->putJson('api/b1/book-series/'.$bookSeries->id, ['title' => '']);
+        $response = $this->putJson(route('api.b1.book-series.update', $bookSeries->id), ['title' => '']);
 
         $this->assertExceptionMessage($response, 'The title field is required.');
     }
@@ -47,7 +47,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
     public function it_can_store_book_series()
     {
         $fakeBookSeries = factory(BookSeries::class)->raw();
-        $response = $this->postJson('api/b1/book-series', $fakeBookSeries);
+        $response = $this->postJson(route('api.b1.book-series.store'), $fakeBookSeries);
 
         $this->assertSuccessMessageResponse($response, 'Book Series saved successfully.');
         $this->assertNotEmpty(BookSeries::where('title', $fakeBookSeries['title'])->first());
@@ -59,7 +59,7 @@ class BookSeriesAPIControllerValidationTest extends TestCase
         $bookSeries = factory(BookSeries::class)->create();
         $fakeBookSeries = factory(BookSeries::class)->raw();
 
-        $response = $this->putJson('api/b1/book-series/'.$bookSeries->id, $fakeBookSeries);
+        $response = $this->putJson(route('api.b1.book-series.update', $bookSeries->id), $fakeBookSeries);
 
         $this->assertSuccessMessageResponse($response, 'Book Series updated successfully.');
         $this->assertEquals($fakeBookSeries['title'], $bookSeries->fresh()->title);
