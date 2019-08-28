@@ -38,7 +38,7 @@ class BookLanguageAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var BookLanguage $bookLanguages */
+        /** @var BookLanguage[] $bookLanguages */
         $bookLanguages = factory(BookLanguage::class)->times(5)->create();
 
         $this->bookLanguageRepo->expects('all')->andReturn($bookLanguages);
@@ -139,12 +139,14 @@ class BookLanguageAPIControllerTest extends TestCase
     /** @test */
     public function test_can_not_delete_book_language_when_book_is_used_one_more_book_items()
     {
+        /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
         $bookItem = factory(BookItem::class)->create(['language_id' => $bookLanguage->id]);
 
         $response = $this->deleteJson(route('api.b1.book-languages.destroy', $bookLanguage->id));
 
-        $this->assertExceptionMessage($response,
+        $this->assertExceptionMessage(
+            $response,
             'Book Language can not be delete, it is used in one or more book items.');
     }
 }

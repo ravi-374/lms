@@ -77,9 +77,10 @@ class SettingAPIControllerValidationTest extends TestCase
     {
         $setting = factory(Setting::class)->create();
 
-        $response = $this->putJson(route('api.b1.settings.update', $setting->id),
-            ['key' => $this->faker->name, 'value' => $this->faker->word]
-        );
+        $response = $this->putJson(route('api.b1.settings.update', $setting->id), [
+            'key'   => $this->faker->name,
+            'value' => $this->faker->word,
+        ]);
 
         $this->assertExceptionMessage($response, 'The display name field is required.');
     }
@@ -100,6 +101,7 @@ class SettingAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_update_setting()
     {
+        /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
         $fakeSetting = factory(Setting::class)->raw();
 

@@ -28,8 +28,9 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     {
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $response = $this->postJson(route('api.b1.book-languages.store'),
-            ['language_name' => $bookLanguage->language_name]);
+        $response = $this->postJson(route('api.b1.book-languages.store'), [
+            'language_name' => $bookLanguage->language_name,
+        ]);
 
         $this->assertExceptionMessage($response, 'The language name has already been taken.');
     }
@@ -37,9 +38,10 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_book_language_fails_when_language_code_is_not_passed()
     {
-        $response = $this->postJson(route('api.b1.book-languages.store'),
-            ['language_name' => $this->faker->name, 'language_code' => '']
-        );
+        $response = $this->postJson(route('api.b1.book-languages.store'), [
+            'language_name' => $this->faker->name,
+            'language_code' => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The language code field is required.');
     }
@@ -49,8 +51,10 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     {
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $response = $this->postJson(route('api.b1.book-languages.store'),
-            ['language_name' => $this->faker->name, 'language_code' => $bookLanguage->language_code]);
+        $response = $this->postJson(route('api.b1.book-languages.store'), [
+            'language_name' => $this->faker->name,
+            'language_code' => $bookLanguage->language_code,
+        ]);
 
         $this->assertExceptionMessage($response, 'The language code has already been taken.');
     }
@@ -60,7 +64,9 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     {
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage->id), ['language_name' => '']);
+        $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage->id), [
+            'language_name' => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The language name field is required.');
     }
@@ -71,9 +77,9 @@ class BookLanguageAPIControllerValidationTest extends TestCase
         $bookLanguage1 = factory(BookLanguage::class)->create();
         $bookLanguage2 = factory(BookLanguage::class)->create();
 
-        $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage2->id),
-            ['language_name' => $bookLanguage1->language_name]
-        );
+        $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage2->id), [
+            'language_name' => $bookLanguage1->language_name,
+        ]);
 
         $this->assertExceptionMessage($response, 'The language name has already been taken.');
     }
@@ -83,9 +89,10 @@ class BookLanguageAPIControllerValidationTest extends TestCase
     {
         $bookLanguage = factory(BookLanguage::class)->create();
 
-        $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage->id),
-            ['language_name' => $this->faker->name, 'language_code' => '']
-        );
+        $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage->id), [
+            'language_name' => $this->faker->name,
+            'language_code' => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The language code field is required.');
     }

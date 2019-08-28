@@ -37,9 +37,11 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function test_create_member_fails_when_email_is_not_passed()
     {
-        $response = $this->postJson(route('api.b1.members.store'),
-            ['first_name' => $this->faker->name, 'last_name' => $this->faker->name, 'email' => '']
-        );
+        $response = $this->postJson(route('api.b1.members.store'), [
+            'first_name' => $this->faker->name,
+            'last_name'  => $this->faker->name,
+            'email'      => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The email field is required.');
     }
@@ -60,14 +62,12 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function test_create_member_fails_when_password_length_is_less_than_six_character()
     {
-        $response = $this->postJson(route('api.b1.members.store'),
-            [
-                'first_name' => $this->faker->name,
-                'last_name'  => $this->faker->name,
-                'email'      => $this->faker->email,
-                'password'   => 12345,
-            ]
-        );
+        $response = $this->postJson(route('api.b1.members.store'), [
+            'first_name' => $this->faker->name,
+            'last_name'  => $this->faker->name,
+            'email'      => $this->faker->email,
+            'password'   => 12345,
+        ]);
 
         $this->assertExceptionMessage($response, 'The password must be at least 6 characters.');
     }
@@ -128,9 +128,10 @@ class MemberControllerValidationTest extends TestCase
     {
         $ankit = factory(Member::class)->create();
 
-        $response = $this->postJson(route('api.b1.members.update', $ankit->id),
-            ['first_name' => $this->faker->name, 'last_name' => '']
-        );
+        $response = $this->postJson(route('api.b1.members.update', $ankit->id), [
+            'first_name' => $this->faker->name,
+            'last_name'  => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The last name field is required.');
     }

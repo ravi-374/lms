@@ -37,6 +37,7 @@ class TagAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Tag[] $tags */
         $tags = factory(Tag::class)->times(5)->create();
 
         $this->tagRepository->expects('all')->andReturn($tags);

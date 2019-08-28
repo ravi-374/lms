@@ -37,14 +37,18 @@ class PermissionAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var Permission $permissions */
+        /** @var Permission[] $permissions */
         $permissions = factory(Permission::class)->times(5)->create();
 
         $this->permissionRepo->expects('all')->andReturn($permissions);
 
         $response = $this->getJson(route('api.b1.permissions.index'));
 
-        $this->assertSuccessDataResponse($response, $permissions->toArray(), 'Permissions retrieved successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $permissions->toArray(),
+            'Permissions retrieved successfully.'
+        );
     }
 
     /** @test */
@@ -115,8 +119,11 @@ class PermissionAPIControllerTest extends TestCase
 
         $response = $this->getJson(route('api.b1.permissions.show', $permission->id));
 
-        $this->assertSuccessDataResponse($response, $permission->toArray(), 'Permission retrieved successfully.');
-
+        $this->assertSuccessDataResponse(
+            $response,
+            $permission->toArray(),
+            'Permission retrieved successfully.'
+        );
     }
 
     /** @test */
@@ -127,7 +134,11 @@ class PermissionAPIControllerTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.permissions.destroy', $permission->id));
 
-        $this->assertSuccessDataResponse($response, $permission->toArray(), 'Permission deleted successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $permission->toArray(),
+            'Permission deleted successfully.'
+        );
         $this->assertEmpty(Permission::find($permission->id));
     }
 }
