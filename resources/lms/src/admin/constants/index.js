@@ -214,7 +214,15 @@ export const settingsActionsType = {
 
 export const settingsKey = {
     CURRENCY: 'currency',
+    ISSUE_DUE_DAYS: 'issue_due_days',
     RETURN_DUE_DAYS: 'return_due_days',
+    RESERVE_DUE_DAYS: 'reserve_due_days',
+};
+
+export const settingsDisplayName = {
+    ISSUE_DUE_DAYS: 'Issue Due Days',
+    RETURN_DUE_DAYS: 'Return Due Days',
+    RESERVE_DUE_DAYS: 'Reserve Due Days',
 };
 
 export const bookItemActionType = {

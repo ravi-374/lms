@@ -9,7 +9,7 @@ import {settingsKey} from '../../constants';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Settings = (props) => {
-    const {currencies, selectedCurrency, isLoading} = props;
+    const { currencies, selectedCurrency, selectedIssueDueDay, selectedReturnDueDay, isLoading } = props;
     useEffect(() => {
         props.fetchSettings();
         props.fetchCurrencies();
@@ -19,7 +19,11 @@ const Settings = (props) => {
     };
     const prepareFormOption = {
         currencies,
-        initialValues: {currencySetting: selectedCurrency},
+        initialValues: {
+            currency: selectedCurrency,
+            issue_due_days: selectedIssueDueDay ? selectedIssueDueDay.id : null,
+            return_due_days: selectedReturnDueDay ? selectedReturnDueDay.id : null,
+        },
         onSaveSettings
     };
     if (isLoading) {
@@ -58,24 +62,27 @@ const prepareCurrencies = (currencies) => {
     return currenciesArray;
 };
 
-const prepareSelectedCurrency = (currencies) => {
-    const currency = currencies.filter(setting => setting.key === settingsKey.CURRENCY)
-        .map(({value, display_name}) => ({
-            id: value,
-            name: display_name,
+const prepareSelectedSetting = (settings, filterKey) => {
+    const setting = settings.filter(setting => setting.key === filterKey)
+        .map(({ value, display_name }) => ({
+            id: settingsKey.CURRENCY === filterKey ? value : +value,
+            name: settingsKey.CURRENCY === filterKey ? display_name : value
         }));
-    if (currency.length > 0) {
-        return {id: currency[0].id, name: currency[0].name};
+    if (setting.length > 0) {
+        return { id: setting[0].id, name: setting[0].name };
     }
 };
 
 const mapStateToProps = (state) => {
-    const {currencies, settings, isLoading} = state;
+    const { currencies, settings, isLoading } = state;
+    const settingsArray = Object.values(settings);
     return {
         currencies: prepareCurrencies(currencies),
-        selectedCurrency: prepareSelectedCurrency(Object.values(settings)),
+        selectedCurrency: prepareSelectedSetting(settingsArray, settingsKey.CURRENCY),
+        selectedIssueDueDay: prepareSelectedSetting(settingsArray, settingsKey.ISSUE_DUE_DAYS),
+        selectedReturnDueDay: prepareSelectedSetting(settingsArray, settingsKey.RETURN_DUE_DAYS),
         isLoading
     }
 };
 
-export default connect(mapStateToProps, {fetchSettings, fetchCurrencies, postCurrencies})(Settings);
+export default connect(mapStateToProps, { fetchSettings, fetchCurrencies, postCurrencies })(Settings);
