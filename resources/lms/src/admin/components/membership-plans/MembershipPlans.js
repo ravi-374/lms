@@ -26,7 +26,7 @@ const MembershipPlans = (props) => {
         fetchMembershipPlans(true);
         fetchSettings(false);
     }, []);
-    const cardModalProps = { membershipPlan, isCreateMode, isDeleteMode, isEditMode, toggleModal };
+    const cardModalProps = { membershipPlan, isCreateMode, isDeleteMode, isEditMode, toggleModal, currency };
     const onOpenModal = (isEdit, membershipPlan = null, isDelete = false) => {
         setCreateMode(!isEdit);
         setEditMode(isEdit);

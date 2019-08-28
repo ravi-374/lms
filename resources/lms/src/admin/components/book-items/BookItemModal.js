@@ -4,14 +4,17 @@ import CreateBookItem from './CreateBookItem';
 import EditBookItem from './EditBookItem';
 
 export default (props) => {
-    const {isEditMode, isCreateMode, toggleModal, isDeleteMode, bookItem, bookLanguages, publishers, bookItems, bookId} = props;
+    const {
+        isEditMode, isCreateMode, toggleModal, isDeleteMode,
+        bookItem, bookItems, bookId, currency
+    } = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'book-item__modal',
             title: isEditMode ? 'Edit Book Item' : 'New Book Item',
             toggleModal,
         };
-        const formOptions = {bookLanguages, publishers, bookItems, bookId};
+        const formOptions = { bookItems, bookId, currency };
         if (isEditMode) {
             return <EditBookItem {...prepareModalOption} {...formOptions} bookItem={bookItem}/>
         }

@@ -4,7 +4,7 @@ import CreateMembershipPlan from './CreateMembershipPlan';
 import EditMembershipPlan from './EditMembershipPlan';
 
 export default (props) => {
-    const { isCreateMode, isEditMode, toggleModal, isDeleteMode, membershipPlan } = props;
+    const { isCreateMode, isEditMode, toggleModal, isDeleteMode, membershipPlan, currency } = props;
     if (!isDeleteMode) {
         const prepareModalOption = {
             className: 'membership-plan-modal',
@@ -12,10 +12,10 @@ export default (props) => {
             toggleModal,
         };
         if (isEditMode) {
-            return <EditMembershipPlan {...prepareModalOption} membershipPlan={membershipPlan}/>
+            return <EditMembershipPlan {...prepareModalOption} currency={currency} membershipPlan={membershipPlan}/>
         }
         if (isCreateMode) {
-            return <CreateMembershipPlan {...prepareModalOption}/>
+            return <CreateMembershipPlan currency={currency}{...prepareModalOption}/>
         }
         return null;
     }

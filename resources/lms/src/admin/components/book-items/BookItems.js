@@ -10,10 +10,11 @@ import sortFilter from '../../../shared/sortFilter';
 import {sortAction} from '../../../store/action/sortAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {setBookItems} from '../../store/actions/bookItemAction';
+import {fetchSettings} from "../../store/actions/settingAction";
 
 const BookItems = (props) => {
     const {
-        bookLanguages, publishers, bookItemList, bookItems,
+        bookLanguages, publishers, bookItemList, bookItems, fetchSettings,
         sortAction, sortObject, toggleModal, setBookItems, bookId, isParentToggle, setIsParentToggle, currency
     } = props;
     const [isCreateMode, setCreateMode] = useState(false);
@@ -22,6 +23,7 @@ const BookItems = (props) => {
     const [bookItem, setBookItem] = useState(null);
     useEffect(() => {
         setBookItems([...bookItemList]);
+        fetchSettings();
     }, []);
     const cardModalProps = {
         bookItem,
@@ -32,7 +34,8 @@ const BookItems = (props) => {
         isEditMode,
         toggleModal,
         bookItems,
-        bookId
+        bookId,
+        currency
     };
     const onOpenModal = (isEdit, bookItem = null, isDelete = false) => {
         setIsParentToggle(false);
@@ -56,7 +59,7 @@ const BookItems = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { bookItems, searchText, sortObject, isLoading } = state;
+    const { bookItems, searchText, sortObject, isLoading, currency } = state;
     let bookItemsArray = Object.values(bookItems);
     if (searchText) {
         bookItemsArray = searchFilter(bookItemsArray, searchText);
@@ -64,7 +67,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         bookItemsArray = sortFilter(bookItemsArray, sortObject);
     }
-    return { bookItems: bookItemsArray, sortObject, isLoading };
+    return { bookItems: bookItemsArray, sortObject, isLoading, currency };
 };
 
-export default connect(mapStateToProps, { setBookItems, sortAction, toggleModal })(BookItems);
+export default connect(mapStateToProps, { setBookItems, sortAction, toggleModal, fetchSettings })(BookItems);

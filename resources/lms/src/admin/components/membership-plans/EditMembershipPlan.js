@@ -9,7 +9,7 @@ const EditMembershipPlan = (props) => {
     const onSaveMembershipPlan = (formValues) => {
         props.editMembershipPlan(props.membershipPlan.id, formValues);
     };
-    const {name, membership_plan_id, price, frequency, stripe_plan_id, description} = props.membershipPlan;
+    const { name, membership_plan_id, price, frequency, stripe_plan_id, description } = props.membershipPlan;
     const changeAbleFields = {
         name, membership_plan_id, price, stripe_plan_id, description,
         frequency: membershipPlanFrequencyOptions.find(option => option.id === frequency)
@@ -17,9 +17,10 @@ const EditMembershipPlan = (props) => {
     const prepareFormOption = {
         onSaveMembershipPlan,
         onCancel: props.toggleModal,
-        initialValues: changeAbleFields
+        initialValues: changeAbleFields,
+        currency: props.currency
     };
     return <Modal {...props} content={<MembershipPlanForm {...prepareFormOption} />}/>
 };
 
-export default connect(null, {editMembershipPlan})(EditMembershipPlan);
+export default connect(null, { editMembershipPlan })(EditMembershipPlan);

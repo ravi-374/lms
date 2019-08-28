@@ -6,8 +6,11 @@ import {addBookItem} from '../../store/actions/bookItemAction';
 import {bookFormatOptions, bookItemStatusOptions} from '../../constants';
 
 const EditBookItem = (props) => {
-    const { bookLanguages, publishers, bookItems, bookItem, toggleModal, addBookItem, bookId } = props;
-    const { id, book_code, edition, format, location, price, language_id, publisher_id, status } = bookItem;
+    const {
+        bookLanguages, publishers, bookItems, bookItem,
+        toggleModal, addBookItem, bookId
+    } = props;
+    const { id, book_code, edition, format, location, price, language, publisher, status } = bookItem;
     const saveBookItem = (formValues) => {
         formValues.id = id;
         const bookItemArray = [...bookItems];
@@ -21,8 +24,8 @@ const EditBookItem = (props) => {
     };
     const changeAbleFields = {
         book_code, edition, location, price,
-        language: bookLanguages.find(language => language.id === language_id),
-        publisher: publishers.find(publisher => publisher.id === publisher_id),
+        language: { id: language.id, name: language.language_name },
+        publisher,
         format: bookFormatOptions.find(bookFormat => bookFormat.id === format),
         status: bookItemStatusOptions.find(bookItemStatus => bookItemStatus.id === +status)
     };

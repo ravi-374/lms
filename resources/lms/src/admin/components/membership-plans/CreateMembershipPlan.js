@@ -11,8 +11,9 @@ const CreateMembershipPlan = (props) => {
     const prepareFormOption = {
         onSaveMembershipPlan,
         onCancel: props.toggleModal,
+        currency: props.currency
     };
     return <Modal {...props} content={<MembershipPlanForm{...prepareFormOption}/>}/>
 };
 
-export default connect(null, {addMembershipPlan})(CreateMembershipPlan);
+export default connect(null, { addMembershipPlan })(CreateMembershipPlan);
