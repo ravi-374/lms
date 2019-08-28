@@ -146,7 +146,8 @@ class UserControllerValidationTest extends TestCase
         $input = factory(User::class)->raw();
 
         $response = $this->postJson(route('api.b1.users.update', $farhan->id),
-            array_merge($input, ['role_id' => 'string']));
+            array_merge($input, ['role_id' => 'string'])
+        );
 
         $this->assertExceptionMessage($response, 'The role id must be an integer.');
     }
