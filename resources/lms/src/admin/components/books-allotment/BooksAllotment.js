@@ -21,7 +21,7 @@ const BooksAllotment = (props) => {
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
     const { booksAllotment, members, books, toggleModal, history, isLoading, totalRecord } = props;
-    const cardModalProps = { bookAllotment, members, books, isEditMode, isDeleteMode, isCreateMode, toggleModal };
+    const [filterObject, setFilterObject] = useState(null);
     const onOpenModal = (isEdit, booksAllotment = null, isDelete = false) => {
         setCreateMode(!isEdit);
         setEditMode(isEdit);
@@ -31,13 +31,23 @@ const BooksAllotment = (props) => {
     };
 
     const onChange = (filter) => {
+        setFilterObject(filter);
         props.fetchBooksAllotment(filter);
     };
 
     const gotToBookHistoryDetail = (bookAllotmentId) => {
         history.push(`${Routes.BOOK_ALLOTMENTS + bookAllotmentId}/details`);
     };
-
+    const cardModalProps = {
+        bookAllotment,
+        members,
+        books,
+        isEditMode,
+        isDeleteMode,
+        isCreateMode,
+        toggleModal,
+        filterObject
+    };
     const columns = [
         {
             name: 'Book',

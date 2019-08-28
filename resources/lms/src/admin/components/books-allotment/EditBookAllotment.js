@@ -12,7 +12,10 @@ import {prepareFullNames} from "../../../shared/sharedMethod";
 import {dateFormat} from "../../../constants";
 
 const EditBookAllotment = (props) => {
-    const { toggleModal, className, title, books, bookAllotment, onSelectBook, bookId, members, bookItems, isMemberBookHistory } = props;
+    const {
+        toggleModal, className,
+        title, books, bookAllotment, onSelectBook, bookId, members, bookItems, isMemberBookHistory, filterObject
+    } = props;
     const modalOption = { toggleModal, className, title };
     const formOption = { books, onSelectBook, bookId, members };
     const { note, reserve_date, issued_on, return_date } = bookAllotment;
@@ -41,10 +44,10 @@ const EditBookAllotment = (props) => {
             switch (formValues.status) {
                 case bookAllotmentStatusConstant.BOOK_LOST:
                 case bookAllotmentStatusConstant.BOOK_DAMAGED:
-                    props.editBookAllotmentStatus(formValues);
+                    props.editBookAllotmentStatus(formValues, filterObject);
                     break;
                 default:
-                    props.editBookAllotment(formValues);
+                    props.editBookAllotment(formValues, filterObject);
                     break;
             }
         } else {

@@ -9,7 +9,10 @@ import EmptyComponent from "../empty-component/EmptyComponent";
 import {renderSortIcons} from "../../config/sortConfig";
 
 export default (props) => {
-    const { items, onChange, columns, loading, totalRows, isShowFilterField, filterOptions, searchKey = '', filterKey = null } = props;
+    const {
+        items, onChange, columns, loading,
+        totalRows, isShowFilterField, filterOptions, searchKey = '', filterKey = null
+    } = props;
     const [perPage, setPerPages] = useState(Filters.OBJ.limit);
     const [orderBy, setOrderBy] = useState(Filters.OBJ.order_By);
     const [direction, setDirection] = useState(Filters.OBJ.direction);
