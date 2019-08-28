@@ -233,6 +233,22 @@ class IssuedBookAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_search_issued_book_records_by_book_code()
+    {
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'XRTD6y45U']);
+        $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
+
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'IRE6484O']);
+        $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
+
+        $response = $this->getJson(route('api.b1.books-history', ['search' => $bookItem1->book_code]));
+
+        $response = $response->original['data'];
+        $this->assertCount(1, $response);
+        $this->assertEquals($bookItem1->book_code, $response[0]['book_item']['book_code']);
+    }
+
+    /** @test */
     public function it_can_issue_book()
     {
         $this->mockRepository();
@@ -345,5 +361,148 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
         $this->assertCount(5, $response->original['data']);
+
+        $totalRecords = $response->original['totalRecords'];
+        $this->assertEquals(5, $totalRecords);
+    }
+
+    /** @test */
+    public function test_can_sort_member_issued_book_records_by_book_name()
+    {
+        /** @var Member $meember */
+        $member = factory(Member::class)->create();
+
+        $book1 = factory(Book::class)->create(['name' => 'ABC']);
+        $bookItem1 = factory(BookItem::class)->create(['book_id' => $book1->id]);
+        $issuedBook1 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem1->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $book2 = factory(Book::class)->create(['name' => 'ZYX']);
+        $bookItem2 = factory(BookItem::class)->create(['book_id' => $book2->id]);
+        $issuedBook2 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem2->id,
+            'member_id'    => $member->id,
+        ]);
+
+        factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
+
+        $responseAsc = $this->getJson("api/b1/members/$member->id/books-history?order_by=name&direction=asc");
+        $responseDesc = $this->getJson("api/b1/members/$member->id/books-history?order_by=name&direction=desc");
+
+        $responseAsc = $responseAsc->original['data'];
+        $responseDesc = $responseDesc->original['data'];
+        $this->assertCount(2, $responseAsc);
+        $this->assertCount(2, $responseDesc);
+        $this->assertEquals($book1->name, $responseAsc[0]['book_item']['book']['name']);
+        $this->assertEquals($book2->name, $responseDesc[0]['book_item']['book']['name']);
+    }
+
+    /** @test */
+    public function test_can_sort_member_issued_book_record_by_book_code()
+    {
+        /** @var Member $meember */
+        $member = factory(Member::class)->create();
+
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'AB1234XYZ']);
+        $issuedBook1 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem1->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZAD587RE']);
+        $issuedBook2 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem2->id,
+            'member_id'    => $member->id,
+        ]);
+
+        factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
+
+        $responseAsc = $this->getJson("api/b1/members/$member->id/books-history?order_by=book_code&direction=asc");
+        $responseDesc = $this->getJson("api/b1/members/$member->id/books-history?order_by=book_code&direction=desc");
+
+        $responseAsc = $responseAsc->original['data'];
+        $responseDesc = $responseDesc->original['data'];
+        $this->assertCount(2, $responseAsc);
+        $this->assertCount(2, $responseDesc);
+        $this->assertEquals($bookItem1->book_code, $responseAsc[0]['book_item']['book_code']);
+        $this->assertEquals($bookItem2->book_code, $responseDesc[0]['book_item']['book_code']);
+    }
+
+    /** @test */
+    public function test_can_search_member_issued_book_records_by_status()
+    {
+        /** @var Member $meember */
+        $member = factory(Member::class)->create();
+
+        $issuedBook1 = factory(IssuedBook::class)->create([
+            'status'    => IssuedBook::STATUS_ISSUED,
+            'member_id' => $member->id,
+        ]);
+        $issuedBook2 = factory(IssuedBook::class)->create([
+            'status'    => IssuedBook::STATUS_RESERVED,
+            'member_id' => $member->id,
+        ]);
+        factory(IssuedBook::class)->create([
+            'status' => IssuedBook::STATUS_ISSUED,
+        ]);
+
+        $responseIssued = $this->getJson("api/b1/members/$member->id/books-history?search=issued&direction=asc");
+        $responseReserved = $this->getJson("api/b1/members/$member->id/books-history?search=reserved&direction=desc");
+
+        $responseIssued = $responseIssued->original['data'];
+        $responseReserved = $responseReserved->original['data'];
+        $this->assertCount(1, $responseIssued);
+        $this->assertEquals(IssuedBook::STATUS_ISSUED, $responseIssued[0]['status']);
+        $this->assertEquals(IssuedBook::STATUS_RESERVED, $responseReserved[0]['status']);
+    }
+
+    /** @test */
+    public function test_can_search_member_issued_book_records_by_book_name()
+    {
+        /** @var Member $meember */
+        $member = factory(Member::class)->create();
+
+        $book1 = factory(Book::class)->create(['name' => 'Laravel']);
+        $bookItem1 = factory(BookItem::class)->create(['book_id' => $book1->id]);
+        $issuedBook1 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem1->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $book2 = factory(Book::class)->create();
+        $bookItem2 = factory(BookItem::class)->create(['book_id' => $book2->id]);
+        $issuedBook2 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem2->id,
+        ]);
+
+        $response = $this->getJson("api/b1/members/$member->id/books-history?search=$book1->name");
+
+        $response = $response->original['data'];
+        $this->assertCount(1, $response);
+        $this->assertEquals($book1->name, $response[0]['book_item']['book']['name']);
+    }
+
+    /** @test */
+    public function test_can_search_member_issued_book_records_by_book_code()
+    {
+        /** @var Member $meember */
+        $member = factory(Member::class)->create();
+
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'XRTD6y45U']);
+        $issuedBook1 = factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem1->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'IRE6484O']);
+        $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
+
+        $response = $this->getJson("api/b1/members/$member->id/books-history?search=$bookItem1->book_code");
+
+        $response = $response->original['data'];
+        $this->assertCount(1, $response);
+        $this->assertEquals($bookItem1->book_code, $response[0]['book_item']['book_code']);
     }
 }
