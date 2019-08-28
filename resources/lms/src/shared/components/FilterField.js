@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import Select from './Select';
 
-const FilterField = ({ options, handleFilter }) => {
-
+const FilterField = ({ options, handleFilter, initialize, filterKey }) => {
+    useEffect(() => {
+        initialize({ filter_key: filterKey });
+    }, []);
     const onChangeFilter = (option) => {
         handleFilter(option.name);
     };
