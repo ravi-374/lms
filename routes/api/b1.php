@@ -43,43 +43,45 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::post('books/{book}/remove-image', 'BookAPIController@removeImage');
 
         // add book items
-        Route::post('books/{book}/items', 'BookAPIController@addItems');
+        Route::post('books/{book}/items', 'BookAPIController@addItems')->name('books.add-items');
         //        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
         // Get available books
-        Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks');
+        Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks')
+            ->name('books.available-books');
 
         // Update book status
-        Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus');
+        Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus')
+            ->name('books.update-book-status');
     });
     // Get book details from third-party api
     Route::get('get-book-details', 'BookAPIController@getBookDetails');
 
     // Book search
-    Route::get('search-books', 'BookItemAPIController@searchBooks');
+    Route::get('search-books', 'BookItemAPIController@searchBooks')->name('books.search-books');
 
     // Users
     Route::middleware('permission:manage_users')->group(function () {
         Route::resource('users', 'UserAPIController');
         Route::post('users/{user}', 'UserAPIController@update');
         Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
-        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus');
+        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus')->name('users.update-status');
     });
 
     // get logged in user details
-    Route::get('user-details', 'UserAPIController@getLoggedInUserDetails');
+    Route::get('user-details', 'UserAPIController@getLoggedInUserDetails')->name('users.user-details');
 
     // update logged in user profile
-    Route::post('update-user-profile', 'UserAPIController@updateUserProfile');
+    Route::post('update-user-profile', 'UserAPIController@updateUserProfile')->name('users.update-user-profile');
 
     // Members
     Route::middleware('permission:manage_members')->group(function () {
-        Route::delete('members/{member}', 'MemberAPIController@destroy');
+        Route::delete('members/{member}', 'MemberAPIController@destroy')->name('members.destroy');
     });
-    Route::post('members', 'MemberAPIController@store');
-    Route::post('members/{member}', 'MemberAPIController@update')->where('member', '\d+');
-    Route::get('members', 'MemberAPIController@index');
-    Route::get('members/{member}', 'MemberAPIController@show')->where('member', '\d+');
-    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus');
+    Route::post('members', 'MemberAPIController@store')->name('members.store');
+    Route::post('members/{member}', 'MemberAPIController@update')->where('member', '\d+')->name('members.update');
+    Route::get('members', 'MemberAPIController@index')->name('members.index');
+    Route::get('members/{member}', 'MemberAPIController@show')->where('member', '\d+')->name('members.show');
+    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus')->name('members.update-status');
     Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage');
 
     Route::middleware('permission:manage_book_series')->group(function () {
@@ -98,29 +100,31 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     // Reserve Book
-    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook');
+    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')->name('reserve-book');
     // Un-Reserve Book
-    Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook');
+    Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook')->name('un-reserve-book');
 
     // Update issued book status
-    Route::put('books/{book_item}/update-issued-book-status', 'IssuedBookAPIController@updateIssuedBookStatus');
+    Route::put('books/{book_item}/update-issued-book-status', 'IssuedBookAPIController@updateIssuedBookStatus')
+        ->name('update-issued-book-status');
 
     // books history
-    Route::get('members/{member}/books-history', 'IssuedBookAPIController@memberBooksHistory');
+    Route::get('members/{member}/books-history',
+        'IssuedBookAPIController@memberBooksHistory')->name('members.book-history');
 
     Route::middleware('permission:issue_books')->group(function () {
         // Issue Book
-        Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook');
+        Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook')->name('issue-book');
         // Return Book
-        Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook');
+        Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook')->name('return-book');
 
         // get books history for admin users
-        Route::get('books-history', 'IssuedBookAPIController@index');
-        Route::get('issued-books/{issued_book}', 'IssuedBookAPIController@show');
+        Route::get('books-history', 'IssuedBookAPIController@index')->name('books-history');
+        Route::get('issued-books/{issued_book}', 'IssuedBookAPIController@show')->name('issued-book.show');
     });
 
     /** Get App Config */
-    Route::get('config', 'AuthAPIController@getAppConfig');
+    Route::get('config', 'AuthAPIController@getAppConfig')->name('config');
 
     Route::middleware('permission:manage_settings')->group(function () {
         // Settings
@@ -129,12 +133,12 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     // Countries
-    Route::get('countries', 'CountryAPIController@index');
+    Route::get('countries', 'CountryAPIController@index')->name('countries.index');
 
     // Currencies
-    Route::get('currencies', 'CommonAPIController@currencies');
+    Route::get('currencies', 'CommonAPIController@currencies')->name('currencies');
 });
 
 /** Password Reset API's For User */
 Route::post('send-reset-password-link', 'AccountAPIController@sendResetPasswordLink');
-Route::post('reset-password', 'AccountAPIController@resetPassword');
+Route::post('reset-password', 'AccountAPIController@resetPassword')->name('reset-password');

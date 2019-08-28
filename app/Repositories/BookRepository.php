@@ -215,7 +215,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             throw new ApiOperationFailedException($e->getMessage());
         }
 
-        return Book::with(['tags', 'genres', 'items', 'authors'])->findOrFail($book->id);
+        return Book::with(['tags', 'genres', 'items.publisher', 'items.language', 'authors'])->findOrFail($book->id);
     }
 
     /**
@@ -336,7 +336,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         $this->createOrUpdateBookItems($book, $items);
 
         /** @var Book $book */
-        $book = $this->findOrFail($book->id, ['items']);
+        $book = $this->findOrFail($book->id, ['items.publisher', 'items.language']);
 
         return $book;
     }

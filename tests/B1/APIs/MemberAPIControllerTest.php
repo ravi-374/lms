@@ -42,7 +42,7 @@ class MemberAPIControllerTest extends TestCase
 
         $this->memberRepo->expects('all')->andReturn($members);
 
-        $response = $this->getJson('api/b1/members');
+        $response = $this->getJson(route('api.b1.members.index'));
 
         $this->assertSuccessDataResponse(
             $response,
@@ -57,10 +57,10 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member[] $members */
         $members = factory(Member::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/members');
-        $take3 = $this->getJson('api/b1/members?limit=3');
-        $skip2 = $this->getJson('api/b1/members?skip=2&limit=2');
-        $searchByName = $this->getJson('api/b1/members?search='.$members[0]->first_name);
+        $response = $this->getJson(route('api.b1.members.index'));
+        $take3 = $this->getJson(route('api.b1.members.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.members.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.b1.members.index', ['search' => $members[0]->first_name]));
 
         $this->assertCount(5, $response->original['data']);
         $this->assertEquals(5, $response->original['totalRecords']);
@@ -81,8 +81,16 @@ class MemberAPIControllerTest extends TestCase
         $plan2 = factory(MembershipPlan::class)->create(['name' => 'VIP']);
         $member2 = factory(Member::class)->create(['membership_plan_id' => $plan2->id]);
 
-        $responseAsc = $this->getJson('api/b1/members?order_by=membership_plan_name&direction=asc');
-        $responseDesc = $this->getJson('api/b1/members?order_by=membership_plan_name&direction=desc');
+        $responseAsc = $this->getJson(route('api.b1.members.index', [
+                'order_by'  => 'membership_plan_name',
+                'direction' => 'asc',
+            ]
+        ));
+        $responseDesc = $this->getJson(route('api.b1.members.index', [
+                'order_by'  => 'membership_plan_name',
+                'direction' => 'desc',
+            ]
+        ));
 
         $responseAsc = $responseAsc->original['data'];
         $responseDesc = $responseDesc->original['data'];
@@ -104,7 +112,7 @@ class MemberAPIControllerTest extends TestCase
             ->with($input)
             ->andReturn($member);
 
-        $response = $this->postJson('api/b1/members', $input);
+        $response = $this->postJson(route('api.b1.members.store'), $input);
 
         $this->assertSuccessDataResponse($response, $member->toArray(), 'Member saved successfully.');
     }
@@ -122,7 +130,7 @@ class MemberAPIControllerTest extends TestCase
             ->with($updateRecord->toArray(), $member->id)
             ->andReturn($updateRecord);
 
-        $response = $this->postJson('api/b1/members/'.$member->id, $updateRecord->toArray());
+        $response = $this->postJson(route('api.b1.members.update', $member->id), $updateRecord->toArray());
 
         $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member updated successfully.');
     }
@@ -133,7 +141,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create();
 
-        $response = $this->getJson("api/b1/members/$member->id");
+        $response = $this->getJson(route('api.b1.members.show', $member->id));
 
         $this->assertSuccessDataResponse(
             $response, $member->toArray(), 'Member retrieved successfully.'
@@ -146,7 +154,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create();
 
-        $response = $this->deleteJson("api/b1/members/$member->id");
+        $response = $this->deleteJson(route('api.b1.members.destroy', $member->id));
 
         $this->assertSuccessDataResponse(
             $response, $member->toArray(), 'Member deleted successfully.'
@@ -160,7 +168,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create(['is_active' => false]);
 
-        $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
+        $response = $this->getJson(route('api.b1.members.update-status', $member->id));
 
         $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
         $this->assertTrue($member->fresh()->is_active);
@@ -172,7 +180,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member */
         $member = factory(Member::class)->create(['is_active' => true]);
 
-        $response = $this->getJson('api/b1/members/'.$member->id.'/update-status');
+        $response = $this->getJson(route('api.b1.members.update-status', $member->id));
 
         $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
         $this->assertFalse($member->fresh()->is_active);
@@ -190,7 +198,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member $member2 */
         $member2 = factory(Member::class)->create(['membership_plan_id' => $membershipPlan2->id]);
 
-        $response = $this->getJson("api/b1/members?search=$membershipPlan1->name");
+        $response = $this->getJson(route('api.b1.members.index', ['search' => $membershipPlan1->name]));
 
         $response = $response->original['data'];
         $this->assertCount(1, $response);

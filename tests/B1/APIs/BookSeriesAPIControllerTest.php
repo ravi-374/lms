@@ -43,7 +43,7 @@ class BookSeriesAPIControllerTest extends TestCase
 
         $this->bookSeriesRepo->expects('all')->andReturn($bookSeries);
 
-        $response = $this->getJson('api/b1/book-series');
+        $response = $this->getJson(route('api.b1.book-series.index'));
 
         $this->assertSuccessDataResponse(
             $response,
@@ -58,10 +58,10 @@ class BookSeriesAPIControllerTest extends TestCase
         /** @var BookSeries[] $bookSeries */
         $bookSeries = factory(BookSeries::class)->times(5)->create();
 
-        $response = $this->getJson('api/b1/book-series');
-        $take3 = $this->getJson('api/b1/book-series?limit=3');
-        $skip2 = $this->getJson('api/b1/book-series?skip=2&limit=2');
-        $searchByTitle = $this->getJson('api/b1/book-series?search='.$bookSeries[0]->title);
+        $response = $this->getJson(route('api.b1.book-series.index'));
+        $take3 = $this->getJson(route('api.b1.book-series.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.b1.book-series.index', ['skip' => 2, 'limit' => 2]));
+        $searchByTitle = $this->getJson(route('api.b1.book-series.index', ['search' => $bookSeries[0]->title]));
 
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
@@ -83,7 +83,7 @@ class BookSeriesAPIControllerTest extends TestCase
             ->with($bookSeries->toArray())
             ->andReturn($bookSeries);
 
-        $response = $this->postJson('api/b1/book-series', $bookSeries->toArray());
+        $response = $this->postJson(route('api.b1.book-series.store'), $bookSeries->toArray());
 
         $this->assertSuccessDataResponse($response, $bookSeries->toArray(), 'Book Series saved successfully.');
     }
@@ -101,7 +101,9 @@ class BookSeriesAPIControllerTest extends TestCase
             ->with($fakeBookSeries->toArray(), $bookSeries->id)
             ->andReturn($fakeBookSeries);
 
-        $response = $this->putJson('api/b1/book-series/'.$bookSeries->id, $fakeBookSeries->toArray());
+        $response = $this->putJson(route('api.b1.book-series.update', $bookSeries->id),
+            $fakeBookSeries->toArray()
+        );
 
         $this->assertSuccessDataResponse($response, $fakeBookSeries->toArray(),
             'Book Series updated successfully.');
@@ -115,7 +117,7 @@ class BookSeriesAPIControllerTest extends TestCase
 
         $seriesBook = factory(SeriesBook::class)->create(['series_id' => $bookSeries->id]);
 
-        $response = $this->getJson('api/b1/book-series/'.$bookSeries->id);
+        $response = $this->getJson(route('api.b1.book-series.show', $bookSeries->id));
 
         $this->assertSuccessDataResponse($response, $bookSeries->toArray(), 'Book Series retrieved successfully.');
 
@@ -128,7 +130,7 @@ class BookSeriesAPIControllerTest extends TestCase
         /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->create();
 
-        $response = $this->deleteJson("api/b1/book-series/$bookSeries->id");
+        $response = $this->deleteJson(route('api.b1.book-series.destroy', $bookSeries->id));
 
         $this->assertSuccessDataResponse($response, $bookSeries->toArray(), 'Book Series deleted successfully.');
         $this->assertEmpty(BookSeries::find($bookSeries->id));

@@ -19,7 +19,7 @@ class BookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_book_fails_when_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/books', ['name' => '']);
+        $response = $this->postJson(route('api.b1.books.store'), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -29,7 +29,7 @@ class BookAPIControllerValidationTest extends TestCase
     {
         $book = factory(Book::class)->create();
 
-        $response = $this->postJson('api/b1/books/', ['name' => $book->name]);
+        $response = $this->postJson(route('api.b1.books.store'), ['name' => $book->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -37,7 +37,7 @@ class BookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_book_fails_when_isbn_is_not_passed()
     {
-        $response = $this->postJson('api/b1/books/', ['name' => $this->faker->name, 'isbn' => '']);
+        $response = $this->postJson(route('api.b1.books.store'), ['name' => $this->faker->name, 'isbn' => '']);
 
         $this->assertExceptionMessage($response, 'The isbn field is required.');
     }
@@ -47,7 +47,11 @@ class BookAPIControllerValidationTest extends TestCase
     {
         $isbn = factory(Book::class)->create();
 
-        $response = $this->postJson('api/b1/books/', ['name' => $this->faker->name, 'isbn' => $isbn->isbn]);
+        $response = $this->postJson(route('api.b1.books.store'), [
+                'name' => $this->faker->name,
+                'isbn' => $isbn->isbn,
+            ]
+        );
 
         $this->assertExceptionMessage($response, 'The isbn has already been taken.');
     }
@@ -55,8 +59,11 @@ class BookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_create_book_fails_when_genres_is_not_passed()
     {
-        $response = $this->postJson('api/b1/books/',
-            ['name' => $this->faker->name, 'isbn' => $this->faker->isbn13, 'genres' => []]
+        $response = $this->postJson(route('api.b1.books.store'), [
+                'name'   => $this->faker->name,
+                'isbn'   => $this->faker->isbn13,
+                'genres' => [],
+            ]
         );
 
         $this->assertExceptionMessage($response, 'The genres field is required.');
@@ -67,7 +74,7 @@ class BookAPIControllerValidationTest extends TestCase
     {
         $book = factory(Book::class)->create();
 
-        $response = $this->putJson('api/b1/books/'.$book->id, ['name' => '']);
+        $response = $this->putJson(route('api.b1.books.update', $book->id), ['name' => '']);
 
         $this->assertExceptionMessage($response, 'The name field is required.');
     }
@@ -77,7 +84,10 @@ class BookAPIControllerValidationTest extends TestCase
     {
         $book = factory(Book::class)->create();
 
-        $response = $this->putJson('api/b1/books/'.$book->id, ['name' => $this->faker->name, 'isbn' => '']);
+        $response = $this->putJson(route('api.b1.books.update', $book->id), [
+            'name' => $this->faker->name,
+            'isbn' => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The isbn field is required.');
     }
@@ -87,7 +97,7 @@ class BookAPIControllerValidationTest extends TestCase
     {
         $book = factory(Book::class)->create();
 
-        $response = $this->postJson('api/b1/books/'.$book->id,
+        $response = $this->postJson(route('api.b1.books.update', $book->id),
             ['name' => $this->faker->name, 'isbn' => $this->faker->isbn13, 'genres' => []]
         );
 
@@ -100,7 +110,7 @@ class BookAPIControllerValidationTest extends TestCase
         $book1 = factory(Book::class)->create();
         $book2 = factory(Book::class)->create();
 
-        $response = $this->putJson('api/b1/books/'.$book2->id, ['name' => $book1->name]);
+        $response = $this->putJson(route('api.b1.books.update', $book2->id), ['name' => $book1->name]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }
@@ -111,7 +121,10 @@ class BookAPIControllerValidationTest extends TestCase
         $book1 = factory(Book::class)->create();
         $book2 = factory(Book::class)->create();
 
-        $response = $this->putJson('api/b1/books/'.$book2->id, ['name' => $this->faker->name, 'isbn' => $book1->isbn]);
+        $response = $this->putJson(route('api.b1.books.update', $book2->id), [
+            'name' => $this->faker->name,
+            'isbn' => $book1->isbn,
+        ]);
 
         $this->assertExceptionMessage($response, 'The isbn has already been taken.');
     }
@@ -119,7 +132,7 @@ class BookAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_book()
     {
-        $response = $this->postJson('api/b1/books', $this->prepareBookInputs());
+        $response = $this->postJson(route('api.b1.books.store'), $this->prepareBookInputs());
 
         $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
     }
@@ -130,7 +143,7 @@ class BookAPIControllerValidationTest extends TestCase
         /** @var Book $book */
         $book = factory(Book::class)->create();
 
-        $response = $this->putJson('api/b1/books/'.$book->id, $this->prepareBookInputs());
+        $response = $this->putJson(route('api.b1.books.update', $book->id), $this->prepareBookInputs());
 
         $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
     }

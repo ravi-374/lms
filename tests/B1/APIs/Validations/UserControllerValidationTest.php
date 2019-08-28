@@ -19,7 +19,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_user_fails_when_first_name_is_not_passed()
     {
-        $response = $this->postJson('api/b1/users', ['first_name' => '']);
+        $response = $this->postJson(route('api.b1.users.store'), ['first_name' => '']);
 
         $this->assertExceptionMessage($response, 'The first name field is required.');
     }
@@ -29,7 +29,7 @@ class UserControllerValidationTest extends TestCase
     {
         $input = factory(User::class)->raw(['last_name' => '']);
 
-        $response = $this->postJson('api/b1/users', $input);
+        $response = $this->postJson(route('api.b1.users.store'), $input);
 
         $this->assertExceptionMessage($response, 'The last name field is required.');
     }
@@ -39,7 +39,7 @@ class UserControllerValidationTest extends TestCase
     {
         $input = factory(User::class)->raw(['email' => '']);
 
-        $response = $this->postJson('api/b1/users', $input);
+        $response = $this->postJson(route('api.b1.users.store'), $input);
 
         $this->assertExceptionMessage($response, 'The email field is required.');
     }
@@ -49,7 +49,7 @@ class UserControllerValidationTest extends TestCase
     {
         $input = factory(User::class)->raw(['password' => '']);
 
-        $response = $this->postJson('api/b1/users', $input);
+        $response = $this->postJson(route('api.b1.users.store'), $input);
 
         $this->assertExceptionMessage($response, 'The password field is required.');
     }
@@ -59,7 +59,7 @@ class UserControllerValidationTest extends TestCase
     {
         $input = factory(User::class)->raw(['password' => 12345]);
 
-        $response = $this->postJson('api/b1/users', $input);
+        $response = $this->postJson(route('api.b1.users.store'), $input);
 
         $this->assertExceptionMessage($response, 'The password must be at least 6 characters.');
     }
@@ -69,7 +69,7 @@ class UserControllerValidationTest extends TestCase
     {
         $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users', array_merge($input, ['role_id' => '']));
+        $response = $this->postJson(route('api.b1.users.store'), array_merge($input, ['role_id' => '']));
 
         $this->assertExceptionMessage($response, 'User must have at least one role.');
     }
@@ -79,7 +79,7 @@ class UserControllerValidationTest extends TestCase
     {
         $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users', array_merge($input, ['role_id' => 'string']));
+        $response = $this->postJson(route('api.b1.users.store'), array_merge($input, ['role_id' => 'string']));
 
         $this->assertExceptionMessage($response, 'The role id must be an integer.');
     }
@@ -90,7 +90,7 @@ class UserControllerValidationTest extends TestCase
         $ankit = factory(User::class)->create();
         $input = factory(User::class)->raw(['email' => $ankit->email]);
 
-        $response = $this->postJson('api/b1/users', $input);
+        $response = $this->postJson(route('api.b1.users.store'), $input);
 
         $this->assertExceptionMessage($response, 'The email has already been taken.');
     }
@@ -100,7 +100,7 @@ class UserControllerValidationTest extends TestCase
     {
         $ankit = factory(User::class)->create();
 
-        $response = $this->postJson('api/b1/users/'.$ankit->id, ['first_name' => '']);
+        $response = $this->postJson(route('api.b1.users.update', $ankit->id), ['first_name' => '']);
 
         $this->assertExceptionMessage($response, 'The first name field is required.');
     }
@@ -111,7 +111,7 @@ class UserControllerValidationTest extends TestCase
         $ankit = factory(User::class)->create();
         $input = factory(User::class)->raw(['last_name' => '']);
 
-        $response = $this->postJson('api/b1/users/'.$ankit->id, $input);
+        $response = $this->postJson(route('api.b1.users.update', $ankit->id), $input);
 
         $this->assertExceptionMessage($response, 'The last name field is required.');
     }
@@ -122,7 +122,7 @@ class UserControllerValidationTest extends TestCase
         $farhan = factory(User::class)->create();
         $input = factory(User::class)->raw(['email' => '']);
 
-        $response = $this->postJson('api/b1/users/'.$farhan->id, $input);
+        $response = $this->postJson(route('api.b1.users.update', $farhan->id), $input);
 
         $this->assertExceptionMessage($response, 'The email field is required.');
     }
@@ -134,7 +134,7 @@ class UserControllerValidationTest extends TestCase
         $vishal = factory(User::class)->create();
         $input = factory(User::class)->raw(['email' => $farhan->email]);
 
-        $response = $this->postJson('api/b1/users/'.$vishal->id, $input);
+        $response = $this->postJson(route('api.b1.users.update', $vishal->id), $input);
 
         $this->assertExceptionMessage($response, 'The email has already been taken.');
     }
@@ -145,7 +145,9 @@ class UserControllerValidationTest extends TestCase
         $farhan = factory(User::class)->create();
         $input = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users/'.$farhan->id, array_merge($input, ['role_id' => 'string']));
+        $response = $this->postJson(route('api.b1.users.update', $farhan->id),
+            array_merge($input, ['role_id' => 'string'])
+        );
 
         $this->assertExceptionMessage($response, 'The role id must be an integer.');
     }
@@ -158,7 +160,7 @@ class UserControllerValidationTest extends TestCase
         $role = factory(Role::class)->create();
         $fakeUser['roles'] = $role->id;
 
-        $response = $this->postJson('api/b1/users', array_merge($fakeUser, [
+        $response = $this->postJson(route('api.b1.users.store'), array_merge($fakeUser, [
             'password' => $this->faker->password,
             'role_id'  => $role->id,
         ]));
@@ -174,7 +176,7 @@ class UserControllerValidationTest extends TestCase
         $user = factory(User::class)->create();
         $fakeUser = factory(User::class)->raw();
 
-        $response = $this->postJson('api/b1/users/'.$user->id, $fakeUser);
+        $response = $this->postJson(route('api.b1.users.update', $user->id), $fakeUser);
 
         $this->assertSuccessMessageResponse($response, 'User updated successfully.');
         $this->assertEquals($fakeUser['email'], $user->fresh()->email);

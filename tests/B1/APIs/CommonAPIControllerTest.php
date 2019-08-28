@@ -17,7 +17,7 @@ class CommonAPIControllerTest extends TestCase
     /** @test */
     public function test_can_get_all_country_list()
     {
-        $response = $this->getJson('api/b1/currencies');
+        $response = $this->getJson(route('api.b1.currencies'));
 
         $this->assertNotEmpty($response->original);
         $this->assertArrayHasKey('country', $response->original[0]);
