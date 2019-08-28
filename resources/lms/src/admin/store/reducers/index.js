@@ -28,6 +28,7 @@ import countryReducer from './countryReducer';
 import settingReducer from './settingReducer';
 import bookItemReducer from './bookItemReducer';
 import totalRecordReduce from './totalRecordReduce';
+import localStorageReducer from '../../../store/reducers/localStorageReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -58,5 +59,6 @@ export default combineReducers({
     permissions: permissionReducer,
     config: configReducer,
     totalRecord: totalRecordReduce,
-    currency:priceReducer
+    currency: priceReducer,
+    profile: localStorageReducer
 });

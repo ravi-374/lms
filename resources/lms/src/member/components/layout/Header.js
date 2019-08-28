@@ -3,14 +3,15 @@ import {connect} from 'react-redux';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
-import {getUserProfile} from "../../../store/action/userProfileAction";
+import {getUserProfile} from "../../../store/action/localStorageAction";
+import {LocalStorageKey, Routes} from "../../../constants";
 
 const Header = (props) => {
-    const { member } = props;
+    const { member, getUserProfile, history } = props;
     let imageUrl = publicImagePath.USER_AVATAR;
 
     useEffect(() => {
-        props.getUserProfile('member');
+        getUserProfile(LocalStorageKey.MEMBER);
     }, []);
 
     if (member) {
@@ -23,7 +24,7 @@ const Header = (props) => {
         }
     }
     const goToMemberProfile = () => {
-        props.history.push('/app/member-profile');
+        history.push(Routes.MEMBER_PROFILE);
     };
     return (
         <Fragment>
@@ -49,6 +50,6 @@ const Header = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    return { member: state.userProfile }
+    return { member: state.profile }
 };
 export default connect(mapStateToProps, { getUserProfile })(Header);

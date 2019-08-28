@@ -33,6 +33,8 @@ export const Routes = {
     MEMBER_RESET_PASSWORD: '/app/reset-password',
     ADMIN_FORGOT_PASSWORD: '/app/admin/forgot-password',
     ADMIN_RESET_PASSWORD: '/app/admin/reset-password',
+    USER_PROFILE: '/app/admin/user-profile',
+    MEMBER_PROFILE: '/app/member-profile',
 };
 
 export const Tokens = {
@@ -59,12 +61,18 @@ export const FilterOption = {
     ALL: 'all'
 };
 
-export const userProfileActionType = {
+export const localStorageActionType = {
     GET_PROFILE: 'GET_PROFILE',
-    SET_PROFILE: 'SET_PROFILE'
+    SET_PROFILE: 'SET_PROFILE',
+    CLEAR_PROFILE: 'CLEAR_PROFILE'
 };
 
 export const dateFormat = {
     DEFAULT_MOMENT: 'YYYY-MM-DD hh:mm:ss',
     NATIVE: 'YYYY-MM-DD'
+};
+
+export const LocalStorageKey = {
+    USER: 'user',
+    MEMBER: 'member'
 };

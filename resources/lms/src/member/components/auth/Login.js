@@ -9,9 +9,9 @@ import CheckBox from '../../../shared/components/CheckBox';
 import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../../shared/toast/Toasts';
 import {connect} from 'react-redux';
-import {Routes, Tokens} from "../../../constants";
+import {Routes, Tokens, LocalStorageKey} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {setUserProfile} from "../../../store/action/userProfileAction";
+import {setUserProfile} from "../../../store/action/localStorageAction";
 
 const Login = (props) => {
     let remember = true;
@@ -47,7 +47,7 @@ const Login = (props) => {
             }
             localStorage.setItem(Tokens.MEMBER, response.data.data.token);
             localStorage.setItem('is_member_remember', isRemember);
-            props.setUserProfile('member',response.data.data.user);
+            props.setUserProfile(LocalStorageKey.MEMBER, response.data.data.user);
             if (sessionStorage.getItem('prevMemberPrevUrl')) {
                 window.location.href = sessionStorage.getItem('prevMemberPrevUrl');
             } else {
