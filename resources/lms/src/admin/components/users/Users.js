@@ -12,30 +12,27 @@ import {fetchRoles} from '../../store/actions/roleAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Users = (props) => {
-    const [isEditMode, setEditMode] = useState(false);
-    const [isCreateMode, setCreateMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
+    const [isEditUser, setEditUser] = useState(false);
+    const [isCreateUser, setCreateUser] = useState(false);
+    const [isDeleteUser, setDeleteUser] = useState(false);
     const [user, setUser] = useState(null);
     const { users, toggleModal, history, isLoading, totalRecord } = props;
-    const cardModalProps = { user, isDeleteMode, isEditMode, isCreateMode, toggleModal };
+    const cardModalProps = { user, isDeleteUser, isEditUser, isCreateUser, toggleModal };
 
     const setActiveInactive = (id) => {
         if (id) {
             props.activeDeactiveUser(id);
         }
     };
-    const fetchUsers = (filter) => {
+
+    const onChangeData = (filter) => {
         props.fetchUsers(filter, true);
     };
 
-    const onChangeData = (filter) => {
-        fetchUsers(filter);
-    };
-
     const onOpenModal = (isEdit, user = null, isDelete = false) => {
-        setCreateMode(!isEdit);
-        setEditMode(isEdit);
-        setDeleteMode(isDelete);
+        setCreateUser(!isEdit);
+        setEditUser(isEdit);
+        setDeleteUser(isDelete);
         setUser(user);
         toggleModal();
     };

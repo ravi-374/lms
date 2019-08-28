@@ -1,5 +1,6 @@
 import React, {useState, useEffect, createRef} from 'react';
 import {Field, reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
 import {Col, Row} from 'reactstrap';
 import userValidate from './userValidate';
 import './Users.scss';
@@ -9,16 +10,26 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
-import {getCurrentUser} from "../../shared/sharedMethod";
+import {getCurrentUser, prepareRoles} from "../../shared/sharedMethod";
+import {fetchRoles} from "../../store/actions/roleAction";
+import {fetchCountries} from "../../store/actions/countryAction";
+import {editUser} from "../../store/actions/userAction";
 
 const UserForm = (props) => {
-    const { initialValues, change, roles, countries } = props;
+    const { initialValues, change, roles, countries, fetchCountries, fetchRoles } = props;
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
     const inputRef = createRef();
+
     useEffect(() => {
+        fetchCountries();
+        fetchRoles();
+        prepareInitialValues();
+    }, []);
+
+    const prepareInitialValues = () => {
         if (initialValues) {
             setActive(initialValues.is_active);
             if (initialValues.image) {
@@ -30,7 +41,7 @@ const UserForm = (props) => {
             change('is_active', true);
             inputRef.current.focus();
         }
-    }, []);
+    };
     const onSaveUser = (formValues) => {
         formValues.file = file;
         props.onSaveUser(formValues);
@@ -137,4 +148,9 @@ const UserForm = (props) => {
     );
 };
 
-export default reduxForm({ form: 'userForm', validate: userValidate })(UserForm);
+const mapStateToProps = (state) => {
+    const { roles, countries } = state;
+    return { roles: prepareRoles(Object.values(roles)), countries }
+};
+const userForm = reduxForm({ form: 'userForm', validate: userValidate })(UserForm);
+export default connect(mapStateToProps, { editUser, fetchCountries, fetchRoles })(userForm);

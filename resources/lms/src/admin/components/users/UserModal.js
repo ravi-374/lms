@@ -4,27 +4,27 @@ import CreateUser from './CreateUser';
 import EditUser from './EditUser';
 
 export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, isCreateMode, user, roles} = props;
-    if (!isDeleteMode) {
+    const { isEditUser, toggleModal, isDeleteUser, isCreateUser, user } = props;
+    if (!isDeleteUser) {
         const prepareModalOption = {
             className: 'user-modal',
-            title: isEditMode ? 'Edit User' : 'New User',
+            title: isEditUser ? 'Edit User' : 'New User',
             toggleModal,
         };
-        if (isEditMode) {
-            return <EditUser {...prepareModalOption} user={user} roles={roles}/>
+        if (isEditUser) {
+            return <EditUser {...prepareModalOption} user={user}/>
         }
-        if (isCreateMode) {
-            return <CreateUser {...prepareModalOption} roles={roles}/>
+        if (isCreateUser) {
+            return <CreateUser {...prepareModalOption}/>
         }
         return null;
     }
-    if (isDeleteMode) {
+    if (isDeleteUser) {
         const prepareModalOption = {
             userId: user.id,
             title: 'Delete User',
             toggleModal,
-            content: `Are you sure you want to delete "${user.name}" ?`,
+            content: `Are you sure you want to delete "${user.first_name + ' ' + user.last_name}" ?`,
         };
         return <DeleteUser {...prepareModalOption}/>
     }

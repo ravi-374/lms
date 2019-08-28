@@ -4,20 +4,17 @@ import {Row, Col, Card, CardBody, Button} from 'reactstrap';
 import UserDetailModal from './UserDetailModal';
 import './UserDetails.scss';
 import {fetchUser} from '../../store/actions/userAction';
-import {fetchRoles} from "../../store/actions/roleAction";
 import {toggleModal} from "../../../store/action/modalAction";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
-import {prepareRoles} from "../../shared/sharedMethod";
 
 const UserDetail = props => {
-    const [isToggle, setIsToggle] = useState(true);
-    const { user, roles, history, isLoading, toggleModal } = props;
+    const [isToggle, setIsToggle] = useState(false);
+    const { user, history, isLoading, toggleModal } = props;
     useEffect(() => {
         props.fetchUser(+props.match.params.id);
-        props.fetchRoles();
     }, []);
     if (!user || isLoading) {
         return (
@@ -109,8 +106,7 @@ const UserDetail = props => {
                                         </div>
                                     </div>
                                 </Row>
-                                <UserDetailModal user={user} roles={roles} isEditMode={isToggle}
-                                                 toggleModal={toggleModal}/>
+                                <UserDetailModal user={user} isEditMode={isToggle} toggleModal={toggleModal}/>
                             </CardBody>
                         </Card>
                     </div>
@@ -121,16 +117,14 @@ const UserDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { users, roles, isLoading } = state;
+    const { users, isLoading } = state;
     return {
         user: users.find(user => user.id === +ownProp.match.params.id),
-        roles: prepareRoles(Object.values(roles)),
         isLoading
     }
 };
 
 export default connect(mapStateToProps, {
     fetchUser,
-    fetchRoles,
     toggleModal
 })(UserDetail);
