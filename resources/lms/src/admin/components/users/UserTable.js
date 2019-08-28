@@ -40,7 +40,7 @@ const UserTable = (props) => {
         },
         {
             name: 'Role',
-            accessor: (d) => d.display_name,
+            selector: 'role_name',
             sortable: true,
             cell: row => {
                 if (row.roles) {
