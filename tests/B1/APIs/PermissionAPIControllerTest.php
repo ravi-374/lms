@@ -96,7 +96,9 @@ class PermissionAPIControllerTest extends TestCase
             ->with($fakePermission->toArray(), $permission->id)
             ->andReturn($fakePermission);
 
-        $response = $this->putJson(route('api.b1.permissions.update', $permission->id), $fakePermission->toArray());
+        $response = $this->putJson(route('api.b1.permissions.update', $permission->id),
+            $fakePermission->toArray()
+        );
 
         $this->assertSuccessDataResponse(
             $response,

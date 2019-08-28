@@ -97,7 +97,9 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
         $membershipPlan = factory(MembershipPlan::class)->create();
         $fakeMembershipPlan = factory(MembershipPlan::class)->raw();
 
-        $response = $this->putJson(route('api.b1.membership-plans.update', $membershipPlan->id), $fakeMembershipPlan);
+        $response = $this->putJson(route('api.b1.membership-plans.update', $membershipPlan->id),
+            $fakeMembershipPlan
+        );
 
         $this->assertSuccessMessageResponse($response, 'Membership Plan updated successfully.');
         $this->assertEquals($fakeMembershipPlan['name'], $membershipPlan->fresh()->name);

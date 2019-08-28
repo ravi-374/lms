@@ -101,7 +101,9 @@ class BookSeriesAPIControllerTest extends TestCase
             ->with($fakeBookSeries->toArray(), $bookSeries->id)
             ->andReturn($fakeBookSeries);
 
-        $response = $this->putJson(route('api.b1.book-series.update', $bookSeries->id), $fakeBookSeries->toArray());
+        $response = $this->putJson(route('api.b1.book-series.update', $bookSeries->id),
+            $fakeBookSeries->toArray()
+        );
 
         $this->assertSuccessDataResponse($response, $fakeBookSeries->toArray(),
             'Book Series updated successfully.');

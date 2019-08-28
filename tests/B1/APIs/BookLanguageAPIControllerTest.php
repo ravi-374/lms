@@ -59,7 +59,10 @@ class BookLanguageAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.book-languages.index'));
         $take3 = $this->getJson(route('api.b1.book-languages.index', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.b1.book-languages.index', ['skip' => 2, 'limit' => 2]));
-        $search = $this->getJson(route('api.b1.book-languages.index', ['search' => $bookLanguage[0]->language_name]));
+        $search = $this->getJson(route('api.b1.book-languages.index', [
+                'search' => $bookLanguage[0]->language_name,
+            ])
+        );
 
         $this->assertCount(23, $response->original['data'], '18 default');
         $this->assertCount(3, $take3->original['data']);

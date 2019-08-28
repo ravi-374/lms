@@ -26,8 +26,10 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function test_create_member_fails_when_last_name_is_not_passed()
     {
-        $response = $this->postJson(route('api.b1.members.store'),
-            ['first_name' => $this->faker->name, 'last_name' => '']);
+        $response = $this->postJson(route('api.b1.members.store'), [
+            'first_name' => $this->faker->name,
+            'last_name'  => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The last name field is required.');
     }
@@ -45,8 +47,11 @@ class MemberControllerValidationTest extends TestCase
     /** @test */
     public function test_create_member_fails_when_password_is_not_passed()
     {
-        $response = $this->postJson(route('api.b1.members.store'),
-            ['first_name' => $this->faker->name, 'last_name' => $this->faker->name, 'email' => $this->faker->email]
+        $response = $this->postJson(route('api.b1.members.store'), [
+                'first_name' => $this->faker->name,
+                'last_name'  => $this->faker->name,
+                'email'      => $this->faker->email,
+            ]
         );
 
         $this->assertExceptionMessage($response, 'The password field is required.');
@@ -102,7 +107,8 @@ class MemberControllerValidationTest extends TestCase
         $farhan = factory(Member::class)->create();
 
         $response = $this->postJson(route('api.b1.members.update', $farhan->id),
-            array_merge($farhan->toArray(), ['email' => $ankit->email]));
+            array_merge($farhan->toArray(), ['email' => $ankit->email])
+        );
 
         $this->assertExceptionMessage($response, 'The email has already been taken.');
     }
