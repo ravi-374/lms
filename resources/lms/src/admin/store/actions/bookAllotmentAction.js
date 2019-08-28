@@ -1,10 +1,11 @@
-import {bookAllotmentActionType, toastType, bookAllotmentStatusConstant} from '../../constants';
+import {bookAllotmentActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
+import {getApiRouteForBookAllotment} from "../../shared/sharedMethod";
 import _ from 'lodash';
 
 export const fetchBooksAllotment = (filter = {}) => async (dispatch) => {
@@ -40,7 +41,7 @@ export const fetchBookAllotment = (bookAllotmentId) => async (dispatch) => {
 };
 
 export const addBookAllotment = (book, filterObj = {}) => async (dispatch) => {
-    await apiConfig.post(`books/${book.book_item_id}/${getApiRoute(book.status)}`, book)
+    await apiConfig.post(`books/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
         .then((response) => {
             dispatch(fetchBooksAllotment(filterObj));
             dispatch(addToast({ text: response.data.message }));
@@ -52,7 +53,7 @@ export const addBookAllotment = (book, filterObj = {}) => async (dispatch) => {
 };
 
 export const editBookAllotment = (book, filterObj = {}) => async (dispatch) => {
-    await apiConfig.post(`books/${book.book_item_id}/${getApiRoute(book.status)}`, book)
+    await apiConfig.post(`books/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
         .then((response) => {
             dispatch(fetchBooksAllotment(filterObj));
             dispatch(addToast({ text: response.data.message }));
@@ -85,17 +86,4 @@ export const deleteBookAllotment = (bookId) => async (dispatch) => {
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: 'error' }));
         });
-};
-
-const getApiRoute = (status) => {
-    switch (status) {
-        case bookAllotmentStatusConstant.BOOK_RESERVED:
-            return 'reserve-book';
-        case bookAllotmentStatusConstant.BOOK_ISSUED:
-            return 'issue-book';
-        case bookAllotmentStatusConstant.BOOK_RETURNED:
-            return 'return-book';
-        default:
-            return 'un-reserve-book';
-    }
 };

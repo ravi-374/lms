@@ -1,42 +1,28 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody, Button} from 'reactstrap';
 import './MemberDetails.scss';
 import {fetchMember} from '../../store/actions/memberAction';
-import {fetchMemberBooksHistory} from '../../store/actions/memberBookHistoryAction';
-import {fetchBooks} from '../../store/actions/bookAction';
-import {fetchMembers} from '../../store/actions/memberAction';
 import {toggleModal} from '../../../store/action/modalAction';
-import MemberBookHistory from './MemberBookAllotment';
+import MemberBookHistory from './MemberBookHistory';
 import BookHistoryModal from './BookHistoryModal';
-import {sortAction} from '../../../store/action/sortAction';
-import sortFilter from '../../../shared/sortFilter';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {prepareFullNames} from "../../../shared/sharedMethod";
 import {publicImagePathURL, publicImagePath} from "../../../appConstant";
-import EmptyComponent from "../../../shared/empty-component/EmptyComponent";
+import {prepareFullAddress} from "../../../shared/sharedMethod";
 
 const MemberDetail = props => {
     const [isEditBookAllotment, setIsEditBookAllotment] = useState(false);
     const [isEditMember, setIsEditMember] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookHistory, setBookHistory] = useState(null);
+    const { member, toggleModal, history } = props;
     useEffect(() => {
         props.fetchMember(+props.match.params.id);
-        props.fetchMemberBooksHistory(+props.match.params.id);
-        props.fetchBooks();
-        props.fetchMembers();
     }, []);
-    const { member, memberBookHistory, books, toggleModal, history, sortObject, sortAction, members, isLoading } = props;
-    if (!member || !members || isLoading) {
-        return (
-            <Fragment>
-                <ProgressBar/>
-                <Toasts/>
-            </Fragment>
-        )
+    if (!member) {
+        return null;
     }
     const onOpenModal = (isEdit, bookHistory = null, isDelete = false) => {
         setIsEditMember(!isEdit);
@@ -48,11 +34,13 @@ const MemberDetail = props => {
     const goBack = () => {
         history.goBack();
     };
-    const cardBodyProps = { books, members, sortAction, sortObject, memberBookHistory, onOpenModal, history };
+    const cardBodyProps = {
+        onOpenModal,
+        history,
+        memberId: member.id
+    };
     const cardModalProps = {
         bookHistory,
-        books,
-        members,
         isEditBookAllotment,
         isDeleteMode,
         isEditMember,
@@ -61,29 +49,10 @@ const MemberDetail = props => {
     };
     const imageUrl = member.image ? publicImagePathURL.MEMBER_AVATAR_URL + member.image : publicImagePath.USER_AVATAR;
     const { address } = member;
-    let fullAddress = '';
-    if (address) {
-        if (address.address_1) {
-            fullAddress += address.address_1;
-        }
-        if (address.address_2) {
-            fullAddress += ',  ' + address.address_2;
-        }
-        if (address.city) {
-            fullAddress += ',  ' + address.city;
-        }
-        if (address.state) {
-            fullAddress += ',  ' + address.state;
-        }
-        if (address.country) {
-            fullAddress += ',  ' + address.country.name;
-        }
-        if (address.zip) {
-            fullAddress += '-' + address.zip;
-        }
-    }
+    const fullAddress = prepareFullAddress(address);
     return (
         <div className="animated fadeIn">
+            <ProgressBar/>
             <HeaderTitle title={'Member Details | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
@@ -136,14 +105,10 @@ const MemberDetail = props => {
                                 </Row>
                                 <div className="mt-5">
                                     <h5 className="mb-3">Book History</h5>
-                                    {memberBookHistory.length > 0 ?
-                                        <Fragment>
-                                            <MemberBookHistory {...cardBodyProps}/>
-                                        </Fragment> :
-                                        <EmptyComponent isShort={true} title="No book history yet..."/>
-                                    }
+                                    <MemberBookHistory {...cardBodyProps}/>
                                 </div>
                                 <BookHistoryModal {...cardModalProps}/>
+                                <Toasts/>
                             </CardBody>
                         </Card>
                     </div>
@@ -154,26 +119,10 @@ const MemberDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { members, memberBookHistory, books, sortObject, isLoading } = state;
-    let bookHistoryArray = Object.values(memberBookHistory);
-    if (sortObject) {
-        bookHistoryArray = sortFilter(bookHistoryArray, sortObject);
-    }
+    const { members } = state;
     return {
         member: members.find(member => member.id === +ownProp.match.params.id),
-        memberBookHistory: bookHistoryArray,
-        books: Object.values(books),
-        members: prepareFullNames(Object.values(members)),
-        sortObject,
-        isLoading
     }
 };
 
-export default connect(mapStateToProps, {
-    fetchMember,
-    fetchMemberBooksHistory,
-    fetchBooks,
-    fetchMembers,
-    sortAction,
-    toggleModal
-})(MemberDetail);
+export default connect(mapStateToProps, { fetchMember, toggleModal })(MemberDetail);

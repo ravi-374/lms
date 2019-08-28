@@ -4,6 +4,7 @@
     border: 1px solid $pagination-border-color;
     border-radius: 0.25rem;
 }
+
 .empty-component {
     display: flex;
     align-items: center;
@@ -19,6 +20,9 @@
     &--maxi {
         @extend .container-border;
         height: 70vh;
+    }
+    &--too-short {
+        height: 36vh;
     }
     &__title {
         margin: 7px 10px 10px;
