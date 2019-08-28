@@ -8,22 +8,25 @@ import BookAllotmentForm from './BookAllotmentForm';
 import {prepareFullNames} from "../../../shared/sharedMethod";
 
 const CreateBookAllotment = (props) => {
-    const { toggleModal, className, title, books, onSelectBook, bookId, members } = props;
+    const {
+        toggleModal, className, title,
+        books, onSelectBook, bookId, members, fetchBooks, fetchMembers, filterObject, addBookAllotment
+    } = props;
     const modalOption = { toggleModal, className, title };
     const formOption = { books, onSelectBook, bookId, members };
 
     useEffect(() => {
-        props.fetchBooks();
-        props.fetchMembers();
+        fetchBooks();
+        fetchMembers();
     }, []);
 
     const onSaveBookAllotment = (formValues) => {
-        props.addBookAllotment(formValues);
+        addBookAllotment(formValues, filterObject);
     };
 
     const prepareFormOption = {
         onSaveBookAllotment,
-        onCancel: props.toggleModal,
+        onCancel: toggleModal,
     };
     return <Modal {...modalOption} content={<BookAllotmentForm{...prepareFormOption} {...formOption}/>}/>
 };
