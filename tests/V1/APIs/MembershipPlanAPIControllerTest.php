@@ -37,6 +37,7 @@ class MembershipPlanAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var MembershipPlan[] $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
 
         $this->membershipPlanRepo->expects('all')->andReturn($membershipPlan);

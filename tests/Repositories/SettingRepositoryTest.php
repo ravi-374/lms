@@ -28,6 +28,7 @@ class SettingRepositoryTest extends TestCase
     /** @test */
     public function test_can_create_setting()
     {
+        /** @var Setting[] $settings */
         $settings = factory(Setting::class)->times(2)->raw();
 
         $settingList = $this->settingRepo->createOrUpdate($settings);

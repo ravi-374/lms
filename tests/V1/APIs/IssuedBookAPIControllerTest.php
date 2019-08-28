@@ -43,11 +43,12 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->mockRepository();
 
         $member = factory(Member::class)->create();
-        $bookItems = factory(IssuedBook::class)
+        /** @var IssuedBook $issuedBook */
+        $issuedBook = factory(IssuedBook::class)
             ->times(5)
             ->create(['member_id' => $member->id]);
 
-        $this->issuedBookRepo->expects('all')->andReturn($bookItems);
+        $this->issuedBookRepo->expects('all')->andReturn($issuedBook);
 
         $response = $this->getJson('api/v1/books-history');
 
