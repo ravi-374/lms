@@ -7,7 +7,7 @@ import {sortConfig} from '../../../config/sortConfig';
 import BookItemStatus from "../../../shared/book-item-status/BookItemStatus";
 import {priceFormatter} from "../../../shared/sharedMethod";
 
-export default ({ bookItems, bookLanguages, onOpenModal, sortAction, sortObject, currency }) => {
+export default ({ bookItems, onOpenModal, sortAction, sortObject, currency }) => {
     const headers = [
         { id: 'book_code', name: 'Book Code' },
         { id: 'edition', name: 'Edition' },
@@ -27,9 +27,8 @@ export default ({ bookItems, bookLanguages, onOpenModal, sortAction, sortObject,
             </thead>
             <tbody>
             {bookItems.map((bookItem) => {
-                    const language = bookLanguages.find(language => language.id === bookItem.language_id);
-                    if (language) {
-                        bookItem.language_name = language.name;
+                    if (bookItem.language) {
+                        bookItem.language_name = bookItem.language.language_name;
                     }
                     return (
                         <tr key={bookItem.id.toString()}>

@@ -3,29 +3,21 @@ import {connect} from 'react-redux';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import './BookDetails.scss';
 import EditBook from './EditBook';
-import {fetchPublishers} from '../../store/actions/publisherAction';
-import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import {fetchBook} from '../../store/actions/bookAction';
 import BookItems from '../book-items/BookItems';
-import {prepareAuthor, prepareBookLanguage, preparePublisher} from '../books/prepareArray';
-import {fetchSettings} from "../../store/actions/settingAction";
+
 import {toggleModal} from '../../../store/action/modalAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import {prepareFullNames} from "../../../shared/sharedMethod";
 
 const BookDetail = props => {
-    const {
-        book, bookLanguages, publishers, toggleModal, history,
-        fetchBook, fetchBookLanguages, fetchPublishers, fetchSettings, currency
-    } = props;
+    const { book, toggleModal, history, fetchBook } = props;
     const [isToggle, setIsToggle] = useState(false);
     const [isParentToggle, setIsParentToggle] = useState(false);
     useEffect(() => {
         fetchBook(+props.match.params.id);
-        fetchBookLanguages();
-        fetchPublishers();
-        fetchSettings(false);
     }, []);
     if (!book || !book.genres) {
         return null;
@@ -42,12 +34,9 @@ const BookDetail = props => {
     const bookItemFormOptions = {
         bookItemList: book.items,
         bookId: book.id,
-        bookLanguages,
-        publishers,
         goBack,
         isParentToggle,
         setIsParentToggle,
-        currency
     };
 
     const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
@@ -90,7 +79,7 @@ const BookDetail = props => {
                                             <div className="book-detail__item">
                                                 <span className="book-detail__item-authors-heading">Author(s)</span>
                                                 <span>
-                                                    {prepareAuthor(book.authors).map((({ name }) => name)).join(',  ')}
+                                                    {prepareFullNames(book.authors).map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
                                             {book.tags.length > 0 ?
@@ -137,18 +126,12 @@ const BookDetail = props => {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { books, publishers, bookLanguages, currency } = state;
+    const { books } = state;
     return {
         book: books.find(book => book.id === +ownProp.match.params.id),
-        bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),
-        publishers: preparePublisher(Object.values(publishers)),
-        currency
     }
 };
 export default connect(mapStateToProps, {
     fetchBook,
-    fetchBookLanguages,
-    fetchPublishers,
     toggleModal,
-    fetchSettings
 })(BookDetail);

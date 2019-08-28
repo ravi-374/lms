@@ -11,7 +11,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 const Settings = (props) => {
     const { currencies, selectedCurrency, selectedIssueDueDay, selectedReturnDueDay, isLoading } = props;
     useEffect(() => {
-        props.fetchSettings();
+        props.fetchSettings(true);
         props.fetchCurrencies();
     }, []);
     const onSaveSettings = (formValues) => {
