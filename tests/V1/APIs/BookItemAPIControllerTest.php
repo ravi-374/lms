@@ -21,6 +21,12 @@ class BookItemAPIControllerTest extends TestCase
         $this->signInWithMember();
     }
 
+    private function mockRepository()
+    {
+        $this->bookItemRepo = \Mockery::mock(BookItemRepository::class);
+        app()->instance(BookItemRepository::class, $this->bookItemRepo);
+    }
+
     public function tearDown(): void
     {
         parent::tearDown();
