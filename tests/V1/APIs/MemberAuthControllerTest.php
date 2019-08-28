@@ -60,7 +60,7 @@ class MemberAuthControllerTest extends TestCase
     /** @test */
     public function test_unable_to_verify_member_account_without_token()
     {
-        $response = $this->getJson(route('api.v1.activate-member.index'));
+        $response = $this->getJson(route('api.v1.activate-member'));
 
         $this->assertJsonErrorMessageResponse($response, 'token not found.');
     }
@@ -76,7 +76,7 @@ class MemberAuthControllerTest extends TestCase
         $key = $member->id.'|'.$member->activation_code;
         $token = encrypt($key);
 
-        $response = $this->getJson(route('api.v1.activate-member.index', ['token='.$token]));
+        $response = $this->getJson(route('api.v1.activate-member', ['token='.$token]));
 
         $this->assertSuccessMessageResponse($response, 'Your account has been activated successfully.');
         $this->assertTrue($member->fresh()->is_active);

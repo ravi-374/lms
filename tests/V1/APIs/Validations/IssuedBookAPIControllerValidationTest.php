@@ -33,7 +33,7 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     {
         $bookItem = factory(BookItem::class)->create();
 
-        $reserveBook = $this->postJson(route('api.v1.books.reserve-book', $bookItem->id));
+        $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
 
         $this->assertSuccessMessageResponse($reserveBook, 'Book reserved successfully.');
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
@@ -44,8 +44,8 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     {
         $bookItem = factory(BookItem::class)->create();
 
-        $reserveBook = $this->postJson(route('api.v1.books.reserve-book', $bookItem->id));
-        $unReserveBook = $this->postJson(route('api.v1.books.un-reserve-book', $bookItem->id));
+        $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
+        $unReserveBook = $this->postJson(route('api.v1.un-reserve-book', $bookItem->id));
 
         $this->assertSuccessMessageResponse($unReserveBook, 'Book un-reserved successfully.');
         $this->assertEquals(BookItem::STATUS_AVAILABLE, $bookItem->fresh()->status);
