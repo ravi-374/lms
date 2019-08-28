@@ -77,3 +77,28 @@ export const checkExistingRoute = (lastLocation, history) => {
         }
     };
 };
+
+export const prepareFullAddress = (address) => {
+    let fullAddress = '';
+    if (address) {
+        if (address.address_1) {
+            fullAddress += address.address_1;
+        }
+        if (address.address_2) {
+            fullAddress += ',  ' + address.address_2;
+        }
+        if (address.city) {
+            fullAddress += ',  ' + address.city;
+        }
+        if (address.state) {
+            fullAddress += ',  ' + address.state;
+        }
+        if (address.country) {
+            fullAddress += ',  ' + address.country.name;
+        }
+        if (address.zip) {
+            fullAddress += '-' + address.zip;
+        }
+    }
+    return fullAddress;
+};

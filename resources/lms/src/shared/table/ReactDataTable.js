@@ -10,15 +10,15 @@ import {renderSortIcons} from "../../config/sortConfig";
 
 export default (props) => {
     const {
-        items, onChange, columns, loading,
-        totalRows, isShowFilterField, filterOptions, searchKey = '', filterKey = null
+        defaultLimit = Filters.OBJ.limit, isShortEmptyState,
+        items, onChange, columns, loading, paginationRowsPerPageOptions = [10, 15, 25, 50, 100], totalRows,
+        isShowFilterField, isShowSearchField = true, filterOptions, searchKey = '', filterKey = null
     } = props;
-    const [perPage, setPerPages] = useState(Filters.OBJ.limit);
+    const [perPage, setPerPages] = useState(defaultLimit);
     const [orderBy, setOrderBy] = useState(Filters.OBJ.order_By);
     const [direction, setDirection] = useState(Filters.OBJ.direction);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState(searchKey);
-
     const tableColumns = useMemo(
         () => columns, []
     );
@@ -75,23 +75,29 @@ export default (props) => {
             buttonHoverBackground: '#f5981c',
         },
     };
+    const emptyStateProps = {
+        isLoading: loading,
+        isMediumEmptyState: !isShortEmptyState ? true : undefined,
+        isShortEmptyState: isShortEmptyState ? true : undefined,
+        title: loading ? 'Loading......' : 'No records yet'
+    };
+
     return (
         <Fragment>
             <Row className="justify-content-end">
                 <Col xs={2}>
                     {isShowFilterField ?
-                        <FilterField options={filterOptions} filterKey={filterKey}
-                                     handleFilter={handleSearch}/> : null}
+                        <FilterField options={filterOptions} filterKey={filterKey} handleFilter={handleSearch}/> : null}
                 </Col>
                 <Col xs={2}>
-                    <SearchField handleSearch={handleSearch}/>
+                    {isShowSearchField ? <SearchField handleSearch={handleSearch}/> : null}
                 </Col>
             </Row>
-            <DataTable noDataComponent={<EmptyComponent isMedium isLoading={loading}
-                                                        title={loading ? 'Loading......' : 'No records yet'}/>}
-                       paginationRowsPerPageOptions={[10, 15, 25, 50, 100]} sortIcon={renderSortIcons(direction)}
-                       pagination={true} paginationServer={true} sortFunction={customSort} striped={true}
-                       highlightOnHover={true} className={'table-bordered table-striped mt-2'} customTheme={darkTheme}
+            <DataTable noDataComponent={<EmptyComponent {...emptyStateProps}/>}
+                       paginationRowsPerPageOptions={paginationRowsPerPageOptions} sortIcon={renderSortIcons(direction)}
+                       pagination={true} paginationPerPage={defaultLimit} paginationServer={true}
+                       sortFunction={customSort} striped={true} highlightOnHover={true}
+                       className={'table-bordered table-striped mt-2'} customTheme={darkTheme}
                        paginationTotalRows={totalRows} onChangeRowsPerPage={handlePerRowsChange}
                        onChangePage={handlePageChange} noHeader={true} columns={tableColumns} data={items}/>
         </Fragment>

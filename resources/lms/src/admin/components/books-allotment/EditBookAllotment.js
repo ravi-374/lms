@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../shared/components/Modal';
 import {editBookAllotment, editBookAllotmentStatus} from '../../store/actions/bookAllotmentAction';
-import {editMemberBookHistory} from '../../store/actions/memberBookHistoryAction';
+import {editMemberBookHistory, editMemberBookHistoryStatus} from '../../store/actions/memberBookHistoryAction';
 import BookAllotmentForm from './BookAllotmentForm';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {fetchMembers} from '../../store/actions/memberAction';
@@ -51,7 +51,15 @@ const EditBookAllotment = (props) => {
                     break;
             }
         } else {
-            props.editMemberBookHistory(formValues);
+            switch (formValues.status) {
+                case bookAllotmentStatusConstant.BOOK_LOST:
+                case bookAllotmentStatusConstant.BOOK_DAMAGED:
+                    props.editMemberBookHistoryStatus(formValues);
+                    break;
+                default:
+                    props.editMemberBookHistory(formValues);
+                    break;
+            }
         }
     };
     if (changeAbleFields.bookItems.length === 0) {
@@ -89,6 +97,7 @@ const prepareBookItems = (books) => {
 export default connect(mapStateToProps, {
     editBookAllotment,
     editMemberBookHistory,
+    editMemberBookHistoryStatus,
     editBookAllotmentStatus,
     fetchBooks,
     fetchMembers

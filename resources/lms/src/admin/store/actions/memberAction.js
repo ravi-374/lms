@@ -26,16 +26,16 @@ export const fetchMembers = (filter = {}, isLoading = false) => async (dispatch)
         });
 };
 
-export const fetchMember = (memberId) => async (dispatch) => {
-    dispatch(setLoading(true));
+export const fetchMember = (memberId, isLoading = false) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
     await apiConfig.get(`members/${memberId}`)
         .then((response) => {
             dispatch({ type: memberActionType.FETCH_MEMBER, payload: response.data.data });
-            dispatch(setLoading(false));
+            isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: 'error' }));
-            dispatch(setLoading(false));
+            isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 
