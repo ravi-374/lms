@@ -34,7 +34,7 @@ class AuthAPIControllerTest extends TestCase
         $role->perms()->sync([$permission->id]);
         $farhan->roles()->sync([$role->id]);
 
-        $response = $this->getJson('api/b1/config');
+        $response = $this->getJson(route('api.b1.config'));
 
         $this->assertSuccessMessageResponse($response, 'Config retrieved successfully.');
         $this->assertEquals($farhan->id, $response->original['data']['user']['id']);
