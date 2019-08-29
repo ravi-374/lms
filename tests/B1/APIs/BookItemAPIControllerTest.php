@@ -4,17 +4,13 @@ namespace Tests\B1\APIs;
 
 use App\Models\BookItem;
 use App\Models\IssuedBook;
-use App\Repositories\BookItemRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class BookItemAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $bookItemRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -22,22 +18,10 @@ class BookItemAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->bookItemRepo = \Mockery::mock(BookItemRepository::class);
-        app()->instance(BookItemRepository::class, $this->bookItemRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_available_books()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$bookItem);
 
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
@@ -46,7 +30,7 @@ class BookItemAPIControllerTest extends TestCase
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
 
-        $this->bookItemRepo->expects('all')->andReturn($bookItem);
+        $this->bookItemRepository->expects('all')->andReturn($bookItem);
 
         $response = $this->getJson(route('api.b1.books.available-books', $bookItem->book_id), [
             'member_id' => $reserveBook->member_id,
@@ -60,12 +44,12 @@ class BookItemAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_books()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$bookItem);
 
         /** @var BookItem[] $bookItems */
         $bookItems = factory(BookItem::class)->times(5)->create();
 
-        $this->bookItemRepo->expects('searchBooks')->andReturn(collect($bookItems));
+        $this->bookItemRepository->expects('searchBooks')->andReturn(collect($bookItems));
 
         $response = $this->getJson(route('api.b1.books.search-books'));
 

@@ -4,18 +4,14 @@ namespace Tests\B1\APIs;
 
 use App\Models\Address;
 use App\Models\Role;
-use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class UserAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $userRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -23,22 +19,10 @@ class UserAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->userRepo = \Mockery::mock(UserRepository::class);
-        app()->instance(UserRepository::class, $this->userRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_users()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$user);
 
         /** @var User[] $users */
         $users = factory(User::class)->times(5)->create();
@@ -105,7 +89,7 @@ class UserAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_user()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$user);
 
         /** @var User $farhan */
         $farhan = factory(User::class)->make();
@@ -128,7 +112,7 @@ class UserAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_user()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$user);
 
         /** @var User $farhan */
         $farhan = factory(User::class)->create();
@@ -190,7 +174,7 @@ class UserAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_user_profile()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$user);
 
         $updateRecord = factory(User::class)->make(['id' => $this->loggedInUserId]);
 

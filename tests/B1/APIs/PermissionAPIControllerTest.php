@@ -3,17 +3,13 @@
 namespace Tests\B1\APIs;
 
 use App\Models\Permission;
-use App\Repositories\PermissionRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class PermissionAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $permissionRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -21,22 +17,10 @@ class PermissionAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->permissionRepo = \Mockery::mock(PermissionRepository::class);
-        app()->instance(PermissionRepository::class, $this->permissionRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_permissions()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$permission);
 
         /** @var Permission[] $permissions */
         $permissions = factory(Permission::class)->times(5)->create();
@@ -74,7 +58,7 @@ class PermissionAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_permission()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$permission);
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->make();
@@ -91,7 +75,7 @@ class PermissionAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_permission()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$permission);
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create();

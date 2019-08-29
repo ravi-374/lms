@@ -3,17 +3,13 @@
 namespace Tests\B1\APIs;
 
 use App\Models\Tag;
-use App\Repositories\TagRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class TagAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $tagRepository;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -21,22 +17,10 @@ class TagAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->tagRepository = \Mockery::mock(TagRepository::class);
-        app()->instance(TagRepository::class, $this->tagRepository);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_tags()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$tag);
 
         /** @var Tag[] $tags */
         $tags = factory(Tag::class)->times(5)->create();
@@ -72,7 +56,7 @@ class TagAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_tag()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$tag);
 
         $tag = factory(Tag::class)->make();
 
@@ -88,7 +72,7 @@ class TagAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_tag()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$tag);
 
         /** @var Tag $tag */
         $tag = factory(Tag::class)->create();
