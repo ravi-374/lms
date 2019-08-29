@@ -88,6 +88,7 @@ class UserControllerValidationTest extends TestCase
     /** @test */
     public function test_create_user_fails_when_email_is_duplicate()
     {
+        /** @var User $ankit */
         $ankit = factory(User::class)->create();
         $input = factory(User::class)->raw(['email' => $ankit->email]);
 

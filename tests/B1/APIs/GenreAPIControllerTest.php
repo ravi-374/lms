@@ -39,7 +39,7 @@ class GenreAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var Genre $genres */
+        /** @var Genre[] $genres */
         $genres = factory(Genre::class)->times(5)->create();
 
         $this->genreRepository->expects('all')->andReturn($genres);
@@ -114,10 +114,9 @@ class GenreAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.genres.show', $genre->id));
 
         $this->assertSuccessDataResponse($response, $genre->toArray(), 'Genre retrieved successfully.');
-
     }
 
-    /* /** @test */
+    /*** @test */
     public function test_unable_to_delete_genre_when_its_used_in_one_or_more_book()
     {
         /** @var Book $book */

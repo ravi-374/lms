@@ -39,7 +39,7 @@ class BookSeriesAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var BookSeries $bookSeries */
+        /** @var BookSeries[] $bookSeries */
         $bookSeries = factory(BookSeries::class)->times(5)->create();
 
         $this->bookSeriesRepo->expects('all')->andReturn($bookSeries);
@@ -62,7 +62,10 @@ class BookSeriesAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.book-series.index'));
         $take3 = $this->getJson(route('api.b1.book-series.index', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.b1.book-series.index', ['skip' => 2, 'limit' => 2]));
-        $searchByTitle = $this->getJson(route('api.b1.book-series.index', ['search' => $bookSeries[0]->title]));
+        $searchByTitle = $this->getJson(route('api.b1.book-series.index', [
+                'search' => $bookSeries[0]->title,
+            ]
+        ));
 
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
@@ -106,8 +109,11 @@ class BookSeriesAPIControllerTest extends TestCase
             $fakeBookSeries->toArray()
         );
 
-        $this->assertSuccessDataResponse($response, $fakeBookSeries->toArray(),
-            'Book Series updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $fakeBookSeries->toArray(),
+            'Book Series updated successfully.'
+        );
     }
 
     /** @test */
@@ -115,12 +121,15 @@ class BookSeriesAPIControllerTest extends TestCase
     {
         /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->create();
-
         $seriesBook = factory(SeriesBook::class)->create(['series_id' => $bookSeries->id]);
 
         $response = $this->getJson(route('api.b1.book-series.show', $bookSeries->id));
 
-        $this->assertSuccessDataResponse($response, $bookSeries->toArray(), 'Book Series retrieved successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $bookSeries->toArray(),
+            'Book Series retrieved successfully.'
+        );
 
         $this->assertEquals($seriesBook->id, $response->original['data']['series_items'][0]['id']);
     }
@@ -133,7 +142,11 @@ class BookSeriesAPIControllerTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.book-series.destroy', $bookSeries->id));
 
-        $this->assertSuccessDataResponse($response, $bookSeries->toArray(), 'Book Series deleted successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $bookSeries->toArray(),
+            'Book Series deleted successfully.'
+        );
         $this->assertEmpty(BookSeries::find($bookSeries->id));
     }
 }

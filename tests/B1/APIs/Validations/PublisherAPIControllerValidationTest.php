@@ -50,7 +50,9 @@ class PublisherAPIControllerValidationTest extends TestCase
         $publisher1 = factory(Publisher::class)->create();
         $publisher2 = factory(Publisher::class)->create();
 
-        $response = $this->putJson(route('api.b1.publishers.update', $publisher2->id), ['name' => $publisher1->name]);
+        $response = $this->putJson(route('api.b1.publishers.update', $publisher2->id), [
+            'name' => $publisher1->name,
+        ]);
 
         $this->assertExceptionMessage($response, 'The name has already been taken.');
     }

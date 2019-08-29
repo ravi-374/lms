@@ -39,6 +39,7 @@ class MembershipPlanAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var MembershipPlan[] $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
 
         $this->membershipPlanRepo->expects('all')->andReturn($membershipPlan);
@@ -112,7 +113,8 @@ class MembershipPlanAPIControllerTest extends TestCase
             $updateRecord->toArray()
         );
 
-        $this->assertSuccessDataResponse($response,
+        $this->assertSuccessDataResponse(
+            $response,
             $updateRecord->toArray(),
             'Membership Plan updated successfully.'
         );
@@ -127,7 +129,9 @@ class MembershipPlanAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.membership-plans.show', $membershipPlan->id));
 
         $this->assertSuccessDataResponse(
-            $response, $membershipPlan->toArray(), 'Membership Plan retrieved successfully.'
+            $response,
+            $membershipPlan->toArray(),
+            'Membership Plan retrieved successfully.'
         );
     }
 
@@ -140,7 +144,9 @@ class MembershipPlanAPIControllerTest extends TestCase
         $response = $this->deleteJson(route('api.b1.membership-plans.destroy', $membershipPlan->id));
 
         $this->assertSuccessDataResponse(
-            $response, $membershipPlan->toArray(), 'Membership Plan deleted successfully.'
+            $response,
+            $membershipPlan->toArray(),
+            'Membership Plan deleted successfully.'
         );
         $this->assertEmpty(MembershipPlan::find($membershipPlan->id));
     }
@@ -156,7 +162,9 @@ class MembershipPlanAPIControllerTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.membership-plans.destroy', $member->membership_plan_id));
 
-        $this->assertExceptionMessage($response,
-            'Membership Plan can not be delete, it is assigned to one or more members.');
+        $this->assertExceptionMessage(
+            $response,
+            'Membership Plan can not be delete, it is assigned to one or more members.'
+        );
     }
 }

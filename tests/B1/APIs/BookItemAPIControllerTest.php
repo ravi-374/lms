@@ -39,6 +39,7 @@ class BookItemAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
         $reserveBook = factory(IssuedBook::class)->create([
             'book_item_id' => $bookItem->id,
@@ -61,6 +62,7 @@ class BookItemAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var BookItem[] $bookItems */
         $bookItems = factory(BookItem::class)->times(5)->create();
 
         $this->bookItemRepo->expects('searchBooks')->andReturn(collect($bookItems));
@@ -83,7 +85,9 @@ class BookItemAPIControllerTest extends TestCase
         ]);
 
         $this->assertSuccessDataResponse(
-            $response, $bookItem->fresh()->toArray(), 'Book status updated successfully.'
+            $response,
+            $bookItem->fresh()->toArray(),
+            'Book status updated successfully.'
         );
         $this->assertEquals(BookItem::STATUS_DAMAGED, $bookItem->fresh()->status);
     }

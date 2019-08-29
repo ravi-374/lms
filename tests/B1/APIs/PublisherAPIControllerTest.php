@@ -39,13 +39,18 @@ class PublisherAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Publisher $publishers */
         $publishers = factory(Publisher::class)->times(5)->create();
 
         $this->publisherRepo->expects('all')->andReturn($publishers);
 
         $response = $this->getJson(route('api.b1.publishers.index'));
 
-        $this->assertSuccessDataResponse($response, $publishers->toArray(), 'Publishers retrieved successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $publishers->toArray(),
+            'Publishers retrieved successfully.'
+        );
     }
 
     /** @test */
@@ -65,7 +70,9 @@ class PublisherAPIControllerTest extends TestCase
         $this->assertEquals(17, $response->original['totalRecords'], '12 defaults');
 
         $search = $searchByName->original['data'];
-        $this->assertTrue(count($search) > 0 && count($search) < 17, 'Must return at lease one publisher');
+        $this->assertTrue(count($search) > 0 && count($search) < 17,
+            'Must return at lease one publisher'
+        );
         $this->assertEquals(count($search), $searchByName->original['totalRecords']);
     }
 
@@ -101,7 +108,11 @@ class PublisherAPIControllerTest extends TestCase
 
         $response = $this->putJson(route('api.b1.publishers.update', $publisher->id), $updateRecord->toArray());
 
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Publisher updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $updateRecord->toArray(),
+            'Publisher updated successfully.'
+        );
     }
 
     /** @test */
@@ -135,6 +146,9 @@ class PublisherAPIControllerTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.publishers.destroy', $bookItem->publisher_id));
 
-        $this->assertExceptionMessage($response, 'Publisher can not be delete, it is used in one or more book items.');
+        $this->assertExceptionMessage(
+            $response,
+            'Publisher can not be delete, it is used in one or more book items.'
+        );
     }
 }

@@ -38,6 +38,7 @@ class SettingAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Setting[] $settings */
         $settings = factory(Setting::class)->times(5)->create();
 
         $this->settingRepo->expects('all')->andReturn($settings);
