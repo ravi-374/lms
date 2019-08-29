@@ -22,7 +22,7 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     {
         $issuedBook = factory(IssuedBook::class)->times(5)->create(['member_id' => $this->loggedInMemberId]);
 
-        $response = $this->getJson('api/v1/books-history');
+        $response = $this->getJson(route('api.v1.books-history.index'));
 
         $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
         $this->assertCount(5, $response->original['data']);
@@ -33,7 +33,7 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     {
         $bookItem = factory(BookItem::class)->create();
 
-        $reserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/reserve-book');
+        $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
 
         $this->assertSuccessMessageResponse($reserveBook, 'Book reserved successfully.');
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
@@ -44,8 +44,8 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     {
         $bookItem = factory(BookItem::class)->create();
 
-        $reserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/reserve-book');
-        $unReserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/un-reserve-book');
+        $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
+        $unReserveBook = $this->postJson(route('api.v1.un-reserve-book', $bookItem->id));
 
         $this->assertSuccessMessageResponse($unReserveBook, 'Book un-reserved successfully.');
         $this->assertEquals(BookItem::STATUS_AVAILABLE, $bookItem->fresh()->status);
