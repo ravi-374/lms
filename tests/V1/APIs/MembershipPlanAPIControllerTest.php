@@ -3,39 +3,23 @@
 namespace Tests\V1\APIs;
 
 use App\Models\MembershipPlan;
-use App\Repositories\MembershipPlanRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class MembershipPlanAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $membershipPlanRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
         parent::setUp();
     }
 
-    private function mockRepository()
-    {
-        $this->membershipPlanRepo = \Mockery::mock(MembershipPlanRepository::class);
-        app()->instance(MembershipPlanRepository::class, $this->membershipPlanRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_membership_plans()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$membershipPlan);
 
         /** @var MembershipPlan[] $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class)->times(5)->create();

@@ -3,17 +3,13 @@
 namespace Tests\V1\APIs;
 
 use App\Models\Member;
-use App\Repositories\MemberRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class MemberAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $memberRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -21,22 +17,10 @@ class MemberAPIControllerTest extends TestCase
         $this->signInWithMember();
     }
 
-    private function mockRepository()
-    {
-        $this->memberRepo = \Mockery::mock(MemberRepository::class);
-        app()->instance(MemberRepository::class, $this->memberRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function it_can_update_member_profile()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$member);
 
         /** @var Member $updateRecord */
         $updateRecord = factory(Member::class)->make(['id' => $this->loggedInMemberId]);
@@ -47,7 +31,7 @@ class MemberAPIControllerTest extends TestCase
             ->with($updateRecord->toArray(), $this->loggedInMemberId)
             ->andReturn($updateRecord);
 
-        $response = $this->postJson(route('api.v1.update-member-profile'),$updateRecord->toArray());
+        $response = $this->postJson(route('api.v1.update-member-profile'), $updateRecord->toArray());
 
         $this->assertSuccessDataResponse(
             $response,
@@ -72,7 +56,7 @@ class MemberAPIControllerTest extends TestCase
         $member = factory(Member::class)->create();
         $fakeMember = factory(Member::class)->raw(['id' => $member->id]);
 
-        $response = $this->postJson(route('api.v1.update-member-profile'),$fakeMember);
+        $response = $this->postJson(route('api.v1.update-member-profile'), $fakeMember);
 
         $this->assertSuccessMessageResponse($response, 'Member profile updated successfully.');
         $this->assertNotEquals($fakeMember['email'], $member->fresh()->email, 'Email should not update');

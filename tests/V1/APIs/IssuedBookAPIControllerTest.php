@@ -6,18 +6,14 @@ use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
-use App\Repositories\IssuedBookRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class IssuedBookAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $issuedBookRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -25,22 +21,10 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->signInWithMember();
     }
 
-    private function mockRepository()
-    {
-        $this->issuedBookRepo = \Mockery::mock(IssuedBookRepository::class);
-        app()->instance(IssuedBookRepository::class, $this->issuedBookRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_book_history()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$issuedBook);
 
         $member = factory(Member::class)->create();
         /** @var IssuedBook $issuedBook */

@@ -3,17 +3,13 @@
 namespace Tests\V1\APIs;
 
 use App\Models\BookItem;
-use App\Repositories\BookItemRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class BookItemAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $bookItemRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -21,27 +17,15 @@ class BookItemAPIControllerTest extends TestCase
         $this->signInWithMember();
     }
 
-    private function mockRepository()
-    {
-        $this->bookItemRepo = \Mockery::mock(BookItemRepository::class);
-        app()->instance(BookItemRepository::class, $this->bookItemRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function it_can_get_all_book_items()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$bookItem);
 
         /** @var BookItem[] $bookItems */
         $bookItems = factory(BookItem::class)->times(5)->create();
 
-        $this->bookItemRepo->expects('searchBooks')->andReturn($bookItems);
+        $this->bookItemRepository->expects('searchBooks')->andReturn($bookItems);
 
         $response = $this->getJson(route('api.v1.search-books.index'));
 

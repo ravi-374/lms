@@ -32,7 +32,7 @@ trait MockRepositories
     public static $bookSeries = 'bookSeriesRepo';
     public static $country = 'countryRepo';
     public static $genre = 'genreRepository';
-    public static $issueBook = 'issueBookRepo';
+    public static $issuedBook = 'issuedBookRepo';
     public static $member = 'memberRepo';
     public static $membershipPlan = 'membershipPlanRepo';
     public static $permission = 'permissionRepo';
@@ -57,7 +57,7 @@ trait MockRepositories
     /** @var MockInterface */
     protected $genreRepository;
     /** @var MockInterface */
-    protected $issueBookRepo;
+    protected $issuedBookRepo;
     /** @var MockInterface */
     protected $memberRepo;
     /** @var MockInterface */
@@ -106,7 +106,7 @@ trait MockRepositories
                 case self::$genre:
                     $repoInstance = GenreRepository::class;
                     break;
-                case self::$issueBook:
+                case self::$issuedBook:
                     $repoInstance = IssuedBookRepository::class;
                     break;
                 case self::$member:
