@@ -60,7 +60,7 @@ class BookSeriesRepositoryTest extends TestCase
     public function it_can_update_book_series()
     {
         $bookSeries = factory(BookSeries::class)->create();
-        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
+        $fakeBookSeries = factory(BookSeries::class)->raw();
 
         $bookSeries = $this->bookSeriesRepo->update($fakeBookSeries, $bookSeries->id);
 

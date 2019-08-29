@@ -109,7 +109,7 @@ class BookRepositoryTest extends TestCase
         /** @var Book $book */
         $book = factory(Book::class)->create();
         $oldBookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
-        $inputs[] = factory(BookItem::class)->make()->toArray();
+        $inputs[] = factory(BookItem::class)->raw();
 
         $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
         $this->assertTrue($result);
