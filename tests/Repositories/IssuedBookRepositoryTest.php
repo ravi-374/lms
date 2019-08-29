@@ -103,6 +103,7 @@ class IssuedBookRepositoryTest extends TestCase
     {
         /** @var Member $member */
         $member = factory(Member::class)->create();
+
         /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
@@ -146,6 +147,8 @@ class IssuedBookRepositoryTest extends TestCase
     {
         $vishal = factory(Member::class)->create();
         $mitul = factory(Member::class)->create();
+
+        /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
         $reserved = $this->issuedBookRepo->reserveBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
@@ -160,6 +163,8 @@ class IssuedBookRepositoryTest extends TestCase
     public function test_unable_to_issue_book_when_its_already_issued()
     {
         $vishal = factory(Member::class)->create();
+
+        /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
         $this->issuedBookRepo->issueBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
@@ -235,7 +240,7 @@ class IssuedBookRepositoryTest extends TestCase
         $member = factory(Member::class)->create();
         $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
 
-        $reserveBook = $this->issuedBookRepo->reserveBook($input);
+        $this->issuedBookRepo->reserveBook($input);
     }
 
     /** @test */
@@ -266,7 +271,7 @@ class IssuedBookRepositoryTest extends TestCase
         $member = factory(Member::class)->create();
         $input = ['book_item_id' => $bookItem->id, 'member_id' => $member->id];
 
-        $returnBook = $this->issuedBookRepo->returnBook($input);
+        $this->issuedBookRepo->returnBook($input);
     }
 
     /** @test */
@@ -298,8 +303,10 @@ class IssuedBookRepositoryTest extends TestCase
         $mitul = factory(Member::class)->create();
 
         $issuedBook = $this->issuedBookRepo->reserveBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
-        $returnBook = $this->issuedBookRepo->unReserveBook(
-            $bookItem, ['book_item_id' => $bookItem->id, 'member_id' => $mitul->id]
+        $returnBook = $this->issuedBookRepo->unReserveBook($bookItem, [
+                'book_item_id' => $bookItem->id,
+                'member_id' => $mitul->id
+            ]
         );
     }
 

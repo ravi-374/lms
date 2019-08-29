@@ -63,6 +63,7 @@ class BookItemRepositoryTest extends TestCase
     /** @test */
     public function it_can_search_books_with_given_book_ids()
     {
+        /** @var BookItem[] $bookItems */
         $bookItems = factory(BookItem::class)->times(5)->create();
 
         $search['id'] = $bookItems[0]->book_id." ".$bookItems[1]->book_id;
@@ -79,6 +80,7 @@ class BookItemRepositoryTest extends TestCase
     /** @test */
     public function it_can_search_books_with_given_book_author()
     {
+        /** @var Author $author */
         $author = factory(Author::class)->create();
         $book1 = factory(Book::class)->create();
         $book1->authors()->sync([$author->id]);

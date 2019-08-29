@@ -49,7 +49,11 @@ class MemberAPIControllerTest extends TestCase
 
         $response = $this->postJson(route('api.v1.update-member-profile'),$updateRecord->toArray());
 
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'Member profile updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $updateRecord->toArray(),
+            'Member profile updated successfully.'
+        );
     }
 
     /** @test */

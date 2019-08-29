@@ -21,7 +21,6 @@ class SeriesBookRepositoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->seriesBookRepo = app(SeriesBookRepository::class);
         $this->signInWithDefaultAdminUser();
     }
@@ -29,11 +28,12 @@ class SeriesBookRepositoryTest extends TestCase
     /** @test */
     public function test_can_create_series_book_items()
     {
+        /** @var BookSeries $bookSeries */
         $bookSeries = factory(BookSeries::class)->create();
         $fakeSeriesBook[] = factory(SeriesBook::class)->raw();
         $fakeSeriesBook[] = factory(SeriesBook::class)->raw();
 
-        $createSeriesBook = $this->seriesBookRepo->createOrUpdateSeriesItems($bookSeries, $fakeSeriesBook);
+        $this->seriesBookRepo->createOrUpdateSeriesItems($bookSeries, $fakeSeriesBook);
 
         $this->assertArrayHasKey('id', $bookSeries);
         $this->assertCount(2, $bookSeries->fresh()->seriesItems);
@@ -59,7 +59,7 @@ class SeriesBookRepositoryTest extends TestCase
      */
     public function test_can_not_create_series_book_when_book_is_not_passed()
     {
-        $inputs[] = factory(SeriesBook::class)->make(['book_id' => null])->toArray();
+        $inputs[] = factory(SeriesBook::class)->raw(['book_id' => null]);
 
         $this->seriesBookRepo->validateSeriesItems($inputs);
     }

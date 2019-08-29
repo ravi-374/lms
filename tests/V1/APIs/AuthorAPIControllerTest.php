@@ -38,6 +38,7 @@ class AuthorAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Author[] $authors */
         $authors = factory(Author::class)->times(5)->create();
 
         $this->authorRepo->expects('all')->andReturn($authors);

@@ -32,7 +32,7 @@ class BookSeriesRepositoryTest extends TestCase
     /** @test */
     public function test_can_get_all_book_series()
     {
-        /** @var BookSeries $bookSeries */
+        /** @var BookSeries[] $bookSeries */
         $bookSeries = factory(BookSeries::class)->times(5)->create();
 
         $allBookSeries = $this->bookSeriesRepo->all();
@@ -48,7 +48,7 @@ class BookSeriesRepositoryTest extends TestCase
      */
     public function it_can_store_book_series()
     {
-        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
+        $fakeBookSeries = factory(BookSeries::class)->raw();
 
         $bookResult = $this->bookSeriesRepo->store($fakeBookSeries);
 
@@ -71,8 +71,9 @@ class BookSeriesRepositoryTest extends TestCase
     /** @test */
     public function test_can_create_book_series_with_series_items()
     {
+        /** @var Book $book */
         $book = factory(Book::class)->create();
-        $fakeBookSeries = factory(BookSeries::class)->make()->toArray();
+        $fakeBookSeries = factory(BookSeries::class)->raw();
 
         $fakeBookSeries['series_items'][] = ['book_id' => $book->id, 'sequence' => 1];
         $fakeBookSeries['series_items'][] = ['book_id' => $book->id, 'sequence' => 2];

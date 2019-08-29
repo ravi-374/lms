@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 /**
  * Class SettingTest
- * @package Tests\Integration\Models
+ * @package Tests\Models
  */
 class SettingTest extends TestCase
 {
@@ -17,6 +17,7 @@ class SettingTest extends TestCase
     /** @test */
     public function it_can_get_setting_of_given_key()
     {
+        /** @var Setting $setting1 */
         $setting1 = factory(Setting::class)->create();
         $setting2 = factory(Setting::class)->create();
 

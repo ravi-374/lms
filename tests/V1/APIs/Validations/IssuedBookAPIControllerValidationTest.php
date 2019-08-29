@@ -20,7 +20,9 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_can_get_all_book_history()
     {
-        $issuedBook = factory(IssuedBook::class)->times(5)->create(['member_id' => $this->loggedInMemberId]);
+        $issuedBook = factory(IssuedBook::class)->times(5)->create([
+            'member_id' => $this->loggedInMemberId
+        ]);
 
         $response = $this->getJson(route('api.v1.books-history.index'));
 
@@ -31,6 +33,7 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_can_reserve_book()
     {
+        /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
         $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
@@ -42,6 +45,7 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_can_un_reserve_book()
     {
+        /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
         $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
