@@ -80,10 +80,7 @@ class BookAPIController extends AppBaseController
      */
     public function show(Book $book)
     {
-        $book->tags;
-        $book->genres;
-        $book->items;
-        $book->authors;
+        $book = Book::with(['tags', 'genres', 'authors', 'items.language', 'items.publisher'])->findOrFail($book->id);
 
         return $this->sendResponse($book->toArray(), 'Book retrieved successfully.');
     }

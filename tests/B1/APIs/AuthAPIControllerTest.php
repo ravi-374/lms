@@ -18,6 +18,7 @@ class AuthAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */
