@@ -32,6 +32,10 @@ class UserAuth
      */
     public function handle($request, Closure $next)
     {
+        if (App::runningUnitTests()) {
+            return $next($request);
+        }
+
         $token = JWTAuth::getToken();
 
         if (App::isLocal() && empty($token)) {
