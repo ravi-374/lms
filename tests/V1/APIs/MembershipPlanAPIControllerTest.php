@@ -18,6 +18,7 @@ class MembershipPlanAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithMember();
     }
 
     private function mockRepository()
@@ -62,7 +63,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.v1.membership-plans.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.v1.membership-plans.index', ['search='.$membershipPlans[0]->name]));
 
-        $this->assertCount(7, $response->original['data'], '2 defaults plan');
+        $this->assertCount(8, $response->original['data'], '2 defaults plan');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
