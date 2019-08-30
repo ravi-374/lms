@@ -10,10 +10,8 @@ const FilterField = ({ options, handleFilter, initialize, filterKey }) => {
         handleFilter(option.name);
     };
     return (
-        <div className="ml-2">
-            <Field name="filter_key" options={options} groupText="filter" component={Select} isCustom
-                   onChange={onChangeFilter}/>
-        </div>
+        <Field name="filter_key" options={options} groupText="filter" component={Select} isCustom
+               onChange={onChangeFilter}/>
     )
 };
 

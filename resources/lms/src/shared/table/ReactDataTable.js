@@ -84,15 +84,14 @@ export default (props) => {
 
     return (
         <Fragment>
-            <Row className="justify-content-end">
-                <Col xs={2}>
-                    {isShowFilterField ?
-                        <FilterField options={filterOptions} filterKey={filterKey} handleFilter={handleSearch}/> : null}
-                </Col>
-                <Col xs={2}>
+            <div className={isShowFilterField ? 'search-filter-container' : 'search-container'}>
+                {isShowFilterField ? <div className="search-filter-container__filter-input">
+                    <FilterField options={filterOptions} filterKey={filterKey} handleFilter={handleSearch}/>
+                </div> : null}
+                <div className={isShowFilterField ? 'search-filter-container__search-input' : ''}>
                     {isShowSearchField ? <SearchField handleSearch={handleSearch}/> : null}
-                </Col>
-            </Row>
+                </div>
+            </div>
             <DataTable noDataComponent={<EmptyComponent {...emptyStateProps}/>}
                        paginationRowsPerPageOptions={paginationRowsPerPageOptions} sortIcon={renderSortIcons(direction)}
                        pagination={true} paginationPerPage={defaultLimit} paginationServer={true}
