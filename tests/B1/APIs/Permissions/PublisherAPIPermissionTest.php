@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\B1\APIs\Permissions;
-
 
 use App\Models\Publisher;
 use App\User;
