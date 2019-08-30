@@ -36,7 +36,7 @@ class PublisherAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_create_publishers_without_permission()
+    public function test_not_allow_to_create_publisher_without_permission()
     {
         $fakePublisher = factory(Publisher::class)->raw();
 
@@ -46,7 +46,7 @@ class PublisherAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_update_publishers_without_permission()
+    public function test_not_allow_to_update_publisher_without_permission()
     {
         $publisher = factory(Publisher::class)->create();
         $updatePublisher = factory(Publisher::class)->raw(['id' => $publisher->id]);
@@ -57,7 +57,7 @@ class PublisherAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_delete_publishers_without_permission()
+    public function test_not_allow_to_delete_publisher_without_permission()
     {
         $publisher = factory(Publisher::class)->create();
 
@@ -76,7 +76,7 @@ class PublisherAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_create_publishers_with_valid_permission()
+    public function test_can_create_publisher_with_valid_permission()
     {
         $this->assignPermissions($this->loggedInUserId, ['manage_publishers']);
         $fakePublisher = factory(Publisher::class)->raw();
@@ -87,7 +87,7 @@ class PublisherAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_update_publishers_with_valid_permission()
+    public function test_can_update_publisher_with_valid_permission()
     {
         $this->assignPermissions($this->loggedInUserId, ['manage_publishers']);
         $publisher = factory(Publisher::class)->create();
@@ -99,7 +99,7 @@ class PublisherAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_delete_publishers_with_valid_permission()
+    public function test_can_delete_publisher_with_valid_permission()
     {
         $this->assignPermissions($this->loggedInUserId, ['manage_publishers']);
         $publisher = factory(Publisher::class)->create();
