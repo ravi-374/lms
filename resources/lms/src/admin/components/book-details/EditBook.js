@@ -16,17 +16,17 @@ const EditBook = (props) => {
         props.fetchGenres();
         props.fetchTags();
     }, []);
-    const {authors, genres, tags, book, toggleModal} = props;
-    const {id, is_featured, isbn, name, price, url, description, image} = book;
+    const { authors, genres, tags, book, toggleModal } = props;
+    const { id, is_featured, isbn, name, price, url, description, image } = book;
     const changAbleFields = {
         id,
         is_featured,
         isbn,
-        selectedGenres: props.book.genres,
-        selectedAuthors: props.book.authors ? prepareAuthor(props.book.authors) : [],
+        genres: props.book.genres,
+        authors: props.book.authors ? prepareAuthor(props.book.authors) : [],
         name,
         price,
-        selectedTags: props.book.tags,
+        tags: props.book.tags,
         url,
         description,
         image,
@@ -51,7 +51,7 @@ const EditBook = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {authors, tags, genres} = state;
+    const { authors, tags, genres } = state;
     return {
         authors: prepareAuthor(Object.values(authors)),
         tags: Object.values(tags),

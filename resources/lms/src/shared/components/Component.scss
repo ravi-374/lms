@@ -167,18 +167,18 @@
             height: auto;
         }
         &--primary {
-            height: 45px;
+            min-height: 43px;
 
             .css-1hwfws3,
             .css-1fhf3k1-control,
             .css-yk16xz-control {
-                height: 45px;
+                min-height: 43px;
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
             }
         }
         &--secondary {
-            height: 38px;
+            min-height: 38px;
 
             .css-1hwfws3,
             .css-1fhf3k1-control,
@@ -188,13 +188,10 @@
             }
         }
 
-        .css-1uccc91-singleValue {
-            top: 45% !important;
-        }
         .css-2613qy-menu {
             cursor: pointer;
         }
-        .css-1w9j89e-menu {
+        .css-26l3qy-menu, .css-1w9j89e-menu {
             z-index: 1234;
         }
     }

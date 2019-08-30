@@ -1,53 +1,49 @@
-import React, {createRef, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Col, Row, Button} from 'reactstrap';
 import {reduxForm, Field} from 'redux-form';
-import InputGroup from '../../../shared/components/InputGroup';
 import Radio from '../../../shared/components/Radio';
-import TypeAhead from '../../../shared/components/TypeAhead';
 import {resetSearchBooks} from "../../store/actions/bookSearchAction";
 import './Books.scss';
+import Select from "../../../shared/components/Select";
 
 const BookSearchForm = (props) => {
     const { books, authors, change, onSearchBook, resetSearchBooks, setSearch } = props;
     const [isAuthorChecked, setIsAuthorChecked] = useState(false);
     const [isBookChecked, setIsBookChecked] = useState(true);
     const [isDisabled, setIsDisabled] = useState(true);
-    const typeAheadRef = createRef();
     const prepareParams = (item) => {
         if (isBookChecked) {
-            return `id=${item[0].id}&search_by_book=${true}`
+            return `id=${item.id}&search_by_book=${true}`
         } else if (isAuthorChecked) {
-            return `id=${item[0].id}&search_by_author=${true}`
+            return `id=${item.id}&search_by_author=${true}`
         }
     };
     const searchBook = (formValues) => {
         onSearchBook(prepareParams(formValues.item));
         setSearch(true);
     };
-    const onSelectItem = (option) => {
-        change('item', option);
+    const onSelectItem = () => {
         setIsDisabled(false);
     };
     const onCheckedBook = () => {
+        change('item', null);
         setIsDisabled(true);
         setSearch(false);
         setIsBookChecked(!isBookChecked);
-        typeAheadRef.current.getInstance().clear();
         setIsAuthorChecked(false);
         resetSearchBooks();
     };
     const onCheckedAuthor = () => {
+        change('item', null);
         setIsDisabled(true);
         setSearch(false);
         setIsAuthorChecked(!isAuthorChecked);
-        typeAheadRef.current.getInstance().clear();
         setIsBookChecked(false);
         resetSearchBooks();
     };
     const onResetSearch = () => {
         change('item', null);
-        typeAheadRef.current.getInstance().clear();
         setIsDisabled(true);
         setSearch(false);
         resetSearchBooks();
@@ -77,11 +73,10 @@ const BookSearchForm = (props) => {
                     <Col xs={12}>
                         <span className="book-form__input-label">{isBookChecked ? 'Book' : 'Author'} Name</span>
                         <div className="book-form__input-book">
-                            <TypeAhead id="item" options={isBookChecked ? books : authors}
-                                       placeholder={`Select ${isBookChecked ? 'Book' : 'Author' }`}
-                                       onChange={onSelectItem} groupText={isBookChecked ? 'book' : 'user-circle-o'}
-                                       reference={typeAheadRef}/>
-                            <Field name="item" type="hidden" component={InputGroup}/>
+                            <Field name="item" options={isBookChecked ? books : authors}
+                                   placeholder={`Select ${isBookChecked ? 'Book' : 'Author' }`} onChange={onSelectItem}
+                                   groupText={isBookChecked ? 'book' : 'user-circle-o'} component={Select}
+                                   isSearchable={true}/>
                         </div>
                     </Col>
                 </div>
