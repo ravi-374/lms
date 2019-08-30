@@ -14,11 +14,11 @@ import {dateFormat} from "../../../constants";
 const EditBookAllotment = (props) => {
     const {
         toggleModal, className,
-        title, books, bookAllotment, onSelectBook, bookId, members, bookItems, isMemberBookHistory, filterObject
+        title, books, bookAllotment, onSelectBook, bookId, members, isMemberBookHistory, filterObject
     } = props;
     const modalOption = { toggleModal, className, title };
     const formOption = { books, onSelectBook, bookId, members };
-    const { note, reserve_date, issued_on, return_date } = bookAllotment;
+    const { note, reserve_date, issued_on, return_date, member } = bookAllotment;
     const changeAbleFields = {
         book: bookAllotment.book_item.book,
         note,
@@ -29,8 +29,7 @@ const EditBookAllotment = (props) => {
             id: bookAllotment.book_item.id,
             name: bookAllotment.book_item.edition + ` (${bookAllotment.book_item.book_code})`
         },
-        bookItems,
-        member: members.find(member => member.id === +bookAllotment.member_id),
+        member: member ? { id: member.id, name: member.first_name + ' ' + member.last_name } : null,
         status: bookStatusOptions.find(circular => circular.id === +bookAllotment.status)
     };
 
@@ -62,9 +61,7 @@ const EditBookAllotment = (props) => {
             }
         }
     };
-    if (changeAbleFields.bookItems.length === 0) {
-        return null;
-    }
+
     const prepareFormOption = {
         onSaveBookAllotment,
         onCancel: toggleModal,
@@ -72,28 +69,14 @@ const EditBookAllotment = (props) => {
     };
     return <Modal {...modalOption} content={<BookAllotmentForm {...prepareFormOption} {...formOption} />}/>
 };
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     const { books, members } = state;
-    const booksArray = Object.values(books);
-    const membersArray = prepareFullNames(Object.values(members));
-    const filterArray = booksArray.filter(book => book.id === +ownProps.bookAllotment.book_item.book.id);
     return {
-        bookItems: prepareBookItems(filterArray),
-        books: booksArray,
-        members: membersArray
+        books: books,
+        members: prepareFullNames(members)
     }
 };
 
-const prepareBookItems = (books) => {
-    let bookArray = [];
-    if (books.length === 0 || books.length > 0 && !books[0].items) {
-        return bookArray;
-    }
-    books[0].items.forEach(book => {
-        bookArray.push({ id: +book.id, name: book.edition + ` (${book.book_code})` });
-    });
-    return bookArray;
-};
 export default connect(mapStateToProps, {
     editBookAllotment,
     editMemberBookHistory,

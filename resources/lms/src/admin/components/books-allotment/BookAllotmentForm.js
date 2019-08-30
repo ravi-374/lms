@@ -26,11 +26,7 @@ const BookAllotmentForm = props => {
         bookId = null;
         memberId = null;
         if (initialValues) {
-            const { book, member } = initialValues;
-            bookId = book.id;
-            memberId = member.id;
             setStatus(initialValues.status.id);
-            setDisabledItem(false);
             if (initialValues.reserve_date) {
                 setSelectedDate(moment(initialValues.reserve_date).toDate());
                 props.change('reserve_date', initialValues.reserve_date);
@@ -160,17 +156,17 @@ const BookAllotmentForm = props => {
             <Col xs={12}>
                 <Field name="book" label="Book" required options={props.books} placeholder="Select Book"
                        onChange={onSelectBook} groupText="book" component={Select} isSearchable={true}
-                       innerRef={bookItemRef}/>
+                       innerRef={bookItemRef} disabled={initialValues}/>
             </Col>
             <Col xs={12}>
                 <Field name="member" label="Member" required options={props.members} placeholder="Select Member"
-                       onChange={onSelectMember} groupText="user-circle-o" component={Select} isSearchable={true}/>
+                       onChange={onSelectMember} groupText="user-circle-o" component={Select} isSearchable={true}
+                       disabled={initialValues}/>
             </Col>
             <Col xs={12}>
-                <Field name="book_item" label="Book Item" required
-                       options={props.bookItems.length > 0 ? props.bookItems : props.initialValues ? props.initialValues.bookItems : props.bookItems}
+                <Field name="book_item" label="Book Item" required options={props.bookItems}
                        placeholder="Select Book Item" groupText="object-group" component={Select} isSearchable={true}
-                       disabled={isDisabledItem}/>
+                       disabled={isDisabledItem || initialValues}/>
             </Col>
             <Col xs={12}>
                 <Field name="status" label="Status" required options={renderBookStatusOption()}
