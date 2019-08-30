@@ -19,7 +19,7 @@ const Lending = () => {
         }
     };
     const isBottom = (el) => {
-        return el.getBoundingClientRect().bottom <= window.innerHeight;
+        if (el) return el.getBoundingClientRect().bottom <= window.innerHeight;
     };
     const trackScrolling = () => {
         let element = document.getElementById('home');
@@ -30,16 +30,16 @@ const Lending = () => {
         const scrollElement = document.getElementById('scroll-btn');
         if (scrollElement) {
             scrollElement.classList.add('scroll-btn-fade-in');
-        }
-        if (!isBottom(element)) {
-            if (scrollElement.classList.contains('scroll-btn-fade-in')) {
-                scrollElement.classList.remove('scroll-btn-fade-in');
-                scrollElement.classList.add('scroll-btn-fade-out');
-            }
-        } else {
-            if (scrollElement.classList.contains('scroll-btn-fade-out')) {
-                scrollElement.classList.remove('scroll-btn-fade-out');
-                scrollElement.classList.add('scroll-btn-fade-in');
+            if (!isBottom(element)) {
+                if (scrollElement.classList.contains('scroll-btn-fade-in')) {
+                    scrollElement.classList.remove('scroll-btn-fade-in');
+                    scrollElement.classList.add('scroll-btn-fade-out');
+                }
+            } else {
+                if (scrollElement.classList.contains('scroll-btn-fade-out')) {
+                    scrollElement.classList.remove('scroll-btn-fade-out');
+                    scrollElement.classList.add('scroll-btn-fade-in');
+                }
             }
         }
         if (isBottom(element1)) {
