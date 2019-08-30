@@ -175,6 +175,30 @@ class IssuedBookAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_sort_issued_book_records_by_reserve_on()
+    {
+        $reservedOn = date('Y-m-d H:i:s');
+        $firstIssuedBook = factory(IssuedBook::class)->create(['reserve_date' => $reservedOn]);
+        $secondIssueBook = factory(IssuedBook::class)->create(['reserve_date' => $reservedOn]);
+
+        $responseAsc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'reserved_on',
+                'direction' => 'asc',
+            ]
+        ));
+        $responseDesc = $this->getJson(route('api.b1.books-history', [
+                'order_by'  => 'reserved_on',
+                'direction' => 'desc',
+            ]
+        ));
+
+        $responseAsc = $responseAsc->original['data'];
+        $responseDesc = $responseDesc->original['data'];
+        $this->assertEquals($reservedOn, $responseAsc[0]['reserve_date']);
+        $this->assertEquals($reservedOn, $responseDesc[0]['reserve_date']);
+    }
+
+    /** @test */
     public function test_can_search_issued_book_records_by_status()
     {
         $issuedBook1 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
