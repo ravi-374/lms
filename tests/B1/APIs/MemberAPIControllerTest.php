@@ -4,17 +4,13 @@ namespace Tests\B1\APIs;
 
 use App\Models\Member;
 use App\Models\MembershipPlan;
-use App\Repositories\MemberRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class MemberAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $memberRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -22,27 +18,15 @@ class MemberAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->memberRepo = \Mockery::mock(MemberRepository::class);
-        app()->instance(MemberRepository::class, $this->memberRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_members()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$member);
 
         /** @var Member[] $members */
         $members = factory(Member::class)->times(5)->create();
 
-        $this->memberRepo->expects('all')->andReturn($members);
+        $this->memberRepository->expects('all')->andReturn($members);
 
         $response = $this->getJson(route('api.b1.members.index'));
 
@@ -103,14 +87,14 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_member()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$member);
 
         /** @var Member $member */
         $member = factory(Member::class)->make();
 
         $input = array_merge($member->toArray(), ['password' => 12345678]);
 
-        $this->memberRepo->expects('store')
+        $this->memberRepository->expects('store')
             ->with($input)
             ->andReturn($member);
 
@@ -122,13 +106,13 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_member()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$member);
 
         /** @var Member $member */
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id]);
 
-        $this->memberRepo->expects('update')
+        $this->memberRepository->expects('update')
             ->with($updateRecord->toArray(), $member->id)
             ->andReturn($updateRecord);
 

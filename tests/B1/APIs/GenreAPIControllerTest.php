@@ -4,17 +4,13 @@ namespace Tests\B1\APIs;
 
 use App\Models\Book;
 use App\Models\Genre;
-use App\Repositories\GenreRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class GenreAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $genreRepository;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -22,22 +18,10 @@ class GenreAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->genreRepository = \Mockery::mock(GenreRepository::class);
-        app()->instance(GenreRepository::class, $this->genreRepository);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_genres()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$genre);
 
         /** @var Genre[] $genres */
         $genres = factory(Genre::class)->times(5)->create();
@@ -73,7 +57,7 @@ class GenreAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_genre()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$genre);
 
         /** @var Genre $genre */
         $genre = factory(Genre::class)->make();
@@ -90,7 +74,7 @@ class GenreAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_genre()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$genre);
 
         /** @var Genre $genre */
         $genre = factory(Genre::class)->create();

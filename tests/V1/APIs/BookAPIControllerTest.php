@@ -3,17 +3,13 @@
 namespace Tests\V1\APIs;
 
 use App\Models\Book;
-use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class BookAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $bookRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -21,27 +17,15 @@ class BookAPIControllerTest extends TestCase
         $this->signInWithMember();
     }
 
-    private function mockRepository()
-    {
-        $this->bookRepo = \Mockery::mock(BookRepository::class);
-        app()->instance(BookRepository::class, $this->bookRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function it_can_get_all_books()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$book);
 
         /** @var Book[] $books */
         $books = factory(Book::class)->times(5)->create();
 
-        $this->bookRepo->expects('all')->andReturn($books);
+        $this->bookRepository->expects('all')->andReturn($books);
 
         $response = $this->getJson(route('api.v1.books.index'));
 

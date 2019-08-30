@@ -3,17 +3,13 @@
 namespace Tests\V1\APIs;
 
 use App\Models\Country;
-use App\Repositories\CountryRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class CountryAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $countryRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -21,27 +17,15 @@ class CountryAPIControllerTest extends TestCase
         $this->signInWithMember();
     }
 
-    private function mockRepository()
-    {
-        $this->countryRepo = \Mockery::mock(CountryRepository::class);
-        app()->instance(CountryRepository::class, $this->countryRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_country_list()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$country);
 
         /** @var Country[] $countries */
         $countries = factory(Country::class)->times(2)->create();
 
-        $this->countryRepo->expects('all')->andReturn($countries);
+        $this->countryRepository->expects('all')->andReturn($countries);
 
         $response = $this->getJson(route('api.v1.countries.index'));
 

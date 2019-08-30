@@ -4,17 +4,13 @@ namespace Tests\B1\APIs;
 
 use App\Models\BookItem;
 use App\Models\BookLanguage;
-use App\Repositories\BookLanguageRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class BookLanguageAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $bookLanguageRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -22,27 +18,15 @@ class BookLanguageAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->bookLanguageRepo = \Mockery::mock(BookLanguageRepository::class);
-        app()->instance(BookLanguageRepository::class, $this->bookLanguageRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_book_languages()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$bookLanguage);
 
         /** @var BookLanguage[] $bookLanguages */
         $bookLanguages = factory(BookLanguage::class)->times(5)->create();
 
-        $this->bookLanguageRepo->expects('all')->andReturn($bookLanguages);
+        $this->bookLanguageRepository->expects('all')->andReturn($bookLanguages);
 
         $response = $this->getJson(route('api.b1.book-languages.index'));
 
@@ -76,12 +60,12 @@ class BookLanguageAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_book_language()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$bookLanguage);
 
         /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->make();
 
-        $this->bookLanguageRepo->expects('create')
+        $this->bookLanguageRepository->expects('create')
             ->with($bookLanguage->toArray())
             ->andReturn($bookLanguage);
 
@@ -95,13 +79,13 @@ class BookLanguageAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_book_language()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$bookLanguage);
 
         /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
         $fakeBookLanguage = factory(BookLanguage::class)->make(['id' => $bookLanguage->id]);
 
-        $this->bookLanguageRepo->expects('update')
+        $this->bookLanguageRepository->expects('update')
             ->with($fakeBookLanguage->toArray(), $bookLanguage->id)
             ->andReturn($fakeBookLanguage);
 

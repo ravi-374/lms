@@ -6,17 +6,13 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\Genre;
-use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class BookAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $bookRepository;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -24,22 +20,10 @@ class BookAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->bookRepository = \Mockery::mock(BookRepository::class);
-        app()->instance(BookRepository::class, $this->bookRepository);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_books()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$book);
 
         /** @var Book[] $books */
         $books = factory(Book::class)->times(5)->create();
@@ -107,7 +91,7 @@ class BookAPIControllerTest extends TestCase
     /** @test */
     public function it_can_store_book()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$book);
 
         $genre = factory(Genre::class)->create();
         /** @var Book $book */
@@ -138,7 +122,7 @@ class BookAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_book()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$book);
 
         $genre = factory(Genre::class)->create();
         /** @var Book $book */
