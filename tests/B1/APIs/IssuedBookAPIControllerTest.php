@@ -178,8 +178,9 @@ class IssuedBookAPIControllerTest extends TestCase
     public function test_can_sort_issued_book_records_by_reserve_on()
     {
         $reservedOn = date('Y-m-d H:i:s');
+        $reservedFutureDate = date('Y-m-d H:i:s', strtotime('+15 days'));
         $firstIssuedBook = factory(IssuedBook::class)->create(['reserve_date' => $reservedOn]);
-        $secondIssueBook = factory(IssuedBook::class)->create(['reserve_date' => $reservedOn]);
+        $secondIssueBook = factory(IssuedBook::class)->create(['reserve_date' => $reservedFutureDate]);
 
         $responseAsc = $this->getJson(route('api.b1.books-history', [
                 'order_by'  => 'reserved_on',
@@ -195,7 +196,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $responseAsc = $responseAsc->original['data'];
         $responseDesc = $responseDesc->original['data'];
         $this->assertEquals($reservedOn, $responseAsc[0]['reserve_date']);
-        $this->assertEquals($reservedOn, $responseDesc[0]['reserve_date']);
+        $this->assertEquals($reservedFutureDate, $responseDesc[0]['reserve_date']);
     }
 
     /** @test */
