@@ -21,7 +21,6 @@ class RoleRepositoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->roleRepo = app(RoleRepository::class);
         $this->signInWithDefaultAdminUser();
     }
@@ -29,7 +28,7 @@ class RoleRepositoryTest extends TestCase
     /** @test */
     public function test_can_get_all_role()
     {
-        /** @var Role $roles */
+        /** @var Role[] $roles */
         $roles = factory(Role::class)->times(5)->create();
 
         $allRoles = $this->roleRepo->all();
@@ -45,7 +44,7 @@ class RoleRepositoryTest extends TestCase
     /** @test */
     public function it_can_store_role()
     {
-        $fakeRole = factory(Role::class)->make()->toArray();
+        $fakeRole = factory(Role::class)->raw();
         $permission = factory(Permission::class)->create();
         $fakeRole['permissions'] = [$permission->id];
 
@@ -74,7 +73,7 @@ class RoleRepositoryTest extends TestCase
     {
         $role = factory(Role::class)->create();
         $permission = factory(Permission::class)->times(2)->create();
-        $fakeRole = factory(Role::class)->make()->toArray();
+        $fakeRole = factory(Role::class)->raw();
         $fakeRole['permissions'] = [$permission[0]->id, $permission[1]->id];
 
         $result = $this->roleRepo->update($fakeRole, $role['id']);

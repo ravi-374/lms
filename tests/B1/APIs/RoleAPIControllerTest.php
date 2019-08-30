@@ -20,6 +20,7 @@ class RoleAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithDefaultAdminUser();
     }
 
     private function mockRepository()
@@ -39,6 +40,7 @@ class RoleAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Role[] $roles */
         $roles = factory(Role::class)->times(5)->create();
 
         $this->roleRepository->expects('all')->andReturn($roles);

@@ -43,25 +43,6 @@ abstract class TestCase extends BaseTestCase
         $this->faker = Factory::create();
     }
 
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->withoutMiddleware($this->skipMiddleware());
-    }
-
-    public function skipMiddleware()
-    {
-        return [
-            \Illuminate\Auth\Middleware\Authenticate::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            UserAuth::class,
-            MemberAuth::class,
-            \Zizaco\Entrust\Middleware\EntrustRole::class,
-            \Zizaco\Entrust\Middleware\EntrustPermission::class,
-        ];
-    }
-
     /**
      * @param TestResponse $response
      * @param string $message

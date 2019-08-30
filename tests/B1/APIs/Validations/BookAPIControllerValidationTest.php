@@ -14,6 +14,7 @@ class BookAPIControllerValidationTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */
@@ -97,9 +98,11 @@ class BookAPIControllerValidationTest extends TestCase
     {
         $book = factory(Book::class)->create();
 
-        $response = $this->postJson(route('api.b1.books.update', $book->id),
-            ['name' => $this->faker->name, 'isbn' => $this->faker->isbn13, 'genres' => []]
-        );
+        $response = $this->postJson(route('api.b1.books.update', $book->id), [
+            'name'   => $this->faker->name,
+            'isbn'   => $this->faker->isbn13,
+            'genres' => [],
+        ]);
 
         $this->assertExceptionMessage($response, 'The genres field is required.');
     }

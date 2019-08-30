@@ -38,11 +38,12 @@ class AuthorAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Author[] $authors */
         $authors = factory(Author::class)->times(5)->create();
 
         $this->authorRepo->expects('all')->andReturn($authors);
 
-        $response = $this->getJson('api/v1/authors');
+        $response = $this->getJson(route('api.v1.authors.index'));
 
         $this->assertSuccessDataResponse($response, $authors->toArray(), 'Authors retrieved successfully.');
     }
@@ -53,10 +54,10 @@ class AuthorAPIControllerTest extends TestCase
         /** @var Author[] $authors */
         $authors = factory(Author::class)->times(5)->create();
 
-        $response = $this->getJson('api/v1/authors');
-        $take3 = $this->getJson('api/v1/authors?limit=3');
-        $skip2 = $this->getJson('api/v1/authors?skip=2&limit=2');
-        $searchByName = $this->getJson('api/v1/authors?search='.$authors[0]->first_name);
+        $response = $this->getJson(route('api.v1.authors.index'));
+        $take3 = $this->getJson(route('api.v1.authors.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.v1.authors.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.v1.authors.index', ['search='.$authors[0]->first_name]));
 
         $this->assertCount(15, $response->original['data'], '10 default');
         $this->assertCount(3, $take3->original['data']);

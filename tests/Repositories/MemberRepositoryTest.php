@@ -96,6 +96,7 @@ class MemberRepositoryTest extends TestCase
     {
         /** @var Member $member */
         $member = factory(Member::class)->create();
+
         $generatedMemberId = $this->memberRepo->generateMemberId();
 
         $this->assertNotEmpty($generatedMemberId);

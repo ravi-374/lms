@@ -22,13 +22,8 @@ class IssueBookTest extends TestCase
         $ankit = factory(Member::class)->create();
         $vishal = factory(Member::class)->create();
 
-        $book1 = factory(IssuedBook::class)->create([
-            'member_id' => $ankit->id,
-        ]);
-
-        $book2 = factory(IssuedBook::class)->create([
-            'member_id' => $vishal->id,
-        ]);
+        $book1 = factory(IssuedBook::class)->create(['member_id' => $ankit->id]);
+        $book2 = factory(IssuedBook::class)->create(['member_id' => $vishal->id]);
 
         $issuedBooks = IssuedBook::ofMember($ankit->id)->get();
         $this->assertCount(1, $issuedBooks);
@@ -41,13 +36,8 @@ class IssueBookTest extends TestCase
     /** @test */
     public function it_can_retrieve_only_reserve_books()
     {
-        $book1 = factory(IssuedBook::class)->create([
-            'status' => IssuedBook::STATUS_RESERVED,
-        ]);
-
-        $book2 = factory(IssuedBook::class)->create([
-            'status' => IssuedBook::STATUS_RETURNED,
-        ]);
+        $book1 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RESERVED]);
+        $book2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
 
         $books = IssuedBook::reserve()->get();
         $this->assertCount(1, $books);
@@ -63,13 +53,8 @@ class IssueBookTest extends TestCase
         $bookItem1 = factory(BookItem::class)->create();
         $bookItem2 = factory(BookItem::class)->create();
 
-        $book1 = factory(IssuedBook::class)->create([
-            'book_item_id' => $bookItem1->id,
-        ]);
-
-        $book2 = factory(IssuedBook::class)->create([
-            'book_item_id' => $bookItem2->id,
-        ]);
+        $book1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
+        $book2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
         $issuedBooks = IssuedBook::ofBookItem($bookItem1->id)->get();
         $this->assertCount(1, $issuedBooks);
@@ -83,7 +68,6 @@ class IssueBookTest extends TestCase
     public function it_can_get_last_issued_book()
     {
         $book1 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
-
         $book2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
 
         $issuedBooks = IssuedBook::lastIssuedBook()->get();

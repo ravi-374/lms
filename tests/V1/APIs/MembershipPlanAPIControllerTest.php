@@ -37,11 +37,12 @@ class MembershipPlanAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var MembershipPlan[] $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
 
         $this->membershipPlanRepo->expects('all')->andReturn($membershipPlan);
 
-        $response = $this->getJson('api/v1/membership-plans');
+        $response = $this->getJson(route('api.v1.membership-plans.index'));
 
         $this->assertSuccessDataResponse(
             $response,
@@ -56,10 +57,10 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var MembershipPlan[] $membershipPlans */
         $membershipPlans = factory(MembershipPlan::class)->times(5)->create();
 
-        $response = $this->getJson('api/v1/membership-plans');
-        $take3 = $this->getJson('api/v1/membership-plans?limit=3');
-        $skip2 = $this->getJson('api/v1/membership-plans?skip=2&limit=2');
-        $searchByName = $this->getJson('api/v1/membership-plans?search='.$membershipPlans[0]->name);
+        $response = $this->getJson(route('api.v1.membership-plans.index'));
+        $take3 = $this->getJson(route('api.v1.membership-plans.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.v1.membership-plans.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.v1.membership-plans.index', ['search='.$membershipPlans[0]->name]));
 
         $this->assertCount(7, $response->original['data'], '2 defaults plan');
         $this->assertCount(3, $take3->original['data']);

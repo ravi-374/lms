@@ -20,9 +20,11 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_can_get_all_book_history()
     {
-        $issuedBook = factory(IssuedBook::class)->times(5)->create(['member_id' => $this->loggedInMemberId]);
+        $issuedBook = factory(IssuedBook::class)->times(5)->create([
+            'member_id' => $this->loggedInMemberId
+        ]);
 
-        $response = $this->getJson('api/v1/books-history');
+        $response = $this->getJson(route('api.v1.books-history.index'));
 
         $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
         $this->assertCount(5, $response->original['data']);
@@ -31,9 +33,10 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_can_reserve_book()
     {
+        /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $reserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/reserve-book');
+        $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
 
         $this->assertSuccessMessageResponse($reserveBook, 'Book reserved successfully.');
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
@@ -42,10 +45,11 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_can_un_reserve_book()
     {
+        /** @var BookItem $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
-        $reserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/reserve-book');
-        $unReserveBook = $this->postJson('api/v1/books/'.$bookItem->id.'/un-reserve-book');
+        $reserveBook = $this->postJson(route('api.v1.reserve-book', $bookItem->id));
+        $unReserveBook = $this->postJson(route('api.v1.un-reserve-book', $bookItem->id));
 
         $this->assertSuccessMessageResponse($unReserveBook, 'Book un-reserved successfully.');
         $this->assertEquals(BookItem::STATUS_AVAILABLE, $bookItem->fresh()->status);

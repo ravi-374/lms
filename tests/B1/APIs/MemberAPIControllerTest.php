@@ -19,6 +19,7 @@ class MemberAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithDefaultAdminUser();
     }
 
     private function mockRepository()
@@ -38,6 +39,7 @@ class MemberAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Member[] $members */
         $members = factory(Member::class)->times(5)->create();
 
         $this->memberRepo->expects('all')->andReturn($members);
@@ -144,7 +146,9 @@ class MemberAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.members.show', $member->id));
 
         $this->assertSuccessDataResponse(
-            $response, $member->toArray(), 'Member retrieved successfully.'
+            $response,
+            $member->toArray(),
+            'Member retrieved successfully.'
         );
     }
 
@@ -157,7 +161,9 @@ class MemberAPIControllerTest extends TestCase
         $response = $this->deleteJson(route('api.b1.members.destroy', $member->id));
 
         $this->assertSuccessDataResponse(
-            $response, $member->toArray(), 'Member deleted successfully.'
+            $response,
+            $member->toArray(),
+            'Member deleted successfully.'
         );
         $this->assertEmpty(Member::find($member->id));
     }
@@ -170,7 +176,11 @@ class MemberAPIControllerTest extends TestCase
 
         $response = $this->getJson(route('api.b1.members.update-status', $member->id));
 
-        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $member->fresh()->toArray(),
+            'Member updated successfully.'
+        );
         $this->assertTrue($member->fresh()->is_active);
     }
 
@@ -182,7 +192,11 @@ class MemberAPIControllerTest extends TestCase
 
         $response = $this->getJson(route('api.b1.members.update-status', $member->id));
 
-        $this->assertSuccessDataResponse($response, $member->fresh()->toArray(), 'Member updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $member->fresh()->toArray(),
+            'Member updated successfully.'
+        );
         $this->assertFalse($member->fresh()->is_active);
     }
 

@@ -23,7 +23,6 @@ class BookRepositoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->bookRepo = app(BookRepository::class);
         $this->signInWithDefaultAdminUser();
     }
@@ -31,7 +30,7 @@ class BookRepositoryTest extends TestCase
     /** @test */
     public function test_can_get_all_books()
     {
-        /** @var Book $books */
+        /** @var Book[] $books */
         $books = factory(Book::class)->times(5)->create();
 
         $allBooks = $this->bookRepo->all();
@@ -46,7 +45,7 @@ class BookRepositoryTest extends TestCase
     /** @test */
     public function it_can_store_book()
     {
-        $fakeBook = factory(Book::class)->make()->toArray();
+        $fakeBook = factory(Book::class)->raw();
 
         $bookResult = $this->bookRepo->store($fakeBook);
 
@@ -57,8 +56,9 @@ class BookRepositoryTest extends TestCase
     /** @test */
     public function it_can_update_book()
     {
+        /** @var Book $book */
         $book = factory(Book::class)->create();
-        $fakeBook = factory(Book::class)->make()->toArray();
+        $fakeBook = factory(Book::class)->raw();
 
         $result = $this->bookRepo->update($fakeBook, $book->id)->toArray();
 
@@ -72,13 +72,14 @@ class BookRepositoryTest extends TestCase
     {
         $book = factory(Book::class)->create();
 
-        $inputs[] = factory(BookItem::class)->make()->toArray();
-        $inputs[] = factory(BookItem::class)->make()->toArray();
+        $inputs[] = factory(BookItem::class)->raw();
+        $inputs[] = factory(BookItem::class)->raw();
 
         $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
 
         $this->assertTrue($result);
 
+        /** @var Book $book */
         $book = Book::with('items')->findOrFail($book->id);
         $this->assertCount(2, $book->items);
         $this->assertEquals($inputs[0]['book_code'], $book->items[0]->book_code);
@@ -88,6 +89,7 @@ class BookRepositoryTest extends TestCase
     /** @test */
     public function it_can_update_book_items()
     {
+        /** @var Book $book */
         $book = factory(Book::class)->create();
         $bookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
         $inputs[] = factory(BookItem::class)->make(['book_id' => $book->id, 'id' => $bookItem->id])->toArray();
@@ -95,6 +97,7 @@ class BookRepositoryTest extends TestCase
         $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
         $this->assertTrue($result);
 
+        /** @var Book $book */
         $book = Book::with('items')->findOrFail($book->id);
         $this->assertCount(1, $book->items);
         $this->assertEquals($inputs[0]['price'], $book->items[0]->price);
@@ -103,9 +106,10 @@ class BookRepositoryTest extends TestCase
     /** @test */
     public function test_can_update_book_items_by_deleting_old_one()
     {
+        /** @var Book $book */
         $book = factory(Book::class)->create();
         $oldBookItem = factory(BookItem::class)->create(['book_id' => $book->id]);
-        $inputs[] = factory(BookItem::class)->make()->toArray();
+        $inputs[] = factory(BookItem::class)->raw();
 
         $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
         $this->assertTrue($result);
@@ -229,7 +233,7 @@ class BookRepositoryTest extends TestCase
      */
     public function it_can_not_store_book_when_book_item_code_is_less_than_eight_character()
     {
-        /** @var BookItem $bookLanguage */
+        /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
         $input['items'] = [['language_id' => $bookLanguage->id, 'price' => 100, 'book_code' => 'SXBFHY']];

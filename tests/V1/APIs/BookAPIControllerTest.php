@@ -38,11 +38,12 @@ class BookAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var Book[] $books */
         $books = factory(Book::class)->times(5)->create();
 
         $this->bookRepo->expects('all')->andReturn($books);
 
-        $response = $this->getJson('api/v1/books');
+        $response = $this->getJson(route('api.v1.books.index'));
 
         $this->assertSuccessDataResponse($response, $books->toArray(), 'Books retrieved successfully.');
     }
@@ -53,10 +54,10 @@ class BookAPIControllerTest extends TestCase
         /** @var Book[] $books */
         $books = factory(Book::class)->times(5)->create();
 
-        $response = $this->getJson('api/v1/books');
-        $take3 = $this->getJson('api/v1/books?limit=3');
-        $skip2 = $this->getJson('api/v1/books?skip=2&limit=2');
-        $searchByName = $this->getJson('api/v1/books?search='.$books[0]->name);
+        $response = $this->getJson(route('api.v1.books.index'));
+        $take3 = $this->getJson(route('api.v1.books.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.v1.books.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.v1.books.index', ['search='.$books[0]->name]));
 
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);

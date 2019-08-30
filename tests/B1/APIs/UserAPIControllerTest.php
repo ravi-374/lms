@@ -40,6 +40,7 @@ class UserAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
+        /** @var User[] $users */
         $users = factory(User::class)->times(5)->create();
 
         $this->userRepo->expects('all')->andReturn($users);
@@ -199,7 +200,11 @@ class UserAPIControllerTest extends TestCase
 
         $response = $this->postJson(route('api.b1.users.update-user-profile'), $updateRecord->toArray());
 
-        $this->assertSuccessDataResponse($response, $updateRecord->toArray(), 'User profile updated successfully.');
+        $this->assertSuccessDataResponse(
+            $response,
+            $updateRecord->toArray(),
+            'User profile updated successfully.'
+        );
     }
 
     /** @test */

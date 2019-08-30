@@ -21,6 +21,7 @@ class BookAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithDefaultAdminUser();
     }
 
     private function mockRepository()
@@ -40,7 +41,7 @@ class BookAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var Book $books */
+        /** @var Book[] $books */
         $books = factory(Book::class)->times(5)->create();
 
         $this->bookRepository->expects('all')->andReturn($books);

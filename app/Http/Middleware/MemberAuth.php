@@ -18,6 +18,10 @@ class MemberAuth
 
     public function handle($request, Closure $next)
     {
+        if (App::runningUnitTests()) {
+            return $next($request);
+        }
+
         $payload = JWTAuth::parseToken()->getPayload()->get('issued_for');
         if ($payload != 'member') {
             throw new UnprocessableEntityHttpException('Invalid token given.');

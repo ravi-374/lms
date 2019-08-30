@@ -13,6 +13,7 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */
@@ -60,9 +61,10 @@ class MembershipPlanAPIControllerValidationTest extends TestCase
     {
         $membershipPlan = factory(MembershipPlan::class)->create();
 
-        $response = $this->putJson(route('api.b1.membership-plans.update', $membershipPlan->id),
-            ['name' => $this->faker->name, 'price' => '']
-        );
+        $response = $this->putJson(route('api.b1.membership-plans.update', $membershipPlan->id), [
+            'name'  => $this->faker->name,
+            'price' => '',
+        ]);
 
         $this->assertExceptionMessage($response, 'The price field is required.');
     }

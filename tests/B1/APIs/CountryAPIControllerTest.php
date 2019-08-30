@@ -18,6 +18,7 @@ class CountryAPIControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->signInWithDefaultAdminUser();
     }
 
     private function mockRepository()
@@ -37,7 +38,7 @@ class CountryAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var Country $countries */
+        /** @var Country[] $countries */
         $countries = factory(Country::class)->times(2)->create();
 
         $this->countryRepo->expects('all')->andReturn($countries);
@@ -50,6 +51,7 @@ class CountryAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_and_get_countries()
     {
+        /** @var Country[] $countries */
         $countries = factory(Country::class)->times(5)->create();
 
         $response = $this->getJson(route('api.b1.countries.index'));

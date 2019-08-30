@@ -38,12 +38,12 @@ class CountryAPIControllerTest extends TestCase
     {
         $this->mockRepository();
 
-        /** @var Country $countries */
+        /** @var Country[] $countries */
         $countries = factory(Country::class)->times(2)->create();
 
         $this->countryRepo->expects('all')->andReturn($countries);
 
-        $response = $this->getJson('api/v1/countries');
+        $response = $this->getJson(route('api.v1.countries.index'));
 
         $this->assertSuccessDataResponse($response, $countries->toArray(), 'Countries retrieve successfully.');
     }
@@ -54,10 +54,10 @@ class CountryAPIControllerTest extends TestCase
         /** @var Country[] $countries */
         $countries = factory(Country::class)->times(5)->create();
 
-        $response = $this->getJson('api/v1/countries');
-        $take3 = $this->getJson('api/v1/countries?limit=3');
-        $skip2 = $this->getJson('api/v1/countries?skip=2&limit=2');
-        $searchByName = $this->getJson('api/v1/countries?search='.$countries[0]->name);
+        $response = $this->getJson(route('api.v1.countries.index'));
+        $take3 = $this->getJson(route('api.v1.countries.index', ['limit' => 3]));
+        $skip2 = $this->getJson(route('api.v1.countries.index', ['skip' => 2, 'limit' => 2]));
+        $searchByName = $this->getJson(route('api.v1.countries.index', ['search='.$countries[0]->name]));
 
         $this->assertCount(251, $response->original['data'], '246 default');
         $this->assertCount(3, $take3->original['data']);

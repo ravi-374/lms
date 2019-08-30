@@ -4,43 +4,28 @@ namespace Tests\B1\APIs;
 
 use App\Models\Author;
 use App\Models\Book;
-use App\Repositories\AuthorRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class AuthorAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $authorRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
         parent::setUp();
-    }
-
-    private function mockRepository()
-    {
-        $this->authorRepo = \Mockery::mock(AuthorRepository::class);
-        app()->instance(AuthorRepository::class, $this->authorRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
+        $this->signInWithDefaultAdminUser();
     }
 
     /** @test */
     public function it_can_get_all_authors()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$author);
 
         $authors = factory(Author::class)->times(5)->create();
 
-        $this->authorRepo->expects('all')->andReturn($authors);
+        $this->authorRepository->expects('all')->andReturn($authors);
 
         $response = $this->getJson(route('api.b1.authors.index'));
 
@@ -74,11 +59,11 @@ class AuthorAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_author()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$author);
 
         $author = factory(Author::class)->make();
 
-        $this->authorRepo->expects('create')
+        $this->authorRepository->expects('create')
             ->with($author->toArray())
             ->andReturn($author);
 
@@ -90,13 +75,13 @@ class AuthorAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_author()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$author);
 
         /** @var Author $author */
         $author = factory(Author::class)->create();
         $updateRecord = factory(Author::class)->make(['id' => $author->id]);
 
-        $this->authorRepo->expects('update')
+        $this->authorRepository->expects('update')
             ->with($updateRecord->toArray(), $author->id)
             ->andReturn($updateRecord);
 

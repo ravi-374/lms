@@ -28,7 +28,7 @@ class MembershipPlanRepositoryTest extends TestCase
     /** @test */
     public function it_can_store_membership_plan()
     {
-        $fakePlan = factory(MembershipPlan::class)->make()->toArray();
+        $fakePlan = factory(MembershipPlan::class)->raw();
 
         $plan = $this->membershipPlanRepo->store($fakePlan);
 
@@ -40,7 +40,7 @@ class MembershipPlanRepositoryTest extends TestCase
     public function it_can_update_membership_plan()
     {
         $plan = factory(MembershipPlan::class)->create();
-        $fakePlan = factory(MembershipPlan::class)->make()->toArray();
+        $fakePlan = factory(MembershipPlan::class)->raw();
 
         $updatedPlan = $this->membershipPlanRepo->update($fakePlan, $plan->id);
 
@@ -64,7 +64,7 @@ class MembershipPlanRepositoryTest extends TestCase
      */
     public function test_validate_membership_plan_fails_with_invalid_frequency()
     {
-        $fakePlan = factory(MembershipPlan::class)->make(['frequency' => 99])->toArray();
+        $fakePlan = factory(MembershipPlan::class)->raw(['frequency' => 99]);
 
         $this->membershipPlanRepo->validateMembershipPlan($fakePlan);
     }
