@@ -15,16 +15,23 @@ class AuthorAPIPermissionTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @var User $user */
-    private $user;
-
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
-        $token = JWTAuth::fromUser($this->user);
+        $this->loggedInUserId = factory(User::class)->create();
+        $token = JWTAuth::fromUser($this->loggedInUserId);
         $this->defaultHeaders = ['HTTP_Authorization' => 'Bearer '.$token];
+    }
+
+    /** @test */
+    public function test_not_allow_to_get_author_without_permission()
+    {
+        $author = factory(Author::class)->create();
+
+        $result = $this->getJson(route('api.b1.authors.show', $author));
+
+        $this->assertExceptionMessage($result, 'Unauthorized action.');
     }
 
     /** @test */
@@ -59,9 +66,20 @@ class AuthorAPIPermissionTest extends TestCase
     }
 
     /** @test */
+    public function test_can_get_author_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_authors']);
+        $author = factory(Author::class)->create();
+
+        $result = $this->getJson(route('api.b1.authors.show', $author));
+
+        $this->assertSuccessMessageResponse($result, 'Author retrieved successfully.');
+    }
+
+    /** @test */
     public function test_can_create_author_with_valid_permission()
     {
-        $this->assignPermissions($this->user, ['manage_authors']);
+        $this->assignPermissions($this->loggedInUserId, ['manage_authors']);
         $fakeAuthor = factory(Author::class)->raw();
 
         $result = $this->postJson(route('api.b1.authors.store'), $fakeAuthor);
@@ -72,7 +90,7 @@ class AuthorAPIPermissionTest extends TestCase
     /** @test */
     public function test_can_update_author_with_valid_permission()
     {
-        $this->assignPermissions($this->user, ['manage_authors']);
+        $this->assignPermissions($this->loggedInUserId, ['manage_authors']);
         $author = factory(Author::class)->create();
         $updateAuthor = factory(Author::class)->raw(['id' => $author->id]);
 
@@ -84,7 +102,7 @@ class AuthorAPIPermissionTest extends TestCase
     /** @test */
     public function test_can_delete_author_with_valid_permission()
     {
-        $this->assignPermissions($this->user, ['manage_authors']);
+        $this->assignPermissions($this->loggedInUserId, ['manage_authors']);
         $author = factory(Author::class)->create();
 
         $result = $this->deleteJson(route('api.b1.authors.destroy', $author->id));

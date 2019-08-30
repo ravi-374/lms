@@ -5,7 +5,9 @@
  */
 Route::group(['middleware' => 'user.auth'], function () {
     // Genre Routes
-    Route::resource('genres', 'GenreAPIController');
+    Route::middleware('permission:manage_genres')->group(function () {
+        Route::resource('genres', 'GenreAPIController');
+    });
 
     // Author Routes
     Route::middleware('permission:manage_authors')->group(function () {
