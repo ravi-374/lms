@@ -11,7 +11,7 @@ const SearchField = (props) => {
         if (typingTimeout) {
             clearTimeout(typingTimeout);
         }
-        setTypingTimeout(setTimeout(() => sendToParent(event.target.value), 2000));
+        setTypingTimeout(setTimeout(() => sendToParent(event.target.value), 500));
     };
     return (
         <Field name="search-text" type="search" placeholder="Search" groupText="search" isCustom={true}
