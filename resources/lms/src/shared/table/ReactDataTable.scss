@@ -8,6 +8,7 @@
         .sc-ifAKCX {
             border-left: 1px solid #c8ced3 !important;
             min-height: 54px;
+
             &:first-child {
                 border-left: 0 !important;
             }
@@ -58,6 +59,7 @@
 
 #pagination-first-page {
     border-left: 1px solid $pagination-border-color;
+    outline-color: $blue;
 
     &:hover:not(:disabled) {
         svg {
@@ -68,6 +70,7 @@
 
 #pagination-previous-page {
     border-left: 1px solid $pagination-border-color;
+    outline-color: $blue;
 
     &:hover:not(:disabled) {
         svg {
@@ -78,6 +81,7 @@
 
 #pagination-next-page {
     border-left: 1px solid $pagination-border-color;
+    outline-color: $blue;
 
     &:hover:not(:disabled) {
         svg {
@@ -88,6 +92,7 @@
 
 #pagination-last-page {
     border-left: 1px solid #c8ced3;
+    outline-color: $blue;
 
     &:hover:not(:disabled) {
         svg {
@@ -161,6 +166,7 @@
         min-width: 255px;
         margin-right: 16px;
     }
+
     &__search-input {
         width: 255px;
     }
