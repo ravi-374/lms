@@ -18,7 +18,7 @@ class MemberAuth
 
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
+        if (Auth::user()) {
             return $next($request);
         }
 
@@ -34,7 +34,7 @@ class MemberAuth
             return call_user_func([$this, 'authenticationSuccess'], []);
         };
 
-        config()->set( 'auth.defaults.guard', 'member' );
+        config()->set('auth.defaults.guard', 'member');
         Config::set('jwt.user', App\Models\Member::class);
         Config::set('auth.providers.members.model', App\Models\Member::class);
 
