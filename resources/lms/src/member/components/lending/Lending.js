@@ -19,7 +19,7 @@ const Lending = () => {
         }
     };
     const isBottom = (el) => {
-        return el.getBoundingClientRect().bottom <= window.innerHeight;
+        if (el) return el.getBoundingClientRect().bottom <= window.innerHeight;
     };
     const trackScrolling = () => {
         let element = document.getElementById('home');
