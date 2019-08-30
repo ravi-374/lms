@@ -25,14 +25,15 @@ class UserAuth
     /**
      * @param $request
      * @param Closure $next
+     * @param string|null $guard
      *
      * @throws JWTException
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        if (App::runningUnitTests()) {
+        if (Auth::guard($guard)->check()) {
             return $next($request);
         }
 

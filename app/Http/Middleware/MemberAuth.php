@@ -16,9 +16,9 @@ class MemberAuth
 {
     use CommonMiddlewareFunctions;
 
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        if (App::runningUnitTests()) {
+        if (Auth::guard($guard)->check()) {
             return $next($request);
         }
 
