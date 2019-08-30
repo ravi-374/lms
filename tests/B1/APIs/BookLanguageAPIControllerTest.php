@@ -26,7 +26,7 @@ class BookLanguageAPIControllerTest extends TestCase
         /** @var BookLanguage[] $bookLanguages */
         $bookLanguages = factory(BookLanguage::class)->times(5)->create();
 
-        $this->bookLanguageRepo->expects('all')->andReturn($bookLanguages);
+        $this->bookLanguageRepository->expects('all')->andReturn($bookLanguages);
 
         $response = $this->getJson(route('api.b1.book-languages.index'));
 
@@ -65,7 +65,7 @@ class BookLanguageAPIControllerTest extends TestCase
         /** @var BookLanguage $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->make();
 
-        $this->bookLanguageRepo->expects('create')
+        $this->bookLanguageRepository->expects('create')
             ->with($bookLanguage->toArray())
             ->andReturn($bookLanguage);
 
@@ -85,7 +85,7 @@ class BookLanguageAPIControllerTest extends TestCase
         $bookLanguage = factory(BookLanguage::class)->create();
         $fakeBookLanguage = factory(BookLanguage::class)->make(['id' => $bookLanguage->id]);
 
-        $this->bookLanguageRepo->expects('update')
+        $this->bookLanguageRepository->expects('update')
             ->with($fakeBookLanguage->toArray(), $bookLanguage->id)
             ->andReturn($fakeBookLanguage);
 

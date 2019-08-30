@@ -26,7 +26,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var MembershipPlan[] $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
 
-        $this->membershipPlanRepo->expects('all')->andReturn($membershipPlan);
+        $this->membershipPlanRepository->expects('all')->andReturn($membershipPlan);
 
         $response = $this->getJson(route('api.b1.membership-plans.index'));
 
@@ -67,7 +67,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var MembershipPlan $membershipPlans */
         $membershipPlans = factory(MembershipPlan::class)->make();
 
-        $this->membershipPlanRepo->expects('store')
+        $this->membershipPlanRepository->expects('store')
             ->with($membershipPlans->toArray())
             ->andReturn($membershipPlans);
 
@@ -89,7 +89,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         $membershipPlan = factory(MembershipPlan::class)->create();
         $updateRecord = factory(MembershipPlan::class)->make(['id' => $membershipPlan->id]);
 
-        $this->membershipPlanRepo->expects('update')
+        $this->membershipPlanRepository->expects('update')
             ->with($updateRecord->toArray(), $membershipPlan->id)
             ->andReturn($updateRecord);
 

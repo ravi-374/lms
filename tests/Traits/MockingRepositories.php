@@ -28,19 +28,19 @@ trait MockRepositories
     public static $author = 'authorRepository';
     public static $book = 'bookRepository';
     public static $bookItem = 'bookItemRepository';
-    public static $bookLanguage = 'bookLanguageRepo';
-    public static $bookSeries = 'bookSeriesRepo';
-    public static $country = 'countryRepo';
+    public static $bookLanguage = 'bookLanguageRepository';
+    public static $bookSeries = 'bookSeriesRepository';
+    public static $country = 'countryRepository';
     public static $genre = 'genreRepository';
-    public static $issuedBook = 'issuedBookRepo';
-    public static $member = 'memberRepo';
-    public static $membershipPlan = 'membershipPlanRepo';
-    public static $permission = 'permissionRepo';
-    public static $publisher = 'publisherRepo';
+    public static $issuedBook = 'issuedBookRepository';
+    public static $member = 'memberRepository';
+    public static $membershipPlan = 'membershipPlanRepository';
+    public static $permission = 'permissionRepository';
+    public static $publisher = 'publisherRepository';
     public static $role = 'roleRepository';
-    public static $setting = 'settingRepo';
+    public static $setting = 'settingRepository';
     public static $tag = 'tagRepository';
-    public static $user = 'userRepo';
+    public static $user = 'userRepository';
 
     /** @var MockInterface */
     public $authorRepository;
@@ -49,31 +49,31 @@ trait MockRepositories
     /** @var MockInterface */
     protected $bookItemRepository;
     /** @var MockInterface */
-    protected $bookLanguageRepo;
+    protected $bookLanguageRepository;
     /** @var MockInterface */
-    protected $bookSeriesRepo;
+    protected $bookSeriesRepository;
     /** @var MockInterface */
-    protected $countryRepo;
+    protected $countryRepository;
     /** @var MockInterface */
     protected $genreRepository;
     /** @var MockInterface */
-    protected $issuedBookRepo;
+    protected $issuedBookRepository;
     /** @var MockInterface */
-    protected $memberRepo;
+    protected $memberRepository;
     /** @var MockInterface */
-    protected $membershipPlanRepo;
+    protected $membershipPlanRepository;
     /** @var MockInterface */
-    protected $permissionRepo;
+    protected $permissionRepository;
     /** @var MockInterface */
-    protected $publisherRepo;
+    protected $publisherRepository;
     /** @var MockInterface */
     protected $roleRepository;
     /** @var MockInterface */
-    protected $settingRepo;
+    protected $settingRepository;
     /** @var MockInterface */
     protected $tagRepository;
     /** @var MockInterface */
-    protected $userRepo;
+    protected $userRepository;
 
 
     public function mockRepo($repoNames)

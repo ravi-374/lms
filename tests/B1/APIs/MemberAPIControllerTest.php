@@ -26,7 +26,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member[] $members */
         $members = factory(Member::class)->times(5)->create();
 
-        $this->memberRepo->expects('all')->andReturn($members);
+        $this->memberRepository->expects('all')->andReturn($members);
 
         $response = $this->getJson(route('api.b1.members.index'));
 
@@ -94,7 +94,7 @@ class MemberAPIControllerTest extends TestCase
 
         $input = array_merge($member->toArray(), ['password' => 12345678]);
 
-        $this->memberRepo->expects('store')
+        $this->memberRepository->expects('store')
             ->with($input)
             ->andReturn($member);
 
@@ -112,7 +112,7 @@ class MemberAPIControllerTest extends TestCase
         $member = factory(Member::class)->create();
         $updateRecord = factory(Member::class)->make(['id' => $member->id]);
 
-        $this->memberRepo->expects('update')
+        $this->memberRepository->expects('update')
             ->with($updateRecord->toArray(), $member->id)
             ->andReturn($updateRecord);
 

@@ -33,7 +33,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook[] $issuedBooks */
         $issuedBooks = factory(IssuedBook::class)->times(5)->create();
 
-        $this->issuedBookRepo->expects('all')->andReturn($issuedBooks);
+        $this->issuedBookRepository->expects('all')->andReturn($issuedBooks);
 
         $response = $this->getJson(route('api.b1.books-history'));
 
@@ -251,7 +251,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'book_item_id' => $bookItem->id,
         ]);
 
-        $this->issuedBookRepo->expects('issueBook')
+        $this->issuedBookRepository->expects('issueBook')
             ->with($input)
             ->andReturn($issueBook);
 
@@ -307,7 +307,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook $issueBook */
         $issueBook = factory(IssuedBook::class)->create();
 
-        $this->issuedBookRepo->expects('returnBook')
+        $this->issuedBookRepository->expects('returnBook')
             ->with(['book_item_id' => $issueBook->book_item_id])
             ->andReturn($issueBook);
 
@@ -342,7 +342,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook[] $issuedBooks */
         $issuedBooks = factory(IssuedBook::class)->times(5)->create(['member_id' => $member->id]);
 
-        $this->issuedBookRepo->expects('all')->andReturn($issuedBooks);
+        $this->issuedBookRepository->expects('all')->andReturn($issuedBooks);
 
         $response = $this->getJson(route('api.b1.members.book-history', $member->id));
 

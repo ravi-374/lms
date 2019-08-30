@@ -27,7 +27,7 @@ class UserAPIControllerTest extends TestCase
         /** @var User[] $users */
         $users = factory(User::class)->times(5)->create();
 
-        $this->userRepo->expects('all')->andReturn($users);
+        $this->userRepository->expects('all')->andReturn($users);
 
         $response = $this->getJson(route('api.b1.users.index'));
 
@@ -100,7 +100,7 @@ class UserAPIControllerTest extends TestCase
             'role_id'  => $role->id,
         ]);
 
-        $this->userRepo->expects('store')
+        $this->userRepository->expects('store')
             ->with($input)
             ->andReturn($farhan);
 
@@ -118,7 +118,7 @@ class UserAPIControllerTest extends TestCase
         $farhan = factory(User::class)->create();
         $updateRecord = factory(User::class)->make(['id' => $farhan->id]);
 
-        $this->userRepo->expects('update')
+        $this->userRepository->expects('update')
             ->with($updateRecord->toArray(), $farhan->id)
             ->andReturn($updateRecord);
 
@@ -178,7 +178,7 @@ class UserAPIControllerTest extends TestCase
 
         $updateRecord = factory(User::class)->make(['id' => $this->loggedInUserId]);
 
-        $this->userRepo->expects('update')
+        $this->userRepository->expects('update')
             ->with($updateRecord->toArray(), $this->loggedInUserId)
             ->andReturn($updateRecord);
 

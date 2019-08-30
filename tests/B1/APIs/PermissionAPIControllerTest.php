@@ -25,7 +25,7 @@ class PermissionAPIControllerTest extends TestCase
         /** @var Permission[] $permissions */
         $permissions = factory(Permission::class)->times(5)->create();
 
-        $this->permissionRepo->expects('all')->andReturn($permissions);
+        $this->permissionRepository->expects('all')->andReturn($permissions);
 
         $response = $this->getJson(route('api.b1.permissions.index'));
 
@@ -63,7 +63,7 @@ class PermissionAPIControllerTest extends TestCase
         /** @var Permission $permission */
         $permission = factory(Permission::class)->make();
 
-        $this->permissionRepo->expects('create')
+        $this->permissionRepository->expects('create')
             ->with($permission->toArray())
             ->andReturn($permission);
 
@@ -81,7 +81,7 @@ class PermissionAPIControllerTest extends TestCase
         $permission = factory(Permission::class)->create();
         $fakePermission = factory(Permission::class)->make(['id' => $permission->id]);
 
-        $this->permissionRepo->expects('update')
+        $this->permissionRepository->expects('update')
             ->with($fakePermission->toArray(), $permission->id)
             ->andReturn($fakePermission);
 

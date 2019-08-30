@@ -25,7 +25,7 @@ class SettingAPIControllerTest extends TestCase
         /** @var Setting[] $settings */
         $settings = factory(Setting::class)->times(5)->create();
 
-        $this->settingRepo->expects('all')->andReturn($settings);
+        $this->settingRepository->expects('all')->andReturn($settings);
 
         $response = $this->getJson(route('api.b1.settings.index'));
 
@@ -58,7 +58,7 @@ class SettingAPIControllerTest extends TestCase
 
         $settings = factory(Setting::class)->times(2)->raw();
 
-        $this->settingRepo->expects('createOrUpdate')
+        $this->settingRepository->expects('createOrUpdate')
             ->with($settings)
             ->andReturn($settings);
 
@@ -76,7 +76,7 @@ class SettingAPIControllerTest extends TestCase
         $setting = factory(Setting::class)->create();
         $fakeSetting = factory(Setting::class)->make();
 
-        $this->settingRepo->expects('update')
+        $this->settingRepository->expects('update')
             ->with($fakeSetting->toArray(), $setting->id)
             ->andReturn($fakeSetting);
 
