@@ -152,3 +152,38 @@
 .feAjYt span.__rdt_custom_sort_icon__ i.sort-arrow-group__visible {
     opacity: .5;
 }
+
+.search-filter-container, .search-container {
+    display: flex;
+    justify-content: flex-end;
+
+    &__filter-input {
+        min-width: 255px;
+        margin-right: 16px;
+    }
+    &__search-input {
+        width: 255px;
+    }
+}
+
+@media (max-width: 636px) {
+    .search-filter-container__filter-input {
+        min-width: 200px;
+    }
+    .search-filter-container__search-input {
+        width: 200px;
+    }
+}
+
+@media (max-width: 518px) {
+
+    .search-filter-container {
+        flex-direction: column;
+    }
+    .search-filter-container__filter-input {
+        min-width: 100%;
+    }
+    .search-filter-container__search-input {
+        width: auto;
+    }
+}
