@@ -4,18 +4,14 @@ namespace Tests\B1\APIs;
 
 use App\Models\Permission;
 use App\Models\Role;
-use App\Repositories\RoleRepository;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class RoleAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $roleRepository;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -23,22 +19,10 @@ class RoleAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->roleRepository = \Mockery::mock(RoleRepository::class);
-        app()->instance(RoleRepository::class, $this->roleRepository);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_roles()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$role);
 
         /** @var Role[] $roles */
         $roles = factory(Role::class)->times(5)->create();
@@ -72,7 +56,7 @@ class RoleAPIControllerTest extends TestCase
     /** @test */
     public function it_can_store_role()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$role);
 
         $permission = factory(Permission::class)->create();
 
@@ -91,7 +75,7 @@ class RoleAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_role()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$role);
 
         $permission = factory(Permission::class)->create();
 

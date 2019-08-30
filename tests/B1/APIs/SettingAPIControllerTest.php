@@ -3,17 +3,13 @@
 namespace Tests\B1\APIs;
 
 use App\Models\Setting;
-use App\Repositories\SettingRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class SettingAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $settingRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -21,27 +17,15 @@ class SettingAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->settingRepo = \Mockery::mock(SettingRepository::class);
-        app()->instance(SettingRepository::class, $this->settingRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_settings()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$setting);
 
         /** @var Setting[] $settings */
         $settings = factory(Setting::class)->times(5)->create();
 
-        $this->settingRepo->expects('all')->andReturn($settings);
+        $this->settingRepository->expects('all')->andReturn($settings);
 
         $response = $this->getJson(route('api.b1.settings.index'));
 
@@ -70,11 +54,11 @@ class SettingAPIControllerTest extends TestCase
     /** @test */
     public function it_can_store_setting()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$setting);
 
         $settings = factory(Setting::class)->times(2)->raw();
 
-        $this->settingRepo->expects('createOrUpdate')
+        $this->settingRepository->expects('createOrUpdate')
             ->with($settings)
             ->andReturn($settings);
 
@@ -86,13 +70,13 @@ class SettingAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_setting()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$setting);
 
         /** @var Setting $setting */
         $setting = factory(Setting::class)->create();
         $fakeSetting = factory(Setting::class)->make();
 
-        $this->settingRepo->expects('update')
+        $this->settingRepository->expects('update')
             ->with($fakeSetting->toArray(), $setting->id)
             ->andReturn($fakeSetting);
 

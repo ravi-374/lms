@@ -6,11 +6,10 @@ use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
-use App\Repositories\IssuedBookRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 /**
  * Class IssuedBookAPIControllerTest
@@ -18,10 +17,7 @@ use Tests\TestCase;
  */
 class IssuedBookAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $issueBookRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -29,27 +25,15 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->issueBookRepo = \Mockery::mock(IssuedBookRepository::class);
-        app()->instance(IssuedBookRepository::class, $this->issueBookRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_issued_books()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$issuedBook);
 
         /** @var IssuedBook[] $issuedBooks */
         $issuedBooks = factory(IssuedBook::class)->times(5)->create();
 
-        $this->issueBookRepo->expects('all')->andReturn($issuedBooks);
+        $this->issuedBookRepository->expects('all')->andReturn($issuedBooks);
 
         $response = $this->getJson(route('api.b1.books-history'));
 
@@ -253,7 +237,7 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function it_can_issue_book()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$issuedBook);
 
         /** @var Member $member */
         $member = factory(Member::class)->create();
@@ -267,7 +251,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'book_item_id' => $bookItem->id,
         ]);
 
-        $this->issueBookRepo->expects('issueBook')
+        $this->issuedBookRepository->expects('issueBook')
             ->with($input)
             ->andReturn($issueBook);
 
@@ -318,12 +302,12 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function it_can_return_book()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$issuedBook);
 
         /** @var IssuedBook $issueBook */
         $issueBook = factory(IssuedBook::class)->create();
 
-        $this->issueBookRepo->expects('returnBook')
+        $this->issuedBookRepository->expects('returnBook')
             ->with(['book_item_id' => $issueBook->book_item_id])
             ->andReturn($issueBook);
 
@@ -350,7 +334,7 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_get_all_issued_books_of_given_member()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$issuedBook);
 
         /** @var Member $member */
         $member = factory(Member::class)->create();
@@ -358,7 +342,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook[] $issuedBooks */
         $issuedBooks = factory(IssuedBook::class)->times(5)->create(['member_id' => $member->id]);
 
-        $this->issueBookRepo->expects('all')->andReturn($issuedBooks);
+        $this->issuedBookRepository->expects('all')->andReturn($issuedBooks);
 
         $response = $this->getJson(route('api.b1.members.book-history', $member->id));
 

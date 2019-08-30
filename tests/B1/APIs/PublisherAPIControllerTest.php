@@ -4,17 +4,13 @@ namespace Tests\B1\APIs;
 
 use App\Models\BookItem;
 use App\Models\Publisher;
-use App\Repositories\PublisherRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 class PublisherAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    /** @var MockInterface */
-    protected $publisherRepo;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -22,27 +18,15 @@ class PublisherAPIControllerTest extends TestCase
         $this->signInWithDefaultAdminUser();
     }
 
-    private function mockRepository()
-    {
-        $this->publisherRepo = \Mockery::mock(PublisherRepository::class);
-        app()->instance(PublisherRepository::class, $this->publisherRepo);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close();
-    }
-
     /** @test */
     public function test_can_get_all_publishers()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$publisher);
 
         /** @var Publisher $publishers */
         $publishers = factory(Publisher::class)->times(5)->create();
 
-        $this->publisherRepo->expects('all')->andReturn($publishers);
+        $this->publisherRepository->expects('all')->andReturn($publishers);
 
         $response = $this->getJson(route('api.b1.publishers.index'));
 
@@ -79,12 +63,12 @@ class PublisherAPIControllerTest extends TestCase
     /** @test */
     public function it_can_create_publisher()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$publisher);
 
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->make();
 
-        $this->publisherRepo->expects('create')
+        $this->publisherRepository->expects('create')
             ->with($publisher->toArray())
             ->andReturn($publisher);
 
@@ -96,13 +80,13 @@ class PublisherAPIControllerTest extends TestCase
     /** @test */
     public function it_can_update_publisher()
     {
-        $this->mockRepository();
+        $this->mockRepo(self::$publisher);
 
         /** @var Publisher $publisher */
         $publisher = factory(Publisher::class)->create();
         $updateRecord = factory(Publisher::class)->make(['id' => $publisher->id]);
 
-        $this->publisherRepo->expects('update')
+        $this->publisherRepository->expects('update')
             ->with($updateRecord->toArray(), $publisher->id)
             ->andReturn($updateRecord);
 
