@@ -12,7 +12,6 @@ import CustomInput from '../../../shared/components/CustomInput';
 import {addToast} from '../../../store/action/toastAction';
 import {bookFormatOptions} from '../../constants';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import TypeAhead from '../../../shared/components/TypeAhead';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 import {fetchSettings} from "../../store/actions/settingAction";
@@ -21,17 +20,11 @@ import {mapCurrencyCode} from "../../../shared/sharedMethod";
 const BookForm = (props) => {
     const [image, setImage] = useState(publicImagePath.BOOK_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
-    const { initialValues, change, currency } = props;
-    const [genres] = useState(initialValues ? initialValues.selectedGenres : []);
-    const [tags] = useState(initialValues ? initialValues.selectedTags : []);
-    const [authors] = useState(initialValues ? initialValues.selectedAuthors : []);
-    const [file, setFile] = useState(null);
+    const { initialValues, change, currency, authors, tags, genres } = props;
     const [isFeatured, setIsFeatured] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isValidAuthor, setIsValidAuthor] = useState(false);
-    const [isValidGenre, setIsValidGenre] = useState(false);
     const [items, setItems] = useState(initialValues ? initialValues.items : [{}]);
     const inputRef = createRef();
+    const [file, setFile] = useState(null);
     useEffect(() => {
         props.fetchSettings();
         prepareInitialValues();
@@ -42,9 +35,6 @@ const BookForm = (props) => {
             setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
         }
         if (initialValues) {
-            props.change('tags', tags);
-            props.change('genres', genres);
-            props.change('authors', authors);
             if (initialValues.image) {
                 change('file_name', true);
                 setImage(publicImagePathURL.BOOK_AVATAR_URL + initialValues.image);
@@ -75,32 +65,9 @@ const BookForm = (props) => {
         setImage(publicImagePath.BOOK_AVATAR);
         setIsDefaultImage(true);
     };
-    const onSelectGenres = (options) => {
-        setIsLoading(false);
-        props.change('genres', options);
-        if (options.length === 0) {
-            setIsValidGenre(true);
-        } else {
-            setIsValidGenre(false);
-        }
-    };
-    const onSelectAuthor = (options) => {
-        props.change('authors', options);
-        if (options.length === 0) {
-            setIsValidAuthor(true);
-        } else {
-            setIsValidAuthor(false);
-        }
-    };
-    const onSelectTag = (options) => {
-        props.change('tags', options);
-    };
     const onChecked = () => {
         setIsFeatured(!isFeatured);
     };
-    if (isLoading && initialValues && genres.length === 0) {
-        return null;
-    }
     const imagePickerOptions = { image, buttonName: 'Cover', isDefaultImage, onRemovePhoto, onFileChange };
     return (
         <Row className="animated fadeIn book-form m-3">
@@ -121,24 +88,20 @@ const BookForm = (props) => {
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead id="author" label="Authors" required multiple={true} options={props.authors}
-                                   placeholder="Select Author" onChange={onSelectAuthor} groupText="user-circle-o"
-                                   defaultSelected={authors} isInvalid={isValidAuthor}/>
-                        <Field name="authors" type="hidden" component={InputGroup}/>
+                        <Field name="authors" label="Authors" required isMulti={true} options={authors}
+                               placeholder="Select Author" groupText="user-circle-o" isSearchable={true}
+                               component={Select}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead id="genres" label="Genres" required multiple={true} options={props.genres}
-                                   placeholder="Select Genres" onChange={onSelectGenres} groupText="list-alt"
-                                   defaultSelected={genres} isInvalid={isValidGenre}/>
-                        <Field name="genres" type="hidden" component={InputGroup}/>
+                        <Field name="genres" label="Genres" required isMulti={true} options={genres}
+                               placeholder="Select Genres" groupText="list-alt" isSearchable={true} component={Select}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="name" label="Name" required groupText="book" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <TypeAhead id="tags" label="Tags" multiple={true} options={props.tags} placeholder="Select Tag"
-                                   onChange={onSelectTag} groupText="tag" defaultSelected={tags}/>
-                        <Field name="tags" type="hidden" component={InputGroup}/>
+                        <Field name="tags" label="Tags" isMulti={true} options={tags} placeholder="Select Tag"
+                               groupText="tag" isSearchable={true} component={Select}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="url" label="URL" groupText="link" component={InputGroup}/>

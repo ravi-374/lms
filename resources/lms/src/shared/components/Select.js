@@ -14,7 +14,7 @@ export default (props) => {
     const {
         input, placeholder, required, label, groupText, isSearchable = false,
         autoFocus, innerRef, defaultValue = {}, disabled, menuPlacement = "auto", isCustom,
-        meta: { touched, error }, options
+        meta: { touched, error }, options, isMulti = false
     } = props;
     const formGroupClass = isCustom ? 'react-select mb-0 mt-1' : 'react-select';
     const labelClass = required ? 'control-label' : '';
@@ -34,7 +34,7 @@ export default (props) => {
                     onChange={(value) => input.onChange(value)} isDisabled={disabled}
                     onBlur={() => input.onBlur(input.value)} options={options} getOptionLabel={(option) => option.name}
                     getOptionValue={(option) => option.id} defaultValue={defaultValue} isSearchable={isSearchable}
-                    menuPlacement={menuPlacement} autoFocus={autoFocus} ref={innerRef}/>
+                    menuPlacement={menuPlacement} autoFocus={autoFocus} ref={innerRef} isMulti={isMulti}/>
             </InputGroup>
             {touched && ((error && <FormFeedback className="d-block">{error}</FormFeedback>))}
         </FormGroup>
