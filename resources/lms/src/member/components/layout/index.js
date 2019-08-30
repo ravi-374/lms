@@ -37,7 +37,7 @@ const Layout = (props) => {
 const renderAppHeader = (props) => {
     const signOut = (e) => {
         e.preventDefault();
-        props.history.push(Routes.MEMBER_LOGIN);
+        props.history.push(Routes.MEMBER_HOME);
         localStorage.removeItem('member');
         localStorage.removeItem(Tokens.MEMBER);
     };
@@ -91,7 +91,7 @@ const renderRoutes = (location) => {
             <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
                 checkExistingRoute(location, props.history);
                 return localStorage.getItem(Tokens.MEMBER) ? <route.component {...props} /> :
-                    <Redirect to={Routes.MEMBER_LOGIN}/>
+                    <Redirect to={Routes.MEMBER_HOME}/>
             }}/>
         ) : (null);
     });

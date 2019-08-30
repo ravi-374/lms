@@ -37,3 +37,9 @@ module.exports = {
 
 // used to run app using reactjs
 mix.js('resources/lms/src/index.js', 'public/js/app.js').version();
+mix.js('resources/assets/js/lending.js', 'public/js/lending.js').version();
+mix.styles([
+    'resources/assets/css/noid-font-style.css',
+], 'public/css/app.css').version();
+mix.copy('resources/assets/fonts', 'public/fonts');
+mix.copy('resources/assets/banners', 'public/images/banner');

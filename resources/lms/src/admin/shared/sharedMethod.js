@@ -7,7 +7,11 @@ export const prepareRoles = (roles) => {
 };
 
 export const getCurrentUser = () => {
-    return JSON.parse(atob(localStorage.getItem('user')));
+    return localStorage.getItem('user') ? JSON.parse(atob(localStorage.getItem('user'))) : null;
+};
+
+export const getCurrentMember = () => {
+    return localStorage.getItem('member') ? JSON.parse(atob(localStorage.getItem('member'))) : null;
 };
 
 export const getApiRouteForBookAllotment = (status) => {

@@ -33,7 +33,7 @@ export default {
                 || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
                 || error.response.data.message === errorMessage.TOKEN_EXPIRED
                 || error.response.data.message === errorMessage.MEMBER_OR_USER_DEACTIVATE) {
-                window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
+                window.location.href = environment.URL + '/#' + Routes.MEMBER_HOME;
                 localStorage.removeItem(Tokens.MEMBER);
             }
             return Promise.reject({ ...error })

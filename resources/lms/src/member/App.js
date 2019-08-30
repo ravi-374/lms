@@ -13,12 +13,14 @@ const Layout = React.lazy(() => import('./components/layout/index'));
 const Login = React.lazy(() => import('./components/auth/Login'));
 const ForgotPassword = React.lazy(() => import('./components/auth/ForgotPassword'));
 const ResetPassword = React.lazy(() => import('./components/auth/ResetPassword'));
+const Lending = React.lazy(() => import('./components/lending/Lending'));
 
 const App = () => {
     return (
         <Provider store={store}>
             <React.Suspense fallback={<ProgressBar/>}>
                 <Switch>
+                    <Route path={Routes.MEMBER_HOME} name="Home" render={props => <Lending {...props}/>}/>
                     <Route path={Routes.MEMBER_LOGIN} name="Login" render={props => <Login {...props}/>}/>
                     <Route path={Routes.MEMBER_FORGOT_PASSWORD} name="Forgot Password"
                            render={props => <ForgotPassword {...props}/>}/>
