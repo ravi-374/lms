@@ -55,9 +55,8 @@ const BookHistory = props => {
 };
 const mapStateToProps = (state) => {
     const { bookHistory, isLoading, totalRecord } = state;
-    let bookHistoryArray = Object.values(bookHistory);
     return {
-        bookHistory: bookHistoryArray,
+        bookHistory,
         isLoading,
         totalRecord
     }
