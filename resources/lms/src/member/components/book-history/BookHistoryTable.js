@@ -26,7 +26,7 @@ export default (props) => {
         {
             sortable: true,
             selector: 'book_code',
-            width: '90px',
+            width: '120px',
             name: 'Book Code',
             cell: row => row.book_item.book_code
         },
@@ -55,7 +55,7 @@ export default (props) => {
             sortable: true,
             selector: 'return_due_date',
             name: 'Return Due Date',
-            width: '150px',
+            width: '160px',
             cell: row => renderDate(row.return_due_date)
         },
         {
