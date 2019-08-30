@@ -2,9 +2,9 @@
 
 namespace Tests;
 
-use App\Http\Middleware\MemberAuth;
-use App\Http\Middleware\UserAuth;
 use App\Models\Member;
+use App\Models\Permission;
+use App\Models\Role;
 use App\User;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -103,5 +103,28 @@ abstract class TestCase extends BaseTestCase
             'success' => false,
             'message' => $message,
         ]);
+    }
+
+    /**
+     * @param int|User $userId
+     * @param array $permissions
+     *
+     * @return User
+     */
+    public function assignPermissions($userId, $permissions)
+    {
+        /** @var Role $role */
+        $role = factory(Role::class)->create();
+
+        foreach ($permissions as $permission) {
+            $permission = Permission::whereName($permission)->first();
+            $role->attachPermission($permission);
+        }
+
+        /** @var User $user */
+        $user = (is_int($userId)) ? User::findOrFail($userId) : $userId;
+        $user->attachRole($role);
+
+        return $user;
     }
 }
