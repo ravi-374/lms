@@ -26,11 +26,9 @@ class GenrePermissionAPITest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_get_genre_without_permission()
+    public function test_not_allow_to_get_genres_without_permission()
     {
-        $genre = factory(Genre::class)->create();
-
-        $response = $this->getJson(route('api.b1.genres.show', $genre->id));
+        $response = $this->getJson(route('api.b1.genres.index'));
 
         $this->assertExceptionMessage($response, 'Unauthorized action.');
     }
@@ -66,13 +64,13 @@ class GenrePermissionAPITest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_genre_with_valid_permission()
+    public function test_can_get_genres_with_valid_permission()
     {
-        $genre = factory(Genre::class)->create();
+        $this->assignPermissions($this->loggedInUserId, ['manage_genres']);
 
-        $response = $this->getJson(route('api.b1.genres.show', $genre->id));
+        $response = $this->getJson(route('api.b1.genres.index'));
 
-        $this->assertExceptionMessage($response, 'Unauthorized action.');
+        $this->assertSuccessMessageResponse($response, 'Genres retrieved successfully.');
     }
 
     /** @test */

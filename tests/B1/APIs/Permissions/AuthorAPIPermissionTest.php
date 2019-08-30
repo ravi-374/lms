@@ -25,11 +25,9 @@ class AuthorAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_get_author_without_permission()
+    public function test_not_allow_to_get_authors_without_permission()
     {
-        $author = factory(Author::class)->create();
-
-        $result = $this->getJson(route('api.b1.authors.show', $author));
+        $result = $this->getJson(route('api.b1.authors.index'));
 
         $this->assertExceptionMessage($result, 'Unauthorized action.');
     }
@@ -66,14 +64,13 @@ class AuthorAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_author_with_valid_permission()
+    public function test_can_get_authors_with_valid_permission()
     {
         $this->assignPermissions($this->loggedInUserId, ['manage_authors']);
-        $author = factory(Author::class)->create();
 
-        $result = $this->getJson(route('api.b1.authors.show', $author));
+        $result = $this->getJson(route('api.b1.authors.index'));
 
-        $this->assertSuccessMessageResponse($result, 'Author retrieved successfully.');
+        $this->assertSuccessMessageResponse($result, 'Authors retrieved successfully.');
     }
 
     /** @test */
