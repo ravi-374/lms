@@ -71,7 +71,8 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
-        if (!empty($search['order_by']) && in_array($search['order_by'], ['name', 'book_code', 'member_name'])) {
+        if (!empty($search['order_by']) && in_array($search['order_by'],
+                ['name', 'book_code', 'member_name', 'reserved_on'])) {
             $orderBy = $search['order_by'];
             unset($search['order_by']);
         }
@@ -103,6 +104,9 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
                     break;
                 case 'member_name' :
                     $orderString = 'member.first_name';
+                    break;
+                case 'reserved_on' :
+                    $orderString = 'reserve_date';
                     break;
             }
 
