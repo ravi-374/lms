@@ -13,7 +13,7 @@ import ModalAction from "../../../shared/action-buttons/ModalAction";
 import BookStatus from "../../../shared/book-status/book-status";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {Routes} from "../../../constants";
-import {bookAllotmentFilterOptions} from "../../constants";
+import {bookAllotmentFilterOptions, storageKey} from "../../constants";
 
 const BooksAllotment = (props) => {
     const [isCreateMode, setCreateMode] = useState(false);
@@ -105,7 +105,7 @@ const BooksAllotment = (props) => {
     ];
 
     const getStoredFilterKey = () => {
-        const item = JSON.parse(localStorage.getItem('filterItem'));
+        const item = JSON.parse(localStorage.getItem(storageKey.BOOK_ALLOTMENT));
         if (item) {
             const bookAllotment = bookAllotmentFilterOptions.find(bookAllotment => bookAllotment.id === item.id);
             if (bookAllotment) {
@@ -130,7 +130,7 @@ const BooksAllotment = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={booksAllotment} isShowFilterField
+                            <ReactDataTable items={booksAllotment} isShowFilterField filterKeyName={storageKey.BOOK_ALLOTMENT}
                                             filterOptions={bookAllotmentFilterOptions} filterKey={getStoredFilterKey()}
                                             columns={columns} loading={isLoading} totalRows={totalRecord}
                                             onOpenModal={onOpenModal} onChange={onChange}/>
