@@ -7,6 +7,7 @@ const FilterField = ({ options, handleFilter, initialize, filterKey }) => {
         initialize({ filter_key: filterKey });
     }, []);
     const onChangeFilter = (option) => {
+        localStorage.setItem('filterItem', JSON.stringify(option));
         handleFilter(option.name);
     };
     return (

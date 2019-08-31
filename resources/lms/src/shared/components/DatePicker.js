@@ -9,7 +9,12 @@ import {
 import DatePicker from 'react-datepicker';
 import './Component.scss';
 
-export default ({label, required, placeHolder, selected = '', addOnType = 'prepend', groupText = 'calendar-check-o', onChange, minDate = '', maxDate = '', todayButton = null, dayClassName = null, className = '', dateFormat = 'MMMM d, yyyy'}) => {
+export default ({
+                    label, required, placeHolder, selected = '', addOnType = 'prepend',
+                    groupText = 'calendar-check-o', onChange, minDate = '', maxDate = '',
+                    todayButton = null, dayClassName = null, className = '', dateFormat = 'MMMM d, yyyy',
+                    disabled = false
+                }) => {
     const labelClass = required ? 'control-label' : '';
     return (
         <Fragment>
@@ -20,11 +25,8 @@ export default ({label, required, placeHolder, selected = '', addOnType = 'prepe
                         <InputGroupText><i className={`fa fa-${groupText}`}/>
                         </InputGroupText>
                     </InputGroupAddon>
-                    <DatePicker placeholderText={placeHolder}
-                                selected={selected}
-                                onChange={onChange}
-                                maxDate={maxDate}
-                                dateFormat={dateFormat}/>
+                    <DatePicker placeholderText={placeHolder} selected={selected} onChange={onChange} maxDate={maxDate}
+                                dateFormat={dateFormat} disabled={disabled}/>
                 </InputGroup>
             </FormGroup>
         </Fragment>
