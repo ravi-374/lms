@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
 use App\Models\Member;
+use App\Models\Setting;
 use App\User;
 use Hash;
 use Illuminate\Http\JsonResponse;
@@ -76,5 +77,18 @@ class AuthAPIController extends AppBaseController
         $token = JWTAuth::fromUser($member);
 
         return $this->sendResponse(['token' => $token, 'user' => $member], 'Logged in successfully.');
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getLibraryDetails()
+    {
+        $settings = Setting::whereIn('key', [Setting::LIBRARY_LOGO, Setting::LIBRARY_NAME])
+            ->get()->keyBy('key');
+
+        $settings[Setting::LIBRARY_LOGO]->append('logo_url');
+
+        return $this->sendResponse($settings->values(), 'Library details retrived successfully.');
     }
 }

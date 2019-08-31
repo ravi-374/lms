@@ -416,7 +416,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     {
         $url = \Config::get('services.openlib.api');
         $url = str_replace('{ISBN_NO}', $isbn, $url);
-        $bookDetails = [];
+        $bookDetails = (new Book())->getFillable();
+        $bookDetails = array_fill_keys($bookDetails, null);
+
 
         try {
             $data = file_get_contents($url);

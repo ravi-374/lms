@@ -124,4 +124,20 @@ class SettingAPIController extends AppBaseController
 
         return $this->sendResponse($setting, 'Setting deleted successfully.');
     }
+
+    /**
+     * @param Request $request
+     *
+     * @throws \App\Exceptions\ApiOperationFailedException
+     *
+     * @return JsonResponse
+     */
+    public function uploadLogo(Request $request)
+    {
+        $request->validate(['logo' => 'required']);
+
+        $setting = $this->settingRepo->uploadLogo($request->file('logo'));
+
+        return $this->sendResponse($setting, 'Logo updated successfully.');
+    }
 }

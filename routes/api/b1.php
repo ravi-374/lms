@@ -133,6 +133,8 @@ Route::group(['middleware' => 'user.auth'], function () {
         // Settings
         Route::resource('settings', 'SettingAPIController');
         Route::post('settings/{setting}', 'SettingAPIController@update');
+        // Upload library logo
+        Route::post('upload-logo', 'SettingAPIController@uploadLogo')->name('upload-logo');
     });
 
     // Countries

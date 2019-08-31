@@ -43,7 +43,7 @@ class SettingAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.b1.settings.index', ['skip' => 2, 'limit' => 2]));
         $searchByKey = $this->getJson(route('api.b1.settings.index', ['search' => $settings[0]->key]));
 
-        $this->assertCount(8, $response->original['data'], '3 defaults');
+        $this->assertCount(10, $response->original['data'], '5 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 

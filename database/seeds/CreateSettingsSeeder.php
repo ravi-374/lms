@@ -18,6 +18,8 @@ class CreateSettingsSeeder extends Seeder
         $settings[] = ['currency', 'INR', 'Indian Rupee'];
         $settings[] = ['return_due_days', 15, 'Return Due Days'];
         $settings[] = ['reserve_due_days', 5, 'Reserve Due Days'];
+        $settings[] = ['library_name', 'My Library', 'My Library'];
+        $settings[] = ['library_logo', '', 'Library Logo'];
 
         foreach ($settings as $setting) {
             Setting::create([

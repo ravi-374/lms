@@ -10,6 +10,8 @@
 namespace App\Repositories;
 
 use App\Models\Setting;
+use App\Traits\ImageTrait;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Class SettingRepository
@@ -59,5 +61,27 @@ class SettingRepository extends BaseRepository
         }
 
         return $settings;
+    }
+
+    /**
+     * @param UploadedFile $image
+     *
+     * @throws \App\Exceptions\ApiOperationFailedException
+     *
+     * @return Setting|null
+     */
+    public function uploadLogo($image)
+    {
+        /** @var Setting $setting */
+        $setting = Setting::where('key', Setting::LIBRARY_LOGO)->first();
+
+        if (!empty($setting->value)) {
+            $setting->deleteImage(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$setting->value);
+        }
+
+        $imageName = ImageTrait::makeImage($image, Setting::LOGO_PATH);
+        $setting->update(['value' => $imageName]);
+
+        return $setting->fresh();
     }
 }
