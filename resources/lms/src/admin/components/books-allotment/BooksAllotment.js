@@ -104,6 +104,16 @@ const BooksAllotment = (props) => {
         },
     ];
 
+    const getStoredFilterKey = () => {
+        const item = JSON.parse(localStorage.getItem('filterItem'));
+        if (item) {
+            const bookAllotment = bookAllotmentFilterOptions.find(bookAllotment => bookAllotment.id === item.id);
+            if (bookAllotment) {
+                return bookAllotment;
+            }
+        }
+        return bookAllotmentFilterOptions[1];
+    };
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
@@ -121,8 +131,7 @@ const BooksAllotment = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={booksAllotment} isShowFilterField
-                                            filterOptions={bookAllotmentFilterOptions}
-                                            filterKey={bookAllotmentFilterOptions[1]} searchKey='issued'
+                                            filterOptions={bookAllotmentFilterOptions} filterKey={getStoredFilterKey()}
                                             columns={columns} loading={isLoading} totalRows={totalRecord}
                                             onOpenModal={onOpenModal} onChange={onChange}/>
                             <BookAllotmentModal {...cardModalProps}/>

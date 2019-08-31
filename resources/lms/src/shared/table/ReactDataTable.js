@@ -19,13 +19,14 @@ export default (props) => {
     const [direction, setDirection] = useState(Filters.OBJ.direction);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState(searchKey);
+    const [filterText, setFilterText] = useState(filterKey ? filterKey.name.toLowerCase() : '');
     const tableColumns = useMemo(
         () => columns, []
     );
 
     useEffect(() => {
         onChangeDidMount(currentPage);
-    }, [currentPage, perPage, orderBy, direction, searchText]);
+    }, [currentPage, perPage, orderBy, direction, searchText, filterText]);
 
     const handlePageChange = (page) => {
         if (currentPage !== page) {
@@ -35,6 +36,9 @@ export default (props) => {
 
     const handleSearch = (searchText) => {
         setSearchText(searchText);
+    };
+    const handleFilter = (filterText) => {
+        setFilterText(filterText);
     };
 
     const customSort = (rows, field, direction) => {
@@ -57,7 +61,9 @@ export default (props) => {
             limit: perPage,
             skip: searchText !== '' ? 0 : (page - 1) * perPage,
             direction: direction,
-            search: isShowFilterField && searchText.toLowerCase() !== FilterOption.ALL ? searchText.toLowerCase() : ''
+            search: isShowFilterField && filterText.toLowerCase() !== FilterOption.ALL &&
+            searchText === '' ? filterText.toLowerCase() : '' ||
+            isShowFilterField && searchText !== '' ? searchText.toLowerCase() : ''
             || !isShowFilterField ? searchText.toLowerCase() : ''
         };
         onChange(filters);
@@ -86,7 +92,7 @@ export default (props) => {
         <Fragment>
             <div className={isShowFilterField ? 'search-filter-container' : 'search-container'}>
                 {isShowFilterField ? <div className="search-filter-container__filter-input">
-                    <FilterField options={filterOptions} filterKey={filterKey} handleFilter={handleSearch}/>
+                    <FilterField options={filterOptions} filterKey={filterKey} handleFilter={handleFilter}/>
                 </div> : null}
                 <div className={isShowFilterField ? 'search-filter-container__search-input' : ''}>
                     {isShowSearchField ? <SearchField handleSearch={handleSearch}/> : null}

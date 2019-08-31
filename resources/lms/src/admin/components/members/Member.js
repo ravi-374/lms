@@ -72,9 +72,19 @@ const Member = ({ members, membershipPlans, onOpenModal, addToast, setActiveInac
     const goToMemberDetailPage = (memberId) => {
         history.push(`${Routes.MEMBERS + memberId}/details`);
     };
+    const getStoredFilterKey = () => {
+        const item = JSON.parse(localStorage.getItem('filterItem'));
+        if (item) {
+            const membershipPlan = membershipPlans.find(membershipPlan => membershipPlan.id === item.id);
+            if (membershipPlan) {
+                return membershipPlan;
+            }
+        }
+        return membershipPlans[0];
+    };
     return (
         <ReactDataTable items={members} columns={columns} isShowFilterField filterOptions={membershipPlans}
-                        filterKey={membershipPlans[0]} searchKey='all' loading={isLoading} totalRows={totalRecord}
+                        filterKey={getStoredFilterKey()} loading={isLoading} totalRows={totalRecord}
                         onChange={onChangeData}/>
     );
 };

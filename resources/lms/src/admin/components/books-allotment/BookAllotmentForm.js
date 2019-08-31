@@ -22,6 +22,8 @@ const BookAllotmentForm = props => {
     const [status, setStatus] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
     const bookItemRef = createRef();
+    const isDisabledStatus =
+        initialValues && initialValues.status && initialValues.status.id === bookAllotmentStatusConstant.BOOK_RETURNED;
     useEffect(() => {
         bookId = null;
         memberId = null;
@@ -120,8 +122,8 @@ const BookAllotmentForm = props => {
         }
         return (
             <Fragment>
-                <DatePicker label={label} selected={selectedDate} maxDate={maxDate} onChange={onSelectDate}
-                            placeHolder="Click to select a date"/>
+                <DatePicker label={label} selected={selectedDate} disabled={isDisabledStatus} maxDate={maxDate}
+                            onChange={onSelectDate} placeHolder="Click to select a date"/>
                 <Field name={field} type="hidden" component={InputGroup}/>
             </Fragment>
         )
@@ -139,8 +141,6 @@ const BookAllotmentForm = props => {
                 case bookAllotmentStatusConstant.BOOK_ISSUED:
                     return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED
                         || bookStatus.id === bookAllotmentStatusConstant.BOOK_LOST);
-                case bookAllotmentStatusConstant.BOOK_RETURNED :
-                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_LOST);
                 case  bookAllotmentStatusConstant.BOOK_LOST:
                     return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED);
                 default:
@@ -171,7 +171,7 @@ const BookAllotmentForm = props => {
             <Col xs={12}>
                 <Field name="status" label="Status" required options={renderBookStatusOption()}
                        placeholder="Select Status" onChange={onSelectBookStatus} groupText="info-circle"
-                       component={Select}/>
+                       component={Select} disabled={isDisabledStatus}/>
             </Col>
             <Col xs={12}>
                 {renderDatePicker(status)}
