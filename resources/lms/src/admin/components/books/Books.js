@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
@@ -67,7 +67,6 @@ const Books = (props) => {
         {
             name: 'Action',
             selector: 'id',
-            center: true,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
