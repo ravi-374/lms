@@ -418,6 +418,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         $url = str_replace('{ISBN_NO}', $isbn, $url);
         $bookDetails = (new Book())->getFillable();
         $bookDetails = array_fill_keys($bookDetails, null);
+        $bookDetails = array_merge($bookDetails,
+            ['tags' => [], 'publishers' => [], 'authors' => [], 'genres' => [], 'languages' => []]
+        );
 
 
         try {
