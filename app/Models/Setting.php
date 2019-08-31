@@ -9,6 +9,7 @@
 
 namespace App\Models;
 
+use App\Traits\ImageTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,8 +36,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Setting extends Model
 {
+    use ImageTrait;
+
     const RESERVE_DUE_DAYS = 'reserve_due_days';
     const RETURN_DUE_DAYS = 'return_due_days';
+    const LIBRARY_LOGO = 'library_logo';
+    const LIBRARY_NAME = 'library_name';
+
+    const LOGO_PATH = 'images';
 
     public $table = 'settings';
     public $fillable = [
@@ -76,5 +83,12 @@ class Setting extends Model
     public function scopeOfKey(Builder $query, $key)
     {
         return $query->where('key', $key);
+    }
+
+    public function getLogoUrlAttribute()
+    {
+        if (!empty($this->value)) {
+            return $this->imageUrl(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$this->value);
+        }
     }
 }

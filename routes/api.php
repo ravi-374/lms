@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // User Login API
 Route::post('/login', 'AuthAPIController@login');
 
+/** Get library logo and name */
+Route::get('library-details', 'AuthAPIController@getLibraryDetails');
+
 // member login API
 Route::post('member-login', 'AuthAPIController@memberLogin');
 
