@@ -7,8 +7,10 @@ import './Members.scss';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {storageKey} from "../../constants";
 
-const Member = ({ members, membershipPlans, onOpenModal, addToast, setActiveInactive, history, isLoading, totalRecord, onChangeData }) => {
+const MemberTable = (props) => {
+    const { members, membershipPlans, onOpenModal, addToast, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
     const columns = [
         {
             name: 'Profile',
@@ -73,7 +75,7 @@ const Member = ({ members, membershipPlans, onOpenModal, addToast, setActiveInac
         history.push(`${Routes.MEMBERS + memberId}/details`);
     };
     const getStoredFilterKey = () => {
-        const item = JSON.parse(localStorage.getItem('filterItem'));
+        const item = JSON.parse(localStorage.getItem(storageKey.MEMBERS));
         if (item) {
             const membershipPlan = membershipPlans.find(membershipPlan => membershipPlan.id === item.id);
             if (membershipPlan) {
@@ -85,9 +87,9 @@ const Member = ({ members, membershipPlans, onOpenModal, addToast, setActiveInac
     return (
         <ReactDataTable items={members} columns={columns} isShowFilterField filterOptions={membershipPlans}
                         filterKey={getStoredFilterKey()} loading={isLoading} totalRows={totalRecord}
-                        onChange={onChangeData}/>
+                        onChange={onChangeData} filterKeyName={storageKey.MEMBERS}/>
     );
 };
 
-const memberForm = reduxForm({ form: 'memberForm' })(Member);
+const memberForm = reduxForm({ form: 'memberForm' })(MemberTable);
 export default connect(null)(memberForm);

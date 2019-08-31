@@ -3,7 +3,7 @@ import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import MemberModal from './MemberModal';
-import Member from './Member';
+import Member from './MemberTable';
 import './Members.scss';
 import Toasts from '../../../shared/toast/Toasts';
 import {toggleModal} from '../../../store/action/modalAction';

@@ -256,3 +256,8 @@ export const bookAllotmentFilterOptions = [
     { id: 6, name: 'Damaged' },
     { id: 7, name: 'Lost' }
 ];
+
+export const storageKey = {
+    BOOK_ALLOTMENT: 'book_allotment',
+    MEMBERS: 'members',
+};
