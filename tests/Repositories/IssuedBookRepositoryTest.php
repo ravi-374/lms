@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
+use App\Models\Setting;
 use App\Repositories\IssuedBookRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -110,10 +111,12 @@ class IssuedBookRepositoryTest extends TestCase
         $input = ['member_id' => $member->id, 'book_item_id' => $bookItem->id];
 
         $issuedBook = $this->issuedBookRepo->issueBook($input);
+        $returnDueDate = Carbon::now()->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
 
         $this->assertArrayHasKey('id', $issuedBook);
         $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBook->status);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
+        $this->assertEquals($returnDueDate, $issuedBook->return_due_date);
     }
 
     /**

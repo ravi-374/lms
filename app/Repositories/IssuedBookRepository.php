@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
+use App\Models\Setting;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Carbon\Carbon;
@@ -210,7 +211,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'book_item_id'    => $input['book_item_id'],
             'member_id'       => $input['member_id'],
             'issued_on'       => $issuedOn,
-            'return_due_date' => Carbon::parse($issuedOn)->addDays(15),
+            'return_due_date' => Carbon::parse($issuedOn)->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS)),
             'note'            => !empty($input['note']) ? $input['note'] : null,
             'status'          => IssuedBook::STATUS_ISSUED,
             'issuer_id'       => Auth::id(),
