@@ -3,6 +3,7 @@ import apiConfig from '../../config/apiConfig';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {getOrSetCurrency} from "../../../store/action/currencyAction";
+import apiConfigWthFormData from "../../config/apiConfigWthFormData";
 
 export const fetchSettings = (isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
@@ -33,10 +34,21 @@ export const fetchCurrencies = () => async (dispatch) => {
         });
 };
 
-export const postCurrencies = (settings) => async (dispatch) => {
+export const postSettings = (settings) => async (dispatch) => {
     await apiConfig.post('settings', settings)
         .then((response) => {
             dispatch({type: settingsActionsType.POST_SETTINGS, payload: response.data});
+            dispatch(addToast({text: response.data.message}));
+        })
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
+        });
+};
+
+export const postAppLogo= (settings) => async (dispatch) => {
+    await apiConfigWthFormData.post('upload-logo', settings)
+        .then((response) => {
+            dispatch({type: settingsActionsType.POST_LOGO, payload: response.data});
             dispatch(addToast({text: response.data.message}));
         })
         .catch(({response}) => {

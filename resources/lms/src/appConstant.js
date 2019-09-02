@@ -20,17 +20,18 @@ export const errorMessage = {
     TOKEN_EXPIRED: 'Token has expired',
     TOKEN_INVALID: 'Could not decode token: Error while decoding to JSON: Syntax error',
     TOKEN_INVALID_SIGNATURE: 'Token Signature could not be verified.',
-    MEMBER_OR_USER_DEACTIVATE:'Your account is not active.'
+    MEMBER_OR_USER_DEACTIVATE: 'Your account is not active.'
 };
 
 export const publicImagePath = {
     USER_AVATAR: 'images/user-avatar.png',
     BOOK_AVATAR: 'images/book-avatar.png',
-    APP_LOGO:'images/logo-blue-black.png'
+    APP_LOGO: 'images/logo-blue-black.png'
 };
 
 export const publicImagePathURL = {
     USER_AVATAR_URL: 'uploads/users/',
     MEMBER_AVATAR_URL: 'uploads/members/',
-    BOOK_AVATAR_URL: 'uploads/books/'
+    BOOK_AVATAR_URL: 'uploads/books/',
+    IMAGE_URL: 'uploads/images/'
 };
