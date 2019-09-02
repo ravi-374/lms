@@ -459,6 +459,18 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 }
             }
 
+            if (isset($data['publishers'])) {
+                foreach ($data['publishers'] as $publisher) {
+
+                    $publisherDBRecord = Publisher::whereName($publisher['name'])->first();
+                    if (!empty($publisherDBRecord)) {
+                        $bookDetails['publishers'][] = $publisherDBRecord->id;
+                    } else {
+                        $bookDetails['publishers'][] = $publisher['name'];
+                    }
+                }
+            }
+
             return $bookDetails;
 
         } catch (Exception $e) {
