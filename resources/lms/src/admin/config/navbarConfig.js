@@ -5,49 +5,61 @@ export default {
         {
             name: 'Books',
             url: '/app/admin/books',
-            icon: 'icon-book-open',
+            icon: 'fa fa-book',
             permission: Permissions.MANAGE_BOOKS,
         },
         {
-            name: 'Users',
-            url: '/app/admin/users',
-            icon: 'icon-user',
-            permission: Permissions.MANAGE_USERS,
+            name: 'Books Allotment',
+            url: '/app/admin/books-allotment',
+            icon: 'fas fa-book-reader',
+            permission: Permissions.MANAGE_BOOKS
+        },
+        {
+            name: 'Members',
+            url: '/app/admin/members',
+            icon: 'fas fa-users',
+            permission: Permissions.MANAGE_MEMBERS,
         },
         {
             name: 'Genres',
             url: '/app/admin/genres',
-            icon: 'icon-layers',
+            icon: 'fas fa-layer-group',
             permission: Permissions.MANAGE_GENRES,
         },
         {
             name: 'Authors',
             url: '/app/admin/authors',
-            icon: 'icon-briefcase',
+            icon: 'fas fa-user-friends',
             permission: Permissions.MANAGE_AUTHORS,
         },
         {
             name: 'Publishers',
             url: '/app/admin/publishers',
-            icon: 'icon-envelope-open',
+            icon: 'fas fa-atlas',
             permission: Permissions.MANAGE_PUBLISHERS,
         },
         {
             name: 'Book Languages',
             url: '/app/admin/book-languages',
-            icon: 'icon-note',
+            icon: 'fa fa-globe',
             permission: Permissions.MANAGE_BOOK_LANGUAGES,
         },
         {
             name: 'Tags',
             url: '/app/admin/tags',
-            icon: 'icon-tag',
+            icon: 'fas fa-tags',
             permission: Permissions.MANAGE_TAGS,
+        },
+        {
+            name: 'Users',
+            url: '/app/admin/users',
+            icon: 'fa fa-user',
+            permission: Permissions.MANAGE_USERS,
         },
         {
             name: 'Roles',
             url: '/app/admin/roles',
-            icon: 'icon-badge',
+            icon: 'fas fa-user-shield',
             permission: Permissions.MANAGE_ROLES,
         },
         {
@@ -59,25 +71,13 @@ export default {
         {
             name: 'Books Series',
             url: '/app/admin/books-series',
-            icon: 'icon-grid',
+            icon: 'fas fa-swatchbook',
             permission: Permissions.MANAGE_BOOK_SERIES,
-        },
-        {
-            name: 'Members',
-            url: '/app/admin/members',
-            icon: 'icon-people',
-            permission: Permissions.MANAGE_MEMBERS,
-        },
-        {
-            name: 'Books Allotment',
-            url: '/app/admin/books-allotment',
-            icon: 'icon-notebook',
-            permission: Permissions.MANAGE_BOOKS
         },
         {
             name: 'Settings',
             url: '/app/admin/settings',
-            icon: 'icon-settings',
+            icon: 'fa fa-cog',
             permission: Permissions.MANAGE_FINANCE,
         }
     ],

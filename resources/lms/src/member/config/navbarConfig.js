@@ -3,12 +3,12 @@ export default {
         {
             name: 'Books',
             url: '/app/books',
-            icon: 'icon-book-open'
+            icon: 'fas fa-book',
         },
         {
             name: 'Book History',
             url: '/app/book-history',
-            icon: 'icon-notebook'
+            icon: 'fas fa-book-reader',
         }
     ]
 };
