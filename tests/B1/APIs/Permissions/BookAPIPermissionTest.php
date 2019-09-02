@@ -87,7 +87,7 @@ class BookAPIPermissionTest extends TestCase
 
         $response = $this->postJson(route('api.b1.books.store'), $fakeBook);
 
-        $this->assertExceptionMessage($response, 'Book saved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
     }
 
     /** @test */
@@ -100,7 +100,7 @@ class BookAPIPermissionTest extends TestCase
 
         $response = $this->putJson(route('api.b1.books.update', $book->id), $updateBook);
 
-        $this->assertExceptionMessage($response, 'Book updated successfully.');
+        $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
     }
 
     /** @test */
@@ -111,7 +111,7 @@ class BookAPIPermissionTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.books.destroy', $book->id));
 
-        $this->assertExceptionMessage($response, 'Book deleted successfully.');
+        $this->assertSuccessMessageResponse($response, 'Book deleted successfully.');
     }
 
     /** @test */

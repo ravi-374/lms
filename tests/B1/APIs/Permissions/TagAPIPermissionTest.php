@@ -81,7 +81,7 @@ class TagAPIPermissionTest extends TestCase
 
         $response = $this->postJson(route('api.b1.tags.store'), $fakeTag);
 
-        $this->assertExceptionMessage($response, 'Tag saved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Tag saved successfully.');
     }
 
     /** @test */
@@ -93,7 +93,7 @@ class TagAPIPermissionTest extends TestCase
 
         $response = $this->putJson(route('api.b1.tags.update', $tag->id), $updateTag);
 
-        $this->assertExceptionMessage($response, 'Tag updated successfully.');
+        $this->assertSuccessMessageResponse($response, 'Tag updated successfully.');
     }
 
     /** @test */
@@ -104,6 +104,6 @@ class TagAPIPermissionTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.tags.destroy', $tag->id));
 
-        $this->assertExceptionMessage($response, 'Tag deleted successfully.');
+        $this->assertSuccessMessageResponse($response, 'Tag deleted successfully.');
     }
 }

@@ -83,7 +83,7 @@ class RoleAPIPermissionTest extends TestCase
 
         $response = $this->postJson(route('api.b1.roles.store'), $fakeRole);
 
-        $this->assertExceptionMessage($response, 'Role saved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Role saved successfully.');
     }
 
     /** @test */
@@ -96,7 +96,7 @@ class RoleAPIPermissionTest extends TestCase
 
         $response = $this->putJson(route('api.b1.roles.update', $role->id), $updateRole);
 
-        $this->assertExceptionMessage($response, 'Role updated successfully.');
+        $this->assertSuccessMessageResponse($response, 'Role updated successfully.');
     }
 
     /** @test */
@@ -107,6 +107,6 @@ class RoleAPIPermissionTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.roles.destroy', $role->id));
 
-        $this->assertExceptionMessage($response, 'Role deleted successfully.');
+        $this->assertSuccessMessageResponse($response, 'Role deleted successfully.');
     }
 }
