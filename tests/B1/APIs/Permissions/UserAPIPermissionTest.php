@@ -110,4 +110,25 @@ class UserAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'User deleted successfully.');
     }
+
+    /** @test */
+    public function test_not_allow_to_update_status_without_permission()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->getJson(route('api.b1.users.update-status', $user->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
+
+    /** @test */
+    public function test_can_update_status_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_users']);
+        $user = factory(User::class)->create();
+
+        $response = $this->getJson(route('api.b1.users.update-status', $user->id));
+
+        $this->assertSuccessMessageResponse($response, 'User updated successfully.');
+    }
 }
