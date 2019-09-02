@@ -81,7 +81,7 @@ class PublisherAPIPermissionTest extends TestCase
 
         $response = $this->postJson(route('api.b1.publishers.store'), $fakePublisher);
 
-        $this->assertExceptionMessage($response, 'Publisher saved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Publisher saved successfully.');
     }
 
     /** @test */
@@ -93,7 +93,7 @@ class PublisherAPIPermissionTest extends TestCase
 
         $response = $this->putJson(route('api.b1.publishers.update', $publisher->id), $updatePublisher);
 
-        $this->assertExceptionMessage($response, 'Publisher updated successfully.');
+        $this->assertSuccessMessageResponse($response, 'Publisher updated successfully.');
     }
 
     /** @test */
@@ -104,6 +104,6 @@ class PublisherAPIPermissionTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.publishers.destroy', $publisher->id));
 
-        $this->assertExceptionMessage($response, 'Publisher deleted successfully.');
+        $this->assertSuccessMessageResponse($response, 'Publisher deleted successfully.');
     }
 }

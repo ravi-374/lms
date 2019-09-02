@@ -81,7 +81,7 @@ class BookLanguagePermissionTest extends TestCase
 
         $response = $this->postJson(route('api.b1.book-languages.store'), $fakeBookLanguage);
 
-        $this->assertExceptionMessage($response, 'Book Language saved successfully.');
+        $this->assertSuccessMessageResponse($response, 'Book Language saved successfully.');
     }
 
     /** @test */
@@ -93,7 +93,7 @@ class BookLanguagePermissionTest extends TestCase
 
         $response = $this->putJson(route('api.b1.book-languages.update', $bookLanguage->id), $updateBookLanguage);
 
-        $this->assertExceptionMessage($response, 'Book Language updated successfully.');
+        $this->assertSuccessMessageResponse($response, 'Book Language updated successfully.');
     }
 
     /** @test */
@@ -104,6 +104,6 @@ class BookLanguagePermissionTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.book-languages.destroy', $bookLanguage->id));
 
-        $this->assertExceptionMessage($response, 'Book Language deleted successfully.');
+        $this->assertSuccessMessageResponse($response, 'Book Language deleted successfully.');
     }
 }
