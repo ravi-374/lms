@@ -6,6 +6,8 @@ export default (state = [], action) => {
     switch (type) {
         case settingsActionsType.FETCH_SETTINGS:
             return { ..._.mapKeys(payload, 'id') };
+        case settingsActionsType.POST_LOGO:
+            return { payload };
         case settingsActionsType.POST_SETTINGS:
             return { ...state, [payload.id]: payload };
         default:

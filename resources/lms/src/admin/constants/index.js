@@ -207,20 +207,23 @@ export const userProfileActionType = {
 export const settingsActionsType = {
     FETCH_SETTINGS: 'FETCH_SETTINGS',
     POST_SETTINGS: 'POST_SETTINGS',
+    POST_LOGO: 'POST_LOGO',
     FETCH_CURRENCIES: 'FETCH_CURRENCIES',
 };
 
 export const settingsKey = {
     CURRENCY: 'currency',
-    ISSUE_DUE_DAYS: 'issue_due_days',
+    ISSUE_DUE_DAYS: 'reserve_due_days',
     RETURN_DUE_DAYS: 'return_due_days',
-    RESERVE_DUE_DAYS: 'reserve_due_days',
+    LIBRARY_NAME: 'library_name',
+    LIBRARY_LOGO: 'library_logo',
 };
 
 export const settingsDisplayName = {
-    ISSUE_DUE_DAYS: 'Issue Due Days',
+    ISSUE_DUE_DAYS: 'Reserve Due Days',
+    APP_NAME: 'App Name',
+    LIBRARY_LOGO: 'Library Logo',
     RETURN_DUE_DAYS: 'Return Due Days',
-    RESERVE_DUE_DAYS: 'Reserve Due Days',
 };
 
 export const bookItemActionType = {
