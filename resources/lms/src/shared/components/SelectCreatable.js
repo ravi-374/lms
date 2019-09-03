@@ -1,5 +1,4 @@
-import React from 'react';
-import Select from 'react-select';
+import React from "react";
 import {
     FormFeedback,
     FormGroup,
@@ -9,17 +8,24 @@ import {
     Label
 } from 'reactstrap';
 import './Component.scss';
+import CreatableSelect from "react-select/Creatable";
 
 export default (props) => {
     const {
-        input, placeholder, required, label, groupText, isSearchable = false,
-        autoFocus, innerRef, defaultValue = {}, disabled, menuPlacement = "auto", isCustom,
-        meta: { touched, error }, options, isMulti = false
+        input, placeholder, required, label, groupText, isSearchable = true,
+        innerRef, disabled, menuPlacement = "auto", isCustom,
+        meta: { touched, error, warning }, options, isMulti = false, isVisibleWarning = true
     } = props;
+
     const formGroupClass = isCustom ? 'react-select mb-0 mt-1' : 'react-select';
     const labelClass = required ? 'control-label' : '';
     const inputClass = isCustom ? 'react-select__input react-select__input--secondary' :
         'react-select__input react-select__input--primary';
+
+    const formatCreate = inputValue => {
+        return `Add New ${label ? label : 'Option'}: ${inputValue}`;
+    };
+
     return (
         <FormGroup className={formGroupClass}>
             {label ? <Label className={labelClass}>{label}</Label> : null}
@@ -29,14 +35,16 @@ export default (props) => {
                         <i className={`fa fa-${groupText}`}/>
                     </InputGroupText>
                 </InputGroupAddon>
-                <Select
+                <CreatableSelect
                     {...input} className={inputClass} placeholder={placeholder} value={input.value}
-                    onChange={(value) => input.onChange(value)} isDisabled={disabled}
-                    onBlur={() => input.onBlur(input.value)} options={options} getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id} defaultValue={defaultValue} isSearchable={isSearchable}
-                    menuPlacement={menuPlacement} ref={innerRef} isMulti={isMulti}/>
+                    onChange={(value) => input.onChange(value)} isDisabled={disabled} isClearable
+                    onBlur={() => input.onBlur(input.value)} options={options} isSearchable={isSearchable}
+                    menuPlacement={menuPlacement} ref={innerRef} isMulti={isMulti} hideSelectedOptions={false}
+                    formatCreateLabel={(inputValue) => formatCreate(inputValue)}/>
             </InputGroup>
             {touched && ((error && <FormFeedback className="d-block">{error}</FormFeedback>))}
+            {((!error && isVisibleWarning && warning &&
+                <FormFeedback className="d-block text-success">{warning}</FormFeedback>))}
         </FormGroup>
-    )
+    );
 }

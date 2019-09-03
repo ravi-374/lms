@@ -260,6 +260,11 @@ export const bookAllotmentFilterOptions = [
     { id: 7, name: 'Lost' }
 ];
 
+export const importActionType = {
+    FETCH_IMPORT_BOOK: 'FETCH_IMPORT_BOOK',
+    CLEAR_IMPORT_BOOK: 'CLEAR_IMPORT_BOOK',
+};
+
 export const storageKey = {
     BOOK_ALLOTMENT: 'book_allotment',
     MEMBERS: 'members',

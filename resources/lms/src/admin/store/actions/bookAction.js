@@ -7,6 +7,7 @@ import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
 import _ from 'lodash';
+import {Routes} from "../../../constants";
 
 export const fetchBooks = (filter = {}, history = null, isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
@@ -46,7 +47,7 @@ export const addBook = (book, history) => async (dispatch) => {
             dispatch({type: bookActionType.ADD_BOOK, payload: response.data.data});
             dispatch(setLoading(false));
             dispatch(addToast({text: response.data.message}));
-            history.push('/app/admin/books');
+            history.push(Routes.ADMIN_DEFAULT);
         })
         .catch(({response}) => {
             dispatch(addToast({text: response.data.message, type: 'error'}));
@@ -62,7 +63,7 @@ export const editBook = (bookId, book, history = null) => async (dispatch) => {
             dispatch(setLoading(false));
             dispatch(addToast({text: response.data.message}));
             if (history) {
-                history.push('/app/admin/books');
+                history.push(Routes.ADMIN_DEFAULT);
             } else {
                 dispatch(toggleModal());
             }
