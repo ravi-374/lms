@@ -3,33 +3,24 @@
 namespace App\Console\Commands;
 
 use App\Models\IssuedBook;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class UpdateIssuedBookStatus extends Command
+class UnReserveBooks extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'lms:issued_book_status';
+    protected $signature = 'lms:un-reserve-books';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Reserved and not issued still valid due time books are un-reserved.';
 
     /**
      * Execute the console command.
@@ -39,12 +30,12 @@ class UpdateIssuedBookStatus extends Command
     public function handle()
     {
         /** @var IssuedBook[] $issueBooks */
-        $issueBooks = IssuedBook::get();
+        $issueBooks = IssuedBook::whereStatus(IssuedBook::STATUS_RESERVED)->get();
 
         foreach ($issueBooks as $issueBook) {
-            if (!$issueBook->issue_due_date < now()) {
+            if (!$issueBook->issue_due_date < Carbon::now()) {
                 $issueBook->update(['status' => IssuedBook::STATUS_UN_RESERVED]);
-                $this->info("Updating issue book status");
+                $this->info("Un-Reserved book with id :$issueBook->id");
             }
         }
     }
