@@ -119,7 +119,6 @@
     transition: all 0.4s ease;
     border-radius: 50%;
     border: 0;
-    outline: none;
     color: $white;
     font-size: 18px;
     display: block;
@@ -127,25 +126,14 @@
     &:hover {
         background-color: #9364d4;
     }
-}
-
-.scroll-btn-fade-out {
-    animation: fadeOut 1s ease-in-out;
-    opacity: 0;
+    &:focus {
+        outline: none !important;
+    }
 }
 
 .scroll-btn-fade-in {
     animation: fadeIn 1s ease-in-out;
     opacity: 1;
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
 }
 
 @keyframes fadeIn {

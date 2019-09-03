@@ -7,8 +7,10 @@ import {getCurrentMember} from "../../../admin/shared/sharedMethod";
 const Lending = () => {
 
     useEffect(() => {
-        window.addEventListener('scroll', trackScrolling);
-    }, []);
+        window.addEventListener("scroll", trackScrolling);
+        trackScrolling();
+        return (() => document.removeEventListener('scroll', trackScrolling))
+    });
 
     const removeActiveClass = () => {
         const c = document.getElementsByClassName('scrollToLink');
@@ -18,11 +20,23 @@ const Lending = () => {
             }
         }
     };
-    const isBottom = (el) => {
-        if (el) return el.getBoundingClientRect().bottom <= window.innerHeight;
+
+    const isBottom = (el, prevEle = null, nextEle = null) => {
+        if (el) {
+            const currentElement = el.getBoundingClientRect().bottom;
+            if (nextEle) {
+                const nextElement = nextEle.getBoundingClientRect().bottom;
+                return (currentElement <= window.innerHeight && nextElement > window.innerHeight);
+            }
+            if (prevEle) {
+                const prevElement = prevEle.getBoundingClientRect().bottom;
+                return (currentElement <= window.innerHeight && prevElement < currentElement);
+            }
+        }
     };
     const trackScrolling = () => {
         let element = document.getElementById('home');
+        const currentElement = document.getElementById('scrollToLink-1');
         let element1 = document.getElementById('services');
         const currentElement1 = document.getElementById('scrollToLink-2');
         let element2 = document.getElementById('newsletter');
@@ -30,36 +44,29 @@ const Lending = () => {
         const scrollElement = document.getElementById('scroll-btn');
         if (scrollElement) {
             scrollElement.classList.add('scroll-btn-fade-in');
-            if (!isBottom(element)) {
-                if (scrollElement.classList.contains('scroll-btn-fade-in')) {
-                    scrollElement.classList.remove('scroll-btn-fade-in');
-                    scrollElement.classList.add('scroll-btn-fade-out');
-                }
-            } else {
-                if (scrollElement.classList.contains('scroll-btn-fade-out')) {
-                    scrollElement.classList.remove('scroll-btn-fade-out');
-                    scrollElement.classList.add('scroll-btn-fade-in');
-                }
-            }
         }
-        if (isBottom(element1)) {
+        if (window.scrollY === 0) {
+            scrollElement.classList.remove('scroll-btn-fade-in');
+        }
+        if (isBottom(element, null, element1)) {
+            removeActiveClass();
+            currentElement.classList.add('current');
+        }
+        if (isBottom(element1, null, element2)) {
             removeActiveClass();
             currentElement1.classList.add('current');
         }
-        if (isBottom(element2)) {
+        if (isBottom(element2, element1, null)) {
             removeActiveClass();
             currentElement2.classList.add('current');
         }
-        document.removeEventListener('scroll', trackScrolling);
     };
     const scrollToTop = () => {
-        const currentElement = document.getElementById('scroll-btn');
         window.scroll({
             top: 0,
             left: 0,
             behavior: 'smooth'
         });
-        currentElement.classList.add('scroll-btn-fade-out');
     };
     const scrollTo = (sourceElementId, destinationElementId) => {
         const sourceElement = document.getElementById(sourceElementId);
@@ -153,7 +160,7 @@ const Lending = () => {
                 <section className="service-one" id="services">
                     <div className="container">
                         <div className="block-title text-center">
-                            <div className="block-title__text">Feature</div>
+                            <div className="block-title__text">Features</div>
                         </div>
                         <div className="row">
                             <div className="col-xl-4 col-lg-6 col-md-6 col-sm-12">
