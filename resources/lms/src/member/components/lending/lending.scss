@@ -321,6 +321,77 @@
 /*
 * main styles
 */
+
+@media(max-width: 1714px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.9);
+        -ms-transform: scale(.9);
+        -o-transform: scale(.9);
+        transform: scale(.9);
+        transform-origin: bottom right;
+    }
+}
+
+@media(max-width: 1472px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.8);
+        -ms-transform: scale(.8);
+        -o-transform: scale(.8);
+        transform: scale(.8);
+        transform-origin: bottom right;
+    }
+}
+
+@media(max-width: 1270px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.7);
+        -ms-transform: scale(.7);
+        -o-transform: scale(.7);
+        transform: scale(.7);
+        transform-origin: bottom right;
+    }
+}
+
+@media(max-width: 1200px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.6);
+        -ms-transform: scale(.6);
+        -o-transform: scale(.6);
+        transform: scale(.6);
+        transform-origin: bottom right;
+    }
+}
+
+@media(max-width: 1110px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.5);
+        -ms-transform: scale(.5);
+        -o-transform: scale(.5);
+        transform: scale(.5);
+        transform-origin: bottom right;
+    }
+}
+
+@media(max-width: 992px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.4);
+        -ms-transform: scale(.4);
+        -o-transform: scale(.4);
+        transform: scale(.4);
+        transform-origin: right;
+    }
+}
+
+@media(max-width: 780px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.35);
+        -ms-transform: scale(.35);
+        -o-transform: scale(.35);
+        transform: scale(.35);
+        transform-origin: right;
+    }
+}
+
 @media(max-width: 1199px) {
     br {
         display: none;
@@ -329,14 +400,6 @@
     .banner-one__text br,
     .block-title__text br {
         display: block;
-    }
-
-    .banner-one__moc {
-        -webkit-transform: scale(.8);
-        -ms-transform: scale(.8);
-        -o-transform: scale(.8);
-        transform: scale(.8);
-        transform-origin: top right;
     }
 
     .service-one .block-title {
@@ -350,13 +413,6 @@
 }
 
 @media(max-width: 991px) {
-    .banner-one__moc {
-        -webkit-transform: scale(.5);
-        -ms-transform: scale(.5);
-        -o-transform: scale(.5);
-        transform: scale(.5);
-        transform-origin: top right;
-    }
 
     .banner-one {
         padding-top: 185px;
