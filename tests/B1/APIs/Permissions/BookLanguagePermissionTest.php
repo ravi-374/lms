@@ -106,4 +106,29 @@ class BookLanguagePermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Book Language deleted successfully.');
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_book_language_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_book_languages']);
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $response = $this->getJson(route('api.b1.book-languages.show', $bookLanguage->id));
+
+        $this->assertSuccessMessageResponse($response, 'Book Language retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_book_language_without_permission()
+    {
+        $bookLanguage = factory(BookLanguage::class)->create();
+
+        $response = $this->get(route('api.b1.book-languages.show', $bookLanguage->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }
