@@ -181,4 +181,29 @@ class BookAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Book status updated successfully.');
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_book_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_books']);
+        $book = factory(Book::class)->create();
+
+        $response = $this->getJson(route('api.b1.books.show', $book->id));
+
+        $this->assertSuccessMessageResponse($response, 'Book retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_book_without_permission()
+    {
+        $book = factory(Book::class)->create();
+
+        $response = $this->get(route('api.b1.books.show', $book->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }

@@ -106,4 +106,29 @@ class AuthorAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($result, 'Author deleted successfully.');
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_author_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_authors']);
+        $author = factory(Author::class)->create();
+
+        $response = $this->getJson(route('api.b1.authors.show', $author->id));
+
+        $this->assertSuccessMessageResponse($response, 'Author retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_author_without_permission()
+    {
+        $author = factory(Author::class)->create();
+
+        $response = $this->get(route('api.b1.authors.show', $author->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }

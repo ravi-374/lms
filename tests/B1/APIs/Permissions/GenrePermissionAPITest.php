@@ -105,4 +105,29 @@ class GenrePermissionAPITest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Genre deleted successfully.');;
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_genre_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_genres']);
+        $genre = factory(Genre::class)->create();
+
+        $response = $this->getJson(route('api.b1.genres.show', $genre->id));
+
+        $this->assertSuccessMessageResponse($response, 'Genre retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_genre_without_permission()
+    {
+        $genre = factory(Genre::class)->create();
+
+        $response = $this->get(route('api.b1.genres.show', $genre->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }
