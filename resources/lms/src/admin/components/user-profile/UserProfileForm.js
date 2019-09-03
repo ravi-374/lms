@@ -68,7 +68,7 @@ const UserProfileForm = (props) => {
                         <Field name="phone" type="number" label="Phone No." groupText="phone" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="password" label="Password" type="password" groupText="lock"
+                        <Field name="password" label="New Password" type="password" groupText="lock"
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
