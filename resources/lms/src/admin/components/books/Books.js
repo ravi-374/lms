@@ -86,6 +86,8 @@ const Books = (props) => {
                 <HeaderTitle title={'Books | LMS System'}/>
                 <h5 className="page-heading">Books</h5>
                 <div className="d-flex justify-content-end">
+                    <Link to={`${Routes.BOOKS}import-book`} size="md"
+                          className="btn btn-primary ml-2">Import Book</Link>
                     <Link to={`${Routes.BOOKS}new`} size="md" className="btn btn-primary ml-2">New Book</Link>
                 </div>
             </Col>

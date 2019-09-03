@@ -11,7 +11,7 @@ import Select from "../../../shared/components/Select";
 import {enableDisableUserInput} from "../../../shared/sharedMethod";
 import {bookItemStatusOptions, bookItemStatusConstants} from "../../constants";
 import {mapCurrencyCode} from "../../../shared/sharedMethod";
-import {prepareBookLanguage} from "../books/prepareArray";
+import {prepareBookLanguage} from "../../shared/prepareArray";
 import {fetchPublishers} from "../../store/actions/publisherAction";
 import {fetchBookLanguages} from "../../store/actions/bookLanguageAction";
 

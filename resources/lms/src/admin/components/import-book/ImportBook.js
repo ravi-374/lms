@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardBody, Button} from 'reactstrap';
+import {Row, Col, Card, CardBody} from 'reactstrap';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
-import BookForm from './BookForm';
-import {addBook} from '../../store/actions/bookAction';
+import ImportBookForm from './ImportBookForm';
 import {fetchAuthors} from '../../store/actions/authorAction';
 import {fetchGenres} from '../../store/actions/genreAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
@@ -14,44 +13,52 @@ import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {prepareFullNames} from "../../../shared/sharedMethod";
 import {prepareBookLanguage} from "../../shared/prepareArray";
+import {clearImportBook} from "../../store/actions/importBookAction";
+import {addBook} from "../../store/actions/bookAction";
+import {prepareCreatableObject} from "../../shared/prepareArray";
 
-const CreateBook = (props) => {
+const ImportBook = (props) => {
+    const {
+        authors, publishers, tags, bookLanguages, genres, isLoading, clearImportBook,
+        history, addBook, fetchAuthors, fetchPublishers, fetchGenres, fetchBookLanguages, fetchTags
+    } = props;
     useEffect(() => {
-        props.fetchAuthors();
-        props.fetchPublishers();
-        props.fetchGenres();
-        props.fetchBookLanguages(true);
-        props.fetchTags();
+        clearImportBook();
+        fetchAuthors();
+        fetchPublishers();
+        fetchGenres();
+        fetchBookLanguages(true);
+        fetchTags();
     }, []);
-    const onSaveBook = (formValues) => {
-        props.addBook(prepareFormData(formValues), props.history);
+
+    const onImportBook = (formValues) => {
+        addBook(prepareFormData(formValues), history);
     };
     const goBack = () => {
-        props.history.goBack();
+        history.goBack();
     };
-    const { authors, publishers, tags, bookLanguages, genres, isLoading } = props;
     const prepareFormOption = {
         authors,
         publishers,
         tags,
         genres,
         bookLanguages,
-        onSaveBook,
-        onCancel: goBack
+        onImportBook,
+        onCancel: goBack,
     };
     return (
         <div className="animated fadeIn">
             {isLoading ? <ProgressBar/> : null}
-            <HeaderTitle title={'New Book | LMS System'}/>
+            <HeaderTitle title={'Import Book | LMS System'}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">New Book</h5>
+                    <h5 className="page-heading">Import Book</h5>
                 </Col>
                 <Col sm={12}>
                     <div className="sticky-table-container">
                         <Card>
                             <CardBody>
-                                <BookForm {...prepareFormOption}/>
+                                <ImportBookForm {...prepareFormOption}/>
                                 <Toasts/>
                             </CardBody>
                         </Card>
@@ -66,11 +73,11 @@ const mapStateToProps = (state) => {
     const { isLoading, authors, publishers, tags, bookLanguages, genres } = state;
     return {
         isLoading,
-        authors: prepareFullNames(Object.values(authors)),
-        publishers: publishers,
-        tags,
-        bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),
-        genres: Object.values(genres)
+        authors: prepareCreatableObject(prepareFullNames(authors)),
+        publishers: prepareCreatableObject(publishers),
+        tags: prepareCreatableObject(tags),
+        bookLanguages: prepareCreatableObject(prepareBookLanguage(Object.values(bookLanguages))),
+        genres: prepareCreatableObject(genres),
     }
 };
 
@@ -80,5 +87,6 @@ export default connect(mapStateToProps, {
     fetchGenres,
     fetchTags,
     fetchBookLanguages,
-    fetchPublishers
-})(CreateBook);
+    fetchPublishers,
+    clearImportBook,
+})(ImportBook);

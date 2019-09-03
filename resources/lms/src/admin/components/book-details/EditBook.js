@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 import {editBook} from '../../store/actions/bookAction';
 import BookForm from './BookForm';
 import prepareFormData from '../books/prepareFormData';
-import {prepareAuthor} from '../books/prepareArray';
 import Modal from '../../../shared/components/Modal';
 import {fetchAuthors} from '../../store/actions/authorAction';
 import {fetchTags} from '../../store/actions/tagAction';
 import {fetchGenres} from '../../store/actions/genreAction';
 import '../books/Books.scss';
+import {prepareFullNames} from "../../../shared/sharedMethod";
 
 const EditBook = (props) => {
     useEffect(() => {
@@ -23,7 +23,7 @@ const EditBook = (props) => {
         is_featured,
         isbn,
         genres: props.book.genres,
-        authors: props.book.authors ? prepareAuthor(props.book.authors) : [],
+        authors: props.book.authors ? prepareFullNames(props.book.authors) : [],
         name,
         price,
         tags: props.book.tags,
@@ -53,7 +53,7 @@ const EditBook = (props) => {
 const mapStateToProps = (state) => {
     const { authors, tags, genres } = state;
     return {
-        authors: prepareAuthor(Object.values(authors)),
+        authors: prepareFullNames(Object.values(authors)),
         tags: Object.values(tags),
         genres: Object.values(genres)
     }

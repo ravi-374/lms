@@ -6,7 +6,10 @@ import {
 } from 'reactstrap';
 import './Component.scss';
 
-export default ({input, label, type, min,max, required, groupText, isCustom, customGroupText = '', addOnType = 'prepend', placeholder, readOnly, meta: {touched, error}}) => {
+export default ({
+                    input, label, type, min, max, required, groupText, isCustom,
+                    customGroupText = '', addOnType = 'prepend', placeholder, readOnly, meta: { touched, error }
+                }) => {
     const formGroupClass = isCustom ? 'custom-input-search mb-0 mt-1' : '';
     const className = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
@@ -15,7 +18,7 @@ export default ({input, label, type, min,max, required, groupText, isCustom, cus
             <div className="controls">
                 <Row>
                     <Col xs={6}>
-                        {label ? <Label className={labelClass} style={{marginTop: '16px'}}>{label}</Label> : null}
+                        {label ? <Label className={labelClass} style={{ marginTop: '16px' }}>{label}</Label> : null}
                     </Col>
                     <Col xs={label ? 6 : 12}>
                         <InputGroup>
