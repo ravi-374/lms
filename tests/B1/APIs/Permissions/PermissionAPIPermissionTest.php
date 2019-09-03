@@ -105,4 +105,29 @@ class PermissionAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Permission deleted successfully.');;
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_permission_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_roles']);
+        $permission = factory(Permission::class)->create();
+
+        $response = $this->getJson(route('api.b1.permissions.show', $permission->id));
+
+        $this->assertSuccessMessageResponse($response, 'Permission retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_permission_without_permission()
+    {
+        $permission = factory(Permission::class)->create();
+
+        $response = $this->get(route('api.b1.permissions.show', $permission->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }
