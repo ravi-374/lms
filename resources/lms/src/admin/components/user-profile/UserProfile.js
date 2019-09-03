@@ -36,7 +36,8 @@ const MemberProfile = props => {
         email,
         password,
         image,
-        phone
+        phone,
+        file_name: !!image
     };
     if (address) {
         const { address_1, address_2, country, city, state, zip } = address;
