@@ -65,7 +65,6 @@ const SettingsForm = (props) => {
     };
 
     const onSaveSettings = (formValues) => {
-        console.log(formValues);
         const { currency, issue_due_days, return_due_days, library_name } = formValues;
         const settings = [
             prepareFormData(settingsKey.CURRENCY, currency.id, currency.name),

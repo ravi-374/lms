@@ -31,7 +31,8 @@ const Settings = (props) => {
         props.postAppLogo(formData)
     };
     const getLogo = (settings) => {
-        return settings[settingsKey.LIBRARY_NAME] ? publicImagePathURL.IMAGE_URL + settings[settingsKey.LIBRARY_LOGO].value : null
+        return settings && settings[settingsKey.LIBRARY_LOGO] ?
+            publicImagePathURL.IMAGE_URL + settings[settingsKey.LIBRARY_LOGO].value : null
     };
 
     const prepareFormOption = {
