@@ -138,21 +138,9 @@ class SettingPermissionTest extends TestCase
     /**
      * @test
      */
-    public function test_can_upload_setting_logo_with_valid_permission()
-    {
-        $this->assignPermissions($this->loggedInUserId, ['manage_settings']);
-
-        $response = $this->postJson(route('api.b1.upload-logo'), ['logo' => 'file.jpg']);
-
-        $this->assertSuccessMessageResponse($response, 'Logo updated successfully.');
-    }
-
-    /**
-     * @test
-     */
     public function test_not_allow_to_upload_setting_logo_without_permission()
     {
-        $response = $this->post(route('api.b1.upload-logo', ['logo' => 'file.jpg']));
+        $response = $this->post(route('api.b1.upload-logo', ['logo' => '']));
 
         $this->assertExceptionMessage($response, 'Unauthorized action.');
     }
