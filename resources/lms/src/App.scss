@@ -156,26 +156,39 @@ select {
     .table {
         border-top: 0;
 
-        thead tr:nth-child(1) th {
-            background: white;
-            position: sticky;
-            top: 0;
-            z-index: 10;
+        @-moz-document url-prefix() {
+            thead tr:nth-child(1) th {
 
-            &:before {
-                content: '';
-                position: absolute;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border-top: 1px solid $border-bg;
-                top: -1px;
+                &:before {
+                    left: 1px !important;
+                    border-top: 0 !important;
+                    border-right: 1px solid $border-bg;
+                    border-bottom: 1px solid $border-bg;
+                    top: 1px !important;
+                }
+            }
+            thead tr:nth-child(1) th {
+                background: white;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-top: 1px solid $border-bg;
+                    top: -1px;
+                }
+
             }
         }
-    }
 
-    .table-responsive {
-        overflow: initial;
+        .table-responsive {
+            overflow: initial;
+        }
     }
 }
 
