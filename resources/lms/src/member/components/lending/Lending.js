@@ -45,7 +45,7 @@ const Lending = () => {
         if (scrollElement) {
             scrollElement.classList.add('scroll-btn-fade-in');
         }
-        if (window.scrollY === 0) {
+        if (window.scrollY === 0 && scrollElement) {
             scrollElement.classList.remove('scroll-btn-fade-in');
         }
         if (isBottom(element, null, element1)) {
