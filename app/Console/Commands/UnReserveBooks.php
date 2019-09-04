@@ -35,16 +35,18 @@ class UnReserveBooks extends Command
         $issueBooks = IssuedBook::whereStatus(IssuedBook::STATUS_RESERVED)->get();
 
         foreach ($issueBooks as $issueBook) {
-            if (!$issueBook->issue_due_date) {
-                $issueDueDate = Carbon::parse($issueBook->issue_due_date)->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
-                if ($issueDueDate < Carbon::now()) {
-                    $issueBook->update(['status' => IssuedBook::STATUS_UN_RESERVED]);
+            $issueDueDate = $issueBook->issue_due_date;
+            if (!$issueDueDate) {
+                $issueDueDate = Carbon::parse($issueBook->reserve_date)
+                    ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS))->toDateTimeString();
+            }
+            if ($issueDueDate < Carbon::now()) {
+                $issueBook->update(['status' => IssuedBook::STATUS_UN_RESERVED]);
 
-                    /** @var BookItem $bookItem */
-                    $bookItem = BookItem::findOrFail($issueBook->book_item_id);
-                    $bookItem->update(['status' => BookItem::STATUS_AVAILABLE]);
-                    $this->info("Un-Reserved book with id :$issueBook->id");
-                }
+                /** @var BookItem $bookItem */
+                $bookItem = BookItem::findOrFail($issueBook->book_item_id);
+                $bookItem->update(['status' => BookItem::STATUS_AVAILABLE]);
+                $this->info("Un-Reserved book with id : $issueBook->id");
             }
         }
     }
