@@ -138,7 +138,7 @@ class IssuedBookRepositoryTest extends TestCase
      */
     public function test_unable_to_issue_book_with_non_existing_book_item_id()
     {
-        $this->issuedBookRepo->issueBook(['book_item_id' => 9999]);
+        $this->issuedBookRepo->issueBook(['book_item_id' => 9999, 'member_id' => 1]);
     }
 
     /**

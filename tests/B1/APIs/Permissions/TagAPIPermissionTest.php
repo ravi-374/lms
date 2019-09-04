@@ -106,4 +106,29 @@ class TagAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Tag deleted successfully.');
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_tag_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_tags']);
+        $tag = factory(Tag::class)->create();
+
+        $response = $this->getJson(route('api.b1.tags.show', $tag->id));
+
+        $this->assertSuccessMessageResponse($response, 'Tag retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_tag_without_permission()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $response = $this->get(route('api.b1.tags.show', $tag->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }
