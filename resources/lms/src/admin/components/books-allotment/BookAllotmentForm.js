@@ -153,31 +153,39 @@ const BookAllotmentForm = props => {
     };
     return (
         <Row className="animated fadeIn m-3">
-            <Col xs={12}>
-                <Field name="book" label="Book" required options={props.books} placeholder="Select Book"
-                       onChange={onSelectBook} groupText="book" component={Select} isSearchable={true}
-                       innerRef={bookItemRef} disabled={initialValues}/>
+            <Col xs={6}>
+                <Row>
+                    <Col xs={12}>
+                        <Field name="book" label="Book" required options={props.books} placeholder="Select Book"
+                               onChange={onSelectBook} groupText="book" component={Select} isSearchable={true}
+                               innerRef={bookItemRef} disabled={initialValues}/>
+                    </Col>
+                    <Col xs={12}>
+                        <Field name="member" label="Member" required options={props.members} placeholder="Select Member"
+                               onChange={onSelectMember} groupText="user-circle-o" component={Select}
+                               isSearchable={true} disabled={initialValues}/>
+                    </Col>
+                    <Col xs={12}>
+                        <Field name="book_item" label="Book Item" required options={props.bookItems}
+                               placeholder="Select Book Item" groupText="object-group" component={Select}
+                               isSearchable={true} disabled={isDisabledItem || initialValues}/>
+                    </Col>
+                </Row>
+            </Col>
+            <Col xs={6}>
+                <Field name="note" rows="10" label="Note" component={TextArea}/>
             </Col>
             <Col xs={12}>
-                <Field name="member" label="Member" required options={props.members} placeholder="Select Member"
-                       onChange={onSelectMember} groupText="user-circle-o" component={Select} isSearchable={true}
-                       disabled={initialValues}/>
-            </Col>
-            <Col xs={12}>
-                <Field name="book_item" label="Book Item" required options={props.bookItems}
-                       placeholder="Select Book Item" groupText="object-group" component={Select} isSearchable={true}
-                       disabled={isDisabledItem || initialValues}/>
-            </Col>
-            <Col xs={12}>
-                <Field name="status" label="Status" required options={renderBookStatusOption()}
-                       placeholder="Select Status" onChange={onSelectBookStatus} groupText="info-circle"
-                       component={Select} disabled={isDisabledStatus}/>
-            </Col>
-            <Col xs={12}>
-                {renderDatePicker(status)}
-            </Col>
-            <Col xs={12}>
-                <Field name="note" label="Note" component={TextArea}/>
+                <Row>
+                    <Col xs={6}>
+                        <Field name="status" label="Status" required options={renderBookStatusOption()}
+                               placeholder="Select Status" onChange={onSelectBookStatus} groupText="info-circle"
+                               component={Select} disabled={isDisabledStatus}/>
+                    </Col>
+                    <Col xs={6}>
+                        {renderDatePicker(status)}
+                    </Col>
+                </Row>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={props.handleSubmit(onSaveBookAllotment)} {...props}/>
