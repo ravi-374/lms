@@ -106,4 +106,29 @@ class PublisherAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Publisher deleted successfully.');
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_publisher_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_publishers']);
+        $publisher = factory(Publisher::class)->create();
+
+        $response = $this->getJson(route('api.b1.publishers.show', $publisher->id));
+
+        $this->assertSuccessMessageResponse($response, 'Publisher retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_publisher_without_permission()
+    {
+        $publisher = factory(Publisher::class)->create();
+
+        $response = $this->get(route('api.b1.publishers.show', $publisher->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }
