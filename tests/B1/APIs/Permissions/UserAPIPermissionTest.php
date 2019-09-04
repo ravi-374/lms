@@ -131,4 +131,29 @@ class UserAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'User updated successfully.');
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_user_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_users']);
+        $user = factory(User::class)->create();
+
+        $response = $this->getJson(route('api.b1.users.show', $user->id));
+
+        $this->assertSuccessMessageResponse($response, 'User retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_user_without_permission()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->get(route('api.b1.users.show', $user->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }

@@ -109,4 +109,29 @@ class RoleAPIPermissionTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Role deleted successfully.');
     }
+
+    /**
+     * @test
+     */
+    public function test_can_show_role_with_valid_permission()
+    {
+        $this->assignPermissions($this->loggedInUserId, ['manage_roles']);
+        $role = factory(Role::class)->create();
+
+        $response = $this->getJson(route('api.b1.roles.show', $role->id));
+
+        $this->assertSuccessMessageResponse($response, 'Role retrieved successfully.');
+    }
+
+    /**
+     * @test
+     */
+    public function test_not_allow_to_show_role_without_permission()
+    {
+        $role = factory(Role::class)->create();
+
+        $response = $this->get(route('api.b1.roles.show', $role->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }
