@@ -257,8 +257,8 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $input['reserve_date'] = (!empty($input['reserve_date'])) ? $input['reserve_date'] : Carbon::now();
         $input['note'] = !empty($input['note']) ? $input['note'] : null;
 
-        if (!empty($issueBook) && $issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id == $input['member_id']) {
-            $issueBook->update(['status' => $input]);
+        if (!empty($issueBook) && $issueBook->status == IssuedBook::STATUS_UN_RESERVED && $issueBook->member_id == $input['member_id']) {
+            $issueBook->update($input);
         } else {
             $issueBook = IssuedBook::create($input);
         }
