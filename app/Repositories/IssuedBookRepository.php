@@ -249,18 +249,20 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
-        if (!empty($issueBook) || $bookItem->status == BookItem::STATUS_NOT_AVAILABLE) {
+        if ($bookItem->status == BookItem::STATUS_NOT_AVAILABLE) {
             throw new UnprocessableEntityHttpException('Book is not available.');
         }
 
-        $reserveDate = (!empty($input['reserve_date'])) ? $input['reserve_date'] : Carbon::now();
-        $issueBook = IssuedBook::create([
-            'book_item_id' => $input['book_item_id'],
-            'member_id'    => $input['member_id'],
-            'note'         => !empty($input['note']) ? $input['note'] : null,
-            'reserve_date' => $reserveDate,
-            'status'       => IssuedBook::STATUS_RESERVED,
-        ]);
+        $input['status'] = IssuedBook::STATUS_RESERVED;
+        $input['reserve_date'] = (!empty($input['reserve_date'])) ? $input['reserve_date'] : Carbon::now();
+        $input['note'] = !empty($input['note']) ? $input['note'] : null;
+
+        if (!empty($issueBook) && $issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id == $input['member_id']) {
+            $issueBook->update(['status' => $input]);
+        } else {
+            $issueBook = IssuedBook::create($input);
+        }
+
         $bookItem->update(['status' => BookItem::STATUS_NOT_AVAILABLE]);
 
         return $this->find($issueBook->id);

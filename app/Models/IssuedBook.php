@@ -234,8 +234,7 @@ class IssuedBook extends Model
      */
     public function scopeLastIssuedBook(Builder $query)
     {
-        return $query->where('status', '!=', self::STATUS_RETURNED)
-            ->where('status', '!=', self::STATUS_UN_RESERVED);
+        return $query->where('status', '!=', self::STATUS_RETURNED);
     }
 
     /**
