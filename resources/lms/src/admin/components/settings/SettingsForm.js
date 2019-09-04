@@ -11,6 +11,7 @@ import {mapCurrencyCode} from '../../../shared/sharedMethod';
 import {settingsDisplayName, settingsKey} from "../../constants";
 import ImagePicker from "../../../shared/image-picker/ImagePicker";
 import {publicImagePath} from "../../../appConstant";
+import './Settings.scss';
 
 const SettingsForm = (props) => {
     const { currencies, initialValues, changeFile } = props;
@@ -76,16 +77,16 @@ const SettingsForm = (props) => {
     };
 
     return (
-        <Row>
-            <Col xs={2}>
-                <h6>Logo</h6>
+        <Row className="settings">
+            <Col xs={2} className="settings__logo">
+                <h6 className="settings__logo-heading">Logo</h6>
                 <div>
                     <Field name="library_logo" type="hidden" component={InputGroup}/>
                     <ImagePicker {...imagePickerOptions}/>
                 </div>
             </Col>
-            <Col xs={10}>
-                <Row>
+            <Col xs={10} className="settings__form">
+                <Row className="settings__form-columns">
                     <Col xs={6}>
                         <Field name='library_name' type="text" label="App Name" required groupText="list"
                                placeholder="App Name" component={InputGroup} inputRef={settingRef}/>
@@ -103,7 +104,7 @@ const SettingsForm = (props) => {
                         <Field name='return_due_days' type="number" label="Return Due Days" min="0" required
                                groupText="calendar" placeholder="Return Due Days" component={InputGroup}/>
                     </Col>
-                    <Col xs={12} className="mt-4">
+                    <Col xs={12}>
                         <SaveAction onSave={props.handleSubmit(onSaveSettings)} isHideCancel {...props}/>
                     </Col>
                 </Row>
