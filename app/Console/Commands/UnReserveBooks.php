@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\BookItem;
 use App\Models\IssuedBook;
-use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -35,12 +34,7 @@ class UnReserveBooks extends Command
         $issueBooks = IssuedBook::whereStatus(IssuedBook::STATUS_RESERVED)->get();
 
         foreach ($issueBooks as $issueBook) {
-            $issueDueDate = $issueBook->issue_due_date;
-            if (!$issueDueDate) {
-                $issueDueDate = Carbon::parse($issueBook->reserve_date)
-                    ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS))->toDateTimeString();
-            }
-            if ($issueDueDate < Carbon::now()) {
+            if ($issueBook->issue_due_date < Carbon::now()) {
                 $issueBook->update(['status' => IssuedBook::STATUS_UN_RESERVED]);
 
                 /** @var BookItem $bookItem */
