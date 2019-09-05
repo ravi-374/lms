@@ -216,6 +216,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'status'          => IssuedBook::STATUS_ISSUED,
             'issuer_id'       => Auth::id(),
         ];
+
         if (!empty($issueBook)) {
             if ($issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id != $input['member_id']) {
                 throw new UnprocessableEntityHttpException('Book is already reserved by another member.');
@@ -224,9 +225,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
                 throw new UnprocessableEntityHttpException('Book is already issued.');
             }
 
-            $issueBook->update($input);
+            $isUpdate = ($issueBook->status == IssuedBook::STATUS_UN_RESERVED && $issueBook->member_id == $input['member_id']) ? true : false;
+            if ($isUpdate || $issueBook->member_id == $input['member_id']) {
+                $issueBook->update($input);
+                $bookItem->update(['status' => BookItem::STATUS_NOT_AVAILABLE]);
 
-            return $this->find($issueBook->id);
+                return $this->find($issueBook->id);
+            }
         }
 
         $issueBook = IssuedBook::create($input);
@@ -257,8 +262,8 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $input['reserve_date'] = (!empty($input['reserve_date'])) ? $input['reserve_date'] : Carbon::now();
         $input['note'] = !empty($input['note']) ? $input['note'] : null;
 
-        if (!empty($issueBook) && $issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id == $input['member_id']) {
-            $issueBook->update(['status' => $input]);
+        if (!empty($issueBook) && $issueBook->status == IssuedBook::STATUS_UN_RESERVED && $issueBook->member_id == $input['member_id']) {
+            $issueBook->update($input);
         } else {
             $issueBook = IssuedBook::create($input);
         }

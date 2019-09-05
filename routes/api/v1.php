@@ -10,13 +10,13 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook')
         ->name('un-reserve-book');
     // books history
-    Route::get('books-history', 'IssuedBookAPIController@booksHistory')->name('books-history.index') ;
+    Route::get('books-history', 'IssuedBookAPIController@booksHistory')->name('books-history.index');
 
     // get logged in member details
     Route::get('member-details', 'MemberAPIController@getLoggedInMemberDetails')->name('member-details');
 
     // get all books
-    Route::get('books', 'BookAPIController@index')->name('books.index') ;;
+    Route::get('books', 'BookAPIController@index')->name('books.index');
 
     // Book search
     Route::get('search-books', 'BookItemAPIController@searchBooks')->name('search-books.index');
@@ -32,6 +32,7 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::get('countries', 'CountryAPIController@index')->name('countries.index');
 
     Route::get('authors', 'AuthorAPIController@index')->name('authors.index');
+    Route::get('settings', 'SettingAPIController@index')->name('settings.index');
 });
 
 Route::post('register-member', 'MemberAuthController@register');

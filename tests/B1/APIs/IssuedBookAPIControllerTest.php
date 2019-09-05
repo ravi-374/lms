@@ -549,4 +549,146 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->assertCount(1, $response);
         $this->assertEquals($bookItem1->book_code, $response[0]['book_item']['book_code']);
     }
+
+    /** @test */
+    public function test_existing_allotment_record_replaced_when_book_is_reserve_from_un_reserve_status_by_same_member()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        /** @var Member $member */
+        $member = factory(Member::class)->create();
+
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.un-reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $issueBookRecords = IssuedBook::ofMember($member->id)->get();
+        $this->assertCount(1, $issueBookRecords);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
+    }
+
+    /** @test */
+    public function test_existing_allotment_record_replaced_when_book_is_issued_from_un_reserve_status_by_same_member()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        /** @var Member $member */
+        $member = factory(Member::class)->create();
+
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.un-reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.issue-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $issueBookRecords = IssuedBook::ofMember($member->id)->get();
+        $this->assertCount(1, $issueBookRecords);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
+    }
+
+    /** @test */
+    public function test_new_allotment_record_added_when_book_is_reserved_from_un_reserved_status_by_different_member()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        /** @var Member $member */
+        $member1 = factory(Member::class)->create();
+        $member2 = factory(Member::class)->create();
+
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member1->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.un-reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member1->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member2->id,
+        ]);
+
+        $issueBookRecords = IssuedBook::all();
+        $this->assertCount(2, $issueBookRecords);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
+    }
+
+    /** @test */
+    public function test_new_allotment_record_added_when_book_is_issued_from_un_reserved_status_by_different_member()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        /** @var Member $member */
+        $member1 = factory(Member::class)->create();
+        $member2 = factory(Member::class)->create();
+
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member1->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.un-reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member1->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.issue-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member2->id,
+        ]);
+
+        $issueBookRecords = IssuedBook::all();
+        $this->assertCount(2, $issueBookRecords);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
+    }
+
+    /** @test */
+    public function test_existing_allotment_record_replaced_when_book_is_issued_from_reserved_status_by_same_member()
+    {
+        /** @var BookItem $bookItem */
+        $bookItem = factory(BookItem::class)->create();
+
+        /** @var Member $member */
+        $member = factory(Member::class)->create();
+
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $response = $this->postJson(route('api.b1.issue-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $issueBookRecords = IssuedBook::all();
+        $this->assertCount(1, $issueBookRecords);
+        $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
+    }
 }
