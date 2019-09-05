@@ -26,7 +26,7 @@ export default ({
                         </InputGroupText>
                     </InputGroupAddon>
                     <DatePicker placeholderText={placeHolder} selected={selected} onChange={onChange} maxDate={maxDate}
-                                dateFormat={dateFormat} disabled={disabled}/>
+                                minDate={minDate} dateFormat={dateFormat} disabled={disabled}/>
                 </InputGroup>
             </FormGroup>
         </Fragment>
