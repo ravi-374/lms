@@ -137,7 +137,7 @@ const Lending = () => {
                     <img src={'images/banner/banner-icon-1-5.png'} alt="Awesome Image" className="bubble-5"/>
                     <img src={'images/banner/banner-icon-1-6.png'} alt="Awesome Image" className="bubble-6"/>
                     <img src={'images/banner/banner-moc-1.png'} className="banner-one__moc" alt="Awesome Image"/>
-                    <div className="container">
+                    <div className="container page-wrapper__container">
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="banner-one__content">

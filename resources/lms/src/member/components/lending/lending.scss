@@ -322,43 +322,43 @@
 * main styles
 */
 
-@media(max-width: 1714px) {
+@media(max-width: 1796px) {
     .banner-one__moc {
         -webkit-transform: scale(.9);
         -ms-transform: scale(.9);
         -o-transform: scale(.9);
         transform: scale(.9);
-        transform-origin: bottom right;
+        transform-origin: top right;
     }
 }
 
-@media(max-width: 1472px) {
+@media(max-width: 1604px) {
     .banner-one__moc {
         -webkit-transform: scale(.8);
         -ms-transform: scale(.8);
         -o-transform: scale(.8);
         transform: scale(.8);
-        transform-origin: bottom right;
+        transform-origin: top right;
     }
 }
 
-@media(max-width: 1270px) {
+@media(max-width: 1413px) {
     .banner-one__moc {
         -webkit-transform: scale(.7);
         -ms-transform: scale(.7);
         -o-transform: scale(.7);
         transform: scale(.7);
-        transform-origin: bottom right;
+        transform-origin: top right;
     }
 }
 
 @media(max-width: 1200px) {
     .banner-one__moc {
-        -webkit-transform: scale(.6);
-        -ms-transform: scale(.6);
-        -o-transform: scale(.6);
-        transform: scale(.6);
-        transform-origin: bottom right;
+        -webkit-transform: scale(.55);
+        -ms-transform: scale(.55);
+        -o-transform: scale(.55);
+        transform: scale(.55);
+        transform-origin: top right;
     }
 }
 
@@ -368,7 +368,7 @@
         -ms-transform: scale(.5);
         -o-transform: scale(.5);
         transform: scale(.5);
-        transform-origin: bottom right;
+        transform-origin: top right;
     }
 }
 
@@ -378,17 +378,27 @@
         -ms-transform: scale(.4);
         -o-transform: scale(.4);
         transform: scale(.4);
-        transform-origin: right;
+        transform-origin: top right;
     }
 }
 
-@media(max-width: 780px) {
+@media(max-width: 930px) {
     .banner-one__moc {
         -webkit-transform: scale(.35);
         -ms-transform: scale(.35);
         -o-transform: scale(.35);
         transform: scale(.35);
-        transform-origin: right;
+        transform-origin: top right;
+    }
+}
+
+@media(max-width: 826px) {
+    .banner-one__moc {
+        -webkit-transform: scale(.3);
+        -ms-transform: scale(.3);
+        -o-transform: scale(.3);
+        transform: scale(.3);
+        transform-origin: top right;
     }
 }
 
