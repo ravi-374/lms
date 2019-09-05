@@ -40,7 +40,7 @@ class IssuedBookPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_issue_book_with_valid_permission()
+    public function test_can_issue_book_with_valid_permission()
     {
         $this->assignPermissions($this->loggedInUserId, ['issue_books']);
 
@@ -57,7 +57,7 @@ class IssuedBookPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_get_return_book_without_permission()
+    public function test_not_allow_to_return_book_without_permission()
     {
         /** @var IssuedBook $issueBook */
         $issueBook = factory(IssuedBook::class)->create();
@@ -70,7 +70,7 @@ class IssuedBookPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_return_book_with_valid_permission()
+    public function test_can_return_book_with_valid_permission()
     {
         $this->assignPermissions($this->loggedInUserId, ['issue_books']);
 
