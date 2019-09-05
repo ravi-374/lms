@@ -649,6 +649,76 @@ paths:
       responses:
         "200":
           description: Book deleted successfully.
+  "/b1/books/{book}/remove-image":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: remove book image.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBook"
+        required: true
+      responses:
+        "200":
+          description: Book image removed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+  "/b1/books/{id}/items":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: add book items.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBook"
+        required: true
+      responses:
+        "200":
+          description: Book items added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+  "/b1/books/{id}/available-books":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: get available book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
+        - name: member_id
+          in: query
+          description: Member Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books history retrieved successfully..
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
   /b1/roles:
     post:
       security:
@@ -1077,7 +1147,7 @@ paths:
         required: true
       responses:
         "200":
-          description: BookSeries saved successfully.
+          description: Book Series saved successfully.
           content:
             application/json:
               schema:
@@ -1091,7 +1161,7 @@ paths:
       description: ""
       responses:
         "200":
-          description: BookSeries retrieved successfully.
+          description: Book Series retrieved successfully.
           content:
             application/json:
               schema:
@@ -1120,7 +1190,7 @@ paths:
         required: true
       responses:
         "200":
-          description: BookSeries updated successfully.
+          description: Book Series updated successfully.
           content:
             application/json:
               schema:
@@ -1142,7 +1212,7 @@ paths:
             type: integer
       responses:
         "200":
-          description: BookSeries retrieved successfully.
+          description: Book Series retrieved successfully.
           content:
             application/json:
               schema:
@@ -1163,7 +1233,7 @@ paths:
             type: integer
       responses:
         "200":
-          description: "BookSeries deleted successfully."
+          description: "Book Series deleted successfully."
   /b1/series-books:
     post:
       security:
@@ -1180,7 +1250,7 @@ paths:
         required: true
       responses:
         "200":
-          description: SeriesBook created successfully.
+          description: Series Book saved successfully.
           content:
             application/json:
               schema:
@@ -1194,7 +1264,7 @@ paths:
       description: ""
       responses:
         "200":
-          description: SeriesBook retrieved successfully.
+          description: Series Book retrieved successfully.
           content:
             application/json:
               schema:
@@ -1211,7 +1281,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: SeriesBook Id
+          description: Series Book Id
           required: true
           schema:
             type: integer
@@ -1223,7 +1293,7 @@ paths:
         required: true
       responses:
         "200":
-          description: SeriesBook updated successfully.
+          description: Series Book updated successfully.
           content:
             application/json:
               schema:
@@ -1244,7 +1314,7 @@ paths:
             type: integer
       responses:
         "200":
-          description: SeriesBook retrieved successfully.
+          description: Series Book retrieved successfully.
           content:
             application/json:
               schema:
@@ -1265,7 +1335,213 @@ paths:
             type: integer
       responses:
         "200":
-          description: SeriesBook deleted successfully.
+          description: Series Book deleted successfully.
+  /b1/settings:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: create setting.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSetting"
+        required: true
+      responses:
+        "200":
+          description: Setting saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: get all settings.
+      description: ""
+      responses:
+        "200":
+          description: Settings retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingListResponse"
+
+  "/b1/Settings/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: update given setting.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Setting Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSetting"
+        required: true
+      responses:
+        "200":
+          description: Setting updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: get specific setting.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Setting Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Setting retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: delete specific setting.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Setting Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Setting deleted successfully.
+  /b1/membership-plans:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: create membership-plans.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMembershipPlan"
+        required: true
+      responses:
+        "200":
+          description: Membership Plan saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: get all membership-plans.
+      description: ""
+      responses:
+        "200":
+          description: Membership Plans retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanListResponse"
+
+  "/b1/membership-plans/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: update given membership-plans.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: MembershipPlan Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMembershipPlan"
+        required: true
+      responses:
+        "200":
+          description: Membership Plan updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: get specific membership-plans.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: MembershipPlan Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Membership Plan retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: delete specific membership-plans.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: MembershipPlan Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Membership Plan deleted successfully.
 components:
   securitySchemes:
     Bearer:
@@ -2023,3 +2299,167 @@ components:
           type: integer
         sequence:
           type: integer
+    CreateMembershipPlan:
+      type: object
+      required:
+        - name
+        - price
+        - frequency
+      properties:
+        name:
+          type: string
+        price:
+          type: float
+        description:
+          type: string
+        frequency:
+          type: integer
+        stripe_plan_id:
+          type: string
+
+    UpdateMembershipPlan:
+      type: object
+      required:
+        - name
+        - price
+        - frequency
+        - id
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: float
+        description:
+          type: string
+        frequency:
+          type: integer
+        stripe_plan_id:
+          type: string
+
+    MembershipPlanResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateMembershipPlan"
+
+    MembershipPlanListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              price:
+                type: float
+              description:
+                type: string
+              frequency:
+                type: integer
+              stripe_plan_id:
+                type: string
+    CreateSetting:
+      type: object
+      required:
+        - key
+        - value
+        - display_name
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        display_name:
+          type: string
+    UpdateSetting:
+      type: object
+      required:
+        - key
+        - value
+        - display_name
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        value:
+          type: string
+        display_name:
+          type: string
+
+    SettingResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateSetting"
+
+    SettingListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              key:
+                type: string
+              value:
+                type: string
+              display_name:
+                type: string
+    BookItemResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              book_id:
+                type: integer
+              book_code:
+                type: string
+              edition:
+                type: string
+              format:
+                type: integer
+              status:
+                type: string
+              price:
+                type: float
+              location:
+                type: string
+              publisher_id:
+                type: integer
+              language_id:
+                type: integer
