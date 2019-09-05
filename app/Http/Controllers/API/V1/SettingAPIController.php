@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Controllers\API\V1;
+
+use App\Http\Controllers\AppBaseController;
+use App\Models\Setting;
+use Illuminate\Http\JsonResponse;
+
+/**
+ * Class SettingAPIController
+ * @package App\Http\Controllers\API\V1
+ */
+class SettingAPIController extends AppBaseController
+{
+    /**
+     * @return JsonResponse
+     */
+    public function index()
+    {
+        $settings = Setting::all();
+
+        return $this->sendResponse($settings->toArray(), 'Settings retrieved successfully.');
+    }
+}

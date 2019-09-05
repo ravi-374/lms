@@ -32,6 +32,7 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::get('countries', 'CountryAPIController@index')->name('countries.index');
 
     Route::get('authors', 'AuthorAPIController@index')->name('authors.index');
+    Route::get('settings', 'SettingAPIController@index')->name('settings.index');
 });
 
 Route::post('register-member', 'MemberAuthController@register');
