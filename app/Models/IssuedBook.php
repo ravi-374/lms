@@ -193,24 +193,6 @@ class IssuedBook extends Model
         return $record;
     }
 
-    /**
-     * @return array
-     */
-    public function apiObject()
-    {
-        $record = $this->toArray();
-        $record['issuer_name'] = $this->issuer_name;
-        $record['returner_name'] = $this->returner_name;
-        $record['return_due_date'] = Carbon::parse($this->issued_on)->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS))->toDate();
-        if (isset($record['book_item']['last_issued_book'])) {
-            $record['expected_available_date'] = $this->getExpectedAvailableDate($record['book_item']['last_issued_book']);
-        }
-        unset($record['issuer']);
-        unset($record['returner']);
-
-        return $record;
-    }
-
     public function getExpectedAvailableDate($lastIssuedBook)
     {
         if (!empty($lastIssuedBook)) {
