@@ -13,9 +13,8 @@ export default ({ bookItems, onOpenModal, sortAction, sortObject, currency }) =>
         { id: 'edition', name: 'Edition' },
         { id: 'language_name', name: 'Language' },
         { id: 'price', name: 'Price' },
-        { id: 'status_name', name: 'Status' }
     ];
-    const headerProps = { sortAction, sortObject, sortConfig, headers };
+    const headerProps = { sortAction, sortObject, sortConfig, headers, isStatusField: true };
     const renderBookItemStatus = (bookItem) => {
         const statusProps = { status: bookItem.status, item: bookItem };
         return <BookItemStatus {...statusProps} item={bookItem}/>;

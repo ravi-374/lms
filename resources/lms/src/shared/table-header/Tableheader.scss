@@ -1,3 +1,11 @@
-th {
-    cursor: pointer;
+.table-header {
+    th {
+        cursor: pointer;
+    }
+
+    &__status, &__action {
+        cursor: default !important;
+        width: 110px;
+        text-align: center;
+    }
 }
