@@ -145,7 +145,7 @@ class IssuedBookAPIController extends AppBaseController
         $book->authors;
         $book->tags;
 
-        return $this->sendResponse($issuedBook->apiObj(), 'Issued Book retrieved successfully.');
+        return $this->sendResponse($issuedBook->apiObject(), 'Issued Book retrieved successfully.');
     }
 
     /**
