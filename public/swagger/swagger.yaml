@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  description: LMS APIs
+  version: 1.0.0
+  title: LMS
+
+servers:
+  - url: /api
+
+paths:
+  /b1/genres:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: create genre.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGenre"
+        required: true
+      responses:
+        "200":
+          description: Genre saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: get all genres.
+      description: ""
+      responses:
+        "200":
+          description: Genres retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreListResponse"
+  "/b1/genres/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: update given genre.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Genre Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGenre"
+        required: true
+      responses:
+        "200":
+          description: Genre updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: get specific genre.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Genre Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Genre retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: delete specific Genre.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Genres Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Genre deleted successfully.
+
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    CreateGenre:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    GenreResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateGenre"
+    GenreListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+    UpdateGenre:
+      type: object
+      required:
+        - name
+        - id
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
