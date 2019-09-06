@@ -44,7 +44,6 @@ class BookItemAPIController extends AppBaseController
         $search = $request->only(['member_id']);
         $search['book_id'] = $book->id;
         $search['status'] = BookItem::STATUS_AVAILABLE;
-        $search['for_member'] = true;
 
         $records = $this->bookItemRepo->all(
             $search,
