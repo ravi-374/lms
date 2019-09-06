@@ -4,6 +4,7 @@ import {Field, reduxForm} from 'redux-form';
 import bookLanguageValidate from './bookLanguageValidate';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
+import './BookLanguages.scss';
 
 const BookLanguageForm = props => {
     const isDisabled = !!props.initialValues;
@@ -23,7 +24,7 @@ const BookLanguageForm = props => {
                        component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <Field name="language_code" readOnly={isDisabled} label="Code" required groupText="code"
+                <Field name="language_code" className="code-field" readOnly={isDisabled} label="Code" required groupText="code"
                        component={InputGroup}/>
             </Col>
             <Col xs={12}>
