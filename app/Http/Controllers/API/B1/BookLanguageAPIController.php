@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
@@ -35,13 +36,18 @@ class BookLanguageAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $bookLanguages = $this->bookLanguageRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($bookLanguages->toArray(), 'Book Languages retrieved successfully.');
+        return $this->sendResponse(
+            $bookLanguages->toArray(),
+            'Book Languages retrieved successfully.',
+            $this->getTotalRecords(BookLanguage::class, $input, $bookLanguages)
+        );
     }
 
     /**
