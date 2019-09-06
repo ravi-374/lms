@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>{{ config('app.name') }} Swagger</title>
+    <title>LMS</title>
     <link href="{{ asset('css/swagger-ui.css') }}" rel="stylesheet"></head>
 </head>
 <body>

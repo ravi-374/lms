@@ -786,6 +786,90 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BookItemResponse"
+  "/b1/books/{id}/reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/un-reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: un-reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book un-reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/update-issued-book-status":
+      put:
+        security:
+          - Bearer: []
+        tags:
+          - IssuedBook
+        summary: un-reserve book.
+        description: ""
+        parameters:
+          - name: id
+            in: path
+            description: BookItem Id
+            required: true
+            schema:
+              type: integer
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReserveBook"
+          required: true
+        responses:
+          "200":
+            description: Book un-reserved successfully.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/IssuedBookResponse"
   /b1/roles:
     post:
       security:
@@ -2515,4 +2599,52 @@ components:
               publisher_id:
                 type: integer
               language_id:
+                type: integer
+    ReserveBook:
+      type: object
+      required:
+        - member_id
+        - book_item_id
+      properties:
+        member_id:
+          type: integer
+        book_item_id:
+          type: integer
+        reserve_date:
+          type: datetime
+        status:
+          type: integer
+    IssuedBookResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              book_item_id:
+                type: integer
+              member_id:
+                type: string
+              reserve_date:
+                type: datetime
+              issued_on:
+                type: datetime
+              return_due_date:
+                type: datetime
+              note:
+                type: string
+              return_date:
+                type: datetime
+              status:
+                type: integer
+              issuer_id:
+                type: integer
+              returner_id:
                 type: integer
