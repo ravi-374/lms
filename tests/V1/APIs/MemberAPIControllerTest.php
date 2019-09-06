@@ -72,11 +72,12 @@ class MemberAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_settings()
+    public function test_can_get_only_member_settings()
     {
         $response = $this->getJson(route('api.v1.settings.index'));
 
-        $this->assertCount(6, $response->original['data']);
+        $this->assertCount(1, $response->original['data']);
+        $this->assertEquals('language', $response->original['data'][0]['key']);
         $this->assertSuccessMessageResponse($response, 'Settings retrieved successfully.');
     }
 }
