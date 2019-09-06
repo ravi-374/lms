@@ -14,7 +14,7 @@ $factory->define(Member::class, function (Faker $faker) {
         'first_name'         => $faker->firstName,
         'last_name'          => $faker->lastName,
         'email'              => $faker->unique()->safeEmail,
-        'password'           => $faker->password, // password
+        'password'           => $faker->password(8), // password
         'membership_plan_id' => $membershipPlan->id,
         'phone'              => $faker->phoneNumber,
     ];

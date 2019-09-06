@@ -5,7 +5,6 @@ namespace Tests\Repositories;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\BookLanguage;
-use App\Models\Tag;
 use App\Repositories\BookRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -140,33 +139,6 @@ class BookRepositoryTest extends TestCase
         $book = factory(Book::class)->raw();
 
         $this->bookRepo->update($book, 999);
-    }
-
-    /**
-     * @test
-     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
-     * @expectedExceptionMessage  Tag not found
-     */
-    public function it_can_not_store_book_with_non_existing_tag()
-    {
-        $input['tags'] = [999];
-
-        $this->bookRepo->validateInput($input);
-    }
-
-    /**
-     * @test
-     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
-     * @expectedExceptionMessage  Genre not found
-     */
-    public function it_can_not_store_book_with_non_existing_genres()
-    {
-        $tag = factory(Tag::class)->create();
-
-        $input['tags'] = [$tag->id];
-        $input['genres'] = [999];
-
-        $this->bookRepo->validateInput($input);
     }
 
     /**
