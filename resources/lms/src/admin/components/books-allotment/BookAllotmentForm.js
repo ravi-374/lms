@@ -29,13 +29,13 @@ const BookAllotmentForm = props => {
         memberId = null;
         if (initialValues) {
             setStatus(initialValues.status.id);
-            if (initialValues.reserve_date) {
+            if (initialValues.reserve_date && initialValues.status.id === bookAllotmentStatusConstant.BOOK_RESERVED) {
                 setSelectedDate(moment(initialValues.reserve_date).toDate());
                 props.change('reserve_date', initialValues.reserve_date);
-            } else if (initialValues.issued_on) {
+            } else if (initialValues.issued_on && initialValues.status.id === bookAllotmentStatusConstant.BOOK_ISSUED) {
                 setSelectedDate(moment(initialValues.issued_on).toDate());
                 props.change('issued_on', initialValues.issued_on);
-            } else {
+            } else if (initialValues.return_date && initialValues.status.id === bookAllotmentStatusConstant.BOOK_RETURNED) {
                 setSelectedDate(moment(initialValues.return_date).toDate());
                 props.change('return_date', initialValues.return_date);
             }
@@ -103,8 +103,10 @@ const BookAllotmentForm = props => {
         let field = '';
         let label = '';
         let maxDate = '';
+        let minDate = ''
         switch (status) {
             case bookAllotmentStatusConstant.BOOK_RESERVED:
+                minDate = moment().toDate();
                 label = 'Reserve Date';
                 field = 'reserve_date';
                 break;
@@ -114,6 +116,8 @@ const BookAllotmentForm = props => {
                 maxDate = moment().toDate();
                 break;
             case bookAllotmentStatusConstant.BOOK_RETURNED:
+                minDate = moment().subtract(moment().diff(moment(initialValues.issued_on), 'days'), 'days').toDate();
+                maxDate = moment().toDate();
                 label = 'Return Date';
                 field = 'return_date';
                 break;
@@ -123,7 +127,7 @@ const BookAllotmentForm = props => {
         return (
             <Fragment>
                 <DatePicker label={label} selected={selectedDate} disabled={isDisabledStatus} maxDate={maxDate}
-                            onChange={onSelectDate} placeHolder="Click to select a date"/>
+                            minDate={minDate} onChange={onSelectDate} placeHolder="Click to select a date"/>
                 <Field name={field} type="hidden" component={InputGroup}/>
             </Fragment>
         )
