@@ -7,7 +7,6 @@ use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
-use App\Repositories\BookItemRepository;
 use App\Repositories\IssuedBookRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -22,13 +21,9 @@ class IssuedBookAPIController extends AppBaseController
     /** @var  IssuedBookRepository */
     private $issuedBookRepository;
 
-    /** @var BookItemRepository */
-    private $bookItemRepo;
-
-    public function __construct(IssuedBookRepository $issuedBookRepo, BookItemRepository $bookItemRepo)
+    public function __construct(IssuedBookRepository $issuedBookRepo)
     {
         $this->issuedBookRepository = $issuedBookRepo;
-        $this->bookItemRepo = $bookItemRepo;
     }
 
     /**

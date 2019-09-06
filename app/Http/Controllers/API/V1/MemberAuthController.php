@@ -7,7 +7,6 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\Member;
 use App\Repositories\AccountRepository;
 use App\Repositories\MemberRepository;
-use App\Repositories\UserRepository;
 use App\User;
 use Crypt;
 use Exception;
@@ -19,7 +18,6 @@ use Illuminate\Routing\Redirector;
 use JWTAuth;
 use Session;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use URL;
 use Validator;
 
 /**
@@ -31,19 +29,14 @@ class MemberAuthController extends AppBaseController
     /** @var  MemberRepository */
     private $memberRepository;
 
-    /** @var  UserRepository */
-    private $userRepository;
-
     /** @var AccountRepository */
     private $accountRepo;
 
     public function __construct(
         MemberRepository $memberRepo,
-        UserRepository $userRepository,
         AccountRepository $accountRepo
     ) {
         $this->memberRepository = $memberRepo;
-        $this->userRepository = $userRepository;
         $this->accountRepo = $accountRepo;
     }
 

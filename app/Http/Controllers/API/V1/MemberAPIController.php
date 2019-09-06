@@ -17,14 +17,6 @@ use Illuminate\Http\JsonResponse;
  */
 class MemberAPIController extends AppBaseController
 {
-    /** @var  MemberRepository */
-    private $memberRepository;
-
-    public function __construct(MemberRepository $memberRepo)
-    {
-        $this->memberRepository = $memberRepo;
-    }
-
     /**
      * @return JsonResponse
      */
@@ -40,18 +32,19 @@ class MemberAPIController extends AppBaseController
 
     /**
      * @param UpdateMemberProfileAPIRequest $request
+     * @param MemberRepository $memberRepository
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      * @return JsonResponse
      */
-    public function updateMemberProfile(UpdateMemberProfileAPIRequest $request)
+    public function updateMemberProfile(UpdateMemberProfileAPIRequest $request, MemberRepository $memberRepository)
     {
         $input = $request->all();
         unset($input['email']);
         unset($input['membership_plan_id']);
 
-        $updateMember = $this->memberRepository->update($input, Auth::id());
+        $updateMember = $memberRepository->update($input, Auth::id());
 
         return $this->sendResponse($updateMember->toArray(), 'Member profile updated successfully.');
     }
