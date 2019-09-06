@@ -4,14 +4,19 @@ import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {getUserProfile} from "../../../store/action/localStorageAction";
-import {LocalStorageKey, Routes} from "../../../constants";
+import {LocalStorageKey, Routes, appSettingsKey} from "../../../constants";
+import {fetchAppSetting} from "../../../store/action/appSettingAction";
 import {getAvatarName} from "../../../shared/sharedMethod";
 
 const Header = (props) => {
-    const { member, getUserProfile, history } = props;
+    const { member, getUserProfile, history, fetchAppSetting, appSetting } = props;
     let imageUrl = null;
+    let appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
+    let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
+        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
 
     useEffect(() => {
+        fetchAppSetting();
         getUserProfile(LocalStorageKey.MEMBER);
     }, []);
 
@@ -31,8 +36,8 @@ const Header = (props) => {
         <Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile/>
             <AppNavbarBrand>
-                <img className="infy-logo" src={publicImagePath.APP_LOGO} height="19" width="40" alt="InfyOm Logo"/>
-                <span className="ml-2 infy-name" style={{ color: '#20a8d8' }}>InfyOm</span>
+                <img className="infy-logo" src={appLogo} height="19" width="40" alt="InfyOm Logo"/>
+                <span className="ml-2 infy-name" style={{ color: '#20a8d8' }}>{appName}</span>
             </AppNavbarBrand>
             <Nav className="ml-auto" navbar>
                 <AppHeaderDropdown direction="down">
@@ -55,6 +60,7 @@ const Header = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    return { member: state.profile }
+    const { profile, appSetting } = state;
+    return { member: profile, appSetting: appSetting }
 };
-export default connect(mapStateToProps, { getUserProfile })(Header);
+export default connect(mapStateToProps, { getUserProfile, fetchAppSetting })(Header);

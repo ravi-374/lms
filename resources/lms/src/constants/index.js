@@ -77,3 +77,13 @@ export const LocalStorageKey = {
     USER: 'user',
     MEMBER: 'member'
 };
+
+export const appSettingActionType = {
+    FETCH_APP_SETTING: 'FETCH_APP_SETTING',
+    EDIT_APP_SETTING: 'EDIT_APP_SETTING',
+};
+
+export const appSettingsKey = {
+    LIBRARY_NAME: 'library_name',
+    LIBRARY_LOGO: 'library_logo',
+};
