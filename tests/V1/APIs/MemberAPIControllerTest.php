@@ -70,4 +70,13 @@ class MemberAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Member image removed successfully.');
     }
+
+    /** @test */
+    public function test_can_get_settings()
+    {
+        $response = $this->getJson(route('api.v1.settings.index'));
+
+        $this->assertCount(6, $response->original['data']);
+        $this->assertSuccessMessageResponse($response, 'Settings retrieved successfully.');
+    }
 }
