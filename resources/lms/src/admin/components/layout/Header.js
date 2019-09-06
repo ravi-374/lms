@@ -5,10 +5,11 @@ import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/reac
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {getUserProfile} from "../../../store/action/localStorageAction";
 import {Routes, LocalStorageKey} from "../../../constants";
+import {getAvatarName} from "../../../shared/sharedMethod";
 
 const Header = (props) => {
     const { user, getUserProfile, history } = props;
-    let imageUrl = publicImagePath.USER_AVATAR;
+    let imageUrl = null;
     useEffect(() => {
         getUserProfile(LocalStorageKey.USER);
     }, []);
@@ -35,7 +36,11 @@ const Header = (props) => {
             <Nav className="ml-auto" navbar>
                 <AppHeaderDropdown direction="down">
                     <DropdownToggle nav>
-                        <img src={imageUrl} className="img-avatar" alt="user-avatar"/>
+                        {imageUrl ? <img src={imageUrl} className="img-avatar" alt="user-avatar"/> :
+                            <div className="header__avatar img-avatar">
+                                <span className="header__avatar-text">{getAvatarName(user.name)}</span>
+                            </div>
+                        }
                         <span className="mr-3" style={{ verticalAlign: 'sub' }}>{user ? user.name : 'User'}</span>
                     </DropdownToggle>
                     <DropdownMenu right style={{ right: 'auto' }}>

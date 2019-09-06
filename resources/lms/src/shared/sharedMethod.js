@@ -102,3 +102,12 @@ export const prepareFullAddress = (address) => {
     }
     return fullAddress;
 };
+
+export const getAvatarName = (name) => {
+    if (name) {
+        return name.toLowerCase()
+            .split(' ')
+            .map((s) => s.charAt(0).toUpperCase())
+            .join('');
+    }
+};
