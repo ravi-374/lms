@@ -225,3 +225,19 @@ select {
         }
     }
 }
+
+.header {
+
+    &__avatar {
+        vertical-align: middle;
+        color: $white;
+        display: inline-block;
+        background: $image-avatar;
+        border-radius: 50%;
+
+        &-text {
+            display: inline-block;
+            margin: 7px;
+        }
+    }
+}
