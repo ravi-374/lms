@@ -842,34 +842,183 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IssuedBookResponse"
-  "/b1/books/{id}/update-issued-book-status":
-      put:
-        security:
-          - Bearer: []
-        tags:
-          - IssuedBook
-        summary: un-reserve book.
-        description: ""
-        parameters:
-          - name: id
-            in: path
-            description: BookItem Id
-            required: true
+  "/b1/books/{id}/issue-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: issue book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
             schema:
-              type: integer
-        requestBody:
+              $ref: "#/components/schemas/CreateIssueBook"
+        required: true
+      responses:
+        "200":
+          description: Book issued successfully.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ReserveBook"
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/return-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: return book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
           required: true
-        responses:
-          "200":
-            description: Book un-reserved successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/IssuedBookResponse"
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateIssueBook"
+        required: true
+      responses:
+        "200":
+          description: Book return successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/update-issued-book-status":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: update issued book status.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIssueBook"
+        required: true
+      responses:
+        "200":
+          description: Issued Book status updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/b1/members/{id}/books-history':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get member book history.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: member Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/b1/books-history':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get books history for admin users.
+      description: ""
+      responses:
+        "200":
+          description: Issued Books retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/b1/issued-books/{id}':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get issued book by id.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: IssuedBook Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Issued Book retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/b1/send-reset-password-link':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Account
+      summary: reset password
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPassword"
+        required: true
+      responses:
+        "200":
+          description: Password reset link sent successfully.
+  '/b1/reset-password':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Account
+      summary: reset password
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePassword"
+        required: true
+      responses:
+        "200":
+          description: Password updated successfully.
   /b1/roles:
     post:
       security:
@@ -1582,6 +1731,21 @@ paths:
       responses:
         "200":
           description: Setting deleted successfully.
+  /b1/upload-logo:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: upload setting logo.
+      description: ""
+      responses:
+        "200":
+          description: Logo updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
   /b1/membership-plans:
     post:
       security:
@@ -1685,6 +1849,54 @@ paths:
       responses:
         "200":
           description: Membership Plan deleted successfully.
+  '/b1/config':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Config
+      summary: get App config.
+      description: ""
+      responses:
+        "200":
+          description: Config retrieved successfully.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/UserResponse'
+                  - $ref: '#/components/schemas/RoleResponse'
+                  - $ref: '#/components/schemas/PermissionResponse'
+  /b1/countries:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Countries
+      summary: get Countries.
+      description: ""
+      responses:
+        "200":
+          description: Countries retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryResponse"
+  /b1/currencies:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Currencies
+      summary: get Currencies.
+      description: ""
+      responses:
+        "200":
+          description: Currencies retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrencyResponse"
 components:
   securitySchemes:
     Bearer:
@@ -2648,3 +2860,64 @@ components:
                 type: integer
               returner_id:
                 type: integer
+    CreateIssueBook:
+      type: object
+      properties:
+        book_item_id:
+          type: integer
+        member_id:
+          type: string
+        status:
+          type: integer
+    UpdateIssueBook:
+      book_item_id:
+        type: integer
+        member_id:
+          type: string
+        status:
+          type: integer
+    CountryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              code:
+                type: string
+    CurrencyResponse:
+      type: object
+      properties:
+        country:
+          type: string
+        iso_code:
+          type: string
+    ResetPassword:
+      type: object
+      required:
+        - email
+        - url
+      properties:
+        email:
+          type: string
+        url:
+          type: string
+    UpdatePassword:
+      type: object
+      required:
+        - token
+        - password
+      properties:
+        token:
+          type: string
+        password:
+          type: string
