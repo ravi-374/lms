@@ -649,7 +649,7 @@ paths:
       responses:
         "200":
           description: Book deleted successfully.
-  "/b1/books/{book}/remove-image":
+  "/b1/books/{id}/remove-image":
     post:
       security:
         - Bearer: []
@@ -657,19 +657,16 @@ paths:
         - Books
       summary: remove book image.
       description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateBook"
-        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Book image removed successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BookResponse"
   "/b1/books/{id}/items":
     post:
       security:
@@ -678,11 +675,18 @@ paths:
         - Books
       summary: add book items.
       description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateBook"
+              $ref: "#/components/schemas/AddItems"
         required: true
       responses:
         "200":
@@ -697,7 +701,7 @@ paths:
         - Bearer: []
       tags:
         - BookItems
-      summary: get available book.
+      summary: get available books.
       description: ""
       parameters:
         - name: id
@@ -714,7 +718,70 @@ paths:
             type: integer
       responses:
         "200":
-          description: Books history retrieved successfully..
+          description: Books history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
+  '/b1/get-book-details':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: get book details.
+      description: ""
+      parameters:
+        - name: isbn
+          in: query
+          description: ISBN
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+  '/b1/search-books':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: book search.
+      responses:
+        "200":
+          description: BookItem retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
+  "/b1/books/{id}/update-book-status":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: update book item status.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBookItem"
+        required: true
+      responses:
+        "200":
+          description: Book status updated successfully.
           content:
             application/json:
               schema:
@@ -1029,6 +1096,82 @@ paths:
       responses:
         "200":
           description: "User deleted successfully."
+  "/b1/users/{id}/remove-image":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: remove user image.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User image removed successfully.
+  '/b1/users/{id}/update-status':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: update user status.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  '/b1/user-details':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: get logged in user details.
+      description: ""
+      responses:
+        "200":
+          description: User details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  "/b1/update-user-profile":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: update logged in user profile.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUser"
+        required: true
+      responses:
+        "200":
+          description: User profile updated successfully..
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
   /b1/members:
     post:
       security:
@@ -1131,6 +1274,24 @@ paths:
       responses:
         "200":
           description: Members deleted successfully.
+  '/b1/members/{id}/remove-image':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: remove member image.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Member Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Member image removed successfully.
   /b1/book-series:
     post:
       security:
@@ -1234,108 +1395,6 @@ paths:
       responses:
         "200":
           description: "Book Series deleted successfully."
-  /b1/series-books:
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - SeriesBooks
-      summary: create series book.
-      description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateSeriesBook"
-        required: true
-      responses:
-        "200":
-          description: Series Book saved successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SeriesBookResponse"
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - SeriesBooks
-      summary: get all series-books.
-      description: ""
-      responses:
-        "200":
-          description: Series Book retrieved successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SeriesBookListResponse"
-
-  "/b1/series-books/{id}":
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - SeriesBooks
-      summary: update given series book.
-      description: ""
-      parameters:
-        - name: id
-          in: path
-          description: Series Book Id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateSeriesBook"
-        required: true
-      responses:
-        "200":
-          description: Series Book updated successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SeriesBookResponse"
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - SeriesBooks
-      summary: get specific series book.
-      description: ""
-      parameters:
-        - name: id
-          in: path
-          description: SeriesBook Id
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Series Book retrieved successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SeriesBookResponse"
-    delete:
-      security:
-        - Bearer: []
-      tags:
-        - SeriesBooks
-      summary: delete specific series book.
-      description: ""
-      parameters:
-        - name: id
-          in: path
-          description: SeriesBook Id
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Series Book deleted successfully.
   /b1/settings:
     post:
       security:
@@ -2119,9 +2178,7 @@ components:
         password:
           type: string
         role_id:
-          type: array
-          items:
-            type: integer
+          type: integer
     CreateMember:
       type: object
       required:
@@ -2244,61 +2301,6 @@ components:
       properties:
         title:
           type: string
-    CreateSeriesBook:
-      type: object
-      required:
-        - series_id
-        - book_id
-        - sequence
-      properties:
-        series_id:
-          type: integer
-        book_id:
-          type: integer
-        sequence:
-          type: integer
-    SeriesBookResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          $ref: "#/components/schemas/UpdateSeriesBook"
-    SeriesBookListResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              series_id:
-                type: integer
-              book_id:
-                type: integer
-              sequence:
-                type: integer
-    UpdateSeriesBook:
-      type: object
-      required:
-        - series_id
-        - book_id
-        - sequence
-      properties:
-        series_id:
-          type: integer
-        book_id:
-          type: integer
-        sequence:
-          type: integer
     CreateMembershipPlan:
       type: object
       required:
@@ -2431,6 +2433,57 @@ components:
                 type: string
               display_name:
                 type: string
+    CreateBookItem:
+      type: object
+      properties:
+        book_id:
+          type: integer
+        book_code:
+          type: string
+        edition:
+          type: string
+        format:
+          type: integer
+        price:
+          type: float
+        status:
+          type: integer
+        location:
+          type: string
+        language_id:
+          type: integer
+        publisher_id:
+          type: integer
+    UpdateBookItem:
+      type: object
+      required:
+        - id
+      properties:
+        book_id:
+          type: integer
+        book_code:
+          type: string
+        edition:
+          type: string
+        format:
+          type: integer
+        price:
+          type: float
+        status:
+          type: integer
+        location:
+          type: string
+        language_id:
+          type: integer
+        publisher_id:
+          type: integer
+    AddItems:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          $ref: "#/components/schemas/UpdateBookItem"
     BookItemResponse:
       type: object
       properties:
