@@ -79,7 +79,7 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::middleware('permission:manage_members')->group(function () {
         Route::delete('members/{member}', 'MemberAPIController@destroy')->name('members.destroy');
     });
-    Route::resource('members', 'MemberAPIController');
+    Route::resource('members', 'MemberAPIController')->except(['destroy']);
     Route::post('members/{member}', 'MemberAPIController@update');
 
     Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus')->name('members.update-status');

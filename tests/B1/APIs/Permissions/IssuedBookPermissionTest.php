@@ -28,7 +28,7 @@ class IssuedBookPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_get_issue_book_without_permission()
+    public function test_not_allow_to_issue_book_without_permission()
     {
         $member = factory(Member::class)->create();
         $bookItem = factory(BookItem::class)->create();

@@ -38,4 +38,14 @@ class MemberAPIPermissionTest extends TestCase
 
         $this->assertExceptionMessage($response, 'Member deleted successfully.');
     }
+
+    /** @test */
+    public function test_not_allow_to_delete_member_without_permission()
+    {
+        $member = factory(Member::class)->create();
+
+        $response = $this->deleteJson(route('api.b1.members.destroy', $member->id));
+
+        $this->assertExceptionMessage($response, 'Unauthorized action.');
+    }
 }
