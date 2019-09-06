@@ -12,7 +12,7 @@ paths:
     post:
       tags:
         - User Authentication
-      summary: Login user by email/username.
+      summary: Login user by email.
       description: ""
       requestBody:
         content:
@@ -36,6 +36,25 @@ paths:
       responses:
         "200":
           description: Logged out successfully.
+  /member-login:
+    post:
+      tags:
+        - Member Authentication
+      summary: Login member by email.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: Member logged in successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
   /b1/genres:
     post:
       security:
@@ -340,6 +359,21 @@ paths:
       responses:
         "200":
           description: Author deleted successfully.
+  /v1/authors:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Authors
+      summary: get all authors.
+      description: ""
+      responses:
+        "200":
+          description: Authors retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorListResponse"
 
   /b1/publishers:
     post:
@@ -740,6 +774,7 @@ paths:
             type: string
       responses:
         "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -985,6 +1020,50 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IssuedBookResponse"
+  /v1/books:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: get all books for admin.
+      description: ""
+      responses:
+        "200":
+          description: Books retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookListResponse"
+  '/v1/books-history':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get books history.
+      description: ""
+      responses:
+        "200":
+          description: Books history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/v1/search-books':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: book search.
+      responses:
+        "200":
+          description: BookItem retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
   '/b1/send-reset-password-link':
     post:
       security:
@@ -1400,7 +1479,7 @@ paths:
         required: true
       responses:
         "200":
-          description: User profile updated successfully..
+          description: User profile updated successfully.
           content:
             application/json:
               schema:
@@ -1425,7 +1504,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MembersResponse"
+                $ref: "#/components/schemas/MemberResponse"
     get:
       security:
         - Bearer: []
@@ -1522,6 +1601,53 @@ paths:
           required: true
           schema:
             type: integer
+      responses:
+        "200":
+          description: Member image removed successfully.
+  '/v1/member-details':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: get logged in member details.
+      description: ""
+      responses:
+        "200":
+          description: Member details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberResponse"
+  "/v1/update-member-profile":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: update logged in member profile.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMember"
+        required: true
+      responses:
+        "200":
+          description: Member profile updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberResponse"
+  '/v1/remove-image':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: remove logged in member image.
+      description: ""
       responses:
         "200":
           description: Member image removed successfully.
@@ -1746,6 +1872,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SettingResponse"
+  /v1/settings:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: get all settings.
+      description: ""
+      responses:
+        "200":
+          description: Settings retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingListResponse"
   /b1/membership-plans:
     post:
       security:
@@ -1767,7 +1908,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MembershipPlanResponse"
-
     get:
       security:
         - Bearer: []
@@ -1849,6 +1989,21 @@ paths:
       responses:
         "200":
           description: Membership Plan deleted successfully.
+  /v1/membership-plans:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: get all membership-plans.
+      description: ""
+      responses:
+        "200":
+          description: Membership Plans retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanListResponse"
   '/b1/config':
     get:
       security:
@@ -1882,6 +2037,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CountryResponse"
+  /v1/countries:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Countries
+      summary: get Countries.
+      description: ""
+      responses:
+        "200":
+          description: Countries retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryResponse"
   /b1/currencies:
     get:
       security:
@@ -1897,6 +2067,62 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CurrencyResponse"
+  "/v1/books/{id}/reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/v1/books/{id}/un-reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: un-reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book un-reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
 components:
   securitySchemes:
     Bearer:
@@ -1917,7 +2143,7 @@ components:
             token:
               type: string
             user:
-              $ref: "#/components/schemas/User"
+              $ref: "#/components/schemas/UserResponse"
     RegisterResponse:
       type: object
       properties:
@@ -1926,7 +2152,7 @@ components:
         message:
           type: string
         data:
-          $ref: "#/components/schemas/User"
+          $ref: "#/components/schemas/UserResponse"
     LoginRequest:
       type: object
       required:
@@ -2607,7 +2833,7 @@ components:
         name:
           type: string
         price:
-          type: float
+          type: integer
         description:
           type: string
         frequency:
@@ -2628,7 +2854,7 @@ components:
         name:
           type: string
         price:
-          type: float
+          type: integer
         description:
           type: string
         frequency:
@@ -2663,7 +2889,7 @@ components:
               name:
                 type: string
               price:
-                type: float
+                type: integer
               description:
                 type: string
               frequency:
@@ -2741,7 +2967,7 @@ components:
         format:
           type: integer
         price:
-          type: float
+          type: integer
         status:
           type: integer
         location:
@@ -2764,7 +2990,7 @@ components:
         format:
           type: integer
         price:
-          type: float
+          type: integer
         status:
           type: integer
         location:
@@ -2805,7 +3031,7 @@ components:
               status:
                 type: string
               price:
-                type: float
+                type: integer
               location:
                 type: string
               publisher_id:
@@ -2823,7 +3049,7 @@ components:
         book_item_id:
           type: integer
         reserve_date:
-          type: datetime
+          type: string
         status:
           type: integer
     IssuedBookResponse:
@@ -2845,15 +3071,15 @@ components:
               member_id:
                 type: string
               reserve_date:
-                type: datetime
+                type: string
               issued_on:
-                type: datetime
+                type: string
               return_due_date:
-                type: datetime
+                type: string
               note:
                 type: string
               return_date:
-                type: datetime
+                type: string
               status:
                 type: integer
               issuer_id:
@@ -2870,8 +3096,9 @@ components:
         status:
           type: integer
     UpdateIssueBook:
-      book_item_id:
-        type: integer
+      properties:
+        book_item_id:
+          type: integer
         member_id:
           type: string
         status:

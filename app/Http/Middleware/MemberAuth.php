@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App;
 use App\Traits\CommonMiddlewareFunctions;
+use App\User;
 use Auth;
 use Closure;
 use Config;
@@ -20,6 +21,18 @@ class MemberAuth
     {
         if (Auth::user()) {
             return $next($request);
+        }
+
+        $token = JWTAuth::getToken();
+
+        if (App::isLocal() && empty($token)) {
+            /** @var User $user */
+            $user = User::whereEmail('admin@lms.local')->first();
+            if ($user) {
+                Auth::loginUsingId($user->id);
+
+                return $next($request);
+            }
         }
 
         $payload = JWTAuth::parseToken()->getPayload()->get('issued_for');
