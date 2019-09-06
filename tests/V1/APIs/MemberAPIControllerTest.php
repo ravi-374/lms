@@ -66,8 +66,22 @@ class MemberAPIControllerTest extends TestCase
     /** @test */
     public function test_can_remove_image()
     {
+        $member = factory(Member::class)->create(['image' => 'image.jpg']);
+        $this->actingAs($member);
+
         $response = $this->postJson(route('api.v1.remove-image'));
 
         $this->assertSuccessMessageResponse($response, 'Member image removed successfully.');
+        $this->assertEmpty($member->fresh()->image);
+    }
+
+    /** @test */
+    public function test_can_get_only_member_settings()
+    {
+        $response = $this->getJson(route('api.v1.settings.index'));
+
+        $this->assertCount(1, $response->original['data']);
+        $this->assertEquals('language', $response->original['data'][0]['key']);
+        $this->assertSuccessMessageResponse($response, 'Settings retrieved successfully.');
     }
 }

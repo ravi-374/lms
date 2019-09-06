@@ -25,7 +25,7 @@ class MemberAuthControllerTest extends TestCase
         $token = encrypt($key);
         $input = ['token' => $token, 'password' => '1nfy0m'];
 
-        $response = $this->postJson(route('api.v1.reset-member-password.index'),$input);
+        $response = $this->postJson(route('api.v1.reset-member-password.index'), $input);
 
         $this->assertSuccessMessageResponse($response, 'Password updated successfully.');
     }
@@ -37,7 +37,7 @@ class MemberAuthControllerTest extends TestCase
         $token = encrypt($key);
         $input = ['token' => $token, 'password' => '1nfy0m'];
 
-        $response = $this->postJson(route('api.v1.reset-member-password.index'),$input);
+        $response = $this->postJson(route('api.v1.reset-member-password.index'), $input);
 
         $this->assertJsonErrorMessageResponse($response, 'User with given email not available.');
     }
@@ -52,7 +52,7 @@ class MemberAuthControllerTest extends TestCase
         $token = encrypt($key);
         $input = ['token' => $token, 'password' => '1nfy0m'];
 
-        $response = $this->postJson(route('api.v1.reset-member-password.index'),$input);
+        $response = $this->postJson(route('api.v1.reset-member-password.index'), $input);
 
         $this->assertJsonErrorMessageResponse($response, 'The activate link has expired.');
     }
@@ -80,5 +80,17 @@ class MemberAuthControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Your account has been activated successfully.');
         $this->assertTrue($member->fresh()->is_active);
+    }
+
+    /** @test */
+    public function test_member_can_register_with_valid_input()
+    {
+        $fakeMember = factory(Member::class)->raw();
+
+        $response = $this->postJson(route('api.v1.register-member', $fakeMember));
+
+        $this->assertEquals($response->original['message'], 'Registered successfully.');
+        $this->assertNotEmpty($response->original['data']['token']);
+        $this->assertNotEmpty($response->original['data']['user']);
     }
 }

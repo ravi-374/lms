@@ -1,14 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
-use App\Repositories\BookItemRepository;
 use App\Repositories\IssuedBookRepository;
 use Auth;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -21,13 +19,9 @@ class IssuedBookAPIController extends AppBaseController
     /** @var  IssuedBookRepository */
     private $issuedBookRepository;
 
-    /** @var BookItemRepository */
-    private $bookItemRepo;
-
-    public function __construct(IssuedBookRepository $issuedBookRepo, BookItemRepository $bookItemRepo)
+    public function __construct(IssuedBookRepository $issuedBookRepo)
     {
         $this->issuedBookRepository = $issuedBookRepo;
-        $this->bookItemRepo = $bookItemRepo;
     }
 
     /**
@@ -50,7 +44,7 @@ class IssuedBookAPIController extends AppBaseController
             return $issuedBook->apiObj();
         });
 
-        $totalRecords = (!empty($search['search'])) ? count($records) :IssuedBook::ofMember($search['member_id'])->count();
+        $totalRecords = (!empty($search['search'])) ? count($records) : IssuedBook::ofMember($search['member_id'])->count();
 
         return $this->sendResponse(
             $records,

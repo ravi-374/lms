@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API\V1;
 
-
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\CountryRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
 /**
  * Class CountryAPIController
  * @package App\Http\Controllers\API\V1
@@ -25,7 +25,6 @@ class CountryAPIController extends AppBaseController
 
     /**
      * @param Request $request
-     *
      *
      * @return JsonResponse
      */

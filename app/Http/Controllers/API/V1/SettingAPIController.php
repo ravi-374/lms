@@ -17,7 +17,7 @@ class SettingAPIController extends AppBaseController
      */
     public function index()
     {
-        $settings = Setting::all();
+        $settings = Setting::whereIn('key', ['language'])->get();
 
         return $this->sendResponse($settings->toArray(), 'Settings retrieved successfully.');
     }
