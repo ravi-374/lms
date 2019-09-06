@@ -88,8 +88,6 @@ const BooksAllotment = (props) => {
             name: 'Status',
             width: '100px',
             center: true,
-            selector: 'status',
-            sortable: true,
             cell: row => <BookStatus status={row.status} item={row}/>
         },
         {

@@ -4,7 +4,7 @@ import './Tableheader.scss';
 const TableHeader = (props) => {
     let isAction = true;
     const sort = (header) => {
-        props.sortAction({orderBy: header, order: props.sortObject.order === 'asc' ? 'desc' : 'asc'})
+        props.sortAction({ orderBy: header, order: props.sortObject.order === 'asc' ? 'desc' : 'asc' })
     };
     if (props.hasOwnProperty('isAction')) {
         isAction = props.isAction;
@@ -14,7 +14,7 @@ const TableHeader = (props) => {
     };
     const renderActionColumn = () => {
         if (isAction) {
-            return <th style={{width: '110px', textAlign: 'center'}}>Action</th>;
+            return <th className="table-header__action">Action</th>;
         }
     };
     const renderStaticColumn = () => {
@@ -22,8 +22,13 @@ const TableHeader = (props) => {
             return <th>{props.staticField}</th>;
         }
     };
+    const renderStatusColumn = () => {
+        if (props.isStatusField) {
+            return <th className="table-header__status">Status</th>;
+        }
+    };
     return (
-        <tr className="table__row">
+        <tr className="table-header">
             {renderStaticColumn()}
             {props.headers.map(header =>
                 (
@@ -32,6 +37,7 @@ const TableHeader = (props) => {
                         </div>
                     </th>
                 ))}
+            {renderStatusColumn()}
             {renderActionColumn()}
         </tr>
     );
