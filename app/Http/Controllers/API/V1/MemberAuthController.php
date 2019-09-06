@@ -54,7 +54,7 @@ class MemberAuthController extends AppBaseController
             'email'      => 'required|unique:members|max:255',
             'first_name' => 'required|string|max:255',
             'last_name'  => 'required|string|max:255',
-            'password'   => 'required|string|max:255|min:8|confirmed',
+            'password'   => 'required|string|max:255|min:8',
         ]);
 
         if ($validator->fails()) {

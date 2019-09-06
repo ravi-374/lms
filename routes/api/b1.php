@@ -65,7 +65,7 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::middleware('permission:manage_users')->group(function () {
         Route::resource('users', 'UserAPIController');
         Route::post('users/{user}', 'UserAPIController@update');
-        Route::post('users/{user}/remove-image', 'UserAPIController@removeImage');
+        Route::post('users/{user}/remove-image', 'UserAPIController@removeImage')->name('users.remove-image');
         Route::get('users/{user}/update-status', 'UserAPIController@updateStatus')->name('users.update-status');
     });
 
@@ -83,7 +83,7 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::post('members/{member}', 'MemberAPIController@update');
 
     Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus')->name('members.update-status');
-    Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage');
+    Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage')->name('members.remove-image');
 
     Route::middleware('permission:manage_book_series')->group(function () {
         // book series routes

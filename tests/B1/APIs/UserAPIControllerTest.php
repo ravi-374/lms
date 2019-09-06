@@ -247,4 +247,15 @@ class UserAPIControllerTest extends TestCase
         $this->assertNotEmpty($response);
         $this->assertEquals($this->loggedInUserId, $response->original['data']->id);
     }
+
+    /** @test */
+    public function test_can_remove_given_user_image()
+    {
+        $user = factory(User::class)->create(['image' => 'image.jpg']);
+
+        $response = $this->postJson(route('api.b1.users.remove-image', $user->id));
+
+        $this->assertSuccessMessageResponse($response, 'User image removed successfully.');
+        $this->assertEmpty($user->fresh()->image);
+    }
 }

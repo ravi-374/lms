@@ -35,7 +35,7 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::get('settings', 'SettingAPIController@index')->name('settings.index');
 });
 
-Route::post('register-member', 'MemberAuthController@register');
+Route::post('register-member', 'MemberAuthController@register')->name('register-member');
 Route::get('activate-member', 'MemberAuthController@verifyAccount')->name('activate-member');
 
 /** Password Reset API's For Member */

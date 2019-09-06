@@ -153,7 +153,7 @@ class MemberAPIController extends AppBaseController
     {
         $member->deleteMemberImage();
 
-        return $this->sendSuccess('member image removed successfully.');
+        return $this->sendSuccess('Member image removed successfully.');
     }
 
     /**
