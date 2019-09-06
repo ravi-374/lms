@@ -202,4 +202,15 @@ class MemberAPIControllerTest extends TestCase
         $this->assertCount(1, $response);
         $this->assertEquals($membershipPlan1->name, $response[0]['membership_plan']['name']);
     }
+
+    /** @test */
+    public function test_remove_member_profile_image()
+    {
+        $member = factory(Member::class)->create(['image' => 'image.jpg']);
+
+        $response = $this->postJson(route('api.b1.members.remove-image', $member->id));
+
+        $this->assertSuccessMessageResponse($response, 'Member image removed successfully.');
+        $this->assertEmpty($member->fresh()->image);
+    }
 }

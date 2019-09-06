@@ -9,7 +9,6 @@ use App\Http\Requests\API\UpdateMemberAPIRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\MemberRepository;
-use App\Repositories\UserRepository;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -24,13 +23,9 @@ class MemberAPIController extends AppBaseController
     /** @var  MemberRepository */
     private $memberRepository;
 
-    /** @var  UserRepository */
-    private $userRepository;
-
-    public function __construct(MemberRepository $memberRepo, UserRepository $userRepository)
+    public function __construct(MemberRepository $memberRepo)
     {
         $this->memberRepository = $memberRepo;
-        $this->userRepository = $userRepository;
     }
 
     /**
@@ -158,7 +153,7 @@ class MemberAPIController extends AppBaseController
     {
         $member->deleteMemberImage();
 
-        return $this->sendSuccess('member image removed successfully.');
+        return $this->sendSuccess('Member image removed successfully.');
     }
 
     /**
