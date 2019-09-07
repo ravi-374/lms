@@ -13,9 +13,9 @@ import './Component.scss';
 export default ({
                     input, label, type = "text", min, max, required, readOnly, autoComplete = "off", onClick,
                     inputRef, groupText, customGroupText = '', addOnType = 'prepend', placeholder, meta: { touched, error },
-                    isAppendIcon, appendGroupText
+                    isAppendIcon, appendGroupText, className
                 }) => {
-    const inputClass = `${touched && error ? 'is-invalid' : ''}`;
+    const inputClass = `${touched && error ? `is-invalid ${className}` : className}`;
     const labelClass = required ? 'control-label' : '';
     const formClass = type === 'hidden' ? 'input-form-group' : '';
     placeholder = placeholder ? placeholder : label;
