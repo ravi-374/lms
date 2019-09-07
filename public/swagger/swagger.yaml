@@ -786,6 +786,19 @@ paths:
       tags:
         - BookItems
       summary: book search.
+      parameters:
+        - name: id
+          in: query
+          description: book ids
+          required: false
+          schema:
+            type: string
+        - name: search_by_book
+          in: query
+          description: search by book true = 1/false =0
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: BookItem retrieved successfully.
@@ -976,6 +989,18 @@ paths:
           required: true
           schema:
             type: integer
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: Books history retrieved successfully.
@@ -991,6 +1016,19 @@ paths:
         - IssuedBook
       summary: get books history for admin users.
       description: ""
+      parameters:
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: Issued Books retrieved successfully.
@@ -1043,6 +1081,19 @@ paths:
         - IssuedBook
       summary: get books history.
       description: ""
+      parameters:
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: Books history retrieved successfully.
@@ -1057,6 +1108,19 @@ paths:
       tags:
         - BookItems
       summary: book search.
+      parameters:
+        - name: id
+          in: query
+          description: book ids
+          required: false
+          schema:
+            type: string
+        - name: search_by_book
+          in: query
+          description: search by book true = 1/false =0
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: BookItem retrieved successfully.
@@ -1070,7 +1134,7 @@ paths:
         - Bearer: []
       tags:
         - Account
-      summary: reset password
+      summary: send reset password link
       description: ""
       requestBody:
         content:
@@ -1791,7 +1855,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/SettingListResponse"
 
-  "/b1/Settings/{id}":
+  "/b1/settings/{id}":
     put:
       security:
         - Bearer: []
@@ -1865,6 +1929,13 @@ paths:
         - Settings
       summary: upload setting logo.
       description: ""
+      parameters:
+        - name: logo
+          in: query
+          description: Setting Logo
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Logo updated successfully.
@@ -2141,10 +2212,6 @@ paths:
       responses:
         "200":
           description: Your account has been activated successfully.
-          success:
-            type: boolean
-          message:
-            type: string
   '/v1/send-reset-member-password-link':
     post:
       security:
@@ -2322,8 +2389,8 @@ components:
     UpdateTag:
       type: object
       required:
-        - name
         - id
+        - name
       properties:
         id:
           type: integer
@@ -2778,9 +2845,7 @@ components:
         password:
           type: string
         membership_plan_id:
-          type: array
-          items:
-            type: integer
+          type: integer
     MemberResponse:
       type: object
       properties:
@@ -2815,9 +2880,7 @@ components:
               password:
                 type: string
               membership_plan_id:
-                type: array
-                items:
-                  type: integer
+                type: integer
     UpdateMember:
       type: object
       required:
@@ -2838,9 +2901,7 @@ components:
         password:
           type: string
         membership_plan_id:
-          type: array
-          items:
-            type: integer
+          type: integer
     CreateBookSeries:
       type: object
       required:
@@ -2954,33 +3015,35 @@ components:
               stripe_plan_id:
                 type: string
     CreateSetting:
-      type: object
+      type: array
       required:
         - key
         - value
         - display_name
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-        display_name:
-          type: string
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+          value:
+            type: string
+          display_name:
+            type: string
     UpdateSetting:
-      type: object
+      type: array
       required:
         - key
         - value
         - display_name
-      properties:
-        id:
-          type: integer
-        key:
-          type: string
-        value:
-          type: string
-        display_name:
-          type: string
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+          value:
+            type: string
+          display_name:
+            type: string
 
     SettingResponse:
       type: object
@@ -3012,27 +3075,6 @@ components:
                 type: string
               display_name:
                 type: string
-    CreateBookItem:
-      type: object
-      properties:
-        book_id:
-          type: integer
-        book_code:
-          type: string
-        edition:
-          type: string
-        format:
-          type: integer
-        price:
-          type: integer
-        status:
-          type: integer
-        location:
-          type: string
-        language_id:
-          type: integer
-        publisher_id:
-          type: integer
     UpdateBookItem:
       type: object
       required:
