@@ -2123,6 +2123,63 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IssuedBookResponse"
+  "/v1/activate-member":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: activate member.
+      description: ""
+      parameters:
+        - name: token
+          in: query
+          description: Token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Your account has been activated successfully.
+          success:
+            type: boolean
+          message:
+            type: string
+  '/v1/send-reset-member-password-link':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: send reset password link
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPassword"
+        required: true
+      responses:
+        "200":
+          description: Password reset link sent successfully.
+  '/v1/reset-password':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: reset password
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePassword"
+        required: true
+      responses:
+        "200":
+          description: Password updated successfully.
+
 components:
   securitySchemes:
     Bearer:
