@@ -1,43 +1,63 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
-import CustomSearchField from '../../../shared/components/CustomSearchField';
-import searchFilter from '../../../shared/searchFilter';
-import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../../store/action/sortAction';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import BookLanguageModal from './BookLanguageModal';
-import BookLanguage from './BookLanguage';
 import './BookLanguages.scss';
 import Toasts from '../../../shared/toast/Toasts';
-import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import ModalAction from "../../../shared/action-buttons/ModalAction";
+import ReactDataTable from "../../../shared/table/ReactDataTable";
 
 const BookLanguages = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookLanguage, setBookLanguage] = useState(null);
-    const { bookLanguages, sortAction, sortObject, toggleModal } = props;
-    useEffect(() => {
-        props.fetchBookLanguages(true);
-    }, []);
+    const { bookLanguages, toggleModal, totalRecord, isLoading } = props;
     const cardModalProps = { bookLanguage, isDeleteMode, isEditMode, toggleModal };
+
+    const onChange = (filter) => {
+        props.fetchBookLanguages(filter, true);
+    };
+
+    const columns = [
+        {
+            name: 'Code',
+            selector: 'language_code',
+            sortable: true,
+            cell: row => <span>{row.language_code}</span>,
+        },
+        {
+            name: 'Name',
+            selector: 'language_name',
+            sortable: true,
+            cell: row => <span>{row.language_name}</span>,
+        },
+        {
+            name: 'Action',
+            selector: 'id',
+            right: true,
+            cell: row => <ModalAction onOpenModal={onOpenModal} item={row}/>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+    ];
+
     const onOpenModal = (isEdit, bookLanguage = null, isDelete = false) => {
         setEditMode(isEdit);
         setDeleteMode(isDelete);
         setBookLanguage(bookLanguage);
         toggleModal();
     };
-    const cardBodyProps = { sortAction, sortObject, bookLanguages, onOpenModal };
-    if (props.isLoading) {
-        return <ProgressBar/>
-    }
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <HeaderTitle title={'Book Languages | LMS System'}/>
+                <ProgressBar/>
                 <h5 className="page-heading">Book Languages</h5>
                 <div className="d-flex justify-content-end">
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
@@ -49,11 +69,8 @@ const BookLanguages = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <div className="d-flex justify-content-end mb-2">
-                                <CustomSearchField/>
-                            </div>
-                            {bookLanguages.length > 0 ? <BookLanguage {...cardBodyProps}/> :
-                                <EmptyComponent title="No book languages yet..."/>}
+                            <ReactDataTable items={bookLanguages} columns={columns} loading={isLoading}
+                                            totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <BookLanguageModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -65,16 +82,8 @@ const BookLanguages = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const { bookLanguages, searchText, sortObject, isLoading } = state;
-    let bookLanguagesArray = Object.values(bookLanguages);
-    if (searchText) {
-        const filterKeys = ['language_name', 'language_code'];
-        bookLanguagesArray = searchFilter(bookLanguagesArray, searchText, filterKeys);
-    }
-    if (sortObject) {
-        bookLanguagesArray = sortFilter(bookLanguagesArray, sortObject);
-    }
-    return { bookLanguages: bookLanguagesArray, sortObject, isLoading };
+    const { bookLanguages, isLoading, totalRecord } = state;
+    return { bookLanguages, totalRecord, isLoading };
 };
 
-export default connect(mapStateToProps, { fetchBookLanguages, sortAction, toggleModal })(BookLanguages);
+export default connect(mapStateToProps, { fetchBookLanguages, toggleModal })(BookLanguages);

@@ -1,16 +1,15 @@
 import {bookLanguageActionType} from '../../constants';
-import _ from 'lodash';
 
-export default (state = {}, action) => {
+export default (state = [], action) => {
     switch (action.type) {
         case bookLanguageActionType.FETCH_BOOK_LANGUAGES:
-            return {...state, ..._.mapKeys(action.payload, 'id')};
-        case bookLanguageActionType.FETCH_BOOK_LANGUAGE:
-        case bookLanguageActionType.EDIT_BOOK_LANGUAGE:
+            return action.payload;
         case bookLanguageActionType.ADD_BOOK_LANGUAGE:
-            return {...state, [action.payload.id]: action.payload};
+            return [...state, action.payload];
+        case bookLanguageActionType.EDIT_BOOK_LANGUAGE:
+            return state.map(item => item.id === +action.payload.id ? action.payload : item);
         case bookLanguageActionType.DELETE_BOOK_LANGUAGE:
-            return _.omit(state, action.payload);
+            return state.filter(item => item.id !== action.payload);
         default:
             return state;
     }

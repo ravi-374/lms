@@ -269,3 +269,7 @@ export const storageKey = {
     BOOK_ALLOTMENT: 'book_allotment',
     MEMBERS: 'members',
 };
+
+export const apiBaseURL = {
+    BOOK_LANGUAGE:'book-languages'
+};
