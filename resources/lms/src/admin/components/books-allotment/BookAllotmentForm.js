@@ -111,9 +111,11 @@ const BookAllotmentForm = props => {
                 field = 'reserve_date';
                 break;
             case bookAllotmentStatusConstant.BOOK_ISSUED:
+                maxDate = initialValues && initialValues.reserve_date ? moment().subtract(
+                    moment().diff(moment(initialValues.reserve_date), 'days') - 1, 'days').toDate() : moment().toDate();
+                minDate = initialValues && initialValues.reserve_date ? moment().toDate() : '';
                 label = 'Issue Date';
                 field = 'issued_on';
-                maxDate = moment().toDate();
                 break;
             case bookAllotmentStatusConstant.BOOK_RETURNED:
                 minDate = moment().subtract(moment().diff(moment(initialValues.issued_on), 'days'), 'days').toDate();
