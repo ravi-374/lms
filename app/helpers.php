@@ -50,7 +50,7 @@ function filterByColumns(&$query, $keywords, $columns)
     $query->where(function (Builder $query) use ($keywords, $columns) {
         foreach ($keywords as $keyword) {
             foreach ($columns as $column) {
-                $query->orWhereRaw("lower($column) LIKE ?", [trim(strtolower($keyword))]);
+                $query->orWhereRaw("lower($column) LIKE ?", ['%'.trim(strtolower($keyword)).'%']);
             }
         }
     });

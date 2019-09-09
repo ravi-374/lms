@@ -90,11 +90,7 @@ abstract class BaseRepository
             }
 
             if(!empty($search['search'])){
-                $query->where(function ($q) use ($searchableFields, $value) {
-                    foreach ($searchableFields as $field){
-                        $q->orWhereRaw("lower($field) like ?", ['%'.$value.'%']);
-                    }
-                });
+                $query = filterByColumns($query, $search['search'], $searchableFields);
             }
 
             if (!empty($search['order_by'])) {
