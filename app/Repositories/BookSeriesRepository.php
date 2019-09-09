@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\BookSeries;
-use BookSeriesRepositoryInterface;
+use App\Repositories\Contracts\BookSeriesRepositoryInterface;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;

@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Repositories\Contracts;
+
 /**
  * Interface SeriesBookRepositoryInterface
  * @package App\Repositories\Contracts

@@ -7,7 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookSeriesAPIRequest;
 use App\Http\Requests\API\UpdateBookSeriesAPIRequest;
 use App\Models\BookSeries;
-use BookSeriesRepositoryInterface;
+use App\Repositories\Contracts\BookSeriesRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
