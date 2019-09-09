@@ -211,7 +211,7 @@ class UserAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.b1.users.index', ['search' => $firstRole->name]));
 
         $response = $response->original['data'];
-        $this->assertCount(1, $response);
+        $this->assertTrue(count($response) > 0);
         $this->assertEquals($firstRole->name, $response[0]['roles'][0]['name']);
     }
 
