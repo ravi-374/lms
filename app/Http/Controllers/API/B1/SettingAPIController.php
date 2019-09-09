@@ -12,6 +12,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
 use App\Models\Setting;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Repositories\SettingRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -27,9 +28,15 @@ class SettingAPIController extends AppBaseController
     /** @var SettingRepository */
     private $settingRepo;
 
-    public function __construct(SettingRepository $settingRepo)
-    {
+    /** @var SettingRepositoryInterface */
+    private $settingRepoInterface;
+
+    public function __construct(
+        SettingRepositoryInterface $settingRepoInterface,
+        SettingRepository $settingRepo
+    ) {
         $this->settingRepo = $settingRepo;
+        $this->settingRepoInterface = $settingRepoInterface;
     }
 
     /**
@@ -72,7 +79,7 @@ class SettingAPIController extends AppBaseController
             }
         }
 
-        $settings = $this->settingRepo->createOrUpdate($input);
+        $settings = $this->settingRepoInterface->createOrUpdate($input);
 
         return $this->sendResponse($settings, 'Setting saved successfully.');
     }
@@ -136,7 +143,7 @@ class SettingAPIController extends AppBaseController
     {
         $request->validate(['logo' => 'required']);
 
-        $setting = $this->settingRepo->uploadLogo($request->file('logo'));
+        $setting = $this->settingRepoInterface->uploadLogo($request->file('logo'));
 
         return $this->sendResponse($setting, 'Logo updated successfully.');
     }
