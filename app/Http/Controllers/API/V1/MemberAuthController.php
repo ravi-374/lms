@@ -6,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Member;
 use App\Repositories\AccountRepository;
+use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\MemberRepository;
 use App\User;
 use Crypt;
@@ -29,12 +30,12 @@ class MemberAuthController extends AppBaseController
     /** @var  MemberRepository */
     private $memberRepository;
 
-    /** @var AccountRepository */
+    /** @var AccountRepositoryInterface */
     private $accountRepo;
 
     public function __construct(
-        MemberRepository $memberRepo,
-        AccountRepository $accountRepo
+        MemberRepositoryInterface $memberRepo,
+        AccountRepositoryInterface $accountRepo
     ) {
         $this->memberRepository = $memberRepo;
         $this->accountRepo = $accountRepo;
@@ -145,7 +146,7 @@ class MemberAuthController extends AppBaseController
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = $url .'?token='. $encodedToken;
+        $data['link'] = $url.'?token='.$encodedToken;
         $data['first_name'] = $member->first_name;
         $data['last_name'] = $member->last_name;
         $data['email'] = $member->email;
