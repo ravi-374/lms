@@ -14,6 +14,8 @@ const UserProfileForm = (props) => {
     const [image, setImage] = useState(publicImagePath.USER_AVATAR);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
+    const [isPasswordHidden, setPasswordHidden] = useState(false);
+    const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
     const defaultImage = publicImagePath.USER_AVATAR;
     useEffect(() => {
         if (initialValues.image) {
@@ -44,6 +46,12 @@ const UserProfileForm = (props) => {
     const goToHomePage = () => {
         history.goBack();
     };
+    const onclickPassword = (password) => {
+        if (password) setPasswordHidden(!isPasswordHidden);
+    };
+    const onclickConfirmPassword = (password) => {
+        if (password) setConfirmPasswordHidden(!isConfirmPasswordHidden);
+    };
     const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
     return (
         <Row className="animated fadeIn user-form m-3">
@@ -68,12 +76,14 @@ const UserProfileForm = (props) => {
                         <Field name="phone" type="number" label="Phone No." groupText="phone" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="password" label="New Password" type="password" groupText="lock"
-                               component={InputGroup}/>
+                        <Field name="password" label="New Password" type={isPasswordHidden ? 'password' : 'text'}
+                               onClick={onclickPassword} groupText="lock" isAppendIcon
+                               appendGroupText={isPasswordHidden ? 'eye' : 'eye-slash'} component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="confirm_password" label="Confirm Password" type="password" groupText="lock"
-                               component={InputGroup}/>
+                        <Field name="confirm_password" label="Confirm Password" onClick={onclickConfirmPassword}
+                               type={isConfirmPasswordHidden ? 'password' : 'text'} groupText="lock" isAppendIcon
+                               appendGroupText={isConfirmPasswordHidden ? 'eye' : 'eye-slash'} component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
