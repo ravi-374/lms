@@ -68,6 +68,7 @@ class BookSeriesRepository extends BaseRepository
      * @param array $input
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return BookSeries
      */
@@ -98,6 +99,7 @@ class BookSeriesRepository extends BaseRepository
      * @param int $id
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return BookSeries
      */

@@ -9,8 +9,10 @@
 
 namespace App\Repositories;
 
+use App\Exceptions\ApiOperationFailedException;
 use App\Models\Setting;
 use App\Traits\ImageTrait;
+use Arr;
 use Illuminate\Http\UploadedFile;
 
 /**
@@ -52,7 +54,7 @@ class SettingRepository extends BaseRepository
      */
     public function createOrUpdate($input)
     {
-        $settingKeys = \Arr::pluck($input, 'key');
+        $settingKeys = Arr::pluck($input, 'key');
         Setting::whereIn('key', $settingKeys)->delete();
 
         $settings = [];
@@ -66,7 +68,7 @@ class SettingRepository extends BaseRepository
     /**
      * @param UploadedFile $image
      *
-     * @throws \App\Exceptions\ApiOperationFailedException
+     * @throws ApiOperationFailedException
      *
      * @return Setting|null
      */

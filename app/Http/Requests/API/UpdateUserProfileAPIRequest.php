@@ -2,6 +2,7 @@
 namespace App\Http\Requests\API;
 
 use App\User;
+use Auth;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateUserProfileAPIRequest extends APIRequest
@@ -23,7 +24,7 @@ class UpdateUserProfileAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $loginUserId = \Auth::user()->id;
+        $loginUserId = Auth::user()->id;
         $rules = User::$updateRules;
         $rules['email'] = 'required|unique:users,email,'.$loginUserId;
 

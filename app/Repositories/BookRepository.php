@@ -18,6 +18,7 @@ use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -178,10 +179,11 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param array $input
      * @param int $id
+     *
      * @throws Exception
      * @throws ApiOperationFailedException
      *
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return JsonResponse|mixed
      */
     public function update($input, $id)
     {
@@ -419,7 +421,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function getBookDetailsFromISBN($isbn)
     {
-        $url = \Config::get('services.openlib.api');
+        $url = config('services.openlib.api');
         $url = str_replace('{ISBN_NO}', $isbn, $url);
         $bookDetails = (new Book())->getFillable();
         $bookDetails = array_fill_keys($bookDetails, null);

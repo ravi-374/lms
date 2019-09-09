@@ -9,6 +9,7 @@ use DB;
 use Exception;
 use Hash;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 /**
@@ -115,7 +116,7 @@ class UserRepository extends BaseRepository
      *
      * @throws ApiOperationFailedException
      * @throws Exception
-     * @return User|\Illuminate\Database\Eloquent\Model
+     * @return User|Model
      */
     public function store($input)
     {

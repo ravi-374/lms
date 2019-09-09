@@ -15,6 +15,7 @@ class AccountRepository
      * @param  string $username
      * @param  string $email
      * @param  string $activateCode
+     *
      * @throws Exception
      */
     public function sendConfirmEmail($username, $email, $activateCode)
