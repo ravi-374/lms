@@ -11,6 +11,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\AccountRepository;
+use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
 use Auth;
 use Crypt;
@@ -27,10 +28,10 @@ use URL;
  */
 class AccountAPIController extends AppBaseController
 {
-    /** @var AccountRepository */
+    /** @var AccountRepositoryInterface */
     private $accountRepo;
 
-    public function __construct(AccountRepository $accountRepo)
+    public function __construct(AccountRepositoryInterface $accountRepo)
     {
         $this->accountRepo = $accountRepo;
     }
