@@ -267,10 +267,10 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_search_issued_book_records_by_book_code()
     {
-        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'XRTD6y45U']);
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'MI6008']);
         $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
 
-        $bookItem2 = factory(BookItem::class)->create(['book_code' => 'IRE6484O']);
+        $bookItem2 = factory(BookItem::class)->create(['book_code' => '007BOND']);
         $issuedBook2 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem2->id]);
 
         $response = $this->getJson(route('api.v1.books-history.index', [

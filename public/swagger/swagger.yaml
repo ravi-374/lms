@@ -1,0 +1,3509 @@
+openapi: 3.0.0
+info:
+  description: #
+    List of apis with related inputs of it. it also including members apis too.
+    Prefix `b1` is used for backend, and `v1` is used for member.
+  version: 1.0.0
+  title: Library Management System APIs
+
+paths:
+  /login:
+    post:
+      tags:
+        - User Authentication
+      summary: Login user by email.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: User logged in successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /logout:
+    post:
+      tags:
+        - User Authentication
+      summary: Logout user and invalidate JWT token.
+      description: ""
+      responses:
+        "200":
+          description: Logged out successfully.
+  /member-login:
+    post:
+      tags:
+        - Member Authentication
+      summary: Login member by email.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: Member logged in successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /b1/genres:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: create genre.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGenre"
+        required: true
+      responses:
+        "200":
+          description: Genre saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: get all genres.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Genres retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreListResponse"
+  "/b1/genres/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: update given genre.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Genre Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGenre"
+        required: true
+      responses:
+        "200":
+          description: Genre updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: get specific genre.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Genre Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Genre retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Genres
+      summary: delete specific Genre.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Genres Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Genre deleted successfully.
+  /b1/tags:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Tags
+      summary: create tag.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTag"
+        required: true
+      responses:
+        "200":
+          description: Tag saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Tags
+      summary: get all tags.
+      description: ""
+      responses:
+        "200":
+          description: Tags retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagListResponse"
+  "/b1/tags/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Tags
+      summary: update given tag.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Tag Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTag"
+        required: true
+      responses:
+        "200":
+          description: Tag updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Tags
+      summary: get specific tag.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Tag Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Tag retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Tags
+      summary: delete specific Tag.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Tags Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Tag deleted successfully.
+  /b1/authors:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Authors
+      summary: create author.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAuthor"
+        required: true
+      responses:
+        "200":
+          description: Author saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Authors
+      summary: get all authors.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Authors retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorListResponse"
+
+  "/b1/authors/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Authors
+      summary: update given author.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Author Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAuthor"
+        required: true
+      responses:
+        "200":
+          description: Author updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Authors
+      summary: get specific author.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Author Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Author retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Authors
+      summary: delete specific author.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Author Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Author deleted successfully.
+  /v1/authors:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Authors
+      summary: get all authors.
+      description: ""
+      responses:
+        "200":
+          description: Authors retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorListResponse"
+
+  /b1/publishers:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Publishers
+      summary: create publisher.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePublisher"
+        required: true
+      responses:
+        "200":
+          description: Publisher saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublisherResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Publishers
+      summary: get all publishers.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Publishers retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublishersListResponse"
+  "/b1/publishers/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Publishers
+      summary: update given publisher.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Publisher Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePublisher"
+        required: true
+      responses:
+        "200":
+          description: Publisher updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublisherResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Publishers
+      summary: get specific publisher.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Publisher Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Publisher retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublisherResponse"
+
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Publishers
+      summary: delete specific publisher.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Publisher Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Publisher deleted successfully.
+  /b1/book-languages:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Book Languages
+      summary: create book language.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookLanguage"
+        required: true
+      responses:
+        "200":
+          description: Book Language saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookLanguageResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Book Languages
+      summary: get all book languages.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book Languages retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookLanguageListResponse"
+
+  "/b1/book-languages/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Book Languages
+      summary: update given book language.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Language Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBookLanguage"
+        required: true
+      responses:
+        "200":
+          description: Book Language updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookLanguageResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Book Languages
+      summary: get specific book language.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Language Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book Language retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookLanguageResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Book Languages
+      summary: delete specific book language.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Language Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book Language deleted successfully.
+  /b1/books:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: create book.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBook"
+        required: true
+      responses:
+        "200":
+          description: Book saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: get all books.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookListResponse"
+
+  "/b1/books/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: update given book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBook"
+        required: true
+      responses:
+        "200":
+          description: Book updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: get specific book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookLanguageResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: delete specific book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book deleted successfully.
+  "/b1/books/{id}/remove-image":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: remove book image.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book image removed successfully.
+  "/b1/books/{id}/items":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: add book items.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddItems"
+        required: true
+      responses:
+        "200":
+          description: Book items added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
+  "/b1/books/{id}/available-books":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: get available books.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Book Id
+          required: true
+          schema:
+            type: integer
+        - name: member_id
+          in: query
+          description: Member Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
+  '/b1/get-book-details':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: get book details.
+      description: ""
+      parameters:
+        - name: isbn
+          in: query
+          description: ISBN
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+  '/b1/search-books':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: book search.
+      parameters:
+        - name: id
+          in: query
+          description: book ids
+          required: false
+          schema:
+            type: string
+        - name: search_by_book
+          in: query
+          description: search by book true = 1/false =0
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: BookItem retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
+  "/b1/books/{id}/update-book-status":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: update book item status.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBookItem"
+        required: true
+      responses:
+        "200":
+          description: Book status updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
+  "/b1/books/{id}/reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/un-reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: un-reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book un-reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/issue-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: issue book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIssueBook"
+        required: true
+      responses:
+        "200":
+          description: Book issued successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/return-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: return book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateIssueBook"
+        required: true
+      responses:
+        "200":
+          description: Book return successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/b1/books/{id}/update-issued-book-status":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: update issued book status.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIssueBook"
+        required: true
+      responses:
+        "200":
+          description: Issued Book status updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/b1/members/{id}/books-history':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get member book history.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: member Id
+          required: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/b1/books-history':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get books history for admin users.
+      description: ""
+      parameters:
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Issued Books retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/b1/issued-books/{id}':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get issued book by id.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: IssuedBook Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Issued Book retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  /v1/books:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Books
+      summary: get all books for admin.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookListResponse"
+  '/v1/books-history':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: get books history.
+      description: ""
+      parameters:
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  '/v1/search-books':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookItems
+      summary: book search.
+      parameters:
+        - name: id
+          in: query
+          description: book ids
+          required: false
+          schema:
+            type: string
+        - name: search_by_book
+          in: query
+          description: search by book true = 1/false =0
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: BookItem retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookItemResponse"
+  '/b1/send-reset-password-link':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Account
+      summary: send reset password link
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPassword"
+        required: true
+      responses:
+        "200":
+          description: Password reset link sent successfully.
+  '/b1/reset-password':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Account
+      summary: reset password
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePassword"
+        required: true
+      responses:
+        "200":
+          description: Password updated successfully.
+  /b1/roles:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Roles
+      summary: create role.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRole"
+        required: true
+      responses:
+        "200":
+          description: Role saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Roles
+      summary: get all roles.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Roles retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleListResponse"
+
+  "/b1/roles/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Roles
+      summary: update given role.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Role Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRole"
+        required: true
+      responses:
+        "200":
+          description: Role updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Roles
+      summary: get specific role.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Role Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Role retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Roles
+      summary: delete specific role.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Role Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Role deleted successfully.
+
+  /b1/permissions:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Permissions
+      summary: create permission.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePermission"
+        required: true
+      responses:
+        "200":
+          description: Permission saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Permissions
+      summary: get all permissions.
+      description: ""
+      responses:
+        "200":
+          description: Permissions retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionsListResponse"
+
+  "/b1/permissions/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Permissions
+      summary: update given permission.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Permission Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePermission"
+        required: true
+      responses:
+        "200":
+          description: Permission updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Permissions
+      summary: get specific permission.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Permission Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Permission retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Permissions
+      summary: delete specific permission.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Permission Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Permission deleted successfully.
+  /b1/users:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: create user.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+        required: true
+      responses:
+        "200":
+          description: User retirieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: get all users.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserListResponse"
+
+  "/b1/users/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: update given user.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUser"
+        required: true
+      responses:
+        "200":
+          description: User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: get specific user.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: delete specific user.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "User deleted successfully."
+  "/b1/users/{id}/remove-image":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: remove user image.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User image removed successfully.
+  '/b1/users/{id}/update-status':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: update user status.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  '/b1/user-details':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: get logged in user details.
+      description: ""
+      responses:
+        "200":
+          description: User details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  "/b1/update-user-profile":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: update logged in user profile.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUser"
+        required: true
+      responses:
+        "200":
+          description: User profile updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /b1/members:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: create member.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMember"
+        required: true
+      responses:
+        "200":
+          description: Member saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: get all members.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Members retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberListResponse"
+
+  "/b1/members/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: update given member.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Member Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMember"
+        required: true
+      responses:
+        "200":
+          description: Member updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: get specific member.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Member Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Member retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: delete specific member.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Member Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Members deleted successfully.
+  '/b1/members/{id}/remove-image':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: remove member image.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Member Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Member image removed successfully.
+  '/v1/member-details':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: get logged in member details.
+      description: ""
+      responses:
+        "200":
+          description: Member details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberResponse"
+  "/v1/update-member-profile":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: update logged in member profile.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMember"
+        required: true
+      responses:
+        "200":
+          description: Member profile updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberResponse"
+  '/v1/remove-image':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: remove logged in member image.
+      description: ""
+      responses:
+        "200":
+          description: Member image removed successfully.
+  /b1/book-series:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - BookSeries
+      summary: create book series.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookSeries"
+        required: true
+      responses:
+        "200":
+          description: Book Series saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookSeriesResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookSeries
+      summary: get all BookSeries.
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      description: ""
+      responses:
+        "200":
+          description: Book Series retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookSeriesListResponse"
+
+  "/b1/book-series/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - BookSeries
+      summary: update given BookSeries.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookSeries Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBookSeries"
+        required: true
+      responses:
+        "200":
+          description: Book Series updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookSeriesResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - BookSeries
+      summary: get specific BookSeries.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookSeries Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book Series retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - BookSeries
+      summary: delete specific BookSeries.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookSeries Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Book Series deleted successfully."
+  /b1/settings:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: create setting.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSetting"
+        required: true
+      responses:
+        "200":
+          description: Setting saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
+
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: get all settings.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Settings retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingListResponse"
+
+  "/b1/settings/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: update given setting.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Setting Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSetting"
+        required: true
+      responses:
+        "200":
+          description: Setting updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: get specific setting.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Setting Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Setting retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: delete specific setting.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Setting Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Setting deleted successfully.
+  /b1/upload-logo:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: upload setting logo.
+      description: ""
+      parameters:
+        - name: logo
+          in: query
+          description: Setting Logo
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Logo updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingResponse"
+  /v1/settings:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Settings
+      summary: get all settings.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Settings retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingListResponse"
+  /b1/membership-plans:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: create membership-plans.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMembershipPlan"
+        required: true
+      responses:
+        "200":
+          description: Membership Plan saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: get all membership-plans.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Membership Plans retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanListResponse"
+
+  "/b1/membership-plans/{id}":
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: update given membership-plans.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: MembershipPlan Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMembershipPlan"
+        required: true
+      responses:
+        "200":
+          description: Membership Plan updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: get specific membership-plans.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: MembershipPlan Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Membership Plan retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: delete specific membership-plans.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: MembershipPlan Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Membership Plan deleted successfully.
+  /v1/membership-plans:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Membership Plans
+      summary: get all membership-plans.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Membership Plans retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipPlanListResponse"
+  '/b1/config':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Config
+      summary: get App config.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Config retrieved successfully.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/UserResponse'
+                  - $ref: '#/components/schemas/RoleResponse'
+                  - $ref: '#/components/schemas/PermissionResponse'
+  /b1/countries:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Countries
+      summary: get Countries.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Countries retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryResponse"
+  /v1/countries:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Countries
+      summary: get Countries.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Countries retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryResponse"
+  /b1/currencies:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Currencies
+      summary: get Currencies.
+      description: ""
+      responses:
+        "200":
+          description: Currencies retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrencyResponse"
+  "/v1/books/{id}/reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/v1/books/{id}/un-reserve-book":
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - IssuedBook
+      summary: un-reserve book.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveBook"
+        required: true
+      responses:
+        "200":
+          description: Book un-reserved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssuedBookResponse"
+  "/v1/activate-member":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: activate member.
+      description: ""
+      parameters:
+        - name: token
+          in: query
+          description: Token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Your account has been activated successfully.
+  '/v1/send-reset-member-password-link':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: send reset password link
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPassword"
+        required: true
+      responses:
+        "200":
+          description: Password reset link sent successfully.
+  '/v1/reset-password':
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: reset password
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePassword"
+        required: true
+      responses:
+        "200":
+          description: Password updated successfully.
+
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+            user:
+              $ref: "#/components/schemas/UserResponse"
+    RegisterResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UserResponse"
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    RegisterUser:
+      type: object
+      required:
+        - first_name
+        - email
+        - password
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        google2fa_secret:
+          type: string
+    CreateGenre:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    GenreResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateGenre"
+    GenreListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+    UpdateGenre:
+      type: object
+      required:
+        - name
+        - id
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    CreateTag:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    TagResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateTag"
+    TagListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+    UpdateTag:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    CreateAuthor:
+      type: object
+      required:
+        - first_name
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        description:
+          type: string
+    UpdateAuthor:
+      type: object
+      required:
+        - first_name
+        - id
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        description:
+          type: string
+    AuthorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateAuthor"
+    AuthorListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              first_name:
+                type: string
+              last_name:
+                type: string
+              description:
+                type: string
+    CreatePublisher:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    UpdatePublisher:
+      type: object
+      required:
+        - name
+        - id
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    PublisherResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdatePublisher"
+    PublishersListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+    CreateBookLanguage:
+      type: object
+      required:
+        - language_name
+        - language_code
+      properties:
+        name:
+          type: string
+        language_name:
+          type: string
+        language_code:
+          type: string
+
+    UpdateBookLanguage:
+      type: object
+      required:
+        - language_name
+        - language_code
+        - id
+      properties:
+        id:
+          type: integer
+        language_name:
+          type: string
+        language_code:
+          type: string
+
+    BookLanguageResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateBookLanguage"
+
+    BookLanguageListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              language_name:
+                type: string
+              language_code:
+                type: string
+
+    CreateBook:
+      type: object
+      required:
+        - name
+        - isbn
+        - genres
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        isbn:
+          type: string
+        genres:
+          type: integer
+
+    UpdateBook:
+      type: object
+      required:
+        - name
+        - isbn
+        - genres
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        isbn:
+          type: string
+        genres:
+          type: integer
+
+    BookResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateBook"
+
+    BookListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+              url:
+                type: string
+              isbn:
+                type: string
+              genres:
+                type: integer
+    CreateRole:
+      type: object
+      required:
+        - name
+        - permissions
+      properties:
+        name:
+          type: string
+        display_name:
+          type: string
+        description:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: integer
+    UpdateRole:
+      type: object
+      required:
+        - name
+        - id
+        - permissions
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        display_name:
+          type: string
+        description:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: integer
+
+    RoleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateRole"
+
+    RoleListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              display_name:
+                type: string
+              description:
+                type: string
+              permissions:
+                type: array
+                items:
+                  type: integer
+
+    CreatePermission:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        display_name:
+          type: string
+        description:
+          type: string
+
+    UpdatePermission:
+      type: object
+      required:
+        - name
+        - id
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        display_name:
+          type: string
+        description:
+          type: string
+
+    PermissionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdatePermission"
+
+    PermissionsListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              display_name:
+                type: string
+              description:
+                type: string
+    CreateUser:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+        - role_id
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role_id:
+          type: array
+          items:
+            type: integer
+    UserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateUser"
+    UserListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              first_name:
+                type: string
+              last_name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              role_id:
+                type: array
+                items:
+                  type: integer
+    UpdateUser:
+      type: object
+      required:
+        - first_name
+          - last_name
+          - email
+          - password
+          - role_id
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role_id:
+          type: integer
+    CreateMember:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+        - membership_plan_id
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        member_id:
+          type: string
+        password:
+          type: string
+        membership_plan_id:
+          type: integer
+    MemberResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateMember"
+    MemberListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              first_name:
+                type: string
+              last_name:
+                type: string
+              email:
+                type: string
+              member_id:
+                type: string
+              password:
+                type: string
+              membership_plan_id:
+                type: integer
+    UpdateMember:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+        - membership_plan_id
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        member_id:
+          type: string
+        password:
+          type: string
+        membership_plan_id:
+          type: integer
+    CreateBookSeries:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+    BookSeriesResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateBookSeries"
+    BookSeriesListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+    UpdateBookSeries:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+    CreateMembershipPlan:
+      type: object
+      required:
+        - name
+        - price
+        - frequency
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+        description:
+          type: string
+        frequency:
+          type: integer
+        stripe_plan_id:
+          type: string
+
+    UpdateMembershipPlan:
+      type: object
+      required:
+        - name
+        - price
+        - frequency
+        - id
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+        description:
+          type: string
+        frequency:
+          type: integer
+        stripe_plan_id:
+          type: string
+
+    MembershipPlanResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateMembershipPlan"
+
+    MembershipPlanListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              price:
+                type: integer
+              description:
+                type: string
+              frequency:
+                type: integer
+              stripe_plan_id:
+                type: string
+    CreateSetting:
+      type: array
+      required:
+        - key
+        - value
+        - display_name
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+          value:
+            type: string
+          display_name:
+            type: string
+    UpdateSetting:
+      type: array
+      required:
+        - key
+        - value
+        - display_name
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+          value:
+            type: string
+          display_name:
+            type: string
+
+    SettingResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/UpdateSetting"
+
+    SettingListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              key:
+                type: string
+              value:
+                type: string
+              display_name:
+                type: string
+    UpdateBookItem:
+      type: object
+      required:
+        - id
+      properties:
+        book_id:
+          type: integer
+        book_code:
+          type: string
+        edition:
+          type: string
+        format:
+          type: integer
+        price:
+          type: integer
+        status:
+          type: integer
+        location:
+          type: string
+        language_id:
+          type: integer
+        publisher_id:
+          type: integer
+    AddItems:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              book_id:
+                type: integer
+              book_code:
+                type: string
+              edition:
+                type: string
+              format:
+                type: integer
+              price:
+                type: integer
+              status:
+                type: integer
+              location:
+                type: string
+              language_id:
+                type: integer
+              publisher_id:
+                type: integer
+    BookItemResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            description:
+              type: string
+            url:
+              type: string
+            isbn:
+              type: string
+            genres:
+              type: integer
+            items:
+              $ref: "#/components/schemas/UpdateBookItem"
+
+    ReserveBook:
+      type: object
+      required:
+        - member_id
+        - book_item_id
+      properties:
+        member_id:
+          type: integer
+        book_item_id:
+          type: integer
+        reserve_date:
+          type: string
+        status:
+          type: integer
+    IssuedBookResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              book_item_id:
+                type: integer
+              member_id:
+                type: string
+              reserve_date:
+                type: string
+              issued_on:
+                type: string
+              return_due_date:
+                type: string
+              note:
+                type: string
+              return_date:
+                type: string
+              status:
+                type: integer
+              issuer_id:
+                type: integer
+              returner_id:
+                type: integer
+    CreateIssueBook:
+      type: object
+      properties:
+        book_item_id:
+          type: integer
+        member_id:
+          type: string
+        status:
+          type: integer
+    UpdateIssueBook:
+      properties:
+        book_item_id:
+          type: integer
+        member_id:
+          type: string
+        status:
+          type: integer
+    CountryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              code:
+                type: string
+    CurrencyResponse:
+      type: object
+      properties:
+        country:
+          type: string
+        iso_code:
+          type: string
+    ResetPassword:
+      type: object
+      required:
+        - email
+        - url
+      properties:
+        email:
+          type: string
+        url:
+          type: string
+    UpdatePassword:
+      type: object
+      required:
+        - token
+        - password
+      properties:
+        token:
+          type: string
+        password:
+          type: string

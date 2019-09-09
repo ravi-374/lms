@@ -5,6 +5,8 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Models\Role;
 use App\Repositories\Contracts\RoleRepositoryInterface;
 use DB;
+use Exception;
+use Illuminate\Support\Collection;
 
 /**
  * Class RoleRepository
@@ -44,7 +46,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Role[]|\Illuminate\Database\Eloquent\Collection
+     * @return Role[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
@@ -72,6 +74,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      * @param array $input
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return Role
      */
@@ -86,7 +89,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
             DB::commit();
 
             return $this->find($role->id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             throw new ApiOperationFailedException($e->getMessage());
@@ -98,6 +101,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      * @param int $id
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return Role
      */
@@ -114,7 +118,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
             DB::commit();
 
             return $this->find($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             throw new ApiOperationFailedException($e->getMessage());

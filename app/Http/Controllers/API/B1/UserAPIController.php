@@ -9,6 +9,7 @@ use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserProfileAPIRequest;
 use App\Repositories\UserRepository;
 use App\User;
+use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -154,7 +155,7 @@ class UserAPIController extends AppBaseController
     public function getLoggedInUserDetails()
     {
         /** @var User $loginUser */
-        $loginUser = \Auth::user();
+        $loginUser = Auth::user();
         $loginUser->address;
         $loginUser->roles;
 
@@ -172,7 +173,7 @@ class UserAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $userId = \Auth::user()->id;
+        $userId = Auth::user()->id;
 
         $user = $this->userRepository->update($input, $userId);
 

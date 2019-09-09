@@ -7,7 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookAPIRequest;
 use App\Http\Requests\API\UpdateBookAPIRequest;
 use App\Models\Book;
-use App\Repositories\BookRepository;
+use App\Repositories\Contracts\BookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,10 +19,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class BookAPIController extends AppBaseController
 {
-    /** @var  BookRepository */
+    /** @var  BookRepositoryInterface */
     private $bookRepository;
 
-    public function __construct(BookRepository $bookRepo)
+    public function __construct(BookRepositoryInterface $bookRepo)
     {
         $this->bookRepository = $bookRepo;
     }

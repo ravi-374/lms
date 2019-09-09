@@ -28,3 +28,14 @@ Route::post('member-login', 'AuthAPIController@memberLogin');
 
 include 'api/v1.php';
 include 'api/b1.php';
+
+/*
+|--------------------------------------------------------------------------
+| Swagger
+|--------------------------------------------------------------------------
+*/
+Route::get('docs', function () {
+    echo '<h1>Library Management System</h1>';
+    //    return view('swagger');
+});
+

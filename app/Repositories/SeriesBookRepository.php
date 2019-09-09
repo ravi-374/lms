@@ -60,6 +60,7 @@ class SeriesBookRepository extends BaseRepository
      * @param array $seriesItems
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return bool
      */

@@ -12,7 +12,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Book;
 use App\Models\BookItem;
-use App\Repositories\BookItemRepository;
+use App\Repositories\Contracts\BookItemRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,10 +25,10 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  */
 class BookItemAPIController extends AppBaseController
 {
-    /** @var BookItemRepository */
+    /** @var BookItemRepositoryInterface */
     private $bookItemRepo;
 
-    public function __construct(BookItemRepository $bookItemRepo)
+    public function __construct(BookItemRepositoryInterface $bookItemRepo)
     {
         $this->bookItemRepo = $bookItemRepo;
     }

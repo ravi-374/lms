@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
 use App\Models\Member;
-use App\Models\User;
 use DB;
 use Exception;
 use Hash;
@@ -123,8 +122,10 @@ class MemberRepository extends BaseRepository
     }
 
     /**
-     * @param $input
+     * @param array $input
+     *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return Member
      */

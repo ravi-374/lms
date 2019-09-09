@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\BookSeries;
+use BookSeriesRepositoryInterface;
 use DB;
 use Exception;
 use Illuminate\Container\Container as Application;
@@ -13,7 +15,7 @@ use Illuminate\Support\Collection;
  * @package App\Repositories
  * @version June 25, 2019, 10:36 am UTC
  */
-class BookSeriesRepository extends BaseRepository
+class BookSeriesRepository extends BaseRepository implements BookSeriesRepositoryInterface
 {
     /** @var SeriesBookRepository */
     private $seriesBookRepo;
@@ -68,6 +70,7 @@ class BookSeriesRepository extends BaseRepository
      * @param array $input
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return BookSeries
      */
@@ -98,6 +101,7 @@ class BookSeriesRepository extends BaseRepository
      * @param int $id
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return BookSeries
      */

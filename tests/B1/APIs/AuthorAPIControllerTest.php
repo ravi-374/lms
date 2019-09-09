@@ -42,7 +42,7 @@ class AuthorAPIControllerTest extends TestCase
         $take3 = $this->getJson(route('api.b1.authors.index', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.b1.authors.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.b1.authors.index', [
-                'search' => $authors[0]->first_name,
+                'search' => $authors[0]->first_name." ".$authors[0]->last_name,
             ]
         ));
 

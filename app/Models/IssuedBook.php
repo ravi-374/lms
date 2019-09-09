@@ -195,15 +195,17 @@ class IssuedBook extends Model
 
     public function getExpectedAvailableDate($lastIssuedBook)
     {
-        if (!empty($lastIssuedBook)) {
-            if ($lastIssuedBook['status'] == IssuedBook::STATUS_RESERVED) {
-                $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
+        if (empty($lastIssuedBook)) {
+            return;
+        }
 
-                return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
-            }
-            if ($lastIssuedBook['status'] == IssuedBook::STATUS_ISSUED) {
-                return $lastIssuedBook['return_due_date'];
-            }
+        if ($lastIssuedBook['status'] == IssuedBook::STATUS_RESERVED) {
+            $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
+
+            return Carbon::now()->addDays($returnDueDays)->toDateTimeString();
+        }
+        if ($lastIssuedBook['status'] == IssuedBook::STATUS_ISSUED) {
+            return $lastIssuedBook['return_due_date'];
         }
     }
 
