@@ -41,7 +41,7 @@ class CountryAPIControllerTest extends TestCase
         $response = $this->getJson(route('api.v1.countries.index'));
         $take3 = $this->getJson(route('api.v1.countries.index', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.v1.countries.index', ['skip' => 2, 'limit' => 2]));
-        $searchByName = $this->getJson(route('api.v1.countries.index', ['search='.$countries[0]->name]));
+        $searchByName = $this->getJson(route('api.v1.countries.index', ['search' => $countries[0]->name]));
 
         $this->assertCount(251, $response->original['data'], '246 default');
         $this->assertCount(3, $take3->original['data']);

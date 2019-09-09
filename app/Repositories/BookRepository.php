@@ -7,7 +7,9 @@ use App\Exceptions\MissingPropertyException;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
+use App\Models\Genre;
 use App\Models\Publisher;
+use App\Models\Tag;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Traits\ImageTrait;
 use Arr;
@@ -203,7 +205,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $book->update($input);
             $this->attachTagsAndGenres($book, $input);
             if (!empty($input['authors'])) {
-                $book->authors()->sync($input['authors']);
+                $this->attachAuthors($book, $input);
             }
 
             DB::commit();
@@ -226,17 +228,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function validateInput($input)
     {
-        if (isset($input['tags']) && !empty($input['tags'])) {
-            foreach ($input['tags'] as $tag) {
-                $this->tagRepo->findOrFail($tag);
-            }
-        }
-        if (isset($input['genres']) && !empty($input['tags'])) {
-            foreach ($input['genres'] as $genre) {
-                $this->genreRepo->findOrFail($genre);
-            }
-        }
-
         if (isset($input['items'])) {
             $this->validateItems($input['items']);
         }
@@ -289,30 +280,42 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param Book $book
      * @param array $input
+     *
      * @return Book
      */
     public function attachTagsAndGenres($book, $input)
     {
-        if (isset($input['tags']) && !empty($input['tags'])) {
-            $book->tags()->sync($input['tags']);
-        } else {
-            $book->tags()->sync([]);
-        }
+        $tags = (!empty($input['tags'])) ? $input['tags'] : [];
+        $tags = array_map(function ($value) {
+            return is_string($value) ? Tag::create(['name' => $value])->id : $value;
+        }, $tags);
+        $book->tags()->sync($tags);
 
-        if (isset($input['genres']) && !empty($input['genres'])) {
-            $book->genres()->sync($input['genres']);
-        }
+        $genres = (!empty($input['genres'])) ? $input['genres'] : [];
+        $genres = array_map(function ($value) {
+            return is_string($value) ? Genre::create(['name' => $value])->id : $value;
+        }, $genres);
+        $book->genres()->sync($genres);
 
         return $book;
     }
 
+    /**
+     * @param Book $book
+     * @param array a$input
+     *
+     * @return bool
+     */
     public function attachAuthors($book, $input)
     {
         $authors = [];
         foreach ($input['authors'] as $author) {
-            $result = explode(' ', $author);
-            if (count($result) > 1) {
-                $author = Author::create(['first_name' => $result[0], 'last_name' => $result[1]]);
+            if (is_string($author)) {
+                $result = explode(' ', $author);
+                $author = Author::create([
+                    'first_name' => $result[0],
+                    'last_name'  => isset($result[1]) ? $result[1] : '',
+                ]);
                 $authors[] = $author->id;
             } else {
                 $authors[] = (int) $author;
@@ -320,6 +323,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         $book->authors()->sync($authors);
+
+        return true;
     }
 
     /**

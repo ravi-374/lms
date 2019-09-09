@@ -53,8 +53,10 @@ class BookLanguageAPIControllerTest extends TestCase
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 
-        $search = $search->original['data'];
-        $this->assertTrue(count($search) > 0 && count($search) < 23);
+        $searchCount = count($search->original['data']);
+        $this->assertTrue($searchCount > 0 && $searchCount < 23);
+        $this->assertEquals($searchCount, $search->original['totalRecords']);
+        $this->assertEquals(23, $response->original['totalRecords']);
     }
 
     /** @test */
