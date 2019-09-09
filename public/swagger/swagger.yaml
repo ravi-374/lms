@@ -1,11 +1,10 @@
 openapi: 3.0.0
 info:
-  description: LMS APIs
+  description: #
+    List of apis with related inputs of it. it also including members apis too.
+    Prefix `b1` is used for backend, and `v1` is used for member.
   version: 1.0.0
-  title: LMS
-
-servers:
-  - url: /api
+  title: Library Management System APIs
 
 paths:
   /login:
