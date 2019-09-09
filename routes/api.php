@@ -35,6 +35,7 @@ include 'api/b1.php';
 |--------------------------------------------------------------------------
 */
 Route::get('docs', function () {
-    return view('swagger');
+    echo '<h1>Library Management System</h1>';
+    //    return view('swagger');
 });
 
