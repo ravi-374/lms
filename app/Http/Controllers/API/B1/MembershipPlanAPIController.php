@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMembershipPlanAPIRequest;
 use App\Http\Requests\API\UpdateMembershipPlanAPIRequest;
 use App\Models\MembershipPlan;
+use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
 use App\Repositories\MembershipPlanRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -17,12 +19,18 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class MembershipPlanAPIController extends AppBaseController
 {
+    /** @var  MembershipPlanRepositoryInterface */
+    private $membershipPlanRepoInterface;
+
     /** @var  MembershipPlanRepository */
     private $membershipPlanRepository;
 
-    public function __construct(MembershipPlanRepository $membershipPlanRepo)
-    {
+    public function __construct(
+        MembershipPlanRepository $membershipPlanRepo,
+        MembershipPlanRepositoryInterface $membershipPlanRepoInterface
+    ) {
         $this->membershipPlanRepository = $membershipPlanRepo;
+        $this->membershipPlanRepoInterface = $membershipPlanRepoInterface;
     }
 
     /**
@@ -59,7 +67,7 @@ class MembershipPlanAPIController extends AppBaseController
         $input = $request->all();
 
         /** @var MembershipPlan $membershipPlan */
-        $membershipPlan = $this->membershipPlanRepository->store($input);
+        $membershipPlan = $this->membershipPlanRepoInterface->store($input);
 
         return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan saved successfully.');
     }
@@ -90,7 +98,7 @@ class MembershipPlanAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $membershipPlan = $this->membershipPlanRepository->update($input, $membershipPlan->id);
+        $membershipPlan = $this->membershipPlanRepoInterface->update($input, $membershipPlan->id);
 
         return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan updated successfully.');
     }

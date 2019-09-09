@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\MembershipPlan;
+use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -10,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  * @package App\Repositories
  * @version June 24, 2019, 10:42 am UTC
  */
-class MembershipPlanRepository extends BaseRepository
+class MembershipPlanRepository extends BaseRepository implements MembershipPlanRepositoryInterface
 {
     /**
      * @var array
