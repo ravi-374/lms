@@ -16,12 +16,14 @@ use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Repositories\Contracts\BookSeriesRepositoryInterface;
 use App\Repositories\Contracts\GenreRepositoryInterface;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
+use App\Repositories\Contracts\MemberRepositoryInterface;
 use App\Repositories\Contracts\PublisherRepositoryInterface;
 use App\Repositories\Contracts\SeriesBookRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\GenreRepository;
 use App\Repositories\IssuedBookRepository;
+use App\Repositories\MemberRepository;
 use App\Repositories\PublisherRepository;
 use App\Repositories\SeriesBookRepository;
 use App\Repositories\TagRepository;
@@ -50,6 +52,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(IssuedBookRepositoryInterface::class, IssuedBookRepository::class);
         $this->app->bind(AccountRepositoryInterface::class, AccountRepository::class);
+        $this->app->bind(MemberRepositoryInterface::class, MemberRepository::class);
     }
 
     /**

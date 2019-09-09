@@ -8,7 +8,7 @@ use App\Http\Requests\API\CreateMemberAPIRequest;
 use App\Http\Requests\API\UpdateMemberAPIRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
-use App\Repositories\MemberRepository;
+use App\Repositories\Contracts\MemberRepositoryInterface;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -20,10 +20,10 @@ use Illuminate\Http\Request;
  */
 class MemberAPIController extends AppBaseController
 {
-    /** @var  MemberRepository */
+    /** @var  MemberRepositoryInterface */
     private $memberRepository;
 
-    public function __construct(MemberRepository $memberRepo)
+    public function __construct(MemberRepositoryInterface $memberRepo)
     {
         $this->memberRepository = $memberRepo;
     }
