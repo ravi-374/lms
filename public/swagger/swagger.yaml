@@ -806,7 +806,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BookResponse"
+                $ref: "#/components/schemas/BookItemResponse"
   "/b1/books/{id}/available-books":
     get:
       security:
@@ -3351,21 +3351,10 @@ components:
         - items
       properties:
         items:
-          $ref: "#/components/schemas/UpdateBookItem"
-    BookItemResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
           type: array
           items:
             type: object
             properties:
-              id:
-                type: integer
               book_id:
                 type: integer
               book_code:
@@ -3374,16 +3363,41 @@ components:
                 type: string
               format:
                 type: integer
-              status:
-                type: string
               price:
+                type: integer
+              status:
                 type: integer
               location:
                 type: string
-              publisher_id:
-                type: integer
               language_id:
                 type: integer
+              publisher_id:
+                type: integer
+    BookItemResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            description:
+              type: string
+            url:
+              type: string
+            isbn:
+              type: string
+            genres:
+              type: integer
+            items:
+              $ref: "#/components/schemas/UpdateBookItem"
+
     ReserveBook:
       type: object
       required:
