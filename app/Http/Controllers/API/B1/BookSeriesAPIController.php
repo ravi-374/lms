@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -6,7 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookSeriesAPIRequest;
 use App\Http\Requests\API\UpdateBookSeriesAPIRequest;
 use App\Models\BookSeries;
-use App\Repositories\BookSeriesRepository;
+use App\Repositories\Contracts\BookSeriesRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,10 +18,10 @@ use Illuminate\Http\Request;
  */
 class BookSeriesAPIController extends AppBaseController
 {
-    /** @var  BookSeriesRepository */
+    /** @var  BookSeriesRepositoryInterface */
     private $bookSeriesRepository;
 
-    public function __construct(BookSeriesRepository $bookSeriesRepo)
+    public function __construct(BookSeriesRepositoryInterface $bookSeriesRepo)
     {
         $this->bookSeriesRepository = $bookSeriesRepo;
     }

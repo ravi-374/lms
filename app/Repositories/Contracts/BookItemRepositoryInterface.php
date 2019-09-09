@@ -2,15 +2,14 @@
 
 namespace App\Repositories\Contracts;
 
-use App\Exceptions\ApiOperationFailedException;
-use App\Models\BookSeries;
+use App\Models\BookItem;
 use Illuminate\Support\Collection;
 
 /**
- * Interface BookSeriesRepositoryInterface
+ * Interface BookItemRepositoryInterface
  * @package App\Repositories\Contracts
  */
-interface BookSeriesRepositoryInterface
+interface BookItemRepositoryInterface
 {
     /**
      * @return array
@@ -28,26 +27,16 @@ interface BookSeriesRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Collection
+     * @return BookItem|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * @param array $input
+     * @param array $search
+     * @param int|null $skip
+     * @param int|null $limit
      *
-     * @throws ApiOperationFailedException
-     *
-     * @return BookSeries
+     * @return BookItem[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function store($input);
-
-    /**
-     * @param array $input
-     * @param int $id
-     *
-     * @throws ApiOperationFailedException
-     *
-     * @return BookSeries
-     */
-    public function update($input, $id);
+    public function searchBooks($search = [], $skip = null, $limit = null);
 }
