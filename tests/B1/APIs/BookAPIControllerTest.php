@@ -230,6 +230,22 @@ class BookAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_can_create_authors_on_the_fly_while_creating_book()
+    {
+        $genre = factory(Genre::class)->create();
+        $author = factory(Author::class)->create();
+        /** @var Book $book */
+        $book = factory(Book::class)->make(['genres' => [$genre->id], 'authors' => [$author->id, 'Vishal']]);
+
+        $response = $this->postJson(route('api.b1.books.store'), $book->toArray());
+
+        $this->assertSuccessMessageResponse($response, 'Book saved successfully.');
+        $book = $response->original['data'];
+        $this->assertArrayHasKey('id', $book);
+        $this->assertCount(2, $book['authors']);
+    }
+
+    /** @test */
     public function test_can_update_book()
     {
         $genre = factory(Genre::class)->create();
@@ -274,5 +290,25 @@ class BookAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
         $this->assertCount(2, $response->original['data']['tags']);
+    }
+
+    /** @test */
+    public function test_can_create_authors_on_the_fly_while_updating_book()
+    {
+        $genre = factory(Genre::class)->create();
+        $author = factory(Author::class)->create();
+        /** @var Book $book */
+        $book = factory(Book::class)->create();
+        $updateBook = factory(Book::class)->raw([
+            'id'      => $book->id,
+            'genres'  => [$genre->id],
+            'authors' => [$author->id, 'Vishal'],
+        ]);
+
+        $response = $this->putJson(route('api.b1.books.update', $book->id), $updateBook);
+
+        $this->assertSuccessMessageResponse($response, 'Book updated successfully.');
+        $updateBook = $response->original['data'];
+        $this->assertCount(2, $updateBook['authors']);
     }
 }

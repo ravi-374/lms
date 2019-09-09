@@ -205,7 +205,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $book->update($input);
             $this->attachTagsAndGenres($book, $input);
             if (!empty($input['authors'])) {
-                $book->authors()->sync($input['authors']);
+                $this->attachAuthors($book, $input);
             }
 
             DB::commit();
@@ -310,9 +310,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     {
         $authors = [];
         foreach ($input['authors'] as $author) {
-            $result = explode(' ', $author);
-            if (count($result) > 1) {
-                $author = Author::create(['first_name' => $result[0], 'last_name' => $result[1]]);
+            if (is_string($author)) {
+                $result = explode(' ', $author);
+                $author = Author::create([
+                    'first_name' => $result[0],
+                    'last_name'  => isset($result[1]) ? $result[1] : '',
+                ]);
                 $authors[] = $author->id;
             } else {
                 $authors[] = (int) $author;
