@@ -12,6 +12,7 @@ namespace App\Repositories;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
+use App\Repositories\Contracts\BookItemRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Collection;
  * Class BookItemRepository
  * @package App\Repositories
  */
-class BookItemRepository extends BaseRepository
+class BookItemRepository extends BaseRepository implements BookItemRepositoryInterface
 {
     /**
      * @var array
