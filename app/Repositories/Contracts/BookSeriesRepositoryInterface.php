@@ -1,7 +1,11 @@
 <?php
+
+namespace App\Repositories\Contracts;
+
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\BookSeries;
 use Illuminate\Support\Collection;
+
 /**
  * Interface BookSeriesRepositoryInterface
  * @package App\Repositories\Contracts
