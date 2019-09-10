@@ -32,10 +32,10 @@ export default (props) => {
         },
         {
             sortable: true,
-            selector: 'issued_on',
-            name: 'Issue Date',
+            selector: 'reserved_on',
+            name: 'Reserved Date',
             width: '150px',
-            cell: row => renderDate(row.issued_on)
+            cell: row => renderDate(row.reserve_date)
         },
         {
             sortable: true,
@@ -46,10 +46,10 @@ export default (props) => {
         },
         {
             sortable: true,
-            selector: 'reserved_on',
-            name: 'Reserved Date',
+            selector: 'issued_on',
+            name: 'Issue Date',
             width: '150px',
-            cell: row => renderDate(row.reserve_date)
+            cell: row => renderDate(row.issued_on)
         },
         {
             sortable: true,
