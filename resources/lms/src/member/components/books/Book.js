@@ -21,7 +21,7 @@ const Book = ({ books, addToast, reserveBook }) => {
             <thead>
             <tr>
                 <th>Cover</th>
-                <th>Book code</th>
+                <th>Book Code</th>
                 <th>Book Name</th>
                 <th>Author(s)</th>
                 <th>Edition</th>
