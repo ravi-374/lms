@@ -13,7 +13,6 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
 use App\Models\Setting;
 use App\Repositories\Contracts\SettingRepositoryInterface;
-use App\Repositories\SettingRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,17 +24,11 @@ use Illuminate\Support\Facades\Validator;
  */
 class SettingAPIController extends AppBaseController
 {
-    /** @var SettingRepository */
-    private $settingRepo;
-
     /** @var SettingRepositoryInterface */
     private $settingRepoInterface;
 
-    public function __construct(
-        SettingRepositoryInterface $settingRepoInterface,
-        SettingRepository $settingRepo
-    ) {
-        $this->settingRepo = $settingRepo;
+    public function __construct(SettingRepositoryInterface $settingRepoInterface)
+    {
         $this->settingRepoInterface = $settingRepoInterface;
     }
 
@@ -49,7 +42,7 @@ class SettingAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $settings = $this->settingRepo->all(
+        $settings = $this->settingRepoInterface->all(
             $request->except(['skip', 'limit']),
             $request->get('skip'),
             $request->get('limit')
@@ -110,7 +103,7 @@ class SettingAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $setting = $this->settingRepo->update($input, $setting->id);
+        $setting = $this->settingRepoInterface->update($input, $setting->id);
 
         return $this->sendResponse($setting->toArray(), 'Setting updated successfully.');
     }
