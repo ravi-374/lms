@@ -21,10 +21,16 @@
                 margin-top: -77px;
             }
         }
+
         &__input-book {
             margin-left: 15px;
             display: inline-block;
             width: 50%;
+        }
+
+        &__btn {
+            width: 60%;
+            padding-left: 116px;
         }
     }
 
@@ -32,9 +38,11 @@
         &-cover, &-book-code, &-action, &-language {
             width: 100px;
         }
+
         &-expected-available-date {
             width: 190px;
         }
+
         &-status {
             width: 100px;
         }

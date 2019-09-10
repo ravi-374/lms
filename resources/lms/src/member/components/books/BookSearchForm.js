@@ -79,12 +79,12 @@ const BookSearchForm = (props) => {
                                    isSearchable={true}/>
                         </div>
                     </Col>
+                    <Col xs={12} className="d-flex flex-row justify-content-end book-form__btn">
+                        <Button onClick={handleSubmit(searchBook)} disabled={isDisabled} color="primary">Search</Button>
+                        <Button className="ml-2" onClick={() => onResetSearch()}>Reset</Button>
+                    </Col>
                 </div>
             </div>
-            <Col xs={12} className=" mt-2 d-flex flex-row justify-content-center">
-                <Button onClick={handleSubmit(searchBook)} disabled={isDisabled} color="primary">Search</Button>
-                <Button className="ml-2" onClick={() => onResetSearch()}>Reset</Button>
-            </Col>
         </Row>
     )
 };
