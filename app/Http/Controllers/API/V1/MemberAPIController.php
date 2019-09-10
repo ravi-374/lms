@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
+use App\Repositories\Contracts\MemberRepositoryInterFace;
 use App\Models\Member;
 use Auth;
 use Exception;
