@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\Permission;
 use App\Models\Role;
 use App\User;
+use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\TestResponse;
@@ -126,5 +127,18 @@ abstract class TestCase extends BaseTestCase
         $user->attachRole($role);
 
         return $user;
+    }
+
+    /**
+     * @param string $string
+     * @param string $timezone
+     *
+     * @return Carbon
+     */
+    protected function mockTime($string, $timezone = 'UTC')
+    {
+        Carbon::setTestNow(Carbon::parse($string, $timezone));
+
+        return Carbon::now();
     }
 }
