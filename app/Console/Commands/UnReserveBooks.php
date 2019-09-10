@@ -34,7 +34,7 @@ class UnReserveBooks extends Command
         $issueBooks = IssuedBook::with('bookItem')->whereStatus(IssuedBook::STATUS_RESERVED)->get();
 
         foreach ($issueBooks as $issueBook) {
-            if ($issueBook->issue_due_date < Carbon::now()) {
+            if ($issueBook->issue_due_date > Carbon::now()->toDateTimeString()) {
                 continue;
             }
             $issueBook->update(['status' => IssuedBook::STATUS_UN_RESERVED]);
