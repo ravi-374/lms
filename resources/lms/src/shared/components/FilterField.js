@@ -11,7 +11,7 @@ const FilterField = ({ options, handleFilter, initialize, filterKey, filterKeyNa
         handleFilter(option.name);
     };
     return (
-        <Field name="filter_key" options={options} groupText="filter" component={Select} isCustom
+        <Field name="filter_key" options={options} groupText="filter" component={Select} isSearchable={true} isCustom
                onChange={onChangeFilter}/>
     )
 };
