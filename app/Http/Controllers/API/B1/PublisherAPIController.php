@@ -5,6 +5,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePublisherAPIRequest;
 use App\Http\Requests\API\UpdatePublisherAPIRequest;
 use App\Models\Publisher;
+use App\Repositories\Contracts\PublisherRepositoryInterface;
 use App\Repositories\PublisherRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -17,10 +18,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class PublisherAPIController extends AppBaseController
 {
-    /** @var  PublisherRepository */
+    /** @var  PublisherRepositoryInterface */
     private $publisherRepository;
 
-    public function __construct(PublisherRepository $publisherRepo)
+    public function __construct(PublisherRepositoryInterface $publisherRepo)
     {
         $this->publisherRepository = $publisherRepo;
     }
