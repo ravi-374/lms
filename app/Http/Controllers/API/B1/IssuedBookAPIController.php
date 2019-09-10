@@ -8,7 +8,6 @@ use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
-use App\Repositories\IssuedBookRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,15 +21,9 @@ class IssuedBookAPIController extends AppBaseController
     /** @var  IssuedBookRepositoryInterface */
     private $issuedBookRepoInterface;
 
-    /** @var  IssuedBookRepository */
-    private $issuedBookRepository;
-
-    public function __construct(
-        IssuedBookRepositoryInterface $issuedBookRepoInterface,
-        IssuedBookRepository $issuedBookRepository
-    ) {
+    public function __construct(IssuedBookRepositoryInterface $issuedBookRepoInterface)
+    {
         $this->issuedBookRepoInterface = $issuedBookRepoInterface;
-        $this->issuedBookRepository = $issuedBookRepository;
     }
 
     /**
@@ -160,9 +153,9 @@ class IssuedBookAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $this->issuedBookRepository->findOrFail($id);
+        $this->issuedBookRepoInterface->findOrFail($id);
 
-        $issuedBook = $this->issuedBookRepository->update($input, $id);
+        $issuedBook = $this->issuedBookRepoInterface->update($input, $id);
 
         return $this->sendResponse($issuedBook->toArray(), 'Issued Book updated successfully.');
     }
@@ -178,7 +171,7 @@ class IssuedBookAPIController extends AppBaseController
     public function destroy($id)
     {
         /** @var IssuedBook $issuedBook */
-        $issuedBook = $this->issuedBookRepository->findOrFail($id);
+        $issuedBook = $this->issuedBookRepoInterface->findOrFail($id);
 
         $issuedBook->delete();
 

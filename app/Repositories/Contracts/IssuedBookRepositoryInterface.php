@@ -4,6 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\Models\BookItem;
 use App\Models\IssuedBook;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 /**
  * Interface IssuedBookRepositoryInterface
@@ -66,4 +67,21 @@ interface IssuedBookRepositoryInterface
      * @return IssuedBook
      */
     public function unReserveBook($bookItem, $input);
+
+    /**
+     * @param int $id
+     * @param array $with
+     * @return mixed
+     */
+    public function findOrFail($id, $with = []);
+
+    /**
+     * Update model record for given id
+     *
+     * @param array $input
+     * @param int $id
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
+     */
+    public function update($input, $id);
 }
