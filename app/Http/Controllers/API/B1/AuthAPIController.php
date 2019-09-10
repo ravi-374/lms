@@ -10,7 +10,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\AuthRepository;
+use App\Repositories\Contracts\AuthRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -19,10 +19,10 @@ use Illuminate\Http\JsonResponse;
  */
 class AuthAPIController extends AppBaseController
 {
-    /** @var AuthRepository $authRepo */
+    /** @var AuthRepositoryInterface $authRepo */
     private $authRepo;
 
-    public function __construct(AuthRepository $authRepo)
+    public function __construct(AuthRepositoryInterface $authRepo)
     {
         $this->authRepo = $authRepo;
     }
