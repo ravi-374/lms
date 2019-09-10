@@ -64,4 +64,14 @@ interface MemberRepositoryInterface
      * @return Member
      */
     public function update($input, $id);
+
+    /**
+     * @param array $input
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return Member
+     */
+    public function storeMember($input);
 }
