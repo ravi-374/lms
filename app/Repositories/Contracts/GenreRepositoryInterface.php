@@ -49,7 +49,7 @@ interface GenreRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return Genre[]|Collection
+     * @return Genre|Collection
      */
     public function update($input, $id);
 }

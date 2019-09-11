@@ -49,7 +49,7 @@ interface TagRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return Tag[]|Collection
+     * @return Tag|Collection
      */
     public function update($input, $id);
 }

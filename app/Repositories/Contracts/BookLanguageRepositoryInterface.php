@@ -45,7 +45,7 @@ interface BookLanguageRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return BookLanguage[]|Collection
+     * @return BookLanguage|Collection
      */
     public function update($input, $id);
 }

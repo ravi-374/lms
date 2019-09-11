@@ -80,7 +80,7 @@ interface IssuedBookRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return IssuedBook[]|Collection
+     * @return IssuedBook|Collection
      */
     public function update($input, $id);
 }

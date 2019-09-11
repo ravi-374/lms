@@ -50,7 +50,7 @@ interface PublisherRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return Publisher[]|Collection
+     * @return Publisher|Collection
      */
     public function update($input, $id);
 }

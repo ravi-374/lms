@@ -48,7 +48,7 @@ interface SeriesBookRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return SeriesBook[]|Collection
+     * @return SeriesBook|Collection
      */
     public function update($input, $id);
 }

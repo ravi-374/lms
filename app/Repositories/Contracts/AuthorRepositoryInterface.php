@@ -49,7 +49,7 @@ interface AuthorRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return Author[]|Collection
+     * @return Author|Collection
      */
     public function update($input, $id);
 }
