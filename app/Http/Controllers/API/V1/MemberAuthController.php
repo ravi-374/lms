@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\ResetPasswordLinkRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Models\Member;
 use App\Repositories\AccountRepository;
 use App\Repositories\Contracts\AccountRepositoryInterface;
@@ -43,7 +45,7 @@ class MemberAuthController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @throws ApiOperationFailedException
      *
@@ -126,21 +128,19 @@ class MemberAuthController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  ResetPasswordLinkRequest  $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function sendResetPasswordLink(Request $request)
+    public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
-        $request->validate(['email' => 'required', 'url' => 'required']);
-
         $url = $request->url;
         $data = [];
         /** @var User $member */
         $member = Member::whereEmail($request->get('email'))->first();
-        if (!$member) {
+        if (! $member) {
             throw new UnprocessableEntityHttpException('Given Email does not exist in our system.');
         }
         $key = $member->email.'|'.date('Y-m-d H:i:s');
@@ -158,20 +158,18 @@ class MemberAuthController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  ResetPasswordRequest  $request
      *
      * @return bool|JsonResponse
      */
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $request->validate(['token' => 'required', 'password' => 'required']);
-
         $input = $request->all();
         $token = Crypt::decrypt($input['token']);
         list($email, $registerTime) = explode('|', $token);
 
         $member = Member::whereEmail($email)->first();
-        if (!$member) {
+        if (! $member) {
             return $this->sendError('User with given email not available.');
         }
 
