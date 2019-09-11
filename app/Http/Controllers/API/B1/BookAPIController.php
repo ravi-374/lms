@@ -6,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookAPIRequest;
 use App\Http\Requests\API\UpdateBookAPIRequest;
+use App\Http\Requests\BookItemRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Exception;
@@ -127,16 +128,14 @@ class BookAPIController extends AppBaseController
 
     /**
      * @param Book $book
-     * @param Request $request
+     * @param BookItemRequest $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function addItems(Book $book, Request $request)
+    public function addItems(Book $book, BookItemRequest $request)
     {
-        $request->validate(['items' => 'required']);
-
         $items = $request->get('items');
 
         $book = $this->bookRepository->addBookItems($book, $items);
