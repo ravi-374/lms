@@ -25,11 +25,11 @@ use Illuminate\Support\Facades\Validator;
 class SettingAPIController extends AppBaseController
 {
     /** @var SettingRepositoryInterface */
-    private $settingRepoInterface;
+    private $settingRepo;
 
-    public function __construct(SettingRepositoryInterface $settingRepoInterface)
+    public function __construct(SettingRepositoryInterface $settingRepo)
     {
-        $this->settingRepoInterface = $settingRepoInterface;
+        $this->settingRepo = $settingRepo;
     }
 
     /**
@@ -42,7 +42,7 @@ class SettingAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $settings = $this->settingRepoInterface->all(
+        $settings = $this->settingRepo->all(
             $request->except(['skip', 'limit']),
             $request->get('skip'),
             $request->get('limit')
@@ -72,7 +72,7 @@ class SettingAPIController extends AppBaseController
             }
         }
 
-        $settings = $this->settingRepoInterface->createOrUpdate($input);
+        $settings = $this->settingRepo->createOrUpdate($input);
 
         return $this->sendResponse($settings, 'Setting saved successfully.');
     }
@@ -103,7 +103,7 @@ class SettingAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $setting = $this->settingRepoInterface->update($input, $setting->id);
+        $setting = $this->settingRepo->update($input, $setting->id);
 
         return $this->sendResponse($setting->toArray(), 'Setting updated successfully.');
     }
@@ -136,7 +136,7 @@ class SettingAPIController extends AppBaseController
     {
         $request->validate(['logo' => 'required']);
 
-        $setting = $this->settingRepoInterface->uploadLogo($request->file('logo'));
+        $setting = $this->settingRepo->uploadLogo($request->file('logo'));
 
         return $this->sendResponse($setting, 'Logo updated successfully.');
     }
