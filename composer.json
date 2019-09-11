@@ -15,7 +15,6 @@
         "laravel/tinker": "^1.0",
         "doctrine/dbal": "~2.3",
         "barryvdh/laravel-ide-helper": "^2.6",
-        "appointer/swaggervel": "dev-master",
         "laravelcollective/html": "^5.8.0",
         "tymon/jwt-auth": "dev-develop",
         "zizaco/entrust": "5.2.x-dev",
