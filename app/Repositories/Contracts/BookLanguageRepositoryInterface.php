@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\BookLanguage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 interface BookLanguageRepositoryInterface
 {
@@ -24,7 +26,7 @@ interface BookLanguageRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return BookLanguage[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
@@ -43,7 +45,7 @@ interface BookLanguageRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
+     * @return BookLanguage|Collection
      */
     public function update($input, $id);
 }

@@ -19,11 +19,11 @@ use Illuminate\Http\Request;
 class IssuedBookAPIController extends AppBaseController
 {
     /** @var  IssuedBookRepositoryInterface */
-    private $issuedBookRepoInterface;
+    private $issuedBookRepository;
 
-    public function __construct(IssuedBookRepositoryInterface $issuedBookRepoInterface)
+    public function __construct(IssuedBookRepositoryInterface $issuedBookRepository)
     {
-        $this->issuedBookRepoInterface = $issuedBookRepoInterface;
+        $this->issuedBookRepository = $issuedBookRepository;
     }
 
     /**
@@ -34,7 +34,7 @@ class IssuedBookAPIController extends AppBaseController
     public function index(Request $request)
     {
         $input = $request->except(['skip', 'limit']);
-        $issuedBooks = $this->issuedBookRepoInterface->all(
+        $issuedBooks = $this->issuedBookRepository->all(
             $input,
             $request->get('skip'),
             $request->get('limit')
@@ -64,7 +64,7 @@ class IssuedBookAPIController extends AppBaseController
         $input = $request->all();
         $input['book_item_id'] = $bookItem->id;
 
-        $result = $this->issuedBookRepoInterface->issueBook($input);
+        $result = $this->issuedBookRepository->issueBook($input);
 
         return $this->sendResponse($result->apiObj(), 'Book issued successfully.');
     }
@@ -81,7 +81,7 @@ class IssuedBookAPIController extends AppBaseController
         $input['status'] = IssuedBook::STATUS_RESERVED;
         $input['book_item_id'] = $bookItem->id;
 
-        $result = $this->issuedBookRepoInterface->reserveBook($input);
+        $result = $this->issuedBookRepository->reserveBook($input);
 
         return $this->sendResponse($result->apiObj(), 'Book reserved successfully.');
     }
@@ -99,7 +99,7 @@ class IssuedBookAPIController extends AppBaseController
         $input = $request->all();
         $input['book_item_id'] = $bookItem->id;
 
-        $result = $this->issuedBookRepoInterface->returnBook($input);
+        $result = $this->issuedBookRepository->returnBook($input);
 
         return $this->sendResponse($result->apiObj(), 'Book return successfully.');
     }
@@ -117,7 +117,7 @@ class IssuedBookAPIController extends AppBaseController
         $input = $request->all();
         $input['book_item_id'] = $bookItem->id;
 
-        $result = $this->issuedBookRepoInterface->updateIssuedBookStatus($input);
+        $result = $this->issuedBookRepository->updateIssuedBookStatus($input);
 
         return $this->sendResponse($result->apiObj(), 'Issued Book status updated successfully.');
     }
@@ -153,9 +153,9 @@ class IssuedBookAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $this->issuedBookRepoInterface->findOrFail($id);
+        $this->issuedBookRepository->findOrFail($id);
 
-        $issuedBook = $this->issuedBookRepoInterface->update($input, $id);
+        $issuedBook = $this->issuedBookRepository->update($input, $id);
 
         return $this->sendResponse($issuedBook->toArray(), 'Issued Book updated successfully.');
     }
@@ -171,7 +171,7 @@ class IssuedBookAPIController extends AppBaseController
     public function destroy($id)
     {
         /** @var IssuedBook $issuedBook */
-        $issuedBook = $this->issuedBookRepoInterface->findOrFail($id);
+        $issuedBook = $this->issuedBookRepository->findOrFail($id);
 
         $issuedBook->delete();
 
@@ -189,7 +189,7 @@ class IssuedBookAPIController extends AppBaseController
         $search = $request->all();
         $search['member_id'] = $member->id;
 
-        $records = $this->issuedBookRepoInterface->all(
+        $records = $this->issuedBookRepository->all(
             $search,
             $request->get('skip', null),
             $request->get('limit', null)
@@ -217,7 +217,7 @@ class IssuedBookAPIController extends AppBaseController
     public function unReserveBook(BookItem $bookItem, Request $request)
     {
         $input = $request->all();
-        $result = $this->issuedBookRepoInterface->unReserveBook($bookItem, $input);
+        $result = $this->issuedBookRepository->unReserveBook($bookItem, $input);
 
         return $this->sendResponse($result->apiObj(), 'Book un-reserved successfully.');
     }

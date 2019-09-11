@@ -19,11 +19,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class MembershipPlanAPIController extends AppBaseController
 {
     /** @var  MembershipPlanRepositoryInterface */
-    private $membershipPlanRepoInterface;
+    private $membershipPlanRepo;
 
-    public function __construct(MembershipPlanRepositoryInterface $membershipPlanRepoInterface)
+    public function __construct(MembershipPlanRepositoryInterface $membershipPlanRepo)
     {
-        $this->membershipPlanRepoInterface = $membershipPlanRepoInterface;
+        $this->membershipPlanRepo = $membershipPlanRepo;
     }
 
     /**
@@ -36,7 +36,7 @@ class MembershipPlanAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $membershipPlans = $this->membershipPlanRepoInterface->all(
+        $membershipPlans = $this->membershipPlanRepo->all(
             $request->except(['skip', 'limit']),
             $request->get('skip', null),
             $request->get('limit', null)
@@ -60,7 +60,7 @@ class MembershipPlanAPIController extends AppBaseController
         $input = $request->all();
 
         /** @var MembershipPlan $membershipPlan */
-        $membershipPlan = $this->membershipPlanRepoInterface->store($input);
+        $membershipPlan = $this->membershipPlanRepo->store($input);
 
         return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan saved successfully.');
     }
@@ -91,7 +91,7 @@ class MembershipPlanAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $membershipPlan = $this->membershipPlanRepoInterface->update($input, $membershipPlan->id);
+        $membershipPlan = $this->membershipPlanRepo->update($input, $membershipPlan->id);
 
         return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan updated successfully.');
     }

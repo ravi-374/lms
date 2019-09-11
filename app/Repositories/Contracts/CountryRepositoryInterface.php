@@ -3,6 +3,8 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Country;
+use Illuminate\Support\Collection;
 /**
  * Interface CountryRepositoryInterface
  * @package App\Repositories\Contracts
@@ -27,7 +29,7 @@ interface CountryRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return Country[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 }
