@@ -11,6 +11,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
+use App\Http\Requests\UploadLogoRequest;
 use App\Models\Setting;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use Exception;
@@ -126,16 +127,14 @@ class SettingAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param UploadLogoRequest $request
      *
      * @throws \App\Exceptions\ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function uploadLogo(Request $request)
+    public function uploadLogo(UploadLogoRequest $request)
     {
-        $request->validate(['logo' => 'required']);
-
         $setting = $this->settingRepo->uploadLogo($request->file('logo'));
 
         return $this->sendResponse($setting, 'Logo updated successfully.');
