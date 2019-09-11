@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\Genre;
 use App\Models\Tag;
+use Arr;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
@@ -203,7 +204,7 @@ class BookAPIControllerTest extends TestCase
     {
         $genre = factory(Genre::class)->create();
         /** @var Book $book */
-        $book = factory(Book::class)->make(['genres' => [$genre->id, "Genre Name"]]);
+        $book = factory(Book::class)->make(['genres' => ["$genre->id", "Genre Name"]]);
 
         $response = $this->postJson(route('api.b1.books.store'), $book->toArray());
 
@@ -211,6 +212,7 @@ class BookAPIControllerTest extends TestCase
         $book = $response->original['data'];
         $this->assertArrayHasKey('id', $book);
         $this->assertCount(2, $book['genres']);
+        $this->assertContains($genre->name, Arr::pluck($book['genres'], 'name'));
     }
 
     /** @test */
@@ -219,7 +221,7 @@ class BookAPIControllerTest extends TestCase
         $genre = factory(Genre::class)->create();
         $tag = factory(Tag::class)->create();
         /** @var Book $book */
-        $book = factory(Book::class)->make(['genres' => [$genre->id], 'tags' => [$tag->id, "Tag Name"]]);
+        $book = factory(Book::class)->make(['genres' => [$genre->id], 'tags' => ["$tag->id", "Tag Name"]]);
 
         $response = $this->postJson(route('api.b1.books.store'), $book->toArray());
 
@@ -227,6 +229,7 @@ class BookAPIControllerTest extends TestCase
         $book = $response->original['data'];
         $this->assertArrayHasKey('id', $book);
         $this->assertCount(2, $book['tags']);
+        $this->assertContains($tag->name, Arr::pluck($book['tags'], 'name'));
     }
 
     /** @test */
@@ -235,7 +238,7 @@ class BookAPIControllerTest extends TestCase
         $genre = factory(Genre::class)->create();
         $author = factory(Author::class)->create();
         /** @var Book $book */
-        $book = factory(Book::class)->make(['genres' => [$genre->id], 'authors' => [$author->id, 'Vishal']]);
+        $book = factory(Book::class)->make(['genres' => [$genre->id], 'authors' => ["$author->id", 'Vishal']]);
 
         $response = $this->postJson(route('api.b1.books.store'), $book->toArray());
 
@@ -243,6 +246,7 @@ class BookAPIControllerTest extends TestCase
         $book = $response->original['data'];
         $this->assertArrayHasKey('id', $book);
         $this->assertCount(2, $book['authors']);
+        $this->assertContains($author->first_name, Arr::pluck($book['authors'], 'first_name'));
     }
 
     /** @test */
