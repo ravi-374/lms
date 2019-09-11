@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Author;
@@ -6,8 +7,6 @@ use App\Repositories\Contracts\AuthorRepositoryInterface;
 
 /**
  * Class AuthorRepository
- * @package App\Repositories
- * @version June 18, 2019, 4:17 am UTC
  */
 class AuthorRepository extends BaseRepository implements AuthorRepositoryInterface
 {

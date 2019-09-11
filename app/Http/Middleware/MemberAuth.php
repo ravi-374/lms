@@ -66,7 +66,7 @@ class MemberAuth
         $member = JWTAuth::parseToken()->authenticate();
         Auth::loginUsingId($member->id);
 
-        if (!$member->is_active) {
+        if (! $member->is_active) {
             throw new UnauthorizedException('Your account is not active.', 401);
         }
 

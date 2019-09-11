@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 /**
  * Class AuthRepositoryTest
- * @package Tests\Repositories
  */
 class AuthRepositoryTest extends TestCase
 {

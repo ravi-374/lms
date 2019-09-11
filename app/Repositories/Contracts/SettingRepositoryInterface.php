@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface SettingRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface SettingRepositoryInterface
 {
@@ -27,10 +26,10 @@ interface SettingRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Setting[]|Collection
      */
@@ -39,22 +38,22 @@ interface SettingRepositoryInterface
     /**
      * Update model record for given id
      *
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return Setting|Collection
      */
     public function update($input, $id);
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return array
      */
     public function createOrUpdate($input);
 
     /**
-     * @param UploadedFile $image
+     * @param  UploadedFile  $image
      *
      * @throws ApiOperationFailedException
      *

@@ -12,8 +12,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class BookSeriesRepository
- * @package App\Repositories
- * @version June 25, 2019, 10:36 am UTC
  */
 class BookSeriesRepository extends BaseRepository implements BookSeriesRepositoryInterface
 {
@@ -52,10 +50,10 @@ class BookSeriesRepository extends BaseRepository implements BookSeriesRepositor
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Collection
      */
@@ -67,7 +65,7 @@ class BookSeriesRepository extends BaseRepository implements BookSeriesRepositor
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -97,8 +95,8 @@ class BookSeriesRepository extends BaseRepository implements BookSeriesRepositor
     }
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @throws ApiOperationFailedException
      * @throws Exception

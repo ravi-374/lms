@@ -5,15 +5,14 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
-use App\Repositories\Contracts\MemberRepositoryInterFace;
 use App\Models\Member;
+use App\Repositories\Contracts\MemberRepositoryInterFace;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
 /**
  * Class MemberController
- * @package App\Http\Controllers\API
  */
 class MemberAPIController extends AppBaseController
 {
@@ -31,8 +30,8 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
-     * @param UpdateMemberProfileAPIRequest $request
-     * @param MemberRepositoryInterFace $memberRepository
+     * @param  UpdateMemberProfileAPIRequest  $request
+     * @param  MemberRepositoryInterFace  $memberRepository
      *
      * @throws ApiOperationFailedException
      * @throws Exception

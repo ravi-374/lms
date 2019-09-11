@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Trait ImageTrait
- * @package App\Traits
  */
 trait ImageTrait
 {

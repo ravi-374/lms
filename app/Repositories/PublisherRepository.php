@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Publisher;
@@ -6,8 +7,6 @@ use App\Repositories\Contracts\PublisherRepositoryInterface;
 
 /**
  * Class PublisherRepository
- * @package App\Repositories
- * @version June 19, 2019, 5:17 am UTC
  */
 class PublisherRepository extends BaseRepository implements PublisherRepositoryInterface
 {

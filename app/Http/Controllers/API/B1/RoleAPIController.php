@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
  * Class RoleAPIController
- * @package App\Http\Controllers\API
  */
 class RoleAPIController extends AppBaseController
 {
@@ -31,7 +30,7 @@ class RoleAPIController extends AppBaseController
      * Display a listing of the Role.
      * GET|HEAD /roles
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -49,7 +48,7 @@ class RoleAPIController extends AppBaseController
     /**
      * Store a newly created Role in storage.
      * POST /roles
-     * @param CreateRoleAPIRequest $request
+     * @param  CreateRoleAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      *
@@ -68,7 +67,7 @@ class RoleAPIController extends AppBaseController
      * Display the specified Role.
      * GET|HEAD /roles/{id}
      *
-     * @param Role $role
+     * @param  Role  $role
      *
      * @return JsonResponse
      */
@@ -82,8 +81,8 @@ class RoleAPIController extends AppBaseController
     /**
      * Update the specified Role in storage.
      * PUT/PATCH /roles/{id}
-     * @param Role $role
-     * @param UpdateRoleAPIRequest $request
+     * @param  Role  $role
+     * @param  UpdateRoleAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      *
@@ -102,7 +101,7 @@ class RoleAPIController extends AppBaseController
      * Remove the specified Role from storage.
      * DELETE /roles/{id}
      *
-     * @param Role $role
+     * @param  Role  $role
      *
      * @throws Exception
      *
@@ -110,7 +109,7 @@ class RoleAPIController extends AppBaseController
      */
     public function destroy(Role $role)
     {
-        if (!$role->users->isEmpty()) {
+        if (! $role->users->isEmpty()) {
             return $this->sendError(
                 'Role is assigned to one or more users.',
                 HttpResponse::HTTP_UNPROCESSABLE_ENTITY

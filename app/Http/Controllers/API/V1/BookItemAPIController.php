@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class BookItemAPIController
- * @package App\Http\Controllers\API\V1
  */
 class BookItemAPIController extends AppBaseController
 {
@@ -30,7 +29,7 @@ class BookItemAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

@@ -15,8 +15,6 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class SeriesBookRepository
- * @package App\Repositories
- * @version June 25, 2019, 10:36 am UTC
  */
 class SeriesBookRepository extends BaseRepository implements SeriesBookRepositoryInterface
 {
@@ -57,8 +55,8 @@ class SeriesBookRepository extends BaseRepository implements SeriesBookRepositor
     }
 
     /**
-     * @param BookSeries $bookSeries
-     * @param array $seriesItems
+     * @param  BookSeries  $bookSeries
+     * @param  array  $seriesItems
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -74,7 +72,7 @@ class SeriesBookRepository extends BaseRepository implements SeriesBookRepositor
             DB::beginTransaction();
             SeriesBook::whereIn('id', $removedItems)->delete();
             foreach ($seriesItems as $seriesItem) {
-                if (!empty($seriesItem['id'])) {
+                if (! empty($seriesItem['id'])) {
                     $item = SeriesBook::findOrFail($seriesItem['id']);
                 } else {
                     $item = new SeriesBook();
@@ -97,7 +95,7 @@ class SeriesBookRepository extends BaseRepository implements SeriesBookRepositor
     }
 
     /**
-     * @param array $seriesItems
+     * @param  array  $seriesItems
      *
      * @throws MissingPropertyException
      *
@@ -111,11 +109,11 @@ class SeriesBookRepository extends BaseRepository implements SeriesBookRepositor
         }
 
         foreach ($seriesItems as $seriesItem) {
-            if (!isset($seriesItem['book_id'])) {
+            if (! isset($seriesItem['book_id'])) {
                 throw new MissingPropertyException('Book is required.');
             }
 
-            if (!isset($seriesItem['sequence'])) {
+            if (! isset($seriesItem['sequence'])) {
                 throw new MissingPropertyException('Sequence is required.');
             }
 

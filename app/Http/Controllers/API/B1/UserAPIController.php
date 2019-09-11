@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class UserController
- * @package App\Http\Controllers\API
  */
 class UserAPIController extends AppBaseController
 {
@@ -32,7 +31,7 @@ class UserAPIController extends AppBaseController
      * Display a listing of the User.
      * GET|HEAD /users
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -55,7 +54,7 @@ class UserAPIController extends AppBaseController
     /**
      * Store a newly created User in storage.
      * POST /users
-     * @param CreateUserAPIRequest $request
+     * @param  CreateUserAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -74,7 +73,7 @@ class UserAPIController extends AppBaseController
      * Display the specified User.
      * GET|HEAD /users/{id}
      *
-     * @param User $user
+     * @param  User  $user
      *
      * @return JsonResponse
      */
@@ -89,8 +88,8 @@ class UserAPIController extends AppBaseController
     /**
      * Update the specified User in storage.
      * PUT/PATCH /users/{id}
-     * @param User $user
-     * @param UpdateUserAPIRequest $request
+     * @param  User  $user
+     * @param  UpdateUserAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -108,8 +107,9 @@ class UserAPIController extends AppBaseController
     /**
      * Remove the specified User from storage.
      * DELETE /users/{id}
+     * @param  User  $user
      *
-     * @param User $user
+     * @throws Exception
      *
      * @return JsonResponse
      */
@@ -122,7 +122,7 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      *
      * @return JsonResponse
      */
@@ -134,7 +134,7 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      *
      * @return JsonResponse
      */
@@ -163,17 +163,18 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * @param UpdateUserProfileAPIRequest $request
+     * @param  UpdateUserProfileAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
+     *
      * @return JsonResponse
      */
     public function updateUserProfile(UpdateUserProfileAPIRequest $request)
     {
         $input = $request->all();
 
-        $userId = Auth::user()->id;
+        $userId = $request->user()->id;
 
         $user = $this->userRepository->update($input, $userId);
 

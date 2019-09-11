@@ -25,7 +25,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Address $address
  * @property-read mixed $image_path
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
+ *     $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
@@ -132,7 +133,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getImagePathAttribute()
     {
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             return $this->imageUrl(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
         }
     }

@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiOperationFailedException
- * @package App\Exceptions
  */
 class ApiOperationFailedException extends Exception
 {

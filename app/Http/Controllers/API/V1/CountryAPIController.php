@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class CountryAPIController
- * @package App\Http\Controllers\API\V1
  */
 class CountryAPIController extends AppBaseController
 {
@@ -24,7 +23,7 @@ class CountryAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

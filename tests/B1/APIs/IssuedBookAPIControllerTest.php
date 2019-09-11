@@ -13,7 +13,6 @@ use Tests\Traits\MockRepositories;
 
 /**
  * Class IssuedBookAPIControllerTest
- * @package Tests\Controllers
  */
 class IssuedBookAPIControllerTest extends TestCase
 {

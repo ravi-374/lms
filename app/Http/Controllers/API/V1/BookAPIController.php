@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class BookController
- * @package App\Http\Controllers\API
  */
 class BookAPIController extends AppBaseController
 {
@@ -25,7 +24,7 @@ class BookAPIController extends AppBaseController
      * Display a listing of the Book.
      * GET|HEAD /books
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

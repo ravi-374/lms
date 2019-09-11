@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 /**
  * Class GenrePermissionAPITest
- * @package Tests\B1\APIs\Permissions
  */
 class GenrePermissionAPITest extends TestCase
 {

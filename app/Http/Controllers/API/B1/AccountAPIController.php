@@ -20,11 +20,9 @@ use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use URL;
 
 /**
  * Class AccountAPIController
- * @package App\Http\Controllers\API\B1
  */
 class AccountAPIController extends AppBaseController
 {

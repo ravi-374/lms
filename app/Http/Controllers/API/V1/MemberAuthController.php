@@ -26,7 +26,6 @@ use Validator;
 
 /**
  * Class MemberAuthController
- * @package App\Http\Controllers\API\B1
  */
 class MemberAuthController extends AppBaseController
 {
@@ -48,6 +47,7 @@ class MemberAuthController extends AppBaseController
      * @param  Request  $request
      *
      * @throws ApiOperationFailedException
+     * @throws Exception
      *
      * @return JsonResponse
      */

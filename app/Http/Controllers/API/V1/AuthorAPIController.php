@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class AuthorAPIController
- * @package App\Http\Controllers\API
  */
 class AuthorAPIController extends AppBaseController
 {
@@ -25,7 +24,7 @@ class AuthorAPIController extends AppBaseController
      * Display a listing of the Author.
      * GET|HEAD /authors
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return JsonResponse
      */
     public function index(Request $request)

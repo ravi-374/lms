@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 /**
  * Class MembershipPlanPermissionTest
- * @package Tests\B1\APIs\Permissions
  */
 class MembershipPlanPermissionTest extends TestCase
 {

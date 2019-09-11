@@ -6,9 +6,9 @@ namespace App\Repositories\Contracts;
 use App\Models\Genre;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+
 /**
  * Interface GenreRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface GenreRepositoryInterface
 {
@@ -25,10 +25,10 @@ interface GenreRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Genre[]|Collection
      */
@@ -37,7 +37,7 @@ interface GenreRepositoryInterface
     /**
      * Create model record
      *
-     * @param array $input
+     * @param  array  $input
      *
      * @return Model
      */
@@ -46,8 +46,8 @@ interface GenreRepositoryInterface
     /**
      * Update model record for given id
      *
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return Genre|Collection
      */

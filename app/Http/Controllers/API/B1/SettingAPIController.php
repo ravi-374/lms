@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers\API\B1;
 
+use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
 use App\Http\Requests\UploadLogoRequest;
@@ -17,11 +18,10 @@ use App\Repositories\Contracts\SettingRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Validator;
 
 /**
  * Class SettingAPIController
- * @package App\Http\Controllers\API\B1
  */
 class SettingAPIController extends AppBaseController
 {
@@ -37,7 +37,7 @@ class SettingAPIController extends AppBaseController
      * Display a listing of the Setting.
      * GET|HEAD /settings
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -56,7 +56,7 @@ class SettingAPIController extends AppBaseController
      * Store a newly created Setting in storage.
      * POST /settings
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -82,7 +82,7 @@ class SettingAPIController extends AppBaseController
      * Display the specified Setting.
      * GET|HEAD /settings/{id}
      *
-     * @param Setting $setting
+     * @param  Setting  $setting
      *
      * @return JsonResponse
      */
@@ -95,8 +95,8 @@ class SettingAPIController extends AppBaseController
      * Update the specified Setting in storage.
      * PUT/PATCH /settings/{id}
      *
-     * @param Setting $setting
-     * @param UpdateSettingAPIRequest $request
+     * @param  Setting  $setting
+     * @param  UpdateSettingAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -113,7 +113,7 @@ class SettingAPIController extends AppBaseController
      * Remove the specified Setting from storage.
      * DELETE settings/{id}
      *
-     * @param Setting $setting
+     * @param  Setting  $setting
      *
      * @throws Exception
      *
@@ -127,9 +127,9 @@ class SettingAPIController extends AppBaseController
     }
 
     /**
-     * @param UploadLogoRequest $request
+     * @param  UploadLogoRequest  $request
      *
-     * @throws \App\Exceptions\ApiOperationFailedException
+     * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
