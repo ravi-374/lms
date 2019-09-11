@@ -74,7 +74,7 @@ class RoleAPIController extends AppBaseController
      */
     public function show(Role $role)
     {
-        $role->perms;
+        $role->permissions;
 
         return $this->sendResponse($role->toArray(), 'Role retrieved successfully.');
     }
