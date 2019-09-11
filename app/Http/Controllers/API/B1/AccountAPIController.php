@@ -11,6 +11,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\ResetPasswordLinkRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
 use Auth;
@@ -18,7 +19,6 @@ use Crypt;
 use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use URL;
 
@@ -37,7 +37,7 @@ class AccountAPIController extends AppBaseController
     }
 
     /**
-     * @param ResetPasswordLinkRequest $request
+     * @param  ResetPasswordLinkRequest  $request
      *
      * @throws Exception
      *
@@ -49,7 +49,7 @@ class AccountAPIController extends AppBaseController
         $data = [];
         /** @var User $user */
         $user = User::whereEmail($request->get('email'))->first();
-        if (!$user) {
+        if (! $user) {
             throw new UnprocessableEntityHttpException('Given Email does not exist in our system.');
         }
         $key = $user->email.'|'.date('Y-m-d H:i:s');
@@ -67,20 +67,18 @@ class AccountAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  ResetPasswordRequest  $request
      *
      * @return bool|JsonResponse
      */
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $request->validate(['token' => 'required', 'password' => 'required']);
-
         $input = $request->all();
         $token = Crypt::decrypt($input['token']);
         list($email, $registerTime) = explode('|', $token);
 
         $user = User::whereEmail($email)->first();
-        if (!$user) {
+        if (! $user) {
             return $this->sendError('User with given email not available.');
         }
 

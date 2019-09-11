@@ -1,12 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 6/19/2019
- * Time: 3:32 PM
- */
 
 namespace App\Repositories\Contracts;
 
@@ -14,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Models\Role;
 use Exception;
 use Illuminate\Support\Collection;
+
 /**
  * Interface RoleRepositoryInterface
  * @package App\Repositories\Contracts

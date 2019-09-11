@@ -1,14 +1,5 @@
 <?php namespace App\Traits;
 
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Ajay Makwana
- * Email: ajay.makwana@infyom.com
- * Date: 5/1/2019
- * Time: 11:18 AM
- */
-
 use App\Exceptions\ApiOperationFailedException;
 use Exception;
 use Illuminate\Http\UploadedFile;

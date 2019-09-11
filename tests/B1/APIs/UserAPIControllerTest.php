@@ -212,7 +212,6 @@ class UserAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($firstRole->name, $response[0]['roles'][0]['name']);
     }
 
     /** @test */

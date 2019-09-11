@@ -1,12 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 6/19/2019
- * Time: 4:16 PM
- */
 
 use App\Models\Permission;
 use Illuminate\Database\Seeder;

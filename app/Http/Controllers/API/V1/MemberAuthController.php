@@ -8,6 +8,8 @@ use App\Http\Requests\ResetPasswordLinkRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Models\Member;
 use App\Repositories\AccountRepository;
+use App\Repositories\Contracts\AccountRepositoryInterface;
+use App\Repositories\Contracts\MemberRepositoryInterFace;
 use App\Repositories\MemberRepository;
 use App\User;
 use Crypt;
@@ -31,12 +33,12 @@ class MemberAuthController extends AppBaseController
     /** @var  MemberRepository */
     private $memberRepository;
 
-    /** @var AccountRepository */
+    /** @var AccountRepositoryInterface */
     private $accountRepo;
 
     public function __construct(
-        MemberRepository $memberRepo,
-        AccountRepository $accountRepo
+        MemberRepositoryInterface $memberRepo,
+        AccountRepositoryInterface $accountRepo
     ) {
         $this->memberRepository = $memberRepo;
         $this->accountRepo = $accountRepo;

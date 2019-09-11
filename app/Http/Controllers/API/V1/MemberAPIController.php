@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
+use App\Repositories\Contracts\MemberRepositoryInterFace;
 use App\Models\Member;
-use App\Repositories\MemberRepository;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -32,14 +32,16 @@ class MemberAPIController extends AppBaseController
 
     /**
      * @param UpdateMemberProfileAPIRequest $request
-     * @param MemberRepository $memberRepository
+     * @param MemberRepositoryInterFace $memberRepository
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      * @return JsonResponse
      */
-    public function updateMemberProfile(UpdateMemberProfileAPIRequest $request, MemberRepository $memberRepository)
-    {
+    public function updateMemberProfile(
+        UpdateMemberProfileAPIRequest $request,
+        MemberRepositoryInterFace $memberRepository
+    ) {
         $input = $request->all();
         unset($input['email']);
         unset($input['membership_plan_id']);
