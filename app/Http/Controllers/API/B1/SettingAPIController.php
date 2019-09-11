@@ -12,7 +12,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
 use App\Models\Setting;
-use App\Repositories\SettingRepository;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,12 +24,12 @@ use Illuminate\Support\Facades\Validator;
  */
 class SettingAPIController extends AppBaseController
 {
-    /** @var SettingRepository */
-    private $settingRepo;
+    /** @var SettingRepositoryInterface */
+    private $settingRepoInterface;
 
-    public function __construct(SettingRepository $settingRepo)
+    public function __construct(SettingRepositoryInterface $settingRepoInterface)
     {
-        $this->settingRepo = $settingRepo;
+        $this->settingRepoInterface = $settingRepoInterface;
     }
 
     /**
@@ -42,7 +42,7 @@ class SettingAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $settings = $this->settingRepo->all(
+        $settings = $this->settingRepoInterface->all(
             $request->except(['skip', 'limit']),
             $request->get('skip'),
             $request->get('limit')
@@ -72,7 +72,7 @@ class SettingAPIController extends AppBaseController
             }
         }
 
-        $settings = $this->settingRepo->createOrUpdate($input);
+        $settings = $this->settingRepoInterface->createOrUpdate($input);
 
         return $this->sendResponse($settings, 'Setting saved successfully.');
     }
@@ -103,7 +103,7 @@ class SettingAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $setting = $this->settingRepo->update($input, $setting->id);
+        $setting = $this->settingRepoInterface->update($input, $setting->id);
 
         return $this->sendResponse($setting->toArray(), 'Setting updated successfully.');
     }
@@ -136,7 +136,7 @@ class SettingAPIController extends AppBaseController
     {
         $request->validate(['logo' => 'required']);
 
-        $setting = $this->settingRepo->uploadLogo($request->file('logo'));
+        $setting = $this->settingRepoInterface->uploadLogo($request->file('logo'));
 
         return $this->sendResponse($setting, 'Logo updated successfully.');
     }
