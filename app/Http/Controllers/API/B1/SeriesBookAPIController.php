@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateSeriesBookAPIRequest;
 use App\Http\Requests\API\UpdateSeriesBookAPIRequest;
 use App\Models\SeriesBook;
-use App\Repositories\SeriesBookRepository;
+use App\Repositories\Contracts\SeriesBookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,10 +17,10 @@ use Illuminate\Http\Request;
  */
 class SeriesBookAPIController extends AppBaseController
 {
-    /** @var  SeriesBookRepository */
+    /** @var  SeriesBookRepositoryInterface */
     private $seriesBookRepository;
 
-    public function __construct(SeriesBookRepository $seriesBookRepo)
+    public function __construct(SeriesBookRepositoryInterface $seriesBookRepo)
     {
         $this->seriesBookRepository = $seriesBookRepo;
     }

@@ -3,14 +3,14 @@
 
 namespace App\Repositories\Contracts;
 
-use App\Models\Tag;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\MembershipPlan;
+use Exception;
 use Illuminate\Support\Collection;
 /**
- * Interface TagRepositoryInterface
+ * Interface MembershipPlanRepositoryInterface
  * @package App\Repositories\Contracts
  */
-interface TagRepositoryInterface
+interface MembershipPlanRepositoryInterface
 {
     /**
      * @return array
@@ -30,26 +30,23 @@ interface TagRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Tag[]|Collection
+     * @return MembershipPlan[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * Create model record
-     *
      * @param array $input
      *
-     * @return Model
+     * @throws Exception
+     * @return MembershipPlan
      */
-    public function create($input);
+    public function store($input);
 
     /**
-     * Update model record for given id
-     *
      * @param array $input
      * @param int $id
      *
-     * @return Tag|Collection
+     * @return MembershipPlan
      */
     public function update($input, $id);
 }

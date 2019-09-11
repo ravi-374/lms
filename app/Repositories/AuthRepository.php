@@ -6,8 +6,10 @@
  * Date: 12-07-2019
  * Time: 11:17 AM
  */
+
 namespace App\Repositories;
 
+use App\Repositories\Contracts\AuthRepositoryInterface;
 use App\User;
 use Auth;
 
@@ -15,7 +17,7 @@ use Auth;
  * Class AuthRepository
  * @package App\Repositories
  */
-class AuthRepository
+class AuthRepository implements AuthRepositoryInterface
 {
     /**
      * @return array

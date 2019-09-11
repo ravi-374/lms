@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateAuthorAPIRequest;
 use App\Http\Requests\API\UpdateAuthorAPIRequest;
 use App\Models\Author;
-use App\Repositories\AuthorRepository;
+use App\Repositories\Contracts\AuthorRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,10 +18,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class AuthorAPIController extends AppBaseController
 {
-    /** @var  AuthorRepository */
+    /** @var  AuthorRepositoryInterface */
     private $authorRepository;
 
-    public function __construct(AuthorRepository $authorRepo)
+    public function __construct(AuthorRepositoryInterface $authorRepo)
     {
         $this->authorRepository = $authorRepo;
     }

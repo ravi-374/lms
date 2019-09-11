@@ -6,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Exceptions\MissingPropertyException;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
+use App\Repositories\Contracts\SeriesBookRepositoryInterface;
 use Arr;
 use DB;
 use Exception;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  * @package App\Repositories
  * @version June 25, 2019, 10:36 am UTC
  */
-class SeriesBookRepository extends BaseRepository
+class SeriesBookRepository extends BaseRepository implements SeriesBookRepositoryInterface
 {
     /** @var BookRepository */
     private $bookRepo;

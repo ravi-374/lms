@@ -3,14 +3,16 @@
 
 namespace App\Repositories\Contracts;
 
-use App\Models\Tag;
-use Illuminate\Database\Eloquent\Model;
+use App\Exceptions\ApiOperationFailedException;
+use App\Models\Setting;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+
 /**
- * Interface TagRepositoryInterface
+ * Interface SettingRepositoryInterface
  * @package App\Repositories\Contracts
  */
-interface TagRepositoryInterface
+interface SettingRepositoryInterface
 {
     /**
      * @return array
@@ -30,18 +32,9 @@ interface TagRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Tag[]|Collection
+     * @return Setting[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
-
-    /**
-     * Create model record
-     *
-     * @param array $input
-     *
-     * @return Model
-     */
-    public function create($input);
 
     /**
      * Update model record for given id
@@ -49,7 +42,23 @@ interface TagRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return Tag|Collection
+     * @return Setting|Collection
      */
     public function update($input, $id);
+
+    /**
+     * @param array $input
+     *
+     * @return array
+     */
+    public function createOrUpdate($input);
+
+    /**
+     * @param UploadedFile $image
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return Setting|null
+     */
+    public function uploadLogo($image);
 }
