@@ -1,5 +1,6 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {Container} from 'reactstrap';
 import {
     AppFooter,
@@ -15,26 +16,39 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from '../../routes';
-import {Routes, Tokens} from "../../../constants";
+import {appSettingsKey, LocalStorageKey, Routes, Tokens} from "../../../constants";
 import {checkExistingRoute} from "../../../shared/sharedMethod";
+import {fetchAppSetting} from "../../../store/action/appSettingAction";
+import {publicImagePath, publicImagePathURL} from "../../../appConstant";
+import {getUserProfile} from "../../../store/action/localStorageAction";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
+    const { getUserProfile, fetchAppSetting, appSetting, member } = props;
+    let appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
+    let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
+        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
+
+    useEffect(() => {
+        fetchAppSetting();
+        getUserProfile(LocalStorageKey.MEMBER);
+    }, []);
+
     return (
         <div className="app">
-            {renderAppHeader(props)}
+            {renderAppHeader(props, appName, appLogo, member)}
             <div className="app-body">
                 {renderAppSidebar(props)}
                 {renderMainSection(props.location)}
             </div>
-            {renderAppFooter()}
+            {renderAppFooter(appName)}
         </div>
     );
 };
 
-const renderAppHeader = (props) => {
+const renderAppHeader = (props, appName, appLogo, member) => {
     const signOut = (e) => {
         e.preventDefault();
         props.history.push(Routes.MEMBER_HOME);
@@ -44,7 +58,8 @@ const renderAppHeader = (props) => {
     return (
         <AppHeader fixed>
             <Suspense fallback={<ProgressBar/>}>
-                <Header history={props.history} onLogout={e => signOut(e)}/>
+                <Header history={props.history} appName={appName} member={member} appLogo={appLogo}
+                        onLogout={e => signOut(e)}/>
             </Suspense>
         </AppHeader>
     );
@@ -97,14 +112,19 @@ const renderRoutes = (location) => {
     });
 };
 
-const renderAppFooter = () => {
+const renderAppFooter = (appName) => {
     return (
         <AppFooter>
             <Suspense fallback={<ProgressBar/>}>
-                <Footer/>
+                <Footer appName={appName}/>
             </Suspense>
         </AppFooter>
     );
 };
 
-export default Layout;
+const mapStateToProps = (state) => {
+    const { profile, appSetting } = state;
+    return { member: profile, appSetting: appSetting }
+};
+
+export default connect(mapStateToProps, { getUserProfile, fetchAppSetting })(Layout);
