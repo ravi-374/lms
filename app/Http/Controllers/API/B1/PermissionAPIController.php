@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePermissionAPIRequest;
 use App\Http\Requests\API\UpdatePermissionAPIRequest;
 use App\Models\Permission;
-use App\Repositories\PermissionRepository;
+use App\Repositories\Contracts\PermissionRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,10 +17,10 @@ use Illuminate\Http\Request;
  */
 class PermissionAPIController extends AppBaseController
 {
-    /** @var  PermissionRepository */
+    /** @var  PermissionRepositoryInterface */
     private $permissionRepository;
 
-    public function __construct(PermissionRepository $permissionRepo)
+    public function __construct(PermissionRepositoryInterface $permissionRepo)
     {
         $this->permissionRepository = $permissionRepo;
     }
