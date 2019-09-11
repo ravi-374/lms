@@ -10,7 +10,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\AccountRepository;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
 use Auth;
@@ -37,16 +37,14 @@ class AccountAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param ResetPasswordRequest $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function sendResetPasswordLink(Request $request)
+    public function sendResetPasswordLink(ResetPasswordRequest $request)
     {
-        $request->validate(['email' => 'required', 'url' => 'required']);
-
         $url = $request->url;
         $data = [];
         /** @var User $user */
@@ -58,7 +56,7 @@ class AccountAPIController extends AppBaseController
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = $url .'?token='. $encodedToken;
+        $data['link'] = $url.'?token='.$encodedToken;
         $data['first_name'] = $user->first_name;
         $data['last_name'] = $user->last_name;
         $data['email'] = $user->email;
