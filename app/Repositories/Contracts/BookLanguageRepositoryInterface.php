@@ -1,15 +1,10 @@
 <?php
 
-
 namespace App\Repositories\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Interface PublisherRepositoryInterface
- * @package App\Repositories\Contracts
- */
-interface PublisherRepositoryInterface
+interface BookLanguageRepositoryInterface
 {
     /**
      * @return array

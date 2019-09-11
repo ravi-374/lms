@@ -6,7 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateGenreAPIRequest;
 use App\Http\Requests\API\UpdateGenreAPIRequest;
 use App\Models\Genre;
-use App\Repositories\GenreRepository;
+use App\Repositories\Contracts\GenreRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,10 +18,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class GenreAPIController extends AppBaseController
 {
-    /** @var  GenreRepository */
+    /** @var  GenreRepositoryInterface */
     private $genreRepository;
 
-    public function __construct(GenreRepository $genreRepo)
+    public function __construct(GenreRepositoryInterface $genreRepo)
     {
         $this->genreRepository = $genreRepo;
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\AppBaseController;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
-use App\Repositories\IssuedBookRepository;
+use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,10 +16,10 @@ use Illuminate\Http\Request;
  */
 class IssuedBookAPIController extends AppBaseController
 {
-    /** @var  IssuedBookRepository */
+    /** @var  IssuedBookRepositoryInterface */
     private $issuedBookRepository;
 
-    public function __construct(IssuedBookRepository $issuedBookRepo)
+    public function __construct(IssuedBookRepositoryInterface $issuedBookRepo)
     {
         $this->issuedBookRepository = $issuedBookRepo;
     }

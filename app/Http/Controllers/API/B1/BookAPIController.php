@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * Class BookController
+ * Class BookAPIController
  * @package App\Http\Controllers\API
  */
 class BookAPIController extends AppBaseController

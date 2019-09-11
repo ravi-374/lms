@@ -6,7 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookLanguageAPIRequest;
 use App\Http\Requests\API\UpdateBookLanguageAPIRequest;
 use App\Models\BookLanguage;
-use App\Repositories\BookLanguageRepository;
+use App\Repositories\Contracts\BookLanguageRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,10 +18,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class BookLanguageAPIController extends AppBaseController
 {
-    /** @var  BookLanguageRepository */
+    /** @var  BookLanguageRepositoryInterface */
     private $bookLanguageRepository;
 
-    public function __construct(BookLanguageRepository $bookLanguageRepo)
+    public function __construct(BookLanguageRepositoryInterface $bookLanguageRepo)
     {
         $this->bookLanguageRepository = $bookLanguageRepo;
     }
