@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Setting;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Traits\ImageTrait;
 use Arr;
 use Illuminate\Http\UploadedFile;
@@ -19,7 +20,7 @@ use Illuminate\Http\UploadedFile;
  * Class SettingRepository
  * @package App\Repositories
  */
-class SettingRepository extends BaseRepository
+class SettingRepository extends BaseRepository implements SettingRepositoryInterface
 {
     /**
      * @var array

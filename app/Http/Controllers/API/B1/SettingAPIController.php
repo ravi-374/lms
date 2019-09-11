@@ -12,7 +12,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
 use App\Models\Setting;
-use App\Repositories\SettingRepository;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,10 +24,10 @@ use Illuminate\Support\Facades\Validator;
  */
 class SettingAPIController extends AppBaseController
 {
-    /** @var SettingRepository */
+    /** @var SettingRepositoryInterface */
     private $settingRepo;
 
-    public function __construct(SettingRepository $settingRepo)
+    public function __construct(SettingRepositoryInterface $settingRepo)
     {
         $this->settingRepo = $settingRepo;
     }
