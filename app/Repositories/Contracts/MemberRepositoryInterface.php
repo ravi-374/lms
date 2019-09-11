@@ -1,24 +1,22 @@
 <?php
 /**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 6/19/2019
- * Time: 3:32 PM
+ * Created by PhpStorm.
+ * User: Farhan-InfyOm
+ * Date: 09/09/2019
+ * Time: 5:47 PM
  */
 
 namespace App\Repositories\Contracts;
 
 use App\Exceptions\ApiOperationFailedException;
-use App\Models\Role;
+use App\Models\Member;
 use Exception;
 use Illuminate\Support\Collection;
 /**
- * Interface RoleRepositoryInterface
+ * Interface MemberRepositoryInterface
  * @package App\Repositories\Contracts
  */
-interface RoleRepositoryInterface
+interface MemberRepositoryInterface
 {
     /**
      * @return array
@@ -36,7 +34,7 @@ interface RoleRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Role[]|Collection
+     * @return Member[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
@@ -45,10 +43,17 @@ interface RoleRepositoryInterface
      *
      * @throws ApiOperationFailedException
      * @throws Exception
-     *
-     * @return Role
+     * @return Member
      */
     public function store($input);
+
+    /**
+     * @param int $id
+     * @param array $columns
+     *
+     * @return Member
+     */
+    public function find($id, $columns = ['*']);
 
     /**
      * @param array $input
@@ -56,8 +61,17 @@ interface RoleRepositoryInterface
      *
      * @throws ApiOperationFailedException
      * @throws Exception
-     *
-     * @return Role
+     * @return Member
      */
     public function update($input, $id);
+
+    /**
+     * @param array $input
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return Member
+     */
+    public function storeMember($input);
 }

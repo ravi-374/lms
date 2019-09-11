@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -6,7 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateRoleAPIRequest;
 use App\Http\Requests\API\UpdateRoleAPIRequest;
 use App\Models\Role;
-use App\Repositories\RoleRepository;
+use App\Repositories\Contracts\RoleRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,10 +19,10 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
  */
 class RoleAPIController extends AppBaseController
 {
-    /** @var  RoleRepository */
+    /** @var  RoleRepositoryInterface */
     private $roleRepository;
 
-    public function __construct(RoleRepository $roleRepo)
+    public function __construct(RoleRepositoryInterface $roleRepo)
     {
         $this->roleRepository = $roleRepo;
     }

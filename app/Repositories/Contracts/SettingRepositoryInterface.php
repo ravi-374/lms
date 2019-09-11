@@ -1,24 +1,18 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 6/19/2019
- * Time: 3:32 PM
- */
+
 
 namespace App\Repositories\Contracts;
 
 use App\Exceptions\ApiOperationFailedException;
-use App\Models\Role;
-use Exception;
+use App\Models\Setting;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+
 /**
- * Interface RoleRepositoryInterface
+ * Interface SettingRepositoryInterface
  * @package App\Repositories\Contracts
  */
-interface RoleRepositoryInterface
+interface SettingRepositoryInterface
 {
     /**
      * @return array
@@ -31,33 +25,40 @@ interface RoleRepositoryInterface
     public function model();
 
     /**
+     * Retrieve all records with given filter criteria
+     *
      * @param array $search
      * @param int|null $skip
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Role[]|Collection
+     * @return Setting[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * @param array $input
+     * Update model record for given id
      *
-     * @throws ApiOperationFailedException
-     * @throws Exception
-     *
-     * @return Role
-     */
-    public function store($input);
-
-    /**
      * @param array $input
      * @param int $id
      *
-     * @throws ApiOperationFailedException
-     * @throws Exception
-     *
-     * @return Role
+     * @return Setting|Collection
      */
     public function update($input, $id);
+
+    /**
+     * @param array $input
+     *
+     * @return array
+     */
+    public function createOrUpdate($input);
+
+    /**
+     * @param UploadedFile $image
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return Setting|null
+     */
+    public function uploadLogo($image);
 }

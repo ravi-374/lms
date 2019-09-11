@@ -1,24 +1,16 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 6/19/2019
- * Time: 3:32 PM
- */
+
 
 namespace App\Repositories\Contracts;
 
-use App\Exceptions\ApiOperationFailedException;
-use App\Models\Role;
+use App\Models\MembershipPlan;
 use Exception;
 use Illuminate\Support\Collection;
 /**
- * Interface RoleRepositoryInterface
+ * Interface MembershipPlanRepositoryInterface
  * @package App\Repositories\Contracts
  */
-interface RoleRepositoryInterface
+interface MembershipPlanRepositoryInterface
 {
     /**
      * @return array
@@ -31,22 +23,22 @@ interface RoleRepositoryInterface
     public function model();
 
     /**
+     * Retrieve all records with given filter criteria
+     *
      * @param array $search
      * @param int|null $skip
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Role[]|Collection
+     * @return MembershipPlan[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
      * @param array $input
      *
-     * @throws ApiOperationFailedException
      * @throws Exception
-     *
-     * @return Role
+     * @return MembershipPlan
      */
     public function store($input);
 
@@ -54,10 +46,7 @@ interface RoleRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @throws ApiOperationFailedException
-     * @throws Exception
-     *
-     * @return Role
+     * @return MembershipPlan
      */
     public function update($input, $id);
 }

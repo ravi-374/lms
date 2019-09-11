@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
 use App\Models\Member;
+use App\Repositories\Contracts\MemberRepositoryInterface;
 use DB;
 use Exception;
 use Hash;
@@ -17,7 +18,7 @@ use Illuminate\Support\Collection;
  * @package App\Repositories
  * @version June 24, 2019, 11:57 am UTC
  */
-class MemberRepository extends BaseRepository
+class MemberRepository extends BaseRepository implements MemberRepositoryInterface
 {
     /** @var MembershipPlanRepository */
     private $membershipPlanRepo;

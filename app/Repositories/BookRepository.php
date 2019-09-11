@@ -289,13 +289,13 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     {
         $tags = (!empty($input['tags'])) ? $input['tags'] : [];
         $tags = array_map(function ($value) {
-            return is_string($value) ? Tag::create(['name' => $value])->id : $value;
+            return is_numeric($value) ? $value : Tag::create(['name' => $value])->id;
         }, $tags);
         $book->tags()->sync($tags);
 
         $genres = (!empty($input['genres'])) ? $input['genres'] : [];
         $genres = array_map(function ($value) {
-            return is_string($value) ? Genre::create(['name' => $value])->id : $value;
+            return is_numeric($value) ? $value : Genre::create(['name' => $value])->id;
         }, $genres);
         $book->genres()->sync($genres);
 
@@ -310,20 +310,16 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function attachAuthors($book, $input)
     {
-        $authors = [];
-        foreach ($input['authors'] as $author) {
-            if (is_string($author)) {
-                $result = explode(' ', $author);
-                $author = Author::create([
-                    'first_name' => $result[0],
-                    'last_name'  => isset($result[1]) ? $result[1] : '',
-                ]);
-                $authors[] = $author->id;
-            } else {
-                $authors[] = (int) $author;
+        $authors = array_map(function ($value) {
+            if (is_numeric($value)) {
+                return $value;
             }
-        }
 
+            $result = explode(' ', $value);
+            $author = Author::create(['first_name' => $result[0], 'last_name' => isset($result[1]) ? $result[1] : '']);
+
+            return $author->id;
+        }, $input['authors']);
         $book->authors()->sync($authors);
 
         return true;

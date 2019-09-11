@@ -1,16 +1,12 @@
 <?php
 
-
 namespace App\Repositories\Contracts;
 
-use App\Models\Tag;
+use App\Models\BookLanguage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-/**
- * Interface TagRepositoryInterface
- * @package App\Repositories\Contracts
- */
-interface TagRepositoryInterface
+
+interface BookLanguageRepositoryInterface
 {
     /**
      * @return array
@@ -30,7 +26,7 @@ interface TagRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Tag[]|Collection
+     * @return BookLanguage[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
@@ -49,7 +45,7 @@ interface TagRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return Tag|Collection
+     * @return BookLanguage|Collection
      */
     public function update($input, $id);
 }

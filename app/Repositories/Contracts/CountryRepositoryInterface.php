@@ -3,14 +3,13 @@
 
 namespace App\Repositories\Contracts;
 
-use App\Models\Tag;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Country;
 use Illuminate\Support\Collection;
 /**
- * Interface TagRepositoryInterface
+ * Interface CountryRepositoryInterface
  * @package App\Repositories\Contracts
  */
-interface TagRepositoryInterface
+interface CountryRepositoryInterface
 {
     /**
      * @return array
@@ -30,26 +29,7 @@ interface TagRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return Tag[]|Collection
+     * @return Country[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
-
-    /**
-     * Create model record
-     *
-     * @param array $input
-     *
-     * @return Model
-     */
-    public function create($input);
-
-    /**
-     * Update model record for given id
-     *
-     * @param array $input
-     * @param int $id
-     *
-     * @return Tag|Collection
-     */
-    public function update($input, $id);
 }
