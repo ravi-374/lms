@@ -6,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookAPIRequest;
 use App\Http\Requests\API\UpdateBookAPIRequest;
+use App\Http\Requests\BookDetailRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Exception;
@@ -157,16 +158,14 @@ class BookAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param BookDetailRequest $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function getBookDetails(Request $request)
+    public function getBookDetails(BookDetailRequest $request)
     {
-        $request->validate(['isbn' => 'required']);
-
         $bookDetails = $this->bookRepository->getBookDetailsFromISBN($request->get('isbn'));
 
         return \Response::json($bookDetails, 200);
