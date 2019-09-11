@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use InfyOm\Generator\Request\APIRequest;
 
-class ResetPasswordRequest extends APIRequest
+class ResetPasswordLinkRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -10,7 +10,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\ResetPasswordLinkRequest;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
 use Auth;
@@ -37,13 +37,13 @@ class AccountAPIController extends AppBaseController
     }
 
     /**
-     * @param ResetPasswordRequest $request
+     * @param ResetPasswordLinkRequest $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function sendResetPasswordLink(ResetPasswordRequest $request)
+    public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
         $url = $request->url;
         $data = [];
