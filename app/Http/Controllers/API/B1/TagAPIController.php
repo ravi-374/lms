@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateTagAPIRequest;
 use App\Http\Requests\API\UpdateTagAPIRequest;
 use App\Models\Tag;
-use App\Repositories\TagRepository;
+use App\Repositories\Contracts\TagRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,10 +17,10 @@ use Illuminate\Http\Request;
  */
 class TagAPIController extends AppBaseController
 {
-    /** @var  TagRepository */
+    /** @var  TagRepositoryInterface */
     private $tagRepository;
 
-    public function __construct(TagRepository $tagRepo)
+    public function __construct(TagRepositoryInterface $tagRepo)
     {
         $this->tagRepository = $tagRepo;
     }
