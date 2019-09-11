@@ -10,7 +10,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\AccountRepository;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
 use Auth;
@@ -37,7 +37,7 @@ class AccountAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @throws Exception
      *
@@ -51,14 +51,14 @@ class AccountAPIController extends AppBaseController
         $data = [];
         /** @var User $user */
         $user = User::whereEmail($request->get('email'))->first();
-        if (!$user) {
+        if (! $user) {
             throw new UnprocessableEntityHttpException('Given Email does not exist in our system.');
         }
         $key = $user->email.'|'.date('Y-m-d H:i:s');
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = $url .'?token='. $encodedToken;
+        $data['link'] = $url.'?token='.$encodedToken;
         $data['first_name'] = $user->first_name;
         $data['last_name'] = $user->last_name;
         $data['email'] = $user->email;
@@ -69,20 +69,18 @@ class AccountAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  ResetPasswordRequest  $request
      *
      * @return bool|JsonResponse
      */
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $request->validate(['token' => 'required', 'password' => 'required']);
-
         $input = $request->all();
         $token = Crypt::decrypt($input['token']);
         list($email, $registerTime) = explode('|', $token);
 
         $user = User::whereEmail($email)->first();
-        if (!$user) {
+        if (! $user) {
             return $this->sendError('User with given email not available.');
         }
 
