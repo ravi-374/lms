@@ -50,7 +50,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('perms');
+        $query = $this->allQuery($search, $skip, $limit)->with('permissions');
 
         $roles = $query->orderByDesc('id')->get();
 
@@ -65,7 +65,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
      */
     public function find($id, $columns = ['*'])
     {
-        $role = $this->findOrFail($id, ['perms']);
+        $role = $this->findOrFail($id, ['permissions']);
 
         return $role;
     }
@@ -84,7 +84,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
             DB::beginTransaction();
             $role = Role::create($input);
             if (!empty($input['permissions'])) {
-                $role->perms()->sync($input['permissions']);
+                $role->permissions()->sync($input['permissions']);
             }
             DB::commit();
 
@@ -114,7 +114,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
             DB::beginTransaction();
             $role->update($input);
             $permissions = (empty($input['permissions'])) ? [] : $input['permissions'];
-            $role->perms()->sync($permissions);
+            $role->permissions()->sync($permissions);
             DB::commit();
 
             return $this->find($id);

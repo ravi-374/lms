@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\BookRepository;
+use App\Repositories\Contracts\BookRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -13,10 +13,10 @@ use Illuminate\Http\Request;
  */
 class BookAPIController extends AppBaseController
 {
-    /** @var  BookRepository */
+    /** @var  BookRepositoryInterface */
     private $bookRepository;
 
-    public function __construct(BookRepository $bookRepo)
+    public function __construct(BookRepositoryInterface $bookRepo)
     {
         $this->bookRepository = $bookRepo;
     }

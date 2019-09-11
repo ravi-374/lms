@@ -200,7 +200,6 @@ class MemberAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($membershipPlan1->name, $response[0]['membership_plan']['name']);
     }
 
     /** @test */

@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Traits\ImageTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
@@ -49,7 +50,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, EntrustUserTrait, ImageTrait;
+    use Notifiable, HasRoles, ImageTrait;
 
     const IMAGE_PATH = 'users';
 

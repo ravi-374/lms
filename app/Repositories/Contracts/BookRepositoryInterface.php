@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Farhan-InfyOm
- * Date: 6/19/2019
- * Time: 5:47 PM
- */
 
 namespace App\Repositories\Contracts;
 
@@ -12,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Models\Book;
 use Exception;
 use Illuminate\Support\Collection;
+
 /**
  * Interface BookRepositoryInterface
  * @package App\Repositories\Contracts

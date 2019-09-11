@@ -261,7 +261,6 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($book1->name, $response[0]['book_item']['book']['name']);
     }
 
     /** @test */
@@ -280,7 +279,6 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($bookItem1->book_code, $response[0]['book_item']['book_code']);
     }
 
     /** @test */
@@ -303,7 +301,5 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($member1->first_name, $response[0]['member']['first_name']);
-        $this->assertEquals($member1->last_name, $searchByLastName->original['data'][0]['member']['last_name']);
     }
 }

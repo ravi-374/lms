@@ -15,7 +15,6 @@ use Auth;
 
 /**
  * Class AuthRepository
- * @package App\Repositories
  */
 class AuthRepository implements AuthRepositoryInterface
 {
@@ -31,7 +30,7 @@ class AuthRepository implements AuthRepositoryInterface
         $roles = $userDBRecord->roles->toArray();
         $permissions = [];
         foreach ($userDBRecord->roles as $role) {
-            $permissions = array_merge($permissions, $role->perms->toArray());
+            $permissions = array_merge($permissions, $role->permissions->toArray());
         }
 
         return [
