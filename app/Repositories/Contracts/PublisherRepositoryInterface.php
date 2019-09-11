@@ -3,7 +3,9 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Publisher;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Interface PublisherRepositoryInterface
@@ -29,7 +31,7 @@ interface PublisherRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return Publisher[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
@@ -48,7 +50,7 @@ interface PublisherRepositoryInterface
      * @param array $input
      * @param int $id
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
+     * @return Publisher[]|Collection
      */
     public function update($input, $id);
 }

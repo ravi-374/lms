@@ -5,6 +5,7 @@ namespace App\Repositories\Contracts;
 
 use App\Models\MembershipPlan;
 use Exception;
+use Illuminate\Support\Collection;
 /**
  * Interface MembershipPlanRepositoryInterface
  * @package App\Repositories\Contracts
@@ -29,7 +30,7 @@ interface MembershipPlanRepositoryInterface
      * @param int|null $limit
      * @param array $columns
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return MembershipPlan[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
