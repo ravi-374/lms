@@ -15,8 +15,8 @@ const MemberForm = (props) => {
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const defaultImage = publicImagePath.USER_AVATAR;
-    const [isPasswordHidden, setPasswordHidden] = useState(false);
-    const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
+    const [isPasswordHidden, setPasswordHidden] = useState(true);
+    const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(true);
     useEffect(() => {
         if (initialValues.image) {
             change('file_name', true);
@@ -79,12 +79,12 @@ const MemberForm = (props) => {
                     <Col xs={6}>
                         <Field name="password" label="New Password" type={isPasswordHidden ? 'password' : 'text'}
                                onClick={onclickPassword} groupText="lock" isAppendIcon
-                               appendGroupText={isPasswordHidden ? 'eye' : 'eye-slash'} component={InputGroup}/>
+                               appendGroupText={isPasswordHidden ? 'eye-slash' : 'eye'} component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="confirm_password" label="Confirm Password" onClick={onclickConfirmPassword}
                                type={isConfirmPasswordHidden ? 'password' : 'text'} groupText="lock" isAppendIcon
-                               appendGroupText={isConfirmPasswordHidden ? 'eye' : 'eye-slash'} component={InputGroup}/>
+                               appendGroupText={isConfirmPasswordHidden ? 'eye-slash' : 'eye'} component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
