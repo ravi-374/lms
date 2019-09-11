@@ -10,6 +10,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\ResetPasswordLinkRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
@@ -18,7 +19,6 @@ use Crypt;
 use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use URL;
 
@@ -37,16 +37,14 @@ class AccountAPIController extends AppBaseController
     }
 
     /**
-     * @param  Request  $request
+     * @param  ResetPasswordLinkRequest  $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function sendResetPasswordLink(Request $request)
+    public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
-        $request->validate(['email' => 'required', 'url' => 'required']);
-
         $url = $request->url;
         $data = [];
         /** @var User $user */
