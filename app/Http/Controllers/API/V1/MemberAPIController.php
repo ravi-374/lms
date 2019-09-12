@@ -5,11 +5,11 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
-use App\Models\Member;
 use App\Repositories\Contracts\MemberRepositoryInterFace;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Class MemberController
@@ -17,12 +17,12 @@ use Illuminate\Http\JsonResponse;
 class MemberAPIController extends AppBaseController
 {
     /**
+     * @param  Request  $request
      * @return JsonResponse
      */
-    public function getLoggedInMemberDetails()
+    public function getLoggedInMemberDetails(Request $request)
     {
-        /** @var Member $member */
-        $member = Auth::user();
+        $member = $request->user();
         $member->address;
         $member->membershipPlan;
 
@@ -51,12 +51,13 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
+     * @param  Request  $request
+     *
      * @return JsonResponse
      */
-    public function removeImage()
+    public function removeImage(Request $request)
     {
-        /** @var Member $member */
-        $member = Auth::user();
+        $member = $request->user();
         $member->deleteMemberImage();
 
         return $this->sendSuccess('Member image removed successfully.');
