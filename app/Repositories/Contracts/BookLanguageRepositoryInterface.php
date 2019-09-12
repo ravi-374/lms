@@ -21,10 +21,10 @@ interface BookLanguageRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return BookLanguage[]|Collection
      */
@@ -33,7 +33,7 @@ interface BookLanguageRepositoryInterface
     /**
      * Create model record
      *
-     * @param array $input
+     * @param  array  $input
      *
      * @return Model
      */
@@ -42,8 +42,8 @@ interface BookLanguageRepositoryInterface
     /**
      * Update model record for given id
      *
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return BookLanguage|Collection
      */

@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface BookItemRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface BookItemRepositoryInterface
 {
@@ -22,19 +21,19 @@ interface BookItemRepositoryInterface
     public function model();
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return BookItem|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
      *
      * @return BookItem[]|\Illuminate\Database\Eloquent\Collection
      */

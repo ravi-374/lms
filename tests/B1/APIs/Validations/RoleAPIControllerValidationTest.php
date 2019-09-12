@@ -90,7 +90,7 @@ class RoleAPIControllerValidationTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Role saved successfully.');
         $this->assertEquals($inputs['name'], $response->original['data']['name']);
-        $this->assertEquals($inputs['permissions'][0], $response->original['data']['perms'][0]['id']);
+        $this->assertEquals($inputs['permissions'][0], $response->original['data']['permissions'][0]['id']);
 
     }
 

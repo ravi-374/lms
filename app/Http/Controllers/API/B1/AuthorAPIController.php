@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class AuthorAPIController
- * @package App\Http\Controllers\API
  */
 class AuthorAPIController extends AppBaseController
 {
@@ -30,7 +29,7 @@ class AuthorAPIController extends AppBaseController
      * Display a listing of the Author.
      * GET|HEAD /authors
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return JsonResponse
      */
     public function index(Request $request)
@@ -53,7 +52,7 @@ class AuthorAPIController extends AppBaseController
      * Store a newly created Author in storage.
      * POST /authors
      *
-     * @param CreateAuthorAPIRequest $request
+     * @param  CreateAuthorAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -70,7 +69,7 @@ class AuthorAPIController extends AppBaseController
      * Display the specified Author.
      * GET|HEAD /authors/{id}
      *
-     * @param Author $author
+     * @param  Author  $author
      *
      * @return JsonResponse
      */
@@ -83,8 +82,8 @@ class AuthorAPIController extends AppBaseController
      * Update the specified Author in storage.
      * PUT/PATCH /authors/{id}
      *
-     * @param Author $author
-     * @param UpdateAuthorAPIRequest $request
+     * @param  Author  $author
+     * @param  UpdateAuthorAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -101,7 +100,7 @@ class AuthorAPIController extends AppBaseController
      * Remove the specified Author from storage.
      * DELETE /authors/{id}
      *
-     * @param Author $author
+     * @param  Author  $author
      *
      * @throws Exception
      *
@@ -109,7 +108,7 @@ class AuthorAPIController extends AppBaseController
      */
     public function destroy(Author $author)
     {
-        if (!empty($author->books->toArray())) {
+        if (! empty($author->books->toArray())) {
             throw new BadRequestHttpException('Author can not be delete, it is used in one or more books.');
         }
         $author->delete();

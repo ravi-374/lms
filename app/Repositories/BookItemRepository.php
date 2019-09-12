@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class BookItemRepository
- * @package App\Repositories
  */
 class BookItemRepository extends BaseRepository implements BookItemRepositoryInterface
 {
@@ -52,10 +51,10 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return BookItem|Collection
      */
@@ -73,9 +72,9 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
      *
      * @return BookItem[]|\Illuminate\Database\Eloquent\Collection
      */
@@ -98,7 +97,7 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
     }
 
     /**
-     * @param BookItem[]|Collection $records
+     * @param  BookItem[]|Collection  $records
      *
      * @return BookItem[]
      */
@@ -114,24 +113,24 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
     }
 
     /**
-     * @param array $search
-     * @param Builder $query
+     * @param  array  $search
+     * @param  Builder  $query
      *
      * @return Builder
      */
     public function applyDynamicSearch($search, $query)
     {
-        $query->when(!empty($search['id']), function (Builder $query) use ($search) {
+        $query->when(! empty($search['id']), function (Builder $query) use ($search) {
             $query->whereHas('book', function (Builder $query) use ($search) {
                 $ids = explode_trim_remove_empty_values_from_array($search['id'], ' ');
 
                 // search by book's Id
-                if (!empty($search['search_by_book'])) {
+                if (! empty($search['search_by_book'])) {
                     Book::filterById($query, $ids);
                 }
 
                 // search by book author's Id
-                if (!empty($search['search_by_author'])) {
+                if (! empty($search['search_by_author'])) {
                     $query->whereHas('authors', function (Builder $query) use ($search, $ids) {
                         Author::filterById($query, $ids);
                     });

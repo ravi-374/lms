@@ -17,8 +17,6 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class IssuedBookRepository
- * @package App\Repositories
- * @version June 25, 2019, 5:24 am UTC
  */
 class IssuedBookRepository extends BaseRepository implements IssuedBookRepositoryInterface
 {
@@ -62,23 +60,23 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return IssuedBook[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
-        if (!empty($search['order_by']) && in_array($search['order_by'],
+        if (! empty($search['order_by']) && in_array($search['order_by'],
                 ['name', 'book_code', 'member_name', 'reserved_on'])) {
             $orderBy = $search['order_by'];
             unset($search['order_by']);
         }
 
-        if (!empty($search['search']) && in_array($search['search'], IssuedBook::STATUS_IN_STRING)) {
+        if (! empty($search['search']) && in_array($search['search'], IssuedBook::STATUS_IN_STRING)) {
             $search['status'] = IssuedBook::getStatusFromString($search['search']);
             unset($search['search']);
         }
@@ -87,13 +85,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $query = $this->allQuery($search, $skip, $limit)->with($with);
         $query = $this->applyDynamicSearch($search, $query);
 
-        $query->when(!empty($search['due_date']), function (Builder $query) use ($search) {
+        $query->when(! empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
         });
 
         $bookRecords = $query->orderByDesc('id')->get();
 
-        if (!empty($orderBy)) {
+        if (! empty($orderBy)) {
             $sortDescending = ($search['direction'] == 'asc') ? false : true;
             $orderString = '';
             switch ($orderBy) {
@@ -118,14 +116,14 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $search
-     * @param Builder $query
+     * @param  array  $search
+     * @param  Builder  $query
      *
      * @return Builder
      */
     public function applyDynamicSearch($search, $query)
     {
-        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
             $searchString = $search['search'];
             $query->orWhereHas('bookItem', function (Builder $query) use ($searchString) {
                 filterByColumns($query, $searchString, ['book_code']);
@@ -144,8 +142,8 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param int $id
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $columns
      *
      * @return IssuedBook
      */
@@ -155,7 +153,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return IssuedBook
      */
@@ -170,7 +168,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return bool
      */
@@ -188,13 +186,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return IssuedBook
      */
     public function issueBook($input)
     {
-        $issuedOn = (!empty($input['issued_on'])) ? Carbon::parse($input['issued_on']) : Carbon::now();
+        $issuedOn = (! empty($input['issued_on'])) ? Carbon::parse($input['issued_on']) : Carbon::now();
         if ($issuedOn->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
             throw new UnprocessableEntityHttpException('Issue date must be less or equal to today\'s date.');
         }
@@ -212,12 +210,12 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             'member_id'       => $input['member_id'],
             'issued_on'       => $issuedOn,
             'return_due_date' => Carbon::parse($issuedOn)->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS)),
-            'note'            => !empty($input['note']) ? $input['note'] : null,
+            'note'            => ! empty($input['note']) ? $input['note'] : null,
             'status'          => IssuedBook::STATUS_ISSUED,
             'issuer_id'       => Auth::id(),
         ];
 
-        if (!empty($issueBook)) {
+        if (! empty($issueBook)) {
             if ($issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id != $input['member_id']) {
                 throw new UnprocessableEntityHttpException('Book is already reserved by another member.');
             }
@@ -241,7 +239,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return IssuedBook
      */
@@ -259,10 +257,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         $input['status'] = IssuedBook::STATUS_RESERVED;
-        $input['reserve_date'] = (!empty($input['reserve_date'])) ? $input['reserve_date'] : Carbon::now();
-        $input['note'] = !empty($input['note']) ? $input['note'] : null;
+        $input['reserve_date'] = (! empty($input['reserve_date'])) ? $input['reserve_date'] : Carbon::now();
+        $input['note'] = ! empty($input['note']) ? $input['note'] : null;
 
-        if (!empty($issueBook) && $issueBook->status == IssuedBook::STATUS_UN_RESERVED && $issueBook->member_id == $input['member_id']) {
+        if (! empty($issueBook) && $issueBook->status == IssuedBook::STATUS_UN_RESERVED && $issueBook->member_id == $input['member_id']) {
             $issueBook->update($input);
         } else {
             $issueBook = IssuedBook::create($input);
@@ -274,7 +272,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return IssuedBook
      */
@@ -293,8 +291,8 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         }
 
         $issueBook->update([
-            'return_date' => (!empty($input['return_date'])) ? $input['return_date'] : Carbon::now(),
-            'note'        => !empty($input['note']) ? $input['note'] : null,
+            'return_date' => (! empty($input['return_date'])) ? $input['return_date'] : Carbon::now(),
+            'note'        => ! empty($input['note']) ? $input['note'] : null,
             'status'      => IssuedBook::STATUS_RETURNED,
             'returner_id' => Auth::id(),
         ]);
@@ -304,13 +302,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return IssuedBook
      */
     public function updateIssuedBookStatus($input)
     {
-        if (!in_array($input['status'], [
+        if (! in_array($input['status'], [
             IssuedBook::STATUS_DAMAGED,
             IssuedBook::STATUS_LOST,
         ])) {
@@ -345,8 +343,8 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     }
 
     /**
-     * @param BookItem $bookItem
-     * @param array $input
+     * @param  BookItem  $bookItem
+     * @param  array  $input
      *
      * @return IssuedBook
      */

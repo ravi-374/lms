@@ -14,7 +14,6 @@ use Tests\TestCase;
 
 /**
  * Class BookAPIPermissionTest
- * @package Tests\B1\APIs\Permissions
  */
 class BookAPIPermissionTest extends TestCase
 {

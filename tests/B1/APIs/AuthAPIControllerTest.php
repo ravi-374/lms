@@ -32,7 +32,7 @@ class AuthAPIControllerTest extends TestCase
 
         /** @var Role $role */
         $role = factory(Role::class)->create();
-        $role->perms()->sync([$permission->id]);
+        $role->permissions()->sync([$permission->id]);
         $farhan->roles()->sync([$role->id]);
 
         $response = $this->getJson(route('api.b1.config'));

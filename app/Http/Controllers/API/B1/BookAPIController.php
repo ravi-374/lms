@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookAPIController
- * @package App\Http\Controllers\API
  */
 class BookAPIController extends AppBaseController
 {
@@ -32,7 +31,7 @@ class BookAPIController extends AppBaseController
      * Display a listing of the Book.
      * GET|HEAD /books
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -56,7 +55,7 @@ class BookAPIController extends AppBaseController
      * Store a newly created Book in storage.
      * POST /books
      *
-     * @param CreateBookAPIRequest $request
+     * @param  CreateBookAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      *
@@ -75,7 +74,7 @@ class BookAPIController extends AppBaseController
      * Display the specified Book.
      * GET|HEAD /books/{id}
      *
-     * @param Book $book
+     * @param  Book  $book
      *
      * @return JsonResponse
      */
@@ -90,8 +89,8 @@ class BookAPIController extends AppBaseController
      * Update the specified Book in storage.
      * PUT/PATCH /books/{id}
      *
-     * @param Book $book
-     * @param UpdateBookAPIRequest $request
+     * @param  Book  $book
+     * @param  UpdateBookAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      * @return JsonResponse
@@ -109,7 +108,7 @@ class BookAPIController extends AppBaseController
      * Remove the specified Book from storage.
      * DELETE /books/{id}
      *
-     * @param Book $book
+     * @param  Book  $book
      *
      * @throws Exception
      *
@@ -117,7 +116,7 @@ class BookAPIController extends AppBaseController
      */
     public function destroy(Book $book)
     {
-        if (!empty($book->items->toArray())) {
+        if (! empty($book->items->toArray())) {
             throw new BadRequestHttpException('Book can not be delete, it is has one or more book items.');
         }
         $book->deleteImage();
@@ -127,8 +126,8 @@ class BookAPIController extends AppBaseController
     }
 
     /**
-     * @param Book $book
-     * @param BookItemRequest $request
+     * @param  Book  $book
+     * @param  BookItemRequest  $request
      *
      * @throws Exception
      *
@@ -144,7 +143,7 @@ class BookAPIController extends AppBaseController
     }
 
     /**
-     * @param Book $book
+     * @param  Book  $book
      *
      * @return JsonResponse
      */
@@ -156,7 +155,7 @@ class BookAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @throws ApiOperationFailedException
      *

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
@@ -6,7 +7,6 @@ use App\Http\Requests\API\CreatePublisherAPIRequest;
 use App\Http\Requests\API\UpdatePublisherAPIRequest;
 use App\Models\Publisher;
 use App\Repositories\Contracts\PublisherRepositoryInterface;
-use App\Repositories\PublisherRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class PublisherAPIController
- * @package App\Http\Controllers\API
  */
 class PublisherAPIController extends AppBaseController
 {
@@ -30,7 +29,7 @@ class PublisherAPIController extends AppBaseController
      * Display a listing of the Publisher.
      * GET|HEAD /publishers
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -54,7 +53,7 @@ class PublisherAPIController extends AppBaseController
      * Store a newly created Publisher in storage.
      * POST /publishers
      *
-     * @param CreatePublisherAPIRequest $request
+     * @param  CreatePublisherAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -71,7 +70,7 @@ class PublisherAPIController extends AppBaseController
      * Display the specified Publisher.
      * GET|HEAD /publishers/{id}
      *
-     * @param Publisher $publisher
+     * @param  Publisher  $publisher
      *
      * @return JsonResponse
      */
@@ -84,8 +83,8 @@ class PublisherAPIController extends AppBaseController
      * Update the specified Publisher in storage.
      * PUT/PATCH /publishers/{id}
      *
-     * @param Publisher $publisher
-     * @param UpdatePublisherAPIRequest $request
+     * @param  Publisher  $publisher
+     * @param  UpdatePublisherAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -102,7 +101,7 @@ class PublisherAPIController extends AppBaseController
      * Remove the specified Publisher from storage.
      * DELETE /publishers/{id}
      *
-     * @param Publisher $publisher
+     * @param  Publisher  $publisher
      *
      * @throws Exception
      *
@@ -110,7 +109,7 @@ class PublisherAPIController extends AppBaseController
      */
     public function destroy(Publisher $publisher)
     {
-        if (!empty($publisher->bookItems->toArray())) {
+        if (! empty($publisher->bookItems->toArray())) {
             throw new BadRequestHttpException('Publisher can not be delete, it is used in one or more book items.');
         }
         $publisher->delete();

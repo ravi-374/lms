@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 /**
  * Class AccountAPIControllerTest
- * @package Tests\Controllers
  */
 class AccountAPIControllerTest extends TestCase
 {

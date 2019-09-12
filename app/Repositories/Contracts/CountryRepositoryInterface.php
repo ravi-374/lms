@@ -5,9 +5,9 @@ namespace App\Repositories\Contracts;
 
 use App\Models\Country;
 use Illuminate\Support\Collection;
+
 /**
  * Interface CountryRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface CountryRepositoryInterface
 {
@@ -24,10 +24,10 @@ interface CountryRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Country[]|Collection
      */

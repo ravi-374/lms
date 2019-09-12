@@ -11,11 +11,10 @@ namespace App\Http\Requests\API;
 
 
 use App\Models\Member;
-use Auth;
 use InfyOm\Generator\Request\APIRequest;
+
 /**
  * Class UpdateMemberProfile
- * @package App\Http\Requests\API
  */
 class UpdateMemberProfileAPIRequest extends APIRequest
 {

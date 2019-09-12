@@ -6,9 +6,9 @@ namespace App\Repositories\Contracts;
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+
 /**
  * Interface AuthorRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface AuthorRepositoryInterface
 {
@@ -25,10 +25,10 @@ interface AuthorRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Author[]|Collection
      */
@@ -37,7 +37,7 @@ interface AuthorRepositoryInterface
     /**
      * Create model record
      *
-     * @param array $input
+     * @param  array  $input
      *
      * @return Model
      */
@@ -46,8 +46,8 @@ interface AuthorRepositoryInterface
     /**
      * Update model record for given id
      *
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return Author|Collection
      */

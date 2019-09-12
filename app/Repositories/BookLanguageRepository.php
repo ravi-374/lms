@@ -7,8 +7,6 @@ use App\Repositories\Contracts\BookLanguageRepositoryInterface;
 
 /**
  * Class BookLanguageRepository
- * @package App\Repositories
- * @version June 19, 2019, 9:49 am UTC
  */
 class BookLanguageRepository extends BaseRepository implements BookLanguageRepositoryInterface
 {

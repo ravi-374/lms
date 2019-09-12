@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class MemberController
- * @package App\Http\Controllers\API
  */
 class MemberAPIController extends AppBaseController
 {
@@ -32,7 +31,7 @@ class MemberAPIController extends AppBaseController
      * Display a listing of the Member.
      * GET|HEAD /members
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -55,7 +54,7 @@ class MemberAPIController extends AppBaseController
     /**
      * Store a newly created Member in storage.
      * POST /members
-     * @param CreateMemberAPIRequest $request
+     * @param  CreateMemberAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -75,7 +74,7 @@ class MemberAPIController extends AppBaseController
      * Display the specified Member.
      * GET|HEAD /members/{id}
      *
-     * @param Member $member
+     * @param  Member  $member
      *
      * @return JsonResponse
      */
@@ -91,8 +90,8 @@ class MemberAPIController extends AppBaseController
      * Update the specified Member in storage.
      * PUT/PATCH /members/{id}
      *
-     * @param Member $member
-     * @param UpdateMemberAPIRequest $request
+     * @param  Member  $member
+     * @param  UpdateMemberAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -114,7 +113,7 @@ class MemberAPIController extends AppBaseController
      * Remove the specified Member from storage.
      * DELETE /members/{id}
      *
-     * @param Member $member
+     * @param  Member  $member
      *
      * @throws Exception
      *
@@ -129,7 +128,7 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
-     * @param Member $member
+     * @param  Member  $member
      *
      * @return JsonResponse
      */
@@ -145,7 +144,7 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
-     * @param Member $member
+     * @param  Member  $member
      *
      * @return JsonResponse
      */

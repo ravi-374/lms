@@ -14,7 +14,6 @@ use App\Repositories\Contracts\CountryRepositoryInterface;
 
 /**
  * Class CountryRepository
- * @package App\Repositories
  */
 class CountryRepository extends BaseRepository implements CountryRepositoryInterface
 {

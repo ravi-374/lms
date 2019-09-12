@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface PublisherRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface PublisherRepositoryInterface
 {
@@ -26,10 +25,10 @@ interface PublisherRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Publisher[]|Collection
      */
@@ -38,7 +37,7 @@ interface PublisherRepositoryInterface
     /**
      * Create model record
      *
-     * @param array $input
+     * @param  array  $input
      *
      * @return Model
      */
@@ -47,8 +46,8 @@ interface PublisherRepositoryInterface
     /**
      * Update model record for given id
      *
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return Publisher|Collection
      */

@@ -6,9 +6,9 @@ namespace App\Repositories\Contracts;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+
 /**
  * Interface TagRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface TagRepositoryInterface
 {
@@ -25,10 +25,10 @@ interface TagRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Tag[]|Collection
      */
@@ -37,7 +37,7 @@ interface TagRepositoryInterface
     /**
      * Create model record
      *
-     * @param array $input
+     * @param  array  $input
      *
      * @return Model
      */
@@ -46,8 +46,8 @@ interface TagRepositoryInterface
     /**
      * Update model record for given id
      *
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return Tag|Collection
      */
