@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
+use App\Models\Member;
 use App\Repositories\Contracts\MemberRepositoryInterFace;
 use Auth;
 use Exception;
@@ -22,6 +23,7 @@ class MemberAPIController extends AppBaseController
      */
     public function getLoggedInMemberDetails(Request $request)
     {
+        /** @var Member $member */
         $member = $request->user();
         $member->address;
         $member->membershipPlan;
@@ -57,6 +59,7 @@ class MemberAPIController extends AppBaseController
      */
     public function removeImage(Request $request)
     {
+        /** @var Member $member */
         $member = $request->user();
         $member->deleteMemberImage();
 
