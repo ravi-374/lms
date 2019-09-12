@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\BookRepository;
+use App\Repositories\Contracts\BookRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class BookController
- * @package App\Http\Controllers\API
  */
 class BookAPIController extends AppBaseController
 {
-    /** @var  BookRepository */
+    /** @var  BookRepositoryInterface */
     private $bookRepository;
 
-    public function __construct(BookRepository $bookRepo)
+    public function __construct(BookRepositoryInterface $bookRepo)
     {
         $this->bookRepository = $bookRepo;
     }
@@ -25,7 +24,7 @@ class BookAPIController extends AppBaseController
      * Display a listing of the Book.
      * GET|HEAD /books
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

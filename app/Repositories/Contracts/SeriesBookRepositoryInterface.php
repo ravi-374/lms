@@ -5,9 +5,9 @@ namespace App\Repositories\Contracts;
 use App\Models\SeriesBook;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+
 /**
  * Interface SeriesBookRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface SeriesBookRepositoryInterface
 {
@@ -24,10 +24,10 @@ interface SeriesBookRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return SeriesBook[]|Collection
      */
@@ -36,7 +36,7 @@ interface SeriesBookRepositoryInterface
     /**
      * Create model record
      *
-     * @param array $input
+     * @param  array  $input
      *
      * @return Model
      */
@@ -45,8 +45,8 @@ interface SeriesBookRepositoryInterface
     /**
      * Update model record for given id
      *
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return SeriesBook|Collection
      */

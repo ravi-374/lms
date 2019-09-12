@@ -1,12 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Ajay Makwana
- * Email: ajay.makwana@infyom.com
- * Date: 24/06/2019
- * Time: 11:18 AM
- */
 
 namespace App\Exceptions;
 
@@ -15,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiOperationFailedException
- * @package App\Exceptions
  */
 class ApiOperationFailedException extends Exception
 {

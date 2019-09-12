@@ -21,7 +21,6 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class BookItemAPIController
- * @package App\Http\Controllers\API\B1
  */
 class BookItemAPIController extends AppBaseController
 {
@@ -34,8 +33,8 @@ class BookItemAPIController extends AppBaseController
     }
 
     /**
-     * @param Book $book
-     * @param Request $request
+     * @param  Book  $book
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -55,7 +54,7 @@ class BookItemAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
+     * @param  BookItem  $bookItem
      *
      * @throws Exception
      *
@@ -72,9 +71,9 @@ class BookItemAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
+     * @param  BookItem  $bookItem
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -82,7 +81,7 @@ class BookItemAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        if (!in_array($input['status'], [
+        if (! in_array($input['status'], [
             BookItem::STATUS_AVAILABLE,
             BookItem::STATUS_NOT_AVAILABLE,
             BookItem::STATUS_LOST,
@@ -98,7 +97,7 @@ class BookItemAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

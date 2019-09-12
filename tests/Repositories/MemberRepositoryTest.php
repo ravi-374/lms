@@ -6,9 +6,9 @@ use App\Models\Member;
 use App\Repositories\MemberRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+
 /**
  * Class MemberRepositoryTest
- * @package Tests\Repositories
  */
 class MemberRepositoryTest extends TestCase
 {

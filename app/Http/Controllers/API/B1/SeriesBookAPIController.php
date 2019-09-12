@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class SeriesBookAPIController
- * @package App\Http\Controllers\API
  */
 class SeriesBookAPIController extends AppBaseController
 {
@@ -29,7 +28,7 @@ class SeriesBookAPIController extends AppBaseController
      * Display a listing of the SeriesBook.
      * GET|HEAD /series-books
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -48,7 +47,7 @@ class SeriesBookAPIController extends AppBaseController
      * Store a newly created SeriesBook in storage.
      * POST /series-book
      *
-     * @param CreateSeriesBookAPIRequest $request
+     * @param  CreateSeriesBookAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -65,7 +64,7 @@ class SeriesBookAPIController extends AppBaseController
      * Display the specified SeriesBook.
      * GET|HEAD /series-book/{id}
      *
-     * @param SeriesBook $seriesBook
+     * @param  SeriesBook  $seriesBook
      *
      * @return JsonResponse
      */
@@ -78,8 +77,8 @@ class SeriesBookAPIController extends AppBaseController
      * Update the specified SeriesBook in storage.
      * PUT/PATCH /series-book/{id}
      *
-     * @param SeriesBook $seriesBook
-     * @param UpdateSeriesBookAPIRequest $request
+     * @param  SeriesBook  $seriesBook
+     * @param  UpdateSeriesBookAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -96,7 +95,7 @@ class SeriesBookAPIController extends AppBaseController
      * Remove the specified seriesBook from storage.
      * DELETE series-book/{id}
      *
-     * @param SeriesBook $seriesBook
+     * @param  SeriesBook  $seriesBook
      *
      * @throws Exception
      *

@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 /**
  * Class RoleAPIPermissionTest
- * @package Tests\B1\APIs\Permissions
  */
 class RoleAPIPermissionTest extends TestCase
 {

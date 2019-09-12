@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class PermissionAPIController
- * @package App\Http\Controllers\API
  */
 class PermissionAPIController extends AppBaseController
 {
@@ -29,7 +28,7 @@ class PermissionAPIController extends AppBaseController
      * Display a listing of the Permission.
      * GET|HEAD /permissions
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -48,7 +47,7 @@ class PermissionAPIController extends AppBaseController
      * Store a newly created Permission in storage.
      * POST /permissions
      *
-     * @param CreatePermissionAPIRequest $request
+     * @param  CreatePermissionAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -65,7 +64,7 @@ class PermissionAPIController extends AppBaseController
      * Display the specified Permission.
      * GET|HEAD /permissions/{id}
      *
-     * @param Permission $permission
+     * @param  Permission  $permission
      *
      * @return JsonResponse
      */
@@ -78,8 +77,8 @@ class PermissionAPIController extends AppBaseController
      * Update the specified Permission in storage.
      * PUT/PATCH /permissions/{id}
      *
-     * @param Permission $permission
-     * @param UpdatePermissionAPIRequest $request
+     * @param  Permission  $permission
+     * @param  UpdatePermissionAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -96,7 +95,7 @@ class PermissionAPIController extends AppBaseController
      * Remove the specified Permission from storage.
      * DELETE /permissions/{id}
      *
-     * @param Permission $permission
+     * @param  Permission  $permission
      *
      * @throws Exception
      *

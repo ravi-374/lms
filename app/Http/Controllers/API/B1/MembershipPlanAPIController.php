@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class MembershipPlanController
- * @package App\Http\Controllers\API\B1
  */
 class MembershipPlanAPIController extends AppBaseController
 {
@@ -30,7 +29,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Display a listing of the MembershipPlan.
      * GET|HEAD /membershipPlans
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -49,7 +48,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Store a newly created MembershipPlan in storage.
      * POST /membershipPlans
      *
-     * @param CreateMembershipPlanAPIRequest $request
+     * @param  CreateMembershipPlanAPIRequest  $request
      *
      * @throws Exception
      *
@@ -69,7 +68,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Display the specified MembershipPlan.
      * GET|HEAD /membershipPlans/{id}
      *
-     * @param MembershipPlan $membershipPlan
+     * @param  MembershipPlan  $membershipPlan
      *
      * @return JsonResponse
      */
@@ -82,8 +81,8 @@ class MembershipPlanAPIController extends AppBaseController
      * Update the specified MembershipPlan in storage.
      * PUT/PATCH /membershipPlans/{id}
      *
-     * @param MembershipPlan $membershipPlan
-     * @param UpdateMembershipPlanAPIRequest $request
+     * @param  MembershipPlan  $membershipPlan
+     * @param  UpdateMembershipPlanAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -100,7 +99,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Remove the specified MembershipPlan from storage.
      * DELETE /membershipPlans/{id}
      *
-     * @param MembershipPlan $membershipPlan
+     * @param  MembershipPlan  $membershipPlan
      *
      * @throws Exception
      *
@@ -108,7 +107,7 @@ class MembershipPlanAPIController extends AppBaseController
      */
     public function destroy(MembershipPlan $membershipPlan)
     {
-        if (!empty($membershipPlan->member)) {
+        if (! empty($membershipPlan->member)) {
             throw new BadRequestHttpException('Membership Plan can not be delete, it is assigned to one or more members.');
         }
         $membershipPlan->delete();

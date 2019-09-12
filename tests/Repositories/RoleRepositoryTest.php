@@ -52,7 +52,7 @@ class RoleRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $result);
         $this->assertEquals($fakeRole['name'], $result['name']);
-        $this->assertCount(1, $result->perms);
+        $this->assertCount(1, $result->permissions);
     }
 
     /**
@@ -80,6 +80,6 @@ class RoleRepositoryTest extends TestCase
 
         $this->assertArrayHasKey('id', $result);
         $this->assertEquals($fakeRole['name'], $result->name);
-        $this->assertCount(2, $result->perms);
+        $this->assertCount(2, $result->permissions);
     }
 }

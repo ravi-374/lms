@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use InfyOm\Generator\Request\APIRequest;
 
-class BookDetailRequest extends APIRequest
+class BookDetailsRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,12 +19,10 @@ class BookDetailRequest extends APIRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return string
+     * @return array
      */
     public function rules()
     {
-        $rules['isbn'] = 'required';
-
-        return $rules;
+        return ['isbn' => 'required'];
     }
 }

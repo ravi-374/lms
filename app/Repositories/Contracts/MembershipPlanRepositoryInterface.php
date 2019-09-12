@@ -6,9 +6,9 @@ namespace App\Repositories\Contracts;
 use App\Models\MembershipPlan;
 use Exception;
 use Illuminate\Support\Collection;
+
 /**
  * Interface MembershipPlanRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface MembershipPlanRepositoryInterface
 {
@@ -25,17 +25,17 @@ interface MembershipPlanRepositoryInterface
     /**
      * Retrieve all records with given filter criteria
      *
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return MembershipPlan[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws Exception
      * @return MembershipPlan
@@ -43,8 +43,8 @@ interface MembershipPlanRepositoryInterface
     public function store($input);
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return MembershipPlan
      */

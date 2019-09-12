@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class MembershipPlanController
- * @package App\Http\Controllers\API\v1
  */
 class MembershipPlanAPIController extends AppBaseController
 {
@@ -25,7 +24,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Display a listing of the MembershipPlan.
      * GET|HEAD /membershipPlans
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

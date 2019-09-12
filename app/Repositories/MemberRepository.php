@@ -15,8 +15,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class MemberRepository
- * @package App\Repositories
- * @version June 24, 2019, 11:57 am UTC
  */
 class MemberRepository extends BaseRepository implements MemberRepositoryInterface
 {
@@ -58,17 +56,17 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Member[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
-        if (!empty($search['order_by']) && ($search['order_by'] == 'membership_plan_name')) {
+        if (! empty($search['order_by']) && ($search['order_by'] == 'membership_plan_name')) {
             $orderBy = $search['order_by'];
             unset($search['order_by']);
         }
@@ -77,7 +75,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
         $query = $this->applyDynamicSearch($search, $query);
         $members = $query->orderByDesc('id')->get();
 
-        if (!empty($orderBy)) {
+        if (! empty($orderBy)) {
             $sortDescending = ($search['direction'] == 'asc') ? false : true;
             $orderString = '';
 
@@ -92,14 +90,14 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     }
 
     /**
-     * @param array $search
-     * @param Builder $query
+     * @param  array  $search
+     * @param  Builder  $query
      *
      * @return Builder
      */
     public function applyDynamicSearch($search, $query)
     {
-        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
             $query->orWhereHas('membershipPlan', function (Builder $query) use ($search) {
                 filterByColumns($query, $search['search'], ['name']);
             });
@@ -109,7 +107,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -123,7 +121,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -137,7 +135,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
             $input['password'] = Hash::make($input['password']);
             $input['member_id'] = $this->generateMemberId();
             $member = Member::create($input);
-            if (!empty($input['image'])) {
+            if (! empty($input['image'])) {
                 $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
                 $member->update(['image' => $imagePath]);
             }
@@ -145,7 +143,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
             /** @var UserRepository $userRepo */
             $userRepo = app(UserRepository::class);
             $addressArr = $userRepo->makeAddressArray($input);
-            if (!empty($addressArr)) {
+            if (! empty($addressArr)) {
                 $address = new Address($addressArr);
                 $member->address()->save($address);
             }
@@ -159,8 +157,8 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     }
 
     /**
-     * @param int $id
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $columns
      *
      * @return Member
      */
@@ -172,8 +170,8 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     }
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -183,32 +181,32 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     {
         try {
             DB::beginTransaction();
-            if (!empty($input['password'])) {
+            if (! empty($input['password'])) {
                 $input['password'] = Hash::make($input['password']);
             }
-            $image = (!empty($input['image'])) ? $input['image'] : null;
+            $image = (! empty($input['image'])) ? $input['image'] : null;
             unset($input['image']);
 
             /** @var Member $member */
             $member = $this->findOrFail($id);
             $member->update($input);
 
-            if (!empty($image)) {
+            if (! empty($image)) {
                 $member->deleteMemberImage(); // delete old image;
                 $imagePath = Member::makeImage($image, Member::IMAGE_PATH);
                 $member->update(['image' => $imagePath]);
             }
 
-            if (!empty($input['remove_image'])) {
+            if (! empty($input['remove_image'])) {
                 $member->deleteMemberImage();
             }
 
             /** @var UserRepository $userRepo */
             $userRepo = app(UserRepository::class);
             $addressArr = $userRepo->makeAddressArray($input);
-            if (!empty($addressArr)) {
+            if (! empty($addressArr)) {
                 $isUpdate = $member->address()->update($addressArr);
-                if (!$isUpdate) {
+                if (! $isUpdate) {
                     $address = new Address($addressArr);
                     $member->address()->save($address);
                 }
@@ -230,7 +228,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
         //todo: later will change format
         $memberId = rand(10000, 99999);
         while (true) {
-            if (!Member::whereMemberId($memberId)->exists()) {
+            if (! Member::whereMemberId($memberId)->exists()) {
                 break;
             }
             $memberId = rand(10000, 99999);

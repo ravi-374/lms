@@ -24,8 +24,6 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class BookRepository
- * @package App\Repositories
- * @version June 19, 2019, 12:06 pm UTC
  */
 class BookRepository extends BaseRepository implements BookRepositoryInterface
 {
@@ -73,17 +71,17 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Book[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
-        if (!empty($search['order_by']) && ($search['order_by'] == 'author_name')) {
+        if (! empty($search['order_by']) && ($search['order_by'] == 'author_name')) {
             $orderBy = $search['order_by'];
             unset($search['order_by']);
         }
@@ -93,7 +91,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
         $bookRecords = $query->get();
 
-        if (!empty($orderBy)) {
+        if (! empty($orderBy)) {
             $sortDescending = ($search['direction'] == 'asc') ? false : true;
             $orderString = '';
 
@@ -108,14 +106,14 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param array $search
-     * @param Builder $query
+     * @param  array  $search
+     * @param  Builder  $query
      *
      * @return Builder
      */
     public function applyDynamicSearch($search, $query)
     {
-        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
             $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
 
             $query->orWhereHas('authors', function (Builder $query) use ($keywords) {
@@ -131,7 +129,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws Exception
      *
@@ -144,11 +142,11 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         $this->validateInput($input);
         try {
             DB::beginTransaction();
-            if (isset($input['photo']) && !empty($input['photo'])) {
+            if (isset($input['photo']) && ! empty($input['photo'])) {
                 $input['image'] = ImageTrait::makeImage($input['photo'], Book::IMAGE_PATH);
             }
 
-            if (!empty($input['image_url'])) {
+            if (! empty($input['image_url'])) {
                 $input['image'] = ImageTrait::makeImageFromURL($input['image_url'], Book::IMAGE_PATH);
             }
 
@@ -156,7 +154,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $book = Book::create($input);
 
             $this->attachTagsAndGenres($book, $input);
-            if (!empty($input['authors'])) {
+            if (! empty($input['authors'])) {
                 $this->attachAuthors($book, $input);
             }
 
@@ -167,7 +165,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            if (isset($input['image']) && !empty($input['image'])) {
+            if (isset($input['image']) && ! empty($input['image'])) {
                 $this->deleteImage(Book::IMAGE_PATH.DIRECTORY_SEPARATOR.$input['image']);
             }
             throw new ApiOperationFailedException($e->getMessage());
@@ -177,8 +175,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @throws Exception
      * @throws ApiOperationFailedException
@@ -196,24 +194,24 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         try {
             DB::beginTransaction();
 
-            if (isset($input['photo']) && !empty($input['photo'])) {
+            if (isset($input['photo']) && ! empty($input['photo'])) {
                 $input['image'] = ImageTrait::makeImage($input['photo'], Book::IMAGE_PATH);
                 $oldImageName = $book->image;
             }
 
-            if (!empty($oldImageName) || !empty($input['remove_image'])) {
+            if (! empty($oldImageName) || ! empty($input['remove_image'])) {
                 $book->deleteImage();
             }
             $book->update($input);
             $this->attachTagsAndGenres($book, $input);
-            if (!empty($input['authors'])) {
+            if (! empty($input['authors'])) {
                 $this->attachAuthors($book, $input);
             }
 
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            if (isset($input['image']) && !empty($input['image'])) {
+            if (isset($input['image']) && ! empty($input['image'])) {
                 $this->deleteImage(Book::IMAGE_PATH.DIRECTORY_SEPARATOR.$input['image']);
             }
             throw new ApiOperationFailedException($e->getMessage());
@@ -223,7 +221,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      * @throws Exception
      *
      * @return bool
@@ -238,7 +236,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param array $items
+     * @param  array  $items
      * @throws Exception
      *
      * @return bool
@@ -251,12 +249,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             }
 
             if (isset($item['format'])) {
-                if (!in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
+                if (! in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
                     throw new UnprocessableEntityHttpException('Invalid Book Format.');
                 }
             }
 
-            if (!isset($item['price']) || empty($item['price'])) {
+            if (! isset($item['price']) || empty($item['price'])) {
                 throw new UnprocessableEntityHttpException('Please enter book item price.');
             }
 
@@ -280,20 +278,20 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param Book $book
-     * @param array $input
+     * @param  Book  $book
+     * @param  array  $input
      *
      * @return Book
      */
     public function attachTagsAndGenres($book, $input)
     {
-        $tags = (!empty($input['tags'])) ? $input['tags'] : [];
+        $tags = (! empty($input['tags'])) ? $input['tags'] : [];
         $tags = array_map(function ($value) {
             return is_numeric($value) ? $value : Tag::create(['name' => $value])->id;
         }, $tags);
         $book->tags()->sync($tags);
 
-        $genres = (!empty($input['genres'])) ? $input['genres'] : [];
+        $genres = (! empty($input['genres'])) ? $input['genres'] : [];
         $genres = array_map(function ($value) {
             return is_numeric($value) ? $value : Genre::create(['name' => $value])->id;
         }, $genres);
@@ -303,8 +301,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param Book $book
-     * @param array a$input
+     * @param  Book  $book
+     * @param  array a$input
      *
      * @return bool
      */
@@ -326,8 +324,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param Book $book
-     * @param array $items
+     * @param  Book  $book
+     * @param  array  $items
      * @throws Exception
      *
      * @return Book
@@ -345,8 +343,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param Book $book
-     * @param array $bookItems
+     * @param  Book  $book
+     * @param  array  $bookItems
      * @throws Exception
      * @throws ApiOperationFailedException
      *
@@ -362,7 +360,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             BookItem::whereIn('id', $removedItems)->delete();
             /** @var BookItem $bookItem */
             foreach ($bookItems as $bookItem) {
-                if (!empty($bookItem['id'])) {
+                if (! empty($bookItem['id'])) {
                     $item = BookItem::findOrFail($bookItem['id']);
                 } else {
                     $item = new BookItem();
@@ -399,7 +397,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
         $itemId = sprintf("%08d", $rand);
         while (true) {
-            if (!BookItem::whereBookCode($itemId)->exists()) {
+            if (! BookItem::whereBookCode($itemId)->exists()) {
                 break;
             }
             $itemId = rand(1, 99999999);
@@ -409,7 +407,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
-     * @param string $isbn
+     * @param  string  $isbn
      *
      * @throws ApiOperationFailedException
      *
@@ -454,7 +452,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     list($firstName, $lastName) = explode(' ', $author['name']);
 
                     $authorDBRecord = Author::whereFirstName($firstName)->whereLastName($lastName)->first();
-                    if (!empty($authorDBRecord)) {
+                    if (! empty($authorDBRecord)) {
                         $bookDetails['authors'][] = $authorDBRecord->id;
                     } else {
                         $bookDetails['authors'][] = $author['name'];
@@ -466,7 +464,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 foreach ($data['publishers'] as $publisher) {
 
                     $publisherDBRecord = Publisher::whereName($publisher['name'])->first();
-                    if (!empty($publisherDBRecord)) {
+                    if (! empty($publisherDBRecord)) {
                         $bookDetails['publishers'][] = $publisherDBRecord->id;
                     } else {
                         $bookDetails['publishers'][] = $publisher['name'];

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
@@ -10,8 +11,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class RoleRepository
- * @package App\Repositories
- * @version June 19, 2019, 10:01 am UTC
  */
 class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
@@ -41,16 +40,16 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Role[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('perms');
+        $query = $this->allQuery($search, $skip, $limit)->with('permissions');
 
         $roles = $query->orderByDesc('id')->get();
 
@@ -58,20 +57,20 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
     }
 
     /**
-     * @param int $id
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $columns
      *
      * @return Role
      */
     public function find($id, $columns = ['*'])
     {
-        $role = $this->findOrFail($id, ['perms']);
+        $role = $this->findOrFail($id, ['permissions']);
 
         return $role;
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -83,8 +82,8 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
         try {
             DB::beginTransaction();
             $role = Role::create($input);
-            if (!empty($input['permissions'])) {
-                $role->perms()->sync($input['permissions']);
+            if (! empty($input['permissions'])) {
+                $role->permissions()->sync($input['permissions']);
             }
             DB::commit();
 
@@ -97,8 +96,8 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
     }
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -114,7 +113,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
             DB::beginTransaction();
             $role->update($input);
             $permissions = (empty($input['permissions'])) ? [] : $input['permissions'];
-            $role->perms()->sync($permissions);
+            $role->permissions()->sync($permissions);
             DB::commit();
 
             return $this->find($id);

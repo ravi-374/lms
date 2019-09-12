@@ -11,9 +11,9 @@ namespace App\Traits;
 
 use App;
 use Tymon\JWTAuth\Http\Middleware\Authenticate;
+
 /**
  * Class CommonMiddlewareFunctions
- * @package App\Traits
  */
 trait CommonMiddlewareFunctions
 {

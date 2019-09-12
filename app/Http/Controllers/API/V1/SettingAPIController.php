@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * Class SettingAPIController
- * @package App\Http\Controllers\API\V1
  */
 class SettingAPIController extends AppBaseController
 {
