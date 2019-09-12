@@ -156,11 +156,12 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
+     * @param  Request  $request
      * @return JsonResponse
      */
-    public function getLoggedInMemberDetails()
+    public function getLoggedInMemberDetails(Request $request)
     {
-        $member = Auth::user();
+        $member = $request->user();
 
         return $this->sendResponse($member, 'Member details retrieved successfully.');
     }
