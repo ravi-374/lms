@@ -3,28 +3,27 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\CountryRepository;
+use App\Repositories\Contracts\CountryRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class CountryAPIController
- * @package App\Http\Controllers\API\V1
  */
 class CountryAPIController extends AppBaseController
 {
     /**
-     * @var CountryRepository
+     * @var CountryRepositoryInterface
      */
     private $countryRepository;
 
-    public function __construct(CountryRepository $countryRepository)
+    public function __construct(CountryRepositoryInterface $countryRepository)
     {
         $this->countryRepository = $countryRepository;
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMembershipPlanAPIRequest;
 use App\Http\Requests\API\UpdateMembershipPlanAPIRequest;
 use App\Models\MembershipPlan;
-use App\Repositories\MembershipPlanRepository;
+use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,29 +14,28 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class MembershipPlanController
- * @package App\Http\Controllers\API
  */
 class MembershipPlanAPIController extends AppBaseController
 {
-    /** @var  MembershipPlanRepository */
-    private $membershipPlanRepository;
+    /** @var  MembershipPlanRepositoryInterface */
+    private $membershipPlanRepo;
 
-    public function __construct(MembershipPlanRepository $membershipPlanRepo)
+    public function __construct(MembershipPlanRepositoryInterface $membershipPlanRepo)
     {
-        $this->membershipPlanRepository = $membershipPlanRepo;
+        $this->membershipPlanRepo = $membershipPlanRepo;
     }
 
     /**
      * Display a listing of the MembershipPlan.
      * GET|HEAD /membershipPlans
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
     public function index(Request $request)
     {
-        $membershipPlans = $this->membershipPlanRepository->all(
+        $membershipPlans = $this->membershipPlanRepo->all(
             $request->except(['skip', 'limit']),
             $request->get('skip', null),
             $request->get('limit', null)
@@ -48,7 +48,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Store a newly created MembershipPlan in storage.
      * POST /membershipPlans
      *
-     * @param CreateMembershipPlanAPIRequest $request
+     * @param  CreateMembershipPlanAPIRequest  $request
      *
      * @throws Exception
      *
@@ -59,7 +59,7 @@ class MembershipPlanAPIController extends AppBaseController
         $input = $request->all();
 
         /** @var MembershipPlan $membershipPlan */
-        $membershipPlan = $this->membershipPlanRepository->store($input);
+        $membershipPlan = $this->membershipPlanRepo->store($input);
 
         return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan saved successfully.');
     }
@@ -68,7 +68,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Display the specified MembershipPlan.
      * GET|HEAD /membershipPlans/{id}
      *
-     * @param MembershipPlan $membershipPlan
+     * @param  MembershipPlan  $membershipPlan
      *
      * @return JsonResponse
      */
@@ -81,8 +81,8 @@ class MembershipPlanAPIController extends AppBaseController
      * Update the specified MembershipPlan in storage.
      * PUT/PATCH /membershipPlans/{id}
      *
-     * @param MembershipPlan $membershipPlan
-     * @param UpdateMembershipPlanAPIRequest $request
+     * @param  MembershipPlan  $membershipPlan
+     * @param  UpdateMembershipPlanAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -90,7 +90,7 @@ class MembershipPlanAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $membershipPlan = $this->membershipPlanRepository->update($input, $membershipPlan->id);
+        $membershipPlan = $this->membershipPlanRepo->update($input, $membershipPlan->id);
 
         return $this->sendResponse($membershipPlan->toArray(), 'Membership Plan updated successfully.');
     }
@@ -99,7 +99,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Remove the specified MembershipPlan from storage.
      * DELETE /membershipPlans/{id}
      *
-     * @param MembershipPlan $membershipPlan
+     * @param  MembershipPlan  $membershipPlan
      *
      * @throws Exception
      *
@@ -107,7 +107,7 @@ class MembershipPlanAPIController extends AppBaseController
      */
     public function destroy(MembershipPlan $membershipPlan)
     {
-        if (!empty($membershipPlan->member)) {
+        if (! empty($membershipPlan->member)) {
             throw new BadRequestHttpException('Membership Plan can not be delete, it is assigned to one or more members.');
         }
         $membershipPlan->delete();

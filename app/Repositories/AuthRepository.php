@@ -6,16 +6,17 @@
  * Date: 12-07-2019
  * Time: 11:17 AM
  */
+
 namespace App\Repositories;
 
+use App\Repositories\Contracts\AuthRepositoryInterface;
 use App\User;
 use Auth;
 
 /**
  * Class AuthRepository
- * @package App\Repositories
  */
-class AuthRepository
+class AuthRepository implements AuthRepositoryInterface
 {
     /**
      * @return array
@@ -29,7 +30,7 @@ class AuthRepository
         $roles = $userDBRecord->roles->toArray();
         $permissions = [];
         foreach ($userDBRecord->roles as $role) {
-            $permissions = array_merge($permissions, $role->perms->toArray());
+            $permissions = array_merge($permissions, $role->permissions->toArray());
         }
 
         return [

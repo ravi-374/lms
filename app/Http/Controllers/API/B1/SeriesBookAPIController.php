@@ -1,25 +1,25 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateSeriesBookAPIRequest;
 use App\Http\Requests\API\UpdateSeriesBookAPIRequest;
 use App\Models\SeriesBook;
-use App\Repositories\SeriesBookRepository;
+use App\Repositories\Contracts\SeriesBookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class SeriesBookAPIController
- * @package App\Http\Controllers\API
  */
 class SeriesBookAPIController extends AppBaseController
 {
-    /** @var  SeriesBookRepository */
+    /** @var  SeriesBookRepositoryInterface */
     private $seriesBookRepository;
 
-    public function __construct(SeriesBookRepository $seriesBookRepo)
+    public function __construct(SeriesBookRepositoryInterface $seriesBookRepo)
     {
         $this->seriesBookRepository = $seriesBookRepo;
     }
@@ -28,7 +28,7 @@ class SeriesBookAPIController extends AppBaseController
      * Display a listing of the SeriesBook.
      * GET|HEAD /series-books
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -47,7 +47,7 @@ class SeriesBookAPIController extends AppBaseController
      * Store a newly created SeriesBook in storage.
      * POST /series-book
      *
-     * @param CreateSeriesBookAPIRequest $request
+     * @param  CreateSeriesBookAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -64,7 +64,7 @@ class SeriesBookAPIController extends AppBaseController
      * Display the specified SeriesBook.
      * GET|HEAD /series-book/{id}
      *
-     * @param SeriesBook $seriesBook
+     * @param  SeriesBook  $seriesBook
      *
      * @return JsonResponse
      */
@@ -77,8 +77,8 @@ class SeriesBookAPIController extends AppBaseController
      * Update the specified SeriesBook in storage.
      * PUT/PATCH /series-book/{id}
      *
-     * @param SeriesBook $seriesBook
-     * @param UpdateSeriesBookAPIRequest $request
+     * @param  SeriesBook  $seriesBook
+     * @param  UpdateSeriesBookAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -95,7 +95,7 @@ class SeriesBookAPIController extends AppBaseController
      * Remove the specified seriesBook from storage.
      * DELETE series-book/{id}
      *
-     * @param SeriesBook $seriesBook
+     * @param  SeriesBook  $seriesBook
      *
      * @throws Exception
      *

@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 /**
  * Class TagAPIPermissionTest
- * @package Tests\B1\APIs\Permissions
  */
 class TagAPIPermissionTest extends TestCase
 {

@@ -1,25 +1,25 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateTagAPIRequest;
 use App\Http\Requests\API\UpdateTagAPIRequest;
 use App\Models\Tag;
-use App\Repositories\TagRepository;
+use App\Repositories\Contracts\TagRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class TagAPIController
- * @package App\Http\Controllers\API
  */
 class TagAPIController extends AppBaseController
 {
-    /** @var  TagRepository */
+    /** @var  TagRepositoryInterface */
     private $tagRepository;
 
-    public function __construct(TagRepository $tagRepo)
+    public function __construct(TagRepositoryInterface $tagRepo)
     {
         $this->tagRepository = $tagRepo;
     }
@@ -28,7 +28,7 @@ class TagAPIController extends AppBaseController
      * Display a listing of the Tag.
      * GET|HEAD /tags
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -52,7 +52,7 @@ class TagAPIController extends AppBaseController
      * Store a newly created Tag in storage.
      * POST /tags
      *
-     * @param CreateTagAPIRequest $request
+     * @param  CreateTagAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -69,7 +69,7 @@ class TagAPIController extends AppBaseController
      * Display the specified Tag.
      * GET|HEAD /tags/{id}
      *
-     * @param Tag $tag
+     * @param  Tag  $tag
      *
      * @return JsonResponse
      */
@@ -82,8 +82,8 @@ class TagAPIController extends AppBaseController
      * Update the specified Tag in storage.
      * PUT/PATCH /tags/{id}
      *
-     * @param Tag $tag
-     * @param UpdateTagAPIRequest $request
+     * @param  Tag  $tag
+     * @param  UpdateTagAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -100,7 +100,7 @@ class TagAPIController extends AppBaseController
      * Remove the specified Tag from storage.
      * DELETE /tags/{id}
      *
-     * @param Tag $tag
+     * @param  Tag  $tag
      *
      * @throws Exception
      *

@@ -6,7 +6,6 @@ use App\Http\Controllers\AppBaseController;
 
 /**
  * Class CommonAPIController
- * @package App\Http\Controllers\API\B1
  */
 class CommonAPIController extends AppBaseController
 {
@@ -25,8 +24,8 @@ class CommonAPIController extends AppBaseController
             'RUB' => 'Russia',
         ]);
 
-        $currencies = $collection->map(function ($key , $value) {
-           return ['country' => $key, 'iso_code' => $value];
+        $currencies = $collection->map(function ($key, $value) {
+            return ['country' => $key, 'iso_code' => $value];
         });
 
         return $currencies->values();

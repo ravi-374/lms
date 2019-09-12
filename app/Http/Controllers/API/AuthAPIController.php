@@ -14,7 +14,7 @@ use JWTAuth;
 class AuthAPIController extends AppBaseController
 {
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -33,11 +33,11 @@ class AuthAPIController extends AppBaseController
             return $this->sendError('Invalid username or password', 422);
         }
 
-        if (!Hash::check($password, $user->password)) {
+        if (! Hash::check($password, $user->password)) {
             return $this->sendError('Invalid username or password', 422);
         }
 
-        if (!$user->is_active) {
+        if (! $user->is_active) {
             return $this->sendError('Your account is not active', 401);
         }
 
@@ -47,7 +47,7 @@ class AuthAPIController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -66,11 +66,11 @@ class AuthAPIController extends AppBaseController
             return $this->sendError('Invalid email or password.', 422);
         }
 
-        if (!Hash::check($password, $member->password)) {
+        if (! Hash::check($password, $member->password)) {
             return $this->sendError('Invalid email or password.', 422);
         }
 
-        if (!$member->is_active) {
+        if (! $member->is_active) {
             return $this->sendError('Your account is not active', 401);
         }
 

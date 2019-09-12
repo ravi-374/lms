@@ -8,9 +8,9 @@ use App\Repositories\AuthRepository;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+
 /**
  * Class AuthRepositoryTest
- * @package Tests\Repositories
  */
 class AuthRepositoryTest extends TestCase
 {
@@ -39,7 +39,7 @@ class AuthRepositoryTest extends TestCase
 
         /** @var Role $role */
         $role = factory(Role::class)->create();
-        $role->perms()->sync([$permission->id]);
+        $role->permissions()->sync([$permission->id]);
         $farhan->roles()->sync([$role->id]);
 
         $appConfig = $this->authRepo->getAppConfig();

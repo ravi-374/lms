@@ -6,9 +6,9 @@ use App\Models\Setting;
 use App\Repositories\SettingRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+
 /**
  * Class SettingRepositoryTest
- * @package Tests\Repositories
  */
 class SettingRepositoryTest extends TestCase
 {

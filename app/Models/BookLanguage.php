@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model as Model;
 /**
  * Class BookLanguage
  *
- * @package App\Models
  * @version June 19, 2019, 9:49 am UTC
  * @property string language_name
  * @property string language_code

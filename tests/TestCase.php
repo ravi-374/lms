@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\User;
 use Carbon\Carbon;
 use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\TestResponse;
 
@@ -15,7 +16,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    /** @var \Faker\Generator */
+    /** @var Generator */
     public $faker;
 
     public $loggedInUserId;
@@ -45,8 +46,8 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @param TestResponse $response
-     * @param string $message
+     * @param  TestResponse  $response
+     * @param  string  $message
      */
     public function assertSuccessMessageResponse(TestResponse $response, string $message)
     {
@@ -58,9 +59,9 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @param TestResponse $response
-     * @param array $data
-     * @param string $message
+     * @param  TestResponse  $response
+     * @param  array  $data
+     * @param  string  $message
      */
     public function assertSuccessDataResponse(TestResponse $response, array $data, string $message)
     {
@@ -73,8 +74,8 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @param TestResponse $response
-     * @param string $message
+     * @param  TestResponse  $response
+     * @param  string  $message
      */
     public function assertExceptionMessage(TestResponse $response, string $message)
     {
@@ -82,8 +83,8 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @param TestResponse $response
-     * @param string $message
+     * @param  TestResponse  $response
+     * @param  string  $message
      */
     public function assertErrorMessageResponse(TestResponse $response, string $message)
     {
@@ -95,8 +96,8 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @param TestResponse $response
-     * @param string $message
+     * @param  TestResponse  $response
+     * @param  string  $message
      */
     public function assertJsonErrorMessageResponse(TestResponse $response, string $message)
     {
@@ -107,8 +108,8 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @param int|User $userId
-     * @param array $permissions
+     * @param  int|User  $userId
+     * @param  array  $permissions
      *
      * @return User
      */
@@ -119,19 +120,19 @@ abstract class TestCase extends BaseTestCase
 
         foreach ($permissions as $permission) {
             $permission = Permission::whereName($permission)->first();
-            $role->attachPermission($permission);
+            $role->givePermissionTo($permission);
         }
 
         /** @var User $user */
         $user = (is_int($userId)) ? User::findOrFail($userId) : $userId;
-        $user->attachRole($role);
+        $user->assignRole($role);
 
         return $user;
     }
 
     /**
-     * @param string $string
-     * @param string $timezone
+     * @param  string  $string
+     * @param  string  $timezone
      *
      * @return Carbon
      */

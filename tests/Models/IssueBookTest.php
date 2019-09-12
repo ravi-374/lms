@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 /**
  * Class IssueBookTest
- * @package Tests\Integration\Models
  */
 class IssueBookTest extends TestCase
 {

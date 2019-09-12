@@ -1,15 +1,14 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\BookLanguage;
-use App\Repositories\Contracts\BookLanguageInterface;
+use App\Repositories\Contracts\BookLanguageRepositoryInterface;
 
 /**
  * Class BookLanguageRepository
- * @package App\Repositories
- * @version June 19, 2019, 9:49 am UTC
  */
-class BookLanguageRepository extends BaseRepository implements BookLanguageInterface
+class BookLanguageRepository extends BaseRepository implements BookLanguageRepositoryInterface
 {
     /**
      * @var array

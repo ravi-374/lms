@@ -7,27 +7,26 @@ use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
-use App\Repositories\IssuedBookRepository;
+use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class IssuedBookController
- * @package App\Http\Controllers\API
  */
 class IssuedBookAPIController extends AppBaseController
 {
-    /** @var  IssuedBookRepository */
+    /** @var  IssuedBookRepositoryInterface */
     private $issuedBookRepository;
 
-    public function __construct(IssuedBookRepository $issuedBookRepo)
+    public function __construct(IssuedBookRepositoryInterface $issuedBookRepository)
     {
-        $this->issuedBookRepository = $issuedBookRepo;
+        $this->issuedBookRepository = $issuedBookRepository;
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -52,8 +51,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
-     * @param Request $request
+     * @param  BookItem  $bookItem
+     * @param  Request  $request
      *
      * @throws Exception
      *
@@ -70,8 +69,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
-     * @param Request $request
+     * @param  BookItem  $bookItem
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -87,8 +86,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
-     * @param Request $request
+     * @param  BookItem  $bookItem
+     * @param  Request  $request
      *
      * @throws Exception
      *
@@ -105,8 +104,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
-     * @param Request $request
+     * @param  BookItem  $bookItem
+     * @param  Request  $request
      *
      * @throws Exception
      *
@@ -123,7 +122,7 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param IssuedBook $issuedBook
+     * @param  IssuedBook  $issuedBook
      *
      * @return JsonResponse
      */
@@ -144,8 +143,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $id
-     * @param UpdateIssuedBookAPIRequest $request
+     * @param  int  $id
+     * @param  UpdateIssuedBookAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -161,7 +160,7 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      *
      * @throws Exception
      *
@@ -179,8 +178,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param Member $member
-     * @param Request $request
+     * @param  Member  $member
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -199,7 +198,7 @@ class IssuedBookAPIController extends AppBaseController
             return $issuedBook->apiObj();
         });
 
-        $totalRecords = (!empty($search['search'])) ? count($records) : IssuedBook::ofMember($search['member_id'])->count();
+        $totalRecords = (! empty($search['search'])) ? count($records) : IssuedBook::ofMember($search['member_id'])->count();
 
         return $this->sendResponse(
             $records,
@@ -209,8 +208,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
-     * @param Request $request
+     * @param  BookItem  $bookItem
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

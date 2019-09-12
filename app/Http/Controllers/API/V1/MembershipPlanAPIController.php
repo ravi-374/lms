@@ -1,26 +1,21 @@
 <?php
+
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateMembershipPlanAPIRequest;
-use App\Http\Requests\API\UpdateMembershipPlanAPIRequest;
-use App\Models\MembershipPlan;
-use App\Repositories\MembershipPlanRepository;
-use Exception;
+use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class MembershipPlanController
- * @package App\Http\Controllers\API
  */
 class MembershipPlanAPIController extends AppBaseController
 {
-    /** @var  MembershipPlanRepository */
+    /** @var  MembershipPlanRepositoryInterface */
     private $membershipPlanRepository;
 
-    public function __construct(MembershipPlanRepository $membershipPlanRepo)
+    public function __construct(MembershipPlanRepositoryInterface $membershipPlanRepo)
     {
         $this->membershipPlanRepository = $membershipPlanRepo;
     }
@@ -29,7 +24,7 @@ class MembershipPlanAPIController extends AppBaseController
      * Display a listing of the MembershipPlan.
      * GET|HEAD /membershipPlans
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

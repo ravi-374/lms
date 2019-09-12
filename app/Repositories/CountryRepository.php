@@ -6,15 +6,16 @@
  * Date: 13-07-2019
  * Time: 03:31 PM
  */
+
 namespace App\Repositories;
 
 use App\Models\Country;
+use App\Repositories\Contracts\CountryRepositoryInterface;
 
 /**
  * Class CountryRepository
- * @package App\Repositories
  */
-class CountryRepository extends BaseRepository
+class CountryRepository extends BaseRepository implements CountryRepositoryInterface
 {
     /**
      * @var array

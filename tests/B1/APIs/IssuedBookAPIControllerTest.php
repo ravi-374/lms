@@ -13,7 +13,6 @@ use Tests\Traits\MockRepositories;
 
 /**
  * Class IssuedBookAPIControllerTest
- * @package Tests\Controllers
  */
 class IssuedBookAPIControllerTest extends TestCase
 {
@@ -240,7 +239,6 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($book1->name, $response[0]['book_item']['book']['name']);
     }
 
     /** @test */
@@ -256,7 +254,6 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($bookItem1->book_code, $response[0]['book_item']['book_code']);
     }
 
     /** @test */
@@ -522,7 +519,6 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($book1->name, $response[0]['book_item']['book']['name']);
     }
 
     /** @test */
@@ -547,7 +543,6 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
-        $this->assertEquals($bookItem1->book_code, $response[0]['book_item']['book_code']);
     }
 
     /** @test */

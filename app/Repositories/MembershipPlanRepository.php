@@ -1,16 +1,16 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\MembershipPlan;
+use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class MembershipPlanRepository
- * @package App\Repositories
- * @version June 24, 2019, 10:42 am UTC
  */
-class MembershipPlanRepository extends BaseRepository
+class MembershipPlanRepository extends BaseRepository implements MembershipPlanRepositoryInterface
 {
     /**
      * @var array
@@ -40,8 +40,8 @@ class MembershipPlanRepository extends BaseRepository
     }
 
     /**
-     * @param int $id
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $columns
      *
      * @return MembershipPlan
      */
@@ -51,7 +51,7 @@ class MembershipPlanRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws Exception
      * @return MembershipPlan
@@ -66,8 +66,8 @@ class MembershipPlanRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @return MembershipPlan
      */
@@ -84,13 +84,13 @@ class MembershipPlanRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return bool
      */
     public function validateMembershipPlan($input)
     {
-        if (!in_array($input['frequency'], [MembershipPlan::MONTHLY_FREQUENCY, MembershipPlan::YEARLY_FREQUENCY])) {
+        if (! in_array($input['frequency'], [MembershipPlan::MONTHLY_FREQUENCY, MembershipPlan::YEARLY_FREQUENCY])) {
             throw new UnprocessableEntityHttpException('invalid frequency.');
         }
 
