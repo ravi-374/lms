@@ -182,7 +182,6 @@ select {
                     border-top: 1px solid $border-bg;
                     top: -1px;
                 }
-
             }
         }
     }
@@ -200,10 +199,10 @@ select {
 
 .brand-minimized {
 
-    .infy-logo {
+    .header__app-logo {
         margin-left: 1px;
     }
-    .infy-name {
+    .header__app-name {
         display: none;
     }
 }
@@ -239,5 +238,39 @@ select {
             display: inline-block;
             margin: 7px;
         }
+    }
+    &__user-name {
+        vertical-align: middle;
+    }
+
+    &__app-logo {
+        width: 40px;
+    }
+
+    &__app-name {
+        color: $infy-name;
+    }
+
+    &__dropdown {
+        right: auto;
+    }
+}
+
+.app-header .navbar-brand {
+    width: auto !important;
+    margin-left: 10px;
+}
+
+@media (max-width: 991px) {
+    .app-header .navbar-brand {
+        width: calc(100% - 215px) !important;
+        margin: auto;
+        position: unset !important;
+    }
+}
+
+@media (max-width: 580px) {
+    .app-header .navbar-brand {
+        width: auto !important;
     }
 }

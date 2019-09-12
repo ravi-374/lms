@@ -1,25 +1,13 @@
-import React, {Fragment, useEffect} from 'react';
-import {connect} from 'react-redux';
+import React, {Fragment} from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
-import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react'
-import {publicImagePath, publicImagePathURL} from '../../../appConstant';
-import {getUserProfile} from "../../../store/action/localStorageAction";
-import {Routes, LocalStorageKey, appSettingsKey} from "../../../constants";
-import {fetchAppSetting} from "../../../store/action/appSettingAction";
+import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
+import {publicImagePathURL} from '../../../appConstant';
+import {Routes} from "../../../constants";
 import {getAvatarName} from "../../../shared/sharedMethod";
 
 const Header = (props) => {
-    const { user, getUserProfile, history, fetchAppSetting, appSetting } = props;
+    const { user, history, appName, appLogo } = props;
     let imageUrl = null;
-    let appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
-    let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
-        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
-
-    useEffect(() => {
-        fetchAppSetting();
-        getUserProfile(LocalStorageKey.USER);
-    }, []);
-
     if (user) {
         user.name = user.first_name;
         if (user.last_name) {
@@ -36,8 +24,8 @@ const Header = (props) => {
         <Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile/>
             <AppNavbarBrand>
-                <img className="infy-logo" src={appLogo} height="19" width="40" alt="InfyOm Logo"/>
-                <span className="ml-2 infy-name" style={{ color: '#20a8d8' }}>{appName}</span>
+                <img className="header__app-logo" src={appLogo} alt={appLogo}/>
+                <span className="ml-2 header__app-name">{appName}</span>
             </AppNavbarBrand>
             <Nav className="ml-auto" navbar>
                 <AppHeaderDropdown direction="down">
@@ -47,9 +35,9 @@ const Header = (props) => {
                                 <span className="header__avatar-text">{getAvatarName(user.name)}</span>
                             </div>
                         }
-                        <span className="mr-3" style={{ verticalAlign: 'sub' }}>{user ? user.name : 'User'}</span>
+                        <span className="mr-3 header__user-name">{user ? user.name : null}</span>
                     </DropdownToggle>
-                    <DropdownMenu right style={{ right: 'auto' }}>
+                    <DropdownMenu right className="header__user-name">
                         <DropdownItem onClick={goToUserProfile}><i className="fa fa-cog"/>Profile</DropdownItem>
                         <DropdownItem onClick={e => props.onLogout(e)}><i className="fa fa-lock"/> Logout</DropdownItem>
                     </DropdownMenu>
@@ -58,8 +46,5 @@ const Header = (props) => {
         </Fragment>
     );
 };
-const mapStateToProps = (state) => {
-    const { profile, appSetting } = state;
-    return { user: profile, appSetting: appSetting }
-};
-export default connect(mapStateToProps, { getUserProfile, fetchAppSetting })(Header);
+
+export default Header;
