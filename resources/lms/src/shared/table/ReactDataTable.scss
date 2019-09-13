@@ -16,89 +16,105 @@
     }
 }
 
-.dwInao {
-    height: 35px;
-    width: 35px;
-    padding: 0;
-    margin: 0;
-    border-radius: 0 !important;
-}
-
-.sc-hSdWYo {
+.uZNoG {
     border: 1px solid $pagination-border-color;
-    margin: 0;
-}
-
-.innQGC {
-    border: 1px solid $pagination-border-color;
-    margin-right: 13px;
-    padding: 8px;
     border-radius: 5px;
-
-    &:first-child {
-        border-radius: 5px 0 0 5px;
-    }
+    padding: 6px;
+    margin: 0;
 }
 
-.stWhL {
-    margin: 0 13px 0 -13px;
-    padding-right: 0;
-    border-radius: 0 5px 5px 0;
+.eWVAiH {
+    height: 31px;
+}
+
+.jNSZEp {
     border-top: 1px solid $pagination-border-color;
     border-bottom: 1px solid $pagination-border-color;
     border-right: 1px solid $pagination-border-color;
-
-    svg {
-        margin-top: 5px;
-    }
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: -2px;
+    margin-right: 30px;
 }
 
-.ESHtS {
-    height: 35px !important;
+.jNSZEp svg {
+    top: 4px;
 }
 
 #pagination-first-page {
-    border-left: 1px solid $pagination-border-color;
-    outline-color: $blue;
+    border: 1px solid $pagination-border-color;
+    outline: none;
 
     &:hover:not(:disabled) {
         svg {
             fill: $white;
         }
+    }
+
+    &:focus {
+        border: 1px solid $blue;
     }
 }
 
 #pagination-previous-page {
-    border-left: 1px solid $pagination-border-color;
-    outline-color: $blue;
+    border: 1px solid $pagination-border-color;
+    outline: none;
 
     &:hover:not(:disabled) {
         svg {
             fill: $white;
         }
+    }
+
+    &:focus {
+        border: 1px solid $blue;
     }
 }
 
 #pagination-next-page {
-    border-left: 1px solid $pagination-border-color;
-    outline-color: $blue;
+    border: 1px solid $pagination-border-color;
+    outline: none;
 
     &:hover:not(:disabled) {
         svg {
             fill: $white;
         }
+    }
+
+    &:focus {
+        border: 1px solid $blue;
     }
 }
 
 #pagination-last-page {
-    border-left: 1px solid #c8ced3;
-    outline-color: $blue;
+    border: 1px solid #c8ced3;
+    outline: none;
 
     &:hover:not(:disabled) {
         svg {
             fill: $white;
         }
     }
+
+    &:focus {
+        border: 1px solid $blue;
+    }
+}
+
+// page number main section class
+.sc-iAyFgw {
+    margin-left: 10px;
+}
+
+// page number main section
+.sc-kEYyzF {
+    margin-right: 10px;
+    height: 35px !important;
+}
+
+// row per page section main class
+.sc-hSdWYo {
+    height: 35px !important;
 }
 
 .rdt_TableRow {
