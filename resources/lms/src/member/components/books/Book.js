@@ -20,7 +20,7 @@ const Book = ({ books, addToast, reserveBook }) => {
         <Table hover bordered striped responsive size="md">
             <thead>
             <tr>
-                <th>Cover</th>
+                <th className="text-center">Cover</th>
                 <th>Book Code</th>
                 <th>Book Name</th>
                 <th>Author(s)</th>
