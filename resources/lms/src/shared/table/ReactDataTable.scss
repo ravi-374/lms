@@ -129,28 +129,52 @@
         }
     }
 }
-
-.feAjYt span.__rdt_custom_sort_icon__ i {
+/* This class name should be renamed as the package has been updated
+    Purpose for this class name is to be provide a specified width for sort icon aligned on table header
+ */
+.caUhkS span.__rdt_custom_sort_icon__ i {
     width: auto !important;
     height: auto !important;
     font-size: 12px !important;
 }
 
-.eLcwWI span.__rdt_custom_sort_icon__ i {
+/* This class name should be renamed as the package has been updated
+    Purpose for this class name is to be unset an initial opacity for asc sorted icon
+ */
+.caUhkS span.__rdt_custom_sort_icon__.asc i {
+    opacity: unset;
+    transform: none !important;
+}
+
+/* This class name should be renamed as the package has been updated
+    Purpose for this class name is to be override an opacity of  default class name by asc icon
+ */
+.caUhkS span.__rdt_custom_sort_icon__.asc i.sort-arrow-group__visible {
+    opacity: .5;
+}
+
+
+/* This class name should be renamed as the package has been updated
+    Purpose for this class name is to be override an opacity of default class name by desc icon
+ */
+.caUhkS span.__rdt_custom_sort_icon__.desc i.sort-arrow-group__visible {
+    opacity: .5;
+}
+
+/* This class name should be renamed as the package has been updated
+     Purpose for this class name is to be provide a specified width for sort icon aligned on table header at the time of hovered
+ */
+.jWjBKP span.__rdt_custom_sort_icon__.asc i {
     width: auto !important;
     height: auto !important;
     font-size: 12px !important;
-}
-
-.feAjYt span.__rdt_custom_sort_icon__.asc i {
     transform: none !important;
 }
 
-.eLcwWI span.__rdt_custom_sort_icon__.asc i, .eLcwWI span.__rdt_custom_sort_icon__.asc svg {
-    transform: none !important;
-}
-
-.eLcwWI:hover span, .eLcwWI:hover span.__rdt_custom_sort_icon__ * {
+/* This class name should be renamed as the package has been updated
+    Purpose for this class name is to be override default opacity when sorted header icon should be hovered
+ */
+.jWjBKP:hover span, .jWjBKP:hover span.__rdt_custom_sort_icon__ * {
     opacity: 0.8 !important;
 }
 
@@ -162,16 +186,8 @@
         position: absolute;
         right: 0;
         width: 25px;
-        top: 8px;
+        top: 10px;
     }
-}
-
-.feAjYt span.__rdt_custom_sort_icon__ i {
-    opacity: unset;
-}
-
-.feAjYt span.__rdt_custom_sort_icon__ i.sort-arrow-group__visible {
-    opacity: .5;
 }
 
 .search-filter-container, .search-container {
