@@ -101,9 +101,11 @@ Route::group(['middleware' => 'user.auth'], function () {
     });
 
     // Reserve Book
-    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')->name('reserve-book');
+    Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')
+        ->name('reserve-book');
     // Un-Reserve Book
-    Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook')->name('un-reserve-book');
+    Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook')
+        ->name('un-reserve-book');
 
     // Update issued book status
     Route::put('books/{book_item}/update-issued-book-status', 'IssuedBookAPIController@updateIssuedBookStatus')

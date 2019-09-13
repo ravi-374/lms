@@ -1,0 +1,44 @@
+@media (max-width: 1544px) {
+    .settings__form {
+        position: absolute;
+        left: 24%;
+        width: 77%;
+    }
+}
+
+@media (max-width: 1120px) {
+    .settings__form {
+        position: absolute;
+        left: 30%;
+        width: 70%;
+    }
+}
+
+@media (max-width: 765px) {
+    .settings {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+
+        .settings__logo {
+            max-width: 100%;
+            margin-bottom: 30px;
+
+            .settings__logo-heading {
+                margin-left: calc(1px - -15%);
+            }
+        }
+    }
+    .settings__form {
+        position: relative;
+        left: 0;
+
+        .settings__form-columns {
+            flex-direction: column;
+
+            .col-6 {
+                max-width: 100%;
+            }
+        }
+    }
+}
