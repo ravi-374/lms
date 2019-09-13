@@ -10,7 +10,7 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {publicImagePathURL, publicImagePath} from "../../../appConstant";
-import {prepareFullAddress} from "../../../shared/sharedMethod";
+import {getAvatarName, prepareFullAddress} from "../../../shared/sharedMethod";
 
 const MemberDetail = props => {
     const [isEditBookAllotment, setIsEditBookAllotment] = useState(false);
@@ -47,7 +47,7 @@ const MemberDetail = props => {
         toggleModal,
         member
     };
-    const imageUrl = member.image ? publicImagePathURL.MEMBER_AVATAR_URL + member.image : publicImagePath.USER_AVATAR;
+    const imageUrl = member.image ? publicImagePathURL.MEMBER_AVATAR_URL + member.image : null;
     const { address } = member;
     const fullAddress = prepareFullAddress(address);
     return (
@@ -69,9 +69,15 @@ const MemberDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="member-detail-row no-gutters">
-                                    <div className="member__image-holder-wrapper">
-                                        <div className="member__image-holder">
-                                            <img src={imageUrl} height="250"/>
+                                    <div className="member-detail__image-holder-wrapper">
+                                        <div className="member-detail__image-holder">
+                                            {imageUrl ? <img src={imageUrl} height="250"/> :
+                                                <div className="member-detail__avatar">
+                                                    <span className="member-detail__avatar-text">
+                                                    {getAvatarName(member.first_name + ' ' + member.last_name)}
+                                                    </span>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div className="member-detail">
