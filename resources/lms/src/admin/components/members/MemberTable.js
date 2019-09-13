@@ -56,6 +56,7 @@ const MemberTable = (props) => {
             name: 'Status',
             selector: 'status',
             width: '90px',
+            center: true,
             cell: (row) =>
                 <div className="member-form__switch">
                     <Field name="is_active" checked={row.is_active} component={ToggleSwitch}

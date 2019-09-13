@@ -15,6 +15,8 @@ import {prepareRoles} from "../../shared/prepareArray";
 import {fetchRoles} from "../../store/actions/roleAction";
 import {fetchCountries} from "../../store/actions/countryAction";
 import {editUser} from "../../store/actions/userAction";
+import {maxDigits} from "../../constants";
+import {enableDisableUserInput} from "../../../shared/sharedMethod";
 
 const UserForm = (props) => {
     const { initialValues, change, roles, countries, fetchCountries, fetchRoles } = props;
@@ -106,9 +108,9 @@ const UserForm = (props) => {
                                required={!initialValues} autoComplete={initialValues ? 'off' : 'new-password'}
                                type="password" groupText="lock" component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
-                        <Field name="phone" label="Phone No." type="number" groupText="phone" component={InputGroup}/>
-                    </Col>
+                    <Field name="phone" type="number" label="Phone No."
+                           onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
+                           component={InputGroup}/>
                     <Col xs={6}>
                         <Field name="role" label="Role" required options={roles} placeholder="Select Role"
                                groupText="tasks" component={Select} isSearchable={true} isMini={true}/>

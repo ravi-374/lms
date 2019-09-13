@@ -12,6 +12,10 @@
             &:first-child {
                 border-left: 0 !important;
             }
+
+            #column-status {
+                width: auto;
+            }
         }
     }
 }
@@ -129,6 +133,7 @@
         }
     }
 }
+
 /* This class name should be renamed as the package has been updated
     Purpose for this class name is to be provide a specified width for sort icon aligned on table header
  */
@@ -152,7 +157,6 @@
 .caUhkS span.__rdt_custom_sort_icon__.asc i.sort-arrow-group__visible {
     opacity: .5;
 }
-
 
 /* This class name should be renamed as the package has been updated
     Purpose for this class name is to be override an opacity of default class name by desc icon

@@ -27,7 +27,7 @@ const Book = ({ books, addToast, reserveBook }) => {
                 <th>Edition</th>
                 <th>Language</th>
                 <th>Expected Available Date</th>
-                <th>Status</th>
+                <th className="text-center">Status</th>
                 <th className="text-center">Action</th>
             </tr>
             </thead>
@@ -56,7 +56,7 @@ const Book = ({ books, addToast, reserveBook }) => {
                         <td className="align-middle book__table-row-expected-available-date">
                             {book.expected_available_date ? dateFormatter(book.expected_available_date) : null}
                         </td>
-                        <td className="align-middle book__table-row-status">
+                        <td className="align-middle text-center book__table-row-status">
                             {book.status === bookItemStatusConstants.AVAILABLE ?
                                 <span className="text-success"> Available</span> :
                                 <span className="text-danger"> Unavailable</span>}
