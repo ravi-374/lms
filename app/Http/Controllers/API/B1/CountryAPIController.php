@@ -6,29 +6,29 @@
  * Date: 13-07-2019
  * Time: 03:31 PM
  */
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\CountryRepository;
+use App\Repositories\Contracts\CountryRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class CountryAPIController
- * @package App\Http\Controllers\API\B1
  */
 class CountryAPIController extends AppBaseController
 {
-    /** @var CountryRepository */
+    /** @var CountryRepositoryInterface */
     private $countryRepo;
 
-    public function __construct(CountryRepository $countryRepo)
+    public function __construct(CountryRepositoryInterface $countryRepo)
     {
         $this->countryRepo = $countryRepo;
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

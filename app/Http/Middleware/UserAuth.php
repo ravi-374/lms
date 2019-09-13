@@ -16,7 +16,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
  * Class UserAuth
- * @package App\Http\Middleware
  */
 class UserAuth
 {

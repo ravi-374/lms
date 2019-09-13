@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface BookSeriesRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface BookSeriesRepositoryInterface
 {
@@ -23,17 +22,17 @@ interface BookSeriesRepositoryInterface
     public function model();
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws ApiOperationFailedException
      *
@@ -42,8 +41,8 @@ interface BookSeriesRepositoryInterface
     public function store($input);
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @throws ApiOperationFailedException
      *

@@ -6,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Exceptions\MissingPropertyException;
 use App\Models\BookSeries;
 use App\Models\SeriesBook;
+use App\Repositories\Contracts\SeriesBookRepositoryInterface;
 use Arr;
 use DB;
 use Exception;
@@ -14,10 +15,8 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class SeriesBookRepository
- * @package App\Repositories
- * @version June 25, 2019, 10:36 am UTC
  */
-class SeriesBookRepository extends BaseRepository
+class SeriesBookRepository extends BaseRepository implements SeriesBookRepositoryInterface
 {
     /** @var BookRepository */
     private $bookRepo;
@@ -56,8 +55,8 @@ class SeriesBookRepository extends BaseRepository
     }
 
     /**
-     * @param BookSeries $bookSeries
-     * @param array $seriesItems
+     * @param  BookSeries  $bookSeries
+     * @param  array  $seriesItems
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -73,7 +72,7 @@ class SeriesBookRepository extends BaseRepository
             DB::beginTransaction();
             SeriesBook::whereIn('id', $removedItems)->delete();
             foreach ($seriesItems as $seriesItem) {
-                if (!empty($seriesItem['id'])) {
+                if (! empty($seriesItem['id'])) {
                     $item = SeriesBook::findOrFail($seriesItem['id']);
                 } else {
                     $item = new SeriesBook();
@@ -96,7 +95,7 @@ class SeriesBookRepository extends BaseRepository
     }
 
     /**
-     * @param array $seriesItems
+     * @param  array  $seriesItems
      *
      * @throws MissingPropertyException
      *
@@ -110,11 +109,11 @@ class SeriesBookRepository extends BaseRepository
         }
 
         foreach ($seriesItems as $seriesItem) {
-            if (!isset($seriesItem['book_id'])) {
+            if (! isset($seriesItem['book_id'])) {
                 throw new MissingPropertyException('Book is required.');
             }
 
-            if (!isset($seriesItem['sequence'])) {
+            if (! isset($seriesItem['sequence'])) {
                 throw new MissingPropertyException('Sequence is required.');
             }
 

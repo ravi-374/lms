@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 /**
  * Class MemberAuthControllerTest
- * @package Tests\V1\APIs\Validations
  */
 class MemberAuthControllerTest extends TestCase
 {

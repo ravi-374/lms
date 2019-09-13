@@ -7,9 +7,9 @@ use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+
 /**
  * Class UserRepositoryTest
- * @package Tests\Repositories
  */
 class UserRepositoryTest extends TestCase
 {

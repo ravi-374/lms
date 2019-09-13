@@ -5,9 +5,9 @@ namespace App\Providers\JWT;
 
 use App\Models\Member;
 use Tymon\JWTAuth\Providers\Auth\Illuminate;
+
 /**
  * Class MemberJWTAuthProvider
- * @package App\Providers\JWT
  */
 class MemberJWTAuthProvider extends Illuminate
 {

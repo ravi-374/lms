@@ -1,25 +1,25 @@
 <?php
+
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreatePermissionAPIRequest;
 use App\Http\Requests\API\UpdatePermissionAPIRequest;
 use App\Models\Permission;
-use App\Repositories\PermissionRepository;
+use App\Repositories\Contracts\PermissionRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class PermissionAPIController
- * @package App\Http\Controllers\API
  */
 class PermissionAPIController extends AppBaseController
 {
-    /** @var  PermissionRepository */
+    /** @var  PermissionRepositoryInterface */
     private $permissionRepository;
 
-    public function __construct(PermissionRepository $permissionRepo)
+    public function __construct(PermissionRepositoryInterface $permissionRepo)
     {
         $this->permissionRepository = $permissionRepo;
     }
@@ -28,7 +28,7 @@ class PermissionAPIController extends AppBaseController
      * Display a listing of the Permission.
      * GET|HEAD /permissions
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -47,7 +47,7 @@ class PermissionAPIController extends AppBaseController
      * Store a newly created Permission in storage.
      * POST /permissions
      *
-     * @param CreatePermissionAPIRequest $request
+     * @param  CreatePermissionAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -64,7 +64,7 @@ class PermissionAPIController extends AppBaseController
      * Display the specified Permission.
      * GET|HEAD /permissions/{id}
      *
-     * @param Permission $permission
+     * @param  Permission  $permission
      *
      * @return JsonResponse
      */
@@ -77,8 +77,8 @@ class PermissionAPIController extends AppBaseController
      * Update the specified Permission in storage.
      * PUT/PATCH /permissions/{id}
      *
-     * @param Permission $permission
-     * @param UpdatePermissionAPIRequest $request
+     * @param  Permission  $permission
+     * @param  UpdatePermissionAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -95,7 +95,7 @@ class PermissionAPIController extends AppBaseController
      * Remove the specified Permission from storage.
      * DELETE /permissions/{id}
      *
-     * @param Permission $permission
+     * @param  Permission  $permission
      *
      * @throws Exception
      *

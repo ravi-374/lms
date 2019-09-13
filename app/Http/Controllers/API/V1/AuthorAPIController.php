@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\AuthorRepository;
+use App\Repositories\Contracts\AuthorRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class AuthorAPIController
- * @package App\Http\Controllers\API
  */
 class AuthorAPIController extends AppBaseController
 {
-    /** @var  AuthorRepository */
+    /** @var  AuthorRepositoryInterface */
     private $authorRepository;
 
-    public function __construct(AuthorRepository $authorRepo)
+    public function __construct(AuthorRepositoryInterface $authorRepo)
     {
         $this->authorRepository = $authorRepo;
     }
@@ -25,7 +24,7 @@ class AuthorAPIController extends AppBaseController
      * Display a listing of the Author.
      * GET|HEAD /authors
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return JsonResponse
      */
     public function index(Request $request)

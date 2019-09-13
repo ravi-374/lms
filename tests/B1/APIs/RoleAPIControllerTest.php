@@ -103,12 +103,12 @@ class RoleAPIControllerTest extends TestCase
 
         /** @var Role $role */
         $role = factory(Role::class)->create();
-        $role->perms()->sync([$permission->id]);
+        $role->permissions()->sync([$permission->id]);
 
         $response = $this->getJson(route('api.b1.roles.show', $role->id));
 
         $this->assertSuccessDataResponse($response, $role->toArray(), 'Role retrieved successfully.');
-        $this->assertEquals($permission->id, $response->original['data']['perms'][0]['id']);
+        $this->assertEquals($permission->id, $response->original['data']['permissions'][0]['id']);
     }
 
     /** @test */

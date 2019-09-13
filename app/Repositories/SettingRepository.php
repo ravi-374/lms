@@ -11,15 +11,15 @@ namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Setting;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Traits\ImageTrait;
 use Arr;
 use Illuminate\Http\UploadedFile;
 
 /**
  * Class SettingRepository
- * @package App\Repositories
  */
-class SettingRepository extends BaseRepository
+class SettingRepository extends BaseRepository implements SettingRepositoryInterface
 {
     /**
      * @var array
@@ -48,7 +48,7 @@ class SettingRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @return array
      */
@@ -66,7 +66,7 @@ class SettingRepository extends BaseRepository
     }
 
     /**
-     * @param UploadedFile $image
+     * @param  UploadedFile  $image
      *
      * @throws ApiOperationFailedException
      *
@@ -77,7 +77,7 @@ class SettingRepository extends BaseRepository
         /** @var Setting $setting */
         $setting = Setting::where('key', Setting::LIBRARY_LOGO)->first();
 
-        if (!empty($setting->value)) {
+        if (! empty($setting->value)) {
             $setting->deleteImage(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$setting->value);
         }
 

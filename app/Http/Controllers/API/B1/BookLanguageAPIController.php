@@ -6,7 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookLanguageAPIRequest;
 use App\Http\Requests\API\UpdateBookLanguageAPIRequest;
 use App\Models\BookLanguage;
-use App\Repositories\BookLanguageRepository;
+use App\Repositories\Contracts\BookLanguageRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,14 +14,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookLanguageAPIController
- * @package App\Http\Controllers\API
  */
 class BookLanguageAPIController extends AppBaseController
 {
-    /** @var  BookLanguageRepository */
+    /** @var  BookLanguageRepositoryInterface */
     private $bookLanguageRepository;
 
-    public function __construct(BookLanguageRepository $bookLanguageRepo)
+    public function __construct(BookLanguageRepositoryInterface $bookLanguageRepo)
     {
         $this->bookLanguageRepository = $bookLanguageRepo;
     }
@@ -30,7 +29,7 @@ class BookLanguageAPIController extends AppBaseController
      * Display a listing of the BookLanguage.
      * GET|HEAD /bookLanguages
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -54,7 +53,7 @@ class BookLanguageAPIController extends AppBaseController
      * Store a newly created BookLanguage in storage.
      * POST /bookLanguages
      *
-     * @param CreateBookLanguageAPIRequest $request
+     * @param  CreateBookLanguageAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -71,7 +70,7 @@ class BookLanguageAPIController extends AppBaseController
      * Display the specified BookLanguage.
      * GET|HEAD /bookLanguages/{id}
      *
-     * @param BookLanguage $bookLanguage
+     * @param  BookLanguage  $bookLanguage
      *
      * @return JsonResponse
      */
@@ -84,8 +83,8 @@ class BookLanguageAPIController extends AppBaseController
      * Update the specified BookLanguage in storage.
      * PUT/PATCH /bookLanguages/{id}
      *
-     * @param BookLanguage $bookLanguage
-     * @param UpdateBookLanguageAPIRequest $request
+     * @param  BookLanguage  $bookLanguage
+     * @param  UpdateBookLanguageAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -102,7 +101,7 @@ class BookLanguageAPIController extends AppBaseController
      * Remove the specified BookLanguage from storage.
      * DELETE /bookLanguages/{id}
      *
-     * @param BookLanguage $bookLanguage
+     * @param  BookLanguage  $bookLanguage
      *
      * @throws Exception
      *
@@ -110,7 +109,7 @@ class BookLanguageAPIController extends AppBaseController
      */
     public function destroy(BookLanguage $bookLanguage)
     {
-        if (!empty($bookLanguage->bookItems->toArray())) {
+        if (! empty($bookLanguage->bookItems->toArray())) {
             throw new BadRequestHttpException('Book Language can not be delete, it is used in one or more book items.');
         }
         $bookLanguage->delete();

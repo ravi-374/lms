@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Farhan-InfyOm
- * Date: 6/19/2019
- * Time: 5:47 PM
- */
 
 namespace App\Repositories\Contracts;
 
@@ -12,9 +6,9 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Models\Book;
 use Exception;
 use Illuminate\Support\Collection;
+
 /**
  * Interface BookRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface BookRepositoryInterface
 {
@@ -29,17 +23,17 @@ interface BookRepositoryInterface
     public function model();
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Book[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * @param string $isbn
+     * @param  string  $isbn
      *
      * @throws ApiOperationFailedException
      *
@@ -48,8 +42,8 @@ interface BookRepositoryInterface
     public function getBookDetailsFromISBN($isbn);
 
     /**
-     * @param Book $book
-     * @param array $bookItems
+     * @param  Book  $book
+     * @param  array  $bookItems
      * @throws Exception
      * @throws ApiOperationFailedException
      *
@@ -58,8 +52,8 @@ interface BookRepositoryInterface
     public function createOrUpdateBookItems($book, $bookItems);
 
     /**
-     * @param Book $book
-     * @param array $items
+     * @param  Book  $book
+     * @param  array  $items
      * @throws Exception
      *
      * @return Book
@@ -67,8 +61,8 @@ interface BookRepositoryInterface
     public function addBookItems($book, $items);
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      * @throws Exception
      * @throws ApiOperationFailedException
      *
@@ -77,7 +71,7 @@ interface BookRepositoryInterface
     public function update($input, $id);
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws Exception
      *

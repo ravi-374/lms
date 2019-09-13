@@ -6,7 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateGenreAPIRequest;
 use App\Http\Requests\API\UpdateGenreAPIRequest;
 use App\Models\Genre;
-use App\Repositories\GenreRepository;
+use App\Repositories\Contracts\GenreRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,14 +14,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class GenreAPIController
- * @package App\Http\Controllers\API
  */
 class GenreAPIController extends AppBaseController
 {
-    /** @var  GenreRepository */
+    /** @var  GenreRepositoryInterface */
     private $genreRepository;
 
-    public function __construct(GenreRepository $genreRepo)
+    public function __construct(GenreRepositoryInterface $genreRepo)
     {
         $this->genreRepository = $genreRepo;
     }
@@ -30,7 +29,7 @@ class GenreAPIController extends AppBaseController
      * Display a listing of the Genre.
      * GET|HEAD /genres
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return JsonResponse
      */
     public function index(Request $request)
@@ -53,7 +52,7 @@ class GenreAPIController extends AppBaseController
      * Store a newly created Genre in storage.
      * POST /genres
      *
-     * @param CreateGenreAPIRequest $request
+     * @param  CreateGenreAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -70,7 +69,7 @@ class GenreAPIController extends AppBaseController
      * Display the specified Genre.
      * GET|HEAD /genres/{id}
      *
-     * @param Genre $genre
+     * @param  Genre  $genre
      *
      * @return JsonResponse
      */
@@ -83,8 +82,8 @@ class GenreAPIController extends AppBaseController
      * Update the specified Genre in storage.
      * PUT/PATCH /genres/{genre}
      *
-     * @param Genre $genre
-     * @param UpdateGenreAPIRequest $request
+     * @param  Genre  $genre
+     * @param  UpdateGenreAPIRequest  $request
      *
      * @return JsonResponse
      */
@@ -101,7 +100,7 @@ class GenreAPIController extends AppBaseController
      * Remove the specified Genre from storage.
      * DELETE /genres/{genre}
      *
-     * @param Genre $genre
+     * @param  Genre  $genre
      *
      * @throws Exception
      *
@@ -109,7 +108,7 @@ class GenreAPIController extends AppBaseController
      */
     public function destroy(Genre $genre)
     {
-        if (!empty($genre->books->toArray())) {
+        if (! empty($genre->books->toArray())) {
             throw new BadRequestHttpException('Genre can not be delete, it is used in one or more books.');
         }
         $genre->delete();

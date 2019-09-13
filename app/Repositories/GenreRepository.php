@@ -7,8 +7,6 @@ use App\Repositories\Contracts\GenreRepositoryInterface;
 
 /**
  * Class GenreRepository
- * @package App\Repositories
- * @version June 17, 2019, 11:10 am UTC
  */
 class GenreRepository extends BaseRepository implements GenreRepositoryInterface
 {

@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 /**
  * Class SettingTest
- * @package Tests\Models
  */
 class SettingTest extends TestCase
 {

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Repositories\Contracts\AccountRepositoryInterface;
@@ -8,14 +9,13 @@ use URL;
 
 /**
  * Class AccountRepository
- * @package App\Repositories
  */
 class AccountRepository implements AccountRepositoryInterface
 {
     /**
-     * @param  string $username
-     * @param  string $email
-     * @param  string $activateCode
+     * @param  string  $username
+     * @param  string  $email
+     * @param  string  $activateCode
      *
      * @throws Exception
      */
@@ -37,7 +37,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      *
      * @throws Exception
      *

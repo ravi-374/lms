@@ -6,15 +6,14 @@ import './MemberProfile.scss';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 
 const MemberForm = (props) => {
     const { initialValues, change, countries, history } = props;
-    const [image, setImage] = useState(publicImagePath.USER_AVATAR);
+    const [image, setImage] = useState(null);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
-    const defaultImage = publicImagePath.USER_AVATAR;
     const [isPasswordHidden, setPasswordHidden] = useState(true);
     const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(true);
     useEffect(() => {
@@ -41,7 +40,7 @@ const MemberForm = (props) => {
     const onRemovePhoto = () => {
         change('file_name', false);
         setFile(null);
-        setImage(defaultImage);
+        setImage(null);
         setIsDefaultImage(true);
     };
     const goToHomePage = () => {
@@ -53,7 +52,13 @@ const MemberForm = (props) => {
     const onclickConfirmPassword = (password) => {
         if (password) setConfirmPasswordHidden(!isConfirmPasswordHidden);
     };
-    const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
+    const imagePickerOptions = {
+        user: { name: initialValues ? initialValues.first_name + ' ' + initialValues.last_name : null },
+        image,
+        isDefaultImage,
+        onRemovePhoto,
+        onFileChange
+    };
     return (
         <Row className="animated fadeIn member-form m-3">
             <Col xs={8} className="primary-detail">

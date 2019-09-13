@@ -5,10 +5,11 @@ import ModalAction from '../../../shared/action-buttons/ModalAction';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import './Users.scss';
 import {addToast} from '../../../store/action/toastAction';
-import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {getCurrentUser} from "../../shared/sharedMethod";
+import {getAvatarName} from "../../../shared/sharedMethod";
 
 const UserTable = (props) => {
     const { users, onOpenModal, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
@@ -18,9 +19,14 @@ const UserTable = (props) => {
             selector: 'image',
             width: '90px',
             cell: row => {
-                const imageUrl = row.image ? publicImagePathURL.USER_AVATAR_URL + row.image : publicImagePath.USER_AVATAR;
-                return <img className="user-table-row__profile-img" src={imageUrl} alt={imageUrl}/>
-            },
+                const imageUrl = row.image ? publicImagePathURL.USER_AVATAR_URL + row.image : null;
+                if (imageUrl)
+                    return <img src={imageUrl ? imageUrl : null} className="user-table-row__profile-img"
+                                alt={imageUrl}/>;
+                return <div className="header__avatar img-avatar">
+                    <span className="header__avatar-text">{getAvatarName(row.first_name + ' ' + row.last_name)}</span>
+                </div>;
+            }
         },
         {
             name: 'Name',

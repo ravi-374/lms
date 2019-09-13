@@ -1,34 +1,17 @@
 @import "../../../scss/variables";
 
-.user__image-holder-wrapper {
-    height: 250px;
-    border-radius: 10px;
-    overflow: hidden;
-    @media (max-width: 1139px) {
-        margin: auto;
-    }
-}
-
-.user__image-holder {
-    position: relative;
-    height: 250px;
-    border-radius: 10px;
-    background: gray;
-    object-fit: cover;
-}
-
-.user-detail-row {
-    @media (max-width: 1139px) {
-        flex-flow: column;
-    }
-}
-
 .user-detail {
-      @media (max-width: 1139px) {
+    @media (max-width: 1139px) {
         width: 100%;
         margin: auto;
         display: flex;
         justify-content: center;
+    }
+
+    &-row {
+        @media (max-width: 1139px) {
+            flex-flow: column;
+        }
     }
 
     &__item-container {
@@ -63,6 +46,39 @@
         &__item-header:after {
             content: "*";
             color: $red;
+        }
+    }
+
+    &__image-holder-wrapper {
+        height: 250px;
+        border-radius: 10px;
+        overflow: hidden;
+        @media (max-width: 1139px) {
+            margin: auto;
+        }
+    }
+
+    &__image-holder {
+        position: relative;
+        width: 250px;
+        border-radius: 10px;
+        background: gray;
+        object-fit: cover;
+    }
+
+    &__avatar {
+        height: 250px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-text {
+            height: auto;
+            background-color: $image-avatar;
+            color: white;
+            border-radius: 50%;
+            padding: 90px;
         }
     }
 }

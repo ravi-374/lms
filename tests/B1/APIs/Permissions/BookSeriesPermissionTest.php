@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 /**
  * Class BookSeriesPermissionTest
- * @package Tests\B1\APIs\Permissions
  */
 class BookSeriesPermissionTest extends TestCase
 {

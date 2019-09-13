@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Permission;
@@ -6,8 +7,6 @@ use App\Repositories\Contracts\PermissionRepositoryInterface;
 
 /**
  * Class PermissionRepository
- * @package App\Repositories
- * @version June 19, 2019, 10:10 am UTC
  */
 class PermissionRepository extends BaseRepository implements PermissionRepositoryInterface
 {

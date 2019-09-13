@@ -33,7 +33,7 @@
         border: 0 !important;
         position: absolute;
         top: -146px;
-        left: 28%;
+        left: 27%;
         width: 91px;
         height: 96px;
         font-weight: 700;
@@ -42,5 +42,21 @@
     &__dropdown-menu {
         top: -37px !important;
         left: -32px !important;
+    }
+
+    &__avatar {
+        height: 200px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-text {
+            height: auto;
+            background-color: $image-avatar;
+            color: white;
+            border-radius: 50%;
+            padding: 76px;
+        }
     }
 }

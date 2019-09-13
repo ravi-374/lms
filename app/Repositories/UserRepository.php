@@ -14,8 +14,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class UserRepository
- * @package App\Repositories
- * @version June 20, 2019, 7:52 am UTC
  */
 class UserRepository extends BaseRepository
 {
@@ -48,17 +46,17 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return User[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
-        if (!empty($search['order_by']) && ($search['order_by'] == 'role_name')) {
+        if (! empty($search['order_by']) && ($search['order_by'] == 'role_name')) {
             $orderBy = $search['order_by'];
             unset($search['order_by']);
         }
@@ -67,7 +65,7 @@ class UserRepository extends BaseRepository
         $query = $this->applyDynamicSearch($search, $query);
         $users = $query->orderByDesc('id')->get();
 
-        if (!empty($orderBy)) {
+        if (! empty($orderBy)) {
             $sortDescending = ($search['direction'] == 'asc') ? false : true;
             $orderString = '';
 
@@ -82,14 +80,14 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param array $search
-     * @param Builder $query
+     * @param  array  $search
+     * @param  Builder  $query
      *
      * @return Builder
      */
     public function applyDynamicSearch($search, $query)
     {
-        $query->when(!empty($search['search']), function (Builder $query) use ($search) {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
             $query->orWhereHas('roles', function (Builder $query) use ($search) {
                 filterByColumns($query, $search['search'], ['name']);
             });
@@ -99,8 +97,8 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param int $id
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $columns
      *
      * @return User
      */
@@ -112,7 +110,7 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -125,17 +123,17 @@ class UserRepository extends BaseRepository
 
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
-            if (!empty($input['role_id'])) {
+            if (! empty($input['role_id'])) {
                 $user->roles()->sync([$input['role_id']]);
             }
 
             $addressArr = $this->makeAddressArray($input);
-            if (!empty($addressArr)) {
+            if (! empty($addressArr)) {
                 $address = new Address($addressArr);
                 $user->address()->save($address);
             }
 
-            if (!empty($input['image'])) {
+            if (! empty($input['image'])) {
                 $imagePath = User::makeImage($input['image'], User::IMAGE_PATH);
                 $user->update(['image' => $imagePath]);
             }
@@ -155,16 +153,16 @@ class UserRepository extends BaseRepository
      */
     public function makeAddressArray($input)
     {
-        if (!empty($input['address_1']) || !empty($input['address_2']) || !empty($input['city']) ||
-            !empty($input['state']) || !empty($input['zip']) || !empty($input['country'])
+        if (! empty($input['address_1']) || ! empty($input['address_2']) || ! empty($input['city']) ||
+            ! empty($input['state']) || ! empty($input['zip']) || ! empty($input['country'])
         ) {
             $addressArr = [
-                'address_1'  => !empty($input['address_1']) ? $input['address_1'] : '',
-                'address_2'  => !empty($input['address_2']) ? $input['address_2'] : '',
-                'city'       => !empty($input['city']) ? $input['city'] : '',
-                'state'      => !empty($input['state']) ? $input['state'] : '',
-                'zip'        => !empty($input['zip']) ? $input['zip'] : '',
-                'country_id' => !empty($input['country_id']) ? $input['country_id'] : null,
+                'address_1'  => ! empty($input['address_1']) ? $input['address_1'] : '',
+                'address_2'  => ! empty($input['address_2']) ? $input['address_2'] : '',
+                'city'       => ! empty($input['city']) ? $input['city'] : '',
+                'state'      => ! empty($input['state']) ? $input['state'] : '',
+                'zip'        => ! empty($input['zip']) ? $input['zip'] : '',
+                'country_id' => ! empty($input['country_id']) ? $input['country_id'] : null,
             ];
 
             return $addressArr;
@@ -174,8 +172,8 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -186,35 +184,35 @@ class UserRepository extends BaseRepository
         try {
             DB::beginTransaction();
 
-            if (!empty($input['password'])) {
+            if (! empty($input['password'])) {
                 $input['password'] = Hash::make($input['password']);
             }
 
-            $image = (!empty($input['image'])) ? $input['image'] : null;
+            $image = (! empty($input['image'])) ? $input['image'] : null;
             unset($input['image']);
 
             /** @var User $user */
             $user = $this->findOrFail($id);
             $user->update($input);
 
-            if (!empty($image)) {
+            if (! empty($image)) {
                 $user->deleteUserImage(); // delete old image;
                 $imagePath = User::makeImage($image, User::IMAGE_PATH);
                 $user->update(['image' => $imagePath]);
             }
 
-            if (!empty($input['remove_image'])) {
+            if (! empty($input['remove_image'])) {
                 $user->deleteUserImage();
             }
 
-            if (!empty($input['role_id'])) {
+            if (! empty($input['role_id'])) {
                 $user->roles()->sync($input['role_id']);
             }
 
             $addressArr = $this->makeAddressArray($input);
-            if (!empty($addressArr)) {
+            if (! empty($addressArr)) {
                 $isUpdate = $user->address()->update($addressArr);
-                if (!$isUpdate) {
+                if (! $isUpdate) {
                     $address = new Address($addressArr);
                     $user->address()->save($address);
                 }

@@ -1,17 +1,22 @@
 import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import './lending.scss';
-import {Routes} from "../../../constants";
+import {appSettingsKey, Routes} from "../../../constants";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
+import {fetchAppSetting} from "../../../store/action/appSettingAction";
+import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 
-const Lending = () => {
-
+const Lending = (props) => {
+    const { fetchAppSetting, appSetting } = props;
+    let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
+        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
     useEffect(() => {
         window.addEventListener("scroll", trackScrolling);
+        fetchAppSetting();
         trackScrolling();
         return (() => document.removeEventListener('scroll', trackScrolling))
     });
-
     const removeActiveClass = () => {
         const c = document.getElementsByClassName('scrollToLink');
         for (let i = 0; i < c.length; i++) {
@@ -20,7 +25,6 @@ const Lending = () => {
             }
         }
     };
-
     const isBottom = (el, prevEle = null, nextEle = null) => {
         if (el) {
             const currentElement = el.getBoundingClientRect().bottom;
@@ -87,7 +91,7 @@ const Lending = () => {
                         <div className="container clearfix">
                             <div className="logo-box clearfix">
                                 <a className="navbar-brand">
-                                    <img src={'images/logo-1-1.png'} className="main-logo" alt="Awesome Image"/>
+                                    <img src={appLogo} className="main-logo" alt="Awesome Image"/>
                                 </a>
                                 <button className="menu-toggle-btn" onClick={() => {
                                     const ele = document.getElementById("main-navigation");
@@ -151,7 +155,9 @@ const Lending = () => {
                                         Excepteur sint occaecat cupidatat non proident sunt
                                         in <br/> culpa qui officia deserunt mollit lorem ipsum anim id est
                                         <br/> laborum perspiciatis unde. </p>
-                                    <a href="#" className="banner-one__btn">Get Started</a>
+                                    <a href="#" onClick={(e) => e.preventDefault()} className="banner-one__btn">
+                                        Get Started
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +241,7 @@ const Lending = () => {
                             </div>
                             <form action="#" className="site-footer__subscribe-form">
                                 <input type="text" name="email" placeholder="Enter your email"/>
-                                <button type="submit">Get Started</button>
+                                <button type="submit" onClick={(e) => e.preventDefault()}>Get Started</button>
                             </form>
                         </div>
                     </div>
@@ -256,7 +262,8 @@ const Lending = () => {
                                 <div className="col-md-6 col-sm-12 mb-3 d-flex justify-content-md-end">
                                     <div className="footer-widget footer-widget--about-widget">
                                         <a href="index.html" className="footer-widget__footer-logo">
-                                            <img src={'images/logo-1-1.png'} alt="Awesome Image"/></a>
+                                            <img src={appLogo} alt="Awesome Image" width="120"/>
+                                        </a>
                                         <p className="d-flex">
                                             <i className="fa fa-phone mr-3" aria-hidden="true"/>
                                             +91 95102 15045 </p>
@@ -308,5 +315,10 @@ const Lending = () => {
         </div>
     );
 };
+const mapStateToProps = (state) => {
+    const { appSetting } = state;
+    return { appSetting }
+};
 
-export default Lending;
+export default connect(mapStateToProps, { fetchAppSetting })(Lending);
+

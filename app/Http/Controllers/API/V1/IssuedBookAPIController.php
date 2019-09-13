@@ -5,27 +5,26 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\AppBaseController;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
-use App\Repositories\IssuedBookRepository;
+use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class IssuedBookController
- * @package App\Http\Controllers\API
  */
 class IssuedBookAPIController extends AppBaseController
 {
-    /** @var  IssuedBookRepository */
+    /** @var  IssuedBookRepositoryInterface */
     private $issuedBookRepository;
 
-    public function __construct(IssuedBookRepository $issuedBookRepo)
+    public function __construct(IssuedBookRepositoryInterface $issuedBookRepo)
     {
         $this->issuedBookRepository = $issuedBookRepo;
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -44,7 +43,7 @@ class IssuedBookAPIController extends AppBaseController
             return $issuedBook->apiObj();
         });
 
-        $totalRecords = (!empty($search['search'])) ? count($records) : IssuedBook::ofMember($search['member_id'])->count();
+        $totalRecords = (! empty($search['search'])) ? count($records) : IssuedBook::ofMember($search['member_id'])->count();
 
         return $this->sendResponse(
             $records,
@@ -54,8 +53,8 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
-     * @param Request $request
+     * @param  BookItem  $bookItem
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -72,7 +71,7 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param BookItem $bookItem
+     * @param  BookItem  $bookItem
      *
      * @return JsonResponse
      */

@@ -11,26 +11,25 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Models\BookItem;
-use App\Repositories\BookItemRepository;
+use App\Repositories\Contracts\BookItemRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class BookItemAPIController
- * @package App\Http\Controllers\API\V1
  */
 class BookItemAPIController extends AppBaseController
 {
-    /** @var BookItemRepository */
+    /** @var BookItemRepositoryInterface */
     private $bookItemRepo;
 
-    public function __construct(BookItemRepository $bookItemRepo)
+    public function __construct(BookItemRepositoryInterface $bookItemRepo)
     {
         $this->bookItemRepo = $bookItemRepo;
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */

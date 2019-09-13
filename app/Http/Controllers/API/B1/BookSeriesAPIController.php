@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class BookSeriesAPIController
- * @package App\Http\Controllers\API
  */
 class BookSeriesAPIController extends AppBaseController
 {
@@ -30,7 +29,7 @@ class BookSeriesAPIController extends AppBaseController
      * Display a listing of the BookSeries.
      * GET|HEAD /bookSeries
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
@@ -49,7 +48,7 @@ class BookSeriesAPIController extends AppBaseController
      * Store a newly created BookSeries in storage.
      * POST /bookSeries
      *
-     * @param CreateBookSeriesAPIRequest $request
+     * @param  CreateBookSeriesAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      *
@@ -68,7 +67,7 @@ class BookSeriesAPIController extends AppBaseController
      * Display the specified BookSeries.
      * GET|HEAD /bookSeries/{id}
      *
-     * @param BookSeries $bookSeries
+     * @param  BookSeries  $bookSeries
      *
      * @return JsonResponse
      */
@@ -83,8 +82,8 @@ class BookSeriesAPIController extends AppBaseController
      * Update the specified BookSeries in storage.
      * PUT/PATCH /bookSeries/{id}
      *
-     * @param BookSeries $bookSeries
-     * @param UpdateBookSeriesAPIRequest $request
+     * @param  BookSeries  $bookSeries
+     * @param  UpdateBookSeriesAPIRequest  $request
      *
      * @throws ApiOperationFailedException
      *
@@ -103,7 +102,7 @@ class BookSeriesAPIController extends AppBaseController
      * Remove the specified BookSeries from storage.
      * DELETE /bookSeries/{id}
      *
-     * @param BookSeries $bookSeries
+     * @param  BookSeries  $bookSeries
      *
      * @throws Exception
      *

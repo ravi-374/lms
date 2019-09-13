@@ -6,24 +6,25 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateMemberProfileAPIRequest;
 use App\Models\Member;
-use App\Repositories\MemberRepository;
+use App\Repositories\Contracts\MemberRepositoryInterFace;
 use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Class MemberController
- * @package App\Http\Controllers\API
  */
 class MemberAPIController extends AppBaseController
 {
     /**
+     * @param  Request  $request
      * @return JsonResponse
      */
-    public function getLoggedInMemberDetails()
+    public function getLoggedInMemberDetails(Request $request)
     {
         /** @var Member $member */
-        $member = Auth::user();
+        $member = $request->user();
         $member->address;
         $member->membershipPlan;
 
@@ -31,15 +32,17 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
-     * @param UpdateMemberProfileAPIRequest $request
-     * @param MemberRepository $memberRepository
+     * @param  UpdateMemberProfileAPIRequest  $request
+     * @param  MemberRepositoryInterFace  $memberRepository
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      * @return JsonResponse
      */
-    public function updateMemberProfile(UpdateMemberProfileAPIRequest $request, MemberRepository $memberRepository)
-    {
+    public function updateMemberProfile(
+        UpdateMemberProfileAPIRequest $request,
+        MemberRepositoryInterFace $memberRepository
+    ) {
         $input = $request->all();
         unset($input['email']);
         unset($input['membership_plan_id']);
@@ -50,12 +53,14 @@ class MemberAPIController extends AppBaseController
     }
 
     /**
+     * @param  Request  $request
+     *
      * @return JsonResponse
      */
-    public function removeImage()
+    public function removeImage(Request $request)
     {
         /** @var Member $member */
-        $member = Auth::user();
+        $member = $request->user();
         $member->deleteMemberImage();
 
         return $this->sendSuccess('Member image removed successfully.');

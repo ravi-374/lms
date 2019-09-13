@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Traits\ImageTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
@@ -24,7 +25,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Address $address
  * @property-read mixed $image_path
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
+ *     $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
@@ -49,7 +51,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, EntrustUserTrait, ImageTrait;
+    use Notifiable, HasRoles, ImageTrait;
 
     const IMAGE_PATH = 'users';
 
@@ -131,7 +133,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getImagePathAttribute()
     {
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             return $this->imageUrl(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
         }
     }

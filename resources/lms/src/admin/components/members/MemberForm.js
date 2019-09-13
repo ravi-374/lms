@@ -12,7 +12,7 @@ import Select from "../../../shared/components/Select";
 
 const MemberForm = (props) => {
     const { initialValues, membershipPlans, countries, change } = props;
-    const [image, setImage] = useState(publicImagePath.USER_AVATAR);
+    const [image, setImage] = useState(!initialValues ? publicImagePath.USER_AVATAR : null);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
@@ -47,13 +47,19 @@ const MemberForm = (props) => {
     const onRemovePhoto = () => {
         change('file_name', false);
         setFile(null);
-        setImage(publicImagePath.USER_AVATAR);
+        setImage(null);
         setIsDefaultImage(true);
     };
     const onChecked = () => {
         setActive(!isActive);
     };
-    const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
+    const imagePickerOptions = {
+        user: { name: initialValues ? initialValues.first_name + ' ' + initialValues.last_name : null },
+        image,
+        isDefaultImage,
+        onRemovePhoto,
+        onFileChange
+    };
     return (
         <Row className="animated fadeIn member-form m-3">
             <Col xs={8} className="primary-detail">

@@ -308,7 +308,7 @@ class IssuedBookRepositoryTest extends TestCase
         $issuedBook = $this->issuedBookRepo->reserveBook(['book_item_id' => $bookItem->id, 'member_id' => $vishal->id]);
         $returnBook = $this->issuedBookRepo->unReserveBook($bookItem, [
                 'book_item_id' => $bookItem->id,
-                'member_id' => $mitul->id
+                'member_id'    => $mitul->id,
             ]
         );
     }

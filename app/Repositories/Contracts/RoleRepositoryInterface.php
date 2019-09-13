@@ -1,12 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- *
- * User: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 6/19/2019
- * Time: 3:32 PM
- */
 
 namespace App\Repositories\Contracts;
 
@@ -14,9 +6,9 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Models\Role;
 use Exception;
 use Illuminate\Support\Collection;
+
 /**
  * Interface RoleRepositoryInterface
- * @package App\Repositories\Contracts
  */
 interface RoleRepositoryInterface
 {
@@ -31,17 +23,17 @@ interface RoleRepositoryInterface
     public function model();
 
     /**
-     * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
-     * @param array $columns
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return Role[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
     /**
-     * @param array $input
+     * @param  array  $input
      *
      * @throws ApiOperationFailedException
      * @throws Exception
@@ -51,8 +43,8 @@ interface RoleRepositoryInterface
     public function store($input);
 
     /**
-     * @param array $input
-     * @param int $id
+     * @param  array  $input
+     * @param  int  $id
      *
      * @throws ApiOperationFailedException
      * @throws Exception
