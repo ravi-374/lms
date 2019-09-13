@@ -29,8 +29,10 @@
         }
 
         &__btn {
-            width: 60%;
-            padding-left: 116px;
+            display: flex;
+            margin-top: 14px;
+            max-width: 430px;
+            justify-content: center;
         }
     }
 

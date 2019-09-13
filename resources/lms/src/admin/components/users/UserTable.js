@@ -23,8 +23,8 @@ const UserTable = (props) => {
                 if (imageUrl)
                     return <img src={imageUrl ? imageUrl : null} className="user-table-row__profile-img"
                                 alt={imageUrl}/>;
-                return <div className="header__avatar img-avatar">
-                    <span className="header__avatar-text">{getAvatarName(row.first_name + ' ' + row.last_name)}</span>
+                return <div className="user__avatar">
+                    <span>{getAvatarName(row.first_name + ' ' + row.last_name)}</span>
                 </div>;
             }
         },

@@ -13,9 +13,9 @@ const BookSearchForm = (props) => {
     const [isBookChecked, setIsBookChecked] = useState(true);
     const [isDisabled, setIsDisabled] = useState(true);
     const prepareParams = (item) => {
-        if (isBookChecked) {
+        if (isBookChecked && item) {
             return `id=${item.id}&search_by_book=${true}`
-        } else if (isAuthorChecked) {
+        } else if (isAuthorChecked && item) {
             return `id=${item.id}&search_by_author=${true}`
         }
     };
@@ -79,7 +79,7 @@ const BookSearchForm = (props) => {
                                    isSearchable={true}/>
                         </div>
                     </Col>
-                    <Col xs={12} className="d-flex flex-row justify-content-end book-form__btn">
+                    <Col xs={12} className="book-form__btn">
                         <Button onClick={handleSubmit(searchBook)} disabled={isDisabled} color="primary">Search</Button>
                         <Button className="ml-2" onClick={() => onResetSearch()}>Reset</Button>
                     </Col>
