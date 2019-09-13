@@ -28,7 +28,7 @@ const Book = ({ books, addToast, reserveBook }) => {
                 <th>Language</th>
                 <th>Expected Available Date</th>
                 <th>Status</th>
-                <th className="text-center">Reserve</th>
+                <th className="text-center">Action</th>
             </tr>
             </thead>
             <tbody>
