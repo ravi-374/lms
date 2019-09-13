@@ -70,13 +70,16 @@ class Permission extends Model implements PermissionContract
     {
         parent::boot();
 
-        self::creating(function (self $role) {
+        self::creating(function (Self $role) {
             if (empty($role->guard_name)) {
                 $role->guard_name = Guard::getDefaultName(static::class);
             }
         });
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(

@@ -13,6 +13,7 @@ use App\Repositories\Contracts\BookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -167,6 +168,6 @@ class BookAPIController extends AppBaseController
     {
         $bookDetails = $this->bookRepository->getBookDetailsFromISBN($request->get('isbn'));
 
-        return \Response::json($bookDetails, 200);
+        return Response::json($bookDetails, 200);
     }
 }

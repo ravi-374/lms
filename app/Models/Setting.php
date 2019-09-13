@@ -85,6 +85,9 @@ class Setting extends Model
         return $query->where('key', $key);
     }
 
+    /**
+     * @return string
+     */
     public function getLogoUrlAttribute()
     {
         if (!empty($this->value)) {

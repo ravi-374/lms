@@ -196,7 +196,7 @@ class IssuedBook extends Model
     public function getExpectedAvailableDate($lastIssuedBook)
     {
         if (empty($lastIssuedBook)) {
-            return;
+            return null;
         }
 
         if ($lastIssuedBook['status'] == IssuedBook::STATUS_RESERVED) {
