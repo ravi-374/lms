@@ -150,12 +150,13 @@ class UserAPIController extends AppBaseController
     }
 
     /**
+     * @param  Request  $request
      * @return JsonResponse
      */
-    public function getLoggedInUserDetails()
+    public function getLoggedInUserDetails(Request $request)
     {
         /** @var User $loginUser */
-        $loginUser = Auth::user();
+        $loginUser = $request->user();
         $loginUser->address;
         $loginUser->roles;
 

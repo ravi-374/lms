@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\AddBookItemRequest;
 use App\Http\Requests\API\CreateBookAPIRequest;
 use App\Http\Requests\API\UpdateBookAPIRequest;
+use App\Http\Requests\BookDetailsRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Exception;
@@ -15,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookAPIController
+ * @package App\Http\Controllers\API
  */
 class BookAPIController extends AppBaseController
 {
@@ -126,16 +129,14 @@ class BookAPIController extends AppBaseController
 
     /**
      * @param  Book  $book
-     * @param  Request  $request
+     * @param  AddBookItemRequest  $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function addItems(Book $book, Request $request)
+    public function addItems(Book $book, AddBookItemRequest $request)
     {
-        $request->validate(['items' => 'required']);
-
         $items = $request->get('items');
 
         $book = $this->bookRepository->addBookItems($book, $items);
@@ -156,16 +157,14 @@ class BookAPIController extends AppBaseController
     }
 
     /**
-     * @param  Request  $request
+     * @param  BookDetailsRequest  $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function getBookDetails(Request $request)
+    public function getBookDetails(BookDetailsRequest $request)
     {
-        $request->validate(['isbn' => 'required']);
-
         $bookDetails = $this->bookRepository->getBookDetailsFromISBN($request->get('isbn'));
 
         return \Response::json($bookDetails, 200);
