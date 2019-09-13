@@ -1,0 +1,110 @@
+import React, {Suspense} from 'react';
+import {Redirect, Route, Switch} from 'react-router-dom';
+import {Container} from 'reactstrap';
+import {
+    AppFooter,
+    AppHeader,
+    AppSidebar,
+    AppSidebarFooter,
+    AppSidebarForm,
+    AppSidebarHeader,
+    AppSidebarMinimizer,
+    AppSidebarNav,
+} from '@coreui/react';
+import navigation from '../../config/navbarConfig';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
+import routes from '../../routes';
+import {Routes, Tokens} from "../../../constants";
+import {checkExistingRoute} from "../../../shared/sharedMethod";
+
+const Footer = React.lazy(() => import('./Footer'));
+const Header = React.lazy(() => import('./Header'));
+
+const Layout = (props) => {
+    return (
+        <div className="app">
+            {renderAppHeader(props)}
+            <div className="app-body">
+                {renderAppSidebar(props)}
+                {renderMainSection(props.location)}
+            </div>
+            {renderAppFooter()}
+        </div>
+    );
+};
+
+const renderAppHeader = (props) => {
+    const signOut = (e) => {
+        e.preventDefault();
+        props.history.push(Routes.MEMBER_HOME);
+        localStorage.removeItem('member');
+        localStorage.removeItem(Tokens.MEMBER);
+    };
+    return (
+        <AppHeader fixed>
+            <Suspense fallback={<ProgressBar/>}>
+                <Header history={props.history} onLogout={e => signOut(e)}/>
+            </Suspense>
+        </AppHeader>
+    );
+};
+
+const renderAppSidebar = (props) => {
+    return (
+        <AppSidebar fixed display="lg">
+            <AppSidebarHeader/>
+            <AppSidebarForm/>
+            <Suspense>
+                <AppSidebarNav navConfig={navigation} {...props} />
+            </Suspense>
+            <AppSidebarFooter/>
+            <AppSidebarMinimizer/>
+        </AppSidebar>
+    );
+};
+
+const renderMainSection = (location) => {
+    return (
+        <main className="main mt-4">
+            <Container fluid>
+                <Suspense fallback={<ProgressBar/>}>
+                    <Switch>
+                        {renderRoutes(location)}
+                        <Redirect from="/" to={Routes.MEMBER_DEFAULT}/>
+                    </Switch>
+                </Suspense>
+            </Container>
+            <Toasts/>
+        </main>
+    )
+};
+
+const renderRoutes = (location) => {
+    if (!localStorage.getItem(Tokens.MEMBER)) {
+        sessionStorage.setItem('prevMemberPrevUrl', window.location.href)
+    } else {
+        sessionStorage.removeItem('prevMemberPrevUrl')
+    }
+    return routes.map((route, index) => {
+        return route.component ? (
+            <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
+                checkExistingRoute(location, props.history);
+                return localStorage.getItem(Tokens.MEMBER) ? <route.component {...props} /> :
+                    <Redirect to={Routes.MEMBER_HOME}/>
+            }}/>
+        ) : (null);
+    });
+};
+
+const renderAppFooter = () => {
+    return (
+        <AppFooter>
+            <Suspense fallback={<ProgressBar/>}>
+                <Footer/>
+            </Suspense>
+        </AppFooter>
+    );
+};
+
+export default Layout;
