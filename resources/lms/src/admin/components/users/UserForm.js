@@ -18,7 +18,7 @@ import {editUser} from "../../store/actions/userAction";
 
 const UserForm = (props) => {
     const { initialValues, change, roles, countries, fetchCountries, fetchRoles } = props;
-    const [image, setImage] = useState(publicImagePath.USER_AVATAR);
+    const [image, setImage] = useState(!initialValues ? publicImagePath.USER_AVATAR : null);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
     const [file, setFile] = useState(null);
     const [isActive, setActive] = useState(true);
@@ -60,13 +60,19 @@ const UserForm = (props) => {
     const onRemovePhoto = () => {
         change('file_name', false);
         setFile(null);
-        setImage(publicImagePath.USER_AVATAR);
+        setImage(null);
         setIsDefaultImage(true);
     };
     const onChecked = () => {
         setActive(!isActive);
     };
-    const imagePickerOptions = { image, isDefaultImage, onRemovePhoto, onFileChange };
+    const imagePickerOptions = {
+        user: { name: initialValues ? initialValues.first_name + ' ' + initialValues.last_name : null },
+        image,
+        isDefaultImage,
+        onRemovePhoto,
+        onFileChange
+    };
     const isVisibleSwitch = initialValues && initialValues.id !== getCurrentUser().id || !initialValues;
     return (
         <Row className="animated fadeIn user-form m-3">

@@ -1,9 +1,13 @@
 import React, {Fragment, useState} from 'react';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import './ImagePicker.scss';
+import {getAvatarName} from "../sharedMethod";
 
 export default (props) => {
-    const { image, isDefaultImage, onFileChange, onRemovePhoto, inputField = 'userInput', buttonName = 'Profile', isRemoveOption = true } = props;
+    const {
+        image, isDefaultImage, onFileChange, onRemovePhoto,
+        inputField = 'userInput', buttonName = 'Profile', isRemoveOption = true, user
+    } = props;
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => {
         setIsOpen(!isOpen);
@@ -42,8 +46,13 @@ export default (props) => {
             <input id={inputField} type="file" onClick={(e) => e.target.value = null} className="d-none"
                    onChange={(e) => onFileChange(e)}/>
             <div className="image__holder">
-                <img src={image ? image : null} className="image__preview mx-auto d-block" height={200} width={200}
-                     alt={image}/>
+                {image ?
+                    <img src={image ? image : null} className="image__preview mx-auto d-block" height={200} width={200}
+                         alt={image}/> :
+                    <div className="image__avatar">
+                        <span className="image__avatar-text">{getAvatarName(user.name)}</span>
+                    </div>
+                }
                 {renderPopOver()}
             </div>
         </Fragment>

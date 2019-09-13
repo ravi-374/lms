@@ -9,6 +9,7 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
+import {getAvatarName} from "../../../shared/sharedMethod";
 
 const UserDetail = props => {
     const [isToggle, setIsToggle] = useState(false);
@@ -31,7 +32,7 @@ const UserDetail = props => {
     const goBack = () => {
         history.goBack();
     };
-    const imageUrl = user.image ? publicImagePathURL.USER_AVATAR_URL + user.image : publicImagePath.USER_AVATAR;
+    const imageUrl = user.image ? publicImagePathURL.USER_AVATAR_URL + user.image : null;
     const { address } = user;
     let fullAddress = '';
     if (address) {
@@ -72,9 +73,15 @@ const UserDetail = props => {
                         <Card>
                             <CardBody>
                                 <Row className="user-detail-row no-gutters">
-                                    <div className="user__image-holder-wrapper">
-                                        <div className="user__image-holder">
-                                            <img src={imageUrl} height="250"/>
+                                    <div className="user-detail__image-holder-wrapper">
+                                        <div className="user-detail__image-holder">
+                                            {imageUrl ? <img src={imageUrl} height="250"/> :
+                                                <div className="user-detail__avatar">
+                                                    <span className="user-detail__avatar-text">
+                                                    {getAvatarName(user.first_name + ' ' + user.last_name)}
+                                                    </span>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div className="user-detail">

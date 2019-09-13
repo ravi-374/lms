@@ -4,21 +4,27 @@ import {connect} from 'react-redux';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import './Members.scss';
-import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {storageKey} from "../../constants";
+import {getAvatarName} from "../../../shared/sharedMethod";
 
 const MemberTable = (props) => {
-    const { members, membershipPlans, onOpenModal, addToast, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
+    const { members, membershipPlans, onOpenModal, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
     const columns = [
         {
             name: 'Profile',
             selector: 'image',
             width: '95px',
             cell: row => {
-                const imageUrl = row.image ? publicImagePathURL.MEMBER_AVATAR_URL + row.image : publicImagePath.USER_AVATAR;
-                return <img className="member-table-row__profile-img" src={imageUrl} alt={imageUrl}/>
+                const imageUrl = row.image ? publicImagePathURL.MEMBER_AVATAR_URL + row.image : null;
+                if (imageUrl)
+                    return <img src={imageUrl ? imageUrl : null} className="member-table-row__profile-img"
+                                alt={imageUrl}/>;
+                return <div className="header__avatar img-avatar">
+                    <span className="header__avatar-text">{getAvatarName(row.first_name + ' ' + row.last_name)}</span>
+                </div>;
             },
         },
         {
