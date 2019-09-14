@@ -14,6 +14,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {setUserProfile} from "../../../store/action/localStorageAction";
 
 const Login = (props) => {
+    const { appLogo, appName } = props;
     let remember = true;
     const isAdminRemember = localStorage.getItem('is_admin_remember');
     if (isAdminRemember !== null && isAdminRemember === 'false') {
@@ -62,7 +63,7 @@ const Login = (props) => {
     const { handleSubmit, invalid } = props;
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle title={'Login | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Login | ${appName}`}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">

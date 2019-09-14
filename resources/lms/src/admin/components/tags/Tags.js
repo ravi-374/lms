@@ -17,7 +17,7 @@ const Tags = (props) => {
     const [isEditTag, setEditMode] = useState(false);
     const [isDeleteTag, setDeleteTag] = useState(false);
     const [tag, setTag] = useState(null);
-    const { tags, toggleModal, totalRecord, isLoading } = props;
+    const { tags, toggleModal, totalRecord, isLoading, appName, appLogo } = props;
     const cardModalProps = { tag, isDeleteTag, isEditTag, isCreateTag, toggleModal };
 
     const onOpenModal = (isEdit, tag = null, isDelete = false) => {
@@ -57,7 +57,7 @@ const Tags = (props) => {
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <ProgressBar/>
-                <HeaderTitle title={'Tags | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Tags | ${appName}`}/>
                 <h5 className="page-heading">Tags</h5>
                 <div className="d-flex justify-content-end">
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">

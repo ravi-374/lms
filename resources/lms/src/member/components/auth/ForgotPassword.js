@@ -14,22 +14,22 @@ import {environment} from "../../../environment";
 
 const ForgotPassword = (props) => {
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-    const {handleSubmit, invalid} = props;
+    const { handleSubmit, invalid, appName, appLogo } = props;
     const onSubmit = async (formValues) => {
         formValues.url = environment.URL + '/#' + Routes.MEMBER_RESET_PASSWORD;
         await apiConfig.post(`send-reset-member-password-link`, formValues)
             .then(response => {
-                props.addToast({text: response.data.message});
+                props.addToast({ text: response.data.message });
                 setIsFormSubmitted(true);
             })
-            .catch(({response}) => {
-                    props.addToast({text: response.data.message, type: 'error'});
+            .catch(({ response }) => {
+                    props.addToast({ text: response.data.message, type: 'error' });
                 }
             );
     };
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle title={'Forgot Password | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Forgot Password | ${appName}`}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">
@@ -69,6 +69,6 @@ const ForgotPassword = (props) => {
     );
 };
 
-const form = reduxForm({form: 'forgotPasswordForm', validate: loginFormValidate})(ForgotPassword);
+const form = reduxForm({ form: 'forgotPasswordForm', validate: loginFormValidate })(ForgotPassword);
 
-export default connect(null, {addToast})(form);
+export default connect(null, { addToast })(form);

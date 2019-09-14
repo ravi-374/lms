@@ -13,23 +13,23 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const ResetPassword = (props) => {
     const params = new URLSearchParams(props.location.search);
-    const {handleSubmit, invalid} = props;
+    const { handleSubmit, invalid, appLogo, appName } = props;
     const onSubmit = async (formValues) => {
         delete formValues.confirm_password;
         formValues.token = params.get('token');
         await apiConfig.post(`reset-password`, formValues)
             .then(response => {
-                props.addToast({text: response.data.message});
+                props.addToast({ text: response.data.message });
                 props.history.push(Routes.ADMIN_LOGIN);
             })
-            .catch(({response}) => {
-                    props.addToast({text: response.data.message, type: 'error'});
+            .catch(({ response }) => {
+                    props.addToast({ text: response.data.message, type: 'error' });
                 }
             );
     };
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle title={'Reset Password | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Reset Password | ${appName}`}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">
@@ -61,6 +61,6 @@ const ResetPassword = (props) => {
     );
 };
 
-const form = reduxForm({form: 'resetPasswordForm', validate: loginFormValidate})(ResetPassword);
+const form = reduxForm({ form: 'resetPasswordForm', validate: loginFormValidate })(ResetPassword);
 
-export default connect(null, {addToast})(form);
+export default connect(null, { addToast })(form);

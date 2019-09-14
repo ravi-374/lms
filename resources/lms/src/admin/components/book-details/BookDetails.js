@@ -13,7 +13,7 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {prepareFullNames} from "../../../shared/sharedMethod";
 
 const BookDetail = props => {
-    const { book, toggleModal, history, fetchBook } = props;
+    const { book, toggleModal, history, fetchBook, appName, appLogo } = props;
     const [isToggle, setIsToggle] = useState(false);
     const [isParentToggle, setIsParentToggle] = useState(false);
     useEffect(() => {
@@ -43,7 +43,7 @@ const BookDetail = props => {
     return (
         <div className="animated fadeIn">
             <ProgressBar/>
-            <HeaderTitle title={'Book-Details | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Book-Details | ${appName}`}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">{book.name}</h5>

@@ -1,5 +1,4 @@
 import React, {Suspense, useEffect} from 'react';
-import {connect} from 'react-redux';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {
@@ -16,34 +15,16 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from "../../routes";
-import {fetchConfig} from "../../store/actions/configAction";
-import {appSettingsKey, LocalStorageKey, Routes, Tokens} from "../../../constants";
+import {Routes, Tokens} from "../../../constants";
 import {checkExistingRoute} from "../../../shared/sharedMethod";
-import {environment} from "../../../environment";
-import {getUserProfile} from "../../../store/action/localStorageAction";
-import {fetchAppSetting} from "../../../store/action/appSettingAction";
-import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const { permissions, getUserProfile, fetchAppSetting, appSetting, user } = props;
-    let appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
-    let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
-        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
+    const { permissions, appLogo, appName, user } = props;
     const newRoutes = prepareRoutes(permissions);
-    useEffect(() => {
-        fetchAppSetting();
-        getUserProfile(LocalStorageKey.USER);
-        if (!localStorage.getItem(Tokens.ADMIN)) {
-            sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
-            window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
-        } else {
-            sessionStorage.removeItem('prevAdminPrevUrl');
-            props.fetchConfig();
-        }
-    }, []);
+
     if (permissions.length === 0) {
         return null;
     }
@@ -52,7 +33,7 @@ const Layout = (props) => {
             {renderAppHeader(props, appName, appLogo, user)}
             <div className="app-body">
                 {renderAppSidebar(props, prepareNavigation(permissions))}
-                {renderMainSection(newRoutes, props.location)}
+                {renderMainSection(newRoutes, props.location, appName, appLogo)}
             </div>
             {renderAppFooter(appName)}
         </div>
@@ -113,13 +94,13 @@ const renderAppSidebar = (props, sideMenuList) => {
     );
 };
 
-const renderMainSection = (newRoutes, location) => {
+const renderMainSection = (newRoutes, location, appName, appLogo) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes(newRoutes, location)}
+                        {renderRoutes(newRoutes, location, appName, appLogo)}
                         <Redirect from="/" to={Routes.ADMIN_DEFAULT}/>
                     </Switch>
                 </Suspense>
@@ -129,12 +110,13 @@ const renderMainSection = (newRoutes, location) => {
     )
 };
 
-const renderRoutes = (newRoutes, location) => {
+const renderRoutes = (newRoutes, location, appName, appLogo) => {
     return newRoutes.map((route, index) => {
         return route.component ? (
             <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
                 checkExistingRoute(location, props.history);
-                return localStorage.getItem(Tokens.ADMIN) ? <route.component {...props} /> :
+                return localStorage.getItem(Tokens.ADMIN) ?
+                    <route.component {...props} appName={appName} appLogo={appLogo}/> :
                     <Redirect to={Routes.ADMIN_LOGIN}/>
             }}/>
         ) : (null);
@@ -151,18 +133,4 @@ const renderAppFooter = (appName) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    const permissions = [];
-    const { profile, appSetting, config } = state;
-
-    if (config.permissions) {
-        config.permissions.forEach((permission) =>
-            permissions.push(permission.name)
-        );
-    }
-    return {
-        permissions, user: profile, appSetting: appSetting
-    };
-};
-
-export default connect(mapStateToProps, { fetchConfig, getUserProfile, fetchAppSetting })(Layout);
+export default Layout;

@@ -11,7 +11,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import _ from "lodash";
 
 const Settings = (props) => {
-    const { currencies, selectedCurrency, settings, isLoading } = props;
+    const { currencies, selectedCurrency, settings, isLoading, appName, appLogo } = props;
     useEffect(() => {
         props.fetchSettings(true);
         props.fetchCurrencies();
@@ -50,7 +50,7 @@ const Settings = (props) => {
 
     return (
         <div className="animated fadeIn">
-            <HeaderTitle title={'Settings | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Settings | ${appName}`}/>
             <Row>
                 <Col xs={12}>
                     <div className="">

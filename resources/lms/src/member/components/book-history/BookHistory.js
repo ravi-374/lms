@@ -10,7 +10,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BookHistory = props => {
     const [history, setHistory] = useState(null);
-    const { bookHistory, isLoading, toggleModal, totalRecord } = props;
+    const { bookHistory, isLoading, toggleModal, totalRecord, appName, appLogo } = props;
     const cardModalProps = {
         history,
         toggleModal,
@@ -37,7 +37,7 @@ const BookHistory = props => {
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <ProgressBar/>
-                <HeaderTitle title={'Book History | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Book History | ${appName}`}/>
                 <h5 className="page-heading">Book History</h5>
             </Col>
             <Col sm={12}>

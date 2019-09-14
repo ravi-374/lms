@@ -12,7 +12,7 @@ import GenreModal from "./GenerModal";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 
 const Genres = (props) => {
-    const { genres, toggleModal, isLoading, totalRecord } = props;
+    const { genres, toggleModal, isLoading, totalRecord, appName, appLogo } = props;
     const [genre, setGenre] = useState(null);
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
@@ -49,7 +49,7 @@ const Genres = (props) => {
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <ProgressBar/>
-                <HeaderTitle title={'Genres | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Genres | ${appName}`}/>
                 <h5 className="page-heading">Genres</h5>
                 <div className="d-flex justify-content-end">
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">

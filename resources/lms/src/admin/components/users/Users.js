@@ -16,7 +16,7 @@ const Users = (props) => {
     const [isCreateUser, setCreateUser] = useState(false);
     const [isDeleteUser, setDeleteUser] = useState(false);
     const [user, setUser] = useState(null);
-    const { users, toggleModal, history, isLoading, totalRecord } = props;
+    const { users, toggleModal, history, isLoading, totalRecord, appName, appLogo } = props;
     const cardModalProps = { user, isDeleteUser, isEditUser, isCreateUser, toggleModal };
 
     const setActiveInactive = (id) => {
@@ -49,7 +49,7 @@ const Users = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title={'Users | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Users | ${appName}`}/>
                 <ProgressBar/>
                 <h5 className="page-heading">Users</h5>
                 <div className="d-flex justify-content-end">
