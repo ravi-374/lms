@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Eloquent;
+use Illuminate\Http\JsonResponse;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
 
@@ -24,7 +25,7 @@ class AppBaseController extends Controller
      * @param  string  $message
      * @param  array  $extraFields
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function sendResponse($result, $message, $extraFields = [])
     {
@@ -37,7 +38,7 @@ class AppBaseController extends Controller
     /**
      * @param  string  $error
      * @param  int  $code
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function sendError($error, $code = 500)
     {
@@ -46,7 +47,7 @@ class AppBaseController extends Controller
 
     /**
      * @param  string  $message
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function sendSuccess($message)
     {
