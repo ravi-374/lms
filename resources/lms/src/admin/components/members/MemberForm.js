@@ -9,6 +9,8 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
+import {maxDigits} from "../../constants";
+import {enableDisableUserInput} from "../../../shared/sharedMethod";
 
 const MemberForm = (props) => {
     const { initialValues, membershipPlans, countries, change } = props;
@@ -91,7 +93,9 @@ const MemberForm = (props) => {
                                type="password" groupText="lock" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="phone" type="number" label="Phone No." groupText="phone" component={InputGroup}/>
+                        <Field name="phone" type="number" label="Phone No."
+                               onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="membership_plan" label="Membership Plan" required options={membershipPlans}

@@ -233,7 +233,8 @@ export const bookItemActionType = {
 };
 
 export const maxDigits = {
-    BOOK_CODE: 8
+    BOOK_CODE: 8,
+    PHONE_NUMBER: 10
 };
 
 export const bookItemStatusConstants = {
