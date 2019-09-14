@@ -14,7 +14,7 @@ import {prepareFullNames} from '../../../shared/sharedMethod';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Books = (props) => {
-    const {isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors} = props;
+    const { isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors, appName, appLogo } = props;
     const [isSearch, setSearch] = useState(false);
     useEffect(() => {
         fetchBooks();
@@ -31,10 +31,10 @@ const Books = (props) => {
     const onSearchBook = (params) => {
         findBooks(params);
     };
-    const prepareFormOption = {books, authors, onSearchBook,setSearch};
+    const prepareFormOption = { books, authors, onSearchBook, setSearch };
     return (
         <div className="animated fadeIn">
-            <HeaderTitle title={'Books | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Books | ${appName}`}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">Books</h5>
@@ -64,7 +64,7 @@ const Books = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {books, searchBooks, authors, isLoading} = state;
-    return {books, searchBooks, authors: prepareFullNames(authors), isLoading}
+    const { books, searchBooks, authors, isLoading } = state;
+    return { books, searchBooks, authors: prepareFullNames(authors), isLoading }
 };
-export default connect(mapStateToProps, {fetchBooks, fetchAuthors, findBooks})(Books);
+export default connect(mapStateToProps, { fetchBooks, fetchAuthors, findBooks })(Books);

@@ -23,7 +23,7 @@ const BookAllotmentDetail = props => {
         props.fetchBooks();
         props.fetchMembers();
     }, []);
-    const { bookHistory, books, toggleModal, history, members, isLoading } = props;
+    const { bookHistory, books, toggleModal, history, members, isLoading, appName, appLogo } = props;
     if (!bookHistory || !members || !books || isLoading || (books && books.length === 0)) {
         return (
             <Fragment>
@@ -53,7 +53,7 @@ const BookAllotmentDetail = props => {
     const { book } = book_item;
     return (
         <div className="animated fadeIn">
-            <HeaderTitle title={'Book Allotment Details | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Book Allotment Details | ${appName}`}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">Book Allotment Details</h5>

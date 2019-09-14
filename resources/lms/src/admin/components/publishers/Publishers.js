@@ -16,7 +16,7 @@ const Publishers = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [publisher, setPublisher] = useState(null);
-    const { publishers, toggleModal, totalRecord, isLoading } = props;
+    const { publishers, toggleModal, totalRecord, isLoading, appName, appLogo } = props;
 
     const cardModalProps = { publisher, isDeleteMode, isEditMode, isCreateMode, toggleModal };
     const onOpenModal = (isEdit, publisher = null, isDelete = false) => {
@@ -51,7 +51,7 @@ const Publishers = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title={'Publishers | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Publishers | ${appName}`}/>
                 <ProgressBar/>
                 <h5 className="page-heading">Publishers</h5>
                 <div className="d-flex justify-content-end">

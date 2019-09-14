@@ -1,6 +1,5 @@
 import React, {Suspense, useEffect} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import {connect} from 'react-redux';
 import {Container} from 'reactstrap';
 import {
     AppFooter,
@@ -16,32 +15,21 @@ import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import routes from '../../routes';
-import {appSettingsKey, LocalStorageKey, Routes, Tokens} from "../../../constants";
+import {Routes, Tokens} from "../../../constants";
 import {checkExistingRoute} from "../../../shared/sharedMethod";
-import {fetchAppSetting} from "../../../store/action/appSettingAction";
-import {publicImagePath, publicImagePathURL} from "../../../appConstant";
-import {getUserProfile} from "../../../store/action/localStorageAction";
 
 const Footer = React.lazy(() => import('./Footer'));
 const Header = React.lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const { getUserProfile, fetchAppSetting, appSetting, member } = props;
-    let appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
-    let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
-        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
-
-    useEffect(() => {
-        fetchAppSetting();
-        getUserProfile(LocalStorageKey.MEMBER);
-    }, []);
+    const { appName, appLogo, member } = props;
 
     return (
         <div className="app">
             {renderAppHeader(props, appName, appLogo, member)}
             <div className="app-body">
                 {renderAppSidebar(props)}
-                {renderMainSection(props.location)}
+                {renderMainSection(props.location, appName, appLogo)}
             </div>
             {renderAppFooter(appName)}
         </div>
@@ -79,13 +67,13 @@ const renderAppSidebar = (props) => {
     );
 };
 
-const renderMainSection = (location) => {
+const renderMainSection = (location, appName, appLogo) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes(location)}
+                        {renderRoutes(location, appName, appLogo)}
                         <Redirect from="/" to={Routes.MEMBER_DEFAULT}/>
                     </Switch>
                 </Suspense>
@@ -95,7 +83,7 @@ const renderMainSection = (location) => {
     )
 };
 
-const renderRoutes = (location) => {
+const renderRoutes = (location, appName, appLogo) => {
     if (!localStorage.getItem(Tokens.MEMBER)) {
         sessionStorage.setItem('prevMemberPrevUrl', window.location.href)
     } else {
@@ -105,7 +93,8 @@ const renderRoutes = (location) => {
         return route.component ? (
             <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
                 checkExistingRoute(location, props.history);
-                return localStorage.getItem(Tokens.MEMBER) ? <route.component {...props} /> :
+                return localStorage.getItem(Tokens.MEMBER) ?
+                    <route.component {...props} appName={appName} appLogo={appLogo}/> :
                     <Redirect to={Routes.MEMBER_HOME}/>
             }}/>
         ) : (null);
@@ -122,9 +111,4 @@ const renderAppFooter = (appName) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    const { profile, appSetting } = state;
-    return { member: profile, appSetting: appSetting }
-};
-
-export default connect(mapStateToProps, { getUserProfile, fetchAppSetting })(Layout);
+export default Layout;

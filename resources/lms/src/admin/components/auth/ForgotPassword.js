@@ -13,7 +13,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {environment} from "../../../environment";
 
 const ForgotPassword = (props) => {
-    const { handleSubmit, invalid } = props;
+    const { handleSubmit, invalid, appLogo, appName } = props;
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const onSubmit = async (formValues) => {
         formValues.url = environment.URL + '/#' + Routes.ADMIN_RESET_PASSWORD;
@@ -29,7 +29,7 @@ const ForgotPassword = (props) => {
     };
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle title={'Forgot Password | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Forgot Password | ${appName}`}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">

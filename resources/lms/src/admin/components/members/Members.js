@@ -16,7 +16,7 @@ const members = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [member, setMember] = useState(null);
-    const { members, toggleModal, history, isLoading, totalRecord, membershipPlans } = props;
+    const { members, toggleModal, history, isLoading, totalRecord, membershipPlans, appName, appLogo } = props;
 
     useEffect(() => {
         props.fetchMembershipPlans();
@@ -54,7 +54,7 @@ const members = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title={'Members | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Members | ${appName}`}/>
                 <ProgressBar/>
                 <h5 className="page-heading">Members</h5>
                 <div className="d-flex justify-content-end">

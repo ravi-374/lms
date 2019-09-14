@@ -19,7 +19,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const BooksSeries = (props) => {
     const [bookSeries, setBookSeries] = useState(null);
-    const { booksSeries, sortAction, sortObject, toggleModal, history } = props;
+    const { booksSeries, sortAction, sortObject, toggleModal, history, appName, appLogo } = props;
     useEffect(() => {
         props.fetchBooksSeries();
         props.fetchBooks();
@@ -36,10 +36,11 @@ const BooksSeries = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title={'Books Series | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Books Series | ${appName}`}/>
                 <h5 className="page-heading">Books Series</h5>
                 <div className="d-flex justify-content-end">
-                    <Link to="/app/admin/books-series/new" size="md" className="btn btn-primary ml-2">New Book Series</Link>
+                    <Link to="/app/admin/books-series/new" size="md"
+                          className="btn btn-primary ml-2">New Book Series</Link>
                 </div>
             </Col>
             <Col sm={12}>

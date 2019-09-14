@@ -11,7 +11,7 @@ import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const MemberProfile = props => {
-    const { isLoading, countries, member, history } = props;
+    const { isLoading, countries, member, history, appName, appLogo } = props;
     useEffect(() => {
         props.fetchMember();
         props.fetchCountries();
@@ -56,7 +56,7 @@ const MemberProfile = props => {
     }
     return (
         <div className="animated fadeIn">
-            <HeaderTitle title={'Profile | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Profile | ${appName}`}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">Profile</h5>

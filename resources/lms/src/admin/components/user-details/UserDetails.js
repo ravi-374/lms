@@ -8,12 +8,12 @@ import {toggleModal} from "../../../store/action/modalAction";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {publicImagePath, publicImagePathURL} from "../../../appConstant";
+import {publicImagePathURL} from "../../../appConstant";
 import {getAvatarName} from "../../../shared/sharedMethod";
 
 const UserDetail = props => {
     const [isToggle, setIsToggle] = useState(false);
-    const { user, history, isLoading, toggleModal } = props;
+    const { user, history, isLoading, toggleModal, appName, appLogo } = props;
     useEffect(() => {
         props.fetchUser(+props.match.params.id);
     }, []);
@@ -57,7 +57,7 @@ const UserDetail = props => {
     }
     return (
         <div className="animated fadeIn">
-            <HeaderTitle title={'User Details | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`User Details | ${appName}`}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="pull-left text-dark">{user.first_name + ' ' + user.last_name}</h5>

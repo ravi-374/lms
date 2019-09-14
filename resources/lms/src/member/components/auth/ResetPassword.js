@@ -13,23 +13,23 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const ResetPassword = (props) => {
     const params = new URLSearchParams(props.location.search);
-    const {handleSubmit, invalid} = props;
+    const { handleSubmit, invalid, appName, appLogo } = props;
     const onSubmit = async (formValues) => {
         delete formValues.confirm_password;
         formValues.token = params.get('token');
         await apiConfig.post(`reset-member-password`, formValues)
             .then(response => {
-                props.addToast({text: response.data.message});
+                props.addToast({ text: response.data.message });
                 props.history.push(Routes.MEMBER_LOGIN);
             })
-            .catch(({response}) => {
-                    props.addToast({text: response.data.message, type: 'error'});
+            .catch(({ response }) => {
+                    props.addToast({ text: response.data.message, type: 'error' });
                 }
             );
     };
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle title={'Reset Password | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Reset Password | ${appName}`}/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">
@@ -41,8 +41,7 @@ const ResetPassword = (props) => {
                                     <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <Field name="confirm_password" type="password" placeholder="Repeat Password"
-                                           groupText="icon-lock"
-                                           component={CustomInputGroup}/>
+                                           groupText="icon-lock" component={CustomInputGroup}/>
                                     <Row>
                                         <Col className="mt-2 d-flex justify-content-between">
                                             <Button color="primary" disabled={invalid} className="px-4">Submit
@@ -62,6 +61,6 @@ const ResetPassword = (props) => {
     );
 };
 
-const form = reduxForm({form: 'resetPasswordForm', validate: loginFormValidate})(ResetPassword);
+const form = reduxForm({ form: 'resetPasswordForm', validate: loginFormValidate })(ResetPassword);
 
-export default connect(null, {addToast})(form);
+export default connect(null, { addToast })(form);
