@@ -129,7 +129,7 @@ class BookItem extends Model
     {
         $lastIssuedBook = $this->lastIssuedBook;
         if (empty($lastIssuedBook)) {
-            return null;
+            return;
         }
 
         if ($lastIssuedBook->status == IssuedBook::STATUS_RESERVED) {

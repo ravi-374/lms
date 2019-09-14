@@ -19,6 +19,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $name
  * @property string|null $display_name
  * @property string|null $description
+ * @property string|null $guard_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission newModelQuery()
@@ -70,7 +71,7 @@ class Permission extends Model implements PermissionContract
     {
         parent::boot();
 
-        self::creating(function (Self $role) {
+        self::creating(function (self $role) {
             if (empty($role->guard_name)) {
                 $role->guard_name = Guard::getDefaultName(static::class);
             }
