@@ -16,7 +16,7 @@ const Authors = (props) => {
     const [isEdiAuthor, setEditAuthor] = useState(false);
     const [isDeleteAuthor, setDeleteAuthor] = useState(false);
     const [author, setAuthor] = useState(null);
-    const { authors, toggleModal, totalRecord, isLoading, fetchAuthors } = props;
+    const { authors, toggleModal, totalRecord, isLoading, fetchAuthors, appName, appLogo } = props;
     const cardModalProps = { author, isCreateAuthor, isDeleteAuthor, isEdiAuthor, toggleModal };
 
     const onChange = (filter) => {
@@ -50,7 +50,7 @@ const Authors = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title={'Authors | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Authors | ${appName}`}/>
                 <h5 className="page-heading">Authors</h5>
                 <ProgressBar/>
                 <div className="d-flex justify-content-end">

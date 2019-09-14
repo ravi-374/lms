@@ -20,7 +20,7 @@ const BooksAllotment = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookAllotment, setBookAllotment] = useState(null);
-    const { booksAllotment, members, books, toggleModal, history, isLoading, totalRecord } = props;
+    const { booksAllotment, members, books, toggleModal, history, isLoading, totalRecord, appName, appLogo } = props;
     const [filterObject, setFilterObject] = useState(null);
     const onOpenModal = (isEdit, booksAllotment = null, isDelete = false) => {
         setCreateMode(!isEdit);
@@ -117,7 +117,7 @@ const BooksAllotment = (props) => {
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <ProgressBar/>
-                <HeaderTitle title={'Books Allotments | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Books Allotments | ${appName}`}/>
                 <h5 className="page-heading">Books Allotment</h5>
                 <div className="d-flex justify-content-end">
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
@@ -129,7 +129,8 @@ const BooksAllotment = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={booksAllotment} isShowFilterField filterKeyName={storageKey.BOOK_ALLOTMENT}
+                            <ReactDataTable items={booksAllotment} isShowFilterField
+                                            filterKeyName={storageKey.BOOK_ALLOTMENT}
                                             filterOptions={bookAllotmentFilterOptions} filterKey={getStoredFilterKey()}
                                             columns={columns} loading={isLoading} totalRows={totalRecord}
                                             onOpenModal={onOpenModal} onChange={onChange}/>

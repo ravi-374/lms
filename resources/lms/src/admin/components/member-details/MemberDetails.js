@@ -17,7 +17,7 @@ const MemberDetail = props => {
     const [isEditMember, setIsEditMember] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [bookHistory, setBookHistory] = useState(null);
-    const { member, toggleModal, history } = props;
+    const { member, toggleModal, history, appName, appLogo } = props;
     useEffect(() => {
         props.fetchMember(+props.match.params.id);
     }, []);
@@ -53,7 +53,7 @@ const MemberDetail = props => {
     return (
         <div className="animated fadeIn">
             <ProgressBar/>
-            <HeaderTitle title={'Member Details | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Member Details | ${appName}`}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">{member.first_name + ' ' + member.last_name}</h5>

@@ -20,11 +20,11 @@ const Roles = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [role, setRole] = useState(null);
-    const {roles, sortAction, sortObject, toggleModal} = props;
+    const { roles, sortAction, sortObject, toggleModal, appName, appLogo } = props;
     useEffect(() => {
         props.fetchRoles(true);
     }, []);
-    const cardModalProps = { role,isCreateMode, isDeleteMode, isEditMode, toggleModal };
+    const cardModalProps = { role, isCreateMode, isDeleteMode, isEditMode, toggleModal };
     const onOpenModal = (isEdit, role = null, isDelete = false) => {
         setCreateMode(!isEdit);
         setEditMode(isEdit);
@@ -32,14 +32,14 @@ const Roles = (props) => {
         setRole(role);
         toggleModal();
     };
-    const cardBodyProps = {sortAction, sortObject, roles, onOpenModal};
+    const cardBodyProps = { sortAction, sortObject, roles, onOpenModal };
     if (props.isLoading) {
         return <ProgressBar/>
     }
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title={'Roles | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Roles | ${appName}`}/>
                 <h5 className="page-heading">Roles</h5>
                 <div className="d-flex justify-content-end">
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
@@ -67,16 +67,16 @@ const Roles = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    const {roles, searchText, sortObject, isLoading} = state;
+    const { roles, searchText, sortObject, isLoading } = state;
     let rolesArray = Object.values(roles);
     if (searchText) {
         const filterKeys = ['name', 'display_name'];
-        rolesArray = searchFilter(rolesArray, searchText,filterKeys);
+        rolesArray = searchFilter(rolesArray, searchText, filterKeys);
     }
     if (sortObject) {
         rolesArray = sortFilter(rolesArray, sortObject);
     }
-    return {roles: rolesArray, sortObject, isLoading};
+    return { roles: rolesArray, sortObject, isLoading };
 };
 
-export default connect(mapStateToProps, {fetchRoles, sortAction, toggleModal})(Roles);
+export default connect(mapStateToProps, { fetchRoles, sortAction, toggleModal })(Roles);

@@ -19,7 +19,7 @@ import {prepareCreatableObject} from "../../shared/prepareArray";
 
 const ImportBook = (props) => {
     const {
-        authors, publishers, tags, bookLanguages, genres, isLoading, clearImportBook,
+        authors, publishers, tags, bookLanguages, genres, isLoading, clearImportBook,appName, appLogo,
         history, addBook, fetchAuthors, fetchPublishers, fetchGenres, fetchBookLanguages, fetchTags
     } = props;
     useEffect(() => {
@@ -49,7 +49,7 @@ const ImportBook = (props) => {
     return (
         <div className="animated fadeIn">
             {isLoading ? <ProgressBar/> : null}
-            <HeaderTitle title={'Import Book | LMS System'}/>
+            <HeaderTitle appLogo={appLogo} title={`Import Book | ${appName}`}/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">Import Book</h5>

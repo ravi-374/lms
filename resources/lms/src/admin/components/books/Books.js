@@ -17,9 +17,7 @@ import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 
 const Books = (props) => {
     const [book, setBook] = useState(null);
-
-    const { books, history, isLoading, toggleModal, totalRecord } = props;
-
+    const { books, history, isLoading, toggleModal, totalRecord, appName, appLogo } = props;
     const cardModalProps = {
         book,
         toggleModal,
@@ -83,7 +81,7 @@ const Books = (props) => {
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <ProgressBar/>
-                <HeaderTitle title={'Books | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Books | ${appName}`}/>
                 <h5 className="page-heading">Books</h5>
                 <div className="d-flex justify-content-end">
                     <Link to={`${Routes.BOOKS}import-book`} size="md"

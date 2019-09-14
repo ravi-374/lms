@@ -21,7 +21,10 @@ const MembershipPlans = (props) => {
     const [isEditMode, setEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [membershipPlan, setMembershipPlan] = useState(null);
-    const { membershipPlans, sortAction, sortObject, toggleModal, currency, fetchMembershipPlans, fetchSettings } = props;
+    const {
+        membershipPlans, sortAction, sortObject, toggleModal, currency,
+        fetchMembershipPlans, fetchSettings, appName, appLogo
+    } = props;
     useEffect(() => {
         fetchMembershipPlans(true);
         fetchSettings(false);
@@ -41,7 +44,7 @@ const MembershipPlans = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title={'Membership Plans | LMS System'}/>
+                <HeaderTitle appLogo={appLogo} title={`Membership Plans | ${appName}`}/>
                 <h5 className="page-heading">Membership Plans</h5>
                 <div className="d-flex justify-content-end">
                     <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
