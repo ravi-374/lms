@@ -6,7 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\AddBookItemRequest;
 use App\Http\Requests\API\CreateBookRequest;
-use App\Http\Requests\API\UpdateBookAPIRequest;
+use App\Http\Requests\API\UpdateBookRequest;
 use App\Http\Requests\BookDetailsRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
@@ -92,12 +92,12 @@ class BookAPIController extends AppBaseController
      * PUT/PATCH /books/{id}
      *
      * @param  Book  $book
-     * @param  UpdateBookAPIRequest  $request
+     * @param  UpdateBookRequest  $request
      *
      * @throws ApiOperationFailedException
      * @return JsonResponse
      */
-    public function update(Book $book, UpdateBookAPIRequest $request)
+    public function update(Book $book, UpdateBookRequest $request)
     {
         $input = $request->all();
 

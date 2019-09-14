@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMembershipPlanRequest;
-use App\Http\Requests\API\UpdateMembershipPlanAPIRequest;
+use App\Http\Requests\API\UpdateMembershipPlanRequest;
 use App\Models\MembershipPlan;
 use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
 use Exception;
@@ -82,11 +82,11 @@ class MembershipPlanAPIController extends AppBaseController
      * PUT/PATCH /membershipPlans/{id}
      *
      * @param  MembershipPlan  $membershipPlan
-     * @param  UpdateMembershipPlanAPIRequest  $request
+     * @param  UpdateMembershipPlanRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(MembershipPlan $membershipPlan, UpdateMembershipPlanAPIRequest $request)
+    public function update(MembershipPlan $membershipPlan, UpdateMembershipPlanRequest $request)
     {
         $input = $request->all();
 

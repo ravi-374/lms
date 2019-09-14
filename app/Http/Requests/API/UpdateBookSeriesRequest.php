@@ -1,10 +1,9 @@
 <?php
 namespace App\Http\Requests\API;
 
-use App\Models\Book;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateBookAPIRequest extends APIRequest
+class UpdateBookSeriesRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,6 @@ class UpdateBookAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Book::$rules;
-        $rules['isbn'] = 'required|unique:books,isbn,'.$this->route('book')->id;
-        $rules['name'] = 'required|unique:books,name,'.$this->route('book')->id;
-
-        return $rules;
+        return ['title' => 'required|unique:book_series,title,'.$this->route('book_series')->id];
     }
 }

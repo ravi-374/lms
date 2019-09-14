@@ -3,7 +3,7 @@ namespace App\Http\Requests\API;
 
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateTagAPIRequest extends APIRequest
+class UpdatePermissionRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class UpdateTagAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['name'] = 'required|unique:tags,name,'.$this->route('tag')->id;
+        $rules['name'] = 'required|unique:permissions,name,'.$this->route('permission')->id;
 
         return $rules;
     }

@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Requests\API;
 
-use App\Models\Author;
+use App\Models\Member;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateAuthorAPIRequest extends APIRequest
+class UpdateMemberRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,9 @@ class UpdateAuthorAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Author::$rules;
+        $rules = Member::$memberRules;
+        $rules['email'] = 'required|unique:members,email,' . $this->route('member')->id;
+
+        return $rules;
     }
 }

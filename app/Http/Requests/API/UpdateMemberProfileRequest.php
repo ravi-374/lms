@@ -1,10 +1,22 @@
 <?php
+/**
+ * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
+ * Author: Vishal Ribdiya
+ * Email: vishal.ribdiya@infyom.com
+ * Date: 25-07-2019
+ * Time: 03:23 PM.
+ */
+
 namespace App\Http\Requests\API;
 
-use App\Models\MembershipPlan;
+
+use App\Models\Member;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateMembershipPlanAPIRequest extends APIRequest
+/**
+ * Class UpdateMemberProfile
+ */
+class UpdateMemberProfileRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +35,8 @@ class UpdateMembershipPlanAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return MembershipPlan::$rules;
+        $rules = Member::$memberRules;
+
+        return $rules;
     }
 }

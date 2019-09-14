@@ -4,7 +4,7 @@ namespace App\Http\Requests\API;
 use App\Models\SeriesBook;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateSeriesBookAPIRequest extends APIRequest
+class UpdateSeriesAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

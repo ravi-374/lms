@@ -11,7 +11,7 @@ namespace App\Http\Requests\API;
 use App\Models\Setting;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSettingAPIRequest extends FormRequest
+class UpdateSettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreatePermissionAPIRequest;
-use App\Http\Requests\API\UpdatePermissionAPIRequest;
+use App\Http\Requests\API\CreatePermissionRequest;
+use App\Http\Requests\API\UpdatePermissionRequest;
 use App\Models\Permission;
 use App\Repositories\Contracts\PermissionRepositoryInterface;
 use Exception;
@@ -47,11 +47,11 @@ class PermissionAPIController extends AppBaseController
      * Store a newly created Permission in storage.
      * POST /permissions
      *
-     * @param  CreatePermissionAPIRequest  $request
+     * @param  CreatePermissionRequest  $request
      *
      * @return JsonResponse
      */
-    public function store(CreatePermissionAPIRequest $request)
+    public function store(CreatePermissionRequest $request)
     {
         $input = $request->all();
 
@@ -78,11 +78,11 @@ class PermissionAPIController extends AppBaseController
      * PUT/PATCH /permissions/{id}
      *
      * @param  Permission  $permission
-     * @param  UpdatePermissionAPIRequest  $request
+     * @param  UpdatePermissionRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(Permission $permission, UpdatePermissionAPIRequest $request)
+    public function update(Permission $permission, UpdatePermissionRequest $request)
     {
         $input = $request->all();
 

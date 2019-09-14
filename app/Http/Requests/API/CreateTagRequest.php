@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Requests\API;
 
-use App\Models\Role;
+use App\Models\Tag;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateRoleAPIRequest extends APIRequest
+class CreateTagRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,17 +23,6 @@ class UpdateRoleAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Role::$rules;
-        $rules['name'] = 'required|unique:roles,name,'.$this->route('role')->id;
-
-        return $rules;
-    }
-
-    /**
-     * @return array
-     */
-    public function messages()
-    {
-        return Role::$messages;
+        return Tag::$rules;
     }
 }

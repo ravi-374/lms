@@ -1,22 +1,10 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- * Author: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 25-07-2019
- * Time: 03:23 PM.
- */
-
 namespace App\Http\Requests\API;
 
-
-use App\Models\Member;
+use App\Models\Role;
 use InfyOm\Generator\Request\APIRequest;
 
-/**
- * Class UpdateMemberProfile
- */
-class UpdateMemberProfileAPIRequest extends APIRequest
+class CreateRoleRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,8 +23,14 @@ class UpdateMemberProfileAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Member::$memberRules;
+        return Role::$rules;
+    }
 
-        return $rules;
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return Role::$messages;
     }
 }

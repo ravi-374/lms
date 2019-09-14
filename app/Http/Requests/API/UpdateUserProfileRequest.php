@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Http\Requests\API;
 
+use App\User;
+use Auth;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdatePermissionAPIRequest extends APIRequest
+class UpdateUserProfileRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +25,9 @@ class UpdatePermissionAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['name'] = 'required|unique:permissions,name,'.$this->route('permission')->id;
+        $loginUserId = Auth::user()->id;
+        $rules = User::$updateRules;
+        $rules['email'] = 'required|unique:users,email,'.$loginUserId;
 
         return $rules;
     }

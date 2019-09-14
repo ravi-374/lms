@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookLanguageRequest;
-use App\Http\Requests\API\UpdateBookLanguageAPIRequest;
+use App\Http\Requests\API\UpdateBookLanguageRequest;
 use App\Models\BookLanguage;
 use App\Repositories\Contracts\BookLanguageRepositoryInterface;
 use Exception;
@@ -84,11 +84,11 @@ class BookLanguageAPIController extends AppBaseController
      * PUT/PATCH /bookLanguages/{id}
      *
      * @param  BookLanguage  $bookLanguage
-     * @param  UpdateBookLanguageAPIRequest  $request
+     * @param  UpdateBookLanguageRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(BookLanguage $bookLanguage, UpdateBookLanguageAPIRequest $request)
+    public function update(BookLanguage $bookLanguage, UpdateBookLanguageRequest $request)
     {
         $input = $request->all();
 

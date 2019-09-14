@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateAuthorRequest;
-use App\Http\Requests\API\UpdateAuthorAPIRequest;
+use App\Http\Requests\API\UpdateAuthorRequest;
 use App\Models\Author;
 use App\Repositories\Contracts\AuthorRepositoryInterface;
 use Exception;
@@ -83,11 +83,11 @@ class AuthorAPIController extends AppBaseController
      * PUT/PATCH /authors/{id}
      *
      * @param  Author  $author
-     * @param  UpdateAuthorAPIRequest  $request
+     * @param  UpdateAuthorRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(Author $author, UpdateAuthorAPIRequest $request)
+    public function update(Author $author, UpdateAuthorRequest $request)
     {
         $input = $request->all();
 

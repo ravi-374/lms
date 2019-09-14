@@ -1,9 +1,10 @@
 <?php
 namespace App\Http\Requests\API;
 
+use App\Models\SeriesBook;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateGenreAPIRequest extends APIRequest
+class CreateSeriesBookRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +23,6 @@ class UpdateGenreAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['name'] = 'required|unique:genres,name,'.$this->route('genre')->id;
-
-        return $rules;
+        return SeriesBook::$rules;
     }
 }

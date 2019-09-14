@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateGenreRequest;
-use App\Http\Requests\API\UpdateGenreAPIRequest;
+use App\Http\Requests\API\UpdateGenreRequest;
 use App\Models\Genre;
 use App\Repositories\Contracts\GenreRepositoryInterface;
 use Exception;
@@ -83,11 +83,11 @@ class GenreAPIController extends AppBaseController
      * PUT/PATCH /genres/{genre}
      *
      * @param  Genre  $genre
-     * @param  UpdateGenreAPIRequest  $request
+     * @param  UpdateGenreRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(Genre $genre, UpdateGenreAPIRequest $request)
+    public function update(Genre $genre, UpdateGenreRequest $request)
     {
         $input = $request->all();
 

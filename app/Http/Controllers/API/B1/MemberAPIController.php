@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMemberRequest;
-use App\Http\Requests\API\UpdateMemberAPIRequest;
+use App\Http\Requests\API\UpdateMemberRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\Contracts\MemberRepositoryInterface;
@@ -90,14 +90,14 @@ class MemberAPIController extends AppBaseController
      * PUT/PATCH /members/{id}
      *
      * @param  Member  $member
-     * @param  UpdateMemberAPIRequest  $request
+     * @param  UpdateMemberRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function update(Member $member, UpdateMemberAPIRequest $request)
+    public function update(Member $member, UpdateMemberRequest $request)
     {
         $input = $request->all();
 

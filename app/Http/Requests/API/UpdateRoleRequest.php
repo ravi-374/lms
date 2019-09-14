@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Http\Requests\API;
 
+use App\Models\Role;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateBookLanguageAPIRequest extends APIRequest
+class UpdateRoleRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,17 @@ class UpdateBookLanguageAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['language_name'] = 'required|unique:book_languages,language_name,'.$this->route('book_language')->id;
-        $rules['language_code'] = 'required|unique:book_languages,language_code,'.$this->route('book_language')->id;
+        $rules = Role::$rules;
+        $rules['name'] = 'required|unique:roles,name,'.$this->route('role')->id;
 
         return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return Role::$messages;
     }
 }

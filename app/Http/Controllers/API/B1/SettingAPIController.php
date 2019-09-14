@@ -11,7 +11,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\UpdateSettingAPIRequest;
+use App\Http\Requests\API\UpdateSettingRequest;
 use App\Http\Requests\UploadLogoRequest;
 use App\Models\Setting;
 use App\Repositories\Contracts\SettingRepositoryInterface;
@@ -96,11 +96,11 @@ class SettingAPIController extends AppBaseController
      * PUT/PATCH /settings/{id}
      *
      * @param  Setting  $setting
-     * @param  UpdateSettingAPIRequest  $request
+     * @param  UpdateSettingRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(Setting $setting, UpdateSettingAPIRequest $request)
+    public function update(Setting $setting, UpdateSettingRequest $request)
     {
         $input = $request->all();
 

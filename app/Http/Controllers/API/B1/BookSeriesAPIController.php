@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookSeriesRequest;
-use App\Http\Requests\API\UpdateBookSeriesAPIRequest;
+use App\Http\Requests\API\UpdateBookSeriesRequest;
 use App\Models\BookSeries;
 use App\Repositories\Contracts\BookSeriesRepositoryInterface;
 use Exception;
@@ -83,13 +83,13 @@ class BookSeriesAPIController extends AppBaseController
      * PUT/PATCH /bookSeries/{id}
      *
      * @param  BookSeries  $bookSeries
-     * @param  UpdateBookSeriesAPIRequest  $request
+     * @param  UpdateBookSeriesRequest  $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function update(BookSeries $bookSeries, UpdateBookSeriesAPIRequest $request)
+    public function update(BookSeries $bookSeries, UpdateBookSeriesRequest $request)
     {
         $input = $request->all();
 

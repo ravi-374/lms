@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Requests\API;
 
-use App\Models\Tag;
+use App\Models\Permission;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreateTagAPIRequest extends APIRequest
+class CreatePermissionRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,6 @@ class CreateTagAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Tag::$rules;
+        return Permission::$rules;
     }
 }

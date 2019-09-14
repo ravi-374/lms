@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Requests\API;
 
-use App\Models\Permission;
+use App\Models\MembershipPlan;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreatePermissionAPIRequest extends APIRequest
+class UpdateMembershipPlanRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,6 @@ class CreatePermissionAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Permission::$rules;
+        return MembershipPlan::$rules;
     }
 }

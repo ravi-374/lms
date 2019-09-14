@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Requests\API;
 
-use App\Models\Role;
+use App\Models\Publisher;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreateRoleAPIRequest extends APIRequest
+class CreatePublisherRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,6 @@ class CreateRoleAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Role::$rules;
-    }
-
-    /**
-     * @return array
-     */
-    public function messages()
-    {
-        return Role::$messages;
+        return Publisher::$rules;
     }
 }
