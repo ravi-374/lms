@@ -4,7 +4,7 @@ namespace App\Http\Requests\API;
 use App\Models\Member;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreateMemberAPIRequest extends APIRequest
+class CreateMemberRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\AddBookItemRequest;
-use App\Http\Requests\API\CreateBookAPIRequest;
+use App\Http\Requests\API\CreateBookRequest;
 use App\Http\Requests\API\UpdateBookAPIRequest;
 use App\Http\Requests\BookDetailsRequest;
 use App\Models\Book;
@@ -57,13 +57,13 @@ class BookAPIController extends AppBaseController
      * Store a newly created Book in storage.
      * POST /books
      *
-     * @param  CreateBookAPIRequest  $request
+     * @param  CreateBookRequest  $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function store(CreateBookAPIRequest $request)
+    public function store(CreateBookRequest $request)
     {
         $input = $request->all();
 

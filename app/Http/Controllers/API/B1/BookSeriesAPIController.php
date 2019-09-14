@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateBookSeriesAPIRequest;
+use App\Http\Requests\API\CreateBookSeriesRequest;
 use App\Http\Requests\API\UpdateBookSeriesAPIRequest;
 use App\Models\BookSeries;
 use App\Repositories\Contracts\BookSeriesRepositoryInterface;
@@ -48,13 +48,13 @@ class BookSeriesAPIController extends AppBaseController
      * Store a newly created BookSeries in storage.
      * POST /bookSeries
      *
-     * @param  CreateBookSeriesAPIRequest  $request
+     * @param  CreateBookSeriesRequest  $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function store(CreateBookSeriesAPIRequest $request)
+    public function store(CreateBookSeriesRequest $request)
     {
         $input = $request->all();
 
