@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Requests\API;
 
-use App\Models\Book;
+use App\Models\IssuedBook;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreateBookAPIRequest extends APIRequest
+class CreateIssuedBookRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,6 @@ class CreateBookAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Book::$rules;
+        return IssuedBook::$rules;
     }
 }

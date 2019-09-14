@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateMembershipPlanAPIRequest;
+use App\Http\Requests\API\CreateMembershipPlanRequest;
 use App\Http\Requests\API\UpdateMembershipPlanAPIRequest;
 use App\Models\MembershipPlan;
 use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
@@ -48,13 +48,13 @@ class MembershipPlanAPIController extends AppBaseController
      * Store a newly created MembershipPlan in storage.
      * POST /membershipPlans
      *
-     * @param  CreateMembershipPlanAPIRequest  $request
+     * @param  CreateMembershipPlanRequest  $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function store(CreateMembershipPlanAPIRequest $request)
+    public function store(CreateMembershipPlanRequest $request)
     {
         $input = $request->all();
 

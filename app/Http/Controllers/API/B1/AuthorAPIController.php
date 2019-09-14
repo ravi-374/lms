@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateAuthorAPIRequest;
+use App\Http\Requests\API\CreateAuthorRequest;
 use App\Http\Requests\API\UpdateAuthorAPIRequest;
 use App\Models\Author;
 use App\Repositories\Contracts\AuthorRepositoryInterface;
@@ -52,11 +52,11 @@ class AuthorAPIController extends AppBaseController
      * Store a newly created Author in storage.
      * POST /authors
      *
-     * @param  CreateAuthorAPIRequest  $request
+     * @param  CreateAuthorRequest  $request
      *
      * @return JsonResponse
      */
-    public function store(CreateAuthorAPIRequest $request)
+    public function store(CreateAuthorRequest $request)
     {
         $input = $request->all();
 

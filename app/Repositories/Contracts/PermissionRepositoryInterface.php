@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Permission;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,7 +29,7 @@ interface PermissionRepositoryInterface
      * @param  int|null  $limit
      * @param  array  $columns
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return Permission[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
@@ -46,7 +48,7 @@ interface PermissionRepositoryInterface
      * @param  array  $input
      * @param  int  $id
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
+     * @return Permission|Collection
      */
     public function update($input, $id);
 }

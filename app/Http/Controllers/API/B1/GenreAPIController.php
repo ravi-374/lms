@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateGenreAPIRequest;
+use App\Http\Requests\API\CreateGenreRequest;
 use App\Http\Requests\API\UpdateGenreAPIRequest;
 use App\Models\Genre;
 use App\Repositories\Contracts\GenreRepositoryInterface;
@@ -52,11 +52,11 @@ class GenreAPIController extends AppBaseController
      * Store a newly created Genre in storage.
      * POST /genres
      *
-     * @param  CreateGenreAPIRequest  $request
+     * @param  CreateGenreRequest  $request
      *
      * @return JsonResponse
      */
-    public function store(CreateGenreAPIRequest $request)
+    public function store(CreateGenreRequest $request)
     {
         $input = $request->all();
 

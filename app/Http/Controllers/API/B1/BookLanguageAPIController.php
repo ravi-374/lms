@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateBookLanguageAPIRequest;
+use App\Http\Requests\API\CreateBookLanguageRequest;
 use App\Http\Requests\API\UpdateBookLanguageAPIRequest;
 use App\Models\BookLanguage;
 use App\Repositories\Contracts\BookLanguageRepositoryInterface;
@@ -53,11 +53,11 @@ class BookLanguageAPIController extends AppBaseController
      * Store a newly created BookLanguage in storage.
      * POST /bookLanguages
      *
-     * @param  CreateBookLanguageAPIRequest  $request
+     * @param  CreateBookLanguageRequest  $request
      *
      * @return JsonResponse
      */
-    public function store(CreateBookLanguageAPIRequest $request)
+    public function store(CreateBookLanguageRequest $request)
     {
         $input = $request->all();
 

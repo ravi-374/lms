@@ -84,7 +84,7 @@ class Author extends Model
     }
 
     /**
-     * @param $query
+     * @param Builder $query
      * @param $keywords
      *
      * @return mixed
