@@ -9,7 +9,6 @@ use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserProfileAPIRequest;
 use App\Repositories\UserRepository;
 use App\User;
-use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

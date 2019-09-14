@@ -9,7 +9,6 @@ use App\Http\Requests\API\UpdateMemberAPIRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\Contracts\MemberRepositoryInterface;
-use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

@@ -136,7 +136,7 @@ class MemberAuthController extends AppBaseController
      */
     public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
-        $url = $request->url;
+        $url = $request->only(['url']);
         $data = [];
         /** @var User $member */
         $member = Member::whereEmail($request->get('email'))->first();

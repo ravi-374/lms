@@ -43,7 +43,7 @@ class AccountAPIController extends AppBaseController
      */
     public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
-        $url = $request->url;
+        $url = $request->only(['url']);
         $data = [];
         /** @var User $user */
         $user = User::whereEmail($request->get('email'))->first();
