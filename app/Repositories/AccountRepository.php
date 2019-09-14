@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use Exception;
+use Illuminate\Mail\Message;
 use Mail;
 use URL;
 
@@ -26,7 +27,7 @@ class AccountRepository implements AccountRepositoryInterface
 
         try {
             Mail::send('emails.account_verification', ['data' => $data],
-                function ($message) use ($email) {
+                function (Message $message) use ($email) {
                     $message->subject('Activate your account');
                     $message->to($email);
                 });
@@ -47,7 +48,7 @@ class AccountRepository implements AccountRepositoryInterface
     {
         try {
             Mail::send('auth.passwords.reset', ['data' => $data],
-                function ($message) use ($data) {
+                function (Message $message) use ($data) {
                     $message->subject('Password Reset Request Received');
                     $message->to($data['email']);
                 });

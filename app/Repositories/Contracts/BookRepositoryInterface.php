@@ -5,6 +5,7 @@ namespace App\Repositories\Contracts;
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Book;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
 /**
@@ -66,7 +67,7 @@ interface BookRepositoryInterface
      * @throws Exception
      * @throws ApiOperationFailedException
      *
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return JsonResponse|mixed
      */
     public function update($input, $id);
 
