@@ -8,6 +8,7 @@ use App\User;
 use Auth;
 use Closure;
 use Config;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Validation\UnauthorizedException;
 use JWTAuth;
@@ -22,16 +23,16 @@ class UserAuth
     use CommonMiddlewareFunctions;
 
     /**
-     * @param $request
+     * @param  Request  $request
      * @param Closure $next
      *
      * @throws JWTException
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()) {
+        if ($request->user()) {
             return $next($request);
         }
 

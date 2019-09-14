@@ -8,6 +8,7 @@ use App\User;
 use Auth;
 use Closure;
 use Config;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Validation\UnauthorizedException;
 use JWTAuth;
@@ -17,9 +18,9 @@ class MemberAuth
 {
     use CommonMiddlewareFunctions;
 
-    public function handle($request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, $guard = null)
     {
-        if (Auth::user()) {
+        if ($request->user()) {
             return $next($request);
         }
 

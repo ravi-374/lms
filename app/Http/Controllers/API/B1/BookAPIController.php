@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookAPIController
- * @package App\Http\Controllers\API
  */
 class BookAPIController extends AppBaseController
 {
