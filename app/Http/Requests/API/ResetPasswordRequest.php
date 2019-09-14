@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API;
 
 use InfyOm\Generator\Request\APIRequest;
 
-class ResetPasswordLinkRequest extends APIRequest
+class ResetPasswordRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class ResetPasswordLinkRequest extends APIRequest
      */
     public function rules()
     {
-        $rules['email'] = 'required';
-        $rules['url'] = 'required';
+        $rules['token'] = 'required';
+        $rules['password'] = 'required';
 
         return $rules;
     }

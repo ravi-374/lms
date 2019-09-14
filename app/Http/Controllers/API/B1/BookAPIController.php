@@ -4,10 +4,10 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\AddBookItemRequest;
+use App\Http\Requests\API\AddBookItemRequest;
+use App\Http\Requests\API\BookDetailsRequest;
 use App\Http\Requests\API\CreateBookRequest;
 use App\Http\Requests\API\UpdateBookRequest;
-use App\Http\Requests\BookDetailsRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Exception;

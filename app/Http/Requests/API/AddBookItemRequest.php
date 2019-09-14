@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API;
 
 use InfyOm\Generator\Request\APIRequest;
 
-class UploadLogoRequest extends APIRequest
+class AddBookItemRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,12 +19,10 @@ class UploadLogoRequest extends APIRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return string
+     * @return array
      */
     public function rules()
     {
-        $rules['logo'] = 'required';
-
-        return $rules;
+        return ['items' => 'required'];
     }
 }
