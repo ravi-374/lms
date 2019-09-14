@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Requests\API;
 
 use InfyOm\Generator\Request\APIRequest;

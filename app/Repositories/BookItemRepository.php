@@ -97,22 +97,6 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
     }
 
     /**
-     * @param  BookItem[]|Collection  $records
-     *
-     * @return BookItem[]
-     */
-    public function sortByReturnDueDate($records)
-    {
-        $available = collect($records->where('status', BookItem::STATUS_AVAILABLE));
-        $notAvailable = collect($records->where('status', BookItem::STATUS_NOT_AVAILABLE))
-            ->sortBy('lastIssuedBook.return_due_date');
-
-        $records = $available->merge($notAvailable);
-
-        return $records;
-    }
-
-    /**
      * @param  array  $search
      * @param  Builder  $query
      *
@@ -139,5 +123,21 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
         });
 
         return $query;
+    }
+
+    /**
+     * @param  BookItem[]|Collection  $records
+     *
+     * @return BookItem[]
+     */
+    public function sortByReturnDueDate($records)
+    {
+        $available = collect($records->where('status', BookItem::STATUS_AVAILABLE));
+        $notAvailable = collect($records->where('status', BookItem::STATUS_NOT_AVAILABLE))
+            ->sortBy('lastIssuedBook.return_due_date');
+
+        $records = $available->merge($notAvailable);
+
+        return $records;
     }
 }

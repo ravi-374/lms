@@ -24,7 +24,7 @@ class UserAuth
 
     /**
      * @param  Request  $request
-     * @param Closure $next
+     * @param  Closure  $next
      *
      * @throws JWTException
      *
@@ -79,7 +79,7 @@ class UserAuth
         $user = JWTAuth::parseToken()->authenticate();
         Auth::login($user);
 
-        if (!$user->is_active) {
+        if (! $user->is_active) {
             throw new UnauthorizedException('Your account is not active.', 401);
         }
 
