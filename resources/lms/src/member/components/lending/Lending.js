@@ -4,16 +4,16 @@ import {Link} from 'react-router-dom';
 import './lending.scss';
 import {appSettingsKey, Routes} from "../../../constants";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
-import {fetchAppSetting} from "../../../store/action/appSettingAction";
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Lending = (props) => {
-    const { fetchAppSetting, appSetting } = props;
-    let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
+    const { appSetting } = props;
+    const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
+    const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
     useEffect(() => {
         window.addEventListener("scroll", trackScrolling);
-        fetchAppSetting();
         trackScrolling();
         return (() => document.removeEventListener('scroll', trackScrolling))
     });
@@ -85,6 +85,7 @@ const Lending = (props) => {
     };
     return (
         <div id="page-wrapper">
+            <HeaderTitle appLogo={appLogo} title={`Home | ${appName}`}/>
             <div className="page-wrapper">
                 <header className="site-header header-one">
                     <nav className="navbar navbar-expand-lg navbar-light header-navigation stricky">
@@ -261,7 +262,8 @@ const Lending = (props) => {
                                 </div>
                                 <div className="col-md-6 col-sm-12 mb-3 d-flex justify-content-md-end">
                                     <div className="footer-widget footer-widget--about-widget">
-                                        <a href="index.html" className="footer-widget__footer-logo">
+                                        <a href="#" onClick={(e) => e.preventDefault()}
+                                           className="footer-widget__footer-logo">
                                             <img src={appLogo} alt="Awesome Image" width="120"/>
                                         </a>
                                         <p className="d-flex">
@@ -320,5 +322,4 @@ const mapStateToProps = (state) => {
     return { appSetting }
 };
 
-export default connect(mapStateToProps, { fetchAppSetting })(Lending);
-
+export default connect(mapStateToProps, {})(Lending);
