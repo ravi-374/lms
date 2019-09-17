@@ -12,13 +12,17 @@ import {settingsDisplayName, settingsKey} from "../../constants";
 import ImagePicker from "../../../shared/image-picker/ImagePicker";
 import {publicImagePath} from "../../../appConstant";
 import './Settings.scss';
+import ImageCropper from '../../../shared/components/ImageCropper';
+import {toggleModal} from "../../../store/action/modalAction";
 
 const SettingsForm = (props) => {
-    const { currencies, initialValues, changeFile } = props;
+    const { currencies, initialValues, changeFile, toggleModal } = props;
     const [groupText, setGroupText] = useState(mapCurrencyCode(initialValues.currency ? initialValues.currency.id : null));
     const settingRef = createRef();
     const [image, setImage] = useState(publicImagePath.APP_LOGO);
     const [isDefaultImage, setIsDefaultImage] = useState(true);
+    const [fileRef, setFileRef] = useState(null);
+    const [imageRef, setImageRef] = useState(null);
 
     useEffect(() => {
         settingRef.current.focus();
@@ -41,13 +45,14 @@ const SettingsForm = (props) => {
     };
 
     const onFileChange = (event) => {
-        changeFile(event.target.files[0]);
+        setFileRef(event.target.files[0]);
         setIsDefaultImage(false);
         const fileReader = new FileReader();
         fileReader.readAsDataURL(event.target.files[0]);
         fileReader.onloadend = () => {
             setImage(fileReader.result);
-        }
+        };
+        toggleModal();
     };
 
     const onRemovePhoto = () => {
@@ -76,12 +81,34 @@ const SettingsForm = (props) => {
         props.onSaveSettings(settings);
     };
 
+    const emitFileChange = (fileRef) => {
+        setFileRef(fileRef);
+    };
+
+    const emitImageChange = (imageRef) => {
+        setImageRef(imageRef);
+    };
+
+    const onSave = () => {
+        changeFile(fileRef);
+        setImage(imageRef);
+        toggleModal();
+    };
+
+    const imageCropperOptions = {
+        image,
+        emitFileChange,
+        emitImageChange,
+        toggleModal,
+        onSave,
+    };
     return (
         <Row className="settings">
             <Col xs={2} className="settings__logo">
                 <h6 className="settings__logo-heading">Logo</h6>
                 <div>
                     <Field name="library_logo" type="hidden" component={InputGroup}/>
+                    <ImageCropper {...imageCropperOptions}/>
                     <ImagePicker {...imagePickerOptions}/>
                 </div>
             </Col>
@@ -114,4 +141,4 @@ const SettingsForm = (props) => {
 };
 
 const form = reduxForm({ form: 'settingsForm', validate: settingsFormValidate })(SettingsForm);
-export default connect(null, { addToast })(form);
+export default connect(null, { addToast, toggleModal })(form);

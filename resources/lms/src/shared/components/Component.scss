@@ -207,3 +207,11 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.react-img-cropper {
+
+    &__img {
+        max-width: 100%;
+    }
+}
+
