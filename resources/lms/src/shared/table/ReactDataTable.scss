@@ -175,6 +175,9 @@
     Purpose for this class name is to be override default opacity when sorted header icon should be hovered
  */
 .jWjBKP:hover span, .jWjBKP:hover span.__rdt_custom_sort_icon__ * {
+    display:inherit;
+    width: 12px !important;
+    font-size: 12px !important;
     opacity: 0.8 !important;
 }
 
