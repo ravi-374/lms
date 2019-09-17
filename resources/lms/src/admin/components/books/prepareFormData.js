@@ -1,13 +1,13 @@
 export default (formValues) => {
-    const {is_featured, isbn, genres, authors, name, tags, url, description, file, items, file_name} = formValues;
+    const { is_featured, isbn, genres, authors, name, tags, url, description, file, items, file_name } = formValues;
     const formData = new FormData();
     formData.append('is_featured', is_featured ? '1' : '0');
     formData.append('isbn', isbn);
-    genres.forEach(genre => formData.append('genres[]', genre.id.toString()));
-    authors.forEach(author => formData.append('authors[]', author.id.toString()));
+    genres.forEach(genre => formData.append('genres[]', genre.value.toString()));
+    authors.forEach(author => formData.append('authors[]', author.value.toString()));
     formData.append('name', name);
     if (tags) {
-        tags.forEach(tag => formData.append('tags[]', tag.id.toString()));
+        tags.forEach(tag => formData.append('tags[]', tag.value.toString()));
     }
     formData.append('url', url ? url : '');
     formData.append('description', description ? description : '');

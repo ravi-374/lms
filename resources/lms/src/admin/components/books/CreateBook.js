@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardBody, Button} from 'reactstrap';
+import {Row, Col, Card, CardBody} from 'reactstrap';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import BookForm from './BookForm';
@@ -13,7 +13,7 @@ import {fetchTags} from '../../store/actions/tagAction';
 import prepareFormData from './prepareFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {prepareFullNames} from "../../../shared/sharedMethod";
-import {prepareBookLanguage} from "../../shared/prepareArray";
+import {prepareBookLanguage, prepareCreatableObject} from "../../shared/prepareArray";
 
 const CreateBook = (props) => {
     useEffect(() => {
@@ -66,11 +66,11 @@ const mapStateToProps = (state) => {
     const { isLoading, authors, publishers, tags, bookLanguages, genres } = state;
     return {
         isLoading,
-        authors: prepareFullNames(Object.values(authors)),
+        authors: prepareCreatableObject(prepareFullNames(authors)),
         publishers: publishers,
-        tags,
+        tags: prepareCreatableObject(tags),
         bookLanguages: prepareBookLanguage(Object.values(bookLanguages)),
-        genres: Object.values(genres)
+        genres: prepareCreatableObject(genres)
     }
 };
 
