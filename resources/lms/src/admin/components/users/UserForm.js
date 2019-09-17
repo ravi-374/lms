@@ -108,9 +108,11 @@ const UserForm = (props) => {
                                required={!initialValues} autoComplete={initialValues ? 'off' : 'new-password'}
                                type="password" groupText="lock" component={InputGroup}/>
                     </Col>
-                    <Field name="phone" type="number" label="Phone No."
-                           onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
-                           component={InputGroup}/>
+                    <Col>
+                        <Field name="phone" type="number" label="Phone No."
+                               onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
+                               component={InputGroup}/>
+                    </Col>
                     <Col xs={6}>
                         <Field name="role" label="Role" required options={roles} placeholder="Select Role"
                                groupText="tasks" component={Select} isSearchable={true} isMini={true}/>
