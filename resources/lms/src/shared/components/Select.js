@@ -12,8 +12,8 @@ import './Component.scss';
 
 export default (props) => {
     const {
-        input, placeholder, required, label, groupText, isSearchable = false,
-        autoFocus, innerRef, defaultValue = {}, disabled, menuPlacement = "auto", isCustom,
+        input, placeholder, required, label, groupText, isSearchable = false
+        , innerRef, defaultValue = {}, disabled, menuPlacement = "auto", isCustom,
         meta: { touched, error }, options, isMulti = false
     } = props;
     const formGroupClass = isCustom ? 'react-select mb-0 mt-1' : 'react-select';
