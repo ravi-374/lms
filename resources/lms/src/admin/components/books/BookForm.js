@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Field, FieldArray, reduxForm} from 'redux-form';
 import {Col, Row, Button, Table} from 'reactstrap';
 import bookValidate from './bookValidate';
+import bookValidateWarning from './bookValidateWarning';
 import './Books.scss';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
@@ -12,10 +13,12 @@ import CustomInput from '../../../shared/components/CustomInput';
 import {addToast} from '../../../store/action/toastAction';
 import {bookFormatOptions} from '../../constants';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {publicImagePath} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 import {fetchSettings} from "../../store/actions/settingAction";
 import {mapCurrencyCode} from "../../../shared/sharedMethod";
+import SelectCreatable from "../../../shared/components/SelectCreatable";
+import _ from 'lodash';
 
 const BookForm = (props) => {
     const [image, setImage] = useState(publicImagePath.BOOK_AVATAR);
@@ -25,25 +28,18 @@ const BookForm = (props) => {
     const [items, setItems] = useState(initialValues ? initialValues.items : [{}]);
     const inputRef = createRef();
     const [file, setFile] = useState(null);
+    const [isVisibleAuthorWarn, setIsVisibleAuthorWarn] = useState(true);
+    const [isVisibleGenreWarn, setIsVisibleGenreWarn] = useState(true);
+    const [isVisibleTagWarn, setIsVisibleTagWarn] = useState(true);
+
     useEffect(() => {
         props.fetchSettings();
         prepareInitialValues();
     }, []);
 
     const prepareInitialValues = () => {
-        if (initialValues && initialValues.is_featured) {
-            setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
-        }
-        if (initialValues) {
-            if (initialValues.image) {
-                change('file_name', true);
-                setImage(publicImagePathURL.BOOK_AVATAR_URL + initialValues.image);
-                setIsDefaultImage(false);
-            }
-        } else {
-            props.initialize({ items: [{}] });
-            inputRef.current.focus();
-        }
+        props.initialize({ items: [{}] });
+        inputRef.current.focus();
     };
     const onSaveBook = (formValues) => {
         formValues.file = file;
@@ -68,6 +64,44 @@ const BookForm = (props) => {
     const onChecked = () => {
         setIsFeatured(!isFeatured);
     };
+
+    const onChangeAuthor = (options) => {
+        if (options && options.length > 0) {
+            const filteredData = _.differenceWith(options, authors, _.isEqual);
+            if (filteredData.length > 0) {
+                change('new_authors', filteredData);
+                setIsVisibleAuthorWarn(true);
+            } else {
+                change('new_authors', null);
+                setIsVisibleAuthorWarn(false);
+            }
+        }
+    };
+
+    const onChangeGenres = (options) => {
+        if (options && options.length > 0) {
+            const filteredData = _.differenceWith(options, genres, _.isEqual);
+            if (filteredData.length > 0) {
+                change('new_genres', filteredData);
+                setIsVisibleGenreWarn(true);
+            } else {
+                change('new_genres', null);
+                setIsVisibleGenreWarn(false);
+            }
+        }
+    };
+    const onChangeTags = (options) => {
+        if (options && options.length > 0) {
+            const filteredData = _.differenceWith(options, tags, _.isEqual);
+            if (filteredData.length > 0) {
+                change('new_tags', filteredData);
+                setIsVisibleTagWarn(true);
+            } else {
+                change('new_tags', null);
+                setIsVisibleTagWarn(false);
+            }
+        }
+    };
     const imagePickerOptions = { image, buttonName: 'Cover', isDefaultImage, onRemovePhoto, onFileChange };
     return (
         <Row className="animated fadeIn book-form m-3">
@@ -88,20 +122,22 @@ const BookForm = (props) => {
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="authors" label="Authors" required isMulti={true} options={authors}
-                               placeholder="Select Author" groupText="user-circle-o" isSearchable={true}
-                               component={Select}/>
+                        <Field name="authors" label="Authors" required isMulti={true} onChange={onChangeAuthor}
+                               isVisibleWarning={isVisibleAuthorWarn} options={authors} placeholder="Select Author"
+                               groupText="user-circle-o" component={SelectCreatable}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="genres" label="Genres" required isMulti={true} options={genres}
-                               placeholder="Select Genres" groupText="list-alt" isSearchable={true} component={Select}/>
+                        <Field name="genres" label="Genres" required isMulti={true} onChange={onChangeGenres}
+                               isVisibleWarning={isVisibleGenreWarn} options={genres} placeholder="Select Genres"
+                               groupText="list-alt" component={SelectCreatable}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="name" label="Name" required groupText="book" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="tags" label="Tags" isMulti={true} options={tags} placeholder="Select Tag"
-                               groupText="tag" isSearchable={true} component={Select}/>
+                        <Field name="tags" label="Tags" isMulti={true} onChange={onChangeTags}
+                               isVisibleWarning={isVisibleTagWarn} options={tags} placeholder="Select Tag"
+                               groupText="tag" component={SelectCreatable}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="url" label="URL" groupText="link" component={InputGroup}/>
@@ -204,5 +240,6 @@ const renderBookItems = ({ fields, meta: { error, submitFailed }, items, setItem
 const mapStateToProps = (state) => {
     return { currency: state.currency };
 };
-const form = reduxForm({ form: 'bookForm', validate: bookValidate })(BookForm);
+
+const form = reduxForm({ form: 'bookForm', validate: bookValidate, warn: bookValidateWarning })(BookForm);
 export default connect(mapStateToProps, { addToast, fetchSettings })(form);
