@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import ProgressBar from '../shared/progress-bar/ProgressBar';
-import {appSettingsKey, LocalStorageKey, Routes, Tokens} from "../constants";
+import {appSettingsKey, LocalStorageKey, Routes} from "../constants";
 import {fetchAppSetting} from "../store/action/appSettingAction";
 import {connect} from "react-redux";
 import {getUserProfile} from "../store/action/localStorageAction";
 import {fetchConfig} from "./store/actions/configAction";
 import {publicImagePath, publicImagePathURL} from "../appConstant";
-import {environment} from "../environment";
 
 const Layout = React.lazy(() => import('./components/layout/index'));
 const Login = React.lazy(() => import('./components/auth/Login'));
@@ -21,20 +20,10 @@ const App = (props) => {
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
     const routeProps = { appLogo, appName };
 
-    const checkPreviousURL = () => {
-        if (!localStorage.getItem(Tokens.ADMIN)) {
-            sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
-            window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
-        } else {
-            sessionStorage.removeItem('prevAdminPrevUrl');
-            fetchConfig();
-        }
-    };
-
     useEffect(() => {
         fetchAppSetting();
+        fetchConfig();
         getUserProfile(LocalStorageKey.USER);
-        checkPreviousURL();
     }, []);
 
     return (

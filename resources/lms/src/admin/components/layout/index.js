@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect} from 'react';
+import React, {Suspense} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {
@@ -68,6 +68,7 @@ const renderAppHeader = (props, appName, appLogo, user) => {
         e.preventDefault();
         localStorage.removeItem('user');
         localStorage.removeItem(Tokens.ADMIN);
+        sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
         props.history.push(Routes.ADMIN_LOGIN);
     };
     return (

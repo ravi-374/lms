@@ -32,7 +32,9 @@ const Header = (props) => {
                     <DropdownToggle nav>
                         {imageUrl ? <img src={imageUrl} className="img-avatar" alt="user-avatar"/> :
                             <div className="header__avatar img-avatar">
-                                <span className="header__avatar-text">{getAvatarName(user.name)}</span>
+                                <span className="header__avatar-text">
+                                    {getAvatarName(user ? user.name : null)}
+                                </span>
                             </div>
                         }
                         <span className="mr-3 header__user-name">{user ? user.name : null}</span>
