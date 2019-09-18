@@ -46,8 +46,8 @@ class BookItemAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$bookItem);
 
-        /** @var BookItem[] $bookItems */
-        $bookItems = factory(BookItem::class)->times(5)->create();
+        /** @var BookItem $bookItems */
+        $bookItems = factory(BookItem::class, 5)->create();
 
         $this->bookItemRepository->expects('searchBooks')->andReturn(collect($bookItems));
 

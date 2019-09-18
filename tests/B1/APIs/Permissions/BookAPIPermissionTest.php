@@ -116,7 +116,7 @@ class BookAPIPermissionTest extends TestCase
     /** @test */
     public function test_unable_to_add_book_items_without_permission()
     {
-        $items = factory(BookItem::class)->times(2)->raw();
+        $items = factory(BookItem::class, 2)->raw();
 
         $response = $this->postJson(route('api.b1.books.add-items', 1), ['items' => $items]);
 
@@ -128,7 +128,7 @@ class BookAPIPermissionTest extends TestCase
     {
         $this->assignPermissions($this->loggedInUserId, ['manage_books']);
         $book = factory(Book::class)->create();
-        $items = factory(BookItem::class)->times(2)->raw();
+        $items = factory(BookItem::class, 2)->raw();
 
         $response = $this->postJson(route('api.b1.books.add-items', $book->id), ['items' => $items]);
 
@@ -149,7 +149,7 @@ class BookAPIPermissionTest extends TestCase
     public function test_can_get_available_book_items_without_permission()
     {
         $this->assignPermissions($this->loggedInUserId, ['manage_books']);
-        $items = factory(BookItem::class)->times(2)->create();
+        $items = factory(BookItem::class, 2)->create();
 
         $response = $this->getJson(route('api.b1.books.available-books', [$items[0]->id, 'member_id' => 1]));
 

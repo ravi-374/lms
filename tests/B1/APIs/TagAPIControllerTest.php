@@ -22,8 +22,8 @@ class TagAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$tag);
 
-        /** @var Tag[] $tags */
-        $tags = factory(Tag::class)->times(5)->create();
+        /** @var Tag $tags */
+        $tags = factory(Tag::class, 5)->create();
 
         $this->tagRepository->expects('all')->andReturn($tags);
 
@@ -36,7 +36,7 @@ class TagAPIControllerTest extends TestCase
     public function test_can_search_and_get_tags()
     {
         /** @var Tag[] $tags */
-        $tags = factory(Tag::class)->times(5)->create();
+        $tags = factory(Tag::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.tags.index'));
         $take3 = $this->getJson(route('api.b1.tags.index', ['limit' => 3]));
