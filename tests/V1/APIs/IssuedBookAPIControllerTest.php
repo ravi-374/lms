@@ -28,9 +28,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $member = factory(Member::class)->create();
         /** @var IssuedBook $issuedBook */
-        $issuedBook = factory(IssuedBook::class)
-            ->times(5)
-            ->create(['member_id' => $member->id]);
+        $issuedBook = factory(IssuedBook::class, 5)->create(['member_id' => $member->id]);
 
         $this->issuedBookRepository->expects('all')->andReturn($issuedBook);
 
@@ -43,9 +41,7 @@ class IssuedBookAPIControllerTest extends TestCase
     public function test_can_get_book_history()
     {
         /** @var IssuedBook[] $IssuedBooks */
-        $IssuedBooks = factory(IssuedBook::class)
-            ->times(5)
-            ->create(['member_id' => $this->loggedInMemberId]);
+        $IssuedBooks = factory(IssuedBook::class, 5)->create(['member_id' => $this->loggedInMemberId]);
 
         factory(IssuedBook::class); // of another member
 

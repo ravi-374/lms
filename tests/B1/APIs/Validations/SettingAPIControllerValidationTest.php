@@ -89,7 +89,7 @@ class SettingAPIControllerValidationTest extends TestCase
     /** @test */
     public function it_can_store_setting()
     {
-        $fakeSetting = factory(Setting::class)->times(2)->raw();
+        $fakeSetting = factory(Setting::class, 2)->raw();
         $response = $this->postJson(route('api.b1.settings.store'), $fakeSetting);
 
         $this->assertSuccessMessageResponse($response, 'Setting saved successfully.');

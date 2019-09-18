@@ -23,7 +23,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         $this->mockRepo(self::$membershipPlan);
 
         /** @var MembershipPlan[] $membershipPlan */
-        $membershipPlan = factory(MembershipPlan::class)->times(5)->create();
+        $membershipPlan = factory(MembershipPlan::class, 5)->create();
 
         $this->membershipPlanRepository->expects('all')->andReturn($membershipPlan);
 
@@ -40,7 +40,7 @@ class MembershipPlanAPIControllerTest extends TestCase
     public function test_can_search_and_get_membership_plans()
     {
         /** @var MembershipPlan[] $membershipPlans */
-        $membershipPlans = factory(MembershipPlan::class)->times(5)->create();
+        $membershipPlans = factory(MembershipPlan::class, 5)->create();
 
         $response = $this->getJson(route('api.v1.membership-plans.index'));
         $take3 = $this->getJson(route('api.v1.membership-plans.index', ['limit' => 3]));

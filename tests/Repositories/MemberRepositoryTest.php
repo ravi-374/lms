@@ -28,7 +28,7 @@ class MemberRepositoryTest extends TestCase
     /** @test */
     public function test_can_get_all_members()
     {
-        factory(Member::class)->times(10)->create();
+        factory(Member::class, 10)->create();
 
         $members = $this->memberRepo->all();
         $take3 = $this->memberRepo->all([], null, 3);
