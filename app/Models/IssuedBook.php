@@ -6,6 +6,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\IssuedBook
@@ -110,7 +111,7 @@ class IssuedBook extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function bookItem()
     {
@@ -128,7 +129,7 @@ class IssuedBook extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function issuer()
     {
@@ -136,7 +137,7 @@ class IssuedBook extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function returner()
     {
@@ -144,7 +145,7 @@ class IssuedBook extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function member()
     {
@@ -162,6 +163,9 @@ class IssuedBook extends Model
         return $query->where('member_id', $memberId);
     }
 
+    /**
+     * @return string
+     */
     public function getIssuerNameAttribute()
     {
         if (!empty($this->issuer_id)) {
@@ -169,6 +173,9 @@ class IssuedBook extends Model
         }
     }
 
+    /**
+     * @return string
+     */
     public function getReturnerNameAttribute()
     {
         if (!empty($this->returner_id)) {
@@ -193,10 +200,14 @@ class IssuedBook extends Model
         return $record;
     }
 
+    /**
+     * @param  int  $lastIssuedBook
+     * @return mixed|null
+     */
     public function getExpectedAvailableDate($lastIssuedBook)
     {
         if (empty($lastIssuedBook)) {
-            return;
+            return null;
         }
 
         if ($lastIssuedBook['status'] == IssuedBook::STATUS_RESERVED) {
@@ -209,6 +220,9 @@ class IssuedBook extends Model
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getIssueDueDateAttribute()
     {
         if ($this->status == self::STATUS_RESERVED) {

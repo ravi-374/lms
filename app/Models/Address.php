@@ -2,6 +2,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * App\Models\Address
@@ -65,7 +67,7 @@ class Address extends Model
 
     /**
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function owner()
     {
@@ -73,7 +75,7 @@ class Address extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function country()
     {

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\BookItem
@@ -85,7 +88,7 @@ class BookItem extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function book()
     {
@@ -93,7 +96,7 @@ class BookItem extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function issuedBooks()
     {
@@ -101,7 +104,7 @@ class BookItem extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
     public function lastIssuedBook()
     {
@@ -110,7 +113,7 @@ class BookItem extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function publisher()
     {
@@ -118,18 +121,21 @@ class BookItem extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function language()
     {
         return $this->belongsTo(BookLanguage::class, 'language_id');
     }
 
+    /**
+     * @return string|null
+     */
     public function getExpectedAvailableDateAttribute()
     {
         $lastIssuedBook = $this->lastIssuedBook;
         if (empty($lastIssuedBook)) {
-            return;
+            return null;
         }
 
         if ($lastIssuedBook->status == IssuedBook::STATUS_RESERVED) {
@@ -143,6 +149,9 @@ class BookItem extends Model
         }
     }
 
+    /**
+     * @return array
+     */
     public function apiObj()
     {
         $bookItem = $this->toArray();
@@ -151,6 +160,9 @@ class BookItem extends Model
         return $bookItem;
     }
 
+    /**
+     * @return int
+     */
     public function getBookItemStatusAttribute()
     {
         /** @var IssuedBook $lastIssuedBook */
