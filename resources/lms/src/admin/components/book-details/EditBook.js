@@ -9,6 +9,7 @@ import {fetchTags} from '../../store/actions/tagAction';
 import {fetchGenres} from '../../store/actions/genreAction';
 import '../books/Books.scss';
 import {prepareFullNames} from "../../../shared/sharedMethod";
+import {prepareCreatableObject} from "../../shared/prepareArray";
 
 const EditBook = (props) => {
     useEffect(() => {
@@ -22,11 +23,11 @@ const EditBook = (props) => {
         id,
         is_featured,
         isbn,
-        genres: props.book.genres,
-        authors: props.book.authors ? prepareFullNames(props.book.authors) : [],
+        genres: prepareCreatableObject(props.book.genres),
+        authors: prepareCreatableObject(prepareFullNames(props.book.authors)),
         name,
         price,
-        tags: props.book.tags,
+        tags: prepareCreatableObject(props.book.tags),
         url,
         description,
         image,
@@ -53,9 +54,9 @@ const EditBook = (props) => {
 const mapStateToProps = (state) => {
     const { authors, tags, genres } = state;
     return {
-        authors: prepareFullNames(Object.values(authors)),
-        tags: Object.values(tags),
-        genres: Object.values(genres)
+        authors: prepareCreatableObject(prepareFullNames(authors)),
+        tags: prepareCreatableObject(tags),
+        genres: prepareCreatableObject(genres)
     }
 };
 export default connect(
