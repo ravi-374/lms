@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class CountryAPIControllerTest
+ */
 class CountryAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;

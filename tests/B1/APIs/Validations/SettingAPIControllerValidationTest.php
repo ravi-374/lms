@@ -6,6 +6,9 @@ use App\Models\Setting;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class SettingAPIControllerValidationTest
+ */
 class SettingAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;

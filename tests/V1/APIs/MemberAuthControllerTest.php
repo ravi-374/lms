@@ -6,6 +6,9 @@ use App\Models\Member;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class MemberAuthControllerTest
+ */
 class MemberAuthControllerTest extends TestCase
 {
     use DatabaseTransactions;

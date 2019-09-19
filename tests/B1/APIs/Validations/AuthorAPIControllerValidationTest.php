@@ -6,6 +6,9 @@ use App\Models\Author;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class AuthorAPIControllerValidationTest
+ */
 class AuthorAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;

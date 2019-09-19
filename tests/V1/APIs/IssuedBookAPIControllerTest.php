@@ -11,6 +11,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class IssuedBookAPIControllerTest
+ */
 class IssuedBookAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;

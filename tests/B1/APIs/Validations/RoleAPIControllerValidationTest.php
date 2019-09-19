@@ -7,6 +7,9 @@ use App\Models\Role;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class RoleAPIControllerValidationTest
+ */
 class RoleAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;

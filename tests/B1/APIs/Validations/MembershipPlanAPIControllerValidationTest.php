@@ -6,6 +6,9 @@ use App\Models\MembershipPlan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class MembershipPlanAPIControllerValidationTest
+ */
 class MembershipPlanAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;

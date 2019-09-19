@@ -6,6 +6,9 @@ use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class TagAPIControllerValidationTest
+ */
 class TagAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;
