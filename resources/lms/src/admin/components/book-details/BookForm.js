@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import bookFormValidate from './bookFormValidate';
+import bookFormValidateWarning from './bookFormValidateWarning';
 import '../books/Books.scss';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
@@ -11,7 +12,7 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import {addToast} from '../../../store/action/toastAction';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
-import Select from "../../../shared/components/Select";
+import SelectCreatable from "../../../shared/components/SelectCreatable";
 
 const BookForm = (props) => {
     const [image, setImage] = useState(publicImagePath.BOOK_AVATAR);
@@ -19,7 +20,9 @@ const BookForm = (props) => {
     const { initialValues, change, authors, tags, genres } = props;
     const [file, setFile] = useState(null);
     const [isFeatured, setIsFeatured] = useState(false);
-
+    const [isVisibleAuthorWarn, setIsVisibleAuthorWarn] = useState(true);
+    const [isVisibleGenreWarn, setIsVisibleGenreWarn] = useState(true);
+    const [isVisibleTagWarn, setIsVisibleTagWarn] = useState(true);
     useEffect(() => {
         if (initialValues && initialValues.is_featured) {
             setIsFeatured(initialValues.is_featured ? initialValues.is_featured : false);
@@ -58,6 +61,43 @@ const BookForm = (props) => {
         setIsFeatured(!isFeatured);
     };
 
+    const onChangeAuthor = (options) => {
+        if (options && options.length > 0) {
+            const filteredData = _.differenceWith(options, authors, _.isEqual);
+            if (filteredData.length > 0) {
+                change('new_authors', filteredData);
+                setIsVisibleAuthorWarn(true);
+            } else {
+                change('new_authors', null);
+                setIsVisibleAuthorWarn(false);
+            }
+        }
+    };
+
+    const onChangeGenres = (options) => {
+        if (options && options.length > 0) {
+            const filteredData = _.differenceWith(options, genres, _.isEqual);
+            if (filteredData.length > 0) {
+                change('new_genres', filteredData);
+                setIsVisibleGenreWarn(true);
+            } else {
+                change('new_genres', null);
+                setIsVisibleGenreWarn(false);
+            }
+        }
+    };
+    const onChangeTags = (options) => {
+        if (options && options.length > 0) {
+            const filteredData = _.differenceWith(options, tags, _.isEqual);
+            if (filteredData.length > 0) {
+                change('new_tags', filteredData);
+                setIsVisibleTagWarn(true);
+            } else {
+                change('new_tags', null);
+                setIsVisibleTagWarn(false);
+            }
+        }
+    };
     const imagePickerOptions = { image, buttonName: 'Cover', isDefaultImage, onRemovePhoto, onFileChange };
     return (
         <Row className="animated fadeIn book-form m-3">
@@ -76,21 +116,23 @@ const BookForm = (props) => {
                     <Col xs={12}>
                         <Field name="name" label="Name" required groupText="book" component={InputGroup}/>
                     </Col>
-                    <Col xs={12}>
-                        <Field name="authors" label="Authors" required isMulti={true} options={authors}
-                               placeholder="Select Author" groupText="user-circle-o" isSearchable={true}
-                               component={Select}/>
+                    <Col xs={6}>
+                        <Field name="authors" label="Authors" required isMulti={true} onChange={onChangeAuthor}
+                               isVisibleWarning={isVisibleAuthorWarn} options={authors} placeholder="Select Author"
+                               groupText="user-circle-o" component={SelectCreatable}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="isbn" label="ISBN No" required groupText="id-card" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="genres" label="Genres" required isMulti={true} options={genres}
-                               placeholder="Select Genres" groupText="list-alt" isSearchable={true} component={Select}/>
+                        <Field name="genres" label="Genres" required isMulti={true} onChange={onChangeGenres}
+                               isVisibleWarning={isVisibleGenreWarn} options={genres} placeholder="Select Genres"
+                               groupText="list-alt" component={SelectCreatable}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="tags" label="Tags" isMulti={true} options={tags} placeholder="Select Tag"
-                               groupText="tag" isSearchable={true} component={Select}/>
+                        <Field name="tags" label="Tags" isMulti={true} onChange={onChangeTags}
+                               isVisibleWarning={isVisibleTagWarn} options={tags} placeholder="Select Tag"
+                               groupText="tag" component={SelectCreatable}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="url" label="URL" groupText="link" component={InputGroup}/>
@@ -119,5 +161,5 @@ const BookForm = (props) => {
     );
 };
 
-const bookForm = reduxForm({ form: 'bookForm', validate: bookFormValidate })(BookForm);
+const bookForm = reduxForm({ form: 'bookForm', validate: bookFormValidate, warn: bookFormValidateWarning })(BookForm);
 export default connect(null, { addToast })(bookForm);
