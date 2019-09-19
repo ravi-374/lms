@@ -7,6 +7,9 @@ use App\Models\Genre;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class BookAPIControllerValidationTest
+ */
 class BookAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;

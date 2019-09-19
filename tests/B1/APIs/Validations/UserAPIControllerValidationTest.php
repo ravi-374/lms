@@ -7,7 +7,10 @@ use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class UserControllerValidationTest extends TestCase
+/**
+ * Class UserAPIControllerValidationTest
+ */
+class UserAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;
 

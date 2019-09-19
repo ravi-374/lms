@@ -5,6 +5,9 @@ namespace Tests\B1\APIs;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class CommonAPIControllerTest
+ */
 class CommonAPIControllerTest extends TestCase
 {
     use DatabaseTransactions;
