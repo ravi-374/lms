@@ -11,9 +11,9 @@ use JWTAuth;
 use Tests\TestCase;
 
 /**
- * Class IssuedBookPermissionTest
+ * Class IssuedBookAPIPermissionTest
  */
-class IssuedBookPermissionTest extends TestCase
+class IssuedBookAPIPermissionTest extends TestCase
 {
     use DatabaseTransactions;
 

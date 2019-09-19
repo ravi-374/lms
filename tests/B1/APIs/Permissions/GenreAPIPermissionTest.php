@@ -9,9 +9,9 @@ use JWTAuth;
 use Tests\TestCase;
 
 /**
- * Class GenrePermissionAPITest
+ * Class GenreAPIPermissionTest
  */
-class GenrePermissionAPITest extends TestCase
+class GenreAPIPermissionTest extends TestCase
 {
     use DatabaseTransactions;
 
