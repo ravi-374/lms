@@ -9,9 +9,9 @@ use JWTAuth;
 use Tests\TestCase;
 
 /**
- * Class BookSeriesPermissionTest
+ * Class BookSeriesAPIPermissionTest
  */
-class BookSeriesPermissionTest extends TestCase
+class BookSeriesAPIPermissionTest extends TestCase
 {
     use DatabaseTransactions;
 

@@ -9,7 +9,7 @@ use JWTAuth;
 use Tests\TestCase;
 
 /**
- * Class PermissionAPITest
+ * Class PermissionAPIPermissionTest
  */
 class PermissionAPIPermissionTest extends TestCase
 {
