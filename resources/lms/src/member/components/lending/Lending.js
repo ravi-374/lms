@@ -25,17 +25,10 @@ const Lending = (props) => {
             }
         }
     };
-    const isBottom = (el, prevEle = null, nextEle = null) => {
+    const isBottom = (el) => {
         if (el) {
             const currentElement = el.getBoundingClientRect().bottom;
-            if (nextEle) {
-                const nextElement = nextEle.getBoundingClientRect().bottom;
-                return (currentElement <= window.innerHeight && nextElement > window.innerHeight);
-            }
-            if (prevEle) {
-                const prevElement = prevEle.getBoundingClientRect().bottom;
-                return (currentElement <= window.innerHeight && prevElement < currentElement);
-            }
+            return (currentElement <= window.innerHeight);
         }
     };
     const trackScrolling = () => {
@@ -52,17 +45,20 @@ const Lending = (props) => {
         if (window.scrollY === 0 && scrollElement) {
             scrollElement.classList.remove('scroll-btn-fade-in');
         }
-        if (isBottom(element, null, element1)) {
+        if (isBottom(element)) {
             removeActiveClass();
             currentElement.classList.add('current');
         }
-        if (isBottom(element1, null, element2)) {
+        if (isBottom(element1)) {
             removeActiveClass();
             currentElement1.classList.add('current');
         }
-        if (isBottom(element2, element1, null)) {
-            removeActiveClass();
-            currentElement2.classList.add('current');
+        if (!isBottom(element2) && element2) {
+            const currentElement = element2.getBoundingClientRect().bottom;
+            if (Math.round(currentElement) === window.innerHeight) {
+                removeActiveClass();
+                currentElement2.classList.add('current');
+            }
         }
     };
     const scrollToTop = () => {
