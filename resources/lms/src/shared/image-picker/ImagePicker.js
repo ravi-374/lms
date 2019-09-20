@@ -50,7 +50,7 @@ export default (props) => {
                     <img src={image ? image : null} className="image__preview mx-auto d-block" height={200} width={200}
                          alt={image}/> :
                     <div className="image__avatar">
-                        <span className="image__avatar-text">{getAvatarName(user.name)}</span>
+                        <span className="image__avatar-text">{getAvatarName(user ? user.name : null)}</span>
                     </div>
                 }
                 {renderPopOver()}
