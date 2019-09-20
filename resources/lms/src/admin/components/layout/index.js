@@ -69,7 +69,7 @@ const renderAppHeader = (props, appName, appLogo, user) => {
         localStorage.removeItem('user');
         localStorage.removeItem(Tokens.ADMIN);
         sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
-        props.history.push(Routes.ADMIN_LOGIN);
+        props.history.push(Routes.MEMBER_HOME);
     };
     return (
         <AppHeader fixed>
@@ -118,7 +118,7 @@ const renderRoutes = (newRoutes, location, appName, appLogo) => {
                 checkExistingRoute(location, props.history);
                 return localStorage.getItem(Tokens.ADMIN) ?
                     <route.component {...props} appName={appName} appLogo={appLogo}/> :
-                    <Redirect to={Routes.ADMIN_LOGIN}/>
+                    <Redirect to={Routes.MEMBER_HOME}/>
             }}/>
         ) : (null);
     });
