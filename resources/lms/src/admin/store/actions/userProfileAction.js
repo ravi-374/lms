@@ -26,7 +26,6 @@ export const editUserProfile = (user, history) => async (dispatch) => {
         .then((response) => {
             dispatch({ type: userProfileActionType.EDIT_USER_PROFILE, payload: response.data.data });
             dispatch(addToast({ text: response.data.message }));
-          //  dispatch(clearUserProfile(LocalStorageKey.USER));
             dispatch(setUserProfile(LocalStorageKey.USER, response.data.data));
             dispatch(setLoading(false));
             history.goBack();
