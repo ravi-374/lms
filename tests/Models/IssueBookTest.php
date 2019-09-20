@@ -118,4 +118,12 @@ class IssueBookTest extends TestCase
 
         $this->assertEquals($issueBook->return_due_date, $returnDueDate);
     }
+
+    /** @test */
+    public function test_can_get_status_from_string()
+    {
+        $status = IssuedBook::getStatusFromString('issued');
+
+        $this->assertEquals(IssuedBook::STATUS_ISSUED, $status);
+    }
 }
