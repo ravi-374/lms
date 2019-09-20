@@ -6,6 +6,9 @@ import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
+import {setUserProfile} from "../../../store/action/localStorageAction";
+import {LocalStorageKey} from "../../../constants";
+import {getCurrentUser} from "../../shared/sharedMethod";
 
 export const fetchUsers = (filter = {}, isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
@@ -55,6 +58,9 @@ export const editUser = (userId, user) => async (dispatch) => {
     await apiConfigWthFormData.post(`users/${userId}`, user)
         .then((response) => {
             dispatch({type: userActionType.EDIT_USER, payload: response.data.data});
+           if(getCurrentUser().id === userId) {
+               dispatch(setUserProfile(LocalStorageKey.USER, response.data.data));
+           }
             dispatch(addToast({text: response.data.message}));
             dispatch(toggleModal());
         })
