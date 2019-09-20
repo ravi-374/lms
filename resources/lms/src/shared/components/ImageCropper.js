@@ -5,17 +5,17 @@ import ConfirmAction from '../action-buttons/ConfirmAction';
 import './Component.scss';
 
 const ImageCropper = (props) => {
-    const { image, emitFileChange, emitImageChange, toggleModal, onSave } = props;
+    const { image, emitFileChange, onSave, onCancel } = props;
     const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 16 / 9 });
     const [croppedImageUrl, setCroppedImageUrl] = useState(null);
     const [imageRef, setImageRef] = useState(null);
     const onImageLoaded = image => {
         setImageRef(image);
+        setCroppedImageUrl(null);
     };
     const onCropComplete = crop => {
         makeClientCrop(crop).then(croppedImageUrl => {
             setCroppedImageUrl(croppedImageUrl);
-            emitImageChange(croppedImageUrl);
         });
     };
     const onCropChange = (crop, percentCrop) => {
@@ -68,15 +68,21 @@ const ImageCropper = (props) => {
         content: <>
             <ReactCrop src={image} crop={crop} onImageLoaded={onImageLoaded} onComplete={onCropComplete}
                        onChange={onCropChange}/>
-            {croppedImageUrl && (<img alt="Crop" className="react-img-cropper__img" src={croppedImageUrl}/>
+            {croppedImageUrl &&
+            (<div className="mt-2">
+                    <h5>Preview</h5>
+                    <hr/>
+                    <div className="text-center">
+                        <img alt="Crop" className="react-img-cropper__img" src={croppedImageUrl}/>
+                    </div>
+                </div>
             )}
         </>,
-        actions: <ConfirmAction onConfirm={onSave} onCancel={toggleModal}/>,
-        toggleModal,
+        actions: <ConfirmAction onConfirm={onSave} onCancel={onCancel}/>,
     };
 
     return (
-        image && (<Modal {...prepareModalOption}/>)
+        image ? (<Modal {...prepareModalOption}/>) : null
     );
 };
 
