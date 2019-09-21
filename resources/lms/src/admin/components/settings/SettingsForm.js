@@ -20,16 +20,11 @@ const SettingsForm = (props) => {
     const [groupText, setGroupText] = useState(mapCurrencyCode(initialValues.currency ? initialValues.currency.id : null));
     const settingRef = createRef();
     const [image, setImage] = useState(publicImagePath.APP_LOGO);
-    const [isDefaultImage, setIsDefaultImage] = useState(true);
+    const [isDefaultImage, setIsDefaultImage] = useState(!(!!(initialValues.library_logo)));
     const [fileRef, setFileRef] = useState(null);
-    const [imageRef, setImageRef] = useState(null);
 
     useEffect(() => {
         settingRef.current.focus();
-        if (initialValues.library_logo !== '' && initialValues.library_logo !== null) {
-            setImage(initialValues.library_logo);
-            setIsDefaultImage(false);
-        }
     }, []);
 
     const onSelectCurrency = (option) => {
@@ -57,12 +52,11 @@ const SettingsForm = (props) => {
 
     const onRemovePhoto = () => {
         changeFile(null);
-        setImage(publicImagePath.USER_AVATAR);
         setIsDefaultImage(true);
     };
 
     const imagePickerOptions = {
-        image,
+        image: initialValues.library_logo ? initialValues.library_logo : publicImagePath.APP_LOGO,
         isDefaultImage,
         buttonName: 'Logo',
         onRemovePhoto,
@@ -85,22 +79,20 @@ const SettingsForm = (props) => {
         setFileRef(fileRef);
     };
 
-    const emitImageChange = (imageRef) => {
-        setImageRef(imageRef);
-    };
-
     const onSave = () => {
         changeFile(fileRef);
-        setImage(imageRef);
+        toggleModal();
+    };
+
+    const onCancel = () => {
         toggleModal();
     };
 
     const imageCropperOptions = {
         image,
         emitFileChange,
-        emitImageChange,
-        toggleModal,
         onSave,
+        onCancel
     };
     return (
         <Row className="settings">
