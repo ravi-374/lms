@@ -22,7 +22,7 @@ class PermissionAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$permission);
 
-        /** @var Permission $permissions */
+        /** @var Permission[] $permissions */
         $permissions = factory(Permission::class, 5)->create();
 
         $this->permissionRepository->expects('all')->andReturn($permissions);

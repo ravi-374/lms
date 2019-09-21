@@ -23,7 +23,7 @@ class BookSeriesAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$bookSeries);
 
-        /** @var BookSeries $bookSeries */
+        /** @var BookSeries[] $bookSeries */
         $bookSeries = factory(BookSeries::class, 5)->create();
 
         $this->bookSeriesRepository->expects('all')->andReturn($bookSeries);

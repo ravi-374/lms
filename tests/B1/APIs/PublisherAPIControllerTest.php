@@ -23,7 +23,7 @@ class PublisherAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$publisher);
 
-        /** @var Publisher $publishers */
+        /** @var Publisher[] $publishers */
         $publishers = factory(Publisher::class, 5)->create();
 
         $this->publisherRepository->expects('all')->andReturn($publishers);

@@ -27,7 +27,7 @@ class BookAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$book);
 
-        /** @var Book $books */
+        /** @var Book[] $books */
         $books = factory(Book::class, 5)->create();
 
         $this->bookRepository->expects('all')->andReturn($books);

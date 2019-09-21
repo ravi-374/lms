@@ -23,7 +23,7 @@ class GenreAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$genre);
 
-        /** @var Genre $genres */
+        /** @var Genre[] $genres */
         $genres = factory(Genre::class, 5)->create();
 
         $this->genreRepository->expects('all')->andReturn($genres);

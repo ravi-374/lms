@@ -23,7 +23,7 @@ class BookLanguageAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$bookLanguage);
 
-        /** @var BookLanguage $bookLanguages */
+        /** @var BookLanguage[] $bookLanguages */
         $bookLanguages = factory(BookLanguage::class, 5)->create();
 
         $this->bookLanguageRepository->expects('all')->andReturn($bookLanguages);

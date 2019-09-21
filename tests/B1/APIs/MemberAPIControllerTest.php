@@ -23,7 +23,7 @@ class MemberAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$member);
 
-        /** @var Member $members */
+        /** @var Member[] $members */
         $members = factory(Member::class, 5)->create();
 
         $this->memberRepository->expects('all')->andReturn($members);

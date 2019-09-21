@@ -61,7 +61,7 @@ class BookItemAPIControllerTest extends TestCase
     /** @test */
     public function test_can_update_book_item_status()
     {
-        /** @var BookItem $bookItem */
+        /** @var BookItem[] $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
         $response = $this->putJson(route('api.b1.books.update-book-status', $bookItem->id), [

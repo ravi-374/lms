@@ -24,7 +24,7 @@ class RoleAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$role);
 
-        /** @var Role $roles */
+        /** @var Role[] $roles */
         $roles = factory(Role::class, 5)->create();
 
         $this->roleRepository->expects('all')->andReturn($roles);
