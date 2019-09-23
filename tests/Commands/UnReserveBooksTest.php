@@ -26,7 +26,7 @@ class UnReserveBooksTest extends TestCase
     public function test_can_un_reserve_books_if_its_is_not_reserved_within_due_days()
     {
         $member = factory(Member::class)->create();
-        $bookItems = factory(BookItem::class)->times(3)->create();
+        $bookItems = factory(BookItem::class, 3)->create();
 
         // two books are reserved
         $response = $this->postJson(route('api.v1.reserve-book', $bookItems[0]->id),

@@ -50,7 +50,7 @@ class TagAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_update_tag_fails_when_name_is_duplicated()
     {
-        $tags = factory(Tag::class)->times(2)->create();
+        $tags = factory(Tag::class, 2)->create();
 
         $response = $this->putJson(route('api.b1.tags.update', $tags[1]->id), ['name' => $tags[0]->name]);
 

@@ -23,8 +23,8 @@ class IssuedBookAPIControllerValidationTest extends TestCase
     /** @test */
     public function test_can_get_all_book_history()
     {
-        $issuedBook = factory(IssuedBook::class)->times(5)->create([
-            'member_id' => $this->loggedInMemberId
+        $issuedBook = factory(IssuedBook::class, 5)->create([
+            'member_id' => $this->loggedInMemberId,
         ]);
 
         $response = $this->getJson(route('api.v1.books-history.index'));
