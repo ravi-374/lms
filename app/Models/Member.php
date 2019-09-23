@@ -41,6 +41,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUpdatedAt($value)
  * @property string $member_id
  * @property-read \App\Models\Address $address
+ * @property-read string $image_path
  * @property-read \App\Models\MembershipPlan $membershipPlan
  * @property string|null $activation_code
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereActivationCode($value)
