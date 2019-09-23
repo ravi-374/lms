@@ -27,7 +27,7 @@ class BookLanguageAPIControllerTest extends TestCase
         $this->mockRepo(self::$bookLanguage);
 
         /** @var BookLanguage[] $bookLanguages */
-        $bookLanguages = factory(BookLanguage::class)->times(5)->create();
+        $bookLanguages = factory(BookLanguage::class, 5)->create();
 
         $this->bookLanguageRepository->expects('all')->andReturn($bookLanguages);
 
@@ -42,7 +42,7 @@ class BookLanguageAPIControllerTest extends TestCase
     public function test_can_search_and_get_book_languages()
     {
         /** @var BookLanguage[] $bookLanguage */
-        $bookLanguage = factory(BookLanguage::class)->times(5)->create();
+        $bookLanguage = factory(BookLanguage::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.book-languages.index'));
         $take3 = $this->getJson(route('api.b1.book-languages.index', ['limit' => 3]));

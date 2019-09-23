@@ -26,7 +26,7 @@ class PermissionAPIControllerTest extends TestCase
         $this->mockRepo(self::$permission);
 
         /** @var Permission[] $permissions */
-        $permissions = factory(Permission::class)->times(5)->create();
+        $permissions = factory(Permission::class, 5)->create();
 
         $this->permissionRepository->expects('all')->andReturn($permissions);
 
@@ -43,7 +43,7 @@ class PermissionAPIControllerTest extends TestCase
     public function test_can_search_and_get_permissions()
     {
         /** @var Permission[] $permissions */
-        $permissions = factory(Permission::class)->times(5)->create();
+        $permissions = factory(Permission::class, 5)->create();
 
         $response = $this->getJson('api/b1/permissions');
         $take3 = $this->getJson(route('api.b1.permissions.index', ['limit' => 3]));

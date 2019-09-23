@@ -27,7 +27,7 @@ class BookSeriesAPIControllerTest extends TestCase
         $this->mockRepo(self::$bookSeries);
 
         /** @var BookSeries[] $bookSeries */
-        $bookSeries = factory(BookSeries::class)->times(5)->create();
+        $bookSeries = factory(BookSeries::class, 5)->create();
 
         $this->bookSeriesRepository->expects('all')->andReturn($bookSeries);
 
@@ -44,7 +44,7 @@ class BookSeriesAPIControllerTest extends TestCase
     public function test_can_search_and_get_book_series()
     {
         /** @var BookSeries[] $bookSeries */
-        $bookSeries = factory(BookSeries::class)->times(5)->create();
+        $bookSeries = factory(BookSeries::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.book-series.index'));
         $take3 = $this->getJson(route('api.b1.book-series.index', ['limit' => 3]));

@@ -27,7 +27,7 @@ class GenreAPIControllerTest extends TestCase
         $this->mockRepo(self::$genre);
 
         /** @var Genre[] $genres */
-        $genres = factory(Genre::class)->times(5)->create();
+        $genres = factory(Genre::class, 5)->create();
 
         $this->genreRepository->expects('all')->andReturn($genres);
 
@@ -40,7 +40,7 @@ class GenreAPIControllerTest extends TestCase
     public function test_can_search_and_get_genres()
     {
         /** @var Genre[] $genres */
-        $genres = factory(Genre::class)->times(5)->create();
+        $genres = factory(Genre::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.genres.index'));
         $take3 = $this->getJson(route('api.b1.genres.index', ['limit' => 3]));

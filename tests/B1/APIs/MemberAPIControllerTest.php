@@ -27,7 +27,7 @@ class MemberAPIControllerTest extends TestCase
         $this->mockRepo(self::$member);
 
         /** @var Member[] $members */
-        $members = factory(Member::class)->times(5)->create();
+        $members = factory(Member::class, 5)->create();
 
         $this->memberRepository->expects('all')->andReturn($members);
 
@@ -44,7 +44,7 @@ class MemberAPIControllerTest extends TestCase
     public function test_can_search_and_get_members()
     {
         /** @var Member[] $members */
-        $members = factory(Member::class)->times(5)->create();
+        $members = factory(Member::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.members.index'));
         $take3 = $this->getJson(route('api.b1.members.index', ['limit' => 3]));
