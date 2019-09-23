@@ -51,6 +51,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \App\User|null $issuer
  * @property-read \App\User|null $returner
  * @property-read mixed $issue_due_date
+ * @property-read mixed $expected_available_date
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook lastIssuedBook()
  */
 class IssuedBook extends Model
