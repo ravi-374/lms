@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereValue($value)
  * @mixin \Eloquent
  * @property string $display_name
+ * @property-read string $logo_url
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereDisplayName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting ofKey($key)
  */
