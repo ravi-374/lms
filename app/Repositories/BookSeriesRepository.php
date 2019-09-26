@@ -123,6 +123,6 @@ class BookSeriesRepository extends BaseRepository implements BookSeriesRepositor
             throw new ApiOperationFailedException($e->getMessage());
         }
 
-        return BookSeries::with(['seriesItems'])->findOrFail($bookSeries->id);
+        return BookSeries::with(['seriesItems.book'])->findOrFail($bookSeries->id);
     }
 }
