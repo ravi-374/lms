@@ -161,16 +161,6 @@ class IssueBookTest extends TestCase
     }
 
     /** @test */
-    public function test_return_empty_expected_available_date_without_pass_issued_book()
-    {
-        $issueBook = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
-
-        $expectedDate = $issueBook->getExpectedAvailableDate('');
-
-        $this->assertNull($expectedDate);
-    }
-
-    /** @test */
     public function test_return_book_issuer_name()
     {
         /** @var User $user */
