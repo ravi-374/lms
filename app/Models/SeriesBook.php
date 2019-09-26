@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\SeriesBook
@@ -59,10 +59,10 @@ class SeriesBook extends Model
     ];
 
     /**
-     * @return HasOne
+     * @return HasMany
      */
     public function book()
     {
-        return $this->hasOne(Book::class, 'id');
+        return $this->hasMany(Book::class, 'id');
     }
 }
