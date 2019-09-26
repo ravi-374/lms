@@ -22,17 +22,22 @@ class BookItemTest extends TestCase
         $bookItem = factory(BookItem::class)->create();
         factory(IssuedBook::class)->create([
             'book_item_id' => $bookItem->id,
-            'status'       => IssuedBook::STATUS_ISSUED,
+            'status'       => IssuedBook::STATUS_RETURNED,
+        ]);
+
+        factory(IssuedBook::class)->create([
+            'book_item_id' => $bookItem->id,
+            'status'       => IssuedBook::STATUS_RESERVED,
         ]);
 
         $bookItem = BookItem::first();
 
         $this->assertNotEmpty($bookItem->book_item_status);
-        $this->assertEquals(IssuedBook::STATUS_ISSUED, $bookItem->book_item_status);
+        $this->assertEquals(IssuedBook::STATUS_RESERVED, $bookItem->book_item_status);
     }
 
     /** @test */
-    public function test_return_issued_book_item_status()
+    public function test_return_issued_book_available_when_book_is_returned()
     {
         factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
 

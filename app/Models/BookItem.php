@@ -64,7 +64,7 @@ class BookItem extends Model
     const FORMAT_PAPERBACK = 2;
 
     public $table = 'book_items';
-    protected $appends = ['book_item_status','expected_available_date'];
+    protected $appends = ['book_item_status'];
 
     public $fillable = [
         'book_id',
