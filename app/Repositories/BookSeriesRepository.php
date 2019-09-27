@@ -59,7 +59,7 @@ class BookSeriesRepository extends BaseRepository implements BookSeriesRepositor
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with('seriesItems');
+        $query = $this->allQuery($search, $skip, $limit)->with('seriesItems.book');
 
         return $query->orderByDesc('id')->get();
     }
@@ -91,7 +91,7 @@ class BookSeriesRepository extends BaseRepository implements BookSeriesRepositor
             throw new ApiOperationFailedException($e->getMessage());
         }
 
-        return BookSeries::with(['seriesItems'])->findOrFail($bookSeries->id);
+        return BookSeries::with(['seriesItems.book'])->findOrFail($bookSeries->id);
     }
 
     /**

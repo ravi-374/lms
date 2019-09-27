@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereSequence($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereSeriesId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $book[]
  * @mixin \Eloquent
  */
 class SeriesBook extends Model
