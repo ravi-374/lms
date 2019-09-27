@@ -47,7 +47,7 @@ const preparePermissions = (permissions, selectedPermission) => {
 const mapStateToProps = (state, ownProps) => {
     const {permissions} = state;
     return {
-        permissions: preparePermissions(permissions, ownProps.role.perms)
+        permissions: preparePermissions(permissions, ownProps.role.permissions)
     }
 };
 export default connect(mapStateToProps, {editRole, fetchPermissions})(EditRole);
