@@ -27,4 +27,14 @@ class SettingTest extends TestCase
         $this->assertEquals($setting1->id, $firstSetting->id);
         $this->assertEquals($setting1->key, $firstSetting->key);
     }
+
+    /** @test */
+    public function test_return_setting_logo_path()
+    {
+        $setting = factory(Setting::class)->create();
+
+        $setting = Setting::first();
+
+        $this->assertNotEmpty($setting->logo_url);
+    }
 }

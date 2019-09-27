@@ -4,12 +4,11 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateUserAPIRequest;
-use App\Http\Requests\API\UpdateUserAPIRequest;
-use App\Http\Requests\API\UpdateUserProfileAPIRequest;
+use App\Http\Requests\API\CreateUserRequest;
+use App\Http\Requests\API\UpdateUserProfileRequest;
+use App\Http\Requests\API\UpdateUserRequest;
 use App\Repositories\UserRepository;
 use App\User;
-use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -54,14 +53,14 @@ class UserAPIController extends AppBaseController
     /**
      * Store a newly created User in storage.
      * POST /users
-     * @param  CreateUserAPIRequest  $request
+     * @param  CreateUserRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function store(CreateUserAPIRequest $request)
+    public function store(CreateUserRequest $request)
     {
         $input = $request->all();
         $user = $this->userRepository->store($input);
@@ -89,14 +88,14 @@ class UserAPIController extends AppBaseController
      * Update the specified User in storage.
      * PUT/PATCH /users/{id}
      * @param  User  $user
-     * @param  UpdateUserAPIRequest  $request
+     * @param  UpdateUserRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function update(User $user, UpdateUserAPIRequest $request)
+    public function update(User $user, UpdateUserRequest $request)
     {
         $input = $request->all();
         $user = $this->userRepository->update($input, $user->id);
@@ -164,14 +163,14 @@ class UserAPIController extends AppBaseController
     }
 
     /**
-     * @param  UpdateUserProfileAPIRequest  $request
+     * @param  UpdateUserProfileRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function updateUserProfile(UpdateUserProfileAPIRequest $request)
+    public function updateUserProfile(UpdateUserProfileRequest $request)
     {
         $input = $request->all();
 

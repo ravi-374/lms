@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class RoleAPIControllerTest
+ */
 class RoleAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -25,7 +28,7 @@ class RoleAPIControllerTest extends TestCase
         $this->mockRepo(self::$role);
 
         /** @var Role[] $roles */
-        $roles = factory(Role::class)->times(5)->create();
+        $roles = factory(Role::class, 5)->create();
 
         $this->roleRepository->expects('all')->andReturn($roles);
 
@@ -38,7 +41,7 @@ class RoleAPIControllerTest extends TestCase
     public function test_can_search_and_get_roles()
     {
         /** @var Role[] $roles */
-        $roles = factory(Role::class)->times(5)->create();
+        $roles = factory(Role::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.roles.index'));
         $take3 = $this->getJson(route('api.b1.roles.index', ['limit' => 3]));

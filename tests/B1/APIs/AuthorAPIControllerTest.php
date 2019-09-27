@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class AuthorAPIControllerTest
+ */
 class AuthorAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -23,7 +26,7 @@ class AuthorAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$author);
 
-        $authors = factory(Author::class)->times(5)->create();
+        $authors = factory(Author::class, 5)->create();
 
         $this->authorRepository->expects('all')->andReturn($authors);
 
@@ -36,7 +39,7 @@ class AuthorAPIControllerTest extends TestCase
     public function test_can_search_and_get_authors()
     {
         /** @var Author[] $authors */
-        $authors = factory(Author::class)->times(5)->create();
+        $authors = factory(Author::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.authors.index'));
         $take3 = $this->getJson(route('api.b1.authors.index', ['limit' => 3]));

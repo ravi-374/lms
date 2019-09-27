@@ -29,19 +29,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 {
     use ImageTrait;
 
-    /** @var TagRepository */
-    private $tagRepo;
-
-    /** @var GenreRepository */
-    private $genreRepo;
-
-    public function __construct(Application $app, TagRepository $tagRepository, GenreRepository $genreRepository)
-    {
-        parent::__construct($app);
-        $this->tagRepo = $tagRepository;
-        $this->genreRepo = $genreRepository;
-    }
-
     /**
      * @var array
      */
@@ -51,6 +38,17 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         'isbn',
         'is_featured',
     ];
+    /** @var TagRepository */
+    private $tagRepo;
+    /** @var GenreRepository */
+    private $genreRepo;
+
+    public function __construct(Application $app, TagRepository $tagRepository, GenreRepository $genreRepository)
+    {
+        parent::__construct($app);
+        $this->tagRepo = $tagRepository;
+        $this->genreRepo = $genreRepository;
+    }
 
     /**
      * Return searchable fields
@@ -176,52 +174,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  array  $input
-     * @param  int  $id
-     *
-     * @throws Exception
-     * @throws ApiOperationFailedException
-     *
-     * @return JsonResponse|mixed
-     */
-    public function update($input, $id)
-    {
-        /** @var Book $book */
-        $book = $this->findOrFail($id);
-        unset($input['items']);
-        $this->validateInput($input);
-        $oldImageName = '';
-
-        try {
-            DB::beginTransaction();
-
-            if (isset($input['photo']) && ! empty($input['photo'])) {
-                $input['image'] = ImageTrait::makeImage($input['photo'], Book::IMAGE_PATH);
-                $oldImageName = $book->image;
-            }
-
-            if (! empty($oldImageName) || ! empty($input['remove_image'])) {
-                $book->deleteImage();
-            }
-            $book->update($input);
-            $this->attachTagsAndGenres($book, $input);
-            if (! empty($input['authors'])) {
-                $this->attachAuthors($book, $input);
-            }
-
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            if (isset($input['image']) && ! empty($input['image'])) {
-                $this->deleteImage(Book::IMAGE_PATH.DIRECTORY_SEPARATOR.$input['image']);
-            }
-            throw new ApiOperationFailedException($e->getMessage());
-        }
-
-        return Book::with(['tags', 'genres', 'items.publisher', 'items.language', 'authors'])->findOrFail($book->id);
-    }
-
-    /**
-     * @param  array  $input
      * @throws Exception
      *
      * @return bool
@@ -325,25 +277,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  Book  $book
-     * @param  array  $items
-     * @throws Exception
-     *
-     * @return Book
-     */
-    public function addBookItems($book, $items)
-    {
-        $this->validateItems($items);
-
-        $this->createOrUpdateBookItems($book, $items);
-
-        /** @var Book $book */
-        $book = $this->findOrFail($book->id, ['items.publisher', 'items.language']);
-
-        return $book;
-    }
-
-    /**
-     * @param  Book  $book
      * @param  array  $bookItems
      * @throws Exception
      * @throws ApiOperationFailedException
@@ -404,6 +337,71 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         return $itemId;
+    }
+
+    /**
+     * @param  array  $input
+     * @param  int  $id
+     *
+     * @throws Exception
+     * @throws ApiOperationFailedException
+     *
+     * @return JsonResponse|mixed
+     */
+    public function update($input, $id)
+    {
+        /** @var Book $book */
+        $book = $this->findOrFail($id);
+        unset($input['items']);
+        $this->validateInput($input);
+        $oldImageName = '';
+
+        try {
+            DB::beginTransaction();
+
+            if (isset($input['photo']) && ! empty($input['photo'])) {
+                $input['image'] = ImageTrait::makeImage($input['photo'], Book::IMAGE_PATH);
+                $oldImageName = $book->image;
+            }
+
+            if (! empty($oldImageName) || ! empty($input['remove_image'])) {
+                $book->deleteImage();
+            }
+            $book->update($input);
+            $this->attachTagsAndGenres($book, $input);
+            if (! empty($input['authors'])) {
+                $this->attachAuthors($book, $input);
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            if (isset($input['image']) && ! empty($input['image'])) {
+                $this->deleteImage(Book::IMAGE_PATH.DIRECTORY_SEPARATOR.$input['image']);
+            }
+            throw new ApiOperationFailedException($e->getMessage());
+        }
+
+        return Book::with(['tags', 'genres', 'items.publisher', 'items.language', 'authors'])->findOrFail($book->id);
+    }
+
+    /**
+     * @param  Book  $book
+     * @param  array  $items
+     * @throws Exception
+     *
+     * @return Book
+     */
+    public function addBookItems($book, $items)
+    {
+        $this->validateItems($items);
+
+        $this->createOrUpdateBookItems($book, $items);
+
+        /** @var Book $book */
+        $book = $this->findOrFail($book->id, ['items.publisher', 'items.language']);
+
+        return $book;
     }
 
     /**

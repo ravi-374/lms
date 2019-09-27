@@ -30,7 +30,7 @@ class BookRepositoryTest extends TestCase
     public function test_can_get_all_books()
     {
         /** @var Book[] $books */
-        $books = factory(Book::class)->times(5)->create();
+        $books = factory(Book::class, 5)->create();
 
         $allBooks = $this->bookRepo->all();
         $take3 = $this->bookRepo->all([], null, 3);

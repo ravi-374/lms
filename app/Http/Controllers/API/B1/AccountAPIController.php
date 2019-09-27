@@ -10,8 +10,8 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\ResetPasswordLinkRequest;
-use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\API\ResetPasswordLinkRequest;
+use App\Http\Requests\API\ResetPasswordRequest;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
 use Auth;

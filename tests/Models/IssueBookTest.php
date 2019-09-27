@@ -5,6 +5,8 @@ namespace Tests\Models;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
+use App\Models\Setting;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -117,5 +119,76 @@ class IssueBookTest extends TestCase
         ]);
 
         $this->assertEquals($issueBook->return_due_date, $returnDueDate);
+    }
+
+    /** @test */
+    public function test_can_get_status_from_string()
+    {
+        $status = IssuedBook::getStatusFromString('issued');
+
+        $this->assertEquals(IssuedBook::STATUS_ISSUED, $status);
+    }
+
+    /** @test */
+    public function test_return_issue_due_date()
+    {
+        $now = Carbon::now();
+        /** @var IssuedBook $issueBook */
+        $issueBook = factory(IssuedBook::class)->create([
+                'status'       => IssuedBook::STATUS_RESERVED,
+                'reserve_date' => $now,
+            ]
+        );
+
+        $issueBook = IssuedBook::findOrFail($issueBook->id);
+
+        $this->assertNotEmpty($issueBook->issue_due_date);
+        $reserveDueDays = getSettingValueByKey(Setting::RESERVE_DUE_DAYS);
+        $issueDueDate = Carbon::parse($now)->addDays($reserveDueDays)->toDateTimeString();
+        $this->assertEquals($issueDueDate, $issueBook->issue_due_date);
+    }
+
+    /** @test */
+    public function test_return_expected_available_date_for_issued_book()
+    {
+        /** @var IssuedBook $issueBook */
+        $issueBook = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
+
+        $expectedDate = $issueBook->getExpectedAvailableDate($issueBook);
+
+        $this->assertEquals(IssuedBook::STATUS_ISSUED, $issueBook->status);
+        $this->assertEquals($issueBook->return_due_date, $expectedDate);
+    }
+
+    /** @test */
+    public function test_return_book_issuer_name()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->create();
+        $issueBook = factory(IssuedBook::class)->create([
+            'status'    => IssuedBook::STATUS_ISSUED,
+            'issuer_id' => $user->id,
+        ]);
+
+        $issueBook = IssuedBook::first();
+
+        $this->assertNotEmpty($issueBook->issuer_name);
+        $this->assertEquals($user->first_name." ".$user->last_name, $issueBook->issuer_name);
+    }
+
+    /** @test */
+    public function test_return_book_returner_name()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->create();
+        $issueBook = factory(IssuedBook::class)->create([
+            'status'      => IssuedBook::STATUS_ISSUED,
+            'returner_id' => $user->id,
+        ]);
+
+        $issueBook = IssuedBook::first();
+
+        $this->assertNotEmpty($issueBook->returner_name);
+        $this->assertEquals($user->first_name." ".$user->last_name, $issueBook->returner_name);
     }
 }

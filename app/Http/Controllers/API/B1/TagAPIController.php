@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateTagAPIRequest;
-use App\Http\Requests\API\UpdateTagAPIRequest;
+use App\Http\Requests\API\CreateTagRequest;
+use App\Http\Requests\API\UpdateTagRequest;
 use App\Models\Tag;
 use App\Repositories\Contracts\TagRepositoryInterface;
 use Exception;
@@ -52,11 +52,11 @@ class TagAPIController extends AppBaseController
      * Store a newly created Tag in storage.
      * POST /tags
      *
-     * @param  CreateTagAPIRequest  $request
+     * @param  CreateTagRequest  $request
      *
      * @return JsonResponse
      */
-    public function store(CreateTagAPIRequest $request)
+    public function store(CreateTagRequest $request)
     {
         $input = $request->all();
 
@@ -83,11 +83,11 @@ class TagAPIController extends AppBaseController
      * PUT/PATCH /tags/{id}
      *
      * @param  Tag  $tag
-     * @param  UpdateTagAPIRequest  $request
+     * @param  UpdateTagRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(Tag $tag, UpdateTagAPIRequest $request)
+    public function update(Tag $tag, UpdateTagRequest $request)
     {
         $input = $request->all();
 
