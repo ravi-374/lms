@@ -1,69 +1,47 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody} from 'reactstrap';
+import PropTypes from 'prop-types';
 import './UserProfile.scss';
+import UserProfileForm from './UserProfileForm';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
-import UserProfileForm from './UserProfileForm';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import prepareUserFormData from "../../shared/prepareUserFormData";
+import {getFormattedMessage, prepareProfileData} from "../../../shared/sharedMethod";
 import {fetchUserProfile, editUserProfile} from '../../store/actions/userProfileAction';
 import {fetchCountries} from '../../store/actions/countryAction';
-import prepareFormData from './prepareFormData';
-import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
-const MemberProfile = props => {
+const UserProfile = props => {
     const {
-        isLoading, countries, userProfile, roles, fetchUserProfile,
-        fetchCountries, editUserProfile, history, appName, appLogo
+        countries, userProfile, fetchUserProfile, fetchCountries, editUserProfile, history
     } = props;
+
     useEffect(() => {
         fetchUserProfile();
         fetchCountries();
     }, []);
+
     const onSaveProfile = (formValues) => {
-        editUserProfile(prepareFormData(formValues), history);
+        editUserProfile(prepareUserFormData(formValues), history);
     };
-    if (!userProfile || isLoading || !userProfile.id) {
-        return (
-            <Fragment>
-                <ProgressBar/>
-                <Toasts/>
-            </Fragment>
-        )
+
+    if (!userProfile || !userProfile.id) {
+        return <><ProgressBar/><Toasts/></>;
     }
-    const { id, is_active, first_name, last_name, email, password, phone, address, image } = userProfile;
-    const changeAbleFields = {
-        id,
-        is_active,
-        first_name,
-        last_name,
-        email,
-        password,
-        image,
-        phone,
-        file_name: !!image
-    };
-    if (address) {
-        const { address_1, address_2, country, city, state, zip } = address;
-        changeAbleFields.address_1 = address_1 ? address_1 : '';
-        changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country ? country : null;
-        changeAbleFields.city = city ? city : '';
-        changeAbleFields.state = state ? state : '';
-        changeAbleFields.zip = zip ? zip : '';
-    }
+
     const prepareFormOption = {
-        initialValues: changeAbleFields,
-        roles,
+        initialValues: prepareProfileData(userProfile),
         countries,
         onSaveProfile,
         history
     };
     return (
         <div className="animated fadeIn">
-            <HeaderTitle appLogo={appLogo} title={`Profile | ${appName}`}/>
+            <HeaderTitle title="Profile"/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="pull-left text-dark">Profile</h5>
+                    <h5 className="pull-left text-dark">{getFormattedMessage('profile.title')}</h5>
                 </Col>
                 <Col sm={12}>
                     <div className="sticky-table-container">
@@ -81,12 +59,17 @@ const MemberProfile = props => {
     )
 };
 
+UserProfile.propTypes = {
+    userProfile: PropTypes.object,
+    history: PropTypes.object,
+    countries: PropTypes.array,
+    fetchUserProfile: PropTypes.func,
+    fetchCountries: PropTypes.func,
+    editUserProfile: PropTypes.func,
+};
+
 const mapStateToProps = (state) => {
     const { userProfile, countries } = state;
     return { userProfile, countries }
 };
-export default connect(mapStateToProps, {
-    fetchUserProfile,
-    fetchCountries,
-    editUserProfile
-})(MemberProfile);
+export default connect(mapStateToProps, { fetchUserProfile, fetchCountries, editUserProfile })(UserProfile);

@@ -1,18 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
-    FormFeedback, FormGroup, Input, Row, Col, Label, InputGroup,
+    Col,
+    FormFeedback,
+    FormGroup,
+    Input,
+    InputGroup,
     InputGroupAddon,
     InputGroupText,
+    Label,
+    Row,
 } from 'reactstrap';
+import {useIntl} from 'react-intl';
 import './Component.scss';
 
-export default ({
-                    input, label, type, min, max, required, groupText, isCustom,
-                    customGroupText = '', addOnType = 'prepend', placeholder, readOnly, meta: { touched, error }
-                }) => {
+const CustomInput = (props) => {
+    const {
+        input, label, type, min, max, required, groupText, isCustom,
+        addOnType = 'prepend', placeholder, readOnly, meta: { touched, error }
+    } = props;
+    const intl = new useIntl();
     const formGroupClass = isCustom ? 'custom-input-search mb-0 mt-1' : '';
     const className = `${touched && error ? 'is-invalid' : ''}`;
     const labelClass = required ? 'control-label' : '';
+    const placeholderText = placeholder ? intl.formatMessage({ id: placeholder }) : placeholder;
+
     return (
         <FormGroup className={formGroupClass}>
             <div className="controls">
@@ -23,12 +35,12 @@ export default ({
                     <Col xs={label ? 6 : 12}>
                         <InputGroup>
                             <InputGroupAddon addonType={addOnType}>
-                                <InputGroupText>{customGroupText === '' ?
-                                    <i className={`fa fa-${groupText}`}/> : customGroupText}
+                                <InputGroupText>
+                                    <i className={`fa fa-${groupText}`}/>
                                 </InputGroupText>
                             </InputGroupAddon>
-                            <Input type={type} {...input} min={min} max={max} className={className} placeholder={placeholder}
-                                   readOnly={readOnly}/>
+                            <Input type={type} {...input} min={min} max={max} className={className}
+                                   placeholder={placeholderText} readOnly={readOnly}/>
                             {touched && ((error && <FormFeedback>{error}</FormFeedback>))}
                         </InputGroup>
                     </Col>
@@ -37,3 +49,20 @@ export default ({
         </FormGroup>
     );
 };
+
+CustomInput.propTypes = {
+    input: PropTypes.object,
+    meta: PropTypes.object,
+    label: PropTypes.string,
+    type: PropTypes.string,
+    min: PropTypes.string,
+    max: PropTypes.string,
+    groupText: PropTypes.string,
+    addOnType: PropTypes.string,
+    placeholder: PropTypes.string,
+    readOnly: PropTypes.bool,
+    required: PropTypes.bool,
+    isCustom: PropTypes.bool
+};
+
+export default CustomInput;

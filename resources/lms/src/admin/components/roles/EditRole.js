@@ -1,35 +1,49 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import RoleForm from './RoleForm';
 import Modal from '../../../shared/components/Modal';
 import {editRole} from '../../store/actions/roleAction';
 import {fetchPermissions} from '../../store/actions/permissionAction';
-import RoleForm from './RoleForm';
-import _ from 'lodash';
 
 const EditRole = (props) => {
+    const { role, permissions, fetchPermissions, editRole, toggleModal } = props;
+
     useEffect(() => {
-        props.fetchPermissions();
+        fetchPermissions();
     }, []);
+
     const onSaveRole = (formValues) => {
         const copyFormValues = _.clone(formValues);
         copyFormValues.permissions = copyFormValues.permissionArray;
         delete copyFormValues.permissionArray;
-        props.editRole(props.role.id, copyFormValues);
+        editRole(role.id, copyFormValues);
     };
     const prepareFormOption = {
         onSaveRole,
-        onCancel: props.toggleModal,
-        permissions: props.permissions,
+        onCancel: toggleModal,
+        permissionsArray: permissions,
         initialValues: {
-            name: props.role.name,
-            display_name: props.role.display_name,
-            description: props.role.description
+            name: role.name,
+            display_name: role.display_name,
+            description: role.description
         }
     };
-    if (props.permissions.length === 0) {
+
+    if (permissions.length === 0) {
         return null;
     }
+
     return <Modal {...props} content={<RoleForm {...prepareFormOption}/>}/>
+};
+
+EditRole.propTypes = {
+    role:PropTypes.object,
+    permissions:PropTypes.array,
+    editRole: PropTypes.func,
+    fetchPermissions: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
 const preparePermissions = (permissions, selectedPermission) => {
@@ -40,14 +54,14 @@ const preparePermissions = (permissions, selectedPermission) => {
         if (perm) {
             selected = true;
         }
-        permissionArray.push({id: permission.id, name: permission.display_name, selected, isChecked: selected})
+        permissionArray.push({ id: permission.id, name: permission.display_name, selected, isChecked: selected })
     });
     return permissionArray;
 };
 const mapStateToProps = (state, ownProps) => {
-    const {permissions} = state;
+    const { permissions } = state;
     return {
         permissions: preparePermissions(permissions, ownProps.role.permissions)
     }
 };
-export default connect(mapStateToProps, {editRole, fetchPermissions})(EditRole);
+export default connect(mapStateToProps, { editRole, fetchPermissions })(EditRole);

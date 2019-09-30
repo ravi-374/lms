@@ -1,34 +1,35 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import './MemberDetails.scss';
+import PropTypes from 'prop-types';
+import {Routes} from "../../../constants";
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import BookStatus from "../../../shared/book-status/book-status";
-import {Routes} from "../../../constants";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {fetchMemberBooksHistory} from "../../store/actions/memberBookHistoryAction";
 
 const MemberBookHistory = (props) => {
     const {
-        memberId, memberBookHistory, onOpenModal,
+        memberId, memberBookHistory, onClickModal,
         history, isLoading, totalRecord, fetchMemberBooksHistory
     } = props;
     const columns = [
         {
-            name: 'Book',
+            name: getFormattedMessage('books.table.book.column'),
             selector: 'name',
             sortable: true,
             wrap: true,
             cell: row => row.name = row.book_item.book.name
         },
         {
-            name: 'Book Item',
+            name: getFormattedMessage('books-allotment.select.book-item.label'),
             selector: 'book_code',
             width: '120px',
             sortable: true,
             cell: row => row.book_code = row.book_item.edition + ` (${row.book_item.book_code})`
         },
         {
-            name: 'Status',
+            name: getFormattedMessage('react-data-table.status.column'),
             width: '100px',
             center: true,
             selector: 'status',
@@ -36,14 +37,14 @@ const MemberBookHistory = (props) => {
             cell: row => <BookStatus status={row.status} item={row}/>
         },
         {
-            name: 'Action',
+            name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
             center: true,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
             width: '120px',
-            cell: row => <ModalAction onOpenModal={onOpenModal} isHideDeleteIcon={true} isHideDetailIcon={false}
+            cell: row => <ModalAction onOpenModal={onClickModal} isHideDeleteIcon={true} isHideDetailIcon={false}
                                       goToDetailScreen={gotToBookHistoryDetail} item={row}/>,
         }];
 
@@ -57,19 +58,27 @@ const MemberBookHistory = (props) => {
 
     return (
         <ReactDataTable items={memberBookHistory} defaultLimit={5} isShortEmptyState
+                        emptyStateMessageId="book-history.empty-state.title"
                         paginationRowsPerPageOptions={[5, 10, 15, 25, 50, 100]} isShowSearchField={false}
-                        columns={columns} loading={isLoading} totalRows={totalRecord} onOpenModal={onOpenModal}
+                        columns={columns} loading={isLoading} totalRows={totalRecord} onOpenModal={onClickModal}
                         onChange={onChange}/>
     );
 };
 
+MemberBookHistory.propTypes = {
+    history: PropTypes.object,
+    memberBookHistory: PropTypes.array,
+    memberId: PropTypes.number,
+    totalRecord: PropTypes.number,
+    isLoading: PropTypes.bool,
+    fetchMemberBooksHistory: PropTypes.func,
+    MemberBookHistory: PropTypes.func,
+    onClickModal: PropTypes.func
+};
+
 const mapStateToProps = (state) => {
     const { memberBookHistory, totalRecord, isLoading } = state;
-    return {
-        memberBookHistory,
-        totalRecord,
-        isLoading
-    }
+    return { memberBookHistory, totalRecord, isLoading }
 };
 
 export default connect(mapStateToProps, { fetchMemberBooksHistory })(MemberBookHistory);

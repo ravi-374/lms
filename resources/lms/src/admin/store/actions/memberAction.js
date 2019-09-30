@@ -75,7 +75,7 @@ export const deleteMember = (memberId) => async (dispatch) => {
         });
 };
 
-export const activDeactiveMember = (memberId) => async (dispatch) => {
+export const activeInactiveMember = (memberId) => async (dispatch) => {
     await apiConfig.get(`members/${memberId}/update-status`)
         .then((response) => {
             dispatch({ type: memberActionType.SET_ACTIVE_DE_ACTIVE, payload: response.data.data });

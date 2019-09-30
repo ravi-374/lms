@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, lazy} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {
@@ -11,29 +11,31 @@ import {
     AppSidebarMinimizer,
     AppSidebarNav,
 } from '@coreui/react';
+import PropTypes from 'prop-types';
 import navigation from '../../config/navbarConfig';
-import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import routes from "../../routes";
 import {Routes, Tokens} from "../../../constants";
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
 import {checkExistingRoute} from "../../../shared/sharedMethod";
 
-const Footer = React.lazy(() => import('./Footer'));
-const Header = React.lazy(() => import('./Header'));
+const Footer = lazy(() => import('./Footer'));
+const Header = lazy(() => import('./Header'));
 
 const Layout = (props) => {
-    const { permissions, appLogo, appName, user } = props;
+    const { permissions, appLogo, appName, user, location } = props;
     const newRoutes = prepareRoutes(permissions);
 
     if (permissions.length === 0) {
         return null;
     }
+
     return (
         <div className="app">
             {renderAppHeader(props, appName, appLogo, user)}
             <div className="app-body">
                 {renderAppSidebar(props, prepareNavigation(permissions))}
-                {renderMainSection(newRoutes, props.location, appName, appLogo)}
+                {renderMainSection(newRoutes, location)}
             </div>
             {renderAppFooter(appName)}
         </div>
@@ -95,13 +97,13 @@ const renderAppSidebar = (props, sideMenuList) => {
     );
 };
 
-const renderMainSection = (newRoutes, location, appName, appLogo) => {
+const renderMainSection = (newRoutes, location) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes(newRoutes, location, appName, appLogo)}
+                        {renderRoutes(newRoutes, location)}
                         <Redirect from="/" to={Routes.ADMIN_DEFAULT}/>
                     </Switch>
                 </Suspense>
@@ -111,13 +113,13 @@ const renderMainSection = (newRoutes, location, appName, appLogo) => {
     )
 };
 
-const renderRoutes = (newRoutes, location, appName, appLogo) => {
+const renderRoutes = (newRoutes, location) => {
     return newRoutes.map((route, index) => {
         return route.component ? (
             <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
                 checkExistingRoute(location, props.history);
                 return localStorage.getItem(Tokens.ADMIN) ?
-                    <route.component {...props} appName={appName} appLogo={appLogo}/> :
+                    <route.component {...props}/> :
                     <Redirect to={Routes.MEMBER_HOME}/>
             }}/>
         ) : (null);
@@ -132,6 +134,15 @@ const renderAppFooter = (appName) => {
             </Suspense>
         </AppFooter>
     );
+};
+
+
+Layout.propTypes = {
+    user: PropTypes.object,
+    location: PropTypes.object,
+    permissions: PropTypes.array,
+    appName: PropTypes.string,
+    appLogo: PropTypes.string,
 };
 
 export default Layout;

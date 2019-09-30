@@ -1,19 +1,30 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import MembershipPlanForm from './MembershipPlanForm';
 import Modal from '../../../shared/components/Modal';
 import {addMembershipPlan} from '../../store/actions/membershipPlanAction';
-import MembershipPlanForm from './MembershipPlanForm';
 
 const CreateMembershipPlan = (props) => {
+    const { currency, addMembershipPlan, toggleModal } = props;
+
     const onSaveMembershipPlan = (formValues) => {
-        props.addMembershipPlan(formValues);
+        addMembershipPlan(formValues);
     };
+
     const prepareFormOption = {
         onSaveMembershipPlan,
-        onCancel: props.toggleModal,
-        currency: props.currency
+        onCancel: toggleModal,
+        currency
     };
+
     return <Modal {...props} content={<MembershipPlanForm{...prepareFormOption}/>}/>
+};
+
+CreateMembershipPlan.propTypes = {
+    currency: PropTypes.string,
+    addMembershipPlan: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
 export default connect(null, { addMembershipPlan })(CreateMembershipPlan);

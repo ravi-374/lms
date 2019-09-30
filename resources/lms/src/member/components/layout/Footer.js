@@ -1,12 +1,18 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Footer = ({appName}) => {
+const MemberFooter = ({ appName }) => {
+
     return (
-        <Fragment>
+        <>
             <span><a href="https://infyom.com">{appName}</a> &copy; 2019 InfyOmLabs.</span>
-            <span className="ml-auto">Powered by <a href="https://coreui.io/">CoreUI</a></span>
-        </Fragment>
+            <span className="app-footer__power-by">Powered by <a href="https://coreui.io/">CoreUI</a></span>
+        </>
     );
 };
 
-export default Footer;
+MemberFooter.propTypes = {
+    appName: PropTypes.string,
+};
+
+export default MemberFooter;

@@ -81,7 +81,7 @@ export const deleteUser = (userId) => async (dispatch) => {
         });
 };
 
-export const activeDeactiveUser = (userId) => async (dispatch) => {
+export const activeInactiveUser = (userId) => async (dispatch) => {
     await apiConfigWthFormData.get(`users/${userId}/update-status`)
         .then((response) => {
             dispatch({type: userActionType.SET_ACTIVE_DE_ACTIVE, payload: response.data.data});

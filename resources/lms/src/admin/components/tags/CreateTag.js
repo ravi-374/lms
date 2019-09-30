@@ -1,18 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import TagForm from './TagForm';
 import Modal from '../../../shared/components/Modal';
 import {addTag} from '../../store/actions/tagAction';
-import TagForm from './TagForm';
 
 const CreateTag = (props) => {
+    const { addTag, toggleModal } = props;
+
     const onSaveTag = (formValues) => {
-        props.addTag(formValues);
+        addTag(formValues);
     };
     const prepareFormOption = {
         onSaveTag,
-        onCancel: props.toggleModal,
+        onCancel: toggleModal,
     };
     return <Modal {...props} content={<TagForm{...prepareFormOption}/>}/>
 };
 
-export default connect(null, {addTag})(CreateTag);
+CreateTag.propTypes = {
+    addTag: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { addTag })(CreateTag);

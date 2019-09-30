@@ -503,3 +503,105 @@
         padding-right: 30px;
     }
 }
+
+html[dir="rtl"] {
+
+    .header-navigation ul.navigation-box > li:first-child {
+        padding-left: 45px;
+    }
+
+    .banner-one__moc {
+        left: 20px;
+        right: unset;
+    }
+
+    @media(max-width: 1796px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.9);
+            -ms-transform: scale(.9);
+            -o-transform: scale(.9);
+            transform: scale(.9);
+            transform-origin: top left;
+        }
+    }
+
+    @media(max-width: 1604px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+            -o-transform: scale(.8);
+            transform: scale(.8);
+            transform-origin: top left;
+        }
+    }
+
+    @media(max-width: 1413px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.7);
+            -ms-transform: scale(.7);
+            -o-transform: scale(.7);
+            transform: scale(.7);
+            transform-origin: top left;
+        }
+    }
+
+    @media(max-width: 1200px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.55);
+            -ms-transform: scale(.55);
+            -o-transform: scale(.55);
+            transform: scale(.55);
+            transform-origin: top left;
+        }
+    }
+
+    @media(max-width: 1110px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.5);
+            -ms-transform: scale(.5);
+            -o-transform: scale(.5);
+            transform: scale(.5);
+            transform-origin: top left;
+        }
+    }
+
+    @media(max-width: 992px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.4);
+            -ms-transform: scale(.4);
+            -o-transform: scale(.4);
+            transform: scale(.4);
+            transform-origin: top left;
+        }
+    }
+
+    @media(max-width: 930px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.35);
+            -ms-transform: scale(.35);
+            -o-transform: scale(.35);
+            transform: scale(.35);
+            transform-origin: top left;
+        }
+    }
+
+    @media(max-width: 826px) {
+        .banner-one__moc {
+            -webkit-transform: scale(.3);
+            -ms-transform: scale(.3);
+            -o-transform: scale(.3);
+            transform: scale(.3);
+            transform-origin: top left;
+        }
+    }
+
+    .site-footer__subscribe-form input {
+        padding-left: unset;
+        padding-right: 60px;
+    }
+
+    .site-footer__subscribe-form button[type=submit] {
+        left: 10px;
+        right: unset;
+    }
+}

@@ -1,14 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
-import {deleteAuthor} from '../../store/actions/authorAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
+import {deleteAuthor} from '../../store/actions/authorAction';
 
 const DeleteAuthor = (props) => {
+    const { authorId, deleteAuthor, toggleModal } = props;
+
     const onDeleteAuthor = () => {
-        props.deleteAuthor(props.authorId);
+        deleteAuthor(authorId);
     };
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteAuthor} onCancel={props.toggleModal}/>}/>
+
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteAuthor} onCancel={toggleModal}/>}/>
 };
 
-export default connect(null, {deleteAuthor})(DeleteAuthor);
+DeleteAuthor.propTypes = {
+    authorId: PropTypes.number,
+    deleteAuthor: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { deleteAuthor })(DeleteAuthor);

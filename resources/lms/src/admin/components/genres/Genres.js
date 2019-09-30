@@ -1,44 +1,43 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
-import './Genres.scss';
+import PropTypes from 'prop-types';
+import GenreModal from "./GenerModal";
 import Toasts from '../../../shared/toast/Toasts';
-import {toggleModal} from '../../../store/action/modalAction';
-import {fetchGenres} from '../../store/actions/genreAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
-import GenreModal from "./GenerModal";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {openModal} from "../../../shared/custom-hooks";
+import {fetchGenres} from '../../store/actions/genreAction';
+import {toggleModal} from '../../../store/action/modalAction';
 
 const Genres = (props) => {
-    const { genres, toggleModal, isLoading, totalRecord, appName, appLogo } = props;
-    const [genre, setGenre] = useState(null);
-    const [isEditMode, setEditMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
-    const cardModalProps = { genre, isDeleteMode, isEditMode, toggleModal };
-    const onOpenModal = (isEdit, genre = null, isDelete = false) => {
-        setEditMode(isEdit);
-        setDeleteMode(isDelete);
-        setGenre(genre);
-        toggleModal();
-    };
+    const { genres, fetchGenres, toggleModal, isLoading, totalRecord } = props;
+    const [isCreate, isEdit, isDelete, genre, onOpenModal] = openModal();
+    const cardModalProps = { genre, isCreate,isEdit, isDelete, toggleModal };
 
     const onChange = (filter) => {
-        props.fetchGenres(filter, true);
+        fetchGenres(filter, true);
+    };
+
+    const onClickModal = (isEdit, genre = null, isDelete = false) => {
+        onOpenModal(isEdit, genre, isDelete);
+        toggleModal();
     };
 
     const columns = [
         {
-            name: 'Name',
+            name: getFormattedMessage('react-data-table.name.column'),
             selector: 'name',
             sortable: true,
         },
         {
-            name: 'Action',
+            name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
             right: true,
-            cell: row => <ModalAction onOpenModal={onOpenModal} item={row}/>,
+            cell: row => <ModalAction onOpenModal={onClickModal} item={row}/>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -49,11 +48,11 @@ const Genres = (props) => {
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <ProgressBar/>
-                <HeaderTitle appLogo={appLogo} title={`Genres | ${appName}`}/>
-                <h5 className="page-heading">Genres</h5>
+                <HeaderTitle title="Genres"/>
+                <h5 className="page-heading">{getFormattedMessage('genres.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        New Genre
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                        {getFormattedMessage('genres.input.new-btn.label')}
                     </Button>
                 </div>
             </Col>
@@ -61,7 +60,8 @@ const Genres = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={genres} columns={columns} loading={isLoading} totalRows={totalRecord}
+                            <ReactDataTable items={genres} columns={columns} loading={isLoading}
+                                            emptyStateMessageId="genres.empty-state.title" totalRows={totalRecord}
                                             onOpenModal={onOpenModal} onChange={onChange}/>
                             <GenreModal {...cardModalProps}/>
                             <Toasts/>
@@ -71,6 +71,14 @@ const Genres = (props) => {
             </Col>
         </Row>
     );
+};
+
+Genres.propTypes = {
+    genres: PropTypes.array,
+    totalRecord: PropTypes.number,
+    isLoading: PropTypes.bool,
+    fetchGenres: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

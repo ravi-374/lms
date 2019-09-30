@@ -1,57 +1,44 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Field, reduxForm} from 'redux-form';
-import {Col, Row} from 'reactstrap';
+import {Row, Col} from 'reactstrap';
+import PropTypes from 'prop-types';
 import memberValidate from './memberProfileValidate';
 import './MemberProfile.scss';
+import {publicImagePathURL} from '../../../appConstant';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import {publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {imagePicker} from "../../../shared/custom-hooks";
 
-const MemberForm = (props) => {
-    const { initialValues, change, countries, history } = props;
-    const [image, setImage] = useState(null);
-    const [isDefaultImage, setIsDefaultImage] = useState(true);
-    const [file, setFile] = useState(null);
+const MemberProfileForm = (props) => {
+    const { initialValues, change, countries, history, onSaveMemberProfile, handleSubmit } = props;
     const [isPasswordHidden, setPasswordHidden] = useState(true);
     const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(true);
-    useEffect(() => {
-        if (initialValues.image) {
-            change('file_name', true);
-            setImage(publicImagePathURL.MEMBER_AVATAR_URL + initialValues.image);
-            setIsDefaultImage(false);
-        }
-    }, []);
-    const onSaveMemberProfile = (formValues) => {
+    const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
+        !!initialValues.image ?
+            publicImagePathURL.MEMBER_AVATAR_URL + initialValues.image : null, null,
+        !(!!initialValues.image),
+    );
+
+    const onSave = (formValues) => {
         formValues.file = file;
-        props.onSaveMemberProfile(formValues);
+        onSaveMemberProfile(formValues);
     };
-    const onFileChange = (event) => {
-        change('file_name', true);
-        setFile(event.target.files[0]);
-        setIsDefaultImage(false);
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(event.target.files[0]);
-        fileReader.onloadend = () => {
-            setImage(fileReader.result);
-        }
-    };
-    const onRemovePhoto = () => {
-        change('file_name', false);
-        setFile(null);
-        setImage(null);
-        setIsDefaultImage(true);
-    };
+
     const goToHomePage = () => {
         history.goBack();
     };
+
     const onclickPassword = (password) => {
         if (password) setPasswordHidden(!isPasswordHidden);
     };
+
     const onclickConfirmPassword = (password) => {
         if (password) setConfirmPasswordHidden(!isConfirmPasswordHidden);
     };
+
     const imagePickerOptions = {
         user: { name: initialValues ? initialValues.first_name + ' ' + initialValues.last_name : null },
         image,
@@ -59,42 +46,47 @@ const MemberForm = (props) => {
         onRemovePhoto,
         onFileChange
     };
+
     return (
         <Row className="animated fadeIn member-form m-3">
             <Col xs={8} className="primary-detail">
                 <div className="d-flex justify-content-between">
-                    <h5>Primary Details</h5>
+                    <h5>{getFormattedMessage('profile.primary-details')}</h5>
                 </div>
-                <hr className={'mt-0'}/>
+                <hr className='mt-0'/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="first_name" label="First Name" required groupText="user-circle-o"
+                        <Field name="first_name" label="profile.input.first-name.label" required
+                               groupText="user-circle-o" component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name="last_name" label="profile.input.last-name.label" required groupText="user"
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="email" label="Email" readOnly required groupText="envelope"
+                        <Field name="email" label="profile.input.email.label" readOnly required groupText="envelope"
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="phone" type="number" label="Phone No." groupText="phone" component={InputGroup}/>
+                        <Field name="phone" type="number" label="profile.input.phone.label" groupText="phone"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="password" label="New Password" type={isPasswordHidden ? 'password' : 'text'}
-                               onClick={onclickPassword} groupText="lock" isAppendIcon
-                               appendGroupText={isPasswordHidden ? 'eye-slash' : 'eye'} component={InputGroup}/>
+                        <Field name="password" label="profile.input.password.label"
+                               type={isPasswordHidden ? 'password' : 'text'} onClick={onclickPassword} groupText="lock"
+                               isAppendIcon appendGroupText={isPasswordHidden ? 'eye-slash' : 'eye'}
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="confirm_password" label="Confirm Password" onClick={onclickConfirmPassword}
-                               type={isConfirmPasswordHidden ? 'password' : 'text'} groupText="lock" isAppendIcon
+                        <Field name="confirm_password" label="profile.input.confirm-password.label"
+                               onClick={onclickConfirmPassword} type={isConfirmPasswordHidden ? 'password' : 'text'}
+                               groupText="lock" isAppendIcon
                                appendGroupText={isConfirmPasswordHidden ? 'eye-slash' : 'eye'} component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
             <Col xs={4} className="member-profile">
-                <h5 className="member-profile__title">Member Profile</h5>
+                <h5 className="member-profile__title">{getFormattedMessage('profile.member-profile')}</h5>
                 <hr className={'mt-0'}/>
                 <div className="mt-5">
                     <Field name="file_name" type="hidden" component={InputGroup}/>
@@ -102,36 +94,49 @@ const MemberForm = (props) => {
                 </div>
             </Col>
             <Col xs={12} className="mt-2">
-                <h5>Additional Details</h5>
+                <h5>{getFormattedMessage('profile.additional-details')}</h5>
                 <hr/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="address_1" label="Address1" groupText="address-book" component={InputGroup}/>
+                        <Field name="address_1" label="profile.input.address1.label" groupText="address-book"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="address_2" label="Address2" groupText="address-book-o" component={InputGroup}/>
+                        <Field name="address_2" label="profile.input.address2.label" groupText="address-book-o"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="city" label="City" groupText="circle" component={InputGroup}/>
+                        <Field name="city" label="profile.input.city.label" groupText="circle" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="state" label="State" groupText="square" component={InputGroup}/>
+                        <Field name="state" label="profile.input.state.label" groupText="square"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="country" label="Country" options={countries} placeholder="Select Country"
-                               groupText="flag" component={Select} isSearchable={true} isMini={true}
-                               menuPlacement="top"/>
+                        <Field name="country" label="profile.select.country.label" options={countries}
+                               placeholder="profile.select.country.placeholder" groupText="flag" component={Select}
+                               isSearchable={true} isMini={true} menuPlacement="top"/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
+                        <Field name="zip" label="profile.input.zip.label" groupText="map-pin" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveMemberProfile)} onCancel={goToHomePage} {...props}/>
+                <SaveAction onSave={handleSubmit(onSave)} onCancel={goToHomePage} {...props}/>
             </Col>
         </Row>
     );
 };
 
-export default reduxForm({ form: 'memberForm', validate: memberValidate })(MemberForm);
+
+MemberProfileForm.propTypes = {
+    initialValues: PropTypes.object,
+    history: PropTypes.object,
+    countries: PropTypes.array,
+    onSaveMemberProfile: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    change: PropTypes.func,
+};
+
+export default reduxForm({ form: 'memberForm', validate: memberValidate })(MemberProfileForm);

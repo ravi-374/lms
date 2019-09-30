@@ -1,17 +1,29 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
-import {deleteBookSeries} from '../../store/actions/bookSeriesAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {deleteBookSeries} from '../../store/actions/bookSeriesAction';
 
 const DeleteBookSeries = (props) => {
-    const content = `Are you sure you want to delete "${props.bookSeries ? props.bookSeries.title : ''}" ?`;
-    const title = "Delete A Book Series";
+    const { bookSeries, deleteBookSeries, toggleModal } = props;
+    const content = props.bookSeries ?
+        <>{getFormattedMessage('modal.delete.message')}&nbsp;"{`${bookSeries.title}`}" ?</> : null;
+    const title = getFormattedMessage('books-series.modal.delete.title');
+
     const onDeleteBookSeries = () => {
-        props.deleteBookSeries(props.bookSeries.id);
+        deleteBookSeries(bookSeries.id);
     };
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteBookSeries} onCancel={props.toggleModal}/>}
+
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteBookSeries} onCancel={toggleModal}/>}
                   content={content} title={title}/>;
 };
 
-export default connect(null, {deleteBookSeries})(DeleteBookSeries);
+DeleteBookSeries.propTypes = {
+    bookSeries: PropTypes.object,
+    deleteBookSeries: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { deleteBookSeries })(DeleteBookSeries);

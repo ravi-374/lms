@@ -1,34 +1,36 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {fetchCurrencies, fetchSettings, postAppLogo, postSettings} from '../../store/actions/settingAction';
 import {Card, CardBody, Col, Row} from 'reactstrap';
-import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from "../../../shared/toast/Toasts";
+import PropTypes from 'prop-types';
+import _ from "lodash";
 import SettingsForm from "./SettingsForm";
 import {settingsKey} from '../../constants';
 import {publicImagePathURL} from "../../../appConstant";
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from "../../../shared/toast/Toasts";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import _ from "lodash";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {fetchCurrencies, fetchSettings, postAppLogo, postSettings} from '../../store/actions/settingAction';
 
 const Settings = (props) => {
-    const { currencies, selectedCurrency, settings, isLoading, appName, appLogo } = props;
+    const {
+        currencies, fetchSettings, fetchCurrencies, postSettings, postAppLogo,
+        selectedCurrency, settings, selectedLanguage, exist_library_logo
+    } = props;
+
     useEffect(() => {
-        props.fetchSettings(true);
-        props.fetchCurrencies();
+        fetchSettings(true);
+        fetchCurrencies();
     }, []);
 
-    if (isLoading) {
-        return <ProgressBar/>
-    }
-
     const onSaveSettings = (formValues) => {
-        props.postSettings(formValues);
+        postSettings([...formValues, exist_library_logo]);
     };
 
-    const changeFile = (file) => {
+    const onChangeAppLogo = (file) => {
         const formData = new FormData();
         formData.append('logo', file, file.name);
-        props.postAppLogo(formData)
+        postAppLogo(formData)
     };
     const getLogo = (settings) => {
         return settings && settings[settingsKey.LIBRARY_LOGO] ?
@@ -43,19 +45,19 @@ const Settings = (props) => {
             return_due_days: settings[settingsKey.RETURN_DUE_DAYS] ? settings[settingsKey.RETURN_DUE_DAYS].value : null,
             library_name: settings[settingsKey.LIBRARY_NAME] ? settings[settingsKey.LIBRARY_NAME].value : null,
             library_logo: getLogo(settings),
+            language: selectedLanguage,
         },
         onSaveSettings,
-        changeFile
+        onChangeAppLogo
     };
 
     return (
         <div className="animated fadeIn">
-            <HeaderTitle appLogo={appLogo} title={`Settings | ${appName}`}/>
+            <ProgressBar/>
+            <HeaderTitle title="Settings"/>
             <Row>
-                <Col xs={12}>
-                    <div className="">
-                        <h5 className="pull-left text-dark">Settings</h5>
-                    </div>
+                <Col xs={12} className="mb-2">
+                    <h5 className="page-heading">{getFormattedMessage('settings.title')}</h5>
                 </Col>
                 <Col sm={12}>
                     <div className="sticky-table-container">
@@ -71,6 +73,19 @@ const Settings = (props) => {
         </div>
     );
 };
+
+Settings.propTypes = {
+    selectedCurrency: PropTypes.object,
+    selectedLanguage: PropTypes.object,
+    exist_library_logo: PropTypes.object,
+    settings: PropTypes.object,
+    currencies: PropTypes.array,
+    fetchSettings: PropTypes.func,
+    fetchCurrencies: PropTypes.func,
+    postSettings: PropTypes.func,
+    postAppLogo: PropTypes.func
+};
+
 
 const prepareCurrencies = (currencies) => {
     let currenciesArray = [];
@@ -93,20 +108,21 @@ const prepareSelectedSetting = (settings, filterKey) => {
 };
 
 const mapStateToProps = (state) => {
-    const { currencies, settings, isLoading } = state;
+    const { currencies, settings } = state;
     const settingsArray = Object.values(settings);
     const settingsArr = _.mapKeys(settingsArray, 'key');
     return {
         currencies: prepareCurrencies(currencies),
         selectedCurrency: prepareSelectedSetting(settingsArray, settingsKey.CURRENCY),
         settings: settingsArr,
-        isLoading
+        selectedLanguage: prepareSelectedSetting(settingsArray, settingsKey.LANGUAGE),
+        exist_library_logo: settings[settingsKey.LIBRARY_LOGO] ? settings[settingsKey.LIBRARY_LOGO] : null,
     }
 };
 
 export default connect(mapStateToProps, {
     fetchSettings,
     fetchCurrencies,
-    postSettings: postSettings,
-    postAppLogo: postAppLogo
+    postSettings,
+    postAppLogo
 })(Settings);

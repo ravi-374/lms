@@ -2,29 +2,44 @@ import React, {Fragment, useEffect, useState, createRef} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 import bookAllotmentValidate from './bookAllotmentValidate';
+import './BooksAllotment.scss';
+import {bookAllotmentStatusConstant, bookStatusOptions} from '../../constants';
+import {dateFormat} from "../../../constants";
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import TextArea from '../../../shared/components/TextArea';
-import {bookAllotmentStatusConstant, bookStatusOptions} from '../../constants';
-import './BooksAllotment.scss';
-import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
-import moment from 'moment';
 import DatePicker from '../../../shared/components/DatePicker';
 import Select from "../../../shared/components/Select";
-import {dateFormat} from "../../../constants";
+import {getFormattedMessage, getFormattedOptions, prepareFullNames} from "../../../shared/sharedMethod";
+import {fetchBooks} from "../../store/actions/bookAction";
+import {fetchMembers} from "../../store/actions/memberAction";
+import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
 
 let bookId = null;
 let memberId = null;
 const BookAllotmentForm = props => {
-    const { initialValues } = props;
+    const {
+        initialValues, books, members, change, bookItems, fetchBooks,
+        fetchMembers, fetchAvailableBooks, onSaveBookAllotment, handleSubmit
+    } = props;
     const [isDisabledItem, setDisabledItem] = useState(true);
     const [status, setStatus] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
     const bookItemRef = createRef();
     const isDisabledStatus =
         initialValues && initialValues.status && initialValues.status.id === bookAllotmentStatusConstant.BOOK_RETURNED;
+    const bookAllotmentStatusOptions = getFormattedOptions(bookStatusOptions);
+
     useEffect(() => {
+        fetchBooks();
+        fetchMembers();
+        prepareInitialValues();
+    }, []);
+
+    const prepareInitialValues = () => {
         bookId = null;
         memberId = null;
         if (initialValues) {
@@ -42,7 +57,8 @@ const BookAllotmentForm = props => {
         } else {
             bookItemRef.current.select.focus();
         }
-    }, []);
+    };
+
     const prepareFormValues = (formValues) => {
         const { book, book_item, member, note } = formValues;
         const formData = {
@@ -67,35 +83,46 @@ const BookAllotmentForm = props => {
         }
         return formData;
     };
-    const onSaveBookAllotment = formValues => {
-        props.onSaveBookAllotment(prepareFormValues(formValues));
+
+    const onSave = formValues => {
+        onSaveBookAllotment(prepareFormValues(formValues));
     };
+
     const getBooks = () => {
         if (bookId && memberId) {
             setDisabledItem(false);
-            props.fetchAvailableBooks(bookId, memberId);
+            fetchAvailableBooks(bookId, memberId);
         } else {
             setDisabledItem(true);
-            props.change('book_item', null);
+            change('book_item', null);
         }
     };
+
     const onSelectBook = (option) => {
         props.change('book_item', null);
-        bookId = option.id;
+        bookId = option ? option.id : null;
         getBooks();
     };
+
     const onSelectMember = (option) => {
         props.change('book_item', null);
-        memberId = option.id;
+        memberId = option ? option.id : null;
         getBooks();
     };
+
     const onSelectBookStatus = (option) => {
-        setSelectedDate(moment().toDate());
-        setStatus(option.id);
+        if (option) {
+            setSelectedDate(moment().toDate());
+            setStatus(option.id);
+        } else {
+            setStatus(null);
+        }
     };
+
     const onSelectDate = (date) => {
         setSelectedDate(date);
     };
+
     const renderDatePicker = (status) => {
         if (!status) {
             return null;
@@ -103,24 +130,24 @@ const BookAllotmentForm = props => {
         let field = '';
         let label = '';
         let maxDate = '';
-        let minDate = ''
+        let minDate = '';
         switch (status) {
             case bookAllotmentStatusConstant.BOOK_RESERVED:
                 minDate = moment().toDate();
-                label = 'Reserve Date';
+                label = getFormattedMessage('books-allotment.table.reserve-date.column');
                 field = 'reserve_date';
                 break;
             case bookAllotmentStatusConstant.BOOK_ISSUED:
                 maxDate = initialValues && initialValues.reserve_date ? moment().subtract(
                     moment().diff(moment(initialValues.reserve_date), 'days') - 1, 'days').toDate() : moment().toDate();
                 minDate = initialValues && initialValues.reserve_date ? moment().toDate() : '';
-                label = 'Issue Date';
+                label = getFormattedMessage('books-allotment.table.issue-date.column');
                 field = 'issued_on';
                 break;
             case bookAllotmentStatusConstant.BOOK_RETURNED:
                 minDate = moment().subtract(moment().diff(moment(initialValues.issued_on), 'days'), 'days').toDate();
                 maxDate = moment().toDate();
-                label = 'Return Date';
+                label = getFormattedMessage('books-allotment.table.return-date.column');
                 field = 'return_date';
                 break;
             default:
@@ -139,21 +166,21 @@ const BookAllotmentForm = props => {
         if (initialValues) {
             switch (initialValues.status.id) {
                 case bookAllotmentStatusConstant.BOOK_RESERVED:
-                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
+                    return bookAllotmentStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
                         || bookStatus.id === bookAllotmentStatusConstant.BOOK_UN_RESERVED);
                 case bookAllotmentStatusConstant.BOOK_UN_RESERVED:
-                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
+                    return bookAllotmentStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
                         || bookStatus.id === bookAllotmentStatusConstant.BOOK_RESERVED);
                 case bookAllotmentStatusConstant.BOOK_ISSUED:
-                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED
+                    return bookAllotmentStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED
                         || bookStatus.id === bookAllotmentStatusConstant.BOOK_LOST);
                 case  bookAllotmentStatusConstant.BOOK_LOST:
-                    return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED);
+                    return bookAllotmentStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_RETURNED);
                 default:
                     return [];
             }
         } else {
-            return bookStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
+            return bookAllotmentStatusOptions.filter(bookStatus => bookStatus.id === bookAllotmentStatusConstant.BOOK_ISSUED
                 || bookStatus.id === bookAllotmentStatusConstant.BOOK_RESERVED);
         }
     };
@@ -162,31 +189,35 @@ const BookAllotmentForm = props => {
             <Col xs={6}>
                 <Row>
                     <Col xs={12}>
-                        <Field name="book" label="Book" required options={props.books} placeholder="Select Book"
-                               onChange={onSelectBook} groupText="book" component={Select} isSearchable={true}
-                               innerRef={bookItemRef} disabled={initialValues}/>
+                        <Field name="book" label="books-allotment.select.book.label" required options={books}
+                               placeholder="books-allotment.select.book.placeholder" onChange={onSelectBook}
+                               groupText="book" component={Select} isSearchable={true} innerRef={bookItemRef}
+                               disabled={initialValues}/>
                     </Col>
                     <Col xs={12}>
-                        <Field name="member" label="Member" required options={props.members} placeholder="Select Member"
-                               onChange={onSelectMember} groupText="user-circle-o" component={Select}
-                               isSearchable={true} disabled={initialValues}/>
+                        <Field name="member" label="books-allotment.select.member.label" required options={members}
+                               placeholder="books-allotment.select.member.placeholder" onChange={onSelectMember}
+                               groupText="user-circle-o" component={Select} isSearchable={true}
+                               disabled={initialValues}/>
                     </Col>
                     <Col xs={12}>
-                        <Field name="book_item" label="Book Item" required options={props.bookItems}
-                               placeholder="Select Book Item" groupText="object-group" component={Select}
-                               isSearchable={true} disabled={isDisabledItem || initialValues}/>
+                        <Field name="book_item" label="books-allotment.select.book-item.label" required
+                               options={bookItems} placeholder="books-allotment.select.book-item.placeholder"
+                               groupText="object-group" component={Select} isSearchable={true}
+                               disabled={isDisabledItem || initialValues}/>
                     </Col>
                 </Row>
             </Col>
             <Col xs={6}>
-                <Field name="note" rows="10" label="Note" component={TextArea}/>
+                <Field name="note" rows="10" label="books-allotment.input.note.label" component={TextArea}/>
             </Col>
             <Col xs={12}>
                 <Row>
                     <Col xs={6}>
-                        <Field name="status" label="Status" required options={renderBookStatusOption()}
-                               placeholder="Select Status" onChange={onSelectBookStatus} groupText="info-circle"
-                               component={Select} disabled={isDisabledStatus}/>
+                        <Field name="status" label="books-allotment.select.status.label" required
+                               options={renderBookStatusOption()}
+                               placeholder="books-allotment.select.status.placeholder" onChange={onSelectBookStatus}
+                               groupText="info-circle" component={Select} disabled={isDisabledStatus}/>
                     </Col>
                     <Col xs={6}>
                         {renderDatePicker(status)}
@@ -194,17 +225,27 @@ const BookAllotmentForm = props => {
                 </Row>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveBookAllotment)} {...props}/>
+                <SaveAction onSave={handleSubmit(onSave)} {...props}/>
             </Col>
         </Row>
     );
 };
 
-const mapStateToProps = (state) => {
-    return { bookItems: prepareBookItems(state.availableBooks) }
+
+BookAllotmentForm.propTypes = {
+    initialValues: PropTypes.object,
+    books: PropTypes.array,
+    bookItems: PropTypes.array,
+    members: PropTypes.array,
+    onSaveBookAllotment: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    change: PropTypes.func,
+    fetchBooks: PropTypes.func,
+    fetchMembers: PropTypes.func,
+    fetchAvailableBooks: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
-const bookAllotmentForm = reduxForm({ form: 'bookAllotmentForm', validate: bookAllotmentValidate })(BookAllotmentForm);
 const prepareBookItems = (books) => {
     let bookArray = [];
     books.forEach(book => {
@@ -212,4 +253,12 @@ const prepareBookItems = (books) => {
     });
     return bookArray;
 };
-export default connect(mapStateToProps, { fetchAvailableBooks })(bookAllotmentForm);
+
+const mapStateToProps = (state) => {
+    const { books, members, availableBooks } = state;
+    return { books, members: prepareFullNames(members), bookItems: prepareBookItems(availableBooks) }
+};
+
+const bookAllotmentForm = reduxForm({ form: 'bookAllotmentForm', validate: bookAllotmentValidate })(BookAllotmentForm);
+
+export default connect(mapStateToProps, { fetchAvailableBooks, fetchBooks, fetchMembers })(bookAllotmentForm);

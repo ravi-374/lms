@@ -9,6 +9,12 @@
         border-radius: 10px;
         background: gray;
         cursor: pointer;
+
+        .btn-secondary:focus {
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
     }
 
     &__cover {
@@ -24,7 +30,7 @@
 
     &__preview {
         border-radius: 10px;
-        object-fit: contain;
+        object-fit: cover;
         text-align: center;
     }
 
@@ -33,9 +39,10 @@
         border: 0 !important;
         position: absolute;
         top: -146px;
-        left: 27%;
-        width: 91px;
+        left: 25%;
+        width: 100px;
         height: 96px;
+        word-break: break-all;
         font-weight: 700;
     }
 

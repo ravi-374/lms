@@ -1,29 +1,36 @@
 import React from 'react';
-import DeleteBookLanguage from './DeleteBookLanguage';
+import PropTypes from 'prop-types';
 import CreateBookLanguage from './CreateBookLanguage';
 import EditBookLanguage from './EditBookLanguage';
+import DeleteBookLanguage from './DeleteBookLanguage';
+import {getModalTitle} from "../../../shared/sharedMethod";
+import ModalConfig from "../../../shared/modal-config/ModalConfig";
 
-export default (props) => {
-    const {isEditMode, toggleModal, isDeleteMode, bookLanguage, isToggle} = props;
-    if (!isDeleteMode) {
-        const prepareModalOption = {
-            className: 'book-language-modal',
-            title: isEditMode ? 'Edit Book Language' : 'New Book Language',
-            toggleModal,
-        };
-        if (isEditMode) {
-            return <EditBookLanguage {...prepareModalOption} bookLanguage={bookLanguage}/>
-        }
-        return <CreateBookLanguage {...prepareModalOption}/>
-    }
-    if (isDeleteMode) {
-        const prepareModalOption = {
-            bookLanguageId: bookLanguage.id,
-            title: 'Delete Book Language',
-            toggleModal,
-            isToggle,
-            content: `Are you sure you want to delete "${bookLanguage.language_name}" ?`,
-        };
-        return <DeleteBookLanguage {...prepareModalOption}/>
-    }
+export const BookLanguageModal = (props) => {
+    const { bookLanguage, isCreate, isEdit, isDelete } = props;
+    const editConfig = { bookLanguage };
+    const delConfig = { bookLanguageId: bookLanguage ? bookLanguage.id : null };
+    const modalOptions = {
+        modalTitle: getModalTitle(isCreate, isEdit, isDelete, 'book-languages.input.new-btn.label',
+            'book-languages.modal.edit.title', 'book-languages.modal.delete.title'),
+        NewComponent: CreateBookLanguage,
+        EditComponent: EditBookLanguage,
+        DeleteComponent: DeleteBookLanguage,
+        deleteKey: bookLanguage ? bookLanguage.language_name : null,
+        editConfig,
+        delConfig,
+        props
+    };
+
+    return <ModalConfig {...modalOptions}/>;
 };
+
+
+BookLanguageModal.propTypes = {
+    bookLanguage: PropTypes.object,
+    isCreate: PropTypes.bool,
+    isEdit: PropTypes.bool,
+    isDelete: PropTypes.bool,
+};
+
+export default BookLanguageModal;

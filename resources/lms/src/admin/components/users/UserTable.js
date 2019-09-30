@@ -1,21 +1,23 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
-import ModalAction from '../../../shared/action-buttons/ModalAction';
-import ToggleSwitch from '../../../shared/components/ToggleSwitch';
+import PropTypes from 'prop-types';
 import './Users.scss';
-import {addToast} from '../../../store/action/toastAction';
 import {publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
+import ModalAction from '../../../shared/action-buttons/ModalAction';
+import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {getCurrentUser} from "../../shared/sharedMethod";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {getAvatarName} from "../../../shared/sharedMethod";
+import {addToast} from '../../../store/action/toastAction';
 
 const UserTable = (props) => {
-    const { users, onOpenModal, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
+    const { users, onClickModal, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
     const columns = [
         {
-            name: 'Profile',
+            name: getFormattedMessage('profile.title'),
             selector: 'image',
             width: '90px',
             cell: row => {
@@ -29,23 +31,23 @@ const UserTable = (props) => {
             }
         },
         {
-            name: 'Name',
+            name: getFormattedMessage('react-data-table.name.column'),
             selector: 'first_name',
             sortable: true,
             cell: row => <span>{row.first_name + ' ' + row.last_name}</span>
         },
         {
-            name: 'Email',
+            name: getFormattedMessage('profile.input.email.label'),
             selector: 'email',
             sortable: true,
         },
         {
-            name: 'Phone',
+            name: getFormattedMessage('profile.input.phone.label'),
             selector: 'phone',
             sortable: true,
         },
         {
-            name: 'Role',
+            name: getFormattedMessage('users.select.role.label'),
             selector: 'role_name',
             sortable: true,
             cell: row => {
@@ -56,7 +58,7 @@ const UserTable = (props) => {
             },
         },
         {
-            name: 'Status',
+            name: getFormattedMessage('react-data-table.status.column'),
             selector: 'status',
             width: '90px',
             center: true,
@@ -68,14 +70,14 @@ const UserTable = (props) => {
                     </div> : null
         },
         {
-            name: 'Action',
+            name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
             center: true,
             width: '150px',
-            cell: row => <ModalAction onOpenModal={onOpenModal} isHideDetailIcon={false}
+            cell: row => <ModalAction onOpenModal={onClickModal} isHideDetailIcon={false}
                                       goToDetailScreen={goToUserDetail} item={row}/>
         }];
 
@@ -87,9 +89,19 @@ const UserTable = (props) => {
         history.push(`${Routes.USERS + userId}/details`);
     };
     return (
-        <ReactDataTable items={users} columns={columns} loading={isLoading} totalRows={totalRecord}
-                        onChange={onChangeData}/>
+        <ReactDataTable items={users} columns={columns} emptyStateMessageId="users.empty-state.title"
+                        loading={isLoading} totalRows={totalRecord} onChange={onChangeData}/>
     );
+};
+
+UserTable.propTypes = {
+    history: PropTypes.object,
+    users: PropTypes.array,
+    totalRecord: PropTypes.number,
+    isLoading: PropTypes.bool,
+    onChangeData: PropTypes.func,
+    onClickModal: PropTypes.func,
+    setActiveInactive: PropTypes.func,
 };
 
 const userForm = reduxForm({ form: 'userForm' })(UserTable);

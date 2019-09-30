@@ -1,19 +1,30 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import PublisherForm from './PublisherForm';
 import Modal from '../../../shared/components/Modal';
 import {editPublisher} from '../../store/actions/publisherAction';
-import PublisherForm from './PublisherForm';
 
 const EditPublisher = (props) => {
+    const { publisher, editPublisher, toggleModal } = props;
+
     const onSavePublisher = (formValues) => {
-        props.editPublisher(props.publisher.id, formValues);
+        editPublisher(publisher.id, formValues);
     };
+
     const prepareFormOption = {
         onSavePublisher,
-        onCancel: props.toggleModal,
-        initialValues: {name: props.publisher.name, description: props.publisher.description}
+        onCancel: toggleModal,
+        initialValues: { name: publisher.name, description: publisher.description }
     };
+
     return <Modal {...props} content={<PublisherForm {...prepareFormOption} />}/>
 };
 
-export default connect(null, {editPublisher})(EditPublisher);
+EditPublisher.propTypes = {
+    publisher: PropTypes.object,
+    editPublisher: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { editPublisher })(EditPublisher);

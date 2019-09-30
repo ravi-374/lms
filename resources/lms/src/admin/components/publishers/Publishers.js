@@ -1,47 +1,43 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
-import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import PropTypes from 'prop-types';
 import PublisherModal from './PublisherModal';
-import './Publishers.scss';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
-import {toggleModal} from '../../../store/action/modalAction';
-import {fetchPublishers} from '../../store/actions/publisherAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {openModal} from "../../../shared/custom-hooks";
+import {fetchPublishers} from '../../store/actions/publisherAction';
+import {toggleModal} from '../../../store/action/modalAction';
 
 const Publishers = (props) => {
-    const [isCreateMode, setCreateMode] = useState(false);
-    const [isEditMode, setEditMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
-    const [publisher, setPublisher] = useState(null);
-    const { publishers, toggleModal, totalRecord, isLoading, appName, appLogo } = props;
-
-    const cardModalProps = { publisher, isDeleteMode, isEditMode, isCreateMode, toggleModal };
-    const onOpenModal = (isEdit, publisher = null, isDelete = false) => {
-        setEditMode(isEdit);
-        setCreateMode(!isEdit);
-        setDeleteMode(isDelete);
-        setPublisher(publisher);
-        toggleModal();
-    };
+    const { publishers, fetchPublishers, toggleModal, totalRecord, isLoading } = props;
+    const [isCreate, isEdit, isDelete, publisher, onOpenModal] = openModal();
+    const cardModalProps = { publisher, isCreate, isEdit, isDelete, toggleModal };
 
     const onChange = (filter) => {
-        props.fetchPublishers(filter, true);
+        fetchPublishers(filter, true);
+    };
+
+    const onClickModal = (isEdit, publisher = null, isDelete = false) => {
+        onOpenModal(isEdit, publisher, isDelete);
+        toggleModal();
     };
 
     const columns = [
         {
-            name: 'Name',
+            name: getFormattedMessage('react-data-table.name.column'),
             selector: 'name',
             sortable: true,
         },
         {
-            name: 'Action',
+            name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
             right: true,
-            cell: row => <ModalAction onOpenModal={onOpenModal} item={row}/>,
+            cell: row => <ModalAction onOpenModal={onClickModal} item={row}/>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -51,12 +47,12 @@ const Publishers = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle appLogo={appLogo} title={`Publishers | ${appName}`}/>
+                <HeaderTitle title="Publishers"/>
                 <ProgressBar/>
-                <h5 className="page-heading">Publishers</h5>
+                <h5 className="page-heading">{getFormattedMessage('publishers.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        New Publisher
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                        {getFormattedMessage('publishers.input.new-btn.label')}
                     </Button>
                 </div>
             </Col>
@@ -64,7 +60,8 @@ const Publishers = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={publishers} columns={columns} loading={isLoading}
+                            <ReactDataTable items={publishers} columns={columns}
+                                            emptyStateMessageId="publishers.empty-state.title" loading={isLoading}
                                             totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <PublisherModal {...cardModalProps}/>
                             <Toasts/>
@@ -74,6 +71,14 @@ const Publishers = (props) => {
             </Col>
         </Row>
     );
+};
+
+Publishers.propTypes = {
+    publishers: PropTypes.array,
+    totalRecord: PropTypes.number,
+    isLoading: PropTypes.bool,
+    fetchPublishers: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
