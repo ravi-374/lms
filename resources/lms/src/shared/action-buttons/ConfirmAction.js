@@ -1,11 +1,26 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Button} from 'reactstrap';
+import {getFormattedMessage} from "../sharedMethod";
 
-export default (props) => {
+const ConfirmAction = (props) => {
+    const { onConfirm, onCancel } = props;
+
     return (
-        <Fragment>
-            <Button color="success" onClick={props.onConfirm}>Yes</Button>
-            <Button color="secondary" onClick={props.onCancel}>No</Button>
-        </Fragment>
+        <>
+            <Button color="success" onClick={onConfirm}>
+                {getFormattedMessage('global.input.yes-btn.label')}
+            </Button>
+            <Button color="secondary" onClick={onCancel}>
+                {getFormattedMessage('global.input.no-btn.label')}
+            </Button>
+        </>
     );
 };
+
+ConfirmAction.propTypes = {
+    onConfirm: PropTypes.func,
+    onCancel: PropTypes.func,
+};
+
+export default ConfirmAction;

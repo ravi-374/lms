@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './EmptyComponent.scss';
 
-const EmptyComponent = ({ title, isShort, isMediumEmptyState, isLoading, isShortEmptyState }) => {
+const EmptyComponent = (props) => {
+    const { title, isShort, isMediumEmptyState, isLoading, isShortEmptyState } = props;
     const prepareClassName = () => {
         if (isMediumEmptyState) {
             return 'empty-component empty-component--mid';
@@ -21,6 +23,14 @@ const EmptyComponent = ({ title, isShort, isMediumEmptyState, isLoading, isShort
             <h5 className="empty-component__title">{title}</h5>
         </div>
     );
+};
+
+EmptyComponent.propTypes = {
+    title: PropTypes.object,
+    isShort: PropTypes.bool,
+    isMediumEmptyState: PropTypes.bool,
+    isShortEmptyState: PropTypes.bool,
+    isLoading: PropTypes.bool
 };
 
 export default EmptyComponent;

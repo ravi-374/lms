@@ -1,49 +1,47 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import RoleModal from './RoleModal';
+import Role from './RoleTable';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import Toasts from '../../../shared/toast/Toasts';
+import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {openModal} from "../../../shared/custom-hooks";
 import {sortAction} from '../../../store/action/sortAction';
-import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import RoleModal from './RoleModal';
-import Role from './Role';
-import './Roles.scss';
-import Toasts from '../../../shared/toast/Toasts';
-import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchRoles} from '../../store/actions/roleAction';
-import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Roles = (props) => {
-    const [isCreateMode, setCreateMode] = useState(false);
-    const [isEditMode, setEditMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
-    const [role, setRole] = useState(null);
-    const { roles, sortAction, sortObject, toggleModal, appName, appLogo } = props;
+    const { roles, fetchRoles, sortAction, sortObject, toggleModal } = props;
+    const [isCreate, isEdit, isDelete, role, onOpenModal] = openModal();
+    const cardModalProps = { role, isCreate, isEdit, isDelete, toggleModal };
+
     useEffect(() => {
-        props.fetchRoles(true);
+        fetchRoles(true);
     }, []);
-    const cardModalProps = { role, isCreateMode, isDeleteMode, isEditMode, toggleModal };
-    const onOpenModal = (isEdit, role = null, isDelete = false) => {
-        setCreateMode(!isEdit);
-        setEditMode(isEdit);
-        setDeleteMode(isDelete);
-        setRole(role);
+
+    const onClickModal = (isEdit, role = null, isDelete = false) => {
+        onOpenModal(isEdit, role, isDelete);
         toggleModal();
     };
-    const cardBodyProps = { sortAction, sortObject, roles, onOpenModal };
-    if (props.isLoading) {
-        return <ProgressBar/>
-    }
+
+    const cardBodyProps = { sortAction, sortObject, roles, onClickModal };
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle appLogo={appLogo} title={`Roles | ${appName}`}/>
-                <h5 className="page-heading">Roles</h5>
+                <ProgressBar/>
+                <HeaderTitle title="Roles"/>
+                <h5 className="page-heading">{getFormattedMessage('roles.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        New Role
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                        {getFormattedMessage('roles.input.new-btn.label')}
                     </Button>
                 </div>
             </Col>
@@ -55,7 +53,7 @@ const Roles = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {roles.length > 0 ? <Role {...cardBodyProps}/> :
-                                <EmptyComponent title="No roles yet..."/>}
+                                <EmptyComponent title={getFormattedMessage('roles.empty-state.title')}/>}
                             <RoleModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -66,8 +64,17 @@ const Roles = (props) => {
     );
 };
 
+Roles.propTypes = {
+    sortObject: PropTypes.object,
+    roles: PropTypes.array,
+    searchText: PropTypes.string,
+    fetchRoles: PropTypes.func,
+    sortAction: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
 const mapStateToProps = (state) => {
-    const { roles, searchText, sortObject, isLoading } = state;
+    const { roles, searchText, sortObject } = state;
     let rolesArray = Object.values(roles);
     if (searchText) {
         const filterKeys = ['name', 'display_name'];
@@ -76,7 +83,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         rolesArray = sortFilter(rolesArray, sortObject);
     }
-    return { roles: rolesArray, sortObject, isLoading };
+    return { roles: rolesArray, sortObject };
 };
 
 export default connect(mapStateToProps, { fetchRoles, sortAction, toggleModal })(Roles);

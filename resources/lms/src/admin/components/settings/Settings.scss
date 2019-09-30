@@ -1,3 +1,36 @@
+.settings {
+
+    .image__preview {
+        object-fit: contain;
+    }
+}
+
+html[dir="rtl"] {
+
+    @media (max-width: 1544px) {
+        .settings__form {
+            position: absolute;
+            left: 0;
+            width: 77%;
+        }
+    }
+
+    @media (max-width: 1120px) {
+        .settings__form {
+            position: absolute;
+            left: 0;
+            width: 70%;
+        }
+    }
+
+    @media (max-width: 945px) {
+        .settings__form {
+            position: relative;
+        }
+    }
+
+}
+
 @media (max-width: 1544px) {
     .settings__form {
         position: absolute;

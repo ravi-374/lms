@@ -1,3 +1,17 @@
+
+html[dir="rtl"] {
+
+    .toast {
+        left: 1.5%;
+        right: unset;
+
+        &__message {
+            margin-right: 0;
+            margin-left: 30px;
+        }
+    }
+}
+
 .toast {
     visibility: hidden;
     overflow: hidden;

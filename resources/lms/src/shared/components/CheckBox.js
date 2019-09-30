@@ -1,7 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Component.scss';
 
-export default ({input, label, checked = false}) => {
+const CheckBox = (props) => {
+    const { input, label, checked = false } = props;
+
     return (
         <label className="control control--checkbox">{label}
             <input type="checkbox" checked={checked} {...input}/>
@@ -9,3 +12,11 @@ export default ({input, label, checked = false}) => {
         </label>
     );
 };
+
+CheckBox.propTypes = {
+    input: PropTypes.object,
+    label: PropTypes.object,
+    checked: PropTypes.bool,
+};
+
+export default CheckBox;

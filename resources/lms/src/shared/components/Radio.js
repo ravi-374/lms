@@ -1,11 +1,23 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import './Component.scss';
 
-export default ({input, label, name, checked = false, value = '', disabled = false}) => {
+const Radio = (props) => {
+    const { input, label, checked = false, disabled = false } = props;
+
     return (
-        <Fragment>
-            <input type="radio" name="radio" className="form__radio" checked={checked} {...input} value={value} disabled={disabled}/>
+        <>
+            <input type="radio" name="radio" className="form__radio" checked={checked} {...input} disabled={disabled}/>
             <label className="form__label">{label}</label>
-        </Fragment>
+        </>
     );
 };
+
+Radio.propTypes = {
+    input: PropTypes.object,
+    label: PropTypes.object,
+    checked: PropTypes.bool,
+    disabled: PropTypes.bool
+};
+
+export default Radio;

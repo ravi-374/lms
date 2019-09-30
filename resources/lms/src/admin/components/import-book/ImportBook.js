@@ -1,27 +1,29 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody} from 'reactstrap';
+import PropTypes from 'prop-types';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import ImportBookForm from './ImportBookForm';
-import {fetchAuthors} from '../../store/actions/authorAction';
-import {fetchGenres} from '../../store/actions/genreAction';
+import prepareFormData from '../../shared/prepareBookFormData';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getFormattedMessage, prepareFullNames} from "../../../shared/sharedMethod";
+import {prepareBookLanguage} from "../../shared/prepareArray";
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 import {fetchPublishers} from '../../store/actions/publisherAction';
 import {fetchTags} from '../../store/actions/tagAction';
-import prepareFormData from './prepareFormData';
-import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {prepareFullNames} from "../../../shared/sharedMethod";
-import {prepareBookLanguage} from "../../shared/prepareArray";
 import {clearImportBook} from "../../store/actions/importBookAction";
 import {addBook} from "../../store/actions/bookAction";
 import {prepareCreatableObject} from "../../shared/prepareArray";
+import {fetchAuthors} from '../../store/actions/authorAction';
+import {fetchGenres} from '../../store/actions/genreAction';
 
 const ImportBook = (props) => {
     const {
-        authors, publishers, tags, bookLanguages, genres, isLoading, clearImportBook,appName, appLogo,
+        authors, publishers, tags, bookLanguages, genres, isLoading, clearImportBook,
         history, addBook, fetchAuthors, fetchPublishers, fetchGenres, fetchBookLanguages, fetchTags
     } = props;
+
     useEffect(() => {
         clearImportBook();
         fetchAuthors();
@@ -34,9 +36,11 @@ const ImportBook = (props) => {
     const onImportBook = (formValues) => {
         addBook(prepareFormData(formValues), history);
     };
+
     const goBack = () => {
         history.goBack();
     };
+
     const prepareFormOption = {
         authors,
         publishers,
@@ -46,13 +50,14 @@ const ImportBook = (props) => {
         onImportBook,
         onCancel: goBack,
     };
+
     return (
         <div className="animated fadeIn">
             {isLoading ? <ProgressBar/> : null}
-            <HeaderTitle appLogo={appLogo} title={`Import Book | ${appName}`}/>
+            <HeaderTitle title="Import Book"/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">Import Book</h5>
+                    <h5 className="page-heading">{getFormattedMessage('books.input.import-btn.label')}</h5>
                 </Col>
                 <Col sm={12}>
                     <div className="sticky-table-container">
@@ -67,6 +72,23 @@ const ImportBook = (props) => {
             </Row>
         </div>
     )
+};
+
+ImportBook.propTypes = {
+    history: PropTypes.object,
+    authors: PropTypes.array,
+    genres: PropTypes.array,
+    tags: PropTypes.array,
+    publishers: PropTypes.array,
+    bookLanguages: PropTypes.array,
+    isLoading: PropTypes.bool,
+    addBook: PropTypes.func,
+    fetchAuthors: PropTypes.func,
+    fetchGenres: PropTypes.func,
+    fetchTags: PropTypes.func,
+    fetchBookLanguages: PropTypes.func,
+    fetchPublishers: PropTypes.func,
+    clearImportBook: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

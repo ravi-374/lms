@@ -1,11 +1,12 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
+import PropTypes from 'prop-types';
 import {publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
-import {getAvatarName} from "../../../shared/sharedMethod";
+import {getAvatarName, getFormattedMessage} from "../../../shared/sharedMethod";
 
-const Header = (props) => {
+const MemberHeader = (props) => {
     const { member, history, appName, appLogo } = props;
     let imageUrl = null;
 
@@ -18,11 +19,13 @@ const Header = (props) => {
             imageUrl = publicImagePathURL.MEMBER_AVATAR_URL + member.image;
         }
     }
+
     const goToMemberProfile = () => {
         history.push(Routes.MEMBER_PROFILE);
     };
+
     return (
-        <Fragment>
+        <>
             <AppSidebarToggler className="d-lg-none" display="md" mobile/>
             <AppNavbarBrand>
                 <img className="header__app-logo" src={appLogo} alt={appLogo}/>
@@ -41,13 +44,24 @@ const Header = (props) => {
                         <span className="mr-3 header__user-name">{member ? member.name : null}</span>
                     </DropdownToggle>
                     <DropdownMenu right className="header__user-name">
-                        <DropdownItem onClick={goToMemberProfile}><i className="fa fa-cog"/>Profile</DropdownItem>
-                        <DropdownItem onClick={e => props.onLogout(e)}><i className="fa fa-lock"/> Logout</DropdownItem>
+                        <DropdownItem onClick={goToMemberProfile}><i className="fa fa-cog"/>
+                            {getFormattedMessage('profile.title')}
+                        </DropdownItem>
+                        <DropdownItem onClick={e => props.onLogout(e)}><i className="fa fa-lock"/>
+                            {getFormattedMessage('header.logout.title')}
+                        </DropdownItem>
                     </DropdownMenu>
                 </AppHeaderDropdown>
             </Nav>
-        </Fragment>
+        </>
     );
 };
 
-export default Header;
+MemberHeader.propTypes = {
+    member: PropTypes.object,
+    history: PropTypes.object,
+    appName: PropTypes.string,
+    appLogo: PropTypes.string,
+};
+
+export default MemberHeader;

@@ -1,30 +1,28 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardBody, Button} from 'reactstrap';
-import UserDetailModal from './UserDetailModal';
-import './UserDetails.scss';
-import {fetchUser} from '../../store/actions/userAction';
-import {toggleModal} from "../../../store/action/modalAction";
+import {Card, CardBody, Row, Col, Button} from 'reactstrap';
+import PropTypes from 'prop-types';
+import UserDetailsModal from './UserDetailsModal';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {publicImagePathURL} from "../../../appConstant";
-import {getAvatarName} from "../../../shared/sharedMethod";
+import UserDetailsCard from '../../shared/componenents/user-details-card/UserDetailsCard';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {fetchUser} from '../../store/actions/userAction';
+import {toggleModal} from "../../../store/action/modalAction";
 
-const UserDetail = props => {
+const UserDetails = props => {
+    const { user, history, fetchUser, toggleModal, match } = props;
     const [isToggle, setIsToggle] = useState(false);
-    const { user, history, isLoading, toggleModal, appName, appLogo } = props;
+
     useEffect(() => {
-        props.fetchUser(+props.match.params.id);
+        fetchUser(+match.params.id);
     }, []);
-    if (!user || isLoading) {
-        return (
-            <Fragment>
-                <ProgressBar/>
-                <Toasts/>
-            </Fragment>
-        )
+
+    if (!user) {
+        return <><ProgressBar/><Toasts/></>;
     }
+
     const onOpenModal = () => {
         setIsToggle(true);
         toggleModal();
@@ -32,88 +30,26 @@ const UserDetail = props => {
     const goBack = () => {
         history.goBack();
     };
-    const imageUrl = user.image ? publicImagePathURL.USER_AVATAR_URL + user.image : null;
-    const { address } = user;
-    let fullAddress = '';
-    if (address) {
-        if (address.address_1) {
-            fullAddress += address.address_1;
-        }
-        if (address.address_2) {
-            fullAddress += ',  ' + address.address_2;
-        }
-        if (address.city) {
-            fullAddress += ',  ' + address.city;
-        }
-        if (address.state) {
-            fullAddress += ',  ' + address.state;
-        }
-        if (address.country) {
-            fullAddress += ',  ' + address.country.name;
-        }
-        if (address.zip) {
-            fullAddress += '-' + address.zip;
-        }
-    }
+
     return (
         <div className="animated fadeIn">
-            <HeaderTitle appLogo={appLogo} title={`User Details | ${appName}`}/>
+            <HeaderTitle title="User Details"/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="pull-left text-dark">{user.first_name + ' ' + user.last_name}</h5>
+                    <h5 className="page-heading">{user.first_name + ' ' + user.last_name}</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
-                            Edit User Details
+                            {getFormattedMessage('users.edit-user-details.title')}
                         </Button>
-                        <Button onClick={() => goBack()}>Back</Button>
+                        <Button onClick={() => goBack()}>{getFormattedMessage('global.input.back-btn.label')}</Button>
                     </div>
                 </Col>
                 <Col sm={12}>
                     <div className="sticky-table-container">
                         <Card>
                             <CardBody>
-                                <Row className="user-detail-row no-gutters">
-                                    <div className="user-detail__image-holder-wrapper">
-                                        <div className="user-detail__image-holder">
-                                            {imageUrl ? <img src={imageUrl} height="250"/> :
-                                                <div className="user-detail__avatar">
-                                                    <span className="user-detail__avatar-text">
-                                                    {getAvatarName(user.first_name + ' ' + user.last_name)}
-                                                    </span>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="user-detail">
-                                        <div className="user-detail__item-container">
-                                            <div className="user-detail__item">
-                                                <span className="user-detail__item-heading">Email</span>
-                                                <span>{user.email}</span>
-                                            </div>
-                                            {fullAddress !== '' ?
-                                                <div className="user-detail__item">
-                                                    <span className="user-detail__item-heading">Address</span>
-                                                    <span>{fullAddress}</span>
-                                                </div> : null
-                                            }
-                                            {user.phone ?
-                                                <div className="user-detail__item">
-                                                    <span className="user-detail__item-heading">Phone</span>
-                                                    <span>{user.phone}</span>
-                                                </div> : null
-                                            }
-                                            <div className="user-detail__item">
-                                                <span className="user-detail__item-heading">Role</span>
-                                                <span>{user.roles.map(({ name }) => name).join('')}</span>
-                                            </div>
-                                            <div className="user-detail__item">
-                                                <span className="user-detail__item-heading">Status</span>
-                                                <span>{user.is_active ? 'Active' : 'Inactive'}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Row>
-                                <UserDetailModal user={user} isEditMode={isToggle} toggleModal={toggleModal}/>
+                                <UserDetailsCard user={user}/>
+                                <UserDetailsModal user={user} isEditMode={isToggle} toggleModal={toggleModal}/>
                             </CardBody>
                         </Card>
                     </div>
@@ -123,15 +59,19 @@ const UserDetail = props => {
     )
 };
 
+UserDetails.propTypes = {
+    user: PropTypes.object,
+    history: PropTypes.object,
+    match: PropTypes.object,
+    fetchUser: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
 const mapStateToProps = (state, ownProp) => {
-    const { users, isLoading } = state;
+    const { users } = state;
     return {
-        user: users.find(user => user.id === +ownProp.match.params.id),
-        isLoading
+        user: users.find(user => user.id === +ownProp.match.params.id)
     }
 };
 
-export default connect(mapStateToProps, {
-    fetchUser,
-    toggleModal
-})(UserDetail);
+export default connect(mapStateToProps, { fetchUser, toggleModal })(UserDetails);

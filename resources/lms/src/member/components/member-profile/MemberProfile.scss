@@ -26,7 +26,7 @@
     }
 }
 
-.user-detail {
+.user-details-card {
     width: calc(100% - 220px);
 
     @media (max-width: 1139px) {
@@ -83,6 +83,7 @@
 }
 
 .member-profile {
+
     &__title {
         margin-bottom: 9px;
     }

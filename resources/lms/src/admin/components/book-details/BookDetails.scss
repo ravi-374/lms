@@ -1,5 +1,14 @@
 @import "../../../scss/variables";
 
+html[dir="rtl"] {
+
+    @media (min-width: 1140px) {
+        .book-detail__item {
+            margin: auto 52px auto;
+        }
+    }
+}
+
 .book-image-container {
     height: 250px;
     border: 1px solid $image-border;
@@ -30,6 +39,10 @@
 }
 
 .book-detail {
+
+    &__modal {
+        max-width: 1000px;
+    }
 
     @media (max-width: 1139px) {
         width: 100%;
@@ -91,18 +104,35 @@
         }
     }
 
-    &-form {
+    &-form-card {
         display: flex;
 
-        &__item-header:after {
-            content: "*";
-            color: $red;
+        &__hr {
+            margin-top: 0;
         }
 
-        &__add-item {
-            @media (max-width: 1399px) {
-                margin-top: 8px;
-            }
+        .image__preview {
+            object-fit: cover;
         }
+
     }
+}
+
+@media only screen and (max-width: 800px) {
+
+    .book-detail-form-card {
+        flex-direction: column;
+    }
+
+    .book-detail-form-card__primary-details {
+        margin-top: 30px;
+        flex: 100%;
+        max-width: 100%;
+    }
+
+    .book-detail-form-card__book-cover {
+        flex: 100%;
+        max-width: 100%;
+    }
+
 }

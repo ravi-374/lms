@@ -1,36 +1,30 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import MemberForm from './MemberForm';
+import prepareFormData from '../../shared/prepareUserFormData';
 import Modal from '../../../shared/components/Modal';
 import {addMember} from '../../store/actions/memberAction';
-import {fetchCountries} from "../../store/actions/countryAction";
-import {fetchMembershipPlans} from "../../store/actions/membershipPlanAction";
-import MemberForm from './MemberForm';
-import prepareFormData from './prepareFormData';
 
 const CreateMember = (props) => {
-    const { countries, fetchCountries, fetchMembershipPlans, membershipPlans } = props;
-    useEffect(() => {
-        fetchMembershipPlans(false);
-        fetchCountries();
-    }, []);
+    const { addMember, toggleModal } = props;
 
     const onSaveMember = (formValues) => {
-        props.addMember(prepareFormData(formValues));
+        addMember(prepareFormData(formValues));
     };
+
     const prepareFormOption = {
+        initialValues: { is_active: true, isCreate: true },
         onSaveMember,
-        onCancel: props.toggleModal,
-        membershipPlans,
-        countries
+        onCancel: toggleModal,
     };
+
     return <Modal {...props} content={<MemberForm{...prepareFormOption}/>}/>
 };
 
-const mapStateToProps = (state) => {
-    const { membershipPlans, countries } = state;
-    return {
-        membershipPlans: Object.values(membershipPlans), countries
-    };
+CreateMember.propTypes = {
+    addMember: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
-export default connect(mapStateToProps, { addMember, fetchCountries, fetchMembershipPlans })(CreateMember);
+export default connect(null, { addMember })(CreateMember);

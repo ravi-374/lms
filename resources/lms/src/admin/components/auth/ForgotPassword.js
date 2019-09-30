@@ -1,60 +1,65 @@
 import React, {useState} from 'react';
-import apiConfig from '../../config/apiConfigwithoutTokenWithRoot';
+import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
-import CustomInputGroup from '../../../shared/components/CustomInputGroup';
+import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
-import {addToast} from '../../../store/action/toastAction';
-import Toasts from '../../../shared/toast/Toasts';
-import {connect} from 'react-redux';
-import {Routes} from "../../../constants";
-import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import apiConfig from '../../config/apiConfigwithoutTokenWithRoot';
 import {environment} from "../../../environment";
+import {Routes} from "../../../constants";
+import Toasts from '../../../shared/toast/Toasts';
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import CustomInputGroup from '../../../shared/components/CustomInputGroup';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {addToast} from '../../../store/action/toastAction';
 
 const ForgotPassword = (props) => {
-    const { handleSubmit, invalid, appLogo, appName } = props;
+    const { handleSubmit, invalid, addToast } = props;
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
     const onSubmit = async (formValues) => {
         formValues.url = environment.URL + '/#' + Routes.ADMIN_RESET_PASSWORD;
         await apiConfig.post(`send-reset-password-link`, formValues)
             .then(response => {
-                props.addToast({ text: response.data.message });
+                addToast({ text: response.data.message });
                 setIsFormSubmitted(true);
             })
             .catch(({ response }) => {
-                    props.addToast({ text: response.data.message, type: 'error' });
+                    addToast({ text: response.data.message, type: 'error' });
                 }
             );
     };
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle appLogo={appLogo} title={`Forgot Password | ${appName}`}/>
+            <HeaderTitle title="Forgot Password"/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">
                         <Card className="p-3">
                             <CardBody>
                                 {!isFormSubmitted ?
-                                    < Form onSubmit={handleSubmit(onSubmit)}>
-                                        <h1>Forgot Password</h1>
-                                        <p className="text-muted">Enter your email for reset a password</p>
-                                        <Field name="email" type="email" placeholder="Email" groupText="icon-user"
-                                               component={CustomInputGroup}/>
+                                    <Form onSubmit={handleSubmit(onSubmit)}>
+                                        <h1>{getFormattedMessage('forgot-password.title')}</h1>
+                                        <p className="text-muted">{getFormattedMessage('forgot-password.note')}</p>
+                                        <Field name="email" type="email" placeholder="profile.input.email.label"
+                                               groupText="icon-user" component={CustomInputGroup}/>
                                         <Row>
                                             <Col className="mt-2 d-flex justify-content-end">
-                                                <Button color="primary" disabled={invalid} className="px-4">Submit
+                                                <Button color="primary" disabled={invalid} className="px-4">
+                                                    {getFormattedMessage('global.input.submit-btn.label')}
                                                 </Button>
-                                                <Link to={Routes.ADMIN_LOGIN}
-                                                      className="btn btn-secondary ml-2">Cancel</Link>
+                                                <Link to={Routes.ADMIN_LOGIN} className="btn btn-secondary ml-2">
+                                                    {getFormattedMessage('global.input.cancel-btn.label')}
+                                                </Link>
                                             </Col>
                                         </Row>
                                     </Form> :
                                     <div>
                                         <div className="text-center">
-                                            <p>Reset link has been sent on your mailing address. please check your mail.</p>
+                                            <p>{getFormattedMessage('forgot-password.email.note')}</p>
                                             <Link to={Routes.ADMIN_LOGIN} color="link">
-                                                Go back to login
+                                                {getFormattedMessage('forgot-password.link.go-back.title')}
                                             </Link>
                                         </div>
                                     </div>
@@ -67,6 +72,12 @@ const ForgotPassword = (props) => {
             </Container>
         </div>
     );
+};
+
+ForgotPassword.propTypes = {
+    invalid: PropTypes.bool,
+    addToast: PropTypes.func,
+    handleSubmit: PropTypes.func,
 };
 
 const form = reduxForm({ form: 'forgotPasswordForm', validate: loginFormValidate })(ForgotPassword);

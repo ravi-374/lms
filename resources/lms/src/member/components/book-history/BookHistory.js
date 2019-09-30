@@ -1,23 +1,26 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Card, CardBody, Col, Row} from 'reactstrap';
-import {fetchBooksHistory} from '../../store/actions/bookHistoryAction';
+import PropTypes from 'prop-types';
 import BookHistoryTable from "./BookHistoryTable";
-import ProgressBar from "../../../shared/progress-bar/ProgressBar";
-import {toggleModal} from '../../../store/action/modalAction';
 import UnReserveBook from "./UnReserveBook";
+import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {toggleModal} from '../../../store/action/modalAction';
+import {fetchBooksHistory} from '../../store/actions/bookHistoryAction';
 
 const BookHistory = props => {
     const [history, setHistory] = useState(null);
-    const { bookHistory, isLoading, toggleModal, totalRecord, appName, appLogo } = props;
+    const { bookHistory, fetchBooksHistory, isLoading, toggleModal, totalRecord } = props;
+
     const cardModalProps = {
-        history,
+        bookHistory: history,
         toggleModal,
     };
 
     const onChangeFilter = (filter) => {
-        props.fetchBooksHistory(filter);
+        fetchBooksHistory(filter);
     };
 
     const onOpenModal = (bookItem = null) => {
@@ -37,8 +40,8 @@ const BookHistory = props => {
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
                 <ProgressBar/>
-                <HeaderTitle appLogo={appLogo} title={`Book History | ${appName}`}/>
-                <h5 className="page-heading">Book History</h5>
+                <HeaderTitle title="Book History"/>
+                <h5 className="page-heading">{getFormattedMessage('book-history.title')}</h5>
             </Col>
             <Col sm={12}>
                 <div className="sticky-table-container">
@@ -53,6 +56,16 @@ const BookHistory = props => {
         </Row>
     )
 };
+
+BookHistory.propTypes = {
+    history: PropTypes.object,
+    bookHistory: PropTypes.array,
+    totalRecord: PropTypes.number,
+    isLoading: PropTypes.bool,
+    fetchBooksHistory: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
 const mapStateToProps = (state) => {
     const { bookHistory, isLoading, totalRecord } = state;
     return {
@@ -61,4 +74,5 @@ const mapStateToProps = (state) => {
         totalRecord
     }
 };
+
 export default connect(mapStateToProps, { fetchBooksHistory, toggleModal })(BookHistory);

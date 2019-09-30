@@ -1,61 +1,59 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import AuthorModal from './AuthorModal';
-import './Authors.scss';
 import Toasts from '../../../shared/toast/Toasts';
-import {toggleModal} from '../../../store/action/modalAction';
-import {fetchAuthors} from '../../store/actions/authorAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {openModal} from "../../../shared/custom-hooks";
+import {toggleModal} from '../../../store/action/modalAction';
+import {fetchAuthors} from '../../store/actions/authorAction';
 
 const Authors = (props) => {
-    const [isCreateAuthor, setCreateAuthor] = useState(false);
-    const [isEdiAuthor, setEditAuthor] = useState(false);
-    const [isDeleteAuthor, setDeleteAuthor] = useState(false);
-    const [author, setAuthor] = useState(null);
-    const { authors, toggleModal, totalRecord, isLoading, fetchAuthors, appName, appLogo } = props;
-    const cardModalProps = { author, isCreateAuthor, isDeleteAuthor, isEdiAuthor, toggleModal };
+    const { authors, toggleModal, totalRecord, isLoading, fetchAuthors } = props;
+    const [isCreate, isEdit, isDelete, author, onOpenModal] = openModal();
+    const cardModalProps = { author, isCreate, isEdit, isDelete, toggleModal };
 
     const onChange = (filter) => {
         fetchAuthors(filter, true);
     };
 
-    const onOpenModal = (isEdit, author = null, isDelete = false) => {
-        setCreateAuthor(!isEdit);
-        setEditAuthor(isEdit);
-        setDeleteAuthor(isDelete);
-        setAuthor(author);
+    const onClickModal = (isEdit, author = null, isDelete = false) => {
+        onOpenModal(isEdit, author, isDelete);
         toggleModal();
     };
+
     const columns = [
         {
-            name: 'Name',
+            name: getFormattedMessage('react-data-table.name.column'),
             selector: 'first_name',
             sortable: true,
             cell: row => <span>{row.first_name} {row.last_name}</span>,
         },
         {
-            name: 'Action',
+            name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
             right: true,
-            cell: row => <ModalAction onOpenModal={onOpenModal} item={row}/>,
+            cell: row => <ModalAction onOpenModal={onClickModal} item={row}/>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
     ];
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle appLogo={appLogo} title={`Authors | ${appName}`}/>
-                <h5 className="page-heading">Authors</h5>
+                <HeaderTitle title="Authors"/>
+                <h5 className="page-heading">{getFormattedMessage('authors.title')}</h5>
                 <ProgressBar/>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        New Author
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                        {getFormattedMessage('authors.input.new-btn.label')}
                     </Button>
                 </div>
             </Col>
@@ -64,7 +62,8 @@ const Authors = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={authors} columns={columns} loading={isLoading}
-                                            totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
+                                            emptyStateMessageId="authors.empty-state.title" totalRows={totalRecord}
+                                            onChange={onChange}/>
                             <AuthorModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -73,6 +72,14 @@ const Authors = (props) => {
             </Col>
         </Row>
     );
+};
+
+Authors.propTypes = {
+    authors: PropTypes.array,
+    totalRecord: PropTypes.number,
+    isLoading: PropTypes.bool,
+    fetchAuthors: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

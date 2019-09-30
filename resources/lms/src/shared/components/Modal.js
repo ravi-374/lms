@@ -1,24 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {connect} from 'react-redux';
-import {toggleModal} from '../../store/action/modalAction';
 
 const GlobalModal = (props) => {
-    const className = `modal-primary primary ${props.className}`;
+    const { className, isToggle, toggleModal, actions, title, content } = props;
+    const modalClassName = `modal-primary primary ${className}`;
     return (
-        <Modal id={props.id} isOpen={props.isToggle} toggle={props.toggleModal} centered={!!props.actions}
-               className={className}>
-            <ModalHeader toggle={props.toggleModal}>{props.title}</ModalHeader>
+        <Modal isOpen={isToggle}  centered={!!actions} className={modalClassName}>
+            <ModalHeader toggle={toggleModal}>{title}</ModalHeader>
             <ModalBody>
-                {props.content}
+                {content}
             </ModalBody>
-            {props.actions ? <ModalFooter>{props.actions}</ModalFooter> : null}
+            {actions ? <ModalFooter>{actions}</ModalFooter> : null}
         </Modal>
     );
 };
 
 const mapStateToProps = state => {
-    return {isToggle: state.isToggle};
+    return { isToggle: state.isToggle };
 };
 
-export default connect(mapStateToProps, {toggleModal})(GlobalModal);
+GlobalModal.propTypes = {
+    title: PropTypes.object,
+    actions: PropTypes.element,
+    content: PropTypes.element,
+    className: PropTypes.string,
+    isToggle: PropTypes.bool,
+    toggleModal: PropTypes.func
+};
+
+export default connect(mapStateToProps)(GlobalModal);

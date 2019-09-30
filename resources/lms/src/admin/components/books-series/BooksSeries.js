@@ -2,45 +2,51 @@ import React, {useState, useEffect} from 'react';
 import {Row, Col, Card, CardBody} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import DeleteBookSeries from './DeleteBookSeries';
+import BookSeries from './BookSeriesTable';
+import './BooksSeries.scss';
 import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../../store/action/sortAction';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import DeleteBookSeries from './DeleteBookSeries';
-import BookSeries from './BookSeries';
-import './BooksSeries.scss';
 import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
-import {toggleModal} from '../../../store/action/modalAction';
-import {fetchBooksSeries} from '../../store/actions/bookSeriesAction';
-import {fetchBooks} from '../../store/actions/bookAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {fetchBooksSeries} from '../../store/actions/bookSeriesAction';
+import {toggleModal} from '../../../store/action/modalAction';
+import {sortAction} from '../../../store/action/sortAction';
 
 const BooksSeries = (props) => {
+    const {
+        booksSeries, fetchBooksSeries,
+        sortAction, sortObject, toggleModal, history,
+    } = props;
     const [bookSeries, setBookSeries] = useState(null);
-    const { booksSeries, sortAction, sortObject, toggleModal, history, appName, appLogo } = props;
-    useEffect(() => {
-        props.fetchBooksSeries();
-        props.fetchBooks();
-    }, []);
     const cardModalProps = { bookSeries, toggleModal };
+
+    useEffect(() => {
+        fetchBooksSeries();
+    }, []);
+
     const onOpenModal = (bookSeries = null) => {
         setBookSeries(bookSeries);
         toggleModal();
     };
+
     const cardBodyProps = { sortAction, sortObject, booksSeries, onOpenModal, history };
-    if (props.isLoading) {
-        return <ProgressBar/>
-    }
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle appLogo={appLogo} title={`Books Series | ${appName}`}/>
-                <h5 className="page-heading">Books Series</h5>
+                <ProgressBar/>
+                <HeaderTitle title="Books Series"/>
+                <h5 className="page-heading">{getFormattedMessage('books-series.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Link to="/app/admin/books-series/new" size="md"
-                          className="btn btn-primary ml-2">New Book Series</Link>
+                    <Link to="/app/admin/books-series/new" size="md" className="btn btn-primary ml-2">
+                        {getFormattedMessage('books-series.input.new-btn.label')}
+                    </Link>
                 </div>
             </Col>
             <Col sm={12}>
@@ -51,7 +57,7 @@ const BooksSeries = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
-                                <EmptyComponent title="No books series yet..."/>}
+                                <EmptyComponent title={getFormattedMessage('books-series.empty-state.title')}/>}
                             <DeleteBookSeries {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -62,8 +68,18 @@ const BooksSeries = (props) => {
     );
 };
 
+BooksSeries.propTypes = {
+    sortObject: PropTypes.object,
+    history: PropTypes.object,
+    booksSeries: PropTypes.array,
+    searchText: PropTypes.string,
+    fetchBooksSeries: PropTypes.func,
+    sortAction: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
 const mapStateToProps = (state) => {
-    const { booksSeries, books, searchText, sortObject, isLoading } = state;
+    const { booksSeries, searchText, sortObject } = state;
     let booksSeriesArray = Object.values(booksSeries);
     if (searchText) {
         const filterKeys = ['title'];
@@ -72,7 +88,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         booksSeriesArray = sortFilter(booksSeriesArray, sortObject);
     }
-    return { booksSeries: booksSeriesArray, sortObject, isLoading, books: Object.values(books) };
+    return { booksSeries: booksSeriesArray, sortObject };
 };
 
-export default connect(mapStateToProps, { fetchBooksSeries, fetchBooks, sortAction, toggleModal })(BooksSeries);
+export default connect(mapStateToProps, { fetchBooksSeries, sortAction, toggleModal })(BooksSeries);

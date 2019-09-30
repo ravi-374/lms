@@ -18,7 +18,7 @@ export default (formValues) => {
     if (file) {
         formData.append('image', file, file.name);
     }
-    if (!file_name) {
+    if (!file_name && !file) {
         formData.append('remove_image', '1');
     }
     return formData;

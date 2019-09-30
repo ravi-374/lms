@@ -1,16 +1,21 @@
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+
 export default formValues => {
     const errors = {};
+    if (!formValues.library_name) {
+        errors.library_name = getFormattedMessage('settings.input.app-name.validate.label');
+    }
     if (!formValues.currency) {
-        errors.currency = 'Currency must be required.';
+        errors.currency = getFormattedMessage('settings.select.currency.validate.label');
     }
     if (!formValues.issue_due_days) {
-        errors.issue_due_days = 'Issue due days must be required.';
-    }
-    if (!formValues.reserve_due_days) {
-        errors.reserve_due_days = 'Reserve due days must be required.';
+        errors.issue_due_days = getFormattedMessage('settings.input.issue-due-days.validate.label');
     }
     if (!formValues.return_due_days) {
-        errors.return_due_days = 'Return due days must be required.';
+        errors.return_due_days = getFormattedMessage('settings.input.return-due-days.validate.label');
+    }
+    if (!formValues.language) {
+        errors.language = getFormattedMessage('settings.select.language.validate.label');
     }
     return errors;
 };

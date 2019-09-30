@@ -1,26 +1,32 @@
 import React, {useState} from "react";
 import ReactCrop from "react-image-crop";
+import PropTypes from 'prop-types';
 import Modal from './Modal';
 import ConfirmAction from '../action-buttons/ConfirmAction';
 import './Component.scss';
+import {getFormattedMessage} from "../sharedMethod";
 
 const ImageCropper = (props) => {
     const { image, emitFileChange, onSave, onCancel } = props;
     const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 16 / 9 });
     const [croppedImageUrl, setCroppedImageUrl] = useState(null);
     const [imageRef, setImageRef] = useState(null);
+
     const onImageLoaded = image => {
         setImageRef(image);
         setCroppedImageUrl(null);
     };
+
     const onCropComplete = crop => {
         makeClientCrop(crop).then(croppedImageUrl => {
             setCroppedImageUrl(croppedImageUrl);
         });
     };
+
     const onCropChange = (crop, percentCrop) => {
         setCrop(crop);
     };
+
     const makeClientCrop = async (crop) => {
         if (imageRef && crop.width && crop.height) {
             return await getCroppedImg(
@@ -30,6 +36,7 @@ const ImageCropper = (props) => {
             );
         }
     };
+
     const getCroppedImg = (image, crop, fileName) => {
         const canvas = document.createElement("canvas");
         const scaleX = image.naturalWidth / image.width;
@@ -48,6 +55,7 @@ const ImageCropper = (props) => {
             crop.width,
             crop.height
         );
+
         return new Promise((resolve, reject) => {
             canvas.toBlob(blob => {
                 if (!blob) {
@@ -64,7 +72,7 @@ const ImageCropper = (props) => {
 
     const prepareModalOption = {
         className: 'membership-plan-modal',
-        title: 'Crop Image',
+        title: getFormattedMessage('image-cropper.modal.title'),
         content: <>
             <ReactCrop src={image} crop={crop} onImageLoaded={onImageLoaded} onComplete={onCropComplete}
                        onChange={onCropChange}/>
@@ -84,6 +92,13 @@ const ImageCropper = (props) => {
     return (
         image ? (<Modal {...prepareModalOption}/>) : null
     );
+};
+
+ImageCropper.propTypes = {
+    image: PropTypes.string,
+    emitFileChange: PropTypes.func,
+    onSave: PropTypes.func,
+    onCancel: PropTypes.func,
 };
 
 export default ImageCropper;

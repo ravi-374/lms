@@ -24,3 +24,11 @@ export const prepareImportedBookObject = (objectArray) => {
     objectArray.forEach(item => newObjectArray.push({ value: item, label: item }));
     return newObjectArray;
 };
+
+export const preparePermissions = permissions => {
+    let permissionArray = [];
+    permissions.forEach(permission => {
+        permissionArray.push({ id: permission.id, name: permission.display_name })
+    });
+    return permissionArray;
+};

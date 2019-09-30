@@ -1,14 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
-import {deleteBookLanguage} from '../../store/actions/bookLanguageAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
+import {deleteBookLanguage} from '../../store/actions/bookLanguageAction';
 
 const DeleteBookLanguage = (props) => {
-    const onDeleteLanguage= () => {
-        props.deleteBookLanguage(props.bookLanguageId);
+    const { bookLanguageId, deleteBookLanguage, toggleModal } = props;
+
+    const onDeleteLanguage = () => {
+        deleteBookLanguage(bookLanguageId);
     };
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteLanguage} onCancel={props.toggleModal}/>}/>
+
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteLanguage} onCancel={toggleModal}/>}/>
 };
 
-export default connect(null, {deleteBookLanguage})(DeleteBookLanguage);
+DeleteBookLanguage.propTypes = {
+    bookLanguageId: PropTypes.number,
+    deleteBookLanguage: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { deleteBookLanguage })(DeleteBookLanguage);

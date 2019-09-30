@@ -1,58 +1,33 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import MemberForm from './MemberForm';
+import prepareFormData from '../../shared/prepareUserFormData';
 import Modal from '../../../shared/components/Modal';
 import {editMember} from '../../store/actions/memberAction';
-import {fetchCountries} from "../../store/actions/countryAction";
-import {fetchMembershipPlans} from "../../store/actions/membershipPlanAction";
-import MemberForm from './MemberForm';
-import prepareFormData from './prepareFormData';
+import {prepareProfileData} from "../../../shared/sharedMethod";
 
 const EditMember = (props) => {
-    const { countries, fetchCountries, fetchMembershipPlans, membershipPlans } = props;
-    useEffect(() => {
-        fetchMembershipPlans(false);
-        fetchCountries();
-    }, []);
+    const { member, editMember, toggleModal } = props;
+
     const onSaveMember = (formValues) => {
         formValues.roles = [];
-        props.editMember(props.member.id, prepareFormData(formValues));
+        editMember(member.id, prepareFormData(formValues));
     };
-    const { id, is_active, first_name, last_name, email, password, membership_plan, phone, address, image } = props.member;
-    const changeAbleFields = {
-        id,
-        is_active,
-        first_name,
-        last_name,
-        email,
-        password,
-        image,
-        membership_plan,
-        phone
-    };
-    if (address) {
-        const { address_1, address_2, country, city, state, zip } = address;
-        changeAbleFields.address_1 = address_1 ? address_1 : '';
-        changeAbleFields.address_2 = address_2 ? address_2 : '';
-        changeAbleFields.country = country ? country : null;
-        changeAbleFields.city = city ? city : '';
-        changeAbleFields.state = state ? state : '';
-        changeAbleFields.zip = zip ? zip : '';
-    }
+
     const prepareFormOption = {
         onSaveMember,
-        onCancel: props.toggleModal,
-        initialValues: changeAbleFields,
-        membershipPlans,
-        countries
+        onCancel: toggleModal,
+        initialValues: prepareProfileData(member),
     };
+
     return <Modal {...props} content={<MemberForm {...prepareFormOption} />}/>
 };
 
-const mapStateToProps = (state) => {
-    const { membershipPlans, countries } = state;
-    return {
-        membershipPlans: Object.values(membershipPlans), countries
-    };
+EditMember.propTypes = {
+    member: PropTypes.object,
+    editMember: PropTypes.func,
+    toggleModal: PropTypes.func,
 };
 
-export default connect(mapStateToProps, { editMember, fetchMembershipPlans, fetchCountries })(EditMember);
+export default connect(null, { editMember })(EditMember);

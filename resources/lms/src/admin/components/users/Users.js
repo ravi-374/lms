@@ -1,60 +1,56 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
-import ProgressBar from '../../../shared/progress-bar/ProgressBar';
+import PropTypes from 'prop-types';
 import UserModal from './UserModal';
 import User from './UserTable';
 import './Users.scss';
+import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
-import {toggleModal} from '../../../store/action/modalAction';
-import {activeDeactiveUser, fetchUsers} from '../../store/actions/userAction';
-import {fetchRoles} from '../../store/actions/roleAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {openModal} from "../../../shared/custom-hooks";
+import {toggleModal} from '../../../store/action/modalAction';
+import {activeInactiveUser, fetchUsers} from '../../store/actions/userAction';
+import {fetchRoles} from '../../store/actions/roleAction';
 
 const Users = (props) => {
-    const [isEditUser, setEditUser] = useState(false);
-    const [isCreateUser, setCreateUser] = useState(false);
-    const [isDeleteUser, setDeleteUser] = useState(false);
-    const [user, setUser] = useState(null);
-    const { users, toggleModal, history, isLoading, totalRecord, appName, appLogo } = props;
-    const cardModalProps = { user, isDeleteUser, isEditUser, isCreateUser, toggleModal };
-
-    const setActiveInactive = (id) => {
-        if (id) {
-            props.activeDeactiveUser(id);
-        }
-    };
+    const { users, fetchUsers, toggleModal, history, isLoading, totalRecord, activeInactiveUser } = props;
+    const [isCreate, isEdit, isDelete, user, onOpenModal] = openModal();
+    const cardModalProps = { user, isCreate, isEdit, isDelete, toggleModal };
 
     const onChangeData = (filter) => {
-        props.fetchUsers(filter, true);
+        fetchUsers(filter, true);
     };
 
-    const onOpenModal = (isEdit, user = null, isDelete = false) => {
-        setCreateUser(!isEdit);
-        setEditUser(isEdit);
-        setDeleteUser(isDelete);
-        setUser(user);
+    const onClickModal = (isEdit, user = null, isDelete = false) => {
+        onOpenModal(isEdit, user, isDelete);
         toggleModal();
+    };
+
+    const setActiveInactive = (id) => {
+        if (id) activeInactiveUser(id);
     };
 
     const cardBodyProps = {
         users,
         setActiveInactive,
-        onOpenModal,
+        onClickModal,
         history,
         isLoading,
         totalRecord,
         onChangeData
     };
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle appLogo={appLogo} title={`Users | ${appName}`}/>
+                <HeaderTitle title="Users"/>
                 <ProgressBar/>
-                <h5 className="page-heading">Users</h5>
+                <h5 className="page-heading">{getFormattedMessage('users.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        New User
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                        {getFormattedMessage('users.modal.add.title')}
                     </Button>
                 </div>
             </Col>
@@ -73,8 +69,20 @@ const Users = (props) => {
     );
 };
 
+Users.propTypes = {
+    history: PropTypes.object,
+    users: PropTypes.array,
+    totalRecord: PropTypes.number,
+    isLoading: PropTypes.bool,
+    fetchUsers: PropTypes.func,
+    activeInactiveUser: PropTypes.func,
+    fetchRoles: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
 const mapStateToProps = (state) => {
     const { users, isLoading, totalRecord } = state;
     return { users, isLoading, totalRecord };
 };
-export default connect(mapStateToProps, { fetchUsers, activeDeactiveUser, fetchRoles, toggleModal })(Users);
+
+export default connect(mapStateToProps, { fetchUsers, activeInactiveUser, fetchRoles, toggleModal })(Users);

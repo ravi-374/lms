@@ -1,14 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import DeleteAction from '../../../shared/action-buttons/DeleteAction';
 import Modal from '../../../shared/components/Modal';
 import {deleteUser} from '../../store/actions/userAction';
-import DeleteAction from '../../../shared/action-buttons/DeleteAction';
 
 const DeleteUser = (props) => {
+    const { userId, deleteUser, toggleModal } = props;
+
     const onDeleteUser = () => {
-        props.deleteUser(props.userId);
+        deleteUser(userId);
     };
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteUser} onCancel={props.toggleModal}/>}/>
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteUser} onCancel={toggleModal}/>}/>
 };
 
-export default connect(null, {deleteUser})(DeleteUser);
+DeleteUser.propTypes = {
+    userId: PropTypes.number,
+    deleteUser: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { deleteUser })(DeleteUser);

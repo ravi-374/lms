@@ -1,36 +1,41 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
+import PropTypes from 'prop-types';
 import './BookDetails.scss';
-import EditBook from './EditBook';
-import {fetchBook} from '../../store/actions/bookAction';
+import BookDetailsModal from './BookDetailsModal';
 import BookItems from '../book-items/BookItems';
-
-import {toggleModal} from '../../../store/action/modalAction';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import {prepareFullNames} from "../../../shared/sharedMethod";
+import {getFormattedMessage, prepareFullNames} from "../../../shared/sharedMethod";
+import {fetchBook} from '../../store/actions/bookAction';
+import {toggleModal} from '../../../store/action/modalAction';
 
 const BookDetail = props => {
-    const { book, toggleModal, history, fetchBook, appName, appLogo } = props;
-    const [isToggle, setIsToggle] = useState(false);
+    const { book, toggleModal, history, fetchBook, match } = props;
     const [isParentToggle, setIsParentToggle] = useState(false);
+    const [isToggle, setIsToggle] = useState(false);
+    const cardModalProps = { book, toggleModal, isToggle };
+
     useEffect(() => {
-        fetchBook(+props.match.params.id);
+        fetchBook(+match.params.id);
     }, []);
+
     if (!book || !book.genres) {
         return null;
     }
+
     const onOpenModal = () => {
         setIsToggle(true);
         setIsParentToggle(true);
         toggleModal();
     };
+
     const goBack = () => {
         history.goBack();
     };
-    const bookFormOptions = { book, toggleModal };
+
     const bookItemFormOptions = {
         bookItemList: book.items,
         bookId: book.id,
@@ -40,18 +45,19 @@ const BookDetail = props => {
     };
 
     const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
+
     return (
         <div className="animated fadeIn">
             <ProgressBar/>
-            <HeaderTitle appLogo={appLogo} title={`Book-Details | ${appName}`}/>
+            <HeaderTitle title="Book-Details"/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">{book.name}</h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
-                            Edit Book Details
+                            {getFormattedMessage('books.edit-book-details.title')}
                         </Button>
-                        <Button onClick={() => goBack()}>Back</Button>
+                        <Button onClick={() => goBack()}>{getFormattedMessage('global.input.back-btn.label')}</Button>
                     </div>
                 </Col>
                 <Col sm={12}>
@@ -67,24 +73,32 @@ const BookDetail = props => {
                                     <div className="book-detail">
                                         <div className="book-detail__item-container">
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-isbn-heading">ISBN</span>
+                                                <span className="book-detail__item-isbn-heading">
+                                                     {getFormattedMessage('books.edit-book-details.table.isbn.column')}
+                                                </span>
                                                 <span>{book.isbn}</span>
                                             </div>
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-genre-heading">Genre(s)</span>
+                                                <span className="book-detail__item-genre-heading">
+                                                    {getFormattedMessage('books.edit-book-details.table.genres.column')}
+                                                </span>
                                                 <span>
                                                     {book.genres.map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
                                             <div className="book-detail__item">
-                                                <span className="book-detail__item-authors-heading">Author(s)</span>
+                                                <span className="book-detail__item-authors-heading">
+                                                  {getFormattedMessage('books.edit-book-details.table.authors.column')}
+                                                </span>
                                                 <span>
                                                     {prepareFullNames(book.authors).map((({ name }) => name)).join(',  ')}
                                                 </span>
                                             </div>
                                             {book.tags.length > 0 ?
                                                 <div className="book-detail__item">
-                                                    <span className="book-detail__item-tags-heading">Tag(s)</span>
+                                                    <span className="book-detail__item-tags-heading">
+                                                    {getFormattedMessage('books.edit-book-details.table.tags.column')}
+                                                    </span>
                                                     <span>
                                                     {book.tags.map((({ name }) => name)).join(',  ')}
                                                 </span>
@@ -92,7 +106,9 @@ const BookDetail = props => {
                                             }
                                             {book.url ?
                                                 <div className="book-detail__item">
-                                                    <span className="book-detail__item-url-heading">URL</span>
+                                                    <span className="book-detail__item-url-heading">
+                                                    {getFormattedMessage('books.input.url.label')}
+                                                    </span>
                                                     <span>
                                                        <a target="_blank" href={book.url}>
                                                             {book.url}
@@ -102,7 +118,9 @@ const BookDetail = props => {
                                             }
                                             {book.description ?
                                                 <div className="book-detail__item">
-                                                    <span className="book-detail__item-desc-heading">Description</span>
+                                                    <span className="book-detail__item-desc-heading">
+                                                        {getFormattedMessage('books.input.description.label')}
+                                                    </span>
                                                     <span className="book-detail__item-desc-text">
                                                     {book.description}
                                                     </span>
@@ -112,10 +130,10 @@ const BookDetail = props => {
                                     </div>
                                 </Row>
                                 <div className={book.description ? 'mt-3' : 'mt-5'}>
-                                    <h5 className="mb-3">Book Items</h5>
+                                    <h5 className="mb-3">{getFormattedMessage('books.items.title')}</h5>
                                     <BookItems {...bookItemFormOptions}/>
                                 </div>
-                                {isToggle && isParentToggle ? <EditBook {...bookFormOptions}/> : null}
+                                <BookDetailsModal {...cardModalProps}/>
                             </CardBody>
                         </Card>
                     </div>
@@ -125,10 +143,20 @@ const BookDetail = props => {
     )
 };
 
+BookDetail.propTypes = {
+    book: PropTypes.object,
+    history: PropTypes.object,
+    match: PropTypes.object,
+    isLoading: PropTypes.bool,
+    isToggle: PropTypes.bool,
+    fetchBook: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
 const mapStateToProps = (state, ownProp) => {
-    const { books } = state;
+    const { books, isToggle } = state;
     return {
-        book: books.find(book => book.id === +ownProp.match.params.id),
+        book: books.find(book => book.id === +ownProp.match.params.id), isToggle
     }
 };
 export default connect(mapStateToProps, {

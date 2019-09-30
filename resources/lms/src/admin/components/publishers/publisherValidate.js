@@ -1,7 +1,9 @@
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+
 export default formValues => {
     const errors = {};
     if (!formValues.name) {
-        errors.name = 'Publisher name must be required.';
+        errors.name = getFormattedMessage('publishers.input.name.validate.label');
     }
     return errors;
 };

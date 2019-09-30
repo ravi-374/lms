@@ -1,14 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
-import {deleteGenre} from '../../store/actions/genreAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
+import {deleteGenre} from '../../store/actions/genreAction';
 
 const DeleteGenre = (props) => {
+    const { genreId, deleteGenre, toggleModal } = props;
+
     const onDeleteGenre = () => {
-        props.deleteGenre(props.genreId);
+        deleteGenre(genreId);
     };
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteGenre} onCancel={props.toggleModal}/>}/>
+
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteGenre} onCancel={toggleModal}/>}/>
 };
 
-export default connect(null, {deleteGenre})(DeleteGenre);
+DeleteGenre.propTypes = {
+    genreId: PropTypes.number,
+    deleteGenre: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { deleteGenre })(DeleteGenre);
