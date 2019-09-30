@@ -1,4 +1,5 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
     FormGroup,
     InputGroup,
@@ -9,15 +10,16 @@ import {
 import DatePicker from 'react-datepicker';
 import './Component.scss';
 
-export default ({
-                    label, required, placeHolder, selected = '', addOnType = 'prepend',
-                    groupText = 'calendar-check-o', onChange, minDate = '', maxDate = '',
-                    todayButton = null, dayClassName = null, className = '', dateFormat = 'MMMM d, yyyy',
-                    disabled = false
-                }) => {
+const ReactDatePicker = (props) => {
+    const {
+        label, required, placeholder, selected = '', addOnType = 'prepend',
+        groupText = 'calendar-check-o', onChange, minDate = '', maxDate = '',
+        dateFormat = 'MMMM d, yyyy', disabled = false
+    } = props;
     const labelClass = required ? 'control-label' : '';
+
     return (
-        <Fragment>
+        <>
             <FormGroup>
                 <Label className={labelClass}>{label}</Label>
                 <InputGroup>
@@ -25,10 +27,40 @@ export default ({
                         <InputGroupText><i className={`fa fa-${groupText}`}/>
                         </InputGroupText>
                     </InputGroupAddon>
-                    <DatePicker placeholderText={placeHolder} selected={selected} onChange={onChange} maxDate={maxDate}
+                    <DatePicker placeholderText={placeholder} selected={selected} onChange={onChange} maxDate={maxDate}
                                 minDate={minDate} dateFormat={dateFormat} disabled={disabled}/>
                 </InputGroup>
             </FormGroup>
-        </Fragment>
+        </>
     )
-}
+};
+
+ReactDatePicker.propTypes = {
+    input: PropTypes.object,
+    label: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string,
+    ]),
+    type: PropTypes.string,
+    groupText: PropTypes.string,
+    addOnType: PropTypes.string,
+    placeholder: PropTypes.string,
+    dateFormat: PropTypes.string,
+    disabled: PropTypes.bool,
+    required: PropTypes.bool,
+    // minDate: PropTypes.oneOfType([
+    //     PropTypes.func,
+    //     PropTypes.date,
+    // ]),
+    // maxDate: PropTypes.oneOfType([
+    //     PropTypes.func,
+    //     PropTypes.date,
+    // ]),
+    // selected: PropTypes.oneOfType([
+    //     PropTypes.func,
+    //     PropTypes.date,
+    // ]),
+    onChange: PropTypes.func
+};
+
+export default ReactDatePicker;

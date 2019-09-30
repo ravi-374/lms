@@ -1,16 +1,19 @@
-import React, {useState, useEffect,createRef} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import {Col, Row, Button, Table} from 'reactstrap';
 import {connect} from 'react-redux';
 import {Field, FieldArray, reduxForm, formValueSelector} from 'redux-form';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
+import PropTypes from 'prop-types';
 import bookSeriesValidate from './bookSeriesValidate';
 import DeleteBookSeriesItem from './DeleteBookSeriesItem';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import CustomInput from '../../../shared/components/CustomInput';
 import Select from "../../../shared/components/Select";
-import {toggleModal} from "../../../store/action/modalAction";
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {fetchBooks} from '../../store/actions/bookAction';
+import {toggleModal} from "../../../store/action/modalAction";
 
 const getItems = seriesItems =>
     seriesItems.map((item, key) => ({
@@ -44,13 +47,25 @@ const filteredBooks = (books, seriesItems) => {
     }));
 };
 const BookSeriesForm = props => {
-    const { initialValues, books, change, seriesItems, toggleModal } = props;
+    const {
+        initialValues, books, change, seriesItems, toggleModal, initialize,
+        onSaveBookSeries, handleSubmit, fetchBooks
+    } = props;
     const [items, setItems] = useState(getItems(initialValues ? initialValues.series_items : [{
         id: 1,
         sequence: 1,
         book_id: { id: null }
     }]));
     const inputRef = createRef();
+
+    useEffect(() => {
+       // fetchBooks({}, null, true);
+        inputRef.current.focus();
+        if (!initialValues) {
+            initialize({ series_items: [{ sequence: 1 }] });
+        }
+    }, []);
+
     const onDragEnd = (result) => {
         if (!result.destination) {
             return;
@@ -74,38 +89,35 @@ const BookSeriesForm = props => {
             });
         });
         setItems(item);
-        props.change('series_items', array);
+        change('series_items', array);
     };
-    useEffect(() => {
-        if (!initialValues) {
-            props.initialize({ series_items: [{ sequence: 1 }] });
-            inputRef.current.focus();
-        }
-    }, []);
+
     const prepareFormData = (formValues) => {
         formValues.series_items.forEach((seriesItem, index) => {
             seriesItem.sequence = index + 1, seriesItem.book_id = seriesItem.book_id.id
         });
         return formValues;
     };
-    const onSaveBookSeries = formValues => {
-        props.onSaveBookSeries(prepareFormData(formValues));
+
+    const onSave = formValues => {
+        onSaveBookSeries(prepareFormData(formValues));
     };
+
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="title" label="Title" required inputRef={inputRef} groupText="television"
-                       component={InputGroup}/>
+                <Field name="title" label="books-series.input.title.label" required inputRef={inputRef}
+                       groupText="television" component={InputGroup}/>
             </Col>
             <Col xs={12} className="mt-3">
-                <h5>Book Series Item Details</h5>
+                <h5>{getFormattedMessage('books-series.items.title')}</h5>
                 <FieldArray name="series_items" component={renderBookSeriesItems}
                             books={filteredBooks(books, seriesItems, initialValues)} change={change}
                             onDragEnd={onDragEnd} setItems={setItems} items={items} toggleModal={toggleModal}
                             seriesItems={seriesItems}/>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveBookSeries)} {...props}/>
+                <SaveAction onSave={handleSubmit(onSave)} {...props}/>
             </Col>
         </Row>
     );
@@ -122,16 +134,16 @@ const renderBookSeriesItems = ({ fields, meta: { error, submitFailed }, onDragEn
     };
     const cardModalProps = { fields, seriesItems, items, setItems, index, setIndex, toggleModal };
     if (fields.length === 0) {
-        return <EmptyComponent isShort={true} title="No books series items yet..."/>
+        return <EmptyComponent isShort={true} title={getFormattedMessage('books-series.items.empty-state.title')}/>
     }
     return (
         <div>
             <Table responsive size="md">
                 <thead>
                 <tr>
-                    <th>Sequence</th>
-                    <th className="book-form__item-header">Book</th>
-                    <th className="text-center">Action</th>
+                    <th>{getFormattedMessage('books-series.items.input.sequence.label')}</th>
+                    <th className="book-form__item-header">{getFormattedMessage('books-series.items.select.book-name.label')}</th>
+                    <th className="text-center">{getFormattedMessage('react-data-table.action.column')}</th>
                 </tr>
                 </thead>
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -152,13 +164,13 @@ const renderBookSeriesItems = ({ fields, meta: { error, submitFailed }, onDragEn
                                             )}>
                                                 <td style={{ width: '720px' }}>
                                                     <Field name={`${item}.sequence`} readOnly={true}
-                                                           placeholder="Sequence" groupText="file-text"
-                                                           component={CustomInput}/>
+                                                           placeholder="books-series.items.input.sequence.label"
+                                                           groupText="file-text" component={CustomInput}/>
                                                 </td>
                                                 <td style={{ width: '720px' }}>
                                                     <Field name={`${item}.book_id`} required options={books}
-                                                           placeholder="Select Book" groupText="book" component={Select}
-                                                           isSearchable={true}/>
+                                                           placeholder="books-series.items.select.book-name.placeholder"
+                                                           groupText="book" component={Select} isSearchable={true}/>
                                                 </td>
                                                 <td className="text-center">
                                                     <Button size="sm" color="danger" style={{ marginTop: '10px' }}
@@ -179,22 +191,31 @@ const renderBookSeriesItems = ({ fields, meta: { error, submitFailed }, onDragEn
                     </Droppable>
                 </DragDropContext>
             </Table>
-            <button type="button" className="btn btn-outline-primary" onClick={() => onAddSubFields()}>Add Item
+            <button type="button" className="btn btn-outline-primary" onClick={() => onAddSubFields()}>
+                {getFormattedMessage('books-series.items.input.add-item-btn.label')}
             </button>
             {submitFailed && error && <div className="text-danger mt-3">{error}</div>}
         </div>
     )
 };
 
-let bookSeriesForm = reduxForm({ form: 'bookSeriesForm', validate: bookSeriesValidate })(BookSeriesForm);
-const selector = formValueSelector('bookSeriesForm');
-bookSeriesForm = connect(
-    state => {
-        const seriesItems = selector(state, 'series_items');
-        return {
-            seriesItems
-        }
-    },
-    { toggleModal })(bookSeriesForm);
+BookSeriesForm.propTypes = {
+    initialValues: PropTypes.object,
+    books: PropTypes.array,
+    seriesItems: PropTypes.array,
+    fetchBooks: PropTypes.func,
+    onSaveBookSeries: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    change: PropTypes.func,
+    initialize: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
 
-export default bookSeriesForm;
+const bookSeriesForm = reduxForm({ form: 'bookSeriesForm', validate: bookSeriesValidate })(BookSeriesForm);
+const selector = formValueSelector('bookSeriesForm');
+const mapStateToProps = (state) => {
+    const { books } = state;
+    return { seriesItems: selector(state, 'series_items'), books }
+};
+
+export default connect(mapStateToProps, { fetchBooks, toggleModal })(bookSeriesForm);

@@ -1,14 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
-import {deleteTag} from '../../store/actions/tagAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
+import {deleteTag} from '../../store/actions/tagAction';
 
 const DeleteTag = (props) => {
+    const { tagId, deleteTag, toggleModal } = props;
+
     const onDeleteTag = () => {
-        props.deleteTag(props.tagId);
+        deleteTag(tagId);
     };
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteTag} onCancel={props.toggleModal}/>}/>
+
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteTag} onCancel={toggleModal}/>}/>
 };
 
-export default connect(null, {deleteTag})(DeleteTag);
+DeleteTag.propTypes = {
+    tagId: PropTypes.number,
+    deleteTag: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default connect(null, { deleteTag })(DeleteTag);

@@ -1,49 +1,64 @@
 import React, {createRef, useEffect} from 'react';
 import {Col, Row} from 'reactstrap';
 import {Field, reduxForm} from 'redux-form';
+import PropTypes from 'prop-types';
+import {membershipPlanFrequencyOptions} from '../../constants';
 import membershipPlanValidate from './membershipPlanValidate';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import TextArea from '../../../shared/components/TextArea';
 import Select from "../../../shared/components/Select";
-import {membershipPlanFrequencyOptions} from '../../constants';
-import {mapCurrencyCode} from "../../../shared/sharedMethod";
+import {getFormattedOptions, mapCurrencyCode} from "../../../shared/sharedMethod";
 
 const MembershipPlanForm = props => {
+    const { onSaveMembershipPlan, handleSubmit,currency } = props;
     const inputRef = createRef();
+    const membershipFrequencyOptions = getFormattedOptions(membershipPlanFrequencyOptions);
+
     useEffect(() => {
-        if (!props.initialValues) {
-            inputRef.current.focus();
-        }
+        inputRef.current.focus();
     }, []);
-    const onSaveMembershipPlan = formValues => {
+
+    const onSave = formValues => {
         const { description, frequency, name, price, stripe_plan_id } = formValues;
-        props.onSaveMembershipPlan({ description, frequency: frequency.id, name, price, stripe_plan_id });
+        onSaveMembershipPlan({ description, frequency: frequency.id, name, price, stripe_plan_id });
     };
+
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={12}>
-                <Field name="name" label="Name" required inputRef={inputRef} groupText="tasks" component={InputGroup}/>
+                <Field name="name" label="membership-plans.input.name.label" required inputRef={inputRef}
+                       groupText="tasks" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <Field name="price" label="Price" placeholder="Price" type="number" min="0" required
-                       groupText={mapCurrencyCode(props.currency)} component={InputGroup}/>
+                <Field name="price" label="membership-plans.input.price.label" type="number" min="0" required
+                       groupText={mapCurrencyCode(currency)} component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <Field name="frequency" label="Frequency" required options={membershipPlanFrequencyOptions}
-                       placeholder="Select Frequency" groupText="clock-o" component={Select}/>
+                <Field name="frequency" label="membership-plans.select.frequency.label" required
+                       options={membershipFrequencyOptions}
+                       placeholder="membership-plans.select.frequency.placeholder" groupText="clock-o"
+                       component={Select}/>
             </Col>
             <Col xs={12}>
-                <Field name="stripe_plan_id" label="Stripe Plan Id" required groupText="stripe" component={InputGroup}/>
+                <Field name="stripe_plan_id" label="membership-plans.input.stripe-plan-id.label" required
+                       groupText="stripe" component={InputGroup}/>
             </Col>
             <Col xs={12}>
-                <Field name="description" label="Description" component={TextArea}/>
+                <Field name="description" label="membership-plans.input.description.label" component={TextArea}/>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveMembershipPlan)} {...props}/>
+                <SaveAction onSave={handleSubmit(onSave)} {...props}/>
             </Col>
         </Row>
     );
+};
+
+MembershipPlanForm.propTypes = {
+    initialValues: PropTypes.object,
+    currency: PropTypes.string,
+    onSaveMembershipPlan: PropTypes.func,
+    handleSubmit: PropTypes.func,
 };
 
 export default reduxForm({ form: 'MembershipPlanForm', validate: membershipPlanValidate })(MembershipPlanForm);

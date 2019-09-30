@@ -1,31 +1,35 @@
 import React from 'react';
-import DeleteTag from './DeleteTag';
+import PropTypes from 'prop-types';
 import CreateTag from './CreateTag';
 import EditTag from './EditTag';
+import DeleteTag from './DeleteTag';
+import {getModalTitle} from "../../../shared/sharedMethod";
+import ModalConfig from "../../../shared/modal-config/ModalConfig";
 
-export default (props) => {
-    const {isEditTag, toggleModal, isDeleteTag,isCreateTag, tag} = props;
-    if (!isDeleteTag) {
-        const prepareModalOption = {
-            className: 'tag-modal',
-            title: isEditTag ? 'Edit Tag' : 'New Tag',
-            toggleModal,
-        };
-        if (isEditTag) {
-            return <EditTag {...prepareModalOption} tag={tag}/>
-        }
-        if(isCreateTag) {
-            return <CreateTag {...prepareModalOption}/>
-        }
-        return null;
-    }
-    if (isDeleteTag) {
-        const prepareModalOption = {
-            tagId: tag.id,
-            title: 'Delete Tag',
-            toggleModal,
-            content: `Are you sure you want to delete "${tag.name}" ?`,
-        };
-        return <DeleteTag {...prepareModalOption}/>
-    }
+export const TagModal = (props) => {
+    const { tag, isCreate, isEdit, isDelete } = props;
+    const editConfig = { tag };
+    const delConfig = { tagId: tag ? tag.id : null };
+    const modalOptions = {
+        modalTitle: getModalTitle(isCreate, isEdit, isDelete, 'tags.input.new-btn.label',
+            'tags.modal.edit.title', 'tags.modal.delete.title'),
+        NewComponent: CreateTag,
+        EditComponent: EditTag,
+        DeleteComponent: DeleteTag,
+        deleteKey: tag ? tag.name : null,
+        editConfig,
+        delConfig,
+        props
+    };
+
+    return <ModalConfig {...modalOptions}/>;
 };
+
+TagModal.propTypes = {
+    tag: PropTypes.object,
+    isCreate: PropTypes.bool,
+    isEdit: PropTypes.bool,
+    isDelete: PropTypes.bool,
+};
+
+export default TagModal;

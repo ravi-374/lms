@@ -1,31 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DeleteMembershipPlan from './DeleteMembershipPlan';
 import CreateMembershipPlan from './CreateMembershipPlan';
 import EditMembershipPlan from './EditMembershipPlan';
+import {getModalTitle} from "../../../shared/sharedMethod";
+import ModalConfig from "../../../shared/modal-config/ModalConfig";
 
-export default (props) => {
-    const { isCreateMode, isEditMode, toggleModal, isDeleteMode, membershipPlan, currency } = props;
-    if (!isDeleteMode) {
-        const prepareModalOption = {
-            className: 'membership-plan-modal',
-            title: isEditMode ? 'Edit Membership Plan' : 'New Membership Plan',
-            toggleModal,
-        };
-        if (isEditMode) {
-            return <EditMembershipPlan {...prepareModalOption} currency={currency} membershipPlan={membershipPlan}/>
-        }
-        if (isCreateMode) {
-            return <CreateMembershipPlan currency={currency}{...prepareModalOption}/>
-        }
-        return null;
-    }
-    if (isDeleteMode) {
-        const prepareModalOption = {
-            membershipPlanId: membershipPlan.id,
-            title: 'Delete Membership Plan',
-            toggleModal,
-            content: `Are you sure you want to delete "${membershipPlan.name}" ?`,
-        };
-        return <DeleteMembershipPlan {...prepareModalOption}/>
-    }
+const MembershipPlanModal = (props) => {
+    const { membershipPlan, currency, isCreate, isEdit, isDelete } = props;
+    const addConfig = { currency };
+    const editConfig = { membershipPlan, currency };
+    const delConfig = { membershipPlanId: membershipPlan ? membershipPlan.id : null };
+    const modalOptions = {
+        modalTitle: getModalTitle(isCreate, isEdit, isDelete, 'membership-plans.input.new-btn.label',
+            'membership-plans.modal.edit.title', 'membership-plans.modal.delete.title'),
+        NewComponent: CreateMembershipPlan,
+        EditComponent: EditMembershipPlan,
+        DeleteComponent: DeleteMembershipPlan,
+        deleteKey: membershipPlan ? membershipPlan.name : null,
+        addConfig,
+        editConfig,
+        delConfig,
+        props
+    };
+
+    return <ModalConfig {...modalOptions}/>;
 };
+
+MembershipPlanModal.propTypes = {
+    membershipPlan: PropTypes.object,
+    currency: PropTypes.string,
+    isCreate: PropTypes.bool,
+    isEdit: PropTypes.bool,
+    isDelete: PropTypes.bool,
+};
+
+export default MembershipPlanModal;

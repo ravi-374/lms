@@ -1,7 +1,9 @@
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+
 export default formValues => {
     const errors = {};
     if (!formValues.name) {
-        errors.name = 'Genre name must be required.';
+        errors.name = getFormattedMessage('genres.input.name.validate.label');
     }
     return errors;
 };

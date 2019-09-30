@@ -1,12 +1,15 @@
+import React from 'react';
+import {getFormattedMessage} from "../../shared/sharedMethod";
+
 export default {
     items: [
         {
-            name: 'Books',
+            name: getFormattedMessage("books.title"),
             url: '/app/books',
             icon: 'fas fa-book',
         },
         {
-            name: 'Book History',
+            name: getFormattedMessage("book-history.title"),
             url: '/app/book-history',
             icon: 'fas fa-book-reader',
         }

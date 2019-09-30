@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect} from 'react';
+import React, {Suspense, useEffect, lazy} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {
@@ -11,6 +11,7 @@ import {
     AppSidebarMinimizer,
     AppSidebarNav,
 } from '@coreui/react';
+import PropTypes from 'prop-types';
 import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from '../../../shared/toast/Toasts';
@@ -18,18 +19,18 @@ import routes from '../../routes';
 import {Routes, Tokens} from "../../../constants";
 import {checkExistingRoute} from "../../../shared/sharedMethod";
 
-const Footer = React.lazy(() => import('./Footer'));
-const Header = React.lazy(() => import('./Header'));
+const Footer = lazy(() => import('./Footer'));
+const Header = lazy(() => import('./Header'));
 
-const Layout = (props) => {
-    const { appName, appLogo, member } = props;
+const MemberLayout = (props) => {
+    const { appName, appLogo, member, location } = props;
 
     return (
         <div className="app">
             {renderAppHeader(props, appName, appLogo, member)}
             <div className="app-body">
                 {renderAppSidebar(props)}
-                {renderMainSection(props.location, appName, appLogo)}
+                {renderMainSection(location)}
             </div>
             {renderAppFooter(appName)}
         </div>
@@ -67,13 +68,13 @@ const renderAppSidebar = (props) => {
     );
 };
 
-const renderMainSection = (location, appName, appLogo) => {
+const renderMainSection = (location) => {
     return (
         <main className="main mt-4">
             <Container fluid>
                 <Suspense fallback={<ProgressBar/>}>
                     <Switch>
-                        {renderRoutes(location, appName, appLogo)}
+                        {renderRoutes(location)}
                         <Redirect from="/" to={Routes.MEMBER_DEFAULT}/>
                     </Switch>
                 </Suspense>
@@ -83,18 +84,13 @@ const renderMainSection = (location, appName, appLogo) => {
     )
 };
 
-const renderRoutes = (location, appName, appLogo) => {
-    if (!localStorage.getItem(Tokens.MEMBER)) {
-        sessionStorage.setItem('prevMemberPrevUrl', window.location.href)
-    } else {
-        sessionStorage.removeItem('prevMemberPrevUrl')
-    }
+const renderRoutes = (location) => {
     return routes.map((route, index) => {
         return route.component ? (
             <Route key={index} path={route.path} exact={route.exact} name={route.name} render={props => {
                 checkExistingRoute(location, props.history);
                 return localStorage.getItem(Tokens.MEMBER) ?
-                    <route.component {...props} appName={appName} appLogo={appLogo}/> :
+                    <route.component {...props} /> :
                     <Redirect to={Routes.MEMBER_HOME}/>
             }}/>
         ) : (null);
@@ -111,4 +107,12 @@ const renderAppFooter = (appName) => {
     );
 };
 
-export default Layout;
+MemberLayout.propTypes = {
+    user: PropTypes.object,
+    location: PropTypes.object,
+    permissions: PropTypes.array,
+    appName: PropTypes.string,
+    appLogo: PropTypes.string,
+};
+
+export default MemberLayout;

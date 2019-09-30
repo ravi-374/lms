@@ -35,3 +35,10 @@ export const publicImagePathURL = {
     BOOK_AVATAR_URL: 'uploads/books/',
     IMAGE_URL: 'uploads/images/'
 };
+
+export const settingsKey = {
+    LANGUAGE: 'language',
+    DEFAULT_LOCALE:'en',
+    LOCALE_ARABIC:'ar',
+    LOCALE_PERSIAN:'pe'
+};

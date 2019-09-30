@@ -1,54 +1,50 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import MembershipPlanModal from './MembershipPlanModal';
+import MembershipPlan from './MembershipPlanTable';
+import Toasts from '../../../shared/toast/Toasts';
+import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
-import {sortAction} from '../../../store/action/sortAction';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import MembershipPlanModal from './MembershipPlanModal';
-import MembershipPlan from './MembershipPlan';
-import './MembershipPlans.scss';
-import Toasts from '../../../shared/toast/Toasts';
-import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
-import {toggleModal} from '../../../store/action/modalAction';
-import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
-import {fetchSettings} from "../../store/actions/settingAction";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {openModal} from "../../../shared/custom-hooks";
+import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
+import {toggleModal} from '../../../store/action/modalAction';
+import {sortAction} from '../../../store/action/sortAction';
 
 const MembershipPlans = (props) => {
-    const [isCreateMode, setCreateMode] = useState(false);
-    const [isEditMode, setEditMode] = useState(false);
-    const [isDeleteMode, setDeleteMode] = useState(false);
-    const [membershipPlan, setMembershipPlan] = useState(null);
     const {
         membershipPlans, sortAction, sortObject, toggleModal, currency,
-        fetchMembershipPlans, fetchSettings, appName, appLogo
+        fetchMembershipPlans
     } = props;
+    const [isCreate, isEdit, isDelete, membershipPlan, onOpenModal] = openModal();
+    const cardModalProps = { membershipPlan, isCreate, isEdit, isDelete, toggleModal, currency };
+
     useEffect(() => {
         fetchMembershipPlans(true);
-        fetchSettings(false);
     }, []);
-    const cardModalProps = { membershipPlan, isCreateMode, isDeleteMode, isEditMode, toggleModal, currency };
-    const onOpenModal = (isEdit, membershipPlan = null, isDelete = false) => {
-        setCreateMode(!isEdit);
-        setEditMode(isEdit);
-        setDeleteMode(isDelete);
-        setMembershipPlan(membershipPlan);
+
+    const onClickModal = (isEdit, membershipPlan = null, isDelete = false) => {
+        onOpenModal(isEdit, membershipPlan, isDelete);
         toggleModal();
     };
-    const cardBodyProps = { sortAction, sortObject, membershipPlans, onOpenModal, currency };
-    if (props.isLoading) {
-        return <ProgressBar/>
-    }
+
+    const cardBodyProps = { sortAction, sortObject, membershipPlans, onClickModal, currency };
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle appLogo={appLogo} title={`Membership Plans | ${appName}`}/>
-                <h5 className="page-heading">Membership Plans</h5>
+                <ProgressBar/>
+                <HeaderTitle title="Membership Plans"/>
+                <h5 className="page-heading">{getFormattedMessage('membership-plans.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onOpenModal(false)} size="md" color="primary ml-2">
-                        New Membership Plan
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                        {getFormattedMessage('membership-plans.input.new-btn.label')}
                     </Button>
                 </div>
             </Col>
@@ -60,7 +56,7 @@ const MembershipPlans = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {membershipPlans.length > 0 ? <MembershipPlan {...cardBodyProps}/> :
-                                <EmptyComponent title="No membership-plans yet..."/>}
+                                <EmptyComponent title={getFormattedMessage('membership-plans.empty-state.title')}/>}
                             <MembershipPlanModal {...cardModalProps}/>
                             <Toasts/>
                         </CardBody>
@@ -71,8 +67,18 @@ const MembershipPlans = (props) => {
     );
 };
 
+MembershipPlans.propTypes = {
+    sortObject: PropTypes.object,
+    currency: PropTypes.string,
+    membershipPlans: PropTypes.array,
+    searchText: PropTypes.string,
+    fetchMembershipPlans: PropTypes.func,
+    sortAction: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
 const mapStateToProps = (state) => {
-    const { membershipPlans, searchText, sortObject, isLoading, currency } = state;
+    const { membershipPlans, searchText, sortObject, currency } = state;
     let membershipPlansArray = Object.values(membershipPlans);
     if (searchText) {
         const filterKeys = ['name', 'price', 'frequency_name'];
@@ -81,12 +87,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         membershipPlansArray = sortFilter(membershipPlansArray, sortObject);
     }
-    return { membershipPlans: membershipPlansArray, sortObject, isLoading, currency };
+    return { membershipPlans: membershipPlansArray, sortObject, currency };
 };
 
-export default connect(mapStateToProps, {
-    fetchMembershipPlans,
-    sortAction,
-    toggleModal,
-    fetchSettings
-})(MembershipPlans);
+export default connect(mapStateToProps, { fetchMembershipPlans, sortAction, toggleModal })(MembershipPlans);

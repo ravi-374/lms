@@ -59,7 +59,7 @@ export const Roles = {
 };
 
 export const FilterOption = {
-    ALL: 'all'
+    ALL: 'books-allotment.filter.all.label'
 };
 
 export const localStorageActionType = {

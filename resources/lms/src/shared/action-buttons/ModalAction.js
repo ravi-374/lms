@@ -1,10 +1,16 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Button} from 'reactstrap';
 
-export default ({ onOpenModal, item, isEditMode = false, goToEditItem, goToDetailScreen = null, isHideDeleteIcon = false, isHideEditIcon = false, isHideDetailIcon = true }) => {
+const ModalAction = (props) => {
+    const {
+        onOpenModal, item, isEditMode = false, goToEditItem, goToDetailScreen = null,
+        isHideDeleteIcon = false, isHideEditIcon = false, isHideDetailIcon = true
+    } = props;
+
     return (
         isEditMode ?
-            <Fragment>
+            <>
                 {!isHideEditIcon ?
                     <Button color="primary" size="sm" onClick={(e) => {
                         e.stopPropagation();
@@ -27,8 +33,8 @@ export default ({ onOpenModal, item, isEditMode = false, goToEditItem, goToDetai
                 }}>
                     <i className="cui-trash icon font-md"/>
                 </Button>
-            </Fragment> :
-            <Fragment>
+            </> :
+            <>
                 {!isHideEditIcon ?
                     <Button color="primary" size="sm" onClick={(e) => {
                         e.stopPropagation();
@@ -52,6 +58,19 @@ export default ({ onOpenModal, item, isEditMode = false, goToEditItem, goToDetai
                     }}>
                         <i className="cui-trash icon font-md"/>
                     </Button> : null}
-            </Fragment>
+            </>
     );
 };
+
+ModalAction.propTypes = {
+    item: PropTypes.object,
+    isEditMode: PropTypes.bool,
+    isHideEditIcon: PropTypes.bool,
+    isHideDetailIcon: PropTypes.bool,
+    isHideDeleteIcon: PropTypes.bool,
+    onOpenModal: PropTypes.func,
+    goToEditItem: PropTypes.func,
+    goToDetailScreen: PropTypes.func,
+};
+
+export default ModalAction;

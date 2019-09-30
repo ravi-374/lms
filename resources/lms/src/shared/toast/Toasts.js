@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Toast from './Toast';
 import {removeToast} from '../../store/action/toastAction';
 
 const Toasts = props => {
-    const {removeToast, toasts} = props;
+    const { removeToast, toasts } = props;
+
     return (
         <div>
             {toasts.map(toast => {
@@ -16,8 +18,13 @@ const Toasts = props => {
     );
 };
 
-const mapStateToProps = state => {
-    return {toasts: state.toasts}
+Toasts.propTypes = {
+    toasts: PropTypes.array,
+    removeToast: PropTypes.func,
 };
 
-export default connect(mapStateToProps, {removeToast})(Toasts);
+const mapStateToProps = state => {
+    return { toasts: state.toasts }
+};
+
+export default connect(mapStateToProps, { removeToast })(Toasts);

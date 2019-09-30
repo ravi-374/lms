@@ -61,3 +61,13 @@ export const bookItemStatusConstants = {
     DAMAGE: 4
 };
 
+export const settingActionType = {
+    FETCH_SETTING: 'FETCH_SETTING'
+};
+
+export const settingsKey = {
+    LANGUAGE: 'language',
+    DEFAULT_LOCALE:'en',
+    LOCALE_ARABIC:'en',
+    LOCALE_SPANISH:'sp'
+};

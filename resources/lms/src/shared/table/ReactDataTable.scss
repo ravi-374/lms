@@ -175,9 +175,6 @@
     Purpose for this class name is to be override default opacity when sorted header icon should be hovered
  */
 .jWjBKP:hover span, .jWjBKP:hover span.__rdt_custom_sort_icon__ * {
-    display:inherit;
-    width: 12px !important;
-    font-size: 12px !important;
     opacity: 0.8 !important;
 }
 
@@ -231,4 +228,37 @@
 
 .rdt_TableHead .rdt_TableHeadRow .sc-ifAKCX:last-child {
     padding-left: calc(48px / 2);
+}
+
+html[dir="rtl"] {
+
+    .rdt_TableRow .rdt_TableCell:first-child,
+    .rdt_TableHead .rdt_TableHeadRow .sc-ifAKCX:first-child {
+        border-left: 1px solid #c8ced3 !important;
+    }
+    .rdt_TableRow .rdt_TableCell:last-child,
+    .rdt_TableHead .rdt_TableHeadRow .sc-ifAKCX:last-child {
+        border-left: 0 !important;
+    }
+    .rdt_TableCol_Sortable span {
+        left: 0;
+        right: auto;
+    }
+    .sc-hSdWYo:not(first-child) {
+        unicode-bidi: plaintext;
+        direction: rtl;
+    }
+    .sc-kEYyzF {
+        margin-right: 20px;
+    }
+
+    .jNSZEp svg {
+        right: unset;
+        left: 0;
+    }
+
+    .search-filter-container__filter-input, .search-container__filter-input {
+        margin-right: unset;
+        margin-left: 16px;
+    }
 }

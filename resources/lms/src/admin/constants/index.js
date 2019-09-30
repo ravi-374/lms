@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const constants = {
     SET_TOTAL_RECORD: 'SET_TOTAL_RECORD',
 };
@@ -56,8 +58,8 @@ export const membershipPlanFrequency = {
 };
 
 export const membershipPlanFrequencyOptions = [
-    { id: 1, name: 'Monthly' },
-    { id: 2, name: 'Yearly' },
+    { id: 1, name: 'membership-plans.filter.monthly.label' },
+    { id: 2, name: 'membership-plans.filter.yearly.label' },
 ];
 
 export const bookActionType = {
@@ -84,19 +86,20 @@ export const bookStatusConstant = {
 };
 
 export const bookFormatOptions = [
-    { id: 1, name: 'Hardcover' },
-    { id: 2, name: 'Paperback' }
+    { id: 1, name: 'books-items.filter.format.hardcover.label' },
+    { id: 2, name: 'books-items.filter.format.paperback.label' }
 ];
 
-export const bookStatusOptions = [
-    { id: 1, name: 'Reserved' },
-    { id: 2, name: 'Issued' },
-    { id: 3, name: 'Returned' },
-    { id: 4, name: 'Available' },
-    { id: 5, name: 'Unreserved' },
-    { id: 6, name: 'Lost' },
-    { id: 7, name: 'Damage' }
+const bookStatus = [
+    { id: 1, name: 'books-allotment.filter.reserved.label', defaultValue: 'Reserved' },
+    { id: 2, name: 'books-allotment.filter.issued.label', defaultValue: 'Issued' },
+    { id: 3, name: 'books-allotment.filter.returned.label', defaultValue: 'Returned' },
+    { id: 4, name: 'books-allotment.filter.available.label', defaultValue: 'Available' },
+    { id: 5, name: 'books-allotment.filter.unreserved.label', defaultValue: 'Unreserved' },
+    { id: 6, name: 'books-allotment.filter.damaged.label', defaultValue: 'Damaged' },
+    { id: 7, name: 'books-allotment.filter.lost.label', defaultValue: 'Lost' }
 ];
+export const bookStatusOptions = bookStatus;
 
 export const errorMessage = {
     TOKEN_NOT_PROVIDED: 'Token not provided',
@@ -217,6 +220,7 @@ export const settingsKey = {
     RETURN_DUE_DAYS: 'return_due_days',
     LIBRARY_NAME: 'library_name',
     LIBRARY_LOGO: 'library_logo',
+    LANGUAGE: 'language',
 };
 
 export const settingsDisplayName = {
@@ -245,20 +249,20 @@ export const bookItemStatusConstants = {
 };
 
 export const bookItemStatusOptions = [
-    { id: 1, name: 'Available' },
-    { id: 2, name: 'Unavailable' },
-    { id: 3, name: 'Lost' },
-    { id: 4, name: 'Damaged' },
+    { id: 1, name: 'books-items.filter.available.label' },
+    { id: 2, name: 'books-items.filter.unavailable.label' },
+    { id: 3, name: 'books-items.filter.lost.label' },
+    { id: 4, name: 'books-items.filter.damaged.label' },
 ];
 
 export const bookAllotmentFilterOptions = [
-    { id: 1, name: 'All' },
-    { id: 2, name: 'Issued' },
-    { id: 3, name: 'Returned' },
-    { id: 4, name: 'Reserved' },
-    { id: 5, name: 'Unreserved' },
-    { id: 6, name: 'Damaged' },
-    { id: 7, name: 'Lost' }
+    { id: 1, name: 'books-allotment.filter.all.label', defaultValue: '' },
+    { id: 2, name: 'books-allotment.filter.issued.label', defaultValue: 'Issued' },
+    { id: 3, name: 'books-allotment.filter.returned.label', defaultValue: 'Returned' },
+    { id: 4, name: 'books-allotment.filter.reserved.label', defaultValue: 'Reserved' },
+    { id: 5, name: 'books-allotment.filter.unreserved.label', defaultValue: 'Unreserved' },
+    { id: 6, name: 'books-allotment.filter.damaged.label', defaultValue: 'Damaged' },
+    { id: 7, name: 'books-allotment.filter.lost.label', defaultValue: 'Lost' }
 ];
 
 export const importActionType = {
@@ -272,5 +276,19 @@ export const storageKey = {
 };
 
 export const apiBaseURL = {
-    BOOK_LANGUAGE:'book-languages'
+    BOOK_LANGUAGE: 'book-languages'
 };
+
+export const languageOptions = [
+    { id: 'ar', name: 'settings.select.language.arabic.label', display_name: 'Arabic' },
+    { id: 'cn', name: 'settings.select.language.chinese.label', display_name: 'Chinese' },
+    { id: 'en', name: 'settings.select.language.english.label', display_name: 'English' },
+    { id: 'fr', name: 'settings.select.language.french.label', display_name: 'French' },
+    { id: 'gr', name: 'settings.select.language.german.label', display_name: 'German' },
+    { id: 'it', name: 'settings.select.language.italian.label', display_name: 'Italian' },
+    { id: 'pe', name: 'settings.select.language.persian.label', display_name: 'Persian' },
+    { id: 'po', name: 'settings.select.language.portuguese.label', display_name: 'Portuguese' },
+    { id: 'ru', name: 'settings.select.language.russian.label', display_name: 'Russian' },
+    { id: 'sp', name: 'settings.select.language.spanish.label', display_name: 'Spanish' },
+    { id: 'tr', name: 'settings.select.language.turkish.label', display_name: 'Turkish' },
+];

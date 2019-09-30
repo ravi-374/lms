@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './lending.scss';
 import {appSettingsKey, Routes} from "../../../constants";
-import {getCurrentMember} from "../../../admin/shared/sharedMethod";
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
+import {getCurrentMember} from "../../../admin/shared/sharedMethod";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Lending = (props) => {
@@ -12,11 +13,13 @@ const Lending = (props) => {
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
     const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
+
     useEffect(() => {
         window.addEventListener("scroll", trackScrolling);
         trackScrolling();
         return (() => document.removeEventListener('scroll', trackScrolling))
     });
+
     const removeActiveClass = () => {
         const c = document.getElementsByClassName('scrollToLink');
         for (let i = 0; i < c.length; i++) {
@@ -25,12 +28,14 @@ const Lending = (props) => {
             }
         }
     };
+
     const isBottom = (el) => {
         if (el) {
             const currentElement = el.getBoundingClientRect().bottom;
             return (currentElement <= window.innerHeight);
         }
     };
+
     const trackScrolling = () => {
         let element = document.getElementById('home');
         const currentElement = document.getElementById('scrollToLink-1');
@@ -61,6 +66,7 @@ const Lending = (props) => {
             }
         }
     };
+
     const scrollToTop = () => {
         window.scroll({
             top: 0,
@@ -68,6 +74,7 @@ const Lending = (props) => {
             behavior: 'smooth'
         });
     };
+
     const scrollTo = (sourceElementId, destinationElementId) => {
         const sourceElement = document.getElementById(sourceElementId);
         const destinationElement = document.getElementById(destinationElementId);
@@ -79,6 +86,7 @@ const Lending = (props) => {
             top: destinationElement.offsetTop
         });
     };
+
     return (
         <div id="page-wrapper">
             <HeaderTitle appLogo={appLogo} title={`Home | ${appName}`}/>
@@ -313,6 +321,11 @@ const Lending = (props) => {
         </div>
     );
 };
+
+Lending.propTypes = {
+    appSetting: PropTypes.object,
+};
+
 const mapStateToProps = (state) => {
     const { appSetting } = state;
     return { appSetting }

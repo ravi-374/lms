@@ -1,40 +1,45 @@
 import React, {useEffect, useState} from 'react';
-import apiConfig from '../../config/apiConfigWithoutToken';
+import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
-import CustomInputGroup from '../../../shared/components/CustomInputGroup';
+import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
+import apiConfig from '../../config/apiConfigWithoutToken';
+import {LocalStorageKey, Routes, Tokens} from "../../../constants";
 import CheckBox from '../../../shared/components/CheckBox';
-import {addToast} from '../../../store/action/toastAction';
 import Toasts from '../../../shared/toast/Toasts';
-import {connect} from 'react-redux';
-import {Routes, Tokens, LocalStorageKey} from "../../../constants";
+import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {setUserProfile} from "../../../store/action/localStorageAction";
+import {addToast} from '../../../store/action/toastAction';
 
-const Login = (props) => {
-    const { appName, appLogo } = props;
+const MemberLogin = (props) => {
+    const { handleSubmit, invalid, history, initialize, setUserProfile, addToast } = props;
     let remember = true;
     const isMemberRemember = localStorage.getItem('is_member_remember');
     if (isMemberRemember !== null && isMemberRemember === 'false') {
         remember = false;
     }
     const [isRemember, setRemember] = useState(remember);
+
     useEffect(() => {
         if (localStorage.getItem(Tokens.MEMBER)) {
-            props.history.push('/');
+            history.push('/');
         }
         if (localStorage.getItem('currentMember')) {
             const member = JSON.parse(atob(localStorage.getItem('currentMember')));
             if (member) {
-                props.initialize(member);
+                initialize(member);
             }
         }
     }, []);
+
     const onRememberChange = () => {
         setRemember(!isRemember);
     };
+
     const onLogin = async (formValues) => {
         delete formValues.remember_me;
         await apiConfig.post('member-login', formValues).then(response => {
@@ -48,47 +53,45 @@ const Login = (props) => {
             }
             localStorage.setItem(Tokens.MEMBER, response.data.data.token);
             localStorage.setItem('is_member_remember', isRemember);
-            props.setUserProfile(LocalStorageKey.MEMBER, response.data.data.user);
+            setUserProfile(LocalStorageKey.MEMBER, response.data.data.user);
             if (sessionStorage.getItem('prevMemberPrevUrl')) {
                 window.location.href = sessionStorage.getItem('prevMemberPrevUrl');
             } else {
-                props.history.push('/');
+                history.push('/');
             }
         }).catch(({ response }) =>
-            props.addToast({ text: response.data.message, type: 'error' })
+            addToast({ text: response.data.message, type: 'error' })
         );
     };
-    const { handleSubmit, invalid } = props;
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle appLogo={appLogo} title={`Login | ${appName}`}/>
+            <HeaderTitle title="Login"/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">
                         <Card className="p-3">
                             <CardBody>
                                 <Form onSubmit={handleSubmit(onLogin)}>
-                                    <h1>Login</h1>
-                                    <p className="text-muted">Sign In to your account</p>
-                                    <Field name="email" type="email" placeholder="Email" groupText="icon-user"
-                                           component={CustomInputGroup}/>
-                                    <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
-                                           component={CustomInputGroup}/>
+                                    <h1>{getFormattedMessage('login.title')}</h1>
+                                    <p className="text-muted">{getFormattedMessage('login.note')}</p>
+                                    <Field name="email" type="email" placeholder="profile.input.email.label"
+                                           groupText="icon-user" component={CustomInputGroup}/>
+                                    <Field name="password" type="password" placeholder="profile.input.password.label"
+                                           groupText="icon-lock" component={CustomInputGroup}/>
                                     <div>
                                         <Field name="remember_me" checked={isRemember} onChange={onRememberChange}
-                                               label="Remember Me" component={CheckBox}/>
+                                               label={getFormattedMessage('login.checkbox.remember.label')}
+                                               component={CheckBox}/>
                                     </div>
-                                    <Row>
-                                        <Col xs="6">
-                                            <Button color="primary" disabled={invalid} className="px-4">Login
-                                            </Button>
-                                        </Col>
-                                        <Col xs="6" className="text-right mt-2">
-                                            <Link to={Routes.MEMBER_FORGOT_PASSWORD} color="link" className="px-0">
-                                                Forgot password?
-                                            </Link>
-                                        </Col>
-                                    </Row>
+                                    <div className="d-flex justify-content-between">
+                                        <Button color="primary" disabled={invalid} className="px-4">
+                                            {getFormattedMessage('login.title')}
+                                        </Button>
+                                        <Link to={Routes.MEMBER_FORGOT_PASSWORD} color="link"
+                                              className="px-0 mt-2 text-right">
+                                            {getFormattedMessage('login.link.forgot-password.title')}
+                                        </Link>
+                                    </div>
                                 </Form>
                                 <Toasts/>
                             </CardBody>
@@ -100,6 +103,16 @@ const Login = (props) => {
     );
 };
 
-const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(Login);
+MemberLogin.propTypes = {
+    location: PropTypes.object,
+    history: PropTypes.object,
+    invalid: PropTypes.bool,
+    initialize: PropTypes.func,
+    addToast: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    setUserProfile: PropTypes.func
+};
+
+const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(MemberLogin);
 
 export default connect(null, { addToast, setUserProfile })(form);

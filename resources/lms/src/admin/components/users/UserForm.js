@@ -2,72 +2,52 @@ import React, {useState, useEffect, createRef} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import {Col, Row} from 'reactstrap';
-import userValidate from './userValidate';
+import PropTypes from 'prop-types';
 import './Users.scss';
+import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {maxDigits} from "../../constants";
+import userValidate from '../../shared/userValidate';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
-import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import Select from "../../../shared/components/Select";
 import {getCurrentUser} from "../../shared/sharedMethod";
 import {prepareRoles} from "../../shared/prepareArray";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {enableDisableUserInput} from "../../../shared/sharedMethod";
+import {imagePicker} from "../../../shared/custom-hooks";
 import {fetchRoles} from "../../store/actions/roleAction";
 import {fetchCountries} from "../../store/actions/countryAction";
 import {editUser} from "../../store/actions/userAction";
-import {maxDigits} from "../../constants";
-import {enableDisableUserInput} from "../../../shared/sharedMethod";
 
 const UserForm = (props) => {
-    const { initialValues, change, roles, countries, fetchCountries, fetchRoles } = props;
-    const [image, setImage] = useState(!initialValues ? publicImagePath.USER_AVATAR : null);
-    const [isDefaultImage, setIsDefaultImage] = useState(true);
-    const [file, setFile] = useState(null);
-    const [isActive, setActive] = useState(true);
+    const { initialValues, change, roles, countries, fetchCountries, fetchRoles, onSaveUser, handleSubmit } = props;
+    const [isActive, setActive] = useState(initialValues.is_active);
     const inputRef = createRef();
+    const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
+        !!initialValues.image ?
+            publicImagePathURL.USER_AVATAR_URL + initialValues.image :
+            !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
+        !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
+        !(!!initialValues.image),
+    );
 
     useEffect(() => {
         fetchCountries();
         fetchRoles();
-        prepareInitialValues();
+        inputRef.current.focus();
     }, []);
 
-    const prepareInitialValues = () => {
-        if (initialValues) {
-            setActive(initialValues.is_active);
-            if (initialValues.image) {
-                change('file_name', true);
-                setImage(publicImagePathURL.USER_AVATAR_URL + initialValues.image);
-                setIsDefaultImage(false);
-            }
-        } else {
-            change('is_active', true);
-            inputRef.current.focus();
-        }
-    };
-    const onSaveUser = (formValues) => {
+    const onSave = (formValues) => {
         formValues.file = file;
-        props.onSaveUser(formValues);
+        onSaveUser(formValues);
     };
-    const onFileChange = (event) => {
-        change('file_name', true);
-        setFile(event.target.files[0]);
-        setIsDefaultImage(false);
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(event.target.files[0]);
-        fileReader.onloadend = () => {
-            setImage(fileReader.result);
-        }
-    };
-    const onRemovePhoto = () => {
-        change('file_name', false);
-        setFile(null);
-        setImage(null);
-        setIsDefaultImage(true);
-    };
+
     const onChecked = () => {
         setActive(!isActive);
     };
+
     const imagePickerOptions = {
         user: { name: initialValues ? initialValues.first_name + ' ' + initialValues.last_name : null },
         image,
@@ -76,16 +56,18 @@ const UserForm = (props) => {
         onFileChange
     };
     const isVisibleSwitch = initialValues && initialValues.id !== getCurrentUser().id || !initialValues;
+
     return (
         <Row className="animated fadeIn user-form m-3">
             <Col xs={8} className="primary-detail">
                 <div className="d-flex justify-content-between">
-                    <h5>Primary Details</h5>
+                    <h5>{getFormattedMessage('profile.primary-details')}</h5>
                     {isVisibleSwitch ?
                         <div className="d-flex">
                             <div>
-                                <Field name="is_active" checked={isActive} label="Is Active" component={ToggleSwitch}
-                                       onChange={onChecked}/>
+                                <Field name="is_active" checked={isActive}
+                                       label={getFormattedMessage('profile.toggle.is-active.label')}
+                                       component={ToggleSwitch} onChange={onChecked}/>
                             </div>
                         </div> : null
                     }
@@ -93,34 +75,39 @@ const UserForm = (props) => {
                 <hr className={isVisibleSwitch ? 'user-form__divider--mt-0' : 'user-form__divider--mt-10'}/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="first_name" label="First Name" required inputRef={inputRef}
+                        <Field name="first_name" label="profile.input.first-name.label" required inputRef={inputRef}
                                groupText="user-circle-o" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="last_name" label="Last Name" required groupText="user" component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="email" label="Email" autoComplete={initialValues ? 'off' : 'new-email'} required
-                               groupText="envelope" component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name={initialValues ? 'password_new' : 'password'} label="Password"
-                               required={!initialValues} autoComplete={initialValues ? 'off' : 'new-password'}
-                               type="password" groupText="lock" component={InputGroup}/>
-                    </Col>
-                    <Col>
-                        <Field name="phone" type="number" label="Phone No."
-                               onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
+                        <Field name="last_name" label="profile.input.last-name.label" required groupText="user"
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="role" label="Role" required options={roles} placeholder="Select Role"
-                               groupText="tasks" component={Select} isSearchable={true} isMini={true}/>
+                        <Field name="email" label="profile.input.email.label"
+                               autoComplete={initialValues ? 'off' : 'new-email'} required groupText="envelope"
+                               component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name={initialValues.isCreate ? 'password' : 'password_new'}
+                               label="profile.input.password.label" required={!initialValues.isCreate}
+                               autoComplete={initialValues ? 'off' : 'new-password'} type="password" groupText="lock"
+                               component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name="phone" type="number" label="profile.input.phone.label"
+                               onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
+                               component={InputGroup}/>
+                    </Col>
+
+                    <Col xs={6}>
+                        <Field name="role" label="users.select.role.label" required options={roles}
+                               placeholder="users.select.role.placeholder" groupText="tasks" component={Select}
+                               isSearchable={true} isMini={true}/>
                     </Col>
                 </Row>
             </Col>
             <Col xs={4} className="user-profile">
-                <h5 className="user-profile__title">User Profile</h5>
+                <h5 className="user-profile__title">{getFormattedMessage('profile.user-profile')}</h5>
                 <hr/>
                 <div className="mt-5">
                     <Field name="file_name" type="hidden" component={InputGroup}/>
@@ -128,35 +115,50 @@ const UserForm = (props) => {
                 </div>
             </Col>
             <Col xs={12} className="mt-2">
-                <h5>Additional Details</h5>
+                <h5>{getFormattedMessage('profile.additional-details')}</h5>
                 <hr/>
                 <Row>
                     <Col xs={6}>
-                        <Field name="address_1" label="Address1" groupText="address-book" component={InputGroup}/>
+                        <Field name="address_1" label="profile.input.address1.label" groupText="address-book"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="address_2" label="Address2" groupText="address-book-o" component={InputGroup}/>
+                        <Field name="address_2" label="profile.input.address2.label" groupText="address-book-o"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="city" label="City" groupText="circle" component={InputGroup}/>
+                        <Field name="city" label="profile.input.city.label" groupText="circle" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="state" label="State" groupText="square" component={InputGroup}/>
+                        <Field name="state" label="profile.input.state.label" groupText="square"
+                               component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="country" label="Country" options={countries} placeholder="Select Country"
-                               groupText="flag" component={Select} isSearchable={true}/>
+                        <Field name="country" label="profile.select.country.label" options={countries}
+                               placeholder="profile.select.country.placeholder" groupText="flag" component={Select}
+                               isSearchable={true}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="zip" label="Zip Code" groupText="map-pin" component={InputGroup}/>
+                        <Field name="zip" label="profile.input.zip.label" groupText="map-pin" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
             <Col xs={12}>
-                <SaveAction onSave={props.handleSubmit(onSaveUser)} {...props}/>
+                <SaveAction onSave={handleSubmit(onSave)} {...props}/>
             </Col>
         </Row>
     );
+};
+
+UserForm.propTypes = {
+    initialValues: PropTypes.object,
+    roles: PropTypes.array,
+    countries: PropTypes.array,
+    fetchCountries: PropTypes.func,
+    fetchRoles: PropTypes.func,
+    onSaveUser: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    change: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

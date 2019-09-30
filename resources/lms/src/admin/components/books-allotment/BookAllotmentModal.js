@@ -1,32 +1,36 @@
 import React from 'react';
-import DeleteBookAllotment from './DeleteBookAllotment';
-import CreateBookAllotment from './AddBookAllotment';
+import PropTypes from 'prop-types';
+import CreateBookAllotment from './CreateBookAllotment';
 import EditBookAllotment from './EditBookAllotment';
+import DeleteBookAllotment from './DeleteBookAllotment';
+import {getModalTitle} from "../../../shared/sharedMethod";
+import ModalConfig from "../../../shared/modal-config/ModalConfig";
 
-export default (props) => {
-    const { bookAllotment, isEditMode, isDeleteMode, toggleModal, isCreateMode, filterObject } = props;
-    if (!isDeleteMode) {
-        const prepareModalOption = {
-            toggleModal,
-            className: 'books-allotment-modal',
-            title: isEditMode ? 'Edit Book Allotment' : 'New Book Allotment',
-        };
-        if (isEditMode) {
-            return <EditBookAllotment {...prepareModalOption} bookAllotment={bookAllotment}
-                                      filterObject={filterObject}/>
-        }
-        if (isCreateMode) {
-            return <CreateBookAllotment {...prepareModalOption} filterObject={filterObject}/>
-        }
-        return null;
-    }
-    if (isDeleteMode) {
-        const prepareModalOption = {
-            bookAllotmentId: bookAllotment.id,
-            title: 'Delete Book Allotment',
-            toggleModal,
-            content: `Are you sure you want to delete "${bookAllotment.name}" ?`,
-        };
-        return <DeleteBookAllotment {...prepareModalOption}/>
-    }
+export const BookAllotmentModal = (props) => {
+    const { bookAllotment, filterObject, isCreate, isEdit, isDelete } = props;
+    const editConfig = { bookAllotment, filterObject };
+    const delConfig = { bookAllotmentId: bookAllotment ? bookAllotment.id : null };
+    const modalOptions = {
+        modalTitle: getModalTitle(isCreate, isEdit, isDelete, 'books-allotment.input.new-btn.label',
+            'books-allotment.modal.edit.title', 'books-allotment.modal.delete.title'),
+        NewComponent: CreateBookAllotment,
+        EditComponent: EditBookAllotment,
+        DeleteComponent: DeleteBookAllotment,
+        deleteKey: bookAllotment ? bookAllotment.name : null,
+        editConfig,
+        delConfig,
+        props
+    };
+
+    return <ModalConfig {...modalOptions}/>;
 };
+
+BookAllotmentModal.propTypes = {
+    bookAllotment: PropTypes.object,
+    filterObject: PropTypes.object,
+    isCreate: PropTypes.bool,
+    isEdit: PropTypes.bool,
+    isDelete: PropTypes.bool,
+};
+
+export default BookAllotmentModal;

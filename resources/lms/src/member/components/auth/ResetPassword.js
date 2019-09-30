@@ -1,53 +1,60 @@
-import React, {} from 'react';
-import apiConfig from '../../config/apiConfigwithoutTokenWithRoot';
+import React from 'react';
+import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
-import CustomInputGroup from '../../../shared/components/CustomInputGroup';
+import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
-import {addToast} from '../../../store/action/toastAction';
-import Toasts from '../../../shared/toast/Toasts';
-import {connect} from 'react-redux';
+import apiConfig from '../../config/apiConfigwithoutTokenWithRoot';
 import {Routes} from "../../../constants";
+import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import CustomInputGroup from '../../../shared/components/CustomInputGroup';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {addToast} from '../../../store/action/toastAction';
 
-const ResetPassword = (props) => {
-    const params = new URLSearchParams(props.location.search);
-    const { handleSubmit, invalid, appName, appLogo } = props;
+const MemberResetPassword = (props) => {
+    const { handleSubmit, invalid, history, location, addToast } = props;
+    const params = new URLSearchParams(location.search);
+
     const onSubmit = async (formValues) => {
         delete formValues.confirm_password;
         formValues.token = params.get('token');
         await apiConfig.post(`reset-member-password`, formValues)
             .then(response => {
-                props.addToast({ text: response.data.message });
-                props.history.push(Routes.MEMBER_LOGIN);
+                addToast({ text: response.data.message });
+                history.push(Routes.MEMBER_LOGIN);
             })
             .catch(({ response }) => {
-                    props.addToast({ text: response.data.message, type: 'error' });
+                    addToast({ text: response.data.message, type: 'error' });
                 }
             );
     };
+
     return (
         <div className="app flex-row align-items-center">
-            <HeaderTitle appLogo={appLogo} title={`Reset Password | ${appName}`}/>
+            <HeaderTitle title="Reset Password"/>
             <Container>
                 <Row className="justify-content-center">
                     <Col md="4">
                         <Card className="p-3">
                             <CardBody>
                                 <Form onSubmit={handleSubmit(onSubmit)}>
-                                    <h1>Reset Password</h1>
-                                    <p className="text-muted">Enter new password</p>
-                                    <Field name="password" type="password" placeholder="Password" groupText="icon-lock"
-                                           component={CustomInputGroup}/>
-                                    <Field name="confirm_password" type="password" placeholder="Repeat Password"
+                                    <h1>{getFormattedMessage('reset-password.title')}</h1>
+                                    <p className="text-muted">{getFormattedMessage('reset-password.note')}</p>
+                                    <Field name="password" type="password" placeholder="profile.input.password.label"
                                            groupText="icon-lock" component={CustomInputGroup}/>
+                                    <Field name="confirm_password" type="password"
+                                           placeholder="profile.input.confirm-password.label" groupText="icon-lock"
+                                           component={CustomInputGroup}/>
                                     <Row>
                                         <Col className="mt-2 d-flex justify-content-between">
-                                            <Button color="primary" disabled={invalid} className="px-4">Submit
+                                            <Button color="primary" disabled={invalid} className="px-4">
+                                                {getFormattedMessage('global.input.reset-btn.label')}
                                             </Button>
-                                            <Link to={Routes.MEMBER_FORGOT_PASSWORD}
-                                                  className="btn btn-secondary ml-2">Back</Link>
+                                            <Link to={Routes.MEMBER_FORGOT_PASSWORD} className="btn btn-secondary ml-2">
+                                                {getFormattedMessage('global.input.back-btn.label')}
+                                            </Link>
                                         </Col>
                                     </Row>
                                 </Form>
@@ -61,6 +68,14 @@ const ResetPassword = (props) => {
     );
 };
 
-const form = reduxForm({ form: 'resetPasswordForm', validate: loginFormValidate })(ResetPassword);
+MemberResetPassword.propTypes = {
+    location: PropTypes.object,
+    history: PropTypes.object,
+    invalid: PropTypes.bool,
+    addToast: PropTypes.func,
+    handleSubmit: PropTypes.func,
+};
+
+const form = reduxForm({ form: 'resetPasswordForm', validate: loginFormValidate })(MemberResetPassword);
 
 export default connect(null, { addToast })(form);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     FormFeedback,
     FormGroup,
@@ -9,35 +10,62 @@ import {
     Input
 } from 'reactstrap';
 import './Component.scss';
+import {useIntl} from 'react-intl';
 
-export default ({
-                    input, label, type = "text", min, max, required, readOnly, autoComplete = "off", onClick,
-                    inputRef, groupText, customGroupText = '', addOnType = 'prepend', placeholder, meta: { touched, error },
-                    isAppendIcon, appendGroupText, className
-                }) => {
+const ReactInputGroup = (props) => {
+    const {
+        input, label, type = "text", min, max, required, readOnly, autoComplete = "off", onClick,
+        inputRef, groupText, addOnType = 'prepend', placeholder, meta: { touched, error },
+        isAppendIcon, appendGroupText, className
+    } = props;
+    const intl = new useIntl();
+    const labelText = type !== 'hidden' ? intl.formatMessage({ id: label ? label : placeholder }) : label;
     const inputClass = `${touched && error ? `is-invalid ${className}` : className}`;
     const labelClass = required ? 'control-label' : '';
     const formClass = type === 'hidden' ? 'input-form-group' : '';
-    placeholder = placeholder ? placeholder : label;
+    const placeholderText = placeholder ? intl.formatMessage({ id: placeholder }) : labelText;
+
     return (
         <FormGroup className={formClass}>
-            {type !== 'hidden' ? <Label className={labelClass}>{label}</Label> : null}
+            {type !== 'hidden' ? <Label className={labelClass}>{labelText}</Label> : null}
             <InputGroup>
                 {type !== 'hidden' ?
                     <InputGroupAddon addonType={addOnType}>
-                        <InputGroupText>{customGroupText === '' ?
-                            <i className={`fa fa-${groupText}`}/> : customGroupText}
+                        <InputGroupText>
+                            <i className={`fa fa-${groupText}`}/>
                         </InputGroupText>
                     </InputGroupAddon>
                     : null
                 }
                 <Input type={type} {...input} min={min} max={max} readOnly={readOnly} innerRef={inputRef}
-                       required={required} className={inputClass} placeholder={placeholder}
+                       required={required} className={inputClass} placeholder={placeholderText}
                        autoComplete={autoComplete}/>
-                {isAppendIcon ? <InputGroupText className="cursor-pointer" onClick={() => onClick(input.value)}> <i
-                    className={`fa fa-${appendGroupText}`}/></InputGroupText> : null}
+                {isAppendIcon ? <InputGroupText className="cursor-pointer" onClick={() => onClick(input.value)}>
+                    <i className={`fa fa-${appendGroupText}`}/></InputGroupText> : null}
                 {touched && ((error && <FormFeedback>{error}</FormFeedback>))}
             </InputGroup>
         </FormGroup>
     );
 };
+
+ReactInputGroup.propTypes = {
+    input: PropTypes.object,
+    inputRef: PropTypes.object,
+    meta: PropTypes.object,
+    label: PropTypes.string,
+    type: PropTypes.string,
+    min: PropTypes.string,
+    max: PropTypes.string,
+    autoComplete: PropTypes.string,
+    className: PropTypes.string,
+    groupText: PropTypes.string,
+    appendGroupText: PropTypes.string,
+    addOnType: PropTypes.string,
+    placeholder: PropTypes.string,
+    readOnly: PropTypes.bool,
+    required: PropTypes.bool,
+    isAppendIcon: PropTypes.bool,
+    onClick: PropTypes.func
+};
+
+export default ReactInputGroup;

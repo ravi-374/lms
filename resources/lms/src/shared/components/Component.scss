@@ -215,3 +215,14 @@
     }
 }
 
+html[dir="rtl"] {
+
+    .modal-header .close {
+        margin: 0;
+        padding: 0;
+    }
+
+    .modal-footer > :not(:last-child) {
+        margin-left: 10px;
+    }
+}
