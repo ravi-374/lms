@@ -29,7 +29,7 @@ class RoleRepositoryTest extends TestCase
     public function test_can_get_all_role()
     {
         /** @var Role[] $roles */
-        $roles = factory(Role::class)->times(5)->create();
+        $roles = factory(Role::class, 5)->create();
 
         $allRoles = $this->roleRepo->all();
         $take3 = $this->roleRepo->all([], null, 3);
@@ -72,7 +72,7 @@ class RoleRepositoryTest extends TestCase
     public function it_can_update_role()
     {
         $role = factory(Role::class)->create();
-        $permission = factory(Permission::class)->times(2)->create();
+        $permission = factory(Permission::class, 2)->create();
         $fakeRole = factory(Role::class)->raw();
         $fakeRole['permissions'] = [$permission[0]->id, $permission[1]->id];
 

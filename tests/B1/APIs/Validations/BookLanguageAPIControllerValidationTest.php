@@ -6,6 +6,9 @@ use App\Models\BookLanguage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class BookLanguageAPIControllerValidationTest
+ */
 class BookLanguageAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;

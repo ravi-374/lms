@@ -12,6 +12,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class BookAPIControllerTest
+ */
 class BookAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -28,7 +31,7 @@ class BookAPIControllerTest extends TestCase
         $this->mockRepo(self::$book);
 
         /** @var Book[] $books */
-        $books = factory(Book::class)->times(5)->create();
+        $books = factory(Book::class, 5)->create();
 
         $this->bookRepository->expects('all')->andReturn($books);
 
@@ -45,7 +48,7 @@ class BookAPIControllerTest extends TestCase
     public function test_can_search_and_get_books()
     {
         /** @var Book[] $books */
-        $books = factory(Book::class)->times(5)->create();
+        $books = factory(Book::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.books.index'));
         $take3 = $this->getJson(route('api.b1.books.index', ['limit' => 3]));
@@ -113,7 +116,7 @@ class BookAPIControllerTest extends TestCase
     {
         /** @var Book $book */
         $book = factory(Book::class)->create();
-        $bookItems = factory(BookItem::class)->times(2)->raw();
+        $bookItems = factory(BookItem::class, 2)->raw();
 
         $response = $this->postJson(route("api.b1.books.add-items", $book->id), ['items' => $bookItems]);
 

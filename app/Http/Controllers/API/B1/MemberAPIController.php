@@ -4,12 +4,11 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateMemberAPIRequest;
-use App\Http\Requests\API\UpdateMemberAPIRequest;
+use App\Http\Requests\API\CreateMemberRequest;
+use App\Http\Requests\API\UpdateMemberRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\Contracts\MemberRepositoryInterface;
-use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -54,14 +53,14 @@ class MemberAPIController extends AppBaseController
     /**
      * Store a newly created Member in storage.
      * POST /members
-     * @param  CreateMemberAPIRequest  $request
+     * @param  CreateMemberRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function store(CreateMemberAPIRequest $request)
+    public function store(CreateMemberRequest $request)
     {
         $input = $request->all();
 
@@ -91,14 +90,14 @@ class MemberAPIController extends AppBaseController
      * PUT/PATCH /members/{id}
      *
      * @param  Member  $member
-     * @param  UpdateMemberAPIRequest  $request
+     * @param  UpdateMemberRequest  $request
      *
      * @throws ApiOperationFailedException
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function update(Member $member, UpdateMemberAPIRequest $request)
+    public function update(Member $member, UpdateMemberRequest $request)
     {
         $input = $request->all();
 

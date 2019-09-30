@@ -30,7 +30,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->mockRepo(self::$issuedBook);
 
         /** @var IssuedBook[] $issuedBooks */
-        $issuedBooks = factory(IssuedBook::class)->times(5)->create();
+        $issuedBooks = factory(IssuedBook::class, 5)->create();
 
         $this->issuedBookRepository->expects('all')->andReturn($issuedBooks);
 
@@ -65,7 +65,7 @@ class IssuedBookAPIControllerTest extends TestCase
     public function test_can_get_book_history()
     {
         /** @var IssuedBook[] $IssuedBooks */
-        $IssuedBooks = factory(IssuedBook::class)->times(5)->create();
+        $IssuedBooks = factory(IssuedBook::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.books-history'));
         $take3 = $this->getJson(route('api.b1.books-history', ['limit' => 3]));
@@ -362,7 +362,7 @@ class IssuedBookAPIControllerTest extends TestCase
         $member = factory(Member::class)->create();
 
         /** @var IssuedBook[] $issuedBooks */
-        $issuedBooks = factory(IssuedBook::class)->times(5)->create(['member_id' => $member->id]);
+        $issuedBooks = factory(IssuedBook::class, 5)->create(['member_id' => $member->id]);
 
         $this->issuedBookRepository->expects('all')->andReturn($issuedBooks);
 

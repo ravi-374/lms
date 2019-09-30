@@ -5,6 +5,9 @@ namespace Tests\Unit\Helpers;
 use App\Models\Setting;
 use Tests\TestCase;
 
+/**
+ * Class HelpersTest
+ */
 class HelpersTest extends TestCase
 {
     /** @test */

@@ -33,6 +33,8 @@ use Spatie\Permission\Traits\HasPermissions;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereUpdatedAt($value)
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
  * @mixin \Eloquent
  */
 class Role extends Model implements RoleContract

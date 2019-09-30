@@ -4,20 +4,20 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\AddBookItemRequest;
-use App\Http\Requests\API\CreateBookAPIRequest;
-use App\Http\Requests\API\UpdateBookAPIRequest;
-use App\Http\Requests\BookDetailsRequest;
+use App\Http\Requests\API\AddBookItemRequest;
+use App\Http\Requests\API\BookDetailsRequest;
+use App\Http\Requests\API\CreateBookRequest;
+use App\Http\Requests\API\UpdateBookRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class BookAPIController
- * @package App\Http\Controllers\API
  */
 class BookAPIController extends AppBaseController
 {
@@ -57,13 +57,13 @@ class BookAPIController extends AppBaseController
      * Store a newly created Book in storage.
      * POST /books
      *
-     * @param  CreateBookAPIRequest  $request
+     * @param  CreateBookRequest  $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function store(CreateBookAPIRequest $request)
+    public function store(CreateBookRequest $request)
     {
         $input = $request->all();
 
@@ -92,12 +92,12 @@ class BookAPIController extends AppBaseController
      * PUT/PATCH /books/{id}
      *
      * @param  Book  $book
-     * @param  UpdateBookAPIRequest  $request
+     * @param  UpdateBookRequest  $request
      *
      * @throws ApiOperationFailedException
      * @return JsonResponse
      */
-    public function update(Book $book, UpdateBookAPIRequest $request)
+    public function update(Book $book, UpdateBookRequest $request)
     {
         $input = $request->all();
 
@@ -167,6 +167,6 @@ class BookAPIController extends AppBaseController
     {
         $bookDetails = $this->bookRepository->getBookDetailsFromISBN($request->get('isbn'));
 
-        return \Response::json($bookDetails, 200);
+        return Response::json($bookDetails, 200);
     }
 }

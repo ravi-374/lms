@@ -8,6 +8,9 @@ use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class AuthAPIControllerTest
+ */
 class AuthAPIControllerTest extends TestCase
 {
     use DatabaseTransactions;

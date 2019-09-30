@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateSeriesBookAPIRequest;
-use App\Http\Requests\API\UpdateSeriesBookAPIRequest;
+use App\Http\Requests\API\CreateSeriesBookRequest;
+use App\Http\Requests\API\UpdateSeriesAPIRequest;
 use App\Models\SeriesBook;
 use App\Repositories\Contracts\SeriesBookRepositoryInterface;
 use Exception;
@@ -47,11 +47,11 @@ class SeriesBookAPIController extends AppBaseController
      * Store a newly created SeriesBook in storage.
      * POST /series-book
      *
-     * @param  CreateSeriesBookAPIRequest  $request
+     * @param  CreateSeriesBookRequest  $request
      *
      * @return JsonResponse
      */
-    public function store(CreateSeriesBookAPIRequest $request)
+    public function store(CreateSeriesBookRequest $request)
     {
         $input = $request->all();
 
@@ -78,11 +78,11 @@ class SeriesBookAPIController extends AppBaseController
      * PUT/PATCH /series-book/{id}
      *
      * @param  SeriesBook  $seriesBook
-     * @param  UpdateSeriesBookAPIRequest  $request
+     * @param  UpdateSeriesAPIRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(SeriesBook $seriesBook, UpdateseriesBookAPIRequest $request)
+    public function update(SeriesBook $seriesBook, UpdateSeriesAPIRequest $request)
     {
         $input = $request->all();
 

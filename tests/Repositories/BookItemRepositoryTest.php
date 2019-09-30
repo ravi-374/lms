@@ -49,7 +49,7 @@ class BookItemRepositoryTest extends TestCase
     /** @test */
     public function test_can_return_all_book_items()
     {
-        $bookItems = factory(BookItem::class)->times(10)->create();
+        $bookItems = factory(BookItem::class, 10)->create();
 
         $allBookItems = $this->bookItemRepo->all();
         $take3 = $this->bookItemRepo->all([], null, 3);
@@ -64,7 +64,7 @@ class BookItemRepositoryTest extends TestCase
     public function it_can_search_books_with_given_book_ids()
     {
         /** @var BookItem[] $bookItems */
-        $bookItems = factory(BookItem::class)->times(5)->create();
+        $bookItems = factory(BookItem::class, 5)->create();
 
         $search['id'] = $bookItems[0]->book_id." ".$bookItems[1]->book_id;
         $search['search_by_book'] = true;

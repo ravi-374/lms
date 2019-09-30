@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 /**
@@ -58,7 +59,7 @@ class Author extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function books()
     {
@@ -84,7 +85,7 @@ class Author extends Model
     }
 
     /**
-     * @param $query
+     * @param Builder $query
      * @param $keywords
      *
      * @return mixed

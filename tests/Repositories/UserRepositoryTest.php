@@ -29,7 +29,7 @@ class UserRepositoryTest extends TestCase
     /** @test */
     public function test_can_get_all_users()
     {
-        factory(User::class)->times(10)->create();
+        factory(User::class, 10)->create();
 
         $users = $this->userRepo->all();
         $take3 = $this->userRepo->all([], null, 3);

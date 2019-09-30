@@ -12,13 +12,14 @@ $factory->define(IssuedBook::class, function (Faker $faker) {
     $bookItem = factory(BookItem::class)->create();
     $member = factory(Member::class)->create();
     $user = factory(User::class)->create();
+    $returnDueDate = date('Y-m-d H:i:s', strtotime('+7 days'));
 
     return [
         'book_item_id'    => $bookItem->id,
         'member_id'       => $member->id,
         'reserve_date'    => $faker->dateTime,
         'issued_on'       => $faker->dateTime,
-        'return_due_date' => $faker->dateTime,
+        'return_due_date' => $returnDueDate,
         'note'            => $faker->sentence,
         'return_date'     => $faker->dateTime,
         'status'          => IssuedBook::STATUS_AVAILABLE,

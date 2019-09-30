@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class BookItemAPIControllerTest
+ */
 class BookItemAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -46,8 +49,8 @@ class BookItemAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$bookItem);
 
-        /** @var BookItem[] $bookItems */
-        $bookItems = factory(BookItem::class)->times(5)->create();
+        /** @var BookItem $bookItems */
+        $bookItems = factory(BookItem::class, 5)->create();
 
         $this->bookItemRepository->expects('searchBooks')->andReturn(collect($bookItems));
 
@@ -61,7 +64,7 @@ class BookItemAPIControllerTest extends TestCase
     /** @test */
     public function test_can_update_book_item_status()
     {
-        /** @var BookItem $bookItem */
+        /** @var BookItem[] $bookItem */
         $bookItem = factory(BookItem::class)->create();
 
         $response = $this->putJson(route('api.b1.books.update-book-status', $bookItem->id), [

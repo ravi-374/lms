@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class UserAPIControllerTest
+ */
 class UserAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -24,8 +27,8 @@ class UserAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$user);
 
-        /** @var User[] $users */
-        $users = factory(User::class)->times(5)->create();
+        /** @var User $users */
+        $users = factory(User::class, 5)->create();
 
         $this->userRepository->expects('all')->andReturn($users);
 
@@ -42,7 +45,7 @@ class UserAPIControllerTest extends TestCase
     public function test_can_search_and_get_users()
     {
         /** @var User[] $users */
-        $users = factory(User::class)->times(5)->create();
+        $users = factory(User::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.users.index'));
         $take3 = $this->getJson(route('api.b1.users.index', ['limit' => 3]));

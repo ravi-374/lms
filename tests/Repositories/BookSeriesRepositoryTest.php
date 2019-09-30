@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 /**
- * Class BookStoreRepositoryTest.
+ * Class BookSeriesRepositoryTest.
  */
 class BookSeriesRepositoryTest extends TestCase
 {
@@ -33,7 +33,7 @@ class BookSeriesRepositoryTest extends TestCase
     public function test_can_get_all_book_series()
     {
         /** @var BookSeries[] $bookSeries */
-        $bookSeries = factory(BookSeries::class)->times(5)->create();
+        $bookSeries = factory(BookSeries::class, 5)->create();
 
         $allBookSeries = $this->bookSeriesRepo->all();
         $take3 = $this->bookSeriesRepo->all([], null, 3);

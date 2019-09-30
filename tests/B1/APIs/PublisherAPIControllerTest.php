@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class PublisherAPIControllerTest
+ */
 class PublisherAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -23,8 +26,8 @@ class PublisherAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$publisher);
 
-        /** @var Publisher $publishers */
-        $publishers = factory(Publisher::class)->times(5)->create();
+        /** @var Publisher[] $publishers */
+        $publishers = factory(Publisher::class, 5)->create();
 
         $this->publisherRepository->expects('all')->andReturn($publishers);
 
@@ -41,7 +44,7 @@ class PublisherAPIControllerTest extends TestCase
     public function test_can_search_and_get_publishers()
     {
         /** @var Publisher[] $publishers */
-        $publishers = factory(Publisher::class)->times(5)->create();
+        $publishers = factory(Publisher::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.publishers.index'));
         $take3 = $this->getJson(route('api.b1.publishers.index', ['limit' => 3]));

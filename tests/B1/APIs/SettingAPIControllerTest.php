@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class SettingAPIControllerTest
+ */
 class SettingAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -23,7 +26,7 @@ class SettingAPIControllerTest extends TestCase
         $this->mockRepo(self::$setting);
 
         /** @var Setting[] $settings */
-        $settings = factory(Setting::class)->times(5)->create();
+        $settings = factory(Setting::class, 5)->create();
 
         $this->settingRepository->expects('all')->andReturn($settings);
 
@@ -36,7 +39,7 @@ class SettingAPIControllerTest extends TestCase
     public function test_can_search_and_get_settings()
     {
         /** @var Setting[] $settings */
-        $settings = factory(Setting::class)->times(5)->create();
+        $settings = factory(Setting::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.settings.index'));
         $take3 = $this->getJson(route('api.b1.settings.index', ['limit' => 3]));
@@ -56,7 +59,7 @@ class SettingAPIControllerTest extends TestCase
     {
         $this->mockRepo(self::$setting);
 
-        $settings = factory(Setting::class)->times(2)->raw();
+        $settings = factory(Setting::class, 2)->raw();
 
         $this->settingRepository->expects('createOrUpdate')
             ->with($settings)

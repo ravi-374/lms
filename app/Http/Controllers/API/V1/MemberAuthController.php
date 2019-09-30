@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\ResetPasswordLinkRequest;
-use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\API\ResetPasswordLinkRequest;
+use App\Http\Requests\API\ResetPasswordRequest;
 use App\Models\Member;
 use App\Repositories\AccountRepository;
 use App\Repositories\Contracts\AccountRepositoryInterface;

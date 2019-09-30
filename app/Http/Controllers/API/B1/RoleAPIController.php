@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreateRoleAPIRequest;
-use App\Http\Requests\API\UpdateRoleAPIRequest;
+use App\Http\Requests\API\CreateRoleRequest;
+use App\Http\Requests\API\UpdateRoleRequest;
 use App\Models\Role;
 use App\Repositories\Contracts\RoleRepositoryInterface;
 use Exception;
@@ -48,13 +48,13 @@ class RoleAPIController extends AppBaseController
     /**
      * Store a newly created Role in storage.
      * POST /roles
-     * @param  CreateRoleAPIRequest  $request
+     * @param  CreateRoleRequest  $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function store(CreateRoleAPIRequest $request)
+    public function store(CreateRoleRequest $request)
     {
         $input = $request->all();
 
@@ -82,13 +82,13 @@ class RoleAPIController extends AppBaseController
      * Update the specified Role in storage.
      * PUT/PATCH /roles/{id}
      * @param  Role  $role
-     * @param  UpdateRoleAPIRequest  $request
+     * @param  UpdateRoleRequest  $request
      *
      * @throws ApiOperationFailedException
      *
      * @return JsonResponse
      */
-    public function update(Role $role, UpdateRoleAPIRequest $request)
+    public function update(Role $role, UpdateRoleRequest $request)
     {
         $input = $request->all();
 

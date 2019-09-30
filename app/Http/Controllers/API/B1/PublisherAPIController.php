@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\CreatePublisherAPIRequest;
-use App\Http\Requests\API\UpdatePublisherAPIRequest;
+use App\Http\Requests\API\CreatePublisherRequest;
+use App\Http\Requests\API\UpdatePublisherRequest;
 use App\Models\Publisher;
 use App\Repositories\Contracts\PublisherRepositoryInterface;
 use Exception;
@@ -53,11 +53,11 @@ class PublisherAPIController extends AppBaseController
      * Store a newly created Publisher in storage.
      * POST /publishers
      *
-     * @param  CreatePublisherAPIRequest  $request
+     * @param  CreatePublisherRequest  $request
      *
      * @return JsonResponse
      */
-    public function store(CreatePublisherAPIRequest $request)
+    public function store(CreatePublisherRequest $request)
     {
         $input = $request->all();
 
@@ -84,11 +84,11 @@ class PublisherAPIController extends AppBaseController
      * PUT/PATCH /publishers/{id}
      *
      * @param  Publisher  $publisher
-     * @param  UpdatePublisherAPIRequest  $request
+     * @param  UpdatePublisherRequest  $request
      *
      * @return JsonResponse
      */
-    public function update(Publisher $publisher, UpdatePublisherAPIRequest $request)
+    public function update(Publisher $publisher, UpdatePublisherRequest $request)
     {
         $input = $request->all();
 

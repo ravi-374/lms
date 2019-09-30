@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
+/**
+ * Class CountryAPIControllerTest
+ */
 class CountryAPIControllerTest extends TestCase
 {
     use DatabaseTransactions, MockRepositories;
@@ -23,7 +26,7 @@ class CountryAPIControllerTest extends TestCase
         $this->mockRepo(self::$country);
 
         /** @var Country[] $countries */
-        $countries = factory(Country::class)->times(2)->create();
+        $countries = factory(Country::class, 2)->create();
 
         $this->countryRepository->expects('all')->andReturn($countries);
 
@@ -36,7 +39,7 @@ class CountryAPIControllerTest extends TestCase
     public function test_can_search_and_get_countries()
     {
         /** @var Country[] $countries */
-        $countries = factory(Country::class)->times(5)->create();
+        $countries = factory(Country::class, 5)->create();
 
         $response = $this->getJson(route('api.b1.countries.index'));
         $take3 = $this->getJson(route('api.b1.countries.index', ['limit' => 3]));

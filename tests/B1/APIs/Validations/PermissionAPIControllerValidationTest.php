@@ -6,6 +6,9 @@ use App\Models\Permission;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
+/**
+ * Class PermissionAPIControllerValidationTest
+ */
 class PermissionAPIControllerValidationTest extends TestCase
 {
     use DatabaseTransactions;

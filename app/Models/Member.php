@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Traits\ImageTrait;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -39,6 +41,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUpdatedAt($value)
  * @property string $member_id
  * @property-read \App\Models\Address $address
+ * @property-read string $image_path
  * @property-read \App\Models\MembershipPlan $membershipPlan
  * @property string|null $activation_code
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereActivationCode($value)
@@ -148,7 +151,7 @@ class Member extends Authenticatable implements JWTSubject
 
     /**
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return MorphOne
      */
     public function address()
     {
@@ -156,7 +159,7 @@ class Member extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function membershipPlan()
     {

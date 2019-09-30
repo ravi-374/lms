@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\UpdateIssuedBookAPIRequest;
+use App\Http\Requests\API\UpdateIssuedBookRequest;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
@@ -144,11 +144,11 @@ class IssuedBookAPIController extends AppBaseController
 
     /**
      * @param  int  $id
-     * @param  UpdateIssuedBookAPIRequest  $request
+     * @param  UpdateIssuedBookRequest  $request
      *
      * @return JsonResponse
      */
-    public function update($id, UpdateIssuedBookAPIRequest $request)
+    public function update($id, UpdateIssuedBookRequest $request)
     {
         $input = $request->all();
 

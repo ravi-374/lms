@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\SeriesBook
@@ -55,4 +57,12 @@ class SeriesBook extends Model
         'book_id'   => 'required',
         'sequence'  => 'required',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'book_id');
+    }
 }
