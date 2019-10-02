@@ -82,7 +82,7 @@ const UserTable = (props) => {
         }];
 
     const onChecked = (user) => {
-        setActiveInactive(user.id);
+        setActiveInactive(user.id, user.is_active);
     };
 
     const goToUserDetail = (userId) => {

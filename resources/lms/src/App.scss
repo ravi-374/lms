@@ -227,6 +227,12 @@ input[type="date"] {
 
 html[dir="rtl"] {
 
+    @media (max-width: 991px) {
+        .app-header .navbar-brand {
+            width: calc(100% - 250px) !important;
+        }
+    }
+
     .app-header .navbar-nav {
         margin-left: inherit !important;
     }

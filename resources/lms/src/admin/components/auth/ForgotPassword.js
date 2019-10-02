@@ -1,35 +1,26 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
-import apiConfig from '../../config/apiConfigwithoutTokenWithRoot';
 import {environment} from "../../../environment";
 import {Routes} from "../../../constants";
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {addToast} from '../../../store/action/toastAction';
+import {forgotPassword} from "../../store/actions/authAction";
 
 const ForgotPassword = (props) => {
-    const { handleSubmit, invalid, addToast } = props;
-    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+    const { handleSubmit, invalid, isSubmitted,forgotPassword } = props;
 
-    const onSubmit = async (formValues) => {
+    const onSubmit = (formValues) => {
         formValues.url = environment.URL + '/#' + Routes.ADMIN_RESET_PASSWORD;
-        await apiConfig.post(`send-reset-password-link`, formValues)
-            .then(response => {
-                addToast({ text: response.data.message });
-                setIsFormSubmitted(true);
-            })
-            .catch(({ response }) => {
-                    addToast({ text: response.data.message, type: 'error' });
-                }
-            );
+        forgotPassword(formValues);
     };
+
     return (
         <div className="app flex-row align-items-center">
             <HeaderTitle title="Forgot Password"/>
@@ -38,7 +29,7 @@ const ForgotPassword = (props) => {
                     <Col md="4">
                         <Card className="p-3">
                             <CardBody>
-                                {!isFormSubmitted ?
+                                {!isSubmitted ?
                                     <Form onSubmit={handleSubmit(onSubmit)}>
                                         <h1>{getFormattedMessage('forgot-password.title')}</h1>
                                         <p className="text-muted">{getFormattedMessage('forgot-password.note')}</p>
@@ -76,10 +67,14 @@ const ForgotPassword = (props) => {
 
 ForgotPassword.propTypes = {
     invalid: PropTypes.bool,
-    addToast: PropTypes.func,
+    isSubmitted: PropTypes.bool,
+    forgotPassword: PropTypes.func,
     handleSubmit: PropTypes.func,
 };
 
 const form = reduxForm({ form: 'forgotPasswordForm', validate: loginFormValidate })(ForgotPassword);
+const mapStateToProps = (state) => {
+    return { isSubmitted: !!state.auth.isSubmitted };
+};
 
-export default connect(null, { addToast })(form);
+export default connect(mapStateToProps, { forgotPassword })(form);

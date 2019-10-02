@@ -1,4 +1,4 @@
-import {memberActionType} from '../../constants';
+import {memberActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import apiConfigWthFormData from '../../config/apiConfigWthFormData';
 import {setLoading} from '../../../store/action/progressBarAction';
@@ -6,10 +6,12 @@ import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {apiBaseURL} from "../../../constants";
 
 export const fetchMembers = (filter = {}, isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
-    let url = 'members';
+    let url = apiBaseURL.MEMBER;
     if (filter.limit || filter.order_By || filter.search) {
         url += requestParam(filter);
     }
@@ -21,67 +23,71 @@ export const fetchMembers = (filter = {}, isLoading = false) => async (dispatch)
             isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
             isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 
 export const fetchMember = (memberId, isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
-    await apiConfig.get(`members/${memberId}`)
+    await apiConfig.get(apiBaseURL.MEMBER + '/' + memberId)
         .then((response) => {
             dispatch({ type: memberActionType.FETCH_MEMBER, payload: response.data.data });
             isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
             isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 
 export const addMember = (member) => async (dispatch) => {
-    await apiConfigWthFormData.post('members', member)
+    await apiConfigWthFormData.post(apiBaseURL.MEMBER, member)
         .then((response) => {
             dispatch({ type: memberActionType.ADD_MEMBER, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('members.success.create.message') }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };
 
 export const editMember = (memberId, member) => async (dispatch) => {
-    await apiConfigWthFormData.post(`members/${memberId}`, member)
+    await apiConfigWthFormData.post(apiBaseURL.MEMBER + '/' + memberId, member)
         .then((response) => {
             dispatch({ type: memberActionType.EDIT_MEMBER, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('members.success.edit.message') }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };
 
 export const deleteMember = (memberId) => async (dispatch) => {
-    await apiConfig.delete(`members/${memberId}`)
-        .then((response) => {
+    await apiConfig.delete(apiBaseURL.MEMBER + '/' + memberId)
+        .then(() => {
             dispatch({ type: memberActionType.DELETE_MEMBER, payload: memberId });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('members.success.delete.message') }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };
 
-export const activeInactiveMember = (memberId) => async (dispatch) => {
-    await apiConfig.get(`members/${memberId}/update-status`)
+export const activeInactiveMember = (memberId, isActive) => async (dispatch) => {
+    await apiConfig.get(apiBaseURL.MEMBER + '/' + memberId + '/update-status')
         .then((response) => {
             dispatch({ type: memberActionType.SET_ACTIVE_DE_ACTIVE, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({
+                text:
+                    getFormattedMessage(!isActive ? 'members.success.active-account.message' :
+                        'members.success.inactive-account.message')
+            }));
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };

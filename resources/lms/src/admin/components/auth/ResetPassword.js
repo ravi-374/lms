@@ -5,32 +5,23 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
-import apiConfig from '../../config/apiConfigwithoutTokenWithRoot';
 import {Routes} from "../../../constants";
 import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {addToast} from '../../../store/action/toastAction';
+import {resetPassword} from "../../store/actions/authAction";
 
 const ResetPassword = (props) => {
-    const { handleSubmit, invalid, location, addToast, history } = props;
+    const { handleSubmit, history, invalid, location, resetPassword } = props;
     const params = new URLSearchParams(location.search);
-   
-    const onSubmit = async (formValues) => {
+
+    const onSubmit = (formValues) => {
         delete formValues.confirm_password;
         formValues.token = params.get('token');
-        await apiConfig.post(`reset-password`, formValues)
-            .then(response => {
-                addToast({ text: response.data.message });
-                history.push(Routes.ADMIN_LOGIN);
-            })
-            .catch(({ response }) => {
-                    addToast({ text: response.data.message, type: 'error' });
-                }
-            );
+        resetPassword(formValues, history);
     };
-    
+
     return (
         <div className="app flex-row align-items-center">
             <HeaderTitle title="Reset Password"/>
@@ -72,10 +63,10 @@ ResetPassword.propTypes = {
     location: PropTypes.object,
     history: PropTypes.object,
     invalid: PropTypes.bool,
-    addToast: PropTypes.func,
+    resetPassword: PropTypes.func,
     handleSubmit: PropTypes.func,
 };
 
 const form = reduxForm({ form: 'resetPasswordForm', validate: loginFormValidate })(ResetPassword);
 
-export default connect(null, { addToast })(form);
+export default connect(null, { resetPassword })(form);

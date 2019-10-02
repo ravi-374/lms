@@ -2,10 +2,11 @@ import {memberBookHistoryActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from "../../../store/action/modalAction";
-import {getApiRouteForBookAllotment} from "../../shared/sharedMethod";
+import {getApiRouteForBookAllotment, getBookAllotmentSuccessMessage} from "../../shared/sharedMethod";
 import {setLoading} from "../../../store/action/progressBarAction";
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
 
 export const fetchMemberBooksHistory = (memberId, filter = {}) => async (dispatch) => {
     dispatch(setLoading(true));
@@ -29,7 +30,7 @@ export const editMemberBookHistory = (book) => async (dispatch) => {
     await apiConfig.post(`books/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
         .then((response) => {
             dispatch({ type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_ALLOTMENT, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage(getBookAllotmentSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
@@ -41,7 +42,7 @@ export const editMemberBookHistoryStatus = (book) => async (dispatch) => {
     await apiConfig.put(`books/${book.book_item_id}/update-issued-book-status`, { status: book.status })
         .then((response) => {
             dispatch({ type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_ALLOTMENT, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage(getBookAllotmentSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {

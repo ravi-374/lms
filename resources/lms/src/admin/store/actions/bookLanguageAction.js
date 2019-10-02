@@ -1,4 +1,4 @@
-import {bookLanguageActionType, apiBaseURL, toastType} from '../../constants';
+import {bookLanguageActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
@@ -6,6 +6,8 @@ import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
 import _ from 'lodash';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {apiBaseURL} from "../../../constants";
 
 export const fetchBookLanguages = (filter = {}, isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
@@ -29,7 +31,7 @@ export const addBookLanguage = (language) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.BOOK_LANGUAGE, language)
         .then((response) => {
             dispatch({ type: bookLanguageActionType.ADD_BOOK_LANGUAGE, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('book-languages.success.create.message') }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
@@ -41,7 +43,7 @@ export const editBookLanguage = (bookLanguageId, language) => async (dispatch) =
     await apiConfig.put(apiBaseURL.BOOK_LANGUAGE + '/' + bookLanguageId, language)
         .then((response) => {
             dispatch({ type: bookLanguageActionType.EDIT_BOOK_LANGUAGE, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('book-languages.success.edit.message') }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
@@ -51,9 +53,9 @@ export const editBookLanguage = (bookLanguageId, language) => async (dispatch) =
 
 export const deleteBookLanguage = (bookLanguageId) => async (dispatch) => {
     await apiConfig.delete(apiBaseURL.BOOK_LANGUAGE + '/' + bookLanguageId)
-        .then((response) => {
+        .then(() => {
             dispatch({ type: bookLanguageActionType.DELETE_BOOK_LANGUAGE, payload: bookLanguageId });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('book-languages.success.delete.message') }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {

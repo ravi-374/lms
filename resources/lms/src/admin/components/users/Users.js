@@ -28,8 +28,8 @@ const Users = (props) => {
         toggleModal();
     };
 
-    const setActiveInactive = (id) => {
-        if (id) activeInactiveUser(id);
+    const setActiveInactive = (id, isActive) => {
+        if (id) activeInactiveUser(id, isActive);
     };
 
     const cardBodyProps = {

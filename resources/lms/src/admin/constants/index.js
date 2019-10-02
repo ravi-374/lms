@@ -275,10 +275,6 @@ export const storageKey = {
     MEMBERS: 'members',
 };
 
-export const apiBaseURL = {
-    BOOK_LANGUAGE: 'book-languages'
-};
-
 export const languageOptions = [
     { id: 'ar', name: 'settings.select.language.arabic.label', display_name: 'Arabic' },
     { id: 'cn', name: 'settings.select.language.chinese.label', display_name: 'Chinese' },
@@ -292,3 +288,10 @@ export const languageOptions = [
     { id: 'sp', name: 'settings.select.language.spanish.label', display_name: 'Spanish' },
     { id: 'tr', name: 'settings.select.language.turkish.label', display_name: 'Turkish' },
 ];
+
+export const authActionType = {
+    LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT',
+    FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+    RESET_PASSWORD: 'RESET_PASSWORD',
+};

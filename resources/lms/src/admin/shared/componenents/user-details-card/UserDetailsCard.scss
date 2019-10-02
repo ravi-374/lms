@@ -46,13 +46,13 @@ html[dir="rtl"] {
         }
 
         &-heading {
-            min-width: 110px;
+            min-width: 120px;
             font-weight: 700;
         }
     }
 
     &__image-holder-wrapper {
-        height: 250px;
+        width: 250px;
         border-radius: 10px;
         overflow: hidden;
         @media (max-width: 1139px) {
@@ -62,7 +62,7 @@ html[dir="rtl"] {
 
     &__image-holder {
         position: relative;
-        height: 250px;
+        width: 250px;
         border-radius: 10px;
         background: gray;
         object-fit: cover;
@@ -70,6 +70,7 @@ html[dir="rtl"] {
 
     &__avatar {
         height: 250px;
+        width: 250px;
         position: relative;
         display: flex;
         justify-content: center;

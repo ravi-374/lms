@@ -4,12 +4,12 @@ import {Card, CardBody, Col, Row} from 'reactstrap';
 import PropTypes from 'prop-types';
 import _ from "lodash";
 import SettingsForm from "./SettingsForm";
-import {settingsKey} from '../../constants';
+import {languageOptions, settingsKey} from '../../constants';
 import {publicImagePathURL} from "../../../appConstant";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import Toasts from "../../../shared/toast/Toasts";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
 import {fetchCurrencies, fetchSettings, postAppLogo, postSettings} from '../../store/actions/settingAction';
 
 const Settings = (props) => {
@@ -17,6 +17,7 @@ const Settings = (props) => {
         currencies, fetchSettings, fetchCurrencies, postSettings, postAppLogo,
         selectedCurrency, settings, selectedLanguage, exist_library_logo
     } = props;
+    const bookLanguagesOptions = getFormattedOptions(languageOptions);
 
     useEffect(() => {
         fetchSettings(true);
@@ -45,7 +46,7 @@ const Settings = (props) => {
             return_due_days: settings[settingsKey.RETURN_DUE_DAYS] ? settings[settingsKey.RETURN_DUE_DAYS].value : null,
             library_name: settings[settingsKey.LIBRARY_NAME] ? settings[settingsKey.LIBRARY_NAME].value : null,
             library_logo: getLogo(settings),
-            language: selectedLanguage,
+            language: bookLanguagesOptions.find(lang => lang.id === selectedLanguage.id),
         },
         onSaveSettings,
         onChangeAppLogo

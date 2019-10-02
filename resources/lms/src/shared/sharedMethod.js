@@ -1,10 +1,9 @@
 import React from 'react';
-import {useIntl, FormattedMessage} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import moment from 'moment';
 import _ from 'lodash';
 import {countryCode} from '../constants';
 import {settingsKey} from "../appConstant";
-import {bookStatusOptions} from "../admin/constants";
 
 export const priceFormatter = (price, format) => {
     return new Intl.NumberFormat('en-IN', {
@@ -149,7 +148,7 @@ export const getAvatarName = (name) => {
 };
 
 export const getFormattedMessage = (id) => {
-    return <FormattedMessage id={id}/>
+    return <FormattedMessage id={id} defaultMessgae={id}/>
 };
 
 export const addRTLSupport = (rtlLang) => {
@@ -171,7 +170,7 @@ export const getModalTitle = (isCreate, isEdit, isDelete, createTitle, editTitle
 
 export const getFormattedMessageWithIntl = (id) => {
     const intl = useIntl();
-    return intl.formatMessage({ id ,defaultMessage:id});
+    return intl.formatMessage({ id, defaultMessage: id });
 };
 
 export const getConcatedFormattedMessage = (msgId1, msgId2) => {
@@ -186,4 +185,8 @@ export const getFormattedOptions = (options) => {
         defaultMessage: option.name
     }));
     return copyOptions;
+};
+
+export const getLocalStorageDataByKey = (keyName) => {
+    return localStorage.getItem(keyName) ? JSON.parse(atob(localStorage.getItem(keyName))) : null;
 };
