@@ -79,7 +79,7 @@ const MemberTable = (props) => {
         }];
 
     const onChecked = (member) => {
-        setActiveInactive(member.id);
+        setActiveInactive(member.id, member.is_active);
     };
 
     const goToMemberDetailPage = (memberId) => {

@@ -12,7 +12,7 @@ export default {
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
                 } else {
-                    window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
+                   // window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
                 }
                 if (isFormData) {
                     config.headers['Content-Type'] = 'multipart/form-data';

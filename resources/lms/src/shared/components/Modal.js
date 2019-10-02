@@ -7,7 +7,7 @@ const GlobalModal = (props) => {
     const { className, isToggle, toggleModal, actions, title, content } = props;
     const modalClassName = `modal-primary primary ${className}`;
     return (
-        <Modal isOpen={isToggle}  centered={!!actions} className={modalClassName}>
+        <Modal isOpen={isToggle} toggle={toggleModal} centered={!!actions} className={modalClassName}>
             <ModalHeader toggle={toggleModal}>{title}</ModalHeader>
             <ModalBody>
                 {content}

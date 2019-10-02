@@ -34,7 +34,7 @@ const EditBookItem = (props) => {
         if (book_code && book_code === bookItem.book_code) {
             delete formValues.book_code;
         }
-        addBookItem(bookId, bookItemArray);
+        addBookItem(bookId, bookItemArray, true);
     };
 
     const prepareFormOption = {

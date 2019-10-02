@@ -147,5 +147,10 @@ SettingsForm.propTypes = {
     toggleModal: PropTypes.func,
 };
 
-const form = reduxForm({ form: 'settingsForm', validate: settingsFormValidate })(SettingsForm);
+const form = reduxForm({
+    form: 'settingsForm',
+    validate: settingsFormValidate,
+    enableReinitialize: true
+})(SettingsForm);
+
 export default connect(null, { addToast, toggleModal })(form);

@@ -1,67 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
-import apiConfig from '../../config/apiConfigWithoutToken';
-import {LocalStorageKey, Routes, Tokens} from "../../../constants";
+import {Routes, Tokens} from "../../../constants";
 import CheckBox from '../../../shared/components/CheckBox';
 import Toasts from '../../../shared/toast/Toasts';
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {setUserProfile} from "../../../store/action/localStorageAction";
-import {addToast} from '../../../store/action/toastAction';
+import {getFormattedMessage, getLocalStorageDataByKey} from "../../../shared/sharedMethod";
+import {login} from "../../store/actions/authAction";
 
 const Login = (props) => {
-    const { handleSubmit, invalid, history, addToast, initialize, setUserProfile } = props;
-    let remember = true;
-    const isAdminRemember = localStorage.getItem('is_admin_remember');
-    if (isAdminRemember !== null && isAdminRemember === 'false') {
-        remember = false;
-    }
-    const [isRemember, setRemember] = useState(remember);
+    const { handleSubmit, invalid, history, initialize, login } = props;
+
     useEffect(() => {
         if (localStorage.getItem(Tokens.ADMIN)) {
             history.push(Routes.ADMIN_DEFAULT);
         }
-        if (localStorage.getItem('currentUser')) {
-            const user = JSON.parse(atob(localStorage.getItem('currentUser')));
-            if (user) {
-                initialize(user);
-            }
-        }
+        initialize(getLocalStorageDataByKey('currentUser'));
     }, []);
-    const onRememberChange = () => {
-        setRemember(!isRemember);
-    };
+
     const onLogin = async (formValues) => {
-        delete formValues.remember_me;
-        await apiConfig.post('login', formValues).then(response => {
-            if (isRemember) {
-                localStorage.setItem('currentUser', btoa(JSON.stringify(formValues)));
-            } else {
-                if (localStorage.getItem('currentUser')) {
-                    const user = JSON.parse(atob(localStorage.getItem('currentUser')));
-                    if (user) {
-                        localStorage.removeItem('currentUser');
-                    }
-                }
-            }
-            localStorage.setItem('is_admin_remember', isRemember);
-            localStorage.setItem(Tokens.ADMIN, response.data.data.token);
-            setUserProfile(LocalStorageKey.USER, response.data.data.user);
-            if (sessionStorage.getItem('prevAdminPrevUrl')) {
-                window.location.href = sessionStorage.getItem('prevAdminPrevUrl');
-            } else {
-                history.push(Routes.ADMIN_DEFAULT);
-            }
-        }).catch(({ response }) =>
-            addToast({ text: response.data.message, type: 'error' })
-        );
+        login(formValues, history);
     };
+
     return (
         <div className="app flex-row align-items-center">
             <HeaderTitle title="Login"/>
@@ -78,7 +43,7 @@ const Login = (props) => {
                                     <Field name="password" type="password" placeholder="profile.input.password.label"
                                            groupText="icon-lock" component={CustomInputGroup}/>
                                     <div>
-                                        <Field name="remember_me" checked={isRemember} onChange={onRememberChange}
+                                        <Field name="remember_me"
                                                label={getFormattedMessage('login.checkbox.remember.label')}
                                                component={CheckBox}/>
                                     </div>
@@ -107,11 +72,10 @@ Login.propTypes = {
     history: PropTypes.object,
     invalid: PropTypes.bool,
     initialize: PropTypes.func,
-    addToast: PropTypes.func,
-    handleSubmit: PropTypes.func,
-    setUserProfile: PropTypes.func
+    login: PropTypes.func,
+    handleSubmit: PropTypes.func
 };
 
 const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(Login);
 
-export default connect(null, { addToast, setUserProfile })(form);
+export default connect(null, { login })(form);
