@@ -2,10 +2,12 @@ import {bookActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {setLoading} from '../../../store/action/progressBarAction';
+import {apiBaseURL} from "../../../constants";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
 
 export const findBooks = (params) => async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConfig.get(`search-books?${params}`)
+    await apiConfig.get(`${apiBaseURL.SEARCH_BOOK}?${params}`)
         .then((response) => {
             dispatch({ type: bookActionType.SEARCH_BOOKS, payload: response.data.data });
             dispatch(setLoading(false));
@@ -21,7 +23,7 @@ export const resetSearchBooks = () => (dispatch) => {
 };
 
 export const reserveBook = (bookItemId, index) => async (dispatch) => {
-    apiConfig.post(`books/${bookItemId}/reserve-book `, {})
+    apiConfig.post(apiBaseURL.BOOK + '/' + bookItemId + '/reserve-book ', {})
         .then((response) => {
             dispatch({
                 type: bookActionType.RESERVE_BOOK,
@@ -31,7 +33,7 @@ export const reserveBook = (bookItemId, index) => async (dispatch) => {
                     expectedAvailableDate: response.data.data.expected_available_date
                 }
             });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('books.success.reserve.message') }));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

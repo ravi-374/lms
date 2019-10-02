@@ -33,8 +33,8 @@ const Members = (props) => {
         fetchMembers(filter, true);
     };
 
-    const setActiveInactive = (id) => {
-        if (id) activeInactiveMember(id);
+    const setActiveInactive = (id, isActive) => {
+        if (id) activeInactiveMember(id, isActive);
     };
 
     const onClickModal = (isEdit, member = null, isDelete = false) => {

@@ -164,7 +164,7 @@
 /* This class name should be renamed as the package has been updated
      Purpose for this class name is to be provide a specified width for sort icon aligned on table header at the time of hovered
  */
-.jWjBKP span.__rdt_custom_sort_icon__.asc i {
+.jWjBKP span.__rdt_custom_sort_icon__ i, .jWjBKP span.__rdt_custom_sort_icon__ svg {
     width: auto !important;
     height: auto !important;
     font-size: 12px !important;

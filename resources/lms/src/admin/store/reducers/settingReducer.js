@@ -8,7 +8,7 @@ export default (state = [], action) => {
         case settingsActionsType.POST_SETTINGS:
             return { ..._.mapKeys(payload, 'key') };
         case settingsActionsType.POST_LOGO:
-            return { payload };
+            return { ...state, [action.payload.key]: action.payload };
         default:
             return state;
     }

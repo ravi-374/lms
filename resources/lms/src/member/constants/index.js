@@ -71,3 +71,10 @@ export const settingsKey = {
     LOCALE_ARABIC:'en',
     LOCALE_SPANISH:'sp'
 };
+
+export const authActionType = {
+    LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT',
+    FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+    RESET_PASSWORD: 'RESET_PASSWORD',
+};

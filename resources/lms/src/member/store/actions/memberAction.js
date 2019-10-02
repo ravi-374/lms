@@ -6,6 +6,7 @@ import {addToast} from '../../../store/action/toastAction';
 import {toastType} from '../../constants';
 import {setUserProfile} from "../../../store/action/localStorageAction";
 import {LocalStorageKey} from "../../../constants";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
 
 export const fetchMember = () => async (dispatch) => {
     dispatch(setLoading(true));
@@ -25,7 +26,7 @@ export const editMember = (member, history) => async (dispatch) => {
     await apiConfigWthFormData.post(`update-member-profile`, member)
         .then((response) => {
             dispatch({ type: memberActionType.EDIT_MEMBER, payload: response.data.data });
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('profile.success.update.message') }));
             dispatch(setLoading(false));
             dispatch(setUserProfile(LocalStorageKey.MEMBER, response.data.data));
             history.goBack();

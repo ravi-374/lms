@@ -5,12 +5,14 @@ import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
-import {getApiRouteForBookAllotment} from "../../shared/sharedMethod";
+import {getApiRouteForBookAllotment, getBookAllotmentSuccessMessage} from "../../shared/sharedMethod";
 import _ from 'lodash';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {apiBaseURL} from "../../../constants";
 
 export const fetchBooksAllotment = (filter = {}) => async (dispatch) => {
     dispatch(setLoading(true));
-    let url = 'books-history';
+    let url = apiBaseURL.BOOK_HISTORY;
 
     if (!_.isEmpty(filter) && (filter.limit || filter.order_By || filter.search)) {
         url += requestParam(filter);
@@ -29,7 +31,7 @@ export const fetchBooksAllotment = (filter = {}) => async (dispatch) => {
 
 export const fetchBookAllotment = (bookAllotmentId) => async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConfig.get(`issued-books/${bookAllotmentId}`)
+    await apiConfig.get(apiBaseURL.ISSUED_BOOK + '/' + bookAllotmentId)
         .then((response) => {
             dispatch({ type: bookAllotmentActionType.FETCH_BOOK_ALLOTMENT, payload: response.data.data });
             dispatch(setLoading(false));
@@ -41,10 +43,10 @@ export const fetchBookAllotment = (bookAllotmentId) => async (dispatch) => {
 };
 
 export const addBookAllotment = (book, filterObj = {}) => async (dispatch) => {
-    await apiConfig.post(`books/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
-        .then((response) => {
+    await apiConfig.post(`${apiBaseURL.BOOK}/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
+        .then(() => {
             dispatch(fetchBooksAllotment(filterObj));
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage(getBookAllotmentSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
@@ -53,10 +55,10 @@ export const addBookAllotment = (book, filterObj = {}) => async (dispatch) => {
 };
 
 export const editBookAllotment = (book, filterObj = {}) => async (dispatch) => {
-    await apiConfig.post(`books/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
-        .then((response) => {
+    await apiConfig.post(`${apiBaseURL.BOOK}/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
+        .then(() => {
             dispatch(fetchBooksAllotment(filterObj));
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage(getBookAllotmentSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
@@ -65,10 +67,10 @@ export const editBookAllotment = (book, filterObj = {}) => async (dispatch) => {
 };
 
 export const editBookAllotmentStatus = (book, filterObj = {}) => async (dispatch) => {
-    await apiConfig.put(`books/${book.book_item_id}/update-issued-book-status`, { status: book.status })
-        .then((response) => {
+    await apiConfig.put(`${apiBaseURL.BOOK}/${book.book_item_id}/update-issued-book-status`, { status: book.status })
+        .then(() => {
             dispatch(fetchBooksAllotment(filterObj));
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage(getBookAllotmentSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
@@ -77,13 +79,13 @@ export const editBookAllotmentStatus = (book, filterObj = {}) => async (dispatch
 };
 
 export const deleteBookAllotment = (bookId) => async (dispatch) => {
-    await apiConfig.delete(`books-history/${bookId}`)
+    await apiConfig.delete(apiBaseURL.BOOK_HISTORY + '/' + bookId)
         .then((response) => {
             dispatch({ type: bookAllotmentActionType.DELETE_BOOK_ALLOTMENT, payload: bookId });
             dispatch(addToast({ text: response.data.message }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: 'error' }));
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };

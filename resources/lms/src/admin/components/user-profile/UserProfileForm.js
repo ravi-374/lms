@@ -9,8 +9,9 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
 import Select from "../../../shared/components/Select";
-import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {enableDisableUserInput, getFormattedMessage} from "../../../shared/sharedMethod";
 import {imagePicker} from "../../../shared/custom-hooks";
+import {maxDigits} from "../../constants";
 
 const UserProfileForm = (props) => {
     const { initialValues, change, countries, history, onSaveProfile, handleSubmit } = props;
@@ -67,7 +68,8 @@ const UserProfileForm = (props) => {
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name="phone" type="number" label="profile.input.phone.label" groupText="phone"
+                        <Field name="phone" type="number" label="profile.input.phone.label"
+                               onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
                                component={InputGroup}/>
                     </Col>
                     <Col xs={6}>

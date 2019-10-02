@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import './Component.scss';
 
 const CheckBox = (props) => {
-    const { input, label, checked = false } = props;
+    const { input, label } = props;
 
     return (
         <label className="control control--checkbox">{label}
-            <input type="checkbox" checked={checked} {...input}/>
+            <input type="checkbox" checked={!!input.value}
+                   onChange={(e, { checked }) => input.onChange(checked)} {...input}/>
             <div className="control__indicator"/>
         </label>
     );
@@ -15,8 +16,10 @@ const CheckBox = (props) => {
 
 CheckBox.propTypes = {
     input: PropTypes.object,
-    label: PropTypes.object,
-    checked: PropTypes.bool,
+    label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
+    ])
 };
 
 export default CheckBox;

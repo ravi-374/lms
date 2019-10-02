@@ -5,10 +5,12 @@ import {addToast} from '../../../store/action/toastAction';
 import {getOrSetCurrency} from "../../../store/action/currencyAction";
 import apiConfigWthFormData from "../../config/apiConfigWthFormData";
 import {editAppSetting} from "../../../store/action/appSettingAction";
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {apiBaseURL} from "../../../constants";
 
 export const fetchSettings = (isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
-    await apiConfig.get('settings')
+    await apiConfig.get(apiBaseURL.SETTING)
         .then((response) => {
             dispatch({ type: settingsActionsType.FETCH_SETTINGS, payload: response.data.data });
             const currencies = response.data.data.filter(setting => setting.key === settingsKey.CURRENCY)
@@ -26,7 +28,7 @@ export const fetchSettings = (isLoading = false) => async (dispatch) => {
 };
 
 export const fetchCurrencies = () => async (dispatch) => {
-    await apiConfig.get('currencies')
+    await apiConfig.get(apiBaseURL.CURRENCY)
         .then((response) => {
             dispatch({ type: settingsActionsType.FETCH_CURRENCIES, payload: response.data });
         })
@@ -36,11 +38,11 @@ export const fetchCurrencies = () => async (dispatch) => {
 };
 
 export const postSettings = (settings) => async (dispatch) => {
-    await apiConfig.post('settings', settings)
+    await apiConfig.post(apiBaseURL.SETTING, settings)
         .then((response) => {
             dispatch({ type: settingsActionsType.POST_SETTINGS, payload: response.data.data });
             dispatch(editAppSetting(prepareAppSetting(response.data.data)));
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('settings.success.create.message') }));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
@@ -48,11 +50,11 @@ export const postSettings = (settings) => async (dispatch) => {
 };
 
 export const postAppLogo = (settings) => async (dispatch) => {
-    await apiConfigWthFormData.post('upload-logo', settings)
+    await apiConfigWthFormData.post(apiBaseURL.UPLOAD_LOGO, settings)
         .then((response) => {
             dispatch({ type: settingsActionsType.POST_LOGO, payload: response.data.data });
             dispatch(editAppSetting(response.data.data));
-            dispatch(addToast({ text: response.data.message }));
+            dispatch(addToast({ text: getFormattedMessage('settings.success.upload-logo.message') }));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
