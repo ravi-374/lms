@@ -62,7 +62,7 @@ interface SettingRepositoryInterface
     public function uploadLogo($image);
 
     /**
-     * @param $image
+     * @param  UploadedFile $image
      *
      * @return mixed
      */

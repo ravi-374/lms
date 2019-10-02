@@ -88,7 +88,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
     }
 
     /**
-     * @param $image
+     * @param  UploadedFile $image
      *
      * @throws ApiOperationFailedException
      *
@@ -100,10 +100,10 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
         $setting = Setting::where('key', Setting::FAVICON_ICON)->first();
 
         if (! empty($setting->value)) {
-            $setting->deleteImage(Setting::FAVICON_PATH.DIRECTORY_SEPARATOR.$setting->value);
+            $setting->deleteImage(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$setting->value);
         }
 
-        $imageName = ImageTrait::makeImage($image, Setting::FAVICON_PATH);
+        $imageName = ImageTrait::makeImage($image, Setting::LOGO_PATH);
         $setting->update(['value' => $imageName]);
 
         return $setting->fresh();

@@ -150,6 +150,6 @@ class SettingAPIController extends AppBaseController
     {
         $setting = $this->settingRepo->uploadFaviconIcon($request->file('favicon'));
 
-        return $this->sendResponse($setting, 'Logo updated successfully.');
+        return $this->sendResponse($setting, 'Favicon updated successfully.');
     }
 }

@@ -46,7 +46,6 @@ class Setting extends Model
     const FAVICON_ICON = 'favicon_icon';
 
     const LOGO_PATH = 'images';
-    const FAVICON_PATH = self::LOGO_PATH.DIRECTORY_SEPARATOR.'favicon';
 
     public $table = 'settings';
     public $fillable = [
