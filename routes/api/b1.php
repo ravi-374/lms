@@ -135,7 +135,6 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::post('settings/{setting}', 'SettingAPIController@update');
         // Upload library logo
         Route::post('upload-logo', 'SettingAPIController@uploadLogo')->name('upload-logo');
-        Route::post('upload-favicon', 'SettingAPIController@uploadFaviconIcon')->name('upload-favicon');
     });
 
     // Countries

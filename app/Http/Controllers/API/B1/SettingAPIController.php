@@ -13,7 +13,6 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingRequest;
 use App\Http\Requests\API\UploadLogoRequest;
-use App\Http\Requests\UploadFaviconIconRequest;
 use App\Models\Setting;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use Exception;
@@ -137,18 +136,6 @@ class SettingAPIController extends AppBaseController
     public function uploadLogo(UploadLogoRequest $request)
     {
         $setting = $this->settingRepo->uploadLogo($request->file('logo'));
-
-        return $this->sendResponse($setting, 'Logo updated successfully.');
-    }
-
-    /**
-     * @param UploadFaviconIconRequest $request
-     *
-     * @return JsonResponse
-     */
-    public function uploadFaviconIcon(UploadFaviconIconRequest $request)
-    {
-        $setting = $this->settingRepo->uploadFaviconIcon($request->file('favicon'));
 
         return $this->sendResponse($setting, 'Logo updated successfully.');
     }
