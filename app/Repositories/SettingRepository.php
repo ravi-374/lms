@@ -86,4 +86,26 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
         return $setting->fresh();
     }
+
+    /**
+     * @param $image
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return Setting|null
+     */
+    public function uploadFaviconIcon($image)
+    {
+        /** @var Setting $setting */
+        $setting = Setting::where('key', Setting::FAVICON_ICON)->first();
+
+        if (! empty($setting->value)) {
+            $setting->deleteImage(Setting::FAVICON_PATH.DIRECTORY_SEPARATOR.$setting->value);
+        }
+
+        $imageName = ImageTrait::makeImage($image, Setting::FAVICON_PATH);
+        $setting->update(['value' => $imageName]);
+
+        return $setting->fresh();
+    }
 }

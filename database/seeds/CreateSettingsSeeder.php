@@ -21,6 +21,7 @@ class CreateSettingsSeeder extends Seeder
         $settings[] = ['library_name', 'My Library', 'My Library'];
         $settings[] = ['library_logo', 'logo-blue-black.png', 'Library Logo'];
         $settings[] = ['language', 'en', 'English'];
+        $settings[] = ['favicon_icon', 'apple-icon-57x57.png', 'Icon'];
 
         foreach ($settings as $setting) {
             Setting::create([
