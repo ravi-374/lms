@@ -60,4 +60,11 @@ interface SettingRepositoryInterface
      * @return Setting|null
      */
     public function uploadLogo($image);
+
+    /**
+     * @param  UploadedFile $image
+     *
+     * @return mixed
+     */
+    public function uploadFaviconIcon($image);
 }
