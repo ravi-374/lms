@@ -24,7 +24,10 @@ const mapStateToProps = state => {
 GlobalModal.propTypes = {
     title: PropTypes.object,
     actions: PropTypes.element,
-    content: PropTypes.element,
+    content: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.string
+    ]),
     className: PropTypes.string,
     isToggle: PropTypes.bool,
     toggleModal: PropTypes.func
