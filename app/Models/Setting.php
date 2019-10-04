@@ -43,6 +43,7 @@ class Setting extends Model
     const RETURN_DUE_DAYS = 'return_due_days';
     const LIBRARY_LOGO = 'library_logo';
     const LIBRARY_NAME = 'library_name';
+    const FAVICON_ICON = 'favicon_icon';
 
     const LOGO_PATH = 'images';
 
