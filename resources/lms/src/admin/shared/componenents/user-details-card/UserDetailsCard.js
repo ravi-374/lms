@@ -15,7 +15,7 @@ const UserDetailsCard = props => {
         <Row className="user-details-card__row no-gutters">
             <div className="user-details-card__image-holder-wrapper">
                 <div className="user-details-card__image-holder">
-                    {imageUrl ? <img src={imageUrl} width="250" height="250"/> :
+                    {imageUrl ? <img src={imageUrl} width="250"/> :
                         <div className="user-details-card__avatar">
                             <span className="user-details-card__avatar-text">
                                 {getAvatarName(user.first_name + ' ' + user.last_name)}
