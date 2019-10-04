@@ -133,7 +133,7 @@ const BookDetail = props => {
                                     <h5 className="mb-3">{getFormattedMessage('books.items.title')}</h5>
                                     <BookItems {...bookItemFormOptions}/>
                                 </div>
-                                <BookDetailsModal {...cardModalProps}/>
+                                {isParentToggle ? <BookDetailsModal {...cardModalProps}/> : null}
                             </CardBody>
                         </Card>
                     </div>
