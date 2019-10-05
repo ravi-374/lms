@@ -1,12 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
-import {deleteBookSeries} from '../../store/actions/bookSeriesAction';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 
-const DeleteBookSeries = (props) => {
+const DeleteBookSeriesItem = (props) => {
     const { fields, seriesItems, items, setItems, index, setIndex, toggleModal } = props;
     const content = <>{getFormattedMessage('modal.delete.message')}&nbsp;"{`${ seriesItems && seriesItems[index].book_id
     && seriesItems[index].book_id.name ? seriesItems[index].book_id.name : seriesItems[index].sequence}`}" ?</>;
@@ -19,8 +17,18 @@ const DeleteBookSeries = (props) => {
         setIndex(null);
         toggleModal();
     };
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteBookSeries} onCancel={props.toggleModal}/>}
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteBookSeries} onCancel={toggleModal}/>}
                   content={content} title={title}/>;
 };
 
-export default connect(null, { deleteBookSeries })(DeleteBookSeries);
+DeleteBookSeriesItem.propTypes = {
+    bookSeries: PropTypes.object,
+    items: PropTypes.array,
+    fields: PropTypes.array,
+    index: PropTypes.number,
+    setItems: PropTypes.func,
+    setIndex: PropTypes.func,
+    toggleModal: PropTypes.func,
+};
+
+export default DeleteBookSeriesItem;

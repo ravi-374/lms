@@ -2,14 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
-import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import './BookAllotmentDetails.scss';
 import BookAllotmentDetailsModal from './BookAllotmentDetailsModal';
 import {bookFormatOptions} from '../../constants';
 import {Routes} from "../../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import {dateFormatter, getFormattedMessage, getFormattedOptions} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
@@ -26,7 +24,7 @@ const BookAllotmentDetail = props => {
     }, []);
 
     if (!bookHistory) {
-        return <><ProgressBar/><Toasts/></>;
+        return <ProgressBar/>;
     }
 
     const onOpenModal = () => {

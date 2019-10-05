@@ -6,7 +6,6 @@ import prepareFormData from './prepareFormData';
 import MemberProfileForm from './MemberProfileForm';
 import './MemberProfile.scss';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage, prepareProfileData} from "../../../shared/sharedMethod";
 import {fetchMember, editMember} from '../../store/actions/memberAction';
@@ -32,7 +31,7 @@ const MemberProfile = props => {
     };
 
     if (!member || !member.id) {
-        return <><ProgressBar/><Toasts/></>;
+        return <ProgressBar/>;
     }
 
     return (

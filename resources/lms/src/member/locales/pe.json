@@ -54,6 +54,7 @@
     "image-picker.dropdown.profile.label": "مشخصات",
     "image-picker.dropdown.cover.label": "پوشش دادن",
     "image-picker.dropdown.logo.label": "آرم",
+    "image-picker.dropdown.favicon.label": "فاویکون",
     "image-picker.dropdown.add.label": "اضافه کردن",
     "image-picker.dropdown.change.label": "تغییر دادن",
     "image-picker.dropdown.remove.label": "برداشتن",
@@ -96,5 +97,8 @@
     "react-data-table.loader.title": "بارگذاری...",
     "reset-password.title": "بازنشانی گذرواژه",
     "reset-password.note": "رمز ورود جدید را وارد کنید",
-    "reset-password.success.message": "رمز عبور با موفقیت به روز شد."
+    "reset-password.success.message": "رمز عبور با موفقیت به روز شد.",
+    "toast.success.message": "موفقیت",
+    "toast.warning.message": "هشدار دهنده",
+    "toast.error.message": "خطا"
 }

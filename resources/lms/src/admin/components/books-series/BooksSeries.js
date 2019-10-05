@@ -10,7 +10,6 @@ import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
 import sortFilter from '../../../shared/sortFilter';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
@@ -59,7 +58,6 @@ const BooksSeries = (props) => {
                             {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
                                 <EmptyComponent title={getFormattedMessage('books-series.empty-state.title')}/>}
                             <DeleteBookSeries {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

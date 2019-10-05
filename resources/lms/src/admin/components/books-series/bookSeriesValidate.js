@@ -12,8 +12,8 @@ export default formValues => {
     if (formValues.series_items && formValues.series_items.length) {
         formValues.series_items.forEach((item, index) => {
             const bookErrors = {};
-            if (!item || !item.book_id) {
-                bookErrors.book_id = getFormattedMessage('books-series.items.select.book-name.validate.label');
+            if (!item || !item.book) {
+                bookErrors.book = getFormattedMessage('books-series.items.select.book-name.validate.label');
                 booksArrayErrors[index] = bookErrors
             }
         });

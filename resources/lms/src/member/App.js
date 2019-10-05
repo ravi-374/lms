@@ -2,17 +2,17 @@ import React, {useEffect, lazy} from 'react';
 import PropTypes from 'prop-types';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import ProgressBar from '../shared/progress-bar/ProgressBar';
 import {IntlProvider} from 'react-intl';
 import LocaleData from './locales';
 import {fetchSettings} from "./store/actions/settingAction";
 import {settingsKey} from "./constants";
 import {appSettingsKey, LocalStorageKey, Routes} from "../constants";
 import {publicImagePath, publicImagePathURL} from "../appConstant";
+import ProgressBar from '../shared/progress-bar/ProgressBar';
+import Toasts from '../shared/toast/Toasts';
+import {addRTLSupport} from "../shared/sharedMethod";
 import {fetchAppSetting} from "../store/action/appSettingAction";
 import {getUserProfile} from "../store/action/localStorageAction";
-import {fetchConfig} from "../admin/store/actions/configAction";
-import {addRTLSupport} from "../shared/sharedMethod";
 
 const Layout = lazy(() => import('./components/layout'));
 const Login = lazy(() => import('./components/auth/Login'));
@@ -48,17 +48,17 @@ const MemberApp = (props) => {
                            render={props => <ResetPassword {...props}/>}/>
                     <Route path="/" render={props => <Layout {...props} {...routeProps}/>}/>
                 </Switch>
+                <Toasts language={settings[settingsKey.LANGUAGE] ? settings[settingsKey.LANGUAGE].value : null}/>
             </React.Suspense>
         </IntlProvider>
     );
 };
 
 MemberApp.propTypes = {
-    member:PropTypes.object,
+    member: PropTypes.object,
     appSetting: PropTypes.object,
     settings: PropTypes.object,
     fetchSettings: PropTypes.func,
-    fetchConfig: PropTypes.func,
     getUserProfile: PropTypes.func,
     fetchAppSetting: PropTypes.func,
     sortAction: PropTypes.func,
@@ -71,4 +71,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { fetchSettings, fetchConfig, getUserProfile, fetchAppSetting })(MemberApp);
+export default connect(mapStateToProps, { fetchSettings, getUserProfile, fetchAppSetting })(MemberApp);

@@ -54,6 +54,7 @@
     "image-picker.dropdown.profile.label": "Perfil",
     "image-picker.dropdown.cover.label": "Cubrir",
     "image-picker.dropdown.logo.label": "Logo",
+    "image-picker.dropdown.favicon.label": "Favicon",
     "image-picker.dropdown.add.label": "Añadir",
     "image-picker.dropdown.change.label": "Cambio",
     "image-picker.dropdown.remove.label": "Eliminar",
@@ -99,5 +100,8 @@
     "react-data-table.loader.title": "Cargando...",
     "reset-password.title": "Restablecer La Contraseña",
     "reset-password.note": "Ingrese nueva clave",
-    "reset-password.success.message": "Contraseña actualizada exitosamente."
+    "reset-password.success.message": "Contraseña actualizada exitosamente.",
+    "toast.success.message": "Éxito",
+    "toast.warning.message": "Advertencia",
+    "toast.error.message": "Error"
 }

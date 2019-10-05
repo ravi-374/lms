@@ -56,6 +56,7 @@
     "image-picker.dropdown.profile.label": "Profil",
     "image-picker.dropdown.cover.label": "Couverture",
     "image-picker.dropdown.logo.label": "Logo",
+    "image-picker.dropdown.favicon.label": "Favicon",
     "image-picker.dropdown.add.label": "Ajouter",
     "image-picker.dropdown.change.label": "Changement",
     "image-picker.dropdown.remove.label": "Retirer",
@@ -98,5 +99,8 @@
     "react-data-table.loader.title": "Chargement...",
     "reset-password.title": "Réinitialiser Le Mot De Passe",
     "reset-password.note": "Entrez un nouveau mot de passe",
-    "reset-password.success.message": "Mot de passe mis à jour avec succès."
+    "reset-password.success.message": "Mot de passe mis à jour avec succès.",
+    "toast.success.message": "Succès",
+    "toast.warning.message": "Attention",
+    "toast.error.message": "Erreur"
 }

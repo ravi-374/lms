@@ -6,7 +6,6 @@ import BookSearchForm from './BookSearchForm';
 import BookSearchTable from './BookSearchTable';
 import './BookSearch.scss';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {getFormattedMessage, prepareFullNames} from '../../../shared/sharedMethod';
@@ -24,7 +23,7 @@ const BookSearch = (props) => {
     }, []);
 
     if (isLoading && !isSearch) {
-        return <><ProgressBar/><Toasts/></>;
+        return <ProgressBar/>;
     }
     const onSearchBook = (params) => {
         findBooks(params);

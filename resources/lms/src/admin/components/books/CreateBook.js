@@ -4,7 +4,6 @@ import {Row, Col, Card, CardBody} from 'reactstrap';
 import PropTypes from 'prop-types';
 import BookForm from './BookForm';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import prepareFormData from '../../shared/prepareBookFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage, prepareFullNames} from "../../../shared/sharedMethod";
@@ -62,7 +61,6 @@ const CreateBook = (props) => {
                         <Card>
                             <CardBody>
                                 <BookForm {...prepareFormOption}/>
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </div>

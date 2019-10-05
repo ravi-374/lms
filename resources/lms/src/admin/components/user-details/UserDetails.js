@@ -4,7 +4,6 @@ import {Card, CardBody, Row, Col, Button} from 'reactstrap';
 import PropTypes from 'prop-types';
 import UserDetailsModal from './UserDetailsModal';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import UserDetailsCard from '../../shared/componenents/user-details-card/UserDetailsCard';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
@@ -20,7 +19,7 @@ const UserDetails = props => {
     }, []);
 
     if (!user) {
-        return <><ProgressBar/><Toasts/></>;
+        return <ProgressBar/>;
     }
 
     const onOpenModal = () => {

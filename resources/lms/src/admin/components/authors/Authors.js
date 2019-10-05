@@ -3,7 +3,6 @@ import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import AuthorModal from './AuthorModal';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
@@ -65,7 +64,6 @@ const Authors = (props) => {
                                             emptyStateMessageId="authors.empty-state.title" totalRows={totalRecord}
                                             onChange={onChange}/>
                             <AuthorModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

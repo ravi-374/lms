@@ -16,7 +16,7 @@ const BookLanguageForm = props => {
     }, []);
 
     const onSave = formValues => {
-        formValues.language_code.toUpperCase();
+        formValues.language_code = formValues.language_code.toUpperCase();
         onSaveBookLanguage(formValues);
     };
 

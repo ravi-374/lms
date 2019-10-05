@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import './UserProfile.scss';
 import UserProfileForm from './UserProfileForm';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import prepareUserFormData from "../../shared/prepareUserFormData";
 import {getFormattedMessage, prepareProfileData} from "../../../shared/sharedMethod";
@@ -27,7 +26,7 @@ const UserProfile = props => {
     };
 
     if (!userProfile || !userProfile.id) {
-        return <><ProgressBar/><Toasts/></>;
+        return <ProgressBar/>;
     }
 
     const prepareFormOption = {
@@ -36,6 +35,7 @@ const UserProfile = props => {
         onSaveProfile,
         history
     };
+
     return (
         <div className="animated fadeIn">
             <HeaderTitle title="Profile"/>

@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Row, Col, Button, Card, CardBody} from 'reactstrap';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import BookLanguageModal from './BookLanguageModal';
 import './BookLanguages.scss';
-import Toasts from '../../../shared/toast/Toasts';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
@@ -72,7 +71,6 @@ const BookLanguages = (props) => {
                                             emptyStateMessageId="book-languages.empty-state.title"
                                             totalRows={totalRecord} onChange={onChange}/>
                             <BookLanguageModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

@@ -7,7 +7,6 @@ import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
 import {Routes, Tokens} from "../../../constants";
 import CheckBox from '../../../shared/components/CheckBox';
-import Toasts from '../../../shared/toast/Toasts';
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage, getLocalStorageDataByKey} from "../../../shared/sharedMethod";
@@ -57,7 +56,6 @@ const Login = (props) => {
                                         </Link>
                                     </div>
                                 </Form>
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </Col>

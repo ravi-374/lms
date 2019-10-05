@@ -26,7 +26,8 @@ export const errorMessage = {
 export const publicImagePath = {
     USER_AVATAR: 'images/user-avatar.png',
     BOOK_AVATAR: 'images/book-avatar.png',
-    APP_LOGO: 'images/logo-blue-black.png'
+    APP_LOGO: 'images/logo-blue-black.png',
+    APP_FAVICON: 'images/logo-blue-black.png'
 };
 
 export const publicImagePathURL = {

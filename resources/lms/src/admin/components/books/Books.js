@@ -7,7 +7,6 @@ import './Books.scss';
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import DeleteBook from './DeleteBook';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
 import {Routes} from "../../../constants";
@@ -105,14 +104,12 @@ const Books = (props) => {
                                             emptyStateMessageId="books.empty-state.title" totalRows={totalRecord}
                                             onChange={onChange}/>
                             <DeleteBook {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>
             </Col>
         </Row>
     );
-
 };
 
 

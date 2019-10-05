@@ -7,7 +7,6 @@ import './BooksAllotment.scss';
 import {Routes} from "../../../constants";
 import {bookAllotmentFilterOptions, storageKey} from "../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import {dateFormatter, getFormattedMessage, getFormattedOptions} from '../../../shared/sharedMethod';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
@@ -127,7 +126,6 @@ const BooksAllotment = (props) => {
                                             columns={columns} loading={isLoading} totalRows={totalRecord}
                                             onChange={onChange}/>
                             <BookAllotmentModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

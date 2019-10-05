@@ -23,6 +23,7 @@
 // Import react datepicker scss
 @import "~react-datepicker/dist/react-datepicker.css";
 @import '~react-image-crop/lib/ReactCrop.scss';
+@import '~react-toastify/dist/ReactToastify.css';
 
 body {
     margin: 0;
@@ -343,5 +344,19 @@ html[dir="rtl"] {
         align-items: center;
         border-radius: 50%;
         color: $white;
+    }
+}
+
+.Toastify__toast-container {
+    width: unset;
+    min-width: 350px;
+    padding: 0;
+
+    .Toastify__toast {
+        padding: 0;
+        overflow: unset;
+    }
+    .Toastify__toast--default {
+        color: $black;
     }
 }

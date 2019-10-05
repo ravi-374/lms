@@ -9,23 +9,15 @@ html[dir="rtl"] {
 
     @media (max-width: 1544px) {
         .settings__form {
-            position: absolute;
-            left: 0;
-            width: 77%;
+            right: 6.3%;
+            max-width: 77%;
         }
     }
 
-    @media (max-width: 1120px) {
+    @media (max-width: 1250px) {
         .settings__form {
-            position: absolute;
-            left: 0;
-            width: 70%;
-        }
-    }
-
-    @media (max-width: 945px) {
-        .settings__form {
-            position: relative;
+            right: 10.3%;
+            max-width: 73%;
         }
     }
 
@@ -33,38 +25,38 @@ html[dir="rtl"] {
 
 @media (max-width: 1544px) {
     .settings__form {
-        position: absolute;
-        left: 24%;
-        width: 77%;
+        left: 6.3%;
+        max-width: 77%;
     }
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1250px) {
     .settings__form {
-        position: absolute;
-        left: 30%;
-        width: 70%;
+        left: 10.3%;
+        max-width: 73%;
     }
 }
 
-@media (max-width: 945px) {
+@media (max-width: 1060px) {
     .settings {
-        position: relative;
         flex-direction: column;
         align-items: center;
 
+        .settings__favicon,
         .settings__logo {
             max-width: 100%;
             margin-bottom: 30px;
 
+            .settings__favicon-heading,
             .settings__logo-heading {
                 margin-left: calc(1px - -15%);
             }
         }
     }
     .settings__form {
-        position: relative;
         left: 0;
+        right: 0 !important;
+        max-width: 100% !important;
 
         .settings__form-columns {
             flex-direction: column;

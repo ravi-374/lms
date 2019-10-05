@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import TagModal from './TagModal';
-import Toasts from '../../../shared/toast/Toasts';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchTags} from '../../store/actions/tagAction';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
@@ -63,7 +62,6 @@ const Tags = (props) => {
                             <ReactDataTable items={tags} columns={columns} emptyStateMessageId="tags.empty-state.title"
                                             loading={isLoading} totalRows={totalRecord} onChange={onChange}/>
                             <TagModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

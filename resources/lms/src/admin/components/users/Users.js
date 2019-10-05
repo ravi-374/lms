@@ -6,7 +6,6 @@ import UserModal from './UserModal';
 import User from './UserTable';
 import './Users.scss';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
@@ -60,7 +59,6 @@ const Users = (props) => {
                         <CardBody>
                             <User {...cardBodyProps}/>
                             <UserModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

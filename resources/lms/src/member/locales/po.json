@@ -54,6 +54,7 @@
     "image-picker.dropdown.profile.label": "Perfil",
     "image-picker.dropdown.cover.label": "Releitura Musical",
     "image-picker.dropdown.logo.label": "Logotipo",
+    "image-picker.dropdown.favicon.label": "Favicon",
     "image-picker.dropdown.add.label": "Adicionar",
     "image-picker.dropdown.change.label": "Mudança",
     "image-picker.dropdown.remove.label": "Retirar",
@@ -96,5 +97,8 @@
     "react-data-table.loader.title": "Carregando...",
     "reset-password.title": "Redefinir Senha",
     "reset-password.note": "Insira a nova senha",
-    "reset-password.success.message": "Senha atualizada com sucesso."
+    "reset-password.success.message": "Senha atualizada com sucesso.",
+    "toast.success.message": "Sucesso",
+    "toast.warning.message": "Aviso",
+    "toast.error.message": "Erro"
 }
