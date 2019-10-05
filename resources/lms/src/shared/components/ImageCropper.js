@@ -6,15 +6,28 @@ import ConfirmAction from '../action-buttons/ConfirmAction';
 import './Component.scss';
 import {getFormattedMessage} from "../sharedMethod";
 
+let imageRef = null;
 const ImageCropper = (props) => {
-    const { image, emitFileChange, onSave, onCancel } = props;
-    const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 16 / 9 });
+    const { image, emitFileChange, onSave, onCancel, isToggle, isFavicon = false } = props;
+    const [crop, setCrop] = useState(isFavicon ? {
+        unit: 'px',
+        width: 16,
+        height: 16,
+    } : {
+        unit: 'px',
+        width: 50,
+        height: 50
+    });
     const [croppedImageUrl, setCroppedImageUrl] = useState(null);
-    const [imageRef, setImageRef] = useState(null);
+    const extraOptions = {
+        minHeight: 16,
+        maxHeight: 16,
+        minWidth: 16,
+        maxWidth: 16,
+    };
 
     const onImageLoaded = image => {
-        setImageRef(image);
-        setCroppedImageUrl(null);
+        imageRef = image;
     };
 
     const onCropComplete = crop => {
@@ -70,12 +83,21 @@ const ImageCropper = (props) => {
         });
     };
 
+    let prepareCropOption = {
+        src: image, crop, onImageLoaded,
+        onComplete: onCropComplete,
+        onChange: onCropChange,
+    };
+
+    if (isFavicon) {
+        prepareCropOption = { ...prepareCropOption, ...extraOptions }
+    }
+
     const prepareModalOption = {
         className: 'membership-plan-modal',
         title: getFormattedMessage('image-cropper.modal.title'),
         content: <>
-            <ReactCrop src={image} crop={crop} onImageLoaded={onImageLoaded} onComplete={onCropComplete}
-                       onChange={onCropChange}/>
+            <ReactCrop {...prepareCropOption}/>
             {croppedImageUrl &&
             (<div className="mt-2">
                     <h5>Preview</h5>
@@ -90,12 +112,14 @@ const ImageCropper = (props) => {
     };
 
     return (
-        image ? (<Modal {...prepareModalOption}/>) : null
+        image && isToggle ? (<Modal {...prepareModalOption}/>) : null
     );
 };
 
 ImageCropper.propTypes = {
     image: PropTypes.string,
+    isToggle: PropTypes.bool,
+    isFavicon: PropTypes.bool,
     emitFileChange: PropTypes.func,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,

@@ -13,7 +13,7 @@ import {fetchSettings} from "../../store/actions/settingAction";
 
 const ImportBookForm = (props) => {
     const {
-        initialValues, change, currency, authors, tags, genres, initialize, handleSubmit,
+        initialValues, change, currency, authors, tags, genres, handleSubmit,
         publishers, bookLanguages, onImportBook, fetchImportBook
     } = props;
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
@@ -37,7 +37,7 @@ const ImportBookForm = (props) => {
     };
     const { invalid, onCancel, pristine } = props;
     const prepareFormOptions = {
-        initialValues, change, initialize,
+        initialValues, change,
         currency, authors, tags, genres,
         publishers, bookLanguages,
         imagePickerOptions,
@@ -134,7 +134,6 @@ ImportBookForm.propTypes = {
     fetchImportBook: PropTypes.func,
     change: PropTypes.func,
     handleSubmit: PropTypes.func,
-    initialize: PropTypes.func,
     onImportBook: PropTypes.func
 };
 

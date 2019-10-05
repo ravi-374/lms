@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import RoleModal from './RoleModal';
 import Role from './RoleTable';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
@@ -55,7 +54,6 @@ const Roles = (props) => {
                             {roles.length > 0 ? <Role {...cardBodyProps}/> :
                                 <EmptyComponent title={getFormattedMessage('roles.empty-state.title')}/>}
                             <RoleModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

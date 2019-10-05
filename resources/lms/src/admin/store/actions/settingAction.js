@@ -61,6 +61,18 @@ export const postAppLogo = (settings) => async (dispatch) => {
         });
 };
 
+export const postAppFavicon = (settings) => async (dispatch) => {
+    await apiConfigWthFormData.post(apiBaseURL.UPLOAD_FAVICON, settings)
+        .then((response) => {
+            dispatch({ type: settingsActionsType.POST_FAVICON, payload: response.data.data });
+            dispatch(editAppSetting(response.data.data));
+            dispatch(addToast({ text: getFormattedMessage('settings.success.upload-favicon.message') }));
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        });
+};
+
 const prepareAppSetting = (settings) => {
     return settings.find(setting => setting.key === settingsKey.LIBRARY_NAME);
 };

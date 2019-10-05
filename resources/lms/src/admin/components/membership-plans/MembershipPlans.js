@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import MembershipPlanModal from './MembershipPlanModal';
 import MembershipPlan from './MembershipPlanTable';
-import Toasts from '../../../shared/toast/Toasts';
 import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import CustomSearchField from '../../../shared/components/CustomSearchField';
 import searchFilter from '../../../shared/searchFilter';
@@ -58,7 +57,6 @@ const MembershipPlans = (props) => {
                             {membershipPlans.length > 0 ? <MembershipPlan {...cardBodyProps}/> :
                                 <EmptyComponent title={getFormattedMessage('membership-plans.empty-state.title')}/>}
                             <MembershipPlanModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

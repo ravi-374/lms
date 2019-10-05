@@ -5,13 +5,14 @@ import {connect} from "react-redux";
 import {IntlProvider} from 'react-intl';
 import {publicImagePath, publicImagePathURL, settingsKey} from "../appConstant";
 import LocaleData from './locales';
+import {appSettingsKey, LocalStorageKey, Routes} from "../constants";
+import ProgressBar from '../shared/progress-bar/ProgressBar';
+import Toasts from '../shared/toast/Toasts';
+import {addRTLSupport} from "../shared/sharedMethod";
 import {fetchAppSetting} from "../store/action/appSettingAction";
 import {fetchSettings} from "./store/actions/settingAction";
 import {fetchConfig} from "./store/actions/configAction";
 import {getUserProfile} from "../store/action/localStorageAction";
-import {appSettingsKey, LocalStorageKey, Routes} from "../constants";
-import {addRTLSupport} from "../shared/sharedMethod";
-import ProgressBar from '../shared/progress-bar/ProgressBar';
 
 const Layout = React.lazy(() => import('./components/layout'));
 const Login = React.lazy(() => import('./components/auth/Login'));
@@ -46,6 +47,7 @@ const AdminApp = (props) => {
                            render={props => <ResetPassword {...props}/>}/>
                     <Route path="/app/admin" name="Home" render={props => <Layout {...props} {...routeProps}/>}/>
                 </Switch>
+                <Toasts language={settings[settingsKey.LANGUAGE] ? settings[settingsKey.LANGUAGE].value : null}/>
             </React.Suspense>
         </IntlProvider>
     );

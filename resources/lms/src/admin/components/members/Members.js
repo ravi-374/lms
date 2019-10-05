@@ -8,7 +8,6 @@ import Member from './MemberTable';
 import './Members.scss';
 import {FilterOption} from "../../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
@@ -75,7 +74,6 @@ const Members = (props) => {
                         <CardBody>
                             <Member {...cardBodyProps}/>
                             <MemberModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

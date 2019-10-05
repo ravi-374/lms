@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import PublisherModal from './PublisherModal';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
@@ -64,7 +63,6 @@ const Publishers = (props) => {
                                             emptyStateMessageId="publishers.empty-state.title" loading={isLoading}
                                             totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <PublisherModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

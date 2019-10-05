@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Helmet} from "react-helmet";
-import {appSettingsKey} from "../../constants";
 import {publicImagePath, publicImagePathURL} from "../../appConstant";
+import {settingsKey} from "../../admin/constants";
 
 const ReactHelmet = (props) => {
-    const { title, appSetting } = props;
-    const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
-    const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
-        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
+    const { title, settings } = props;
+    const appName = settings[settingsKey.LIBRARY_NAME] ? settings[settingsKey.LIBRARY_NAME].value : null;
+    const appLogo = settings[settingsKey.LIBRARY_FAVICON] ?
+        publicImagePathURL.IMAGE_URL + settings[settingsKey.LIBRARY_FAVICON].value : publicImagePath.APP_LOGO;
 
     return (
         <Helmet onChangeClientState={() => {
@@ -36,12 +36,12 @@ const ReactHelmet = (props) => {
 };
 
 ReactHelmet.propTypes = {
-    appSetting: PropTypes.object,
+    settings: PropTypes.object,
     title: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {
-    return { appSetting: state.appSetting };
+    return { settings: state.settings };
 };
 
 export default connect(mapStateToProps)(ReactHelmet);

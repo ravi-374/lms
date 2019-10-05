@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
 import {Routes} from "../../../constants";
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
@@ -49,7 +48,6 @@ const MemberResetPassword = (props) => {
                                         </Col>
                                     </Row>
                                 </Form>
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </Col>

@@ -7,7 +7,6 @@ import {Button, Card, CardBody, Col, Container, Form, Row} from 'reactstrap';
 import loginFormValidate from './loginFormValidate';
 import {environment} from "../../../environment";
 import {Routes} from "../../../constants";
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
@@ -55,7 +54,6 @@ const ForgotPassword = (props) => {
                                         </div>
                                     </div>
                                 }
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </Col>

@@ -19,7 +19,7 @@ const getItems = seriesItems =>
     seriesItems.map((item, key) => ({
         id: `item-${key}`,
         sequence: item.sequence,
-        book_id: item.book_id.id
+        book_id: item.book.id
     }));
 
 const reorder = (list, startIndex, endIndex) => {
@@ -41,8 +41,8 @@ const filteredBooks = (books, seriesItems) => {
         return books;
     }
     return books.filter(o => !seriesItems.find(o2 => {
-        if (o2.book_id && o2.book_id.id) {
-            return o.id === +o2.book_id.id
+        if (o2.book && o2.book.id) {
+            return o.id === +o2.book.id
         }
     }));
 };
@@ -54,12 +54,12 @@ const BookSeriesForm = props => {
     const [items, setItems] = useState(getItems(initialValues ? initialValues.series_items : [{
         id: 1,
         sequence: 1,
-        book_id: { id: null }
+        book: { id: null }
     }]));
     const inputRef = createRef();
 
     useEffect(() => {
-       // fetchBooks({}, null, true);
+        fetchBooks({}, null, true);
         inputRef.current.focus();
         if (!initialValues) {
             initialize({ series_items: [{ sequence: 1 }] });
@@ -84,7 +84,7 @@ const BookSeriesForm = props => {
         seriesItem.forEach((item, index) => {
             seriesItems.forEach((i) => {
                 if (item.sequence === +i.sequence) {
-                    array.push({ sequence: index + 1, book_id: i.book_id })
+                    array.push({ sequence: index + 1, book: i.book })
                 }
             });
         });
@@ -94,8 +94,10 @@ const BookSeriesForm = props => {
 
     const prepareFormData = (formValues) => {
         formValues.series_items.forEach((seriesItem, index) => {
-            seriesItem.sequence = index + 1, seriesItem.book_id = seriesItem.book_id.id
+            seriesItem.sequence = index + 1;
+            seriesItem.book_id = seriesItem.book.id;
         });
+        delete formValues.book;
         return formValues;
     };
 
@@ -168,7 +170,7 @@ const renderBookSeriesItems = ({ fields, meta: { error, submitFailed }, onDragEn
                                                            groupText="file-text" component={CustomInput}/>
                                                 </td>
                                                 <td style={{ width: '720px' }}>
-                                                    <Field name={`${item}.book_id`} required options={books}
+                                                    <Field name={`${item}.book`} required options={books}
                                                            placeholder="books-series.items.select.book-name.placeholder"
                                                            groupText="book" component={Select} isSearchable={true}/>
                                                 </td>

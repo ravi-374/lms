@@ -54,6 +54,7 @@
     "image-picker.dropdown.profile.label": "الملف الشخصي",
     "image-picker.dropdown.cover.label": "التغطية",
     "image-picker.dropdown.logo.label": "شعار",
+    "image-picker.dropdown.favicon.label": "فافيكون",
     "image-picker.dropdown.add.label": "إضافة",
     "image-picker.dropdown.change.label": "يتغيرون",
     "image-picker.dropdown.remove.label": "إزالة",
@@ -96,5 +97,8 @@
     "react-data-table.loader.title": "جار التحميل...",
     "reset-password.title": "إعادة تعيين كلمة المرور",
     "reset-password.note": "أدخل كلمة مرور جديدة",
-    "reset-password.success.message": "تم تحديث كلمة السر بنجاح."
+    "reset-password.success.message": "تم تحديث كلمة السر بنجاح.",
+    "toast.success.message": "نجاح",
+    "toast.warning.message": "تحذير",
+    "toast.error.message": "خطأ"
 }

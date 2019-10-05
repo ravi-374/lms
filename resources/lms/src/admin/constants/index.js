@@ -211,6 +211,7 @@ export const settingsActionsType = {
     FETCH_SETTINGS: 'FETCH_SETTINGS',
     POST_SETTINGS: 'POST_SETTINGS',
     POST_LOGO: 'POST_LOGO',
+    POST_FAVICON: 'POST_FAVICON',
     FETCH_CURRENCIES: 'FETCH_CURRENCIES',
 };
 
@@ -220,6 +221,7 @@ export const settingsKey = {
     RETURN_DUE_DAYS: 'return_due_days',
     LIBRARY_NAME: 'library_name',
     LIBRARY_LOGO: 'library_logo',
+    LIBRARY_FAVICON: 'favicon_icon',
     LANGUAGE: 'language',
 };
 

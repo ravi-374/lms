@@ -3,7 +3,6 @@ import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import GenreModal from "./GenerModal";
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
@@ -64,7 +63,6 @@ const Genres = (props) => {
                                             emptyStateMessageId="genres.empty-state.title" totalRows={totalRecord}
                                             onOpenModal={onOpenModal} onChange={onChange}/>
                             <GenreModal {...cardModalProps}/>
-                            <Toasts/>
                         </CardBody>
                     </Card>
                 </div>

@@ -16,7 +16,6 @@ import navigation from '../../config/navbarConfig';
 import routes from "../../routes";
 import {Routes, Tokens} from "../../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import {checkExistingRoute} from "../../../shared/sharedMethod";
 
 const Footer = lazy(() => import('./Footer'));
@@ -108,7 +107,6 @@ const renderMainSection = (newRoutes, location) => {
                     </Switch>
                 </Suspense>
             </Container>
-            <Toasts/>
         </main>
     )
 };
