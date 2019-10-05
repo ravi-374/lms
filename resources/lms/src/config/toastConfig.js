@@ -1,9 +1,16 @@
+import {toast, cssTransition, Slide, Zoom, Flip, Bounce} from "react-toastify";
+
 let id = 0;
 
 const defaultOptions = {
-    color: "#28a745"
+    config: {
+        autoClose: 3000,
+        position: toast.POSITION.BOTTOM_RIGHT,
+        closeButton: false,
+        transition: Zoom
+    }
 };
 
-export default (options) => {
-    return {...defaultOptions, ...options, id: id++}
+export default (options = {}) => {
+    return { ...defaultOptions, ...options, id: id++ }
 };

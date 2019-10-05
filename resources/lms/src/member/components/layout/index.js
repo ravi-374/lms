@@ -14,7 +14,6 @@ import {
 import PropTypes from 'prop-types';
 import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import routes from '../../routes';
 import {Routes, Tokens} from "../../../constants";
 import {checkExistingRoute} from "../../../shared/sharedMethod";
@@ -79,7 +78,6 @@ const renderMainSection = (location) => {
                     </Switch>
                 </Suspense>
             </Container>
-            <Toasts/>
         </main>
     )
 };

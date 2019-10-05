@@ -54,6 +54,7 @@
     "image-picker.dropdown.profile.label": "Профиль",
     "image-picker.dropdown.cover.label": "Покрытие",
     "image-picker.dropdown.logo.label": "Поготип",
+    "image-picker.dropdown.favicon.label": "Favicon",
     "image-picker.dropdown.add.label": "Добавлять",
     "image-picker.dropdown.change.label": "+ Изменить",
     "image-picker.dropdown.remove.label": "Удалить",
@@ -96,5 +97,8 @@
     "react-data-table.loader.title": "Загрузка ...",
     "reset-password.title": "Сброс Пароль",
     "reset-password.note": "Введите новый пароль",
-    "reset-password.success.message": "Пароль успешно обновлен."
+    "reset-password.success.message": "Пароль успешно обновлен.",
+    "toast.success.message": "успех",
+    "toast.warning.message": "Предупреждение",
+    "toast.error.message": "Ошибка"
 }

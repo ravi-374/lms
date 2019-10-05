@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody} from 'reactstrap';
 import PropTypes from 'prop-types';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import ImportBookForm from './ImportBookForm';
 import prepareFormData from '../../shared/prepareBookFormData';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
@@ -64,7 +63,6 @@ const ImportBook = (props) => {
                         <Card>
                             <CardBody>
                                 <ImportBookForm {...prepareFormOption}/>
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </div>

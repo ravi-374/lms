@@ -7,15 +7,20 @@ import SettingsForm from "./SettingsForm";
 import {languageOptions, settingsKey} from '../../constants';
 import {publicImagePathURL} from "../../../appConstant";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from "../../../shared/toast/Toasts";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
-import {fetchCurrencies, fetchSettings, postAppLogo, postSettings} from '../../store/actions/settingAction';
+import {
+    fetchCurrencies,
+    fetchSettings,
+    postAppLogo,
+    postSettings,
+    postAppFavicon
+} from '../../store/actions/settingAction';
 
 const Settings = (props) => {
     const {
         currencies, fetchSettings, fetchCurrencies, postSettings, postAppLogo,
-        selectedCurrency, settings, selectedLanguage, exist_library_logo
+        selectedCurrency, settings, selectedLanguage, exist_library_logo, exist_favicon_logo, postAppFavicon
     } = props;
     const bookLanguagesOptions = getFormattedOptions(languageOptions);
 
@@ -25,17 +30,28 @@ const Settings = (props) => {
     }, []);
 
     const onSaveSettings = (formValues) => {
-        postSettings([...formValues, exist_library_logo]);
+        postSettings([...formValues, exist_library_logo, exist_favicon_logo]);
     };
 
     const onChangeAppLogo = (file) => {
-        const formData = new FormData();
-        formData.append('logo', file, file.name);
-        postAppLogo(formData)
+        if (file) {
+            const formData = new FormData();
+            formData.append('logo', file, file.name);
+            postAppLogo(formData)
+        }
     };
-    const getLogo = (settings) => {
-        return settings && settings[settingsKey.LIBRARY_LOGO] ?
-            publicImagePathURL.IMAGE_URL + settings[settingsKey.LIBRARY_LOGO].value : null
+
+    const onChangeAppFavicon = (file) => {
+        if (file) {
+            const formData = new FormData();
+            formData.append('favicon', file, file.name);
+            postAppFavicon(formData)
+        }
+    };
+
+    const getLogo = (settings, key) => {
+        return settings && settings[key] ?
+            publicImagePathURL.IMAGE_URL + settings[key].value : null
     };
 
     const prepareFormOption = {
@@ -45,11 +61,13 @@ const Settings = (props) => {
             issue_due_days: settings[settingsKey.ISSUE_DUE_DAYS] ? settings[settingsKey.ISSUE_DUE_DAYS].value : null,
             return_due_days: settings[settingsKey.RETURN_DUE_DAYS] ? settings[settingsKey.RETURN_DUE_DAYS].value : null,
             library_name: settings[settingsKey.LIBRARY_NAME] ? settings[settingsKey.LIBRARY_NAME].value : null,
-            library_logo: getLogo(settings),
+            library_logo: getLogo(settings, settingsKey.LIBRARY_LOGO),
+            library_favicon: getLogo(settings, settingsKey.LIBRARY_FAVICON),
             language: bookLanguagesOptions.find(lang => lang.id === selectedLanguage.id),
         },
         onSaveSettings,
-        onChangeAppLogo
+        onChangeAppLogo,
+        onChangeAppFavicon
     };
 
     return (
@@ -65,7 +83,6 @@ const Settings = (props) => {
                         <Card>
                             <CardBody>
                                 <SettingsForm {...prepareFormOption}/>
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </div>
@@ -79,12 +96,14 @@ Settings.propTypes = {
     selectedCurrency: PropTypes.object,
     selectedLanguage: PropTypes.object,
     exist_library_logo: PropTypes.object,
+    exist_favicon_logo: PropTypes.object,
     settings: PropTypes.object,
     currencies: PropTypes.array,
     fetchSettings: PropTypes.func,
     fetchCurrencies: PropTypes.func,
     postSettings: PropTypes.func,
-    postAppLogo: PropTypes.func
+    postAppLogo: PropTypes.func,
+    postAppFavicon: PropTypes.func
 };
 
 
@@ -118,6 +137,7 @@ const mapStateToProps = (state) => {
         settings: settingsArr,
         selectedLanguage: prepareSelectedSetting(settingsArray, settingsKey.LANGUAGE),
         exist_library_logo: settings[settingsKey.LIBRARY_LOGO] ? settings[settingsKey.LIBRARY_LOGO] : null,
+        exist_favicon_logo: settings[settingsKey.LIBRARY_FAVICON] ? settings[settingsKey.LIBRARY_FAVICON] : null,
     }
 };
 
@@ -125,5 +145,6 @@ export default connect(mapStateToProps, {
     fetchSettings,
     fetchCurrencies,
     postSettings,
-    postAppLogo
+    postAppLogo,
+    postAppFavicon
 })(Settings);

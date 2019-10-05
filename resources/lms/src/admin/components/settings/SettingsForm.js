@@ -13,18 +13,27 @@ import SaveAction from '../../../shared/action-buttons/SaveAction';
 import ImagePicker from "../../../shared/image-picker/ImagePicker";
 import {getFormattedMessage, getFormattedOptions, mapCurrencyCode} from '../../../shared/sharedMethod';
 import ImageCropper from '../../../shared/components/ImageCropper';
-import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from "../../../store/action/modalAction";
 import {imagePicker} from "../../../shared/custom-hooks";
 
 const SettingsForm = (props) => {
-    const { currencies, initialValues, change, onChangeAppLogo, toggleModal, onSaveSettings, handleSubmit } = props;
+    const {
+        currencies, initialValues, change, onChangeAppLogo, toggleModal,
+        onSaveSettings, handleSubmit, onChangeAppFavicon
+    } = props;
     const [groupText, setGroupText] = useState(mapCurrencyCode(initialValues.currency ? initialValues.currency.id : null));
     const settingRef = createRef();
-    const [fileRef, setFileRef] = useState(null);
-    const [image, isDefaultImage, file, onFileChanging, onRemovingPhoto] = imagePicker(change,
+    const [logoRef, setLogoRef] = useState(null);
+    const [faviconRef, setFaviconRef] = useState(null);
+    const [isToggleLogo, setToggleLogo] = useState(false);
+    const [isToggleFavicon, setToggleFavicon] = useState(false);
+    const [logo, isDefaultLogo, logoFile, onLogoChange, onRemoveLogo] = imagePicker(change,
         publicImagePath.APP_LOGO, publicImagePath.APP_LOGO,
         !(!!initialValues.library_logo),
+    );
+    const [favicon, isDefaultFavicon, faviconFile, onFaviconChange, onRemoveFavicon] = imagePicker(change,
+        publicImagePath.APP_FAVICON, publicImagePath.APP_FAVICON,
+        !(!!initialValues.library_favicon),
     );
     const bookLanguagesOptions = getFormattedOptions(languageOptions);
 
@@ -52,23 +61,51 @@ const SettingsForm = (props) => {
         onSaveSettings(settings);
     };
 
-    const onFileChange = (event) => {
-        setFileRef(file);
-        onFileChanging(event);
+    const onChangingLogo = (event) => {
+        setLogoRef(logoFile);
+        onLogoChange(event);
+        setToggleFavicon(false);
+        setToggleLogo(true);
         toggleModal();
     };
 
-    const onRemovePhoto = () => {
+    const onChangingFavicon = (event) => {
+        setFaviconRef(faviconFile);
+        onFaviconChange(event);
+        setToggleLogo(false);
+        setToggleFavicon(true);
+        toggleModal();
+    };
+
+    const onRemovingLogo = () => {
         onChangeAppLogo(null);
-        onRemovingPhoto();
+        onRemoveLogo();
     };
 
-    const emitFileChange = (fileRef) => {
-        setFileRef(fileRef);
+    const onRemovingFavicon = () => {
+        onChangeAppFavicon(null);
+        onRemoveFavicon();
     };
 
-    const onSaveImage = () => {
-        onChangeAppLogo(fileRef);
+    const emitLogoChange = (fileRef) => {
+        setLogoRef(fileRef);
+    };
+
+    const emitFaviconChange = (fileRef) => {
+        setFaviconRef(fileRef);
+    };
+
+    const onSaveLogo = () => {
+        if (isToggleFavicon) {
+            onChangeAppFavicon(logoRef);
+        } else {
+            onChangeAppLogo(logoRef);
+        }
+        toggleModal();
+    };
+
+    const onSaveFavicon = () => {
+        onChangeAppFavicon(faviconRef);
         toggleModal();
     };
 
@@ -76,20 +113,41 @@ const SettingsForm = (props) => {
         toggleModal();
     };
 
-    const imagePickerOptions = {
+    const logoPickerOptions = {
         image: initialValues.library_logo ? initialValues.library_logo : publicImagePath.APP_LOGO,
-        isDefaultImage,
+        isDefaultImage: isDefaultLogo,
         buttonName: 'image-picker.dropdown.logo.label',
-        onRemovePhoto,
-        onFileChange,
-        isRemoveOption: false
+        onRemovePhoto: onRemovingLogo,
+        onFileChange: onChangingLogo,
+        isRemoveOption: false,
+        inputField: 'logo-picker'
     };
 
-    const imageCropperOptions = {
-        image,
-        emitFileChange,
-        onSave: onSaveImage,
-        onCancel
+    const logoCropperOptions = {
+        image: logo,
+        emitFileChange: emitLogoChange,
+        onSave: onSaveLogo,
+        onCancel,
+        isToggle: isToggleLogo
+    };
+
+    const faviconPickerOptions = {
+        image: initialValues.library_favicon ? initialValues.library_favicon : publicImagePath.APP_LOGO,
+        isDefaultImage: isDefaultFavicon,
+        buttonName: 'image-picker.dropdown.favicon.label',
+        onRemovePhoto: onRemovingFavicon,
+        onFileChange: onChangingFavicon,
+        isRemoveOption: false,
+        inputField: 'favicon-picker'
+    };
+
+    const faviconCropperOptions = {
+        image: favicon,
+        emitFileChange: emitFaviconChange,
+        onSave: onSaveFavicon,
+        onCancel,
+        isToggle: isToggleFavicon,
+        isFavicon: true
     };
 
     return (
@@ -97,9 +155,9 @@ const SettingsForm = (props) => {
             <Col xs={2} className="settings__logo">
                 <h6 className="settings__logo-heading">{getFormattedMessage('image-picker.dropdown.logo.label')}</h6>
                 <div>
-                    <Field name="library_logo" type="hidden" component={InputGroup}/>
-                    <ImageCropper {...imageCropperOptions}/>
-                    <ImagePicker {...imagePickerOptions}/>
+                    <Field name="file_name" type="hidden" component={InputGroup}/>
+                    <ImageCropper {...logoCropperOptions}/>
+                    <ImagePicker {...logoPickerOptions}/>
                 </div>
             </Col>
             <Col xs={10} className="settings__form">
@@ -127,10 +185,18 @@ const SettingsForm = (props) => {
                                options={bookLanguagesOptions} placeholder="settings.select.language.placeholder"
                                component={Select} isSearchable={true}/>
                     </Col>
-                    <Col xs={12}>
-                        <SaveAction onSave={handleSubmit(onSave)} isHideCancel {...props}/>
-                    </Col>
                 </Row>
+            </Col>
+            <Col xs={2} className="settings__favicon mt-2">
+                <h6 className="settings__favicon-heading">{getFormattedMessage('image-picker.dropdown.favicon.label')}</h6>
+                <div>
+                    <Field name="file_name" type="hidden" component={InputGroup}/>
+                    <ImageCropper {...faviconCropperOptions}/>
+                    <ImagePicker {...faviconPickerOptions}/>
+                </div>
+            </Col>
+            <Col xs={12}>
+                <SaveAction onSave={handleSubmit(onSave)} isHideCancel {...props}/>
             </Col>
         </Row>
     );
@@ -143,7 +209,7 @@ SettingsForm.propTypes = {
     handleSubmit: PropTypes.func,
     change: PropTypes.func,
     onChangeAppLogo: PropTypes.func,
-    addToast: PropTypes.func,
+    onChangeAppFavicon: PropTypes.func,
     toggleModal: PropTypes.func,
 };
 
@@ -153,4 +219,4 @@ const form = reduxForm({
     enableReinitialize: true
 })(SettingsForm);
 
-export default connect(null, { addToast, toggleModal })(form);
+export default connect(null, { toggleModal })(form);

@@ -87,6 +87,7 @@ export const appSettingsKey = {
     LIBRARY_NAME: 'library_name',
     LIBRARY_LOGO: 'library_logo',
 };
+
 export const apiBaseURL = {
     AUTHOR: 'authors',
     BOOK_LANGUAGE: 'book-languages',
@@ -112,6 +113,7 @@ export const apiBaseURL = {
     SEARCH_BOOK:'search-books',
     TAG: 'tags',
     UPLOAD_LOGO: 'upload-logo',
+    UPLOAD_FAVICON: 'upload-favicon',
     USER: 'users',
     USER_DETAILS: 'user-details',
     USER_PROFILE_UPDATE: 'update-user-profile',

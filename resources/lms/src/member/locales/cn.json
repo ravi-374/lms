@@ -54,6 +54,7 @@
     "image-picker.dropdown.profile.label": "轮廓",
     "image-picker.dropdown.cover.label": "覆盖",
     "image-picker.dropdown.logo.label": "商标",
+    "image-picker.dropdown.favicon.label": "网站图标",
     "image-picker.dropdown.add.label": "加",
     "image-picker.dropdown.change.label": "更改",
     "image-picker.dropdown.remove.label": "去掉",
@@ -96,5 +97,8 @@
     "react-data-table.loader.title": "载入中...",
     "reset-password.title": "重设密码",
     "reset-password.note": "输入新密码",
-    "reset-password.success.message": "密码更新成功。"
+    "reset-password.success.message": "密码更新成功。",
+    "toast.success.message": "成功",
+    "toast.warning.message": "警告",
+    "toast.error.message": "错误"
 }

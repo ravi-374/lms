@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import MemberBookHistory from './MemberBookHistory';
 import BookHistoryModal from './MemberBookHistoryModal';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
@@ -22,7 +21,7 @@ const MemberDetail = props => {
     }, []);
 
     if (!member) {
-        return <><ProgressBar/><Toasts/></>;
+        return <ProgressBar/>;
     }
 
     const onClickModal = (isEdit, bookHistory = null, isDelete = false) => {
@@ -73,7 +72,6 @@ const MemberDetail = props => {
                                     <MemberBookHistory {...cardBodyProps}/>
                                 </div>
                                 <BookHistoryModal {...cardModalProps}/>
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </div>

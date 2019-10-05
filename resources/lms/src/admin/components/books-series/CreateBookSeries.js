@@ -1,21 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardBody} from 'reactstrap';
 import PropTypes from 'prop-types';
 import BookSeriesForm from './BookSeriesForm';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
-import Toasts from '../../../shared/toast/Toasts';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {addBookSeries} from '../../store/actions/bookSeriesAction';
-import {fetchBooks} from "../../store/actions/bookAction";
 
 const CreateBookSeries = (props) => {
-    const { history, addBookSeries, fetchBooks } = props;
-
-    useEffect(() => {
-        fetchBooks({}, null, true);
-    }, []);
+    const { history, addBookSeries } = props;
 
     const onSaveBookSeries = (formValues) => {
         addBookSeries(formValues, history);
@@ -43,7 +37,6 @@ const CreateBookSeries = (props) => {
                         <Card>
                             <CardBody>
                                 <BookSeriesForm {...prepareFormOption}/>
-                                <Toasts/>
                             </CardBody>
                         </Card>
                     </div>
@@ -60,4 +53,4 @@ CreateBookSeries.propTypes = {
     fetchBooks: PropTypes.func,
 };
 
-export default connect(null, { addBookSeries, fetchBooks })(CreateBookSeries);
+export default connect(null, { addBookSeries })(CreateBookSeries);

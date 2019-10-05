@@ -54,6 +54,7 @@
     "image-picker.dropdown.profile.label": "Profil",
     "image-picker.dropdown.cover.label": "Örtmek",
     "image-picker.dropdown.logo.label": "Logo",
+    "image-picker.dropdown.favicon.label": "Favicon",
     "image-picker.dropdown.add.label": "Eklemek",
     "image-picker.dropdown.change.label": "Değişiklik",
     "image-picker.dropdown.remove.label": "Kaldır",
@@ -96,5 +97,8 @@
     "react-data-table.loader.title": "Yükleniyor...",
     "reset-password.title": "Şifreyi Yenile",
     "reset-password.note": "Yeni şifre gir",
-    "reset-password.success.message": "Şifre başarıyla güncellendi."
+    "reset-password.success.message": "Şifre başarıyla güncellendi.",
+    "toast.success.message": "Başarı",
+    "toast.warning.message": "Uyarı",
+    "toast.error.message": "Hata"
 }
