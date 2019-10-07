@@ -118,7 +118,7 @@ const renderRoutes = (newRoutes, location) => {
                 checkExistingRoute(location, props.history);
                 return localStorage.getItem(Tokens.ADMIN) ?
                     <route.component {...props}/> :
-                    <Redirect to={Routes.MEMBER_HOME}/>
+                    <Redirect to={Routes.ADMIN_LOGIN}/>
             }}/>
         ) : (null);
     });

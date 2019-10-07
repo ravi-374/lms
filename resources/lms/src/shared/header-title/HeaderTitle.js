@@ -36,7 +36,10 @@ const ReactHelmet = (props) => {
 };
 
 ReactHelmet.propTypes = {
-    settings: PropTypes.object,
+    settings: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]),
     title: PropTypes.string,
 };
 
