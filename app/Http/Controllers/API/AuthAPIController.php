@@ -84,7 +84,7 @@ class AuthAPIController extends AppBaseController
      */
     public function getLibraryDetails()
     {
-        $settings = Setting::whereIn('key', [Setting::LIBRARY_LOGO, Setting::LIBRARY_NAME])->get();
+        $settings = Setting::whereIn('key', [Setting::LIBRARY_LOGO, Setting::LIBRARY_NAME, Setting::FAVICON_ICON])->get();
 
         return $this->sendResponse($settings->toArray(), 'Library details retrieved successfully.');
     }
