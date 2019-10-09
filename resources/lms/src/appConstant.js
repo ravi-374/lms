@@ -27,7 +27,7 @@ export const publicImagePath = {
     USER_AVATAR: 'images/user-avatar.png',
     BOOK_AVATAR: 'images/book-avatar.png',
     APP_LOGO: 'images/logo-blue-black.png',
-    APP_FAVICON: 'images/logo-blue-black.png'
+    APP_FAVICON: 'images/favicon/android-icon-36x36.png'
 };
 
 export const publicImagePathURL = {
@@ -39,7 +39,7 @@ export const publicImagePathURL = {
 
 export const settingsKey = {
     LANGUAGE: 'language',
-    DEFAULT_LOCALE:'en',
-    LOCALE_ARABIC:'ar',
-    LOCALE_PERSIAN:'pe'
+    DEFAULT_LOCALE: 'en',
+    LOCALE_ARABIC: 'ar',
+    LOCALE_PERSIAN: 'pe'
 };

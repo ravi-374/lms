@@ -1,12 +1,12 @@
-import {bookAllotmentActionType} from '../../constants';
+import {bookCirculationActionType} from '../../constants';
 
 export default (state = [], action) => {
     switch (action.type) {
-        case bookAllotmentActionType.FETCH_BOOKS_ALLOTMENT:
+        case bookCirculationActionType.FETCH_BOOKS_CIRCULATION:
             return action.payload;
-        case bookAllotmentActionType.FETCH_BOOK_ALLOTMENT:
+        case bookCirculationActionType.FETCH_BOOK_CIRCULATION:
             return [action.payload];
-        case bookAllotmentActionType.DELETE_BOOK_ALLOTMENT:
+        case bookCirculationActionType.DELETE_BOOK_CIRCULATION:
             return state.filter(item => item.id !== action.payload);
         default:
             return state;

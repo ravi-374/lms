@@ -91,13 +91,13 @@ export const bookFormatOptions = [
 ];
 
 const bookStatus = [
-    { id: 1, name: 'books-allotment.filter.reserved.label', defaultValue: 'Reserved' },
-    { id: 2, name: 'books-allotment.filter.issued.label', defaultValue: 'Issued' },
-    { id: 3, name: 'books-allotment.filter.returned.label', defaultValue: 'Returned' },
-    { id: 4, name: 'books-allotment.filter.available.label', defaultValue: 'Available' },
-    { id: 5, name: 'books-allotment.filter.unreserved.label', defaultValue: 'Unreserved' },
-    { id: 6, name: 'books-allotment.filter.damaged.label', defaultValue: 'Damaged' },
-    { id: 7, name: 'books-allotment.filter.lost.label', defaultValue: 'Lost' }
+    { id: 1, name: 'books-circulation.filter.reserved.label', defaultValue: 'Reserved' },
+    { id: 2, name: 'books-circulation.filter.issued.label', defaultValue: 'Issued' },
+    { id: 3, name: 'books-circulation.filter.returned.label', defaultValue: 'Returned' },
+    { id: 4, name: 'books-circulation.filter.available.label', defaultValue: 'Available' },
+    { id: 5, name: 'books-circulation.filter.unreserved.label', defaultValue: 'Unreserved' },
+    { id: 6, name: 'books-circulation.filter.damaged.label', defaultValue: 'Damaged' },
+    { id: 7, name: 'books-circulation.filter.lost.label', defaultValue: 'Lost' }
 ];
 export const bookStatusOptions = bookStatus;
 
@@ -136,13 +136,13 @@ export const permissionActionType = {
     FETCH_PERMISSIONS: 'FETCH_PERMISSIONS',
 };
 
-export const bookAllotmentActionType = {
-    FETCH_BOOKS_ALLOTMENT: 'FETCH_BOOKS_ALLOTMENT',
-    FETCH_BOOK_ALLOTMENT: 'FETCH_BOOK_ALLOTMENT',
-    DELETE_BOOK_ALLOTMENT: 'DELETE_BOOK_ALLOTMENT'
+export const bookCirculationActionType = {
+    FETCH_BOOKS_CIRCULATION: 'FETCH_BOOKS_CIRCULATION',
+    FETCH_BOOK_CIRCULATION: 'FETCH_BOOK_CIRCULATION',
+    DELETE_BOOK_CIRCULATION: 'DELETE_BOOK_CIRCULATION'
 };
 
-export const bookAllotmentStatusOptions = [
+export const bookCirculationStatusOptions = [
     { id: 1, name: 'Reserve' },
     { id: 2, name: 'Issue' },
     { id: 3, name: 'Return' },
@@ -150,7 +150,7 @@ export const bookAllotmentStatusOptions = [
     // {id: 5, name: 'Damaged'},
 ];
 
-export const bookAllotmentStatusConstant = {
+export const bookCirculationStatusConstant = {
     BOOK_RESERVED: 1,
     BOOK_ISSUED: 2,
     BOOK_RETURNED: 3,
@@ -194,8 +194,8 @@ export const Permissions = {
 };
 
 export const memberBookHistoryActionType = {
-    FETCH_MEMBER_BOOK_ALLOTMENT: 'FETCH_MEMBER_BOOK_ALLOTMENT',
-    EDIT_MEMBER_BOOK_ALLOTMENT: 'EDIt_MEMBER_BOOK_ALLOTMENT',
+    FETCH_MEMBER_BOOK_HISTORY: 'FETCH_MEMBER_BOOK_HISTORY',
+    EDIT_MEMBER_BOOK_HISTORY: 'EDIT_MEMBER_BOOK_HISTORY',
 };
 
 export const countryActionType = {
@@ -257,14 +257,14 @@ export const bookItemStatusOptions = [
     { id: 4, name: 'books-items.filter.damaged.label' },
 ];
 
-export const bookAllotmentFilterOptions = [
-    { id: 1, name: 'books-allotment.filter.all.label', defaultValue: '' },
-    { id: 2, name: 'books-allotment.filter.issued.label', defaultValue: 'Issued' },
-    { id: 3, name: 'books-allotment.filter.returned.label', defaultValue: 'Returned' },
-    { id: 4, name: 'books-allotment.filter.reserved.label', defaultValue: 'Reserved' },
-    { id: 5, name: 'books-allotment.filter.unreserved.label', defaultValue: 'Unreserved' },
-    { id: 6, name: 'books-allotment.filter.damaged.label', defaultValue: 'Damaged' },
-    { id: 7, name: 'books-allotment.filter.lost.label', defaultValue: 'Lost' }
+export const bookCirculationFilterOptions = [
+    { id: 1, name: 'books-circulation.filter.all.label', defaultValue: '' },
+    { id: 2, name: 'books-circulation.filter.issued.label', defaultValue: 'Issued' },
+    { id: 3, name: 'books-circulation.filter.returned.label', defaultValue: 'Returned' },
+    { id: 4, name: 'books-circulation.filter.reserved.label', defaultValue: 'Reserved' },
+    { id: 5, name: 'books-circulation.filter.unreserved.label', defaultValue: 'Unreserved' },
+    { id: 6, name: 'books-circulation.filter.damaged.label', defaultValue: 'Damaged' },
+    { id: 7, name: 'books-circulation.filter.lost.label', defaultValue: 'Lost' }
 ];
 
 export const importActionType = {
@@ -273,7 +273,7 @@ export const importActionType = {
 };
 
 export const storageKey = {
-    BOOK_ALLOTMENT: 'book_allotment',
+    BOOK_CIRCULATION: 'book_circulation',
     MEMBERS: 'members',
 };
 

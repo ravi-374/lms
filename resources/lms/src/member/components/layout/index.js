@@ -106,7 +106,7 @@ const renderAppFooter = (appName) => {
 };
 
 MemberLayout.propTypes = {
-    user: PropTypes.object,
+    member: PropTypes.object,
     location: PropTypes.object,
     permissions: PropTypes.array,
     appName: PropTypes.string,

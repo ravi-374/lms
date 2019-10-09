@@ -1,31 +1,31 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import BookAllotmentForm from './BookAllotmentForm';
+import BookCirculationForm from './BookCirculationForm';
 import Modal from '../../../shared/components/Modal';
-import {addBookAllotment} from '../../store/actions/bookAllotmentAction';
+import {addBookCirculation} from '../../store/actions/bookCirculationAction';
 
-const CreateBookAllotment = (props) => {
+const CreateBookCirculation = (props) => {
     const {
         toggleModal, className, title,
-        books, onSelectBook, bookId, members, filterObject, addBookAllotment
+        books, onSelectBook, bookId, members, filterObject, addBookCirculation
     } = props;
     const modalOption = { toggleModal, className, title };
     const formOption = { books, onSelectBook, bookId, members };
 
-    const onSaveBookAllotment = (formValues) => {
-        addBookAllotment(formValues, filterObject);
+    const onSaveBookCirculation = (formValues) => {
+        addBookCirculation(formValues, filterObject);
     };
 
     const prepareFormOption = {
-        onSaveBookAllotment,
+        onSaveBookCirculation,
         onCancel: toggleModal,
     };
-    return <Modal {...modalOption} content={<BookAllotmentForm{...prepareFormOption} {...formOption}/>}/>
+    return <Modal {...modalOption} content={<BookCirculationForm{...prepareFormOption} {...formOption}/>}/>
 };
 
-CreateBookAllotment.propTypes = {
-    bookAllotment: PropTypes.object,
+CreateBookCirculation.propTypes = {
+    bookCirculation: PropTypes.object,
     filterObject: PropTypes.object,
     title: PropTypes.object,
     books: PropTypes.array,
@@ -33,12 +33,12 @@ CreateBookAllotment.propTypes = {
     bookId: PropTypes.number,
     className: PropTypes.string,
     isMemberBookHistory: PropTypes.bool,
-    addBookAllotment: PropTypes.func,
+    addBookCirculation: PropTypes.func,
     editMemberBookHistory: PropTypes.func,
     editMemberBookHistoryStatus: PropTypes.func,
-    editBookAllotmentStatus: PropTypes.func,
+    editBookCirculationStatus: PropTypes.func,
     onSelectBook: PropTypes.func,
     toggleModal: PropTypes.func,
 };
 
-export default connect(null, { addBookAllotment })(CreateBookAllotment);
+export default connect(null, { addBookCirculation: addBookCirculation })(CreateBookCirculation);
