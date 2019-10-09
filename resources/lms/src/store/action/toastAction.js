@@ -3,16 +3,10 @@ import {constants} from '../../constants';
 import toastConfig from '../../config/toastConfig';
 import {toast} from "react-toastify";
 import ToastCard from '../../shared/toast/ToastCard';
-import {toastType} from "../../admin/constants";
 
 const notify = (options, toastsConfig) => {
     toastsConfig.config.toastId = toastsConfig.id;
-    switch (options.type) {
-        case toastType.ERROR :
-            return toast.error(<ToastCard {...options}/>, toastsConfig.config);
-        default:
-            return toast.success(<ToastCard {...options}/>, toastsConfig.config);
-    }
+    toast(<ToastCard {...options}/>, toastsConfig.config);
 };
 
 export const addToast = (options = {}) => {
