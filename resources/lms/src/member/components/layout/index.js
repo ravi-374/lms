@@ -42,6 +42,7 @@ const renderAppHeader = (props, appName, appLogo, member) => {
         props.history.push(Routes.MEMBER_HOME);
         localStorage.removeItem('member');
         localStorage.removeItem(Tokens.MEMBER);
+        sessionStorage.setItem('prevMemberPrevUrl', window.location.href);
     };
     return (
         <AppHeader fixed>
@@ -106,7 +107,7 @@ const renderAppFooter = (appName) => {
 };
 
 MemberLayout.propTypes = {
-    user: PropTypes.object,
+    member: PropTypes.object,
     location: PropTypes.object,
     permissions: PropTypes.array,
     appName: PropTypes.string,

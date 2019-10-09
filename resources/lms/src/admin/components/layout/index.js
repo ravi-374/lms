@@ -17,6 +17,7 @@ import routes from "../../routes";
 import {Routes, Tokens} from "../../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {checkExistingRoute} from "../../../shared/sharedMethod";
+import {publicImagePathURL} from "../../../appConstant";
 
 const Footer = lazy(() => import('./Footer'));
 const Header = lazy(() => import('./Header'));

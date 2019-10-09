@@ -9,7 +9,7 @@ const ReactHelmet = (props) => {
     const { title, settings } = props;
     const appName = settings[settingsKey.LIBRARY_NAME] ? settings[settingsKey.LIBRARY_NAME].value : null;
     const appLogo = settings[settingsKey.LIBRARY_FAVICON] ?
-        publicImagePathURL.IMAGE_URL + settings[settingsKey.LIBRARY_FAVICON].value : publicImagePath.APP_LOGO;
+        publicImagePathURL.IMAGE_URL + settings[settingsKey.LIBRARY_FAVICON].value : publicImagePath.APP_FAVICON;
 
     return (
         <Helmet onChangeClientState={() => {
@@ -17,9 +17,6 @@ const ReactHelmet = (props) => {
                 const existingIcons = document.querySelectorAll(
                     `link[rel="icon"],link[rel="apple-touch-icon"], link[rel="shortcut icon"]`
                 );
-                if (!existingIcons.length) {
-                    return
-                }
                 existingIcons.forEach(e => e.parentNode.removeChild(e));
                 const link = document.createElement('link');
                 link.type = 'image/x-icon';
@@ -44,7 +41,7 @@ ReactHelmet.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    return { settings: state.settings };
+    return { settings: state.appSetting };
 };
 
 export default connect(mapStateToProps)(ReactHelmet);

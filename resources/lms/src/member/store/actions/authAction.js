@@ -12,18 +12,18 @@ export const login = (user, history) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.LOGIN, { email, password })
         .then((response) => {
             if (user.remember_me) {
-                localStorage.setItem('currentUser', btoa(JSON.stringify(user)));
+                localStorage.setItem('currentMember', btoa(JSON.stringify(user)));
             } else {
-                if (getLocalStorageDataByKey('currentUser')) {
-                    localStorage.removeItem('currentUser');
+                if (getLocalStorageDataByKey('currentMember')) {
+                    localStorage.removeItem('currentMember');
                 }
             }
-            localStorage.setItem(Tokens.ADMIN, response.data.data.token);
-            dispatch(setUserProfile(LocalStorageKey.USER, response.data.data.user));
-            if (sessionStorage.getItem('prevAdminPrevUrl')) {
-                window.location.href = sessionStorage.getItem('prevAdminPrevUrl');
+            localStorage.setItem(Tokens.MEMBER, response.data.data.token);
+            dispatch(setUserProfile(LocalStorageKey.MEMBER, response.data.data.user));
+            if (sessionStorage.getItem('prevMemberPrevUrl')) {
+                window.location.href = sessionStorage.getItem('prevMemberPrevUrl');
             } else {
-                history.push(Routes.ADMIN_DEFAULT);
+                history.push(Routes.MEMBER_DEFAULT);
             }
             dispatch({ type: authActionType.LOGIN, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('login.success.logged.message') }));
