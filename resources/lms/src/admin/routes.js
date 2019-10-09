@@ -18,11 +18,11 @@ const Members = React.lazy(() => import('./components/members/Members'));
 const BooksSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/BooksSeries'));
 const CreateBookSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/CreateBookSeries'));
 const EditBookSeries = React.lazy(() => import(/* webpackChunkName: "books-series" */'./components/books-series/EditBookSeries'));
-const BooksAllotment = React.lazy(() => import('./components/books-allotment/BooksAllotment'));
+const BooksCirculation = React.lazy(() => import('./components/books-circulation/BooksCirculation'));
 const BookDetails = React.lazy(() => import('./components/book-details/BookDetails'));
 const MemberDetails = React.lazy(() => import('./components/member-details/MemberDetails'));
 const UserDetails = React.lazy(() => import('./components/user-details/UserDetails'));
-const BookAllotmentDetails = React.lazy(() => import('./components/book-allotment-details/BookAllotmentDetails'));
+const BookCirculationDetails = React.lazy(() => import('./components/book-circulation-details/BookCirculationDetails'));
 const UserProfile = React.lazy(() => import('./components/user-profile/UserProfile'));
 const Settings = React.lazy(() => import('./components/settings/Settings'));
 
@@ -154,17 +154,17 @@ export default [
         permission: Permissions.MANAGE_BOOK_SERIES
     },
     {
-        path: Routes.BOOK_ALLOTMENTS,
+        path: Routes.BOOKS_CIRCULATION,
         exact: true,
-        name: 'BooksAllotment',
-        component: BooksAllotment,
+        name: 'BooksCirculation',
+        component: BooksCirculation,
         permission: Permissions.MANAGE_BOOKS
     },
     {
-        path: `${Routes.BOOK_ALLOTMENTS}:id/details`,
+        path: `${Routes.BOOKS_CIRCULATION}:id/details`,
         exact: true,
-        name: 'BookAllotmentDetails',
-        component: BookAllotmentDetails,
+        name: 'BookCirculationDetails',
+        component: BookCirculationDetails,
         permission: Permissions.MANAGE_BOOKS
     },
     {

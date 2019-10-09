@@ -22,7 +22,7 @@ const MemberBookHistory = (props) => {
             cell: row => row.name = row.book_item.book.name
         },
         {
-            name: getFormattedMessage('books-allotment.select.book-item.label'),
+            name: getFormattedMessage('books-circulation.select.book-item.label'),
             selector: 'book_code',
             width: '120px',
             sortable: true,
@@ -48,8 +48,8 @@ const MemberBookHistory = (props) => {
                                       goToDetailScreen={gotToBookHistoryDetail} item={row}/>,
         }];
 
-    const gotToBookHistoryDetail = (bookAllotmentId) => {
-        history.push(`${Routes.BOOK_ALLOTMENTS + bookAllotmentId}/details`);
+    const gotToBookHistoryDetail = (bookCirculationId) => {
+        history.push(`${Routes.BOOKS_CIRCULATION + bookCirculationId}/details`);
     };
 
     const onChange = (filter) => {

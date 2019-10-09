@@ -3,24 +3,24 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Button, Card, CardBody, Col, Row} from 'reactstrap';
 import PropTypes from 'prop-types';
-import './BookAllotmentDetails.scss';
-import BookAllotmentDetailsModal from './BookAllotmentDetailsModal';
+import './BookCirculationDetails.scss';
+import BookCirculationDetailsModal from './BookCirculationDetailsModal';
 import {bookFormatOptions} from '../../constants';
 import {Routes} from "../../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {dateFormatter, getFormattedMessage, getFormattedOptions} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {fetchBookAllotment} from '../../store/actions/bookAllotmentAction';
+import {fetchBookCirculation} from '../../store/actions/bookCirculationAction';
 import {toggleModal} from '../../../store/action/modalAction';
 
-const BookAllotmentDetail = props => {
-    const { bookHistory, fetchBookAllotment, toggleModal, history, match } = props;
+const BookCirculationDetail = props => {
+    const { bookHistory, fetchBookCirculation, toggleModal, history, match } = props;
     const [isToggle, setIsToggle] = useState(false);
     const booksFormatOptions = getFormattedOptions(bookFormatOptions);
 
     useEffect(() => {
-        fetchBookAllotment(+match.params.id);
+        fetchBookCirculation(+match.params.id);
     }, []);
 
     if (!bookHistory) {
@@ -48,13 +48,15 @@ const BookAllotmentDetail = props => {
 
     return (
         <div className="animated fadeIn">
-            <HeaderTitle title="Book Allotment Details"/>
+            <HeaderTitle title="Book Circulation Details"/>
             <Row>
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading"> {getFormattedMessage('books-allotment.edit-book-allotment-details.title')}</h5>
+                    <h5 className="page-heading">
+                        {getFormattedMessage('books-circulation.edit-book-circulation-details.title')}
+                    </h5>
                     <div className="d-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
-                            {getFormattedMessage('books-allotment.modal.edit.title')}
+                            {getFormattedMessage('books-circulation.modal.edit.title')}
                         </Button>
                         <Button onClick={() => goBack()}>{getFormattedMessage('global.input.back-btn.label')}</Button>
                     </div>
@@ -68,7 +70,7 @@ const BookAllotmentDetail = props => {
                                         <div className="book-history-detail__item-container">
                                             <div className="book-history-detail__item-name">
                                                 <span className="book-history-detail__item-name-heading">
-                                                    {getFormattedMessage('books-allotment.select.book.label')}
+                                                    {getFormattedMessage('books-circulation.select.book.label')}
                                                 </span>
                                                 <span>
                                                     <Link to={`${Routes.BOOKS + book.id}/details`}>{book.name}</Link>
@@ -86,7 +88,7 @@ const BookAllotmentDetail = props => {
                                             </div>
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">
-                                                    {getFormattedMessage('books-allotment.select.member.label')}
+                                                    {getFormattedMessage('books-circulation.select.member.label')}
                                                 </span>
                                                 <span>
                                                       <Link to={`${Routes.MEMBERS + bookHistory.member_id}/details`}>
@@ -128,14 +130,14 @@ const BookAllotmentDetail = props => {
                                             </div>
                                             <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">
-                                                    {getFormattedMessage('books-allotment.select.status.label')}
+                                                    {getFormattedMessage('books-circulation.select.status.label')}
                                                 </span>
                                                 <span> {renderBookStatus(bookHistory)}</span>
                                             </div>
                                             {bookHistory.issuer_name ?
                                                 <div className="book-history-detail__item">
                                                     <span className="book-history-detail__item-heading">
-                                                        {getFormattedMessage('books-allotment.table.issuer.column')}
+                                                        {getFormattedMessage('books-circulation.table.issuer.column')}
                                                     </span>
                                                     <span>
                                                          <Link to={`${Routes.USERS + bookHistory.issuer_id}/details`}>
@@ -147,10 +149,10 @@ const BookAllotmentDetail = props => {
                                             {bookHistory.returner_name ?
                                                 <div className="book-history-detail__item">
                                                     <span className="book-history-detail__item-heading">
-                                                        {getFormattedMessage('books-allotment.table.returner.column')}
+                                                        {getFormattedMessage('books-circulation.table.returner.column')}
                                                     </span>
                                                     <span>
-                                                         <Link to={`${Routes.USERS + bookHistory.returner_id}/details`}>
+                                                        <Link to={`${Routes.USERS + bookHistory.returner_id}/details`}>
                                                           {bookHistory.returner_name}
                                                          </Link>
                                                     </span>
@@ -159,7 +161,7 @@ const BookAllotmentDetail = props => {
                                             {bookHistory.issued_on ?
                                                 <div className="book-history-detail__item">
                                                     <span className="book-history-detail__item-heading">
-                                                        {getFormattedMessage('books-allotment.table.issue-date.column')}
+                                                        {getFormattedMessage('books-circulation.table.issue-date.column')}
                                                     </span>
                                                     <span>{dateFormatter(bookHistory.issued_on)}</span>
                                                 </div> : null
@@ -167,7 +169,7 @@ const BookAllotmentDetail = props => {
                                             {bookHistory.issue_due_date ?
                                                 <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">
-                                                    {getFormattedMessage('books-allotment.table.issue-due-date.column')}
+                                                    {getFormattedMessage('books-circulation.table.issue-due-date.column')}
                                                 </span>
                                                     <span>{dateFormatter(bookHistory.issue_due_date)}</span>
                                                 </div> : null
@@ -175,7 +177,7 @@ const BookAllotmentDetail = props => {
                                             {bookHistory.return_date ?
                                                 <div className="book-history-detail__item">
                                                     <span className="book-history-detail__item-heading">
-                                                       {getFormattedMessage('books-allotment.table.return-date.column')}
+                                                       {getFormattedMessage('books-circulation.table.return-date.column')}
                                                     </span>
                                                     <span>
                                                         {dateFormatter(bookHistory.return_date)}
@@ -185,7 +187,7 @@ const BookAllotmentDetail = props => {
                                             {bookHistory.return_due_date ?
                                                 <div className="book-history-detail__item">
                                                 <span className="book-history-detail__item-heading">
-                                                    {getFormattedMessage('books-allotment.table.return-due-date.column')}
+                                                    {getFormattedMessage('books-circulation.table.return-due-date.column')}
                                                 </span>
                                                     <span>{dateFormatter(bookHistory.return_due_date)}</span>
                                                 </div> : null
@@ -193,7 +195,7 @@ const BookAllotmentDetail = props => {
                                             {bookHistory.note ?
                                                 <div className="book-history-detail__item-note">
                                                     <span className="book-history-detail__item-heading">
-                                                        {getFormattedMessage('books-allotment.input.note.label')}
+                                                        {getFormattedMessage('books-circulation.input.note.label')}
                                                     </span>
                                                     <span>{bookHistory.note}</span>
                                                 </div> : null
@@ -201,7 +203,7 @@ const BookAllotmentDetail = props => {
                                         </div>
                                     </div>
                                 </Row>
-                                <BookAllotmentDetailsModal {...cardModalProps}/>
+                                <BookCirculationDetailsModal {...cardModalProps}/>
                             </CardBody>
                         </Card>
                     </div>
@@ -211,18 +213,21 @@ const BookAllotmentDetail = props => {
     )
 };
 
-BookAllotmentDetail.propTypes = {
+BookCirculationDetail.propTypes = {
     bookHistory: PropTypes.object,
     history: PropTypes.object,
     match: PropTypes.object,
-    fetchBookAllotment: PropTypes.func,
+    fetchBookCirculation: PropTypes.func,
     toggleModal: PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { booksAllotment } = state;
+    const { booksCirculation } = state;
     return {
-        bookHistory: booksAllotment.find(bookAllotment => bookAllotment.id === +ownProp.match.params.id)
+        bookHistory: booksCirculation.find(bookCirculation => bookCirculation.id === +ownProp.match.params.id)
     }
 };
-export default connect(mapStateToProps, { fetchBookAllotment, toggleModal })(BookAllotmentDetail);
+export default connect(mapStateToProps, {
+    fetchBookCirculation: fetchBookCirculation,
+    toggleModal
+})(BookCirculationDetail);

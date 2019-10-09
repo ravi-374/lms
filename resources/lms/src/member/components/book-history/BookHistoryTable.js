@@ -2,7 +2,7 @@ import React from 'react';
 import {Button} from 'reactstrap';
 import PropTypes from 'prop-types';
 import './BookHistory.scss';
-import {bookAllotmentStatusConstant,} from '../../constants';
+import {bookCirculationStatusConstant,} from '../../constants';
 import {dateFormatter, getFormattedMessage} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
@@ -85,7 +85,7 @@ const BookHistoryTable = (props) => {
     };
 
     const renderAction = (bookHistory) => {
-        if (bookHistory.status === bookAllotmentStatusConstant.BOOK_RESERVED) {
+        if (bookHistory.status === bookCirculationStatusConstant.BOOK_RESERVED) {
             return <Button size="sm" color="danger" onClick={(e) => {
                 e.stopPropagation();
                 onOpenModal(bookHistory)

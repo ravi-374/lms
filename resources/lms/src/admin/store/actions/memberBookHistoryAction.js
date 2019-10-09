@@ -2,7 +2,7 @@ import {memberBookHistoryActionType, toastType} from '../../constants';
 import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from "../../../store/action/modalAction";
-import {getApiRouteForBookAllotment, getBookAllotmentSuccessMessage} from "../../shared/sharedMethod";
+import {getApiRouteForBookCirculation, getBookCirculationSuccessMessage} from "../../shared/sharedMethod";
 import {setLoading} from "../../../store/action/progressBarAction";
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
@@ -16,7 +16,7 @@ export const fetchMemberBooksHistory = (memberId, filter = {}) => async (dispatc
     }
     await apiConfig.get(url)
         .then((response) => {
-            dispatch({ type: memberBookHistoryActionType.FETCH_MEMBER_BOOK_ALLOTMENT, payload: response.data.data });
+            dispatch({ type: memberBookHistoryActionType.FETCH_MEMBER_BOOK_HISTORY, payload: response.data.data });
             dispatch(setTotalRecord(response.data.totalRecords));
             dispatch(setLoading(false));
         })
@@ -27,10 +27,10 @@ export const fetchMemberBooksHistory = (memberId, filter = {}) => async (dispatc
 };
 
 export const editMemberBookHistory = (book) => async (dispatch) => {
-    await apiConfig.post(`books/${book.book_item_id}/${getApiRouteForBookAllotment(book.status)}`, book)
+    await apiConfig.post(`books/${book.book_item_id}/${getApiRouteForBookCirculation(book.status)}`, book)
         .then((response) => {
-            dispatch({ type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_ALLOTMENT, payload: response.data.data });
-            dispatch(addToast({ text: getFormattedMessage(getBookAllotmentSuccessMessage(book.status)) }));
+            dispatch({ type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_HISTORY, payload: response.data.data });
+            dispatch(addToast({ text: getFormattedMessage(getBookCirculationSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {
@@ -41,8 +41,8 @@ export const editMemberBookHistory = (book) => async (dispatch) => {
 export const editMemberBookHistoryStatus = (book) => async (dispatch) => {
     await apiConfig.put(`books/${book.book_item_id}/update-issued-book-status`, { status: book.status })
         .then((response) => {
-            dispatch({ type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_ALLOTMENT, payload: response.data.data });
-            dispatch(addToast({ text: getFormattedMessage(getBookAllotmentSuccessMessage(book.status)) }));
+            dispatch({ type: memberBookHistoryActionType.EDIT_MEMBER_BOOK_HISTORY, payload: response.data.data });
+            dispatch(addToast({ text: getFormattedMessage(getBookCirculationSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
         .catch(({ response }) => {

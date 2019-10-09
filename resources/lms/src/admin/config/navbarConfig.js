@@ -10,8 +10,8 @@ export default {
             permission: Permissions.MANAGE_BOOKS,
         },
         {
-            name: getFormattedMessage('books-allotment.title'),
-            url: '/app/admin/books-allotment',
+            name: getFormattedMessage('books-circulation.title'),
+            url: '/app/admin/books-circulation',
             icon: 'fas fa-book-reader',
             permission: Permissions.MANAGE_BOOKS
         },

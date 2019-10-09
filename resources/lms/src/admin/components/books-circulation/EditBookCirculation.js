@@ -1,54 +1,54 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import BookAllotmentForm from './BookAllotmentForm';
+import BookCirculationForm from './BookCirculationForm';
 import {dateFormat} from "../../../constants";
-import {bookAllotmentStatusConstant, bookStatusOptions} from '../../constants';
+import {bookCirculationStatusConstant, bookStatusOptions} from '../../constants';
 import Modal from '../../../shared/components/Modal';
-import {editBookAllotment, editBookAllotmentStatus} from '../../store/actions/bookAllotmentAction';
+import {editBookCirculation, editBookCirculationStatus} from '../../store/actions/bookCirculationAction';
 import {editMemberBookHistory, editMemberBookHistoryStatus} from '../../store/actions/memberBookHistoryAction';
 import {getFormattedOptions} from "../../../shared/sharedMethod";
 
-const EditBookAllotment = (props) => {
+const EditBookCirculation = (props) => {
     const {
-        toggleModal, className, editBookAllotmentStatus, editBookAllotment,
+        toggleModal, className, editBookCirculationStatus, editBookCirculation,
         editMemberBookHistoryStatus, editMemberBookHistory,
-        title, bookAllotment, onSelectBook, bookId, isMemberBookHistory, filterObject
+        title, bookCirculation, onSelectBook, bookId, isMemberBookHistory, filterObject
     } = props;
     const modalOption = { toggleModal, className, title };
     const formOption = { onSelectBook, bookId };
-    const bookAllotmentStatusOptions = getFormattedOptions(bookStatusOptions);
-    const { note, reserve_date, issued_on, return_date, member } = bookAllotment;
+    const bookCirculationStatusOptions = getFormattedOptions(bookStatusOptions);
+    const { note, reserve_date, issued_on, return_date, member } = bookCirculation;
     const changeAbleFields = {
-        book: bookAllotment.book_item.book,
+        book: bookCirculation.book_item.book,
         note,
         reserve_date: reserve_date ? moment(reserve_date, dateFormat.DEFAULT_MOMENT).format(dateFormat.NATIVE) : '',
         issued_on: issued_on ? moment(issued_on, dateFormat.DEFAULT_MOMENT).format(dateFormat.NATIVE) : '',
         return_date: return_date ? moment(return_date, dateFormat.DEFAULT_MOMENT).format(dateFormat.NATIVE) : '',
         book_item: {
-            id: bookAllotment.book_item.id,
-            name: bookAllotment.book_item.edition + ` (${bookAllotment.book_item.book_code})`
+            id: bookCirculation.book_item.id,
+            name: bookCirculation.book_item.edition + ` (${bookCirculation.book_item.book_code})`
         },
         member: member ? { id: member.id, name: member.first_name + ' ' + member.last_name } : null,
-        status: bookAllotmentStatusOptions.find(bookAllotmentStatus => bookAllotmentStatus.id === +bookAllotment.status)
+        status: bookCirculationStatusOptions.find(bookCirculationStatus => bookCirculationStatus.id === +bookCirculation.status)
     };
 
-    const onSaveBookAllotment = (formValues) => {
+    const onSaveBookCirculation = (formValues) => {
         if (!isMemberBookHistory) {
             switch (formValues.status) {
-                case bookAllotmentStatusConstant.BOOK_LOST:
-                case bookAllotmentStatusConstant.BOOK_DAMAGED:
-                    editBookAllotmentStatus(formValues, filterObject);
+                case bookCirculationStatusConstant.BOOK_LOST:
+                case bookCirculationStatusConstant.BOOK_DAMAGED:
+                    editBookCirculationStatus(formValues, filterObject);
                     break;
                 default:
-                    editBookAllotment(formValues, filterObject);
+                    editBookCirculation(formValues, filterObject);
                     break;
             }
         } else {
             switch (formValues.status) {
-                case bookAllotmentStatusConstant.BOOK_LOST:
-                case bookAllotmentStatusConstant.BOOK_DAMAGED:
+                case bookCirculationStatusConstant.BOOK_LOST:
+                case bookCirculationStatusConstant.BOOK_DAMAGED:
                     editMemberBookHistoryStatus(formValues);
                     break;
                 default:
@@ -59,16 +59,16 @@ const EditBookAllotment = (props) => {
     };
 
     const prepareFormOption = {
-        onSaveBookAllotment,
+        onSaveBookCirculation,
         onCancel: toggleModal,
         initialValues: changeAbleFields
     };
 
-    return <Modal {...modalOption} content={<BookAllotmentForm {...prepareFormOption} {...formOption} />}/>
+    return <Modal {...modalOption} content={<BookCirculationForm {...prepareFormOption} {...formOption} />}/>
 };
 
-EditBookAllotment.propTypes = {
-    bookAllotment: PropTypes.object,
+EditBookCirculation.propTypes = {
+    bookCirculation: PropTypes.object,
     filterObject: PropTypes.object,
     title: PropTypes.object,
     books: PropTypes.array,
@@ -76,10 +76,10 @@ EditBookAllotment.propTypes = {
     bookId: PropTypes.number,
     className: PropTypes.string,
     isMemberBookHistory: PropTypes.bool,
-    editBookAllotment: PropTypes.func,
+    editBookCirculation: PropTypes.func,
     editMemberBookHistory: PropTypes.func,
     editMemberBookHistoryStatus: PropTypes.func,
-    editBookAllotmentStatus: PropTypes.func,
+    editBookCirculationStatus: PropTypes.func,
     fetchBooks: PropTypes.func,
     fetchMembers: PropTypes.func,
     onSelectBook: PropTypes.func,
@@ -87,8 +87,8 @@ EditBookAllotment.propTypes = {
 };
 
 export default connect(null, {
-    editBookAllotment,
+    editBookCirculation: editBookCirculation,
     editMemberBookHistory,
     editMemberBookHistoryStatus,
-    editBookAllotmentStatus,
-})(EditBookAllotment);
+    editBookCirculationStatus: editBookCirculationStatus,
+})(EditBookCirculation);

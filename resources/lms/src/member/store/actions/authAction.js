@@ -9,7 +9,7 @@ import {getLocalStorageDataByKey} from "../../../shared/sharedMethod";
 
 export const login = (user, history) => async (dispatch) => {
     const { email, password } = user;
-    await apiConfig.post(apiBaseURL.LOGIN, { email, password })
+    await apiConfig.post(apiBaseURL.MEMBER_LOGIN, { email, password })
         .then((response) => {
             if (user.remember_me) {
                 localStorage.setItem('currentMember', btoa(JSON.stringify(user)));
@@ -20,11 +20,7 @@ export const login = (user, history) => async (dispatch) => {
             }
             localStorage.setItem(Tokens.MEMBER, response.data.data.token);
             dispatch(setUserProfile(LocalStorageKey.MEMBER, response.data.data.user));
-            if (sessionStorage.getItem('prevMemberPrevUrl')) {
-                window.location.href = sessionStorage.getItem('prevMemberPrevUrl');
-            } else {
-                history.push(Routes.MEMBER_DEFAULT);
-            }
+            history.push(Routes.MEMBER_DEFAULT);
             dispatch({ type: authActionType.LOGIN, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('login.success.logged.message') }));
         })
