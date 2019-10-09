@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {lazy} from 'react';
 
-const Books = React.lazy(() => import('./components/book-search/BookSearch'));
-const MemberProfile = React.lazy(() => import('./components/member-profile/MemberProfile'));
-const BookHistory = React.lazy(() => import('./components/book-history/BookHistory'));
+const Books = lazy(() => import('./components/book-search/BookSearch'));
+const MemberProfile = lazy(() => import('./components/member-profile/MemberProfile'));
+const BookHistory = lazy(() => import('./components/book-history/BookHistory'));
+
 export default [
     {
         path: '/app/books',

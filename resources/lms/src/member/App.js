@@ -19,6 +19,7 @@ const Login = lazy(() => import('./components/auth/Login'));
 const ForgotPassword = lazy(() => import('./components/auth/ForgotPassword'));
 const ResetPassword = lazy(() => import('./components/auth/ResetPassword'));
 const Lending = lazy(() => import('./components/lending/Lending'));
+const Home = lazy(() => import('./components/home/Home'));
 
 const MemberApp = (props) => {
     const { getUserProfile, fetchSettings, settings, fetchAppSetting, appSetting, member } = props;
@@ -40,13 +41,15 @@ const MemberApp = (props) => {
         <IntlProvider locale={settingsKey.DEFAULT_LOCALE} messages={messages}>
             <React.Suspense fallback={<ProgressBar/>}>
                 <Switch>
-                    <Route path={Routes.MEMBER_HOME} name="Home" render={props => <Lending {...props}/>}/>
+                    <Route exact={true} path={Routes.APP_HOME} name="Home" render={props => <Home {...props}/>}/>
+                    <Route path={Routes.MEMBER_HOME} name="Lending" render={props => <Lending {...props}/>}/>
                     <Route path={Routes.MEMBER_LOGIN} name="Login" render={props => <Login {...props}/>}/>
                     <Route path={Routes.MEMBER_FORGOT_PASSWORD} name="Forgot Password"
                            render={props => <ForgotPassword {...props}/>}/>
                     <Route path={Routes.MEMBER_RESET_PASSWORD} name="Reset Password"
                            render={props => <ResetPassword {...props}/>}/>
-                    <Route path="/" render={props => <Layout {...props} {...routeProps}/>}/>
+                    <Route path="/app" render={props => <Layout {...props} {...routeProps}/>}/>
+                    <Redirect from="*" to="/app"/>
                 </Switch>
                 <Toasts language={settings[settingsKey.LANGUAGE] ? settings[settingsKey.LANGUAGE].value : null}/>
             </React.Suspense>

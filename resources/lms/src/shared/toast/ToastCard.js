@@ -6,39 +6,29 @@ import {getFormattedMessage} from "../sharedMethod";
 
 const ToastCard = (props) => {
     const { type, text, closeToast } = props;
+    const iconColor = type === toastType.ERROR
+        ? 'toast-card__icon--error' : 'toast-card__icon--success';
 
     const renderCard = () => {
-        switch (type) {
-            case toastType.ERROR:
-                return (
-                    <div className="toast-card__alert">
-                        <div className="toast-card__icon toast-card--error">
-                            <i className="fas fa-times-circle"/>
-                        </div>
-                        <div>
-                            <h5>{getFormattedMessage('toast.error.message')}</h5>
-                            <span>{text}</span>
-                        </div>
-                    </div>
-                );
-            default:
-                return (
-                    <div className="toast-card__alert">
-                        <div className="toast-card__icon toast-card--success">
-                            <i className="fas fa-check-circle"/>
-                        </div>
-                        <div>
-                            <h5>{getFormattedMessage('toast.success.message')}</h5>
-                            <span>{text}</span>
-                        </div>
-                    </div>
-                );
-        }
+        return (
+            <div className="toast-card__alert">
+                <div className={`toast-card__icon ${iconColor}`}>
+                    <i className={`fas ${type === toastType.ERROR ? 'fa-times-circle' : 'fa-check-circle'} `}/>
+                </div>
+                <div>
+                    <h5>
+                        {getFormattedMessage(`${type === toastType.ERROR
+                            ? 'toast.error.message' : 'toast.success.message'}`)}
+                    </h5>
+                    <span>{text}</span>
+                </div>
+            </div>
+        );
     };
 
     return (
         <div className="toast-card">
-            <i className="fa fa-times-circle fa-2x toast-card__close-btn" onClick={closeToast}/>
+            <i className={`fa fa-times-circle fa-2x toast-card__close-btn ${iconColor}`} onClick={closeToast}/>
             {renderCard()}
         </div>
     )
