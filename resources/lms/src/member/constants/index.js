@@ -15,7 +15,7 @@ export const countryActionType = {
     FETCH_COUNTRIES: 'FETCH_COUNTRIES'
 };
 
-export const bookAllotmentStatusConstant = {
+export const bookCirculationStatusConstant = {
     BOOK_RESERVED: 1,
     BOOK_ISSUED: 2,
     BOOK_RETURNED: 3,

@@ -9,7 +9,7 @@ import {getLocalStorageDataByKey} from "../../../shared/sharedMethod";
 
 export const login = (user, history) => async (dispatch) => {
     const { email, password } = user;
-    await apiConfig.post(apiBaseURL.LOGIN, { email, password })
+    await apiConfig.post(apiBaseURL.USER_LOGIN, { email, password })
         .then((response) => {
             if (user.remember_me) {
                 localStorage.setItem('currentUser', btoa(JSON.stringify(user)));

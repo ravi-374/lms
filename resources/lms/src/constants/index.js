@@ -28,7 +28,7 @@ export const Routes = {
     ADMIN_DEFAULT: '/app/admin/books',
     BOOKS: '/app/admin/books/',
     MEMBERS: '/app/admin/members/',
-    BOOK_ALLOTMENTS: '/app/admin/books-allotment/',
+    BOOKS_CIRCULATION: '/app/admin/books-circulation/',
     USERS: '/app/admin/users/',
     MEMBER_FORGOT_PASSWORD: '/app/forgot-password',
     MEMBER_RESET_PASSWORD: '/app/reset-password',
@@ -59,7 +59,7 @@ export const Roles = {
 };
 
 export const FilterOption = {
-    ALL: 'books-allotment.filter.all.label'
+    ALL: 'books-circulation.filter.all.label'
 };
 
 export const localStorageActionType = {
@@ -101,20 +101,21 @@ export const apiBaseURL = {
     COUNTRY: 'countries',
     GENRE: 'genres',
     ISSUED_BOOK: 'issued-books',
-    LOGIN: 'login',
     RESET_PASSWORD: 'reset-password',
     FORGOT_PASSWORD: 'send-reset-password-link',
     MEMBER: 'members',
+    MEMBER_LOGIN: 'member-login',
     MEMBER_PLAN: 'membership-plans',
     PERMISSION: 'permissions',
     PUBLISHER: 'publishers',
     ROLE: 'roles',
     SETTING: 'settings',
-    SEARCH_BOOK:'search-books',
+    SEARCH_BOOK: 'search-books',
     TAG: 'tags',
     UPLOAD_LOGO: 'upload-logo',
     UPLOAD_FAVICON: 'upload-favicon',
     USER: 'users',
+    USER_LOGIN: 'login',
     USER_DETAILS: 'user-details',
     USER_PROFILE_UPDATE: 'update-user-profile',
 };

@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EditBookAllotment from '../books-allotment/EditBookAllotment';
+import EditBookCirculation from '../books-circulation/EditBookCirculation';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 
-export const BookAllotmentDetailsModal = (props) => {
+export const BookCirculationDetailsModal = (props) => {
     const { bookHistory, isToggle, toggleModal } = props;
     if (isToggle) {
         const prepareModalOption = {
             toggleModal,
             className: 'book-history-detail__modal',
-            title: getFormattedMessage('books-allotment.modal.edit.title'),
+            title: getFormattedMessage('books-circulation.modal.edit.title'),
         };
-        return <EditBookAllotment {...prepareModalOption} bookAllotment={bookHistory}/>
+        return <EditBookCirculation {...prepareModalOption} bookCirculation={bookHistory}/>
     }
     return null;
 };
 
-BookAllotmentDetailsModal.propTypes = {
+BookCirculationDetailsModal.propTypes = {
     bookHistory: PropTypes.object,
     isToggle: PropTypes.bool,
     toggleModal: PropTypes.func,
 };
 
-export default BookAllotmentDetailsModal;
+export default BookCirculationDetailsModal;
