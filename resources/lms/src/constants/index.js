@@ -21,6 +21,7 @@ export const countryCode = {
 };
 
 export const Routes = {
+    APP_HOME: '/',
     MEMBER_HOME: '/app/home',
     MEMBER_LOGIN: '/app/login',
     MEMBER_DEFAULT: '/app/books',

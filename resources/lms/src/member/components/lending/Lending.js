@@ -4,9 +4,9 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './lending.scss';
 import {appSettingsKey, Routes} from "../../../constants";
+import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
-import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const Lending = (props) => {
     const { appSetting } = props;
@@ -89,7 +89,7 @@ const Lending = (props) => {
 
     return (
         <div id="page-wrapper">
-            <HeaderTitle appLogo={appLogo} title={`Home | ${appName}`}/>
+            <HeaderTitle title="Home"/>
             <div className="page-wrapper">
                 <header className="site-header header-one">
                     <nav className="navbar navbar-expand-lg navbar-light header-navigation stricky">
