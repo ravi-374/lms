@@ -83,4 +83,31 @@ interface IssuedBookRepositoryInterface
      * @return IssuedBook|Collection
      */
     public function update($input, $id);
+
+    /**
+     * @param  bool  $today
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return int
+     */
+    public function reserveBooksCount($today, $startDate = null, $endDate = null);
+
+    /**
+     * @param  bool  $today
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return int
+     */
+    public function issuedBooksCount($today, $startDate = null, $endDate = null);
+
+    /**
+     * @param  bool  $today
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return int
+     */
+    public function overDueBooksCount($today, $startDate = null, $endDate = null);
 }

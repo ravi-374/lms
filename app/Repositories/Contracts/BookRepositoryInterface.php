@@ -81,4 +81,13 @@ interface BookRepositoryInterface
      * @return mixed
      */
     public function store($input);
+
+    /**
+     * @param  bool  $today
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return int
+     */
+    public function booksCount($today, $startDate = null, $endDate = null);
 }

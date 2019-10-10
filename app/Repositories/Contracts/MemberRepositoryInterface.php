@@ -74,4 +74,13 @@ interface MemberRepositoryInterface
      * @return Member
      */
     public function storeMember($input);
+
+    /**
+     * @param  bool  $today
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return int
+     */
+    public function membersCount($today, $startDate = null, $endDate = null);
 }
