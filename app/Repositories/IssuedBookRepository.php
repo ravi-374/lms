@@ -414,9 +414,9 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         $query = IssuedBook::overDue();
         if (! empty($startDate) && ! empty($endDate)) {
-            $query->whereRaw('DATE(issued_on) BETWEEN ? AND ?', [$startDate, $endDate]);
+            $query->whereRaw('DATE(return_due_date) BETWEEN ? AND ?', [$startDate, $endDate]);
         } elseif ($today) {
-            $query->whereRaw('DATE(issued_on) = ? ', [Carbon::now()->toDateString()]);
+            $query->whereRaw('DATE(return_due_date) = ? ', [Carbon::now()->toDateString()]);
         }
 
         return $query->count();
