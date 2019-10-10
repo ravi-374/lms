@@ -476,4 +476,23 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             throw new ApiOperationFailedException('Unable to get book details : '.$e->getMessage());
         }
     }
+
+    /**
+     * @param  bool  $today
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return int
+     */
+    public function booksCount($today, $startDate = null, $endDate = null)
+    {
+        $query = Book::query();
+        if (! empty($startDate) && ! empty($endDate)) {
+            $query->whereRaw('DATE(created_at) BETWEEN ? AND ?', [$startDate, $endDate]);
+        } elseif ($today) {
+            $query->whereRaw('DATE(created_at) = ? ', [Carbon::now()->toDateString()]);
+        }
+
+        return $query->count();
+    }
 }

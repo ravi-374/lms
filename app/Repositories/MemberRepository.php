@@ -6,6 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
 use App\Models\Member;
 use App\Repositories\Contracts\MemberRepositoryInterface;
+use Carbon\Carbon;
 use DB;
 use Exception;
 use Hash;
@@ -235,5 +236,24 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
         }
 
         return $memberId;
+    }
+
+    /**
+     * @param  bool  $today
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return int
+     */
+    public function membersCount($today, $startDate = null, $endDate = null)
+    {
+        $query = Member::query();
+        if (! empty($startDate) && ! empty($endDate)) {
+            $query->whereRaw('DATE(created_at) BETWEEN ? AND ?', [$startDate, $endDate]);
+        } elseif ($today) {
+            $query->whereRaw('DATE(created_at) = ? ', [Carbon::now()->toDateString()]);
+        }
+
+        return $query->count();
     }
 }
