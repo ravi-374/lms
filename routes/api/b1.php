@@ -143,6 +143,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     // Currencies
     Route::get('currencies', 'CommonAPIController@currencies')->name('currencies');
+    Route::get('dashboard-details', 'DashboardAPIController@dashboardDetails');
 });
 
 /** Password Reset API's For User */

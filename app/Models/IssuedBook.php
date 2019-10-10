@@ -53,6 +53,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read mixed $issue_due_date
  * @property-read mixed $expected_available_date
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook lastIssuedBook()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook overDue()
  */
 class IssuedBook extends Model
 {
@@ -120,7 +121,7 @@ class IssuedBook extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      *
      * @return Builder
      */
@@ -154,8 +155,8 @@ class IssuedBook extends Model
     }
 
     /**
-     * @param int $memberId
-     * @param Builder $query
+     * @param  int  $memberId
+     * @param  Builder  $query
      *
      * @return Builder
      */
@@ -169,7 +170,7 @@ class IssuedBook extends Model
      */
     public function getIssuerNameAttribute()
     {
-        if (!empty($this->issuer_id)) {
+        if (! empty($this->issuer_id)) {
             return $this->issuer->first_name." ".$this->issuer->last_name;
         }
     }
@@ -179,7 +180,7 @@ class IssuedBook extends Model
      */
     public function getReturnerNameAttribute()
     {
-        if (!empty($this->returner_id)) {
+        if (! empty($this->returner_id)) {
             return $this->returner->first_name." ".$this->returner->last_name;
         }
     }
@@ -234,8 +235,8 @@ class IssuedBook extends Model
     }
 
     /**
-     * @param int $bookItemId
-     * @param Builder $query
+     * @param  int  $bookItemId
+     * @param  Builder  $query
      *
      * @return Builder
      */
@@ -245,7 +246,7 @@ class IssuedBook extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      *
      * @return Builder
      */
@@ -255,7 +256,7 @@ class IssuedBook extends Model
     }
 
     /**
-     * @param string $statusInString
+     * @param  string  $statusInString
      *
      * @return int|null
      */
@@ -284,5 +285,13 @@ class IssuedBook extends Model
         }
 
         return $status;
+    }
+
+    public function scopeOverDue(Builder $query)
+    {
+        $now = Carbon::now()->toDateTimeString();
+
+        return $query->where('status', self::STATUS_ISSUED)
+            ->where('return_due_date', '<', $now);
     }
 }
