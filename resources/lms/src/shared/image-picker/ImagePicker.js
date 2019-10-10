@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import './ImagePicker.scss';
-import {getAvatarName, getFormattedMessage, getFormattedMessageWithIntl} from "../sharedMethod";
+import {getAvatarName, getFormattedMessage} from "../sharedMethod";
 
 const ImagePicker = (props) => {
     const {
@@ -21,7 +21,10 @@ const ImagePicker = (props) => {
 
     const getConcatedMessage = (messageId) => {
         return (
-            getFormattedMessageWithIntl(messageId) + ' ' + getFormattedMessageWithIntl(buttonName)
+            <>
+                {getFormattedMessage(messageId)} &nbsp;
+                {getFormattedMessage(buttonName)}
+            </>
         )
     };
 
