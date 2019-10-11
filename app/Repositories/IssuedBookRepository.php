@@ -412,11 +412,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function overDueBooksCount($today, $startDate = null, $endDate = null)
     {
-        $query = IssuedBook::overDue();
+        $query = IssuedBook::query();
         if (! empty($startDate) && ! empty($endDate)) {
-            $query->whereRaw('DATE(issued_on) BETWEEN ? AND ?', [$startDate, $endDate]);
+            $query->whereRaw('DATE(return_due_date) BETWEEN ? AND ?', [$startDate, $endDate]);
         } elseif ($today) {
-            $query->whereRaw('DATE(issued_on) = ? ', [Carbon::now()->toDateString()]);
+            $query->whereRaw('DATE(return_due_date) = ?', [Carbon::now()->toDateString()]);
+        } else {
+            $query->overDue();
         }
 
         return $query->count();

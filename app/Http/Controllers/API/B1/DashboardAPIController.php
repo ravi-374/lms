@@ -56,7 +56,7 @@ class DashboardAPIController extends AppBaseController
             $request->get('today', false), $request->get('start_date'), $request->get('end_date')
         );
 
-        $data['total_overdue_books'] = $this->issuedBookRepo->issuedBooksCount(
+        $data['total_overdue_books'] = $this->issuedBookRepo->overDueBooksCount(
             $request->get('today', false), $request->get('start_date'), $request->get('end_date')
         );
 

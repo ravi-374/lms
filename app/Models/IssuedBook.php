@@ -289,9 +289,9 @@ class IssuedBook extends Model
 
     public function scopeOverDue(Builder $query)
     {
-        $now = Carbon::now()->toDateTimeString();
+        $now = Carbon::now()->toDateString();
 
         return $query->where('status', self::STATUS_ISSUED)
-            ->where('return_due_date', '<', $now);
+            ->whereRaw('DATE(return_due_date) < ?', [$now]);
     }
 }
