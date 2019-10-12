@@ -74,9 +74,10 @@ function prepareCountFromDate($startDate, $endDate, $records)
         $records = $records->groupBy('date');
         while (strtotime($startDate) <= strtotime($endDate)) {
             $monthText = date('M Y', strtotime($startDate));;
-            $result[$monthText][] = 0;
             if (isset($records[$startDate])) {
                 $result[$monthText][] = $records[$startDate]->count();
+            } else {
+                $result[$monthText][] = 0;
             }
 
             $startDate = Carbon::parse($startDate)->addDay()->toDateString();
