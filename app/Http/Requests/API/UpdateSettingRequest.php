@@ -12,6 +12,9 @@ namespace App\Http\Requests\API;
 use App\Models\Setting;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class UpdateSettingRequest
+ */
 class UpdateSettingRequest extends FormRequest
 {
     /**

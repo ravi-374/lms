@@ -13,7 +13,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingRequest;
 use App\Http\Requests\API\UploadLogoRequest;
-use App\Http\Requests\UploadFaviconIconRequest;
+use App\Http\Requests\API\UploadFaviconIconRequest;
 use App\Models\Setting;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use Exception;

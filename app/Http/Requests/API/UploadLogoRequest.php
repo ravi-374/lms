@@ -4,6 +4,9 @@ namespace App\Http\Requests\API;
 
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class UploadLogoRequest
+ */
 class UploadLogoRequest extends APIRequest
 {
     /**

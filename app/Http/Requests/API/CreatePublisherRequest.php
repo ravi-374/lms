@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\Publisher;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreatePublisherRequest
+ */
 class CreatePublisherRequest extends APIRequest
 {
     /**

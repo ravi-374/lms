@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\BookSeries;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreateBookSeriesRequest
+ */
 class CreateBookSeriesRequest extends APIRequest
 {
     /**

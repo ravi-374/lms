@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\Member;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class UpdateMemberRequest
+ */
 class UpdateMemberRequest extends APIRequest
 {
     /**

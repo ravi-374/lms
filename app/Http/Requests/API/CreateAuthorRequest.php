@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\Author;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreateAuthorRequest
+ */
 class CreateAuthorRequest extends APIRequest
 {
     /**

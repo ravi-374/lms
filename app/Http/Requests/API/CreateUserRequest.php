@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\User;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreateUserRequest
+ */
 class CreateUserRequest extends APIRequest
 {
     /**

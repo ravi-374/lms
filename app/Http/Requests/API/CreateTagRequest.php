@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\Tag;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreateTagRequest
+ */
 class CreateTagRequest extends APIRequest
 {
     /**

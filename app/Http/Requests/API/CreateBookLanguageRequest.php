@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\BookLanguage;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreateBookLanguageRequest
+ */
 class CreateBookLanguageRequest extends APIRequest
 {
     /**
