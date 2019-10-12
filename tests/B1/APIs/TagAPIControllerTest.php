@@ -109,7 +109,7 @@ class TagAPIControllerTest extends TestCase
 
         $response = $this->deleteJson(route('api.b1.tags.destroy', $tag->id));
 
-        $this->assertSuccessDataResponse($response, $tag->toArray(), 'Tag deleted successfully.');
+        $this->assertSuccessMessageResponse($response, 'Tag deleted successfully.');
         $this->assertEmpty(Tag::find($tag->id));
     }
 }

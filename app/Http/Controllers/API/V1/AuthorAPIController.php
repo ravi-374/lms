@@ -25,6 +25,7 @@ class AuthorAPIController extends AppBaseController
      * GET|HEAD /authors
      *
      * @param  Request  $request
+     *
      * @return JsonResponse
      */
     public function index(Request $request)

@@ -37,6 +37,7 @@ class MemberAPIController extends AppBaseController
      *
      * @throws ApiOperationFailedException
      * @throws Exception
+     *
      * @return JsonResponse
      */
     public function updateMemberProfile(
