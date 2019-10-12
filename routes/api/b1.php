@@ -104,6 +104,7 @@ Route::group(['middleware' => 'user.auth'], function () {
         // Membership Plans
         Route::resource('membership-plans', 'MembershipPlanAPIController');
     });
+    Route::get('membership-plans', 'MembershipPlanAPIController@index')->name('membership-plans.index');
 
     // Reserve Book
     Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')

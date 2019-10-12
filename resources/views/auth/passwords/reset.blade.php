@@ -49,7 +49,7 @@
     <table class="contact_us_mail__table">
         <tr>
             <td class="text-center">
-                <img class="logo" src="{{asset('img/logo.png')}}" alt="">
+                <img class="logo" src="{{asset('img/logo-blue-black.png')}}" alt="">
             </td>
         </tr>
         <tr>
