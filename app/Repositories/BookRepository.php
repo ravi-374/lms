@@ -482,17 +482,21 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function booksCount($today, $startDate = null, $endDate = null)
     {
         $query = Book::query();
         if (! empty($startDate) && ! empty($endDate)) {
+            $query->select('*', DB::raw('DATE(created_at) as date'));
             $query->whereRaw('DATE(created_at) BETWEEN ? AND ?', [$startDate, $endDate]);
         } elseif ($today) {
             $query->whereRaw('DATE(created_at) = ? ', [Carbon::now()->toDateString()]);
         }
 
-        return $query->count();
+        $records = $query->get();
+        $books = prepareCountFromDate($startDate, $endDate, $records);
+
+        return [$records->count(), $books];
     }
 }

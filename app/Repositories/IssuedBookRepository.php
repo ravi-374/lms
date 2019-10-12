@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -370,18 +371,22 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function reserveBooksCount($today, $startDate = null, $endDate = null)
     {
         $query = IssuedBook::reserve();
         if (! empty($startDate) && ! empty($endDate)) {
+            $query->select('*', DB::raw('DATE(reserve_date) as date'));
             $query->whereRaw('DATE(reserve_date) BETWEEN ? AND ?', [$startDate, $endDate]);
         } elseif ($today) {
             $query->whereRaw('DATE(reserve_date) = ? ', [Carbon::now()->toDateString()]);
         }
 
-        return $query->count();
+        $records = $query->get();
+        $reservedBooks = prepareCountFromDate($startDate, $endDate, $records);
+
+        return [$records->count(), $reservedBooks];
     }
 
     /**
@@ -389,18 +394,22 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function issuedBooksCount($today, $startDate = null, $endDate = null)
     {
         $query = IssuedBook::whereStatus(IssuedBook::STATUS_ISSUED);
         if (! empty($startDate) && ! empty($endDate)) {
+            $query->select('*', DB::raw('DATE(issued_on) as date'));
             $query->whereRaw('DATE(issued_on) BETWEEN ? AND ?', [$startDate, $endDate]);
         } elseif ($today) {
             $query->whereRaw('DATE(issued_on) = ? ', [Carbon::now()->toDateString()]);
         }
 
-        return $query->count();
+        $records = $query->get();
+        $issuedBooks = prepareCountFromDate($startDate, $endDate, $records);
+
+        return [$records->count(), $issuedBooks];
     }
 
     /**
@@ -408,12 +417,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function overDueBooksCount($today, $startDate = null, $endDate = null)
     {
         $query = IssuedBook::query();
         if (! empty($startDate) && ! empty($endDate)) {
+            $query->select('*', DB::raw('DATE(return_due_date) as date'));
             $query->whereRaw('DATE(return_due_date) BETWEEN ? AND ?', [$startDate, $endDate]);
         } elseif ($today) {
             $query->whereRaw('DATE(return_due_date) = ?', [Carbon::now()->toDateString()]);
@@ -421,7 +431,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             $query->overDue();
         }
 
-        return $query->count();
+        $records = $query->get();
+        $overDueBooks = prepareCountFromDate($startDate, $endDate, $records);
+
+        return [$records->count(), $overDueBooks];
     }
 
 

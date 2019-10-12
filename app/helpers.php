@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 /**
  * @param string $key
@@ -56,4 +58,23 @@ function filterByColumns(&$query, $keywords, $columns)
     });
 
     return $query;
+}
+
+function prepareCountFromDate($startDate, $endDate, $records)
+{
+    $result = [];
+    if (! empty($startDate)) {
+        /** @var Collection $records */
+        $records = $records->groupBy('date');
+        while (strtotime($startDate) <= strtotime($endDate)) {
+            $result[$startDate] = 0;
+            if (isset($records[$startDate])) {
+                $result[$startDate] = $records[$startDate]->count();
+            }
+
+            $startDate = Carbon::parse($startDate)->addDay()->toDateString();
+        }
+    }
+
+    return $result;
 }

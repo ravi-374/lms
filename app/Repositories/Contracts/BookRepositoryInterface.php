@@ -87,7 +87,7 @@ interface BookRepositoryInterface
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function booksCount($today, $startDate = null, $endDate = null);
 }
