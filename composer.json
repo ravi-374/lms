@@ -19,7 +19,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "6.*",
         "spatie/laravel-permission": "^3.0",
-        "tymon/jwt-auth": "dev-feature/laravel-6-support#0be3f2811dee67b63c756ca44d2a1eea0a910982"
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -29,12 +29,6 @@
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^7.5"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/MatanYadaev/jwt-auth"
-        }
-    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
