@@ -73,7 +73,7 @@ function prepareCountFromDate($startDate, $endDate, $records)
         /** @var Collection $records */
         $records = $records->groupBy('date');
         while (strtotime($startDate) <= strtotime($endDate)) {
-            $monthText = date('M Y', strtotime($startDate));;
+            $monthText = date('M', strtotime($startDate)).'_'.date('Y', strtotime($startDate));
             if (isset($records[$startDate])) {
                 $result[$monthText][] = $records[$startDate]->count();
             } else {
