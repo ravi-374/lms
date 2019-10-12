@@ -80,7 +80,7 @@ interface MemberRepositoryInterface
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function membersCount($today, $startDate = null, $endDate = null);
 }

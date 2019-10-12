@@ -89,7 +89,7 @@ interface IssuedBookRepositoryInterface
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function reserveBooksCount($today, $startDate = null, $endDate = null);
 
@@ -98,7 +98,7 @@ interface IssuedBookRepositoryInterface
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function issuedBooksCount($today, $startDate = null, $endDate = null);
 
@@ -107,7 +107,7 @@ interface IssuedBookRepositoryInterface
      * @param  string|null  $startDate
      * @param  string|null  $endDate
      *
-     * @return int
+     * @return array
      */
     public function overDueBooksCount($today, $startDate = null, $endDate = null);
 }
