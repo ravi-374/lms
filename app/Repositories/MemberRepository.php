@@ -176,6 +176,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
      *
      * @throws ApiOperationFailedException
      * @throws Exception
+     *
      * @return Member
      */
     public function update($input, $id)

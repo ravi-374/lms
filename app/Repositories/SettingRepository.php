@@ -88,7 +88,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
     }
 
     /**
-     * @param  UploadedFile $image
+     * @param  UploadedFile  $image
      *
      * @throws ApiOperationFailedException
      *

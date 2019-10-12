@@ -436,6 +436,4 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         return [$records->count(), $overDueBooks];
     }
-
-
 }

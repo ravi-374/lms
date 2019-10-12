@@ -29,6 +29,11 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 {
     use ImageTrait;
 
+    /** @var TagRepository */
+    private $tagRepo;
+    /** @var GenreRepository */
+    private $genreRepo;
+
     /**
      * @var array
      */
@@ -38,10 +43,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         'isbn',
         'is_featured',
     ];
-    /** @var TagRepository */
-    private $tagRepo;
-    /** @var GenreRepository */
-    private $genreRepo;
 
     public function __construct(Application $app, TagRepository $tagRepository, GenreRepository $genreRepository)
     {
@@ -174,6 +175,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  array  $input
+     *
      * @throws Exception
      *
      * @return bool
@@ -189,6 +191,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  array  $items
+     *
      * @throws Exception
      *
      * @return bool
@@ -278,6 +281,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     /**
      * @param  Book  $book
      * @param  array  $bookItems
+     *
      * @throws Exception
      * @throws ApiOperationFailedException
      *
