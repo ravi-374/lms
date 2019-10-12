@@ -227,7 +227,6 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
      */
     public function generateMemberId()
     {
-        //todo: later will change format
         $memberId = rand(10000, 99999);
         while (true) {
             if (! Member::whereMemberId($memberId)->exists()) {
