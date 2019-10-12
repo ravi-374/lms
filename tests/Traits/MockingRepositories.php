@@ -43,9 +43,9 @@ trait MockRepositories
     public static $user = 'userRepository';
 
     /** @var MockInterface */
-    public $authorRepository;
+    protected $authorRepository;
     /** @var MockInterface */
-    public $bookRepository;
+    protected $bookRepository;
     /** @var MockInterface */
     protected $bookItemRepository;
     /** @var MockInterface */

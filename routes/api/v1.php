@@ -40,4 +40,5 @@ Route::get('activate-member', 'MemberAuthController@verifyAccount')->name('activ
 
 /** Password Reset API's For Member */
 Route::post('send-reset-member-password-link', 'MemberAuthController@sendResetPasswordLink');
-Route::post('reset-member-password', 'MemberAuthController@resetPassword')->name('reset-member-password.index');
+Route::post('reset-member-password', 'MemberAuthController@resetPassword')
+    ->name('reset-member-password.index');
