@@ -1,11 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- * Author: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 25-07-2019
- * Time: 03:23 PM.
- */
 
 namespace App\Http\Requests\API;
 

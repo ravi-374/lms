@@ -75,7 +75,11 @@ trait MockRepositories
     /** @var MockInterface */
     protected $userRepository;
 
-
+    /**
+     * Mock given repo
+     *
+     * @param $repoNames
+     */
     public function mockRepo($repoNames)
     {
         if (!is_array($repoNames)) {

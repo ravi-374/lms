@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\B1\APIs\Permissions;
-
 
 use App\Models\Book;
 use App\Models\BookItem;
