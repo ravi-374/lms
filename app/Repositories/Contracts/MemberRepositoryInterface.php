@@ -43,6 +43,7 @@ interface MemberRepositoryInterface
      *
      * @throws ApiOperationFailedException
      * @throws Exception
+     *
      * @return Member
      */
     public function store($input);
@@ -61,6 +62,7 @@ interface MemberRepositoryInterface
      *
      * @throws ApiOperationFailedException
      * @throws Exception
+     *
      * @return Member
      */
     public function update($input, $id);

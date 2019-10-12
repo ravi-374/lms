@@ -38,6 +38,7 @@ interface MembershipPlanRepositoryInterface
      * @param  array  $input
      *
      * @throws Exception
+     *
      * @return MembershipPlan
      */
     public function store($input);

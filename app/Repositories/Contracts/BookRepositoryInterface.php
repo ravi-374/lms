@@ -45,6 +45,7 @@ interface BookRepositoryInterface
     /**
      * @param  Book  $book
      * @param  array  $bookItems
+     *
      * @throws Exception
      * @throws ApiOperationFailedException
      *
@@ -55,6 +56,7 @@ interface BookRepositoryInterface
     /**
      * @param  Book  $book
      * @param  array  $items
+     *
      * @throws Exception
      *
      * @return Book
@@ -64,6 +66,7 @@ interface BookRepositoryInterface
     /**
      * @param  array  $input
      * @param  int  $id
+     *
      * @throws Exception
      * @throws ApiOperationFailedException
      *
