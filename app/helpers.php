@@ -42,7 +42,6 @@ function explode_trim_remove_empty_values_from_array($str, $delimiter = ',')
  * @param string $keywords
  * @param array $columns
  *
- *
  * @return mixed
  */
 function filterByColumns(&$query, $keywords, $columns)
@@ -60,6 +59,13 @@ function filterByColumns(&$query, $keywords, $columns)
     return $query;
 }
 
+/**
+ * @param  string  $startDate
+ * @param  string  $endDate
+ * @param  Collection  $records
+ *
+ * @return array
+ */
 function prepareCountFromDate($startDate, $endDate, $records)
 {
     $result = [];
@@ -67,11 +73,10 @@ function prepareCountFromDate($startDate, $endDate, $records)
         /** @var Collection $records */
         $records = $records->groupBy('date');
         while (strtotime($startDate) <= strtotime($endDate)) {
-            $dateText = date('jS M', strtotime($startDate));
             $monthText = date('M Y', strtotime($startDate));;
-            $result[$monthText][$dateText] = 0;
+            $result[$monthText][] = 0;
             if (isset($records[$startDate])) {
-                $result[$monthText][$dateText] = $records[$startDate]->count();
+                $result[$monthText][] = $records[$startDate]->count();
             }
 
             $startDate = Carbon::parse($startDate)->addDay()->toDateString();
@@ -79,4 +84,23 @@ function prepareCountFromDate($startDate, $endDate, $records)
     }
 
     return $result;
+}
+
+/**
+ * @param  string  $startDate
+ * @param  string  $endDate
+ * @param  string  $format
+ *
+ * @return array
+ */
+function prepareDateText($startDate, $endDate, $format = 'jS M')
+{
+    $dates = [];
+    while (strtotime($startDate) <= strtotime($endDate)) {
+        $dateText = date($format, strtotime($startDate));
+        $dates[] = $dateText;
+        $startDate = Carbon::parse($startDate)->addDay()->toDateString();
+    }
+
+    return $dates;
 }

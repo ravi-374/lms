@@ -40,25 +40,31 @@ class DashboardAPIController extends AppBaseController
      */
     public function dashboardDetails(Request $request)
     {
+        $today = $request->get('today');
+        $startDate = $request->get('start_date');
+        $endDate = $request->get('end_date');
+
         list($response['total_books'], $response['books']) = $this->bookRepo->booksCount(
-            $request->get('today', false), $request->get('start_date'), $request->get('end_date')
+            $today, $startDate, $endDate
         );
 
         list($response['total_members'], $response['members']) = $this->memberRepo->membersCount(
-            $request->get('today', false), $request->get('start_date'), $request->get('end_date')
+            $today, $startDate, $endDate
         );
 
         list($response['total_reserved_books'], $response['reserved_books']) = $this->issuedBookRepo->reserveBooksCount(
-            $request->get('today', false), $request->get('start_date'), $request->get('end_date')
+            $today, $startDate, $endDate
         );
 
         list($response['total_issued_books'], $response['issued_books']) = $this->issuedBookRepo->issuedBooksCount(
-            $request->get('today', false), $request->get('start_date'), $request->get('end_date')
+            $today, $startDate, $endDate
         );
 
         list($response['total_overdue_books'], $response['overdue_books']) = $this->issuedBookRepo->overDueBooksCount(
-            $request->get('today', false), $request->get('start_date'), $request->get('end_date')
+            $today, $startDate, $endDate
         );
+
+        $response['dates'] = (! empty($startDate)) ? prepareDateText($startDate, $endDate) : [];
 
         return $this->sendResponse($response, 'Dashboard details retrieved successfully.');
     }
