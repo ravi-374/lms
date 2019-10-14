@@ -4,6 +4,12 @@ import {getFormattedMessage} from "../../shared/sharedMethod";
 export default {
     items: [
         {
+            name: getFormattedMessage('dashboard.title'),
+            url: 'app/admin/dashboard',
+            icon: 'icon-speedometer',
+            permission: Permissions.MANAGE_BOOKS,
+        },
+        {
             name: getFormattedMessage('books.title'),
             url: '/app/admin/books',
             icon: 'fa fa-book',

@@ -26,7 +26,7 @@ export const Routes = {
     MEMBER_LOGIN: '/app/login',
     MEMBER_DEFAULT: '/app/books',
     ADMIN_LOGIN: '/app/admin/login',
-    ADMIN_DEFAULT: '/app/admin/books',
+    ADMIN_DEFAULT: '/app/admin/dashboard',
     BOOKS: '/app/admin/books/',
     MEMBERS: '/app/admin/members/',
     BOOKS_CIRCULATION: '/app/admin/books-circulation/',
@@ -71,7 +71,9 @@ export const localStorageActionType = {
 
 export const dateFormat = {
     DEFAULT_MOMENT: 'YYYY-MM-DD hh:mm:ss',
-    NATIVE: 'YYYY-MM-DD'
+    NATIVE: 'YYYY-MM-DD',
+    CHART_DATE: 'MMM,D,YYYY',
+    CHART_CUSTOM_DATE: 'MMM_YYYY',
 };
 
 export const LocalStorageKey = {
@@ -100,10 +102,11 @@ export const apiBaseURL = {
     CURRENCY: 'currencies',
     CONFIG: 'config',
     COUNTRY: 'countries',
+    DASHBOARD_DETAILS: 'dashboard-details',
     GENRE: 'genres',
     ISSUED_BOOK: 'issued-books',
-    RESET_PASSWORD: 'reset-password',
-    FORGOT_PASSWORD: 'send-reset-password-link',
+    RESET_PASSWORD: 'reset-member-password',
+    FORGOT_PASSWORD: 'send-reset-member-password-link',
     MEMBER: 'members',
     MEMBER_LOGIN: 'member-login',
     MEMBER_PLAN: 'membership-plans',

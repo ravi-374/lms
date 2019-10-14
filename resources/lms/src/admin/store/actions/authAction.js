@@ -23,7 +23,7 @@ export const login = (user, history) => async (dispatch) => {
             if (sessionStorage.getItem('prevAdminPrevUrl')) {
                 window.location.href = sessionStorage.getItem('prevAdminPrevUrl');
             } else {
-                history.push(Routes.ADMIN_DEFAULT);
+                history.push(Routes.ADMIN_DASHBOARD);
             }
             dispatch({ type: authActionType.LOGIN, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('login.success.logged.message') }));

@@ -134,7 +134,6 @@ const renderAppFooter = (appName) => {
     );
 };
 
-
 Layout.propTypes = {
     user: PropTypes.object,
     location: PropTypes.object,

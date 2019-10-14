@@ -25,7 +25,7 @@ const Home = (props) => {
     };
 
     return (
-        <>
+        <div className="animated fadeIn">
             <header className="header position-fixed">
                 <HeaderTitle title="Index"/>
                 <div className="container">
@@ -478,7 +478,7 @@ const Home = (props) => {
                     </div>
                 </div>
             </footer>
-        </>
+        </div>
     );
 };
 

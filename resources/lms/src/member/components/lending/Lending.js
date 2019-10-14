@@ -88,7 +88,7 @@ const Lending = (props) => {
     };
 
     return (
-        <div id="page-wrapper">
+        <div id="page-wrapper" className="animated fadeIn">
             <HeaderTitle title="Home"/>
             <div className="page-wrapper">
                 <header className="site-header header-one">

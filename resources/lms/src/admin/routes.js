@@ -28,6 +28,13 @@ const Settings = React.lazy(() => import('./components/settings/Settings'));
 
 export default [
     {
+        path: Routes.ADMIN_DEFAULT,
+        exact: true,
+        name: 'Dashboard',
+        component: Dashboard,
+        permission: Permissions.MANAGE_USERS
+    },
+    {
         path: Routes.USERS,
         exact: true,
         name: 'Users',

@@ -1,0 +1,9 @@
+.dashboard {
+    &__card-wrapper {
+        max-width: 20%;
+
+        @media (max-width: 1092px) {
+            max-width: 50%;
+        }
+    }
+}
