@@ -32,6 +32,7 @@ import localStorageReducer from '../../../store/reducers/localStorageReducer';
 import importBookReducer from './importBookReducer';
 import appSettingReducer from '../../../store/reducers/appSettingReducer';
 import authReducer from './authReducer';
+import dashBoardReducer from './dashBoardReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -67,4 +68,5 @@ export default combineReducers({
     importBook: importBookReducer,
     appSetting: appSettingReducer,
     auth: authReducer,
+    dashBoard: dashBoardReducer,
 });

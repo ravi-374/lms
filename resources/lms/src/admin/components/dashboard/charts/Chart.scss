@@ -1,0 +1,17 @@
+.charts {
+
+    &__child-popover {
+
+        .popover {
+            min-width: 700px;
+        }
+    }
+
+    .custom-input-search {
+        cursor: pointer
+    }
+}
+
+.list-group {
+    cursor: pointer;
+}

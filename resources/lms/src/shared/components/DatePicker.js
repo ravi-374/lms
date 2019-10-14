@@ -14,21 +14,22 @@ const ReactDatePicker = (props) => {
     const {
         label, required, placeholder, selected = '', addOnType = 'prepend',
         groupText = 'calendar-check-o', onChange, minDate = '', maxDate = '',
-        dateFormat = 'MMMM d, yyyy', disabled = false
+        dateFormat = 'MMMM d, yyyy', disabled = false, startOpen = false, shouldCloseOnSelect = true,
     } = props;
     const labelClass = required ? 'control-label' : '';
 
     return (
         <>
             <FormGroup>
-                <Label className={labelClass}>{label}</Label>
+                {label ? <Label className={labelClass}>{label}</Label> : null}
                 <InputGroup>
                     <InputGroupAddon addonType={addOnType}>
                         <InputGroupText><i className={`fa fa-${groupText}`}/>
                         </InputGroupText>
                     </InputGroupAddon>
                     <DatePicker placeholderText={placeholder} selected={selected} onChange={onChange} maxDate={maxDate}
-                                minDate={minDate} dateFormat={dateFormat} disabled={disabled}/>
+                                minDate={minDate} dateFormat={dateFormat} disabled={disabled}
+                                shouldCloseOnSelect={shouldCloseOnSelect} startOpen={startOpen}/>
                 </InputGroup>
             </FormGroup>
         </>

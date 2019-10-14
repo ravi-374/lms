@@ -297,3 +297,30 @@ export const authActionType = {
     FORGOT_PASSWORD: 'FORGOT_PASSWORD',
     RESET_PASSWORD: 'RESET_PASSWORD',
 };
+
+export const dashBoardActionType = {
+    FETCH_DASHBOARD_DETAILS: 'FETCH_DASHBOARD_DETAILS',
+    FETCH_DASHBOARD_DETAILS_BY_TODAY: 'FETCH_DASHBOARD_DETAILS_BY_TODAY',
+    FETCH_DASHBOARD_DETAILS_BY_CURRENT_WEEK: 'FETCH_DASHBOARD_DETAILS_BY_CURRENT_WEEK',
+    FETCH_DASHBOARD_DETAILS_BY_LAST_WEEK: 'FETCH_DASHBOARD_DETAILS_BY_LAST_WEEK',
+    FETCH_DASHBOARD_DETAILS_BY_CURRENT_MONTH: 'FETCH_DASHBOARD_DETAILS_BY_CURRENT_MONTH',
+    FETCH_DASHBOARD_DETAILS_BY_LAST_MONTH: 'FETCH_DASHBOARD_DETAILS_BY_LAST_MONTH',
+    FETCH_DASHBOARD_DETAILS_BETWEEN_MONTHS: 'FETCH_DASHBOARD_DETAILS_BETWEEN_MONTHS',
+};
+
+export const chartLabels = [
+    { name: 'dashboard.chart.book.label' },
+    { name: 'dashboard.chart.issue-book.label' },
+    { name: 'dashboard.chart.reserve-book.label' },
+    { name: 'dashboard.chart.overdue-book.label' },
+    { name: 'dashboard.chart.member.label' },
+];
+
+export const chartLabelSelector = {
+    TODAY: 'today',
+    THIS_WEEK: 'this_week',
+    LAST_WEEK: 'last_week',
+    THIS_MONTH: 'this_month',
+    LAST_MONTH: 'last_month',
+    CUSTOM: 'custom',
+};
