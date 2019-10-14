@@ -43,7 +43,7 @@ const BookSearch = (props) => {
                         <Card>
                             <CardBody>
                                 <Row>
-                                    <Col xs={12}><BookSearchForm {...prepareFormOption}/></Col>
+                                    <Col xs={12} className="book-search-col"><BookSearchForm {...prepareFormOption}/></Col>
                                     <Col xs={12} className="mt-3">
                                         {searchBooks.length > 0 && isSearch ?
                                             <BookSearchTable books={searchBooks}/> :
