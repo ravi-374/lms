@@ -1,5 +1,10 @@
 .book {
 
+    &-search-col {
+        position: relative;
+        z-index: 1;
+    }
+
     &-form {
         &__filter-by {
             display: flex;
