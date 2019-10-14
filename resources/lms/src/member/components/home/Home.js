@@ -32,7 +32,7 @@ const Home = (props) => {
                     <nav className="navbar navbar-expand-lg">
                         <a className="navbar-brand d-flex align-items-center" href="#"
                            onClick={(e) => e.preventDefault()}>
-                            <img src={appLogo} alt="logo" className="header__logo"/>
+                            <img src={appLogo} alt="logo" className="header__logo" />
                             <span className="pl-3">{appName}</span>
                         </a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -421,7 +421,7 @@ const Home = (props) => {
                 <div className="container">
                     <div className="row">
                         <div className="col-12 col-md-3">
-                            <a href="#"><img src={appLogo} alt="library"/></a>
+                            <a href="#"><img src={appLogo} alt="library" height="50"/></a>
                             <p className="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros elementum nulla sodales ullamcorper.</p>
                             <div className="space-10"/>
                             <ul className="list-inline list-unstyled social-list">

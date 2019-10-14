@@ -9,21 +9,17 @@ import {getFormattedMessage} from "../sharedMethod";
 let imageRef = null;
 const ImageCropper = (props) => {
     const { image, emitFileChange, onSave, onCancel, isToggle, isFavicon = false } = props;
-    const [crop, setCrop] = useState(isFavicon ? {
-        unit: 'px',
-        width: 16,
-        height: 16,
-    } : {
+    const [crop, setCrop] = useState( {
         unit: 'px',
         width: 50,
         height: 50
     });
     const [croppedImageUrl, setCroppedImageUrl] = useState(null);
     const extraOptions = {
-        minHeight: 16,
-        maxHeight: 16,
-        minWidth: 16,
-        maxWidth: 16,
+        minHeight: 50,
+        maxHeight: 50,
+        minWidth: 50,
+        maxWidth: 50,
     };
 
     const onImageLoaded = image => {
