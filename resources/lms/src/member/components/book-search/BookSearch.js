@@ -37,10 +37,10 @@ const BookSearch = (props) => {
         authors,
         onSearchBook,
         setSearch,
-        isBookSelected: !!book,
+        isBookSelected: !!book || !!author || true,
         isAuthorSelected: !!author,
         isDisabledSearch: !(!!book || !!author),
-        initialValues: !!author || !!book ? { item: { id: 0, name: book ? book : author } } : {}
+        initialValues: !!author || !!book ? { item: { id: 0, name: book ? book : author } } : null
     };
 
     return (
