@@ -20,7 +20,6 @@ import {checkExistingRoute} from "../../../shared/sharedMethod";
 
 const Footer = lazy(() => import('./Footer'));
 const Header = lazy(() => import('./Header'));
-const Home = lazy(() => import('../../components/home/Home'));
 
 const MemberLayout = (props) => {
     const { appName, appLogo, member, location } = props;

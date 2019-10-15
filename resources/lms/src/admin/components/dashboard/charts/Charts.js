@@ -234,10 +234,12 @@ const Charts = (props) => {
                                     {getFormattedMessage('dashboard.chart.circulation-report.title')}
                                 </CardHeader>
                                 <CardBody>
-                                    <div className="chart-wrapper">
+                                    <div className="chart-wrapper chart-wrapper-content">
                                         {renderEmptyDataSet(doughnut.datasets) ? <Doughnut data={doughnut}/> :
-                                            <EmptyComponent isShort title={getFormattedMessage
-                                            ('dashboard.chart.empty-message.label')}/>}
+                                            <div className="chart-wrapper-empty-component">
+                                                <EmptyComponent isShort title={getFormattedMessage
+                                                ('dashboard.chart.empty-message.label')}/>
+                                            </div>}
                                     </div>
                                 </CardBody>
                             </Card>
@@ -246,7 +248,7 @@ const Charts = (props) => {
                                     {getFormattedMessage('dashboard.chart.book&member-report.title')}
                                 </CardHeader>
                                 <CardBody>
-                                    <div className="chart-wrapper">
+                                    <div className="chart-wrapper chart-wrapper-content">
                                         {renderEmptyDataSet(pie.datasets) ? <Pie data={pie}/> :
                                             <EmptyComponent isShort title={getFormattedMessage
                                             ('dashboard.chart.empty-message.label')}/>}
