@@ -1,11 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- * Author: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 12-07-2019
- * Time: 05:56 PM
- */
 
 namespace App\Http\Controllers\API\B1;
 
@@ -13,7 +6,7 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateSettingRequest;
 use App\Http\Requests\API\UploadLogoRequest;
-use App\Http\Requests\UploadFaviconIconRequest;
+use App\Http\Requests\API\UploadFaviconIconRequest;
 use App\Models\Setting;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use Exception;

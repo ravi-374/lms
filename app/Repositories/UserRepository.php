@@ -114,6 +114,7 @@ class UserRepository extends BaseRepository
      *
      * @throws ApiOperationFailedException
      * @throws Exception
+     *
      * @return User|Model
      */
     public function store($input)
@@ -148,7 +149,8 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param $input
+     * @param  array  $input
+     *
      * @return array
      */
     public function makeAddressArray($input)
@@ -177,6 +179,7 @@ class UserRepository extends BaseRepository
      *
      * @throws ApiOperationFailedException
      * @throws Exception
+     *
      * @return User
      */
     public function update($input, $id)

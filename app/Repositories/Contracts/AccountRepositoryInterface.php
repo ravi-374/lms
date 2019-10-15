@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Repositories\Contracts;
 
 use Exception;
@@ -14,6 +13,7 @@ interface AccountRepositoryInterface
      * @param  string  $username
      * @param  string  $email
      * @param  string  $activateCode
+     *
      * @throws Exception
      */
     public function sendConfirmEmail($username, $email, $activateCode);

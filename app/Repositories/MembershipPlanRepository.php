@@ -54,6 +54,7 @@ class MembershipPlanRepository extends BaseRepository implements MembershipPlanR
      * @param  array  $input
      *
      * @throws Exception
+     *
      * @return MembershipPlan
      */
     public function store($input)

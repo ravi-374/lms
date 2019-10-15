@@ -13,11 +13,21 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Validation\UnauthorizedException;
 use JWTAuth;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class MemberAuth
 {
     use CommonMiddlewareFunctions;
 
+    /**
+     * @param  Request  $request
+     * @param  Closure  $next
+     * @param  string|null  $guard
+     *
+     * @throws JWTException
+     *
+     * @return mixed
+     */
     public function handle(Request $request, Closure $next, $guard = null)
     {
         if ($request->user()) {

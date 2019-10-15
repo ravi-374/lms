@@ -4,6 +4,9 @@ namespace App\Http\Requests\API;
 
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class BookDetailsRequest
+ */
 class BookDetailsRequest extends APIRequest
 {
     /**

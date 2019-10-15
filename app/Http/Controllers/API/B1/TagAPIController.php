@@ -110,6 +110,6 @@ class TagAPIController extends AppBaseController
     {
         $tag->delete();
 
-        return $this->sendResponse($tag, 'Tag deleted successfully.');
+        return $this->sendSuccess('Tag deleted successfully.');
     }
 }

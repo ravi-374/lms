@@ -20,7 +20,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use JWTAuth;
-use Session;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Validator;
 
@@ -87,32 +86,25 @@ class MemberAuthController extends AppBaseController
     }
 
     /**
+     * @param  Request  $request
+     *
      * @return JsonResponse|RedirectResponse|Redirector
      */
-    public function verifyAccount()
+    public function verifyAccount(Request $request)
     {
-        $token = \Request::get('token', null);
+        $token = $request->get('token', null);
         if (empty($token)) {
-            Session::flash('error', 'token not found.');
-
-            //Todo: add proper redirect once all set up eg. return redirect('login');
             return $this->sendError('token not found.');
         }
         try {
             $token = Crypt::decrypt($token);
             list($memberId, $activationCode) = $result = explode('|', $token);
             if (count($result) < 2) {
-                Session::flash('error', 'token not found.');
-
-                //Todo: add proper redirect once all set up eg. return redirect('login');
                 return $this->sendError('token not found.');
             }
             /** @var Member $member */
             $member = Member::whereActivationCode($activationCode)->findOrFail($memberId);
             if (empty($member)) {
-                Session::flash('msg', 'This account activation token is invalid.');
-
-                //Todo: add proper redirect once all set up eg. return redirect('login');
                 return $this->sendError('This account activation token is invalid.');
             }
             $member->is_active = 1;
@@ -120,9 +112,6 @@ class MemberAuthController extends AppBaseController
 
             return $this->sendSuccess('Your account has been activated successfully.');
         } catch (Exception $e) {
-            Session::flash('msg', 'Something went wrong.');
-
-            //Todo: add proper redirect once all set up eg. return redirect('login');
             return $this->sendError('Something went wrong.');
         }
     }
@@ -136,7 +125,7 @@ class MemberAuthController extends AppBaseController
      */
     public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
-        $url = $request->url;
+        $url = $request->get('url');
         $data = [];
         /** @var User $member */
         $member = Member::whereEmail($request->get('email'))->first();

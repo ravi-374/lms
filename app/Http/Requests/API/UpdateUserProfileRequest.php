@@ -6,6 +6,9 @@ use App\User;
 use Auth;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class UpdateUserProfileRequest
+ */
 class UpdateUserProfileRequest extends APIRequest
 {
     /**

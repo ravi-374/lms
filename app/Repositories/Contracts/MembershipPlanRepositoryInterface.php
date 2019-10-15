@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Repositories\Contracts;
 
 use App\Models\MembershipPlan;
@@ -38,6 +37,7 @@ interface MembershipPlanRepositoryInterface
      * @param  array  $input
      *
      * @throws Exception
+     *
      * @return MembershipPlan
      */
     public function store($input);

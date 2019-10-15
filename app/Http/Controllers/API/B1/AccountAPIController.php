@@ -1,11 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- * Author: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 15-07-2019
- * Time: 05:11 PM
- */
 
 namespace App\Http\Controllers\API\B1;
 
@@ -43,7 +36,7 @@ class AccountAPIController extends AppBaseController
      */
     public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
-        $url = $request->url;
+        $url = $request->get('url');
         $data = [];
         /** @var User $user */
         $user = User::whereEmail($request->get('email'))->first();

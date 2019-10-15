@@ -72,7 +72,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         $orderBy = null;
         if (! empty($search['order_by']) && in_array($search['order_by'],
-                ['name', 'book_code', 'member_name', 'reserved_on'])) {
+                ['name', 'book_code', 'member_name', 'reserved_on', 'issue_due_date'])) {
             $orderBy = $search['order_by'];
             unset($search['order_by']);
         }
@@ -107,6 +107,9 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
                     break;
                 case 'reserved_on' :
                     $orderString = 'reserve_date';
+                    break;
+                case 'issue_due_date':
+                    $orderString = 'issue_due_date';
                     break;
             }
 
@@ -436,6 +439,4 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         return [$records->count(), $overDueBooks];
     }
-
-
 }

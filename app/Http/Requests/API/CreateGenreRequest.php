@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\Genre;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreateGenreRequest
+ */
 class CreateGenreRequest extends APIRequest
 {
     /**

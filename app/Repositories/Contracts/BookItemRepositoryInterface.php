@@ -35,7 +35,7 @@ interface BookItemRepositoryInterface
      * @param  int|null  $skip
      * @param  int|null  $limit
      *
-     * @return BookItem[]|\Illuminate\Database\Eloquent\Collection
+     * @return BookItem[]|Collection
      */
     public function searchBooks($search = [], $skip = null, $limit = null);
 }

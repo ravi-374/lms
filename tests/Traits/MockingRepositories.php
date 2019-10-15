@@ -43,9 +43,9 @@ trait MockRepositories
     public static $user = 'userRepository';
 
     /** @var MockInterface */
-    public $authorRepository;
+    protected $authorRepository;
     /** @var MockInterface */
-    public $bookRepository;
+    protected $bookRepository;
     /** @var MockInterface */
     protected $bookItemRepository;
     /** @var MockInterface */
@@ -75,7 +75,11 @@ trait MockRepositories
     /** @var MockInterface */
     protected $userRepository;
 
-
+    /**
+     * Mock given repo
+     *
+     * @param $repoNames
+     */
     public function mockRepo($repoNames)
     {
         if (!is_array($repoNames)) {

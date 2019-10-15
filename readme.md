@@ -1,4 +1,4 @@
-<p align="center"><img src="http://tracker.in/assets/img/logo-red-black.png"></p>
+<p><img src="https://track.infyom.com/assets/img/logo-red-black.png"></p>
 
 ## Library Management System
 
@@ -7,7 +7,9 @@
 Clone a Project
 
 - **Checkout `frontend`  branch**
-- **Composer Install**
+- Run `Composer Install`
+- Run `php artisan key:generate`
+- Run `php artisan jwt:secret`
 - **Setup .env file**
 - **Run migration `php artisan migrate`**
 - **Run seeder `php artisan db:seed`**

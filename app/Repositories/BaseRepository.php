@@ -64,6 +64,7 @@ abstract class BaseRepository
      *
      * @param  int  $perPage
      * @param  array  $columns
+     *
      * @return LengthAwarePaginator
      */
     public function paginate($perPage, $columns = ['*'])
@@ -79,6 +80,7 @@ abstract class BaseRepository
      * @param  array  $search
      * @param  int|null  $skip
      * @param  int|null  $limit
+     *
      * @return Builder
      */
     public function allQuery($search = [], $skip = null, $limit = null)

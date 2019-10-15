@@ -1,11 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- * Author: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 15-07-2019
- * Time: 12:54 PM
- */
 
 namespace App\Exceptions;
 

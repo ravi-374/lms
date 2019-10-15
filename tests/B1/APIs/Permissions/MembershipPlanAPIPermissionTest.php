@@ -25,14 +25,6 @@ class MembershipPlanAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_get_membership_plans_without_permission()
-    {
-        $response = $this->getJson(route('api.b1.membership-plans.index'));
-
-        $this->assertExceptionMessage($response, 'Unauthorized action.');
-    }
-
-    /** @test */
     public function test_not_allow_to_create_membership_plan_without_permission()
     {
         $fakeMembershipPlan = factory(MembershipPlan::class)->raw();

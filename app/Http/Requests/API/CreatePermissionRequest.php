@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\Permission;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreatePermissionRequest
+ */
 class CreatePermissionRequest extends APIRequest
 {
     /**

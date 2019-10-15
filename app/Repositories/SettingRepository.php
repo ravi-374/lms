@@ -1,11 +1,4 @@
 <?php
-/**
- * Company: InfyOm Technologies, Copyright 2019, All Rights Reserved.
- * Author: Vishal Ribdiya
- * Email: vishal.ribdiya@infyom.com
- * Date: 12-07-2019
- * Time: 05:57 PM
- */
 
 namespace App\Repositories;
 
@@ -88,7 +81,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
     }
 
     /**
-     * @param  UploadedFile $image
+     * @param  UploadedFile  $image
      *
      * @throws ApiOperationFailedException
      *

@@ -5,6 +5,9 @@ namespace App\Http\Requests\API;
 use App\Models\Role;
 use InfyOm\Generator\Request\APIRequest;
 
+/**
+ * Class CreateRoleRequest
+ */
 class CreateRoleRequest extends APIRequest
 {
     /**

@@ -65,15 +65,18 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::middleware('permission:manage_users')->group(function () {
         Route::resource('users', 'UserAPIController');
         Route::post('users/{user}', 'UserAPIController@update');
-        Route::post('users/{user}/remove-image', 'UserAPIController@removeImage')->name('users.remove-image');
-        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus')->name('users.update-status');
+        Route::post('users/{user}/remove-image', 'UserAPIController@removeImage')
+            ->name('users.remove-image');
+        Route::get('users/{user}/update-status', 'UserAPIController@updateStatus')
+            ->name('users.update-status');
     });
 
     // get logged in user details
     Route::get('user-details', 'UserAPIController@getLoggedInUserDetails')->name('users.user-details');
 
     // update logged in user profile
-    Route::post('update-user-profile', 'UserAPIController@updateUserProfile')->name('users.update-user-profile');
+    Route::post('update-user-profile', 'UserAPIController@updateUserProfile')
+        ->name('users.update-user-profile');
 
     // Members
     Route::middleware('permission:manage_members')->group(function () {
@@ -82,8 +85,10 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::resource('members', 'MemberAPIController')->except(['destroy']);
     Route::post('members/{member}', 'MemberAPIController@update');
 
-    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus')->name('members.update-status');
-    Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage')->name('members.remove-image');
+    Route::get('members/{member}/update-status', 'MemberAPIController@updateStatus')
+        ->name('members.update-status');
+    Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage')
+        ->name('members.remove-image');
 
     Route::middleware('permission:manage_book_series')->group(function () {
         // book series routes
@@ -99,6 +104,7 @@ Route::group(['middleware' => 'user.auth'], function () {
         // Membership Plans
         Route::resource('membership-plans', 'MembershipPlanAPIController');
     });
+    Route::get('membership-plans', 'MembershipPlanAPIController@index')->name('membership-plans.index');
 
     // Reserve Book
     Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')
@@ -117,9 +123,11 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     Route::middleware('permission:issue_books')->group(function () {
         // Issue Book
-        Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook')->name('issue-book');
+        Route::post('books/{book_item}/issue-book', 'IssuedBookAPIController@issueBook')
+            ->name('issue-book');
         // Return Book
-        Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook')->name('return-book');
+        Route::post('books/{book_item}/return-book', 'IssuedBookAPIController@returnBook')
+            ->name('return-book');
 
         // get books history for admin users
         Route::get('books-history', 'IssuedBookAPIController@index')->name('books-history');

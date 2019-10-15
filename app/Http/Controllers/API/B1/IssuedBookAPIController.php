@@ -174,7 +174,7 @@ class IssuedBookAPIController extends AppBaseController
 
         $issuedBook->delete();
 
-        return $this->sendResponse($id, 'Issued Book deleted successfully.');
+        return $this->sendSuccess('Issued Book deleted successfully.');
     }
 
     /**
