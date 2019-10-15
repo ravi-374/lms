@@ -8,7 +8,7 @@ import {
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import './Chart.scss';
-import {barChartOptions, preparePieChart} from "../prepareChartData";
+import {barChartOptions, prepareDougnutChart, preparePieChart} from "../prepareChartData";
 import EmptyComponent from '../../../../shared/empty-component/EmptyComponent';
 import CustomInput from "../../../../shared/components/CustomInput";
 import DatePicker from "../../../../shared/components/DatePicker";
@@ -17,11 +17,12 @@ import {chartLabels, chartLabelSelector} from "../../../constants";
 import {getFormattedMessage, getFormattedOptions} from "../../../../shared/sharedMethod";
 
 const Charts = (props) => {
-    const { general, onMonthSelector, setTypeOfData, chartData, change, initialize } = props;
+    const {
+        general, onMonthSelector, setTypeOfData, chartData, change, initialize,
+        selectedMinDate, setSelectedMinDate, selectedMaxDate, setSelectedMaxDate
+    } = props;
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [childPopoverOpen, setChildPopoverOpen] = useState(false);
-    const [selectedMinDate, setSelectedMinDate] = useState(moment().startOf('month').toDate());
-    const [selectedMaxDate, setSelectedMaxDate] = useState(moment().endOf('month').toDate());
     const toggle = () => setPopoverOpen(!popoverOpen);
     const toggleChild = () => setChildPopoverOpen(!childPopoverOpen);
     const labels = getFormattedOptions(chartLabels).map((({ name }) => name));
@@ -37,11 +38,16 @@ const Charts = (props) => {
         return null;
     }
 
-    const doughnut = preparePieChart(general, labels);
+    const doughnut = prepareDougnutChart(general, labels);
     const pie = preparePieChart(general, labels);
 
     const renderEmptyDataSet = (dataSet) => {
         return dataSet[0].data.reduce((a, b) => a + b, 0);
+    };
+    const renderEmptyBarChart = (dataSet) => {
+        const data = [];
+        dataSet.forEach(d => data.push(...d.data));
+        return data.reduce((a, b) => a + b, 0);
     };
 
     const renderMonthSelector = () => {
@@ -178,7 +184,7 @@ const Charts = (props) => {
                                 </Popover>
                             </ListGroupItem>
                             <ListGroupItem>
-                                <Button color="primary" size="sm"
+                                <Button color="primary" size="sm" disabled={!childPopoverOpen}
                                         onClick={() => onSelectDate(chartLabelSelector.CUSTOM)}>
                                     {getFormattedMessage('global.input.apply-btn.label')}
                                 </Button>
@@ -201,15 +207,19 @@ const Charts = (props) => {
                         <CardBody>
                             <Row>
                                 <Col sm="5">
-                                    {/*<CardTitle className="mb-0">Traffic</CardTitle>*/}
-                                    {/*<div className="small text-muted">November 2015</div>*/}
+                                    <CardTitle className="mb-0">
+                                        {getFormattedMessage('dashboard.chart.custom-report.title')}
+                                    </CardTitle>
                                 </Col>
                                 <Col sm="7" className="d-none d-sm-inline-block">
                                     {renderMonthSelector()}
                                 </Col>
                             </Row>
                             <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                <Bar data={chartData} options={barChartOptions} height={300}/>
+                                {renderEmptyBarChart(chartData.datasets) ?
+                                    <Bar data={chartData} options={barChartOptions} height={300}/> :
+                                    <EmptyComponent isShort title={getFormattedMessage
+                                    ('dashboard.chart.empty-message.label')}/>}
                             </div>
                         </CardBody>
                     </Card>
@@ -221,7 +231,7 @@ const Charts = (props) => {
                         <CardColumns className="cols-2">
                             <Card>
                                 <CardHeader>
-                                    Doughnut Chart
+                                    {getFormattedMessage('dashboard.chart.circulation-report.title')}
                                 </CardHeader>
                                 <CardBody>
                                     <div className="chart-wrapper">
@@ -233,7 +243,7 @@ const Charts = (props) => {
                             </Card>
                             <Card>
                                 <CardHeader>
-                                    Pie Chart
+                                    {getFormattedMessage('dashboard.chart.book&member-report.title')}
                                 </CardHeader>
                                 <CardBody>
                                     <div className="chart-wrapper">
@@ -255,6 +265,8 @@ Charts.propTypes = {
     dashBoard: PropTypes.object,
     general: PropTypes.object,
     chartData: PropTypes.object,
+    setSelectedMinDate: PropTypes.func,
+    setSelectedMaxDate: PropTypes.func,
     setTypeOfData: PropTypes.func,
     onMonthSelector: PropTypes.func,
     change: PropTypes.func,

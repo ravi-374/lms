@@ -1,13 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import './Home.scss';
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {appSettingsKey, Routes} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
+import {getCurrentMember} from "../../../admin/shared/sharedMethod";
 
 const Home = (props) => {
     const { appSetting, history } = props;
+    const [search, setSearch] = useState(null);
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
     const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
@@ -19,9 +22,15 @@ const Home = (props) => {
         document.body.appendChild(script);
     }, []);
 
-    const goToHome = (event) => {
-        event.preventDefault();
-        history.push(Routes.MEMBER_HOME);
+    const onSearch = (searchBy = 'book') => {
+        history.push({
+            pathname: Routes.MEMBER_DEFAULT,
+            search: `?${searchBy}= ${search}`
+        })
+    };
+
+    const onChangeInput = (event) => {
+        setSearch(event.target.value);
     };
 
     return (
@@ -32,7 +41,7 @@ const Home = (props) => {
                     <nav className="navbar navbar-expand-lg">
                         <a className="navbar-brand d-flex align-items-center" href="#"
                            onClick={(e) => e.preventDefault()}>
-                            <img src={appLogo} alt="logo" className="header__logo" />
+                            <img src={appLogo} alt="logo" className="header__logo"/>
                             <span className="pl-3">{appName}</span>
                         </a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -43,17 +52,10 @@ const Home = (props) => {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav ml-auto text-uppercase">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#" onClick={(e) => goToHome(e)}>Home<span
-                                        className="sr-only">(current)</span></a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#" onClick={(e) => e.preventDefault()}>Link</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#" onClick={(e) => e.preventDefault()}>Team</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#" onClick={(e) => e.preventDefault()}>Event</a>
+                                    <Link to={getCurrentMember() ? Routes.MEMBER_DEFAULT : Routes.MEMBER_LOGIN}
+                                          className="nav-link">
+                                        {getCurrentMember() ? 'Books' : 'Login'}
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -94,38 +96,28 @@ const Home = (props) => {
                                     <a className="nav-link" data-toggle="tab" href="#author" role="tab"
                                        aria-controls="author" aria-selected="false" id="author-tab">Author</a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" data-toggle="tab" href="#publisher" role="tab"
-                                       aria-selected="false" id="publisher-tab">Publisher</a>
-                                </li>
                             </ul>
                             <div className="tab-content">
                                 <div id="book" className="tab-pane fade show active" role="tabpanel"
                                      aria-labelledby="book-tab">
                                     <div className="d-flex align-items-center">
-                                        <input type="text" placeholder="Enter book name"/>
+                                        <input type="text" placeholder="Enter book name"
+                                               onChange={(e) => onChangeInput(e)}/>
                                         <span
-                                            className="landing-search-box__search-icon d-flex justify-content-center align-items-center">
+                                            className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
+                                            onClick={() => onSearch()}>
                                 <i className="fas fa-search"/>
                             </span>
                                     </div>
                                 </div>
                                 <div id="author" className="tab-pane fade" role="tabpanel" aria-labelledby="author-tab">
                                     <div className="d-flex align-items-center">
-                                        <input type="text" placeholder="Enter author name"/>
+                                        <input type="text" placeholder="Enter author name"
+                                               onChange={(e) => onChangeInput(e)}/>
                                         <span
-                                            className="landing-search-box__search-icon d-flex justify-content-center align-items-center">
-                                <i className="fas fa-search"/>
-                            </span>
-                                    </div>
-                                </div>
-                                <div id="publisher" className="tab-pane fade" role="tabpanel"
-                                     aria-labelledby="publisher-tab">
-                                    <div className="d-flex align-items-center">
-                                        <input type="text" placeholder="Enter publisher name"/>
-                                        <span
-                                            className="landing-search-box__search-icon d-flex justify-content-center align-items-center">
-                                <i className="fas fa-search"/>
+                                            className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
+                                            onClick={() => onSearch('author')}>
+                                 <i className="fas fa-search"/>
                             </span>
                                     </div>
                                 </div>

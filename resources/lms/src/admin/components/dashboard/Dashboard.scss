@@ -11,9 +11,21 @@
 
     &__card {
 
+        &-count {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        &-title {
+            margin-top: 18px;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
         &-icon {
             float: right;
-            margin-top: -8px;
+            margin-top: -20px;
+            opacity: .7;
         }
     }
 }
