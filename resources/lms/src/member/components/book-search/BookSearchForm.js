@@ -10,10 +10,13 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {resetSearchBooks} from "../../store/actions/bookSearchAction";
 
 const BookSearchForm = (props) => {
-    const { books, authors, change, onSearchBook, resetSearchBooks, setSearch, handleSubmit } = props;
-    const [isAuthorChecked, setIsAuthorChecked] = useState(false);
-    const [isBookChecked, setIsBookChecked] = useState(true);
-    const [isDisabled, setIsDisabled] = useState(true);
+    const {
+        books, authors, change, onSearchBook, resetSearchBooks, setSearch, handleSubmit, isAuthorSelected,
+        isBookSelected, isDisabledSearch
+    } = props;
+    const [isAuthorChecked, setIsAuthorChecked] = useState(isAuthorSelected);
+    const [isBookChecked, setIsBookChecked] = useState(isBookSelected);
+    const [isDisabled, setIsDisabled] = useState(isDisabledSearch);
 
     const prepareParams = (item) => {
         if (isBookChecked && item) {
@@ -110,6 +113,9 @@ const BookSearchForm = (props) => {
 BookSearchForm.propTypes = {
     books: PropTypes.array,
     authors: PropTypes.array,
+    isAuthorSelected: PropTypes.bool,
+    isBookSelected: PropTypes.bool,
+    isDisabledSearch: PropTypes.bool,
     onSearchBook: PropTypes.func,
     resetSearchBooks: PropTypes.func,
     setSearch: PropTypes.func,

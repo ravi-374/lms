@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Bar, Line} from 'react-chartjs-2';
 import {
-    ButtonGroup,
     Card,
     CardBody,
     Col,
@@ -12,20 +10,20 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import './Dashboard.scss';
 import Charts from './charts/Charts';
-import {
-    prepareBarChart,
-    cardChartData1, cardChartData2, cardChartData3, cardChartData4, cardChartData5, cardChartOpts1,
-    cardChartOpts2, cardChartOpts3, cardChartOpts4, cardChartOpts5, prepareMonthlyBarChart,
-} from "./prepareChartData";
+import {prepareBarChart, prepareMonthlyBarChart, prepareCards} from "./prepareChartData";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import {fetchDashBoardDetails} from "../../store/actions/dashBoardAction";
 import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
 import {chartLabels, chartLabelSelector} from "../../constants";
+import moment from "moment/moment";
+import {dateFormat} from "../../../constants";
 
 const Dashboard = (props) => {
     const { fetchDashBoardDetails, dashBoard, isLoading } = props;
     const [typeOfData, setTypeOfData] = useState('general');
+    const [selectedMinDate, setSelectedMinDate] = useState(moment().startOf('month').toDate());
+    const [selectedMaxDate, setSelectedMaxDate] = useState(moment().endOf('month').toDate());
     const labels = getFormattedOptions(chartLabels).map((({ name }) => name));
 
     useEffect(() => {
@@ -36,70 +34,33 @@ const Dashboard = (props) => {
         return <ProgressBar/>;
     }
     const { general } = dashBoard;
-    const { total_books, total_issued_books, total_reserved_books, total_overdue_books, total_members } = general;
-    const totalCard = [
-        {
-            type: 'line',
-            title: labels[0],
-            color: 'bg-info',
-            count: total_books,
-            data: cardChartData1,
-            dataOptions: cardChartOpts1,
-            icon: 'fa fa-book'
-        },
-        {
-            type: 'line',
-            title: labels[1],
-            color: 'bg-primary',
-            count: total_issued_books,
-            data: cardChartData2,
-            dataOptions: cardChartOpts2,
-            icon: 'fas fa-book-reader'
-        },
-        {
-            type: 'line',
-            title: labels[2],
-            color: 'bg-warning',
-            count: total_reserved_books,
-            data: cardChartData3,
-            dataOptions: cardChartOpts3,
-            icon: 'fas fa-book-reader'
-        },
-        {
-            type: 'bar',
-            title: labels[3],
-            color: 'bg-danger',
-            count: total_overdue_books,
-            data: cardChartData4,
-            dataOptions: cardChartOpts4,
-            icon: 'fas fa-book-reader'
-        },
-        {
-            type: 'bar',
-            title: labels[4],
-            color: 'bg-success',
-            count: total_members,
-            data: cardChartData5,
-            dataOptions: cardChartOpts5,
-            icon: 'fas fa-users'
-        },
-    ];
+    const totalCard = prepareCards(general, labels);
 
     const renderChartData = (chartData, type) => {
+        const inputToady = moment().format(dateFormat.CHART_CUSTOM_DATE);
+        const inputNextWeek = moment().add(1, 'week').format(dateFormat.CHART_CUSTOM_DATE);
+        const inputLastWeek = moment().subtract(1, 'week').format(dateFormat.CHART_CUSTOM_DATE);
+        const inputStartMonth = moment().startOf('month').format(dateFormat.CHART_CUSTOM_DATE);
+        const inputNextMonth = moment().endOf('month').format(dateFormat.CHART_CUSTOM_DATE);
+        const inputStartOfLastMonth = moment().subtract(1, 'months').startOf('month').format(dateFormat.CHART_CUSTOM_DATE);
+        const inputEndOfLastMonth = moment().subtract(1, 'months').endOf('month').format(dateFormat.CHART_CUSTOM_DATE);
+        const inputInterStartMediateDate = moment(selectedMinDate).format(dateFormat.CHART_CUSTOM_DATE);
+        const inputInterMediateEndDate = moment(selectedMaxDate).format(dateFormat.CHART_CUSTOM_DATE);
+
         const { general, today, currentWeek, lastWeek, currentMonth, lastMonth, interMonth } = chartData;
         if (type === chartLabelSelector.TODAY && today) {
-            return prepareBarChart(today, labels)
+            return prepareBarChart(today, labels, inputToady)
         } else if (type === chartLabelSelector.THIS_WEEK && currentWeek) {
-            return prepareMonthlyBarChart(currentWeek, labels)
+            return prepareMonthlyBarChart(currentWeek, labels, inputToady, inputNextWeek);
         } else if (type === chartLabelSelector.LAST_WEEK && lastWeek) {
-            return prepareMonthlyBarChart(lastWeek, labels)
+            return prepareMonthlyBarChart(lastWeek, labels, inputLastWeek, inputToady);
         } else if (type === chartLabelSelector.THIS_MONTH && currentMonth) {
-            return prepareMonthlyBarChart(currentMonth, labels)
+            return prepareMonthlyBarChart(currentMonth, labels, inputStartMonth, inputNextMonth);
         } else if (type === chartLabelSelector.LAST_MONTH && lastMonth) {
-            return prepareMonthlyBarChart(lastMonth, labels)
+            return prepareMonthlyBarChart(lastMonth, labels, inputStartOfLastMonth, inputEndOfLastMonth);
         }
         else if (type === chartLabelSelector.CUSTOM && interMonth) {
-            return prepareMonthlyBarChart(interMonth, labels)
+            return prepareMonthlyBarChart(interMonth, labels, inputInterStartMediateDate, inputInterMediateEndDate);
         } else {
             return prepareBarChart(general, labels);
         }
@@ -108,26 +69,23 @@ const Dashboard = (props) => {
     const onMonthSelector = (params = {}) => {
         fetchDashBoardDetails(params);
     };
-    const chartOptions = { general, chartData: renderChartData(dashBoard, typeOfData), onMonthSelector, setTypeOfData };
+
+    const chartOptions = {
+        general, chartData: renderChartData(dashBoard, typeOfData), onMonthSelector, setTypeOfData,
+        selectedMinDate, setSelectedMinDate, selectedMaxDate, setSelectedMaxDate
+    };
 
     const renderCards = () => {
         return totalCard.map((card, index) => (
             <Col key={index} className="dashboard__card-wrapper">
                 <Card className={`text-white ${card.color}`}>
-                    <CardBody className="pb-0">
-                        <ButtonGroup className="float-right">
+                    <CardBody>
+                        <div className="dashboard__card-count">{card.count}</div>
+                        <div className="dashboard__card-icon">
                             <i className={card.icon}/>
-                        </ButtonGroup>
-                        <div className="text-value">{card.count}</div>
-                        <div>{card.title}</div>
+                        </div>
+                        <div className="dashboard__card-title">{card.title}</div>
                     </CardBody>
-                    <div className={`chart-wrapper ${card.color === 'bg-warning' ? '' : 'mx-3'}`}
-                         style={{ height: '70px' }}>
-                        {card.type === 'line' ?
-                            <Line data={card.data} options={card.dataOptions} height={70}/> :
-                            <Bar data={card.data} options={card.dataOptions} height={70}/>
-                        }
-                    </div>
                 </Card>
             </Col>
         ));

@@ -14,8 +14,11 @@ import {findBooks} from '../../store/actions/bookSearchAction';
 import {fetchAuthors} from '../../store/actions/authorAction';
 
 const BookSearch = (props) => {
-    const { isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors } = props;
+    const { isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors, location } = props;
     const [isSearch, setSearch] = useState(false);
+    const params = new URLSearchParams(location.search);
+    const author = params.get('author');
+    const book = params.get('book');
 
     useEffect(() => {
         fetchBooks();
@@ -29,7 +32,16 @@ const BookSearch = (props) => {
         findBooks(params);
     };
 
-    const prepareFormOption = { books, authors, onSearchBook, setSearch };
+    const prepareFormOption = {
+        books,
+        authors,
+        onSearchBook,
+        setSearch,
+        isBookSelected: !!book,
+        isAuthorSelected: !!author,
+        isDisabledSearch: !(!!book || !!author),
+        initialValues: !!author || !!book ? { item: { id: 0, name: book ? book : author } } : {}
+    };
 
     return (
         <div className="animated fadeIn">
@@ -43,7 +55,8 @@ const BookSearch = (props) => {
                         <Card>
                             <CardBody>
                                 <Row>
-                                    <Col xs={12} className="book-search-col"><BookSearchForm {...prepareFormOption}/></Col>
+                                    <Col xs={12}
+                                         className="book-search-col"><BookSearchForm {...prepareFormOption}/></Col>
                                     <Col xs={12} className="mt-3">
                                         {searchBooks.length > 0 && isSearch ?
                                             <BookSearchTable books={searchBooks}/> :
@@ -64,6 +77,7 @@ const BookSearch = (props) => {
 };
 
 BookSearch.propTypes = {
+    location: PropTypes.object,
     books: PropTypes.array,
     authors: PropTypes.array,
     searchBooks: PropTypes.array,
