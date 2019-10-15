@@ -446,7 +446,7 @@ const Home = (props) => {
                                     <td>contact@infyom.in</td>
                                 </tr>
                                 <tr>
-                                    <td><i className="fas fa-phone-alt"/></td>
+                                    <td><i className="fas fa-phone"/></td>
                                     <td>+91 70963 36561</td>
                                 </tr>
                                 <tr>
@@ -455,17 +455,6 @@ const Home = (props) => {
                                 </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div className="col-12 col-md-3 ml-auto">
-                            <h4 className="">Useful Link</h4>
-                            <div className="space-20"/>
-                            <ul className="list-unstyled menu-tip">
-                                <li><a href="books.html">Costumer Service</a></li>
-                                <li><a href="books.html">Help Desk</a></li>
-                                <li><a href="books.html">Forum</a></li>
-                                <li><a href="books.html">Staff Profile</a></li>
-                                <li><a href="books.html">Live Chat</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
