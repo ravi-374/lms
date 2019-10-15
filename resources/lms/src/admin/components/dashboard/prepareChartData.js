@@ -1,7 +1,5 @@
 import {getStyle} from "@coreui/coreui/dist/js/coreui-utilities";
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import {dateFormat} from "../../../constants";
-import moment from "moment/moment";
 
 const brandPrimary = getStyle('--primary');
 const brandSuccess = getStyle('--success');
@@ -9,241 +7,49 @@ const brandInfo = getStyle('--info');
 const brandWarning = getStyle('--warning');
 const brandDanger = getStyle('--danger');
 
-const chartColors = [brandInfo, brandPrimary, brandWarning, brandDanger, brandSuccess];
-
-export const cardChartData1 = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            label: 'My First dataset',
-            backgroundColor: brandInfo,
-            borderColor: 'rgba(255,255,255,.55)',
-            data: [1, 18, 9, 17, 34, 22, 11],
-        },
-    ],
-};
-
-export const cardChartOpts1 = {
-    tooltips: {
-        enabled: false,
-        custom: CustomTooltips
-    },
-    maintainAspectRatio: false,
-    legend: {
-        display: false,
-    },
-    scales: {
-        xAxes: [
-            {
-                gridLines: {
-                    color: 'transparent',
-                    zeroLineColor: 'transparent',
-                },
-                ticks: {
-                    fontSize: 2,
-                    fontColor: 'transparent',
-                },
-
-            }],
-        yAxes: [
-            {
-                display: false,
-                ticks: {
-                    display: false,
-                    min: Math.min.apply(Math, cardChartData1.datasets[0].data) - 5,
-                    max: Math.max.apply(Math, cardChartData1.datasets[0].data) + 5,
-                },
-            }],
-    },
-    elements: {
-        line: {
-            tension: 0.00001,
-            borderWidth: 1,
-        },
-        point: {
-            radius: 4,
-            hitRadius: 10,
-            hoverRadius: 4,
-        },
-    },
-};
-
-// Card Chart 2
-export const cardChartData2 = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            label: 'My First dataset',
-            backgroundColor: brandPrimary,
-            borderColor: 'rgba(255,255,255,.55)',
-            data: [65, 59, 84, 84, 51, 55, 40],
-        },
-    ],
-};
-
-export const cardChartOpts2 = {
-    tooltips: {
-        enabled: false,
-        custom: CustomTooltips
-    },
-    maintainAspectRatio: false,
-    legend: {
-        display: false,
-    },
-    scales: {
-        xAxes: [
-            {
-                gridLines: {
-                    color: 'transparent',
-                    zeroLineColor: 'transparent',
-                },
-                ticks: {
-                    fontSize: 2,
-                    fontColor: 'transparent',
-                },
-
-            }],
-        yAxes: [
-            {
-                display: false,
-                ticks: {
-                    display: false,
-                    min: Math.min.apply(Math, cardChartData2.datasets[0].data) - 5,
-                    max: Math.max.apply(Math, cardChartData2.datasets[0].data) + 5,
-                },
-            }],
-    },
-    elements: {
-        line: {
-            borderWidth: 1,
-        },
-        point: {
-            radius: 4,
-            hitRadius: 10,
-            hoverRadius: 4,
-        },
-    }
-};
-
-// Card Chart 3
-export const cardChartData3 = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,255,255,.2)',
-            borderColor: 'rgba(255,255,255,.55)',
-            data: [78, 81, 80, 45, 34, 12, 40],
-        },
-    ],
-};
-
-export const cardChartOpts3 = {
-    tooltips: {
-        enabled: false,
-        custom: CustomTooltips
-    },
-    maintainAspectRatio: false,
-    legend: {
-        display: false,
-    },
-    scales: {
-        xAxes: [
-            {
-                display: false,
-            }],
-        yAxes: [
-            {
-                display: false,
-            }],
-    },
-    elements: {
-        line: {
-            borderWidth: 2,
-        },
-        point: {
-            radius: 0,
-            hitRadius: 10,
-            hoverRadius: 4,
-        },
-    },
-};
-
-// Card Chart 4
-export const cardChartData4 = {
-    labels: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-    datasets: [
-        {
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,255,255,.3)',
-            borderColor: 'transparent',
-            data: [78, 81, 80, 45, 34, 12, 40, 75, 34, 89, 32, 68, 54, 72, 18, 98],
-        },
-    ],
-};
-
-export const cardChartOpts4 = {
-    tooltips: {
-        enabled: false,
-        custom: CustomTooltips
-    },
-    maintainAspectRatio: false,
-    legend: {
-        display: false,
-    },
-    scales: {
-        xAxes: [
-            {
-                display: false,
-                barPercentage: 0.6,
-            }],
-        yAxes: [
-            {
-                display: false,
-            }],
-    },
-};
-
-
-// Card Chart 5
-export const cardChartData5 = {
-    labels: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-    datasets: [
-        {
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,255,255,.3)',
-            borderColor: 'transparent',
-            data: [78, 81, 80, 45, 34, 12, 40, 75, 34, 89, 32, 68, 54, 72, 18, 98],
-        },
-    ],
-};
-
-export const cardChartOpts5 = {
-    tooltips: {
-        enabled: false,
-        custom: CustomTooltips
-    },
-    maintainAspectRatio: false,
-    legend: {
-        display: false,
-    },
-    scales: {
-        xAxes: [
-            {
-                display: false,
-                barPercentage: 0.6,
-            }],
-        yAxes: [
-            {
-                display: false,
-            }],
-    },
-};
+const chartColors = [brandInfo, brandSuccess, brandPrimary, brandWarning, brandDanger];
 
 // Main Chart
 export const prepareChartData = (chartData) => {
-    const { total_books, total_issued_books, total_reserved_books, total_overdue_books, total_members } = chartData;
-    return [total_books, total_issued_books, total_reserved_books, total_overdue_books, total_members];
+    const { total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books } = chartData;
+    return [total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books];
+};
+
+export const prepareCards = (chartData, labels) => {
+    const { total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books } = chartData;
+    return [
+        {
+            title: labels[0],
+            color: 'bg-info',
+            count: total_books,
+            icon: 'fa fa-book fa-4x'
+        },
+        {
+            title: labels[1],
+            color: 'bg-success',
+            count: total_members,
+            icon: 'fas fa-users fa-4x'
+        },
+        {
+            title: labels[2],
+            color: 'bg-primary',
+            count: total_issued_books,
+            icon: 'fas fa-book-reader fa-4x'
+        },
+        {
+            title: labels[3],
+            color: 'bg-warning',
+            count: total_reserved_books,
+            icon: 'fas fa-book-reader fa-4x'
+        },
+        {
+            type: 'bar',
+            title: labels[4],
+            color: 'bg-danger',
+            count: total_overdue_books,
+            icon: 'fas fa-book-reader fa-4x'
+        },
+    ];
 };
 
 export const prepareBarChart = (chartData, labels) => {
@@ -264,12 +70,10 @@ export const prepareBarChart = (chartData, labels) => {
     };
 };
 
-const getChartData = (chartData) => {
-    const startDate = moment().format(dateFormat.CHART_CUSTOM_DATE);
-    const endDate = moment().add(1, 'M').format(dateFormat.CHART_CUSTOM_DATE);
+const getChartData = (chartData, startDate, endDate) => {
     const { dates, books, issued_books, reserved_books, overdue_books, members } = chartData;
-    let data = [books[startDate], issued_books[startDate], reserved_books[startDate],
-        overdue_books[startDate], members[startDate]];
+    let data = [books[startDate], members[startDate], issued_books[startDate], reserved_books[startDate],
+        overdue_books[startDate]];
     if (books[endDate]) {
         data = [books[startDate].concat(books[endDate]),
             books[startDate].concat(books[endDate]),
@@ -279,9 +83,9 @@ const getChartData = (chartData) => {
     return { data, dates };
 };
 
-export const prepareMonthlyBarChart = (chartData, labels) => {
+export const prepareMonthlyBarChart = (chartData, labels, startDate, endDate = null) => {
     let dataSet = [];
-    const { data, dates } = getChartData(chartData);
+    const { data, dates } = getChartData(chartData, startDate, endDate);
     labels.forEach((label, index) => {
         dataSet.push(
             {
@@ -322,21 +126,36 @@ export const barChartOptions = {
             ticks: {
                 stepSize: 1,
                 fontSize: 14,
+                beginAtZero: true
             },
             stacked: true
         }],
     },
 };
 
-export const preparePieChart = (chartData, labels) => {
+export const prepareDougnutChart = (chartData, labels) => {
     let chart = {
-        labels
+        labels: labels.slice(2, 5)
     };
     chart.datasets = [
         {
-            data: prepareChartData(chartData),
-            backgroundColor: chartColors,
-            hoverBackgroundColor: chartColors
+            data: prepareChartData(chartData).slice(2, 5),
+            backgroundColor: chartColors.slice(2, 5),
+            hoverBackgroundColor: chartColors.slice(2, 5)
+        }
+    ];
+    return chart;
+};
+
+export const preparePieChart = (chartData, labels) => {
+    let chart = {
+        labels: labels.slice(0, 2)
+    };
+    chart.datasets = [
+        {
+            data: prepareChartData(chartData).slice(0, 2),
+            backgroundColor: chartColors.slice(0, 2),
+            hoverBackgroundColor: chartColors.slice(0, 2)
         }
     ];
     return chart;

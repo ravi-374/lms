@@ -310,10 +310,10 @@ export const dashBoardActionType = {
 
 export const chartLabels = [
     { name: 'dashboard.chart.book.label' },
+    { name: 'dashboard.chart.member.label' },
     { name: 'dashboard.chart.issue-book.label' },
     { name: 'dashboard.chart.reserve-book.label' },
     { name: 'dashboard.chart.overdue-book.label' },
-    { name: 'dashboard.chart.member.label' },
 ];
 
 export const chartLabelSelector = {
