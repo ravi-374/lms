@@ -5,7 +5,7 @@ export default {
     items: [
         {
             name: getFormattedMessage('dashboard.title'),
-            url: 'app/admin/dashboard',
+            url: '/app/admin/dashboard',
             icon: 'icon-speedometer',
             permission: Permissions.MANAGE_BOOKS,
         },
