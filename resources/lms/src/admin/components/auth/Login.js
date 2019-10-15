@@ -9,7 +9,7 @@ import {Routes, Tokens} from "../../../constants";
 import CheckBox from '../../../shared/components/CheckBox';
 import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {getFormattedMessage, getLocalStorageDataByKey} from "../../../shared/sharedMethod";
+import {getFormattedMessage, getLocalStorageDataByEncryptKey} from "../../../shared/sharedMethod";
 import {login} from "../../store/actions/authAction";
 
 const Login = (props) => {
@@ -19,7 +19,7 @@ const Login = (props) => {
         if (localStorage.getItem(Tokens.ADMIN)) {
             history.push(Routes.ADMIN_DEFAULT);
         }
-        initialize(getLocalStorageDataByKey('currentUser'));
+        initialize(getLocalStorageDataByEncryptKey('currentUser'));
     }, []);
 
     const onLogin = async (formValues) => {
