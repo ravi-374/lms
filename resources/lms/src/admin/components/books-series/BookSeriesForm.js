@@ -54,7 +54,7 @@ const BookSeriesForm = props => {
     const [items, setItems] = useState(getItems(initialValues ? initialValues.series_items : [{
         id: 1,
         sequence: 1,
-        book: { id: null }
+        book: {id: null}
     }]));
     const inputRef = createRef();
 
@@ -62,7 +62,7 @@ const BookSeriesForm = props => {
         fetchBooks({}, null, true);
         inputRef.current.focus();
         if (!initialValues) {
-            initialize({ series_items: [{ sequence: 1 }] });
+            initialize({series_items: [{sequence: 1}]});
         }
     }, []);
 
@@ -84,7 +84,7 @@ const BookSeriesForm = props => {
         seriesItem.forEach((item, index) => {
             seriesItems.forEach((i) => {
                 if (item.sequence === +i.sequence) {
-                    array.push({ sequence: index + 1, book: i.book })
+                    array.push({sequence: index + 1, book: i.book})
                 }
             });
         });
@@ -124,19 +124,26 @@ const BookSeriesForm = props => {
         </Row>
     );
 };
-const renderBookSeriesItems = ({ fields, meta: { error, submitFailed }, onDragEnd, change, items, setItems, books, toggleModal, seriesItems }) => {
+const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, change, items, setItems, books, toggleModal, seriesItems}) => {
     const [index, setIndex] = useState(null);
     const onAddSubFields = () => {
-        setItems([...items, { id: `item-${items.length + 1}`, sequence: items.length + 1, book_id: null }]);
-        return fields.push({ sequence: items.length + 1, book_id: null });
+        setItems([...items, {id: `item-${items.length + 1}`, sequence: items.length + 1, book_id: null}]);
+        return fields.push({sequence: items.length + 1, book_id: null});
     };
     const onRemoveSubFields = (index) => {
         setIndex(index);
         toggleModal();
     };
-    const cardModalProps = { fields, seriesItems, items, setItems, index, setIndex, toggleModal };
+    const cardModalProps = {fields, seriesItems, items, setItems, index, setIndex, toggleModal};
     if (fields.length === 0) {
-        return <EmptyComponent isShort={true} title={getFormattedMessage('books-series.items.empty-state.title')}/>
+        return (
+            <div>
+                <EmptyComponent isShort={true} title={getFormattedMessage('books-series.items.empty-state.title')}/>
+                <button type="button" className="btn btn-outline-primary mt-3" onClick={() => onAddSubFields()}>
+                    {getFormattedMessage('books-series.items.input.add-item-btn.label')}
+                </button>
+            </div>
+        )
     }
     return (
         <div>
@@ -164,18 +171,18 @@ const renderBookSeriesItems = ({ fields, meta: { error, submitFailed }, onDragEn
                                                 provided.draggableProps.style,
                                                 snapshot.isDragging
                                             )}>
-                                                <td style={{ width: '720px' }}>
+                                                <td style={{width: '720px'}}>
                                                     <Field name={`${item}.sequence`} readOnly={true}
                                                            placeholder="books-series.items.input.sequence.label"
                                                            groupText="file-text" component={CustomInput}/>
                                                 </td>
-                                                <td style={{ width: '720px' }}>
+                                                <td style={{width: '720px'}}>
                                                     <Field name={`${item}.book`} required options={books}
                                                            placeholder="books-series.items.select.book-name.placeholder"
                                                            groupText="book" component={Select} isSearchable={true}/>
                                                 </td>
                                                 <td className="text-center">
-                                                    <Button size="sm" color="danger" style={{ marginTop: '10px' }}
+                                                    <Button size="sm" color="danger" style={{marginTop: '10px'}}
                                                             onClick={() => onRemoveSubFields(index, item)}>
                                                         <i className="cui-trash icon font-md"/>
                                                     </Button>
@@ -213,11 +220,11 @@ BookSeriesForm.propTypes = {
     toggleModal: PropTypes.func,
 };
 
-const bookSeriesForm = reduxForm({ form: 'bookSeriesForm', validate: bookSeriesValidate })(BookSeriesForm);
+const bookSeriesForm = reduxForm({form: 'bookSeriesForm', validate: bookSeriesValidate})(BookSeriesForm);
 const selector = formValueSelector('bookSeriesForm');
 const mapStateToProps = (state) => {
-    const { books } = state;
-    return { seriesItems: selector(state, 'series_items'), books }
+    const {books} = state;
+    return {seriesItems: selector(state, 'series_items'), books}
 };
 
-export default connect(mapStateToProps, { fetchBooks, toggleModal })(bookSeriesForm);
+export default connect(mapStateToProps, {fetchBooks, toggleModal})(bookSeriesForm);
