@@ -48,7 +48,7 @@ export const addBook = (book, history) => async (dispatch) => {
             dispatch({ type: bookActionType.ADD_BOOK, payload: response.data.data });
             dispatch(setLoading(false));
             dispatch(addToast({ text: getFormattedMessage('books.success.create.message') }));
-            history.push(Routes.ADMIN_DEFAULT);
+            history.push(Routes.BOOKS);
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
@@ -64,7 +64,7 @@ export const editBook = (bookId, book, history = null) => async (dispatch) => {
             dispatch(setLoading(false));
             dispatch(addToast({ text: getFormattedMessage('books.success.edit.message') }));
             if (history) {
-                history.push(Routes.ADMIN_DEFAULT);
+                history.push(Routes.BOOKS);
             } else {
                 dispatch(toggleModal());
             }
