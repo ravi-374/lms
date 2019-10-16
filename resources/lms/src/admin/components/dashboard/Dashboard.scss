@@ -1,12 +1,11 @@
 .dashboard {
 
     &__card-wrapper {
-        max-width: 20%;
 
-        @media (max-width: 1092px) {
-            max-width: 50%;
+        @media (min-width: 1280px) {
+            flex: 1;
+            max-width: 100%;
         }
-
     }
 
     &__card {
@@ -24,7 +23,7 @@
 
         &-icon {
             float: right;
-            margin-top: -20px;
+            margin-top: -40px;
             opacity: .7;
         }
     }
