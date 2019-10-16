@@ -510,7 +510,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     public function booksCountFromGenres()
     {
         /** @var Genre[] $genres */
-        $genres = Genre::withCount('books')->get();
+        $genres = Genre::withCount('books')->whereHas('books')->get();
 
         $response = [];
         foreach ($genres as $genre) {
