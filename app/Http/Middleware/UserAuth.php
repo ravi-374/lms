@@ -40,7 +40,7 @@ class UserAuth
 
         if (App::isLocal() && empty($token)) {
             /** @var User $user */
-            $user = User::whereEmail('admin@lms.local')->first();
+            $user = User::whereEmail('admin@lms.com')->first();
             if ($user) {
                 Auth::loginUsingId($user->id);
 

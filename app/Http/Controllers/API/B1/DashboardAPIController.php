@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
+use App\Models\BookItem;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterface;
@@ -47,6 +48,10 @@ class DashboardAPIController extends AppBaseController
         list($response['total_books'], $response['books']) = $this->bookRepo->booksCount(
             $today, $startDate, $endDate
         );
+
+        $response['genres_with_books'] = $this->bookRepo->booksCountFromGenres();
+
+        $response['total_available_books'] = BookItem::whereStatus(BookItem::STATUS_AVAILABLE)->count();
 
         list($response['total_members'], $response['members']) = $this->memberRepo->membersCount(
             $today, $startDate, $endDate
