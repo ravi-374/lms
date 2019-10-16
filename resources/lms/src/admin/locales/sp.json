@@ -160,7 +160,7 @@
     "books-series.success.delete.message": "Serie de libros eliminada con éxito.",
     "dashboard.title":"Tablero",
     "dashboard.chart.custom-report.title": "Informe Personalizado",
-    "dashboard.chart.book&member-report.title": "Informe De Libros Y Miembros",
+    "dashboard.chart.book&member-report.title": "Libros por géneros",
     "dashboard.chart.circulation-report.title": "Informe De Circulación De Libros",
     "dashboard.chart.book.label":"Libros",
     "dashboard.chart.issue-book.label":"Libros Emitidos",

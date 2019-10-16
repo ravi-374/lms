@@ -160,7 +160,7 @@
     "books-series.success.delete.message": "تم حذف سلسلة الكتب بنجاح.",
     "dashboard.title":"لوحة القيادة",
     "dashboard.chart.custom-report.title": "تقرير تداول الكتب",
-    "dashboard.chart.book&member-report.title": "تقرير الكتب والأعضاء",
+    "dashboard.chart.book&member-report.title": "كتب حسب الأنواع",
     "dashboard.chart.circulation-report.title": "تقرير تداول الكتب",
     "dashboard.chart.book.label":"كتب",
     "dashboard.chart.issue-book.label":"الكتب الصادرة",

@@ -160,7 +160,7 @@
     "books-series.success.delete.message": "Kitap serisi başarıyla silindi.",
     "dashboard.title":"Gösterge Paneli",
     "dashboard.chart.custom-report.title": "Özel Rapor",
-    "dashboard.chart.book&member-report.title": "Kitaplar Ve Üyeler Raporu",
+    "dashboard.chart.book&member-report.title": "Türe Göre Kitaplar",
     "dashboard.chart.circulation-report.title": "Kitaplar Dolaşım Raporu",
     "dashboard.chart.book.label":"Kitabın",
     "dashboard.chart.issue-book.label":"Verilen Kitaplar",

@@ -160,7 +160,7 @@
     "books-series.success.delete.message": "图书系列已成功删除。",
     "dashboard.title":"仪表板",
     "dashboard.chart.custom-report.title": "自定义报告",
-    "dashboard.chart.book&member-report.title": "书籍和会员报告",
+    "dashboard.chart.book&member-report.title": "按類型的書籍",
     "dashboard.chart.circulation-report.title": "图书发行报告",
     "dashboard.chart.book.label":"图书",
     "dashboard.chart.issue-book.label":"发行书籍",

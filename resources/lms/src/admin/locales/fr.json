@@ -160,7 +160,7 @@
     "books-series.success.delete.message": "Série de livres supprimée avec succès.",
     "dashboard.title": "Tableau De Bord",
     "dashboard.chart.custom-report.title": "Rapport Personnalisé",
-    "dashboard.chart.book&member-report.title": "Rapport Livres Et Membres",
+    "dashboard.chart.book&member-report.title": "Livres par genres",
     "dashboard.chart.circulation-report.title": "Rapport De Circulation Des Livres",
     "dashboard.chart.book.label": "Livres",
     "dashboard.chart.issue-book.label": "Livres Publiés",

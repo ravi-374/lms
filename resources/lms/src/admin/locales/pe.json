@@ -160,7 +160,7 @@
     "books-series.success.delete.message": "مجموعه کتاب با موفقیت حذف شد.",
     "dashboard.title":"داشبورد",
     "dashboard.chart.custom-report.title": "گزارش سفارشی",
-    "dashboard.chart.book&member-report.title": "گزارش کتاب و اعضا",
+    "dashboard.chart.book&member-report.title": "کتابها توسط ژانرها",
     "dashboard.chart.circulation-report.title": "گزارش گردش کتاب",
     "dashboard.chart.book.label":"کتابها",
     "dashboard.chart.issue-book.label":"کتاب های منتشر شده",

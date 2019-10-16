@@ -11,12 +11,12 @@ const chartColors = [brandInfo, brandSuccess, brandPrimary, brandWarning, brandD
 
 // Main Chart
 export const prepareChartData = (chartData) => {
-    const { total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books } = chartData;
+    const {total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books} = chartData;
     return [total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books];
 };
 
 export const prepareCards = (chartData, labels) => {
-    const { total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books } = chartData;
+    const {total_books, total_members, total_issued_books, total_reserved_books, total_overdue_books} = chartData;
     return [
         {
             title: labels[0],
@@ -71,7 +71,7 @@ export const prepareBarChart = (chartData, labels) => {
 };
 
 const getChartData = (chartData, startDate, endDate) => {
-    const { dates, books, issued_books, reserved_books, overdue_books, members } = chartData;
+    const {dates, books, issued_books, reserved_books, overdue_books, members} = chartData;
     let data = [books[startDate], members[startDate], issued_books[startDate], reserved_books[startDate],
         overdue_books[startDate]];
     if (books[endDate]) {
@@ -80,12 +80,12 @@ const getChartData = (chartData, startDate, endDate) => {
             books[startDate].concat(books[endDate]), books[startDate].concat(books[endDate]),
             books[startDate].concat(books[endDate])]
     }
-    return { data, dates };
+    return {data, dates};
 };
 
 export const prepareMonthlyBarChart = (chartData, labels, startDate, endDate = null) => {
     let dataSet = [];
-    const { data, dates } = getChartData(chartData, startDate, endDate);
+    const {data, dates} = getChartData(chartData, startDate, endDate);
     labels.forEach((label, index) => {
         dataSet.push(
             {
@@ -100,7 +100,7 @@ export const prepareMonthlyBarChart = (chartData, labels, startDate, endDate = n
             },
         );
     });
-    return { labels: dates, datasets: dataSet };
+    return {labels: dates, datasets: dataSet};
 };
 
 export const barChartOptions = {
@@ -147,16 +147,26 @@ export const prepareDougnutChart = (chartData, labels) => {
     return chart;
 };
 
-export const preparePieChart = (chartData, labels) => {
+export const preparePieChart = (chartData) => {
+    const labels = [];
+    const data = [];
+
+    chartData.genres_with_books.forEach(genres => {
+        labels.push(genres.name);
+        data.push(genres.count);
+    });
+
     let chart = {
-        labels: labels.slice(0, 2)
+        labels: labels
     };
+
     chart.datasets = [
         {
-            data: prepareChartData(chartData).slice(0, 2),
+            data: data,
             backgroundColor: chartColors.slice(0, 2),
-            hoverBackgroundColor: chartColors.slice(0, 2)
+            hoverBackgroundColor: chartColors.slice(0, 2),
         }
     ];
+
     return chart;
 };
