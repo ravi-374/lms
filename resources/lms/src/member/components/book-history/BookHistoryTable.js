@@ -34,7 +34,7 @@ const BookHistoryTable = (props) => {
         },
         {
             sortable: true,
-            selector: 'issued_due_on',
+            selector: 'issue_due_date ',
             name: getFormattedMessage('book-history.table.issue-due-date.column'),
             width: '180px',
             cell: row => renderDate(row.issue_due_date)

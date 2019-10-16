@@ -203,30 +203,6 @@ const Charts = (props) => {
         <div className="charts">
             <Row>
                 <Col>
-                    <Card>
-                        <CardBody>
-                            <Row>
-                                <Col sm="5">
-                                    <CardTitle className="mb-0">
-                                        {getFormattedMessage('dashboard.chart.custom-report.title')}
-                                    </CardTitle>
-                                </Col>
-                                <Col sm="7" className="d-none d-sm-inline-block">
-                                    {renderMonthSelector()}
-                                </Col>
-                            </Row>
-                            <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                                {renderEmptyBarChart(chartData.datasets) ?
-                                    <Bar data={chartData} options={barChartOptions} height={300}/> :
-                                    <EmptyComponent isShort title={getFormattedMessage
-                                    ('dashboard.chart.empty-message.label')}/>}
-                            </div>
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
                     <div className="animated fadeIn">
                         <CardColumns className="cols-2">
                             <Card>
