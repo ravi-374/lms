@@ -14,7 +14,7 @@ import {findBooks} from '../../store/actions/bookSearchAction';
 import {fetchAuthors} from '../../store/actions/authorAction';
 
 const BookSearch = (props) => {
-    const { isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors, location } = props;
+    const {isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors, location} = props;
     const [isSearch, setSearch] = useState(false);
     const params = new URLSearchParams(location.search);
     const author = params.get('author');
@@ -37,10 +37,10 @@ const BookSearch = (props) => {
         authors,
         onSearchBook,
         setSearch,
-        isBookSelected: !!book,
-        isAuthorSelected: !!author,
+        isBookSelected:(!book && author)?false:true,
+        isAuthorSelected: author,
         isDisabledSearch: !(!!book || !!author),
-        initialValues: !!author || !!book ? { item: { id: 0, name: book ? book : author } } : {}
+        initialValues: !!author || !!book ? {item: {id: 0, name: book ? book : author}} : {}
     };
 
     return (
@@ -88,7 +88,7 @@ BookSearch.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { books, searchBooks, authors, isLoading } = state;
-    return { books, searchBooks, authors: prepareFullNames(authors), isLoading }
+    const {books, searchBooks, authors, isLoading} = state;
+    return {books, searchBooks, authors: prepareFullNames(authors), isLoading}
 };
-export default connect(mapStateToProps, { fetchBooks, fetchAuthors, findBooks })(BookSearch);
+export default connect(mapStateToProps, {fetchBooks, fetchAuthors, findBooks})(BookSearch);
