@@ -32,7 +32,6 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::get('countries', 'CountryAPIController@index')->name('countries.index');
 
     Route::get('authors', 'AuthorAPIController@index')->name('authors.index');
-    Route::get('settings', 'SettingAPIController@index')->name('settings.index');
 });
 
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');
@@ -42,3 +41,5 @@ Route::get('activate-member', 'MemberAuthController@verifyAccount')->name('activ
 Route::post('send-reset-member-password-link', 'MemberAuthController@sendResetPasswordLink');
 Route::post('reset-member-password', 'MemberAuthController@resetPassword')
     ->name('reset-member-password.index');
+
+Route::get('settings', 'SettingAPIController@index')->name('settings.index');
