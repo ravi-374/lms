@@ -76,6 +76,7 @@
     "books.success.create.message": "图书已成功保存。",
     "books.success.edit.message": "图书更新成功。",
     "books.success.delete.message": "图书已成功删除。",
+    "books.error.import.message": "找不到與此ISBN相關的數據。",
     "books.items.success.create.message": "图书项目已成功保存。",
     "books.items.success.edit.message": "图书项目已成功更新。",
     "books.items.success.delete.message": "图书项目已成功删除。",

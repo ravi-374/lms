@@ -76,6 +76,7 @@
     "books.success.create.message": "Livre enregistré avec succès.",
     "books.success.edit.message": "Livre mis à jour avec succès.",
     "books.success.delete.message": "Livre supprimé avec succès.",
+    "books.error.import.message": "Aucune donnée trouvée avec cet ISBN.",
     "books.items.success.create.message": "Élément de livre enregistré avec succès.",
     "books.items.success.edit.message": "Élément du livre mis à jour avec succès.",
     "books.items.success.delete.message": "Élément de livre supprimé avec succès.",

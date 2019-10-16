@@ -76,6 +76,7 @@
     "books.success.create.message": "کتاب با موفقیت ذخیره شد.",
     "books.success.edit.message": "کتاب با موفقیت به روز شد.",
     "books.success.delete.message": "کتاب با موفقیت حذف شد.",
+    "books.error.import.message": "داده ای با این شابک یافت نشد.",
     "books.items.success.create.message": "مورد با موفقیت ذخیره شد.",
     "books.items.success.edit.message": "مورد با موفقیت به روز شد.",
     "books.items.success.delete.message": "مورد کتاب با موفقیت حذف شد.",

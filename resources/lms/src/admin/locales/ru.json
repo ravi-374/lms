@@ -76,6 +76,7 @@
     "books.success.create.message": "Книга успешно сохранена.",
     "books.success.edit.message": "Книга успешно обновлена.",
     "books.success.delete.message": "Книга успешно удалена.",
+    "books.error.import.message": "Данные с этим ISBN не найдены.",
     "books.items.success.create.message": "Элемент книги успешно сохранен.",
     "books.items.success.edit.message": "Элемент книги успешно обновлен.",
     "books.items.success.delete.message": "Элемент книги успешно удален.",

@@ -54,7 +54,7 @@ const ImportBookForm = (props) => {
 };
 
 const prepareData = (book, ownProps) => {
-    const { isbn, authors, publishers, genres, tags, languages, name, is_featured, image_url, published_on, description, url } = book;
+    const { isbn, authors, publishers, genres, tags, languages, name, is_featured, image_url, published_on, description, url } = book
     let authorArray = [], genreArray = [], publisherArray = [], tagArray = [], languageArray = [];
     let itemArray = [];
     let newAuthors = [];

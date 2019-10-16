@@ -76,6 +76,7 @@
     "books.success.create.message": "تم حفظ الكتاب بنجاح.",
     "books.success.edit.message": "تم تحديث الكتاب بنجاح.",
     "books.success.delete.message": "تم حذف الكتاب بنجاح.",
+    "books.error.import.message": "لم يتم العثور على بيانات مع رقم ISBN هذا.",
     "books.items.success.create.message": "تم حفظ عنصر الكتاب بنجاح.",
     "books.items.success.edit.message": "تم تحديث عنصر الكتاب بنجاح.",
     "books.items.success.delete.message": "تم حذف عنصر الكتاب بنجاح.",

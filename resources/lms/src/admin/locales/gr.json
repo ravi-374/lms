@@ -76,6 +76,7 @@
     "books.success.create.message": "Buch erfolgreich gespeichert.",
     "books.success.edit.message": "Buch erfolgreich aktualisiert.",
     "books.success.delete.message": "Buch erfolgreich gelöscht.",
+    "books.error.import.message": "Zu dieser ISBN wurden keine Daten gefunden.",
     "books.items.success.create.message": "Buchartikel erfolgreich gespeichert.",
     "books.items.success.edit.message": "Buchelement wurde erfolgreich aktualisiert.",
     "books.items.success.delete.message": "Buchelement wurde erfolgreich gelöscht.",

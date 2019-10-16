@@ -76,6 +76,7 @@
     "books.success.create.message": "Kitap başarıyla kaydedildi.",
     "books.success.edit.message": "Kitap başarıyla güncellendi.",
     "books.success.delete.message": "Kitap başarıyla silindi.",
+    "books.error.import.message": "Bu ISBN’te veri bulunamadı.",
     "books.items.success.create.message": "Kitap öğesi başarıyla kaydedildi.",
     "books.items.success.edit.message": "Kitap öğesi başarıyla güncellendi.",
     "books.items.success.delete.message": "Kitap öğesi başarıyla silindi.",
