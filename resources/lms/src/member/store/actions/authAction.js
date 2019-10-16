@@ -5,7 +5,7 @@ import {addToast} from '../../../store/action/toastAction';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {apiBaseURL, LocalStorageKey, Routes, Tokens} from "../../../constants";
 import {setUserProfile} from "../../../store/action/localStorageAction";
-import {getLocalStorageDataByKey} from "../../../shared/sharedMethod";
+import {getLocalStorageDataByEncryptKey} from "../../../shared/sharedMethod";
 
 export const login = (user, history) => async (dispatch) => {
     const { email, password } = user;
@@ -14,7 +14,7 @@ export const login = (user, history) => async (dispatch) => {
             if (user.remember_me) {
                 localStorage.setItem('currentMember', btoa(JSON.stringify(user)));
             } else {
-                if (getLocalStorageDataByKey('currentMember')) {
+                if (getLocalStorageDataByEncryptKey('currentMember')) {
                     localStorage.removeItem('currentMember');
                 }
             }

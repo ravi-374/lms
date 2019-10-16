@@ -187,6 +187,10 @@ export const getFormattedOptions = (options) => {
     return copyOptions;
 };
 
-export const getLocalStorageDataByKey = (keyName) => {
+export const getLocalStorageDataByEncryptKey = (keyName) => {
     return localStorage.getItem(keyName) ? JSON.parse(atob(localStorage.getItem(keyName))) : null;
+};
+
+export const getLocalStorageDataByKey = (keyName) => {
+    return localStorage.getItem(keyName) ? localStorage.getItem(keyName) : null;
 };
