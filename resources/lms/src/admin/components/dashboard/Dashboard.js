@@ -77,14 +77,14 @@ const Dashboard = (props) => {
 
     const renderCards = () => {
         return totalCard.map((card, index) => (
-            <Col key={index} className="dashboard__card-wrapper">
+            <Col key={index} className="dashboard__card-wrapper col-12 col-sm-6 col-lg-3">
                 <Card className={`text-white ${card.color}`}>
                     <CardBody>
                         <div className="dashboard__card-count">{card.count}</div>
                         <div className="dashboard__card-icon">
                             <i className={card.icon}/>
                         </div>
-                        <div className="dashboard__card-title">{card.title}</div>
+                        <div className="dashboard__card-title text-nowrap">{card.title}</div>
                     </CardBody>
                 </Card>
             </Col>
