@@ -41,8 +41,9 @@ const MemberApp = (props) => {
         <IntlProvider locale={settingsKey.DEFAULT_LOCALE} messages={messages}>
             <React.Suspense fallback={<ProgressBar/>}>
                 <Switch>
-                    <Route exact={true} path={Routes.APP_HOME} name="Home" render={props => <Home {...props}/>}/>
-                    <Route path={Routes.MEMBER_HOME} name="Lending" render={props => <Lending {...props}/>}/>
+                    {/*<Route exact={true} path={Routes.APP_HOME} name="Home" render={props => <Home {...props}/>}/>*/}
+                    <Route path={Routes.MEMBER_HOME} name="home" render={props => <Home {...props}/>}/>
+                    <Route path={Routes.MEMBER_LENDING} name="Lending" render={props => <Lending {...props}/>}/>
                     <Route path={Routes.MEMBER_LOGIN} name="Login" render={props => <Login {...props}/>}/>
                     <Route path={Routes.MEMBER_FORGOT_PASSWORD} name="Forgot Password"
                            render={props => <ForgotPassword {...props}/>}/>

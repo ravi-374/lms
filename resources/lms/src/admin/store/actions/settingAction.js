@@ -22,7 +22,7 @@ export const fetchSettings = (isLoading = false) => async (dispatch) => {
             isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+            // dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
             isLoading ? dispatch(setLoading(false)) : null;
         });
 };

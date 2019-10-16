@@ -28,6 +28,7 @@ const Dashboard = (props) => {
 
     useEffect(() => {
         fetchDashBoardDetails();
+        console.log(window.location.protocol);
     }, []);
 
     if (_.isEmpty(dashBoard) || !dashBoard.general) {

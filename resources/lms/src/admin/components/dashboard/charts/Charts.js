@@ -38,7 +38,6 @@ const Charts = (props) => {
         return null;
     }
 
-    console.log(general);
     const doughnut = prepareDougnutChart(general, labels);
     const pie = preparePieChart(general);
 

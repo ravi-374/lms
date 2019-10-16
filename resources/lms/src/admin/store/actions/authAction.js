@@ -6,10 +6,11 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {apiBaseURL, LocalStorageKey, Routes, Tokens} from "../../../constants";
 import {setUserProfile} from "../../../store/action/localStorageAction";
 import {getLocalStorageDataByEncryptKey} from "../../../shared/sharedMethod";
+import {environment} from "../../../environment";
 
 export const login = (user, history) => async (dispatch) => {
-    const { email, password } = user;
-    await apiConfig.post(apiBaseURL.USER_LOGIN, { email, password })
+    const {email, password} = user;
+    await apiConfig.post(apiBaseURL.USER_LOGIN, {email, password})
         .then((response) => {
             if (user.remember_me) {
                 localStorage.setItem('currentUser', btoa(JSON.stringify(user)));
@@ -20,38 +21,38 @@ export const login = (user, history) => async (dispatch) => {
             }
             localStorage.setItem(Tokens.ADMIN, response.data.data.token);
             dispatch(setUserProfile(LocalStorageKey.USER, response.data.data.user));
+            dispatch({type: authActionType.LOGIN, payload: response.data.data});
+            dispatch(addToast({text: getFormattedMessage('login.success.logged.message')}));
             if (sessionStorage.getItem('prevAdminPrevUrl')) {
                 window.location.href = sessionStorage.getItem('prevAdminPrevUrl');
             } else {
-                history.push(Routes.ADMIN_DEFAULT);
+                window.location.href = environment.URL + '/#/' + Routes.ADMIN_DEFAULT;
             }
-            dispatch({ type: authActionType.LOGIN, payload: response.data.data });
-            dispatch(addToast({ text: getFormattedMessage('login.success.logged.message') }));
         })
-        .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
         });
 };
 
 export const forgotPassword = (user) => async (dispatch) => {
     await apiConfigWithRoot.post(apiBaseURL.FORGOT_PASSWORD, user)
         .then(() => {
-            dispatch({ type: authActionType.FORGOT_PASSWORD, payload: true });
-            dispatch(addToast({ text: getFormattedMessage('forgot-password.success.message') }));
+            dispatch({type: authActionType.FORGOT_PASSWORD, payload: true});
+            dispatch(addToast({text: getFormattedMessage('forgot-password.success.message')}));
         })
-        .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
         });
 };
 
 export const resetPassword = (user, history) => async (dispatch) => {
     await apiConfigWithRoot.post(apiBaseURL.RESET_PASSWORD, user)
         .then(() => {
-            dispatch({ type: authActionType.RESET_PASSWORD, payload: user });
-            dispatch(addToast({ text: getFormattedMessage('reset-password.success.message') }));
+            dispatch({type: authActionType.RESET_PASSWORD, payload: user});
+            dispatch(addToast({text: getFormattedMessage('reset-password.success.message')}));
             history.push(Routes.ADMIN_LOGIN);
         })
-        .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
         });
 };

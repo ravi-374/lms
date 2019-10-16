@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {IntlProvider} from 'react-intl';
 import {publicImagePath, publicImagePathURL, settingsKey} from "../appConstant";
 import LocaleData from './locales';
-import {appSettingsKey, LocalStorageKey, Routes} from "../constants";
+import {appSettingsKey, LocalStorageKey, Routes, Tokens} from "../constants";
 import ProgressBar from '../shared/progress-bar/ProgressBar';
 import Toasts from '../shared/toast/Toasts';
 import {addRTLSupport} from "../shared/sharedMethod";
@@ -20,20 +20,22 @@ const ForgotPassword = React.lazy(() => import('./components/auth/ForgotPassword
 const ResetPassword = React.lazy(() => import('./components/auth/ResetPassword'));
 
 const AdminApp = (props) => {
-    const { permissions, fetchSettings, settings, getUserProfile, fetchAppSetting, fetchConfig, appSetting, user } = props;
+    const {permissions, fetchSettings, settings, getUserProfile, fetchAppSetting, fetchConfig, appSetting, user} = props;
     const messages = settings[settingsKey.LANGUAGE] ? LocaleData[settings[settingsKey.LANGUAGE].value]
         : LocaleData[settingsKey.DEFAULT_LOCALE];
     let appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
     let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
-    const routeProps = { appLogo, appName, permissions, user };
+    const routeProps = {appLogo, appName, permissions, user};
     addRTLSupport(settings[settingsKey.LANGUAGE] ? settings[settingsKey.LANGUAGE].value : settingsKey.DEFAULT_LOCALE);
 
     useEffect(() => {
         fetchAppSetting();
         fetchSettings();
-        fetchConfig();
-        getUserProfile(LocalStorageKey.USER);
+        if (localStorage.getItem(Tokens.ADMIN)) {
+            fetchConfig();
+            getUserProfile(LocalStorageKey.USER);
+        }
     }, []);
 
     return (
@@ -71,7 +73,7 @@ AdminApp.propTypes = {
 
 const mapStateToProps = (state) => {
     const permissions = [];
-    const { settings, profile, appSetting, config } = state;
+    const {settings, profile, appSetting, config} = state;
     if (config.permissions) {
         config.permissions.forEach((permission) =>
             permissions.push(permission.name)
@@ -82,4 +84,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { fetchSettings, fetchConfig, getUserProfile, fetchAppSetting })(AdminApp);
+export default connect(mapStateToProps, {fetchSettings, fetchConfig, getUserProfile, fetchAppSetting})(AdminApp);
