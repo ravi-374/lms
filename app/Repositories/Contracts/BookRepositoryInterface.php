@@ -93,4 +93,9 @@ interface BookRepositoryInterface
      * @return array
      */
     public function booksCount($today, $startDate = null, $endDate = null);
+
+    /**
+     * @return array
+     */
+    public function booksCountFromGenres();
 }

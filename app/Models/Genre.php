@@ -22,6 +22,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Genre whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $books
+ * @property int $is_default
+ * @property-read int|null $books_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Genre whereIsDefault($value)
  */
 class Genre extends Model
 {
