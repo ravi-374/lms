@@ -223,6 +223,12 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             if ($issueBook->status == IssuedBook::STATUS_RESERVED && $issueBook->member_id != $input['member_id']) {
                 throw new UnprocessableEntityHttpException('Book is already reserved by another member.');
             }
+            if ($issueBook->note != $input['note']) {
+                $issueBook->update(['note' => $input['note']]);
+
+                return $this->find($issueBook->id);
+            }
+
             if ($issueBook->status == IssuedBook::STATUS_ISSUED) {
                 throw new UnprocessableEntityHttpException('Book is already issued.');
             }
@@ -257,6 +263,12 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
         if ($bookItem->status == BookItem::STATUS_NOT_AVAILABLE) {
+            if (! empty($issueBook && $issueBook->note != $input['note'])) {
+                $issueBook->update(['note' => $input['note']]);
+
+                return $this->find($issueBook->id);
+            }
+
             throw new UnprocessableEntityHttpException('Book is not available.');
         }
 
@@ -286,6 +298,16 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $issueBook = IssuedBook::ofBookItem($input['book_item_id'])
             ->lastIssuedBook()
             ->first();
+
+        $returnedBook = IssuedBook::ofBookItem($input['book_item_id'])
+            ->ofMember($input['member_id'])->whereStatus(IssuedBook::STATUS_RETURNED)
+            ->first();
+
+        if (! empty($returnedBook)) {
+            $returnedBook->update(['note' => $input['note']]);
+
+            return $this->find($issueBook->id);
+        }
 
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
