@@ -74,10 +74,10 @@ class IssuedBookAPIPermissionTest extends TestCase
         $this->assignPermissions($this->loggedInUserId, ['issue_books']);
 
         /** @var IssuedBook $issueBook */
-        $issueBook = factory(IssuedBook::class)->create();
+        $issueBook = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
 
         $response = $this->postJson(route('api.b1.return-book', $issueBook->book_item_id), [
-            'book_item_id' => $issueBook->book_item_id,
+            'book_item_id' => $issueBook->book_item_id, 'member_id' => $issueBook->member_id,
         ]);
 
         $this->assertSuccessMessageResponse($response, 'Book return successfully.');
