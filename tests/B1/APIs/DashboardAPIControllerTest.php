@@ -3,6 +3,7 @@
 namespace Tests\B1\APIs;
 
 use App\Models\Book;
+use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Member;
 use Carbon\Carbon;
@@ -23,146 +24,84 @@ class DashboardAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_all_counts_for_dashboard()
+    public function test_can_get_counts_of_total_books()
     {
         $books = factory(Book::class, 5)->create();
-        $members = factory(Member::class, 5)->create();
-        // 10 members/books created here
-        $reservedBooks = factory(IssuedBook::class, 10)->create(['status' => IssuedBook::STATUS_RESERVED]);
-        // 2 members/books created here
-        $issuedBooks = factory(IssuedBook::class, 2)->create(['status' => IssuedBook::STATUS_ISSUED]);
-        // 1 members/books created here
-        $overDueBooks = factory(IssuedBook::class)->create([
-            'status'          => IssuedBook::STATUS_ISSUED,
-            'return_due_date' => Carbon::now()->subDay(),
-        ]);
 
         $response = $this->getJson(route('api.b1.dashboard-details'));
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(5 + 10 + 2 + 1, $response['total_books']);
-        $this->assertEquals(5 + 10 + 2 + 1, $response['total_members']);
-        $this->assertEquals(10, $response['total_reserved_books']);
-        $this->assertEquals(3, $response['total_issued_books']);
-        $this->assertEquals(1, $response['total_overdue_books']);
+        $this->assertEquals(5, $response['total_books']);
     }
 
     /** @test */
-    public function test_can_get_dashboard_statistics_for_today()
+    public function test_can_get_count_of_total_reserved_books()
     {
-        // books
-        $books = factory(Book::class, 3)->create(['created_at' => Carbon::now()]);
-        factory(Book::class, 2)->create(['created_at' => Carbon::now()->subDays(2)]);
-        // members
-        $members = factory(Member::class, 2)->create(['created_at' => Carbon::now()]);
-        factory(Member::class, 3)->create(['created_at' => Carbon::now()->subDays(2)]);
-        // reserved books
-        $reservedBooks = factory(IssuedBook::class, 4)->create([
-            'status' => IssuedBook::STATUS_RESERVED, 'reserve_date' => Carbon::now(),
-        ]);
-        factory(IssuedBook::class, 1)->create([
-            'status' => IssuedBook::STATUS_RESERVED, 'reserve_date' => Carbon::now()->subDay(),
-        ]);
-        // issue books
-        $issueBooks = factory(IssuedBook::class, 1)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'issued_on' => Carbon::now(),
-        ]);
-        factory(IssuedBook::class, 4)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'issued_on' => Carbon::now()->subDay(),
-        ]);
-        // overdue books
-        $overDueBooks = factory(IssuedBook::class, 4)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'return_due_date' => Carbon::now()->subDay(),
-        ]);
-        factory(IssuedBook::class, 1)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'return_due_date' => Carbon::now(),
-        ]);
+        $reservedBooks = factory(IssuedBook::class, 7)->create(['status' => IssuedBook::STATUS_RESERVED]);
+        $issuedBooks = factory(IssuedBook::class, 2)->create(['status' => IssuedBook::STATUS_ISSUED]);
 
-        $response = $this->getJson(route('api.b1.dashboard-details', ['today' => true]));
+        $response = $this->getJson(route('api.b1.dashboard-details'));
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(3 + 5 + 5 + 5, $response['total_books']);
-        $this->assertEquals(2 + 5 + 5 + 5, $response['total_members']);
-        $this->assertEquals(4, $response['total_reserved_books']);
-        $this->assertEquals(1, $response['total_issued_books']);
-        $this->assertEquals(1, $response['total_overdue_books']);
+        $this->assertEquals(7, $response['total_reserved_books']);
     }
 
     /** @test */
-    public function test_can_get_statistics_for_current_month()
+    public function test_can_get_count_of_total_issued_books()
     {
-        // books
-        $books = factory(Book::class, 1)->create(['created_at' => Carbon::now()]);
-        factory(Book::class, 2)->create(['created_at' => Carbon::now()->addMonths(2)]);
-        // members
-        $members = factory(Member::class, 3)->create(['created_at' => Carbon::now()]);
-        factory(Member::class, 3)->create(['created_at' => Carbon::now()->addMonths(2)]);
-        // reserved books
-        $reservedBooks = factory(IssuedBook::class, 4)->create([
-            'status' => IssuedBook::STATUS_RESERVED, 'reserve_date' => Carbon::now(),
-        ]);
-        factory(IssuedBook::class, 1)->create([
-            'status' => IssuedBook::STATUS_RESERVED, 'reserve_date' => Carbon::now()->addMonths(2),
-        ]);
-        // issue books
-        $issueBooks = factory(IssuedBook::class, 1)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'issued_on' => Carbon::now()->addMonths(2),
-        ]);
-        factory(IssuedBook::class, 4)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'issued_on' => Carbon::now(),
-        ]);
-        // overdue books
-        $overDueBooks = factory(IssuedBook::class, 4)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'return_due_date' => Carbon::now(),
-        ]);
-        factory(IssuedBook::class, 1)->create([
-            'status' => IssuedBook::STATUS_ISSUED, 'return_due_date' => Carbon::now()->addMonths(2),
-        ]);
+        $reservedBooks = factory(IssuedBook::class, 3)->create(['status' => IssuedBook::STATUS_RESERVED]);
+        $issuedBooks = factory(IssuedBook::class, 2)->create(['status' => IssuedBook::STATUS_ISSUED]);
 
-        $startDate = Carbon::now()->startOfMonth()->toDateString();
-        $endDate = Carbon::now()->endOfMonth()->toDateString();
-        $response = $this->getJson(route(
-                'api.b1.dashboard-details',
-                ['start_date' => $startDate, 'end_date' => $endDate]
-            )
-        );
+        $response = $this->getJson(route('api.b1.dashboard-details'));
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(1 + 5 + 5 + 5, $response['total_books']);
-        $this->assertEquals(3 + 5 + 5 + 5, $response['total_members']);
-        $this->assertEquals(4, $response['total_reserved_books']);
-        $this->assertEquals(4, $response['total_issued_books']);
+        $this->assertEquals(2, $response['total_issued_books']);
     }
 
     /** @test */
-    public function test_can_get_counts_of_overdue_books_for_current_month()
+    public function test_can_get_count_of_total_available_books()
     {
-        $this->mockTime(Carbon::now()->startOfMonth());
-        factory(IssuedBook::class, 4)->create([
-            'status'          => IssuedBook::STATUS_ISSUED,
-            'issued_on'       => Carbon::now(),
-            'return_due_date' => Carbon::now()->addMonths(2),
-        ]);
+        factory(BookItem::class, 3)->create(['status' => BookItem::STATUS_NOT_AVAILABLE]);
+        factory(BookItem::class, 2)->create(['status' => BookItem::STATUS_AVAILABLE]);
 
-        factory(IssuedBook::class)->create([
-            'status'          => IssuedBook::STATUS_ISSUED,
-            'issued_on'       => Carbon::now(),
-            'return_due_date' => Carbon::now()->addDays(5),
-        ]);
-
-        $startDate = Carbon::now()->startOfMonth()->toDateString();
-        $endDate = Carbon::now()->endOfMonth()->toDateString();
-        $response = $this->getJson(route(
-                'api.b1.dashboard-details',
-                ['start_date' => $startDate, 'end_date' => $endDate]
-            )
-        );
+        $response = $this->getJson(route('api.b1.dashboard-details'));
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(1, $response['total_overdue_books']);
+        $this->assertEquals(2, $response['total_available_books']);
+    }
+
+    /** @test */
+    public function test_can_get_total_overdue_books_count()
+    {
+        factory(IssuedBook::class, 3)->create([
+            'status' => IssuedBook::STATUS_ISSUED,
+        ]);
+
+        factory(IssuedBook::class, 3)->create([
+            'status' => IssuedBook::STATUS_RETURNED,
+        ]);
+
+        $this->mockTime(Carbon::now()->addMonths(3));
+        $response = $this->getJson(route('api.b1.dashboard-details'));
+
+        $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
+        $response = $response->original['data'];
+        $this->assertEquals(3, $response['total_overdue_books']);
+    }
+
+    /** @test */
+    public function test_can_get_total_members_count()
+    {
+        factory(Member::class, 3)->create();
+
+        $response = $this->getJson(route('api.b1.dashboard-details'));
+
+        $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
+        $response = $response->original['data'];
+        $this->assertEquals(3, $response['total_members']);
     }
 }
