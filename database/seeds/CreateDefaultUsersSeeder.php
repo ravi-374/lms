@@ -4,7 +4,7 @@ use App\Models\Role;
 use App\User;
 use Illuminate\Database\Seeder;
 
-class CreateAdminUserSeeder extends Seeder
+class CreateDefaultUsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.

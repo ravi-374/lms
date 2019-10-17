@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateRolesAndPermissionsSeeder::class);
         $this->call(CreateGenresSeeder::class);
         $this->call(CreateBookLanguagesSeeder::class);
-        $this->call(CreateAdminUserSeeder::class);
+        $this->call(CreateDefaultUsersSeeder::class);
         $this->call(CreateCountriesSeeder::class);
         $this->call(CreateAuthorsSeeder::class);
         $this->call(CreatePublishersSeeder::class);
