@@ -512,13 +512,14 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         /** @var Genre[] $genres */
         $genresRecords = Genre::withCount('books')->whereHas('books')->get();
 
-        $genres = $booksCount = $colors = [];
+        $genres = $booksCount = $colors = $colorsWithDifferentOpacity = [];
         foreach ($genresRecords as $genre) {
             $genres[] = $genre->name;
             $booksCount[] = $genre->books_count;
-            $colors[] = getColor();
+            $colors[] = getColor(0.7);
+            $colorsWithDifferentOpacity[] = getColor(0.9);
         }
 
-        return [$genres, $booksCount, $colors];
+        return [$genres, $booksCount, $colors, $colorsWithDifferentOpacity];
     }
 }
