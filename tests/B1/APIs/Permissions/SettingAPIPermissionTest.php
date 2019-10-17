@@ -25,14 +25,6 @@ class SettingAPIPermissionTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_get_settings_without_permission()
-    {
-        $response = $this->getJson(route('api.b1.settings.index'));
-
-        $this->assertExceptionMessage($response, 'Unauthorized action.');
-    }
-
-    /** @test */
     public function test_not_allow_to_create_setting_without_permission()
     {
         $fakeSetting = factory(Setting::class)->raw();
