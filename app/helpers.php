@@ -105,3 +105,26 @@ function prepareDateText($startDate, $endDate, $format = 'jS M')
 
     return $dates;
 }
+
+/**
+ * @return string
+ */
+function getColorCode()
+{
+    return rand(0, 255).', '.rand(0, 255).', '.rand(1, 255);
+}
+
+/**
+ * @param  int  $opacity
+ * @param  string|null  $colorCode
+ *
+ * @return string
+ */
+function getColor($opacity = 1, $colorCode = null)
+{
+    if (empty($colorCode)) {
+        $colorCode = getColorCode();
+    }
+
+    return 'rgba('.$colorCode.', '.$opacity.')';
+}
