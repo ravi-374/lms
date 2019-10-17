@@ -157,3 +157,4 @@ Route::group(['middleware' => 'user.auth'], function () {
 /** Password Reset API's For User */
 Route::post('send-reset-password-link', 'AccountAPIController@sendResetPasswordLink');
 Route::post('reset-password', 'AccountAPIController@resetPassword')->name('reset-password');
+Route::get('settings', 'SettingAPIController@index')->name('settings.index');
