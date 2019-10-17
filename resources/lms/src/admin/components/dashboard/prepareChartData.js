@@ -148,23 +148,15 @@ export const prepareDougnutChart = (chartData, labels) => {
 };
 
 export const preparePieChart = (chartData) => {
-    const labels = [];
-    const data = [];
-
-    chartData.genres_with_books.forEach(genres => {
-        labels.push(genres.name);
-        data.push(genres.count);
-    });
-
     let chart = {
-        labels: labels
+        labels: chartData.genres_with_books[0]
     };
 
     chart.datasets = [
         {
-            data: data,
-            backgroundColor: chartColors.slice(0, 2),
-            hoverBackgroundColor: chartColors.slice(0, 2),
+            data: chartData.genres_with_books[1],
+            backgroundColor:chartData.genres_with_books[2],
+            hoverBackgroundColor: chartData.genres_with_books[3],
         }
     ];
 
