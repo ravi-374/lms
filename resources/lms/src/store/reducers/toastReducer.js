@@ -1,7 +1,7 @@
 import {constants} from "../../constants";
 
 export default (state = [], action) => {
-    const {type, payload} = action;
+    const { type, payload } = action;
     switch (type) {
         case constants.ADD_TOAST:
             return [payload, ...state];

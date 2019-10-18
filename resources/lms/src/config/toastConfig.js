@@ -4,7 +4,7 @@ let id = 0;
 
 const defaultOptions = {
     config: {
-        autoClose: 3000,
+        autoClose: 2000,
         position: toast.POSITION.BOTTOM_RIGHT,
         closeButton: false,
         transition: Zoom
