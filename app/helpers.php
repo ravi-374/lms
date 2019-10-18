@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Setting;
+use App\Resources\RandomColor;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -122,9 +123,8 @@ function getColorCode()
  */
 function getColor($opacity = 1, $colorCode = null)
 {
-    if (empty($colorCode)) {
-        $colorCode = getColorCode();
-    }
-
-    return 'rgba('.$colorCode.', '.$opacity.')';
+    return RandomColor::one(array(
+        'luminosity' => 'bright',
+        'format'     => 'rgbCss' // e.g. 'rgb(225,200,20)'
+    ));
 }
