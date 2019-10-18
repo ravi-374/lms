@@ -1,9 +1,14 @@
 <?php
+
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Address
@@ -17,25 +22,25 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $state
  * @property int $zip
  * @property string|null $country_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Address[] $owner
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Country $country
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereAddress1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereAddress2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCountryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereOwnerId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereOwnerType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereState($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereZip($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|Address[] $owner
+ * @property-read Collection|Country $country
+ * @method static Builder|Address newModelQuery()
+ * @method static Builder|Address newQuery()
+ * @method static Builder|Address query()
+ * @method static Builder|Address whereAddress1($value)
+ * @method static Builder|Address whereAddress2($value)
+ * @method static Builder|Address whereCity($value)
+ * @method static Builder|Address whereCountryId($value)
+ * @method static Builder|Address whereCreatedAt($value)
+ * @method static Builder|Address whereId($value)
+ * @method static Builder|Address whereOwnerId($value)
+ * @method static Builder|Address whereOwnerType($value)
+ * @method static Builder|Address whereState($value)
+ * @method static Builder|Address whereUpdatedAt($value)
+ * @method static Builder|Address whereZip($value)
+ * @mixin Eloquent
  */
 class Address extends Model
 {

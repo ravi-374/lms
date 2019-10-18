@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,31 +23,31 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $location
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereBookId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereBookCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereEdition($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereFormat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereLocation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \App\Models\Book $book
- * @property-read \App\Models\IssuedBook $lastIssuedBook
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssuedBook[] $issuedBooks
+ * @method static Builder|BookItem newModelQuery()
+ * @method static Builder|BookItem newQuery()
+ * @method static Builder|BookItem query()
+ * @method static Builder|BookItem whereBookId($value)
+ * @method static Builder|BookItem whereBookCode($value)
+ * @method static Builder|BookItem whereCreatedAt($value)
+ * @method static Builder|BookItem whereEdition($value)
+ * @method static Builder|BookItem whereFormat($value)
+ * @method static Builder|BookItem whereId($value)
+ * @method static Builder|BookItem whereLocation($value)
+ * @method static Builder|BookItem whereStatus($value)
+ * @method static Builder|BookItem whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read Book $book
+ * @property-read IssuedBook $lastIssuedBook
+ * @property-read Collection|IssuedBook[] $issuedBooks
  * @property float $price
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePrice($value)
+ * @method static Builder|BookItem wherePrice($value)
  * @property int|null $publisher_id
  * @property int $language_id
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereLanguageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem wherePublisherId($value)
+ * @method static Builder|BookItem whereLanguageId($value)
+ * @method static Builder|BookItem wherePublisherId($value)
  * @property-read mixed $expected_available_date
- * @property-read \App\Models\Publisher|null $publisher
- * @property-read \App\Models\BookLanguage|null $language
+ * @property-read Publisher|null $publisher
+ * @property-read BookLanguage|null $language
  */
 class BookItem extends Model
 {
@@ -167,7 +170,7 @@ class BookItem extends Model
     {
         /** @var IssuedBook $lastIssuedBook */
         $lastIssuedBook = $this->lastIssuedBook;
-        if (!empty($lastIssuedBook)) {
+        if (! empty($lastIssuedBook)) {
             return $lastIssuedBook->status;
         }
 

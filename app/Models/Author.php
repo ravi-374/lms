@@ -1,9 +1,13 @@
 <?php
+
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 
 /**
@@ -13,19 +17,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $first_name
  * @property string|null $last_name
  * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Author whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $books
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Author newModelQuery()
+ * @method static Builder|Author newQuery()
+ * @method static Builder|Author query()
+ * @method static Builder|Author whereCreatedAt($value)
+ * @method static Builder|Author whereDescription($value)
+ * @method static Builder|Author whereFirstName($value)
+ * @method static Builder|Author whereId($value)
+ * @method static Builder|Author whereLastName($value)
+ * @method static Builder|Author whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read Collection|Book[] $books
  */
 class Author extends Model
 {
@@ -67,8 +71,8 @@ class Author extends Model
     }
 
     /**
-     * @param Builder $query
-     * @param array $keywords
+     * @param  Builder  $query
+     * @param  array  $keywords
      *
      * @return mixed
      */
@@ -85,7 +89,7 @@ class Author extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      * @param $keywords
      *
      * @return mixed
@@ -102,8 +106,8 @@ class Author extends Model
     }
 
     /**
-     * @param Builder $query
-     * @param array $keywords
+     * @param  Builder  $query
+     * @param  array  $keywords
      *
      * @return mixed
      */

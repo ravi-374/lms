@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Contracts\Permission as PermissionContract;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
@@ -20,19 +23,19 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $display_name
  * @property string|null $description
  * @property string|null $guard_name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereDisplayName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Permission newModelQuery()
+ * @method static Builder|Permission newQuery()
+ * @method static Builder|Permission query()
+ * @method static Builder|Permission whereCreatedAt($value)
+ * @method static Builder|Permission whereDescription($value)
+ * @method static Builder|Permission whereDisplayName($value)
+ * @method static Builder|Permission whereId($value)
+ * @method static Builder|Permission whereName($value)
+ * @method static Builder|Permission whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|Role[] $roles
  */
 class Permission extends Model implements PermissionContract
 {
