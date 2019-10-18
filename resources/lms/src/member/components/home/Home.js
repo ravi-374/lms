@@ -324,7 +324,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-1.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -341,7 +341,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-2.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -358,7 +358,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-3.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -375,7 +375,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-4.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
