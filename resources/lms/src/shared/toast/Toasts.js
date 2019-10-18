@@ -19,7 +19,7 @@ const Toasts = props => {
 
 Toasts.propTypes = {
     toasts: PropTypes.array,
-    language:PropTypes.string,
+    language: PropTypes.string,
     removeToast: PropTypes.func,
 };
 

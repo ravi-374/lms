@@ -8,7 +8,7 @@ const Toast = (props) => {
     const { onCancel, language } = props;
 
     useEffect(() => {
-   //     setTimeout(() => onCancel(), 5000);
+        setTimeout(() => onCancel(), 5000);
     }, []);
 
     return (

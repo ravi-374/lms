@@ -138,7 +138,8 @@ const SettingsForm = (props) => {
         onRemovePhoto: onRemovingFavicon,
         onFileChange: onChangingFavicon,
         isRemoveOption: false,
-        inputField: 'favicon-picker'
+        inputField: 'favicon-picker',
+        isFavicon: true
     };
 
     const faviconCropperOptions = {
