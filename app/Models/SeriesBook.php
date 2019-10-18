@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\SeriesBook
@@ -12,19 +16,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $series_id
  * @property int $book_id
  * @property int $sequence
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereBookId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereSequence($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereSeriesId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SeriesBook whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $book[]
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|SeriesBook newModelQuery()
+ * @method static Builder|SeriesBook newQuery()
+ * @method static Builder|SeriesBook query()
+ * @method static Builder|SeriesBook whereBookId($value)
+ * @method static Builder|SeriesBook whereCreatedAt($value)
+ * @method static Builder|SeriesBook whereId($value)
+ * @method static Builder|SeriesBook whereSequence($value)
+ * @method static Builder|SeriesBook whereSeriesId($value)
+ * @method static Builder|SeriesBook whereUpdatedAt($value)
+ * @property-read Collection|Book[] $book[]
+ * @mixin Eloquent
  */
 class SeriesBook extends Model
 {

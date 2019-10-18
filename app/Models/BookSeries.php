@@ -1,25 +1,30 @@
 <?php
+
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\BookSeries
  *
  * @property int $id
  * @property string $title
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookSeries whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SeriesBook[] $seriesItems
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|BookSeries newModelQuery()
+ * @method static Builder|BookSeries newQuery()
+ * @method static Builder|BookSeries query()
+ * @method static Builder|BookSeries whereCreatedAt($value)
+ * @method static Builder|BookSeries whereId($value)
+ * @method static Builder|BookSeries whereTitle($value)
+ * @method static Builder|BookSeries whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read Collection|SeriesBook[] $seriesItems
  */
 class BookSeries extends Model
 {

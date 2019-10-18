@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 use Str;
 
 /**
@@ -16,24 +19,24 @@ use Str;
  * @property int $frequency
  * @property string $slug
  * @property string $stripe_plan_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereFrequency($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereStripePlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|MembershipPlan newModelQuery()
+ * @method static Builder|MembershipPlan newQuery()
+ * @method static Builder|MembershipPlan query()
+ * @method static Builder|MembershipPlan whereCreatedAt($value)
+ * @method static Builder|MembershipPlan whereDescription($value)
+ * @method static Builder|MembershipPlan whereFrequency($value)
+ * @method static Builder|MembershipPlan whereId($value)
+ * @method static Builder|MembershipPlan whereName($value)
+ * @method static Builder|MembershipPlan wherePrice($value)
+ * @method static Builder|MembershipPlan whereSlug($value)
+ * @method static Builder|MembershipPlan whereStripePlanId($value)
+ * @method static Builder|MembershipPlan whereUpdatedAt($value)
+ * @mixin Eloquent
  * @property string $membership_plan_id
- * @property-read \App\Models\Member $member
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MembershipPlan whereMembershipPlanId($value)
+ * @property-read Member $member
+ * @method static Builder|MembershipPlan whereMembershipPlanId($value)
  */
 class MembershipPlan extends Model
 {

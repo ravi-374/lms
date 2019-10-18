@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use Carbon\Carbon;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,38 +23,38 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereBookItemId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereIssuedOn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereMemberId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereNote($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereReserveDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereReturnDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereReturnDueDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \App\Models\BookItem $bookItem
- * @property-read \App\Models\Member $member
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook reserve()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofMember($memberId)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook ofBookItem($bookItemId)
+ * @method static Builder|IssuedBook newModelQuery()
+ * @method static Builder|IssuedBook newQuery()
+ * @method static Builder|IssuedBook query()
+ * @method static Builder|IssuedBook whereBookItemId($value)
+ * @method static Builder|IssuedBook whereCreatedAt($value)
+ * @method static Builder|IssuedBook whereId($value)
+ * @method static Builder|IssuedBook whereIssuedOn($value)
+ * @method static Builder|IssuedBook whereMemberId($value)
+ * @method static Builder|IssuedBook whereNote($value)
+ * @method static Builder|IssuedBook whereReserveDate($value)
+ * @method static Builder|IssuedBook whereReturnDate($value)
+ * @method static Builder|IssuedBook whereReturnDueDate($value)
+ * @method static Builder|IssuedBook whereStatus($value)
+ * @method static Builder|IssuedBook whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read BookItem $bookItem
+ * @property-read Member $member
+ * @method static Builder|IssuedBook reserve()
+ * @method static Builder|IssuedBook ofMember($memberId)
+ * @method static Builder|IssuedBook ofBookItem($bookItemId)
  * @property int|null $issuer_id
  * @property int|null $returner_id
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereIssuerId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereReturnerId($value)
+ * @method static Builder|IssuedBook whereIssuerId($value)
+ * @method static Builder|IssuedBook whereReturnerId($value)
  * @property-read string|null $issuer_name
  * @property-read string|null $returner_name
- * @property-read \App\User|null $issuer
- * @property-read \App\User|null $returner
+ * @property-read User|null $issuer
+ * @property-read User|null $returner
  * @property-read mixed $issue_due_date
  * @property-read mixed $expected_available_date
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook lastIssuedBook()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook overDue()
+ * @method static Builder|IssuedBook lastIssuedBook()
+ * @method static Builder|IssuedBook overDue()
  */
 class IssuedBook extends Model
 {

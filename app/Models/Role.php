@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Guard;
@@ -18,24 +22,24 @@ use Spatie\Permission\Traits\HasPermissions;
  * @property string|null $display_name
  * @property string|null $description
  * @property string $guard_name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role permission($permissions)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereDisplayName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereGuardName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereUpdatedAt($value)
+ * @method static Builder|Role newModelQuery()
+ * @method static Builder|Role newQuery()
+ * @method static Builder|Role permission($permissions)
+ * @method static Builder|Role query()
+ * @method static Builder|Role whereCreatedAt($value)
+ * @method static Builder|Role whereDescription($value)
+ * @method static Builder|Role whereDisplayName($value)
+ * @method static Builder|Role whereGuardName($value)
+ * @method static Builder|Role whereId($value)
+ * @method static Builder|Role whereName($value)
+ * @method static Builder|Role whereUpdatedAt($value)
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
- * @mixin \Eloquent
+ * @property-read Collection|User[] $users
+ * @mixin Eloquent
  */
 class Role extends Model implements RoleContract
 {

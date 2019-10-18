@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use App\Traits\ImageTrait;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Carbon;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * App\Models\Member
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member query()
- * @mixin \Eloquent
+ * @method static Builder|Member newModelQuery()
+ * @method static Builder|Member newQuery()
+ * @method static Builder|Member query()
+ * @mixin Eloquent
  * @property string $id
  * @property string $first_name
  * @property string $last_name
@@ -25,26 +27,26 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $phone
  * @property string|null $image
  * @property bool $is_active
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMembershipPlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMemberId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUpdatedAt($value)
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Member whereCreatedAt($value)
+ * @method static Builder|Member whereEmail($value)
+ * @method static Builder|Member whereFirstName($value)
+ * @method static Builder|Member whereId($value)
+ * @method static Builder|Member whereImage($value)
+ * @method static Builder|Member whereIsActive($value)
+ * @method static Builder|Member whereLastName($value)
+ * @method static Builder|Member whereMembershipPlanId($value)
+ * @method static Builder|Member whereMemberId($value)
+ * @method static Builder|Member wherePassword($value)
+ * @method static Builder|Member wherePhone($value)
+ * @method static Builder|Member whereUpdatedAt($value)
  * @property string $member_id
- * @property-read \App\Models\Address $address
+ * @property-read Address $address
  * @property-read string $image_path
- * @property-read \App\Models\MembershipPlan $membershipPlan
+ * @property-read MembershipPlan $membershipPlan
  * @property string|null $activation_code
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereActivationCode($value)
+ * @method static Builder|Member whereActivationCode($value)
  */
 class Member extends Authenticatable implements JWTSubject
 {
@@ -135,14 +137,14 @@ class Member extends Authenticatable implements JWTSubject
 
     public function getImagePathAttribute()
     {
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             return $this->imageUrl(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
         }
     }
 
     public function deleteMemberImage()
     {
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             self::deleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image); // thumbnail
 
             $this->update(['image' => null]);
@@ -167,8 +169,8 @@ class Member extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @param Builder $query
-     * @param array $keywords
+     * @param  Builder  $query
+     * @param  array  $keywords
      *
      * @return mixed
      */
