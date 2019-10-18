@@ -22,8 +22,8 @@ export const countryCode = {
 
 export const Routes = {
     APP_HOME: '/',
-    MEMBER_HOME: '/app/lending',
-    MEMBER_LENDING: '/app/lending',
+    MEMBER_HOME: '/app/landing',
+    MEMBER_LENDING: '/app/landing',
     MEMBER_LOGIN: '/app/login',
     MEMBER_DEFAULT: '/app/books',
     ADMIN_LOGIN: '/app/admin/login',
