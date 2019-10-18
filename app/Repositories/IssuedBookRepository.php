@@ -306,7 +306,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         if (! empty($returnedBook)) {
             $returnedBook->update(['note' => $input['note']]);
 
-            return $this->find($issueBook->id);
+            return $this->find($returnedBook->id);
         }
 
         /** @var BookItem $bookItem */
@@ -376,6 +376,16 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      */
     public function unReserveBook($bookItem, $input)
     {
+        $unReservedBook = IssuedBook::ofBookItem($bookItem->id)->ofMember($input['member_id'])
+            ->whereStatus(IssuedBook::STATUS_UN_RESERVED)
+            ->first();
+
+        if (! empty($unReservedBook)) {
+            $unReservedBook->update(['note' => $input['note']]);
+
+            return $this->find($unReservedBook->id);
+        }
+
         /** @var IssuedBook $issueBook */
         $issueBook = IssuedBook::ofBookItem($bookItem->id)
             ->where('status', IssuedBook::STATUS_RESERVED)
