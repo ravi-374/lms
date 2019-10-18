@@ -154,7 +154,7 @@ export const preparePieChart = (chartData) => {
 
     chart.datasets = [
         {
-            data: [],
+            data: chartData.genres_with_books[1],
             backgroundColor: chartData.genres_with_books[2],
             hoverBackgroundColor: chartData.genres_with_books[3],
         }
