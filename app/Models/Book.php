@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Traits\ImageTrait;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use phpDocumentor\Reflection\Types\Nullable;
 
 /**
@@ -16,32 +19,32 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @property string $name
  * @property string $description
  * @property string|Nullable $image
- * @property \Illuminate\Support\Carbon $published_on
+ * @property Carbon $published_on
  * @property string $isbn
  * @property string $url
  * @property bool $is_featured
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BookItem[] $items
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereIsFeatured($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereIsbn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book wherePublishedOn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Book whereUrl($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|Genre[] $genres
+ * @property-read Collection|Tag[] $tags
+ * @property-read Collection|BookItem[] $items
+ * @method static Builder|Book newModelQuery()
+ * @method static Builder|Book newQuery()
+ * @method static Builder|Book query()
+ * @method static Builder|Book whereCreatedAt($value)
+ * @method static Builder|Book whereDescription($value)
+ * @method static Builder|Book whereId($value)
+ * @method static Builder|Book whereImage($value)
+ * @method static Builder|Book whereIsFeatured($value)
+ * @method static Builder|Book whereIsbn($value)
+ * @method static Builder|Book whereName($value)
+ * @method static Builder|Book wherePublishedOn($value)
+ * @method static Builder|Book whereUpdatedAt($value)
+ * @method static Builder|Book whereUrl($value)
+ * @mixin Eloquent
  * @property-read string $image_path
  * @property-read string $authors_name
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Author[] $authors
+ * @property-read Collection|Author[] $authors
  */
 class Book extends Model
 {
@@ -98,7 +101,7 @@ class Book extends Model
      */
     public function getImagePathAttribute()
     {
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             return $this->imageUrl(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
         }
     }
@@ -108,7 +111,7 @@ class Book extends Model
      */
     public function deleteImage()
     {
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             $this->traitDeleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
             $this->update(['image' => null]);
 
@@ -149,8 +152,8 @@ class Book extends Model
     }
 
     /**
-     * @param Builder $query
-     * @param array $keywords
+     * @param  Builder  $query
+     * @param  array  $keywords
      *
      * @return mixed
      */
@@ -166,7 +169,7 @@ class Book extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      * @param $keywords
      *
      * @return mixed

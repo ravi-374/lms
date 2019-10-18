@@ -1,27 +1,31 @@
 <?php
+
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Publisher
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BookItem[] $publishers
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Publisher whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BookItem[] $bookItems
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|BookItem[] $publishers
+ * @method static Builder|Publisher newModelQuery()
+ * @method static Builder|Publisher newQuery()
+ * @method static Builder|Publisher query()
+ * @method static Builder|Publisher whereCreatedAt($value)
+ * @method static Builder|Publisher whereId($value)
+ * @method static Builder|Publisher whereName($value)
+ * @method static Builder|Publisher whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read Collection|BookItem[] $bookItems
  */
 class Publisher extends Model
 {
@@ -59,8 +63,8 @@ class Publisher extends Model
     }
 
     /**
-     * @param Builder $query
-     * @param array $keywords
+     * @param  Builder  $query
+     * @param  array  $keywords
      *
      * @return mixed
      */

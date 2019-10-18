@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Traits\ImageTrait;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Setting
@@ -12,21 +14,21 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $key
  * @property string $value
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereKey($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereValue($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Setting newModelQuery()
+ * @method static Builder|Setting newQuery()
+ * @method static Builder|Setting query()
+ * @method static Builder|Setting whereCreatedAt($value)
+ * @method static Builder|Setting whereId($value)
+ * @method static Builder|Setting whereKey($value)
+ * @method static Builder|Setting whereUpdatedAt($value)
+ * @method static Builder|Setting whereValue($value)
+ * @mixin Eloquent
  * @property string $display_name
  * @property-read string $logo_url
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting whereDisplayName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting ofKey($key)
+ * @method static Builder|Setting whereDisplayName($value)
+ * @method static Builder|Setting ofKey($key)
  */
 class Setting extends Model
 {
@@ -70,8 +72,8 @@ class Setting extends Model
     ];
 
     /**
-     * @param Builder $query
-     * @param string $key
+     * @param  Builder  $query
+     * @param  string  $key
      *
      * @return Builder
      */
@@ -85,7 +87,7 @@ class Setting extends Model
      */
     public function getLogoUrlAttribute()
     {
-        if (!empty($this->value)) {
+        if (! empty($this->value)) {
             return $this->imageUrl(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$this->value);
         }
     }

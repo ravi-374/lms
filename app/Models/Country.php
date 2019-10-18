@@ -2,23 +2,26 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Country
  *
  * @property int $id
  * @property string $title
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Country whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Country newModelQuery()
+ * @method static Builder|Country newQuery()
+ * @method static Builder|Country query()
+ * @method static Builder|Country whereCreatedAt($value)
+ * @method static Builder|Country whereId($value)
+ * @method static Builder|Country whereTitle($value)
+ * @method static Builder|Country whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Country extends Model
 {
