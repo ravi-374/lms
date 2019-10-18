@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 /**
- * @param string $key
+ * @param  string  $key
  *
  * @return null|string
  */
@@ -16,14 +16,14 @@ function getSettingValueByKey($key)
     /** @var Setting $setting */
     $setting = Setting::where('key', $key)->first();
 
-    if (!empty($setting)) {
+    if (! empty($setting)) {
         return $setting->value;
     }
 }
 
 /**
- * @param string $str
- * @param string $delimiter
+ * @param  string  $str
+ * @param  string  $delimiter
  *
  * @return array
  */
@@ -32,16 +32,16 @@ function explode_trim_remove_empty_values_from_array($str, $delimiter = ',')
     $arr = explode($delimiter, trim($str));
     $arr = array_map('trim', $arr);
     $arr = array_filter($arr, function ($value) {
-        return !empty($value);
+        return ! empty($value);
     });
 
     return $arr;
 }
 
 /**
- * @param Builder $query
- * @param string $keywords
- * @param array $columns
+ * @param  Builder  $query
+ * @param  string  $keywords
+ * @param  array  $columns
  *
  * @return mixed
  */
@@ -108,23 +108,17 @@ function prepareDateText($startDate, $endDate, $format = 'jS M')
 }
 
 /**
- * @return string
- */
-function getColorCode()
-{
-    return rand(0, 255).', '.rand(0, 255).', '.rand(1, 255);
-}
-
-/**
  * @param  int  $opacity
- * @param  string|null  $colorCode
+ * @param  string  $colorType
+ * @param  string  $colorFormat
  *
- * @return string
+ * @return array|string
  */
-function getColor($opacity = 1, $colorCode = null)
+function getRandomColor($opacity = 1, $colorType = 'bright', $colorFormat = 'rgbaCss')
 {
     return RandomColor::one(array(
-        'luminosity' => 'bright',
-        'format'     => 'rgbCss' // e.g. 'rgb(225,200,20)'
+        'luminosity' => $colorType,
+        'format'     => $colorFormat,
+        'opacity'    => $opacity,
     ));
 }

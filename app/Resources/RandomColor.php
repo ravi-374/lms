@@ -43,18 +43,19 @@ class RandomColor
     {
     }
 
-    static public function one($options = array())
+    static public function one($options = [])
     {
         $h = self::$h = self::_pickHue($options);
         $s = self::$s = self::_pickSaturation($h, $options);
         $v = self::$v = self::_pickBrightness($h, $s, $options);
+        $options['opacity'] = ! isset($options['opacity']) ? null : $options['opacity'];
 
-        return self::format(compact('h', 's', 'v'), @$options['format']);
+        return self::format(compact('h', 's', 'v'), @$options['format'], $options['opacity']);
     }
 
-    static public function many($count, $options = array())
+    static public function many($count, $options = [])
     {
-        $colors = array();
+        $colors = [];
 
         for ($i = 0; $i < $count; $i++) {
             $colors[] = self::one($options);
@@ -63,30 +64,47 @@ class RandomColor
         return $colors;
     }
 
-    static public function format($hsv, $format = 'hex')
+    static public function format($hsv, $format = 'hex', $opacity = '')
     {
         switch ($format) {
             case 'hsv':
-                return $hsv;
+                $text = $hsv;
+                break;
 
             case 'hsl':
-                return self::hsv2hsl($hsv);
+                $text = self::hsv2hsl($hsv);
+                break;
 
             case 'hslCss':
                 $hsl = self::hsv2hsl($hsv);
 
-                return 'hsl('.$hsl['h'].','.$hsl['s'].'%,'.$hsl['l'].'%)';
+                $text = 'hsl('.$hsl['h'].','.$hsl['s'].'%,'.$hsl['l'].'%)';
+                break;
 
             case 'rgb':
-                return self::hsv2rgb($hsv);
+                $text = self::hsv2rgb($hsv);
+                break;
 
             case 'rgbCss':
-                return 'rgb('.implode(',', self::hsv2rgb($hsv)).')';
+                $text = 'rgb('.implode(',', self::hsv2rgb($hsv)).')';
+                break;
+
+            case 'rgbaCss':
+                $text = 'rgba('.implode(',', self::hsv2rgb($hsv)).')';
+                break;
 
             case 'hex':
             default:
-                return self::hsv2hex($hsv);
+                $text = self::hsv2hex($hsv);
+                break;
         }
+
+        if (! empty($opacity)) {
+            $text = substr($text, 0, -1);
+            $text .= ', '.$opacity.')';
+        }
+
+        return $text;
     }
 
     static private function _pickHue($options)
@@ -163,7 +181,7 @@ class RandomColor
 
     static private function _getHueRange($options)
     {
-        $ranges = array();
+        $ranges = [];
 
         if (isset($options['hue'])) {
             if (! is_array($options['hue'])) {
@@ -269,11 +287,11 @@ class RandomColor
         $v /= 100;
         $k = (2 - $s) * $v;
 
-        return array(
+        return [
             'h' => $h,
             's' => round($s * $v / ($k < 1 ? $k : 2 - $k), 4) * 100,
             'l' => $k / 2 * 100,
-        );
+        ];
     }
 
     static public function hsv2rgb($hsv)
@@ -301,31 +319,31 @@ class RandomColor
 
         switch ($i) {
             case 0:
-                list($r, $g, $b) = array($v, $k, $m);
+                list($r, $g, $b) = [$v, $k, $m];
                 break;
             case 1:
-                list($r, $g, $b) = array($n, $v, $m);
+                list($r, $g, $b) = [$n, $v, $m];
                 break;
             case 2:
-                list($r, $g, $b) = array($m, $v, $k);
+                list($r, $g, $b) = [$m, $v, $k];
                 break;
             case 3:
-                list($r, $g, $b) = array($m, $n, $v);
+                list($r, $g, $b) = [$m, $n, $v];
                 break;
             case 4:
-                list($r, $g, $b) = array($k, $m, $v);
+                list($r, $g, $b) = [$k, $m, $v];
                 break;
             case 5:
             case 6:
-                list($r, $g, $b) = array($v, $m, $n);
+                list($r, $g, $b) = [$v, $m, $n];
                 break;
         }
 
-        return array(
+        return [
             'r' => floor($r * 255),
             'g' => floor($g * 255),
             'b' => floor($b * 255),
-        );
+        ];
     }
 }
 
@@ -333,64 +351,64 @@ class RandomColor
  * h=hueRange
  * s=saturationRange : bounds[0][0] ; bounds[-][0]
  */
-RandomColor::$dictionary = array(
-    'monochrome' => array(
-        'bounds' => array(array(0, 0), array(100, 0)),
+RandomColor::$dictionary = [
+    'monochrome' => [
+        'bounds' => [[0, 0], [100, 0]],
         'h'      => null,
-        's'      => array(0, 100),
-    ),
-    'red'        => array(
-        'bounds' => array(
-            array(20, 100), array(30, 92), array(40, 89), array(50, 85), array(60, 78), array(70, 70), array(80, 60),
-            array(90, 55), array(100, 50),
-        ),
-        'h'      => array(-26, 18),
-        's'      => array(20, 100),
-    ),
-    'orange'     => array(
-        'bounds' => array(
-            array(20, 100), array(30, 93), array(40, 88), array(50, 86), array(60, 85), array(70, 70), array(100, 70),
-        ),
-        'h'      => array(19, 46),
-        's'      => array(20, 100),
-    ),
-    'yellow'     => array(
-        'bounds' => array(
-            array(25, 100), array(40, 94), array(50, 89), array(60, 86), array(70, 84), array(80, 82), array(90, 80),
-            array(100, 75),
-        ),
-        'h'      => array(47, 62),
-        's'      => array(25, 100),
-    ),
-    'green'      => array(
-        'bounds' => array(
-            array(30, 100), array(40, 90), array(50, 85), array(60, 81), array(70, 74), array(80, 64), array(90, 50),
-            array(100, 40),
-        ),
-        'h'      => array(63, 178),
-        's'      => array(30, 100),
-    ),
-    'blue'       => array(
-        'bounds' => array(
-            array(20, 100), array(30, 86), array(40, 80), array(50, 74), array(60, 60), array(70, 52), array(80, 44),
-            array(90, 39), array(100, 35),
-        ),
-        'h'      => array(179, 257),
-        's'      => array(20, 100),
-    ),
-    'purple'     => array(
-        'bounds' => array(
-            array(20, 100), array(30, 87), array(40, 79), array(50, 70), array(60, 65), array(70, 59), array(80, 52),
-            array(90, 45), array(100, 42),
-        ),
-        'h'      => array(258, 282),
-        's'      => array(20, 100),
-    ),
-    'pink'       => array(
-        'bounds' => array(
-            array(20, 100), array(30, 90), array(40, 86), array(60, 84), array(80, 80), array(90, 75), array(100, 73),
-        ),
-        'h'      => array(283, 334),
-        's'      => array(20, 100),
-    ),
-);
+        's'      => [0, 100],
+    ],
+    'red'        => [
+        'bounds' => [
+            [20, 100], [30, 92], [40, 89], [50, 85], [60, 78], [70, 70], [80, 60],
+            [90, 55], [100, 50],
+        ],
+        'h'      => [-26, 18],
+        's'      => [20, 100],
+    ],
+    'orange'     => [
+        'bounds' => [
+            [20, 100], [30, 93], [40, 88], [50, 86], [60, 85], [70, 70], [100, 70],
+        ],
+        'h'      => [19, 46],
+        's'      => [20, 100],
+    ],
+    'yellow'     => [
+        'bounds' => [
+            [25, 100], [40, 94], [50, 89], [60, 86], [70, 84], [80, 82], [90, 80],
+            [100, 75],
+        ],
+        'h'      => [47, 62],
+        's'      => [25, 100],
+    ],
+    'green'      => [
+        'bounds' => [
+            [30, 100], [40, 90], [50, 85], [60, 81], [70, 74], [80, 64], [90, 50],
+            [100, 40],
+        ],
+        'h'      => [63, 178],
+        's'      => [30, 100],
+    ],
+    'blue'       => [
+        'bounds' => [
+            [20, 100], [30, 86], [40, 80], [50, 74], [60, 60], [70, 52], [80, 44],
+            [90, 39], [100, 35],
+        ],
+        'h'      => [179, 257],
+        's'      => [20, 100],
+    ],
+    'purple'     => [
+        'bounds' => [
+            [20, 100], [30, 87], [40, 79], [50, 70], [60, 65], [70, 59], [80, 52],
+            [90, 45], [100, 42],
+        ],
+        'h'      => [258, 282],
+        's'      => [20, 100],
+    ],
+    'pink'       => [
+        'bounds' => [
+            [20, 100], [30, 90], [40, 86], [60, 84], [80, 80], [90, 75], [100, 73],
+        ],
+        'h'      => [283, 334],
+        's'      => [20, 100],
+    ],
+];

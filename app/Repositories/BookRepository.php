@@ -522,8 +522,13 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         foreach ($genresRecords as $genre) {
             $genres[] = $genre->name;
             $booksCount[] = $genre->books_count;
-            $colors[] = getColor(0.7);
-            $colorsWithDifferentOpacity[] = getColor(0.9);
+            $color = getRandomColor(0.9);
+            $colors[] = $color;
+
+            $color = substr($color, 0, -6);
+            $color .= ', 0.7)';
+
+            $colorsWithDifferentOpacity[] = $color;
         }
 
         return [$genres, $booksCount, $colors, $colorsWithDifferentOpacity];
