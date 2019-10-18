@@ -72,7 +72,7 @@ class BookRepositoryTest extends TestCase
         $book = factory(Book::class)->create();
 
         $inputs[] = factory(BookItem::class)->raw();
-        $inputs[] = factory(BookItem::class)->raw();
+        $inputs[] = factory(BookItem::class)->raw(['publisher_id' => 'Vishal Ribdiya']);
 
         $result = $this->bookRepo->createOrUpdateBookItems($book, $inputs);
 
@@ -83,6 +83,7 @@ class BookRepositoryTest extends TestCase
         $this->assertCount(2, $book->items);
         $this->assertEquals($inputs[0]['book_code'], $book->items[0]->book_code);
         $this->assertEquals($inputs[1]['book_code'], $book->items[1]->book_code);
+        $this->assertIsNumeric($book->items[1]->publisher_id);
     }
 
     /** @test */

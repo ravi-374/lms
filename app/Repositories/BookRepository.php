@@ -297,6 +297,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             BookItem::whereIn('id', $removedItems)->delete();
             /** @var BookItem $bookItem */
             foreach ($bookItems as $bookItem) {
+
+                if (! empty($bookItem['publisher_id']) && ! is_numeric($bookItem['publisher_id'])) {
+                    $publisher = Publisher::create(['name' => $bookItem['publisher_id']]);
+                    $bookItem['publisher_id'] = $publisher->id;
+                }
+
                 if (! empty($bookItem['id'])) {
                     $item = BookItem::findOrFail($bookItem['id']);
                 } else {
