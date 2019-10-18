@@ -13,7 +13,6 @@ $('.popular-book__book-item-slider').owlCarousel({
     margin: 10,
     nav: true,
     dots: false,
-    center: true,
     autoplay: true,
     responsive: {
         0: {
