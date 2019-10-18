@@ -26,7 +26,7 @@ export const login = (user, history) => async (dispatch) => {
             if (sessionStorage.getItem('prevAdminPrevUrl')) {
                 window.location.href = sessionStorage.getItem('prevAdminPrevUrl');
             } else {
-                window.location.href = environment.URL + '/#/' + Routes.ADMIN_DEFAULT;
+                history.push(Routes.ADMIN_DEFAULT);
             }
         })
         .catch(({response}) => {
