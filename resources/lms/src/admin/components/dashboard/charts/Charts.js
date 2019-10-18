@@ -199,6 +199,25 @@ const Charts = (props) => {
         );
     };
 
+    const options = {
+        legend: { display: false },
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem, data) {
+                    return ' ' + data.labels[tooltipItem.index]
+                },
+            },
+        },
+    }
+    const BookCirculationOptions = {
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem, data) {
+                    return ' ' + data.labels[tooltipItem.index]
+                },
+            },
+        },
+    }
     return (
         <div className="charts">
             <Row>
@@ -211,7 +230,7 @@ const Charts = (props) => {
                                 </CardHeader>
                                 <CardBody>
                                     <div className="chart-wrapper chart-wrapper-content">
-                                        {renderEmptyDataSet(doughnut.datasets) ? <Doughnut data={doughnut}/> :
+                                        {renderEmptyDataSet(doughnut.datasets) ? <Doughnut data={doughnut} options={BookCirculationOptions}/> :
                                             <div className="chart-wrapper-empty-component">
                                                 <EmptyComponent isShort title={getFormattedMessage
                                                 ('dashboard.chart.empty-message.label')}/>
@@ -226,7 +245,7 @@ const Charts = (props) => {
                                 <CardBody>
                                     <div className="chart-wrapper chart-wrapper-content">
                                         {renderEmptyDataSet(pie.datasets) ?
-                                            <Pie data={pie} options={{ legend: { display: false } }}/> :
+                                            <Pie data={pie} options={options}/> :
                                             <div className="chart-wrapper-empty-component">
                                                 <EmptyComponent isShort title={getFormattedMessage
                                                 ('dashboard.chart.empty-message.label')}/>
