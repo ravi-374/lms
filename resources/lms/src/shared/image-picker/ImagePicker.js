@@ -7,7 +7,8 @@ import {getAvatarName, getFormattedMessage} from "../sharedMethod";
 const ImagePicker = (props) => {
     const {
         image, isDefaultImage, onFileChange, onRemovePhoto, inputField = 'userInput',
-        buttonName = "image-picker.dropdown.profile.label", isRemoveOption = true, user
+        buttonName = "image-picker.dropdown.profile.label", isRemoveOption = true, user,
+        isFavicon = false
     } = props;
     const [isOpen, setIsOpen] = useState(false);
 
@@ -35,15 +36,23 @@ const ImagePicker = (props) => {
             </DropdownItem>);
         }
     };
+    const toggleClass = !isFavicon ? 'image__dropdown-btn' : 'image__favicon-dropdown-btn';
+    const dropMenuClass = !isFavicon ? 'image__dropdown-menu' : 'image__favicon-dropdown-menu';
+    const holderClass = !isFavicon ? 'image__holder' : 'image__favicon-holder';
+    const previewClass = !isFavicon ? 'image__preview' : 'image__favicon-preview';
+    const avatarClass = !isFavicon ? 'image__avatar' : 'image__favicon-avatar-text';
+    const avatarTextClass = !isFavicon ? 'image__avatar-text' : 'image__favicon-avatar-text';
+    const height = !isFavicon ? 200 : 120;
+    const width = !isFavicon ? 200 : 120;
 
     const renderPopOver = () => {
         return (
             <Dropdown isOpen={isOpen} toggle={toggle}>
-                <DropdownToggle className="image__dropdown-btn">
+                <DropdownToggle className={toggleClass}>
                     {isDefaultImage ? getConcatedMessage('image-picker.dropdown.add.label') :
                         getConcatedMessage('image-picker.dropdown.change.label')}
                 </DropdownToggle>
-                <DropdownMenu className="image__dropdown-menu">
+                <DropdownMenu className={dropMenuClass}>
                     <DropdownItem className="text-center" onClick={() => openFileSelect()}>
                         {isDefaultImage ? getConcatedMessage('image-picker.dropdown.add.label') :
                             getConcatedMessage('image-picker.dropdown.change.label')}
@@ -60,12 +69,12 @@ const ImagePicker = (props) => {
         <>
             <input id={inputField} type="file" onClick={(e) => e.target.value = null} className="d-none"
                    onChange={(e) => onFileChange(e)} accept="image/*"/>
-            <div className="image__holder">
+            <div className={holderClass}>
                 {image ?
-                    <img src={image ? image : null} className="image__preview mx-auto d-block" height={200} width={200}
-                         alt={image}/> :
-                    <div className="image__avatar">
-                        <span className="image__avatar-text">{getAvatarName(user ? user.name : null)}</span>
+                    <img src={image ? image : null} className={`${previewClass} mx-auto d-block`} height={height}
+                         width={width} alt={image}/> :
+                    <div className={avatarClass}>
+                        <span className={avatarTextClass}>{getAvatarName(user ? user.name : null)}</span>
                     </div>
                 }
                 {renderPopOver()}
