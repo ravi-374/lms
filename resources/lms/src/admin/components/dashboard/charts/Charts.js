@@ -204,7 +204,8 @@ const Charts = (props) => {
         tooltips: {
             callbacks: {
                 label: function (tooltipItem, data) {
-                    return ' ' + data.labels[tooltipItem.index]
+                    const count = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+                    return ' ' + data.labels[tooltipItem.index] + ' : ' + count;
                 },
             },
         },
@@ -213,7 +214,8 @@ const Charts = (props) => {
         tooltips: {
             callbacks: {
                 label: function (tooltipItem, data) {
-                    return ' ' + data.labels[tooltipItem.index]
+                    const count = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+                    return ' ' + data.labels[tooltipItem.index] + ' : ' + count;
                 },
             },
         },
