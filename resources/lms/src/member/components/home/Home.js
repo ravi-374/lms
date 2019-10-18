@@ -36,7 +36,7 @@ const Home = (props) => {
     return (
         <div className="animated fadeIn">
             <header className="header position-fixed">
-                <HeaderTitle title="Index"/>
+                <HeaderTitle title="Lending"/>
                 <div className="container">
                     <nav className="navbar navbar-expand-lg">
                         <a className="navbar-brand d-flex align-items-center" href="#"
