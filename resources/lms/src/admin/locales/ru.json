@@ -161,7 +161,7 @@
     "dashboard.title":"Приборная Доска",
     "dashboard.chart.custom-report.title": "Пользовательский Отчет",
     "dashboard.chart.book&member-report.title": "Книги по жанрам",
-    "dashboard.chart.circulation-report.title": "Отчет О Тираже Книг",
+    "dashboard.chart.circulation-report.title": "Тираже Книг",
     "dashboard.chart.book.label":"Книги",
     "dashboard.chart.issue-book.label":"Выпущенные Книги",
     "dashboard.chart.reserve-book.label":"Зарезервированные Книги",

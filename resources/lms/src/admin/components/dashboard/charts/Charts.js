@@ -225,9 +225,13 @@ const Charts = (props) => {
                                 </CardHeader>
                                 <CardBody>
                                     <div className="chart-wrapper chart-wrapper-content">
-                                        {renderEmptyDataSet(pie.datasets) ? <Pie data={pie} options={{legend:{ display: false}}}/> :
-                                            <EmptyComponent isShort title={getFormattedMessage
-                                            ('dashboard.chart.empty-message.label')}/>}
+                                        {renderEmptyDataSet(pie.datasets) ?
+                                            <Pie data={pie} options={{ legend: { display: false } }}/> :
+                                            <div className="chart-wrapper-empty-component">
+                                                <EmptyComponent isShort title={getFormattedMessage
+                                                ('dashboard.chart.empty-message.label')}/>
+                                            </div>
+                                        }
                                     </div>
                                 </CardBody>
                             </Card>

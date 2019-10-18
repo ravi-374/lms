@@ -161,7 +161,7 @@
     "dashboard.title":"Gösterge Paneli",
     "dashboard.chart.custom-report.title": "Özel Rapor",
     "dashboard.chart.book&member-report.title": "Türe Göre Kitaplar",
-    "dashboard.chart.circulation-report.title": "Kitaplar Dolaşım Raporu",
+    "dashboard.chart.circulation-report.title": "Kitaplar Dolaşım",
     "dashboard.chart.book.label":"Kitabın",
     "dashboard.chart.issue-book.label":"Verilen Kitaplar",
     "dashboard.chart.reserve-book.label":"Ayrılmış Kitaplar",

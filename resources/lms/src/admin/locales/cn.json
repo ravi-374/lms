@@ -161,7 +161,7 @@
     "dashboard.title":"仪表板",
     "dashboard.chart.custom-report.title": "自定义报告",
     "dashboard.chart.book&member-report.title": "按類型的書籍",
-    "dashboard.chart.circulation-report.title": "图书发行报告",
+    "dashboard.chart.circulation-report.title": "书籍发行",
     "dashboard.chart.book.label":"图书",
     "dashboard.chart.issue-book.label":"发行书籍",
     "dashboard.chart.reserve-book.label":"保留书",

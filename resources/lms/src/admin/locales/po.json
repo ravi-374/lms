@@ -161,7 +161,7 @@
     "dashboard.title":"Painel De Controle",
     "dashboard.chart.custom-report.title": "Relatório Personalizado",
     "dashboard.chart.book&member-report.title": "Livros por gêneros",
-    "dashboard.chart.circulation-report.title": "Relatório De Circulação De Livros",
+    "dashboard.chart.circulation-report.title": "Circulação De Livros",
     "dashboard.chart.book.label":"Livros",
     "dashboard.chart.issue-book.label":"Livros Emitidos",
     "dashboard.chart.reserve-book.label":"Livros Reservados",

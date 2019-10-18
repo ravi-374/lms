@@ -161,7 +161,7 @@
     "dashboard.title":"Cruscotto",
     "dashboard.chart.custom-report.title": "Rapporto Personalizzato",
     "dashboard.chart.book&member-report.title": "Libri per generi",
-    "dashboard.chart.circulation-report.title": "Rapporto Sulla Circolazione Dei Libri",
+    "dashboard.chart.circulation-report.title": "Circolazione Dei Libri",
     "dashboard.chart.book.label":"Libri",
     "dashboard.chart.issue-book.label":"Libri Emessi",
     "dashboard.chart.reserve-book.label":"Libri Riservati",
