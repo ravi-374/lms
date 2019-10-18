@@ -66,16 +66,16 @@ const Home = (props) => {
                 <div className="position-absolute landing__slider">
                     <div className="landing__owl-slider owl-carousel owl-theme">
                         <div className="item">
-                            <img src="img/slide1.jpg" alt="slide one" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-1.jpg" alt="slide one" className="img-fluid landing__slider-img"/>
                         </div>
                         <div className="item">
-                            <img src="img/slide2.jpg" alt="slide two" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-2.jpg" alt="slide two" className="img-fluid landing__slider-img"/>
                         </div>
                         <div className="item">
-                            <img src="img/slide3.jpg" alt="slide three" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-3.jpg" alt="slide three" className="img-fluid landing__slider-img"/>
                         </div>
                         <div className="item">
-                            <img src="img/slide-4.jpg" alt="slide three" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-4.jpg" alt="slide three" className="img-fluid landing__slider-img"/>
                         </div>
                     </div>
                 </div>
@@ -210,37 +210,31 @@ const Home = (props) => {
                                 <div className="popular-book__item-box">
                                     Book 1
                                 </div>
-                                {/*<img src="img/book/book1.jpg" alt="book one"/>*/}
                             </div>
                             <div className="item">
                                 <div className="popular-book__item-box">
                                     Book 2
                                 </div>
-                                {/*<img src="img/book/book2.jpg" alt="book two"/>*/}
                             </div>
                             <div className="item">
                                 <div className="popular-book__item-box">
                                     Book 3
                                 </div>
-                                {/*<img src="img/book/book3.jpg" alt="book three"/>*/}
                             </div>
                             <div className="item">
                                 <div className="popular-book__item-box">
                                     Book 4
                                 </div>
-                                {/*<img src="img/book/book1.jpg" alt="book one"/>*/}
                             </div>
                             <div className="item">
                                 <div className="popular-book__item-box">
                                     Book 5
                                 </div>
-                                {/*<img src="img/book/book2.jpg" alt="book two"/>*/}
                             </div>
                             <div className="item">
                                 <div className="popular-book__item-box">
                                     Book 6
                                 </div>
-                                {/*<img src="img/book/book3.jpg" alt="book three"/>*/}
                             </div>
                         </div>
                     </div>
@@ -256,7 +250,7 @@ const Home = (props) => {
                         <div className="meet-out-staff__slider owl-carousel owl-theme">
                             <div className="item">
                                 <div className="card meet-out-staff__card p-3">
-                                    <img src="img/staff/team-3.jpg" alt=""/>
+                                    <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
                                     <hr/>
                                     <h5 className="text-center">John Doe</h5>
                                     <p className="text-center text-muted">Designer</p>
@@ -264,7 +258,7 @@ const Home = (props) => {
                             </div>
                             <div className="item">
                                 <div className="card meet-out-staff__card p-3">
-                                    <img src="img/staff/team-3.jpg" alt=""/>
+                                    <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
                                     <hr/>
                                     <h5 className="text-center">John Doe</h5>
                                     <p className="text-center text-muted">Designer</p>
@@ -272,7 +266,7 @@ const Home = (props) => {
                             </div>
                             <div className="item">
                                 <div className="card meet-out-staff__card p-3">
-                                    <img src="img/staff/team-3.jpg" alt=""/>
+                                    <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
                                     <hr/>
                                     <h5 className="text-center">John Doe</h5>
                                     <p className="text-center text-muted">Designer</p>
@@ -280,7 +274,7 @@ const Home = (props) => {
                             </div>
                             <div className="item">
                                 <div className="card meet-out-staff__card p-3">
-                                    <img src="img/staff/team-3.jpg" alt=""/>
+                                    <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
                                     <hr/>
                                     <h5 className="text-center">John Doe</h5>
                                     <p className="text-center text-muted">Designer</p>
@@ -288,7 +282,7 @@ const Home = (props) => {
                             </div>
                             <div className="item">
                                 <div className="card meet-out-staff__card p-3">
-                                    <img src="img/staff/team-3.jpg" alt=""/>
+                                    <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
                                     <hr/>
                                     <h5 className="text-center">John Doe</h5>
                                     <p className="text-center text-muted">Designer</p>
@@ -296,7 +290,7 @@ const Home = (props) => {
                             </div>
                             <div className="item">
                                 <div className="card meet-out-staff__card p-3">
-                                    <img src="img/staff/team-3.jpg" alt=""/>
+                                    <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
                                     <hr/>
                                     <h5 className="text-center">John Doe</h5>
                                     <p className="text-center text-muted">Designer</p>
@@ -330,7 +324,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-1.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -347,7 +341,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-2.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +358,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-3.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -381,7 +375,7 @@ const Home = (props) => {
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
-                                            <img src="img/user/client2.jpg" alt=""/>
+                                            <img src="img/user/avatar-4.png" alt=""/>
                                         </div>
                                     </div>
                                 </div>
