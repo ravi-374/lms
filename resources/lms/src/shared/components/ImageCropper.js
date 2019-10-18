@@ -9,17 +9,23 @@ import {getFormattedMessage} from "../sharedMethod";
 let imageRef = null;
 const ImageCropper = (props) => {
     const { image, emitFileChange, onSave, onCancel, isToggle, isFavicon = false } = props;
-    const [crop, setCrop] = useState( {
+    const [crop, setCrop] = useState({
         unit: 'px',
         width: 50,
         height: 50
     });
     const [croppedImageUrl, setCroppedImageUrl] = useState(null);
-    const extraOptions = {
+    const faviocnExtraOptions = {
         minHeight: 50,
         maxHeight: 50,
         minWidth: 50,
         maxWidth: 50,
+    };
+    const logoExtraOptions = {
+        minHeight: 70,
+        maxHeight: 70,
+        minWidth: 100,
+        maxWidth: 100,
     };
 
     const onImageLoaded = image => {
@@ -86,7 +92,9 @@ const ImageCropper = (props) => {
     };
 
     if (isFavicon) {
-        prepareCropOption = { ...prepareCropOption, ...extraOptions }
+        prepareCropOption = { ...prepareCropOption, ...faviocnExtraOptions }
+    } else {
+        prepareCropOption = { ...prepareCropOption, ...logoExtraOptions }
     }
 
     const prepareModalOption = {
