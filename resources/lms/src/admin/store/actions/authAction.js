@@ -25,16 +25,12 @@ export const login = (user, history) => async (dispatch) => {
                 }
             }
             localStorage.setItem(Tokens.ADMIN, response.data.data.token)
-            dispatch(
-                setUserProfile(LocalStorageKey.USER, response.data.data.user))
-            dispatch(
-                { type: authActionType.LOGIN, payload: response.data.data })
-            dispatch(addToast(
-                { text: getFormattedMessage('login.success.logged.message') }))
+            dispatch(setUserProfile(LocalStorageKey.USER, response.data.data.user))
+            dispatch({ type: authActionType.LOGIN, payload: response.data.data })
+            dispatch(addToast({ text: getFormattedMessage('login.success.logged.message') }))
             dispatch(fetchConfig())
             if (sessionStorage.getItem('prevAdminPrevUrl')) {
-                window.location.href = sessionStorage.getItem(
-                    'prevAdminPrevUrl')
+                window.location.href = sessionStorage.getItem('prevAdminPrevUrl')
             } else {
                 history.push(Routes.ADMIN_DEFAULT)
             }
