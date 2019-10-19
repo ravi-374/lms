@@ -10,6 +10,7 @@ let imageRef = null;
 const ImageCropper = (props) => {
     const { image, emitFileChange, onSave, onCancel, isToggle, isFavicon = false } = props;
     const [crop, setCrop] = useState({
+        aspect: 16 / 9,
         unit: 'px',
         width: 50,
         height: 50
@@ -21,13 +22,6 @@ const ImageCropper = (props) => {
         minWidth: 50,
         maxWidth: 50,
     };
-    const logoExtraOptions = {
-        minHeight: 70,
-        maxHeight: 70,
-        minWidth: 100,
-        maxWidth: 100,
-    };
-
     const onImageLoaded = image => {
         imageRef = image;
     };
@@ -93,8 +87,6 @@ const ImageCropper = (props) => {
 
     if (isFavicon) {
         prepareCropOption = { ...prepareCropOption, ...faviocnExtraOptions }
-    } else {
-        prepareCropOption = { ...prepareCropOption, ...logoExtraOptions }
     }
 
     const prepareModalOption = {
