@@ -173,8 +173,9 @@ const BookCirculationForm = props => {
                         || bookStatus.id === bookCirculationStatusConstant.BOOK_RESERVED);
                 case bookCirculationStatusConstant.BOOK_ISSUED:
                     return bookCirculationStatusOptions.filter(bookStatus => bookStatus.id === bookCirculationStatusConstant.BOOK_RETURNED
-                        || bookStatus.id === bookCirculationStatusConstant.BOOK_LOST);
+                        || bookStatus.id === bookCirculationStatusConstant.BOOK_LOST || bookStatus.id === bookCirculationStatusConstant.BOOK_DAMAGED);
                 case  bookCirculationStatusConstant.BOOK_LOST:
+                case  bookCirculationStatusConstant.BOOK_DAMAGED:
                     return bookCirculationStatusOptions.filter(bookStatus => bookStatus.id === bookCirculationStatusConstant.BOOK_RETURNED);
                 default:
                     return [];
@@ -259,6 +260,9 @@ const mapStateToProps = (state) => {
     return { books, members: prepareFullNames(members), bookItems: prepareBookItems(availableBooks) }
 };
 
-const bookCirculationForm = reduxForm({ form: 'bookCirculationForm', validate: bookCirculationValidate })(BookCirculationForm);
+const bookCirculationForm = reduxForm({
+    form: 'bookCirculationForm',
+    validate: bookCirculationValidate
+})(BookCirculationForm);
 
 export default connect(mapStateToProps, { fetchAvailableBooks, fetchBooks, fetchMembers })(bookCirculationForm);

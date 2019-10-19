@@ -37,21 +37,21 @@ const BookStatus = ( props) => {
             </span>;
         case bookCirculationStatusConstant.BOOK_DAMAGED:
             item.status_name = getFormattedMessage('book-history.filter.damaged.label');
-            return <span className="text-danger">
+            return <span className="text-warning">
                 <strong>
                     {getFormattedMessage('book-history.filter.damaged.label')}
                 </strong>
             </span>;
         case bookCirculationStatusConstant.BOOK_UN_RESERVED:
             item.status_name = getFormattedMessage('book-history.filter.unreserved.label');
-            return <span className="text-warning">
+            return <span className="text-info">
                 <strong>
                     {getFormattedMessage('book-history.filter.unreserved.label')}
                 </strong>
             </span>;
         default:
             item.status_name = getFormattedMessage('book-history.filter.reserved.label');
-            return <span className="text-info">
+            return <span className="text-primary">
                 <strong>
                     {getFormattedMessage('book-history.filter.reserved.label')}
                 </strong>
