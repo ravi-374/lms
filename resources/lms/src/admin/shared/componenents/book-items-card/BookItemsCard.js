@@ -8,11 +8,14 @@ import {bookFormatOptions} from '../../../constants'
 import {prepareCreatableObject} from "../../prepareArray";
 import SelectCreatable from "../../../../shared/components/SelectCreatable";
 import {getFormattedMessage, getFormattedOptions, mapCurrencyCode} from "../../../../shared/sharedMethod";
+import {bookITemCreationWarning, bookCreationWarning} from "../../../../shared/custom-hooks";
 
 const BookItemsCard = (props) => {
-    const { fields, meta: { error, submitFailed }, bookLanguages, publishers, currency } = props;
+    const { fields, meta: { error, submitFailed }, bookLanguages, publishers, currency, change } = props;
     const [items, setItems] = useState([{}]);
     const booksFormatOptions = getFormattedOptions(bookFormatOptions);
+    const [onChangeLanguage] = bookITemCreationWarning(change);
+    const [onChangePublisher] = bookITemCreationWarning(change);
 
     const onAddSubFields = () => {
         setItems([...items, { id: 1 }]);
@@ -42,12 +45,14 @@ const BookItemsCard = (props) => {
                 <td className="book-items-card__language">
                     <Field name={`${item}.language`} required options={bookLanguages}
                            placeholder="books.items.select.language.placeholder" groupText="language"
-                           component={SelectCreatable} menuPlacement="top"/>
+                           component={SelectCreatable} menuPlacement="top"
+                           onChange={(option) => onChangeLanguage(option, bookLanguages, 'new_language', item)}/>
                 </td>
                 <td className="book-items-card__publisher">
                     <Field name={`${item}.publisher`} options={publishers}
                            placeholder="books.items.select.publisher.placeholder" groupText="user-circle-o"
-                           component={SelectCreatable} menuPlacement="top"/>
+                           component={SelectCreatable} menuPlacement="top"
+                           onChange={(option) => onChangePublisher(option, publishers, 'new_publisher', item)}/>
                 </td>
                 <td className="text-center">
                     <Button size="sm" color="danger" className="book-items-card__action-btn"

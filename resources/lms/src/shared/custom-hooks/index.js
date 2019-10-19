@@ -48,3 +48,14 @@ export const bookCreationWarning = (change) => {
     };
     return [onChangeValue];
 };
+
+export const bookITemCreationWarning = (change) => {
+    const onChangeValue = (option, objArray, key, item) => {
+        if (option) {
+            change(`${item}.${key}`, _.differenceWith([option], objArray, _.isEqual));
+        } else {
+            change(`${item}.${key}`, []);
+        }
+    };
+    return [onChangeValue];
+};

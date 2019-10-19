@@ -27,7 +27,7 @@ const BookFormCard = (props) => {
 
     useEffect(() => {
         inputRef.current.focus();
-        initialize?initialize({ items: [{}] }):null;
+        initialize ? initialize({ items: [{}] }) : null;
     }, []);
 
     const onFocusChangeISBN = (event) => {
@@ -117,7 +117,7 @@ const BookFormCard = (props) => {
             <Col xs={12} className="mt-3">
                 <h5>{getFormattedMessage('books.items.title')}</h5>
                 <FieldArray name="items" component={BookItemsCard} bookLanguages={bookLanguages} publishers={publishers}
-                            currency={currency}/>
+                            currency={currency} change={change}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={handleSubmit(onSave)} {...saveActionOptions}/>
