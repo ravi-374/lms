@@ -74,10 +74,10 @@ export const checkExistingRoute = (lastLocation, history) => {
         lastLocation = location;
     });
     const prevHistoryPush = history.push;
-    history.push = (pathname) => {
-        if (!lastLocation || pathname !== lastLocation.pathname + lastLocation.search + lastLocation.hash
+    history.push = (path) => {
+        if (!lastLocation || path && path.pathname !== lastLocation.pathname + lastLocation.search + lastLocation.hash
         ) {
-            prevHistoryPush(pathname)
+            prevHistoryPush(path)
         }
     };
 };
