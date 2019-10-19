@@ -96,8 +96,8 @@ const bookStatus = [
     { id: 3, name: 'books-circulation.filter.returned.label', defaultValue: 'Returned' },
     { id: 4, name: 'books-circulation.filter.available.label', defaultValue: 'Available' },
     { id: 5, name: 'books-circulation.filter.unreserved.label', defaultValue: 'Unreserved' },
-    { id: 6, name: 'books-circulation.filter.damaged.label', defaultValue: 'Damaged' },
-    { id: 7, name: 'books-circulation.filter.lost.label', defaultValue: 'Lost' }
+    { id: 6, name: 'books-circulation.filter.lost.label', defaultValue: 'Lost' },
+    { id: 7, name: 'books-circulation.filter.damaged.label', defaultValue: 'Damaged' },
 ];
 export const bookStatusOptions = bookStatus;
 
