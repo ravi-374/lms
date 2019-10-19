@@ -62,6 +62,8 @@
     "books.input.authors.warning-start.label": "新作者",
     "books.input.genres.warning-start.label": "新类型",
     "books.input.tags.warning-start.label": "新标签",
+    "books.input.language.warning-start.label": "新语言",
+    "books.input.publisher.warning-start.label": "新发行人",
     "books.input.authors.warning-end.label": "将被创建。",
     "books.input.name.validate.label": "必须要求书名称标题。",
     "books.input.authors.validate.label": "书籍作者必须是必填项。",

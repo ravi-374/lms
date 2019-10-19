@@ -62,6 +62,8 @@
     "books.input.authors.warning-start.label": "Yeni Yazar",
     "books.input.genres.warning-start.label": "Yeni tür (ler)",
     "books.input.tags.warning-start.label": "Yeni etiket (ler)",
+    "books.input.language.warning-start.label": "Yeni dil",
+    "books.input.publisher.warning-start.label": "Yeni yayıncı",
     "books.input.authors.warning-end.label": "yaratılacak",
     "books.input.name.validate.label": "Kitap adı unvanı gerekli olmalı.",
     "books.input.authors.validate.label": "Kitap yazarı (yazarları) gerekli olmalıdır.",

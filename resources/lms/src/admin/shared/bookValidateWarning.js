@@ -25,11 +25,20 @@ export default formValues => {
     if (formValues.items && formValues.items.length) {
         formValues.items.forEach((item, index) => {
             const bookWarnings = {};
-            // if (item && item.publisher) {
-            //     bookWarnings.publisher = `New publisher
-            //     ${item.publisher.label} will be created.`;
-            //     booksArrayWarnings[index] = bookWarnings;
-            // }
+            if (item && item.new_language && item.new_language.length > 0) {
+                bookWarnings.language = <>{getFormattedMessage('books.input.language.warning-start.label')} "
+                                          {item.new_language[0].label}"
+                                          {getFormattedMessage('books.input.authors.warning-end.label')}
+                </>;
+                booksArrayWarnings[index] = bookWarnings;
+            }
+            if (item && item.new_publisher && item.new_publisher.length > 0) {
+                bookWarnings.publisher = <>{getFormattedMessage('books.input.publisher.warning-start.label')} "
+                                           {item.new_publisher[0].label}"
+                                           {getFormattedMessage('books.input.authors.warning-end.label')}
+                </>;
+                booksArrayWarnings[index] = bookWarnings;
+            }
         });
         if (booksArrayWarnings.length) {
             warning.items = booksArrayWarnings;

@@ -62,6 +62,8 @@
     "books.input.authors.warning-start.label": "Nuevo autor (es)",
     "books.input.genres.warning-start.label": "Nuevos géneros",
     "books.input.tags.warning-start.label": "Nueva etiqueta (s)",
+    "books.input.language.warning-start.label": "Nuevo idioma",
+    "books.input.publisher.warning-start.label": "Nuevo editor",
     "books.input.authors.warning-end.label": "se creará.",
     "books.input.name.validate.label": "Se debe requerir el título del nombre del libro.",
     "books.input.authors.validate.label": "Los autores del libro deben ser requeridos.",

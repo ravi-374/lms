@@ -62,6 +62,8 @@
     "books.input.authors.warning-start.label": "Новый автор (ы)",
     "books.input.genres.warning-start.label": "Новый жанр",
     "books.input.tags.warning-start.label": "Новый тег (ы)",
+    "books.input.language.warning-start.label": "Новый язык",
+    "books.input.publisher.warning-start.label": "Новый издатель",
     "books.input.authors.warning-end.label": "будет создан.",
     "books.input.name.validate.label": "Название книги должно быть обязательным.",
     "books.input.authors.validate.label": "Автор книги должен быть обязательным.",

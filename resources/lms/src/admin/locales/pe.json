@@ -62,6 +62,8 @@
     "books.input.authors.warning-start.label": "نویسنده جدید",
     "books.input.genres.warning-start.label": "ژانرهای جدید",
     "books.input.tags.warning-start.label": "برچسب (های) جدید",
+    "books.input.language.warning-start.label": "زبان جدید",
+    "books.input.publisher.warning-start.label": "ناشر جدید",
     "books.input.authors.warning-end.label": "ایجاد خواهد شد",
     "books.input.name.validate.label": "عنوان نام کتاب لازم است.",
     "books.input.authors.validate.label": "نویسنده (بازدید کنندگان) کتاب مورد نیاز است.",

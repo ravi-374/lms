@@ -62,6 +62,8 @@
     "books.input.authors.warning-start.label": "Neue autor(en)",
     "books.input.genres.warning-start.label": "Neue genre(s)",
     "books.input.tags.warning-start.label": "Neue tag(s)",
+    "books.input.language.warning-start.label": "Neue Sprache",
+    "books.input.publisher.warning-start.label": "Neuer Verlag",
     "books.input.authors.warning-end.label": "wird erstellt.",
     "books.input.name.validate.label": "Der Buchtitel muss angegeben werden.",
     "books.input.authors.validate.label": "Buchautor (en) müssen erforderlich sein.",
