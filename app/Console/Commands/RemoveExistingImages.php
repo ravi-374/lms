@@ -38,14 +38,17 @@ class RemoveExistingImages extends Command
         $booksDirectory = public_path()."/uploads/".Book::IMAGE_PATH;
         $images = glob($booksDirectory."/*");
         $this->deleteImages($images);
+        $this->info('Books images deleted.');
 
         $membersDirectory = public_path()."/uploads/".Member::IMAGE_PATH;
         $images = glob($membersDirectory."/*");
         $this->deleteImages($images);
+        $this->info('Members images deleted.');
 
         $usersDirectory = public_path()."/uploads/".User::IMAGE_PATH;
         $images = glob($usersDirectory."/*");
         $this->deleteImages($images);
+        $this->info('Users images deleted.');
 
         $imagesDirectory = public_path()."/uploads/".Setting::LOGO_PATH;
         $images = glob($imagesDirectory."/*");
@@ -55,6 +58,7 @@ class RemoveExistingImages extends Command
             }
         }, $images);
         $this->deleteImages(array_filter($images));
+        $this->info('Uploaded Logos and favicon images deleted.');
     }
 
     public function deleteImages($imagesArr)
