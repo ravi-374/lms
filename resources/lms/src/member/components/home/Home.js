@@ -39,13 +39,14 @@ const Home = (props) => {
     };
 
     const bookSliderOption = {
-        items : 6,
+        items: 6,
         nav: true,
         rewind: true,
         autoplay: true,
         margin: 10,
-        loop: true
-    }
+        loop: true,
+        responsive: false
+    };
 
     const renderFeaturedBooks = () => {
         return (
@@ -53,7 +54,11 @@ const Home = (props) => {
                 {books.map((item, i) => {
                     return (
                         <div className="item" key={i}>
-                                <img alt={item.image_path} src={item.image_path} />
+                            <div className="popular-book__item-box">
+                                <img alt={item.image_path}
+                                     src={item.image_path ? item.image_path : publicImagePath.BOOK_AVATAR}/>
+                                     <span className={'book-name'}>{item.name}</span>
+                            </div>
                         </div>
                     )
                 })}
