@@ -38,3 +38,5 @@ Route::get('docs', function () {
     return view('redoc.index');
 });
 
+
+Route::get('books', 'BookAPIController@index');
