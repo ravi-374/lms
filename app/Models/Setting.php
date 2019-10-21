@@ -40,6 +40,9 @@ class Setting extends Model
     const LIBRARY_NAME = 'library_name';
     const FAVICON_ICON = 'favicon_icon';
 
+    const DEFAULT_LOGO_NAME = 'logo-blue-black.png';
+    const DEFAULT_FAVICON_NAME = 'favicon.ico';
+
     const LOGO_PATH = 'images';
 
     public $table = 'settings';
