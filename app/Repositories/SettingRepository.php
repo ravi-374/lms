@@ -70,7 +70,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
         /** @var Setting $setting */
         $setting = Setting::where('key', Setting::LIBRARY_LOGO)->first();
 
-        if (! empty($setting->value)) {
+        if (! empty($setting->value) && $setting->value != Setting::DEFAULT_LOGO_NAME) {
             $setting->deleteImage(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$setting->value);
         }
 
@@ -92,7 +92,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
         /** @var Setting $setting */
         $setting = Setting::where('key', Setting::FAVICON_ICON)->first();
 
-        if (! empty($setting->value)) {
+        if (! empty($setting->value) && $setting->value != Setting::DEFAULT_FAVICON_NAME) {
             $setting->deleteImage(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$setting->value);
         }
 
