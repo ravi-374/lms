@@ -16,3 +16,16 @@ export const fetchBooks = () => async (dispatch) => {
             dispatch(setLoading(false));
         });
 };
+
+export const fetchFeaturedBooks = () => async (dispatch) => {
+    dispatch(setLoading(true));
+    await apiConfig.get(apiBaseURL.BOOK + '?is_featured=1')
+    .then((response) => {
+        dispatch({ type: bookActionType.FETCH_FEATURED_BOOKS, payload: response.data.data });
+        dispatch(setLoading(false));
+    })
+    .catch(({ response }) => {
+        dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        dispatch(setLoading(false));
+    });
+};

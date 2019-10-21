@@ -7,15 +7,20 @@ import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {appSettingsKey, Routes} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
+import {fetchFeaturedBooks} from "../../store/actions/bookAction";
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 const Home = (props) => {
-    const { appSetting, history } = props;
+    const { appSetting, books, history, fetchFeaturedBooks, isLoading } = props;
     const [search, setSearch] = useState(null);
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
     const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
 
     useEffect(() => {
+        fetchFeaturedBooks();
         const script = document.createElement("script");
         script.src = "js/home.js";
         script.async = true;
@@ -31,6 +36,45 @@ const Home = (props) => {
 
     const onChangeInput = (event) => {
         setSearch(event.target.value);
+    };
+
+    const renderFeaturedBooks = () => {
+        return (
+            <OwlCarousel items={6} className="owl-theme" loop margin={10} nav autoplay>
+                {books.map((item, i) => {
+                    return (
+                        <div className="item" key={i}>
+                            <div className="popular-book__item-box">
+                                <img alt={item.image_path} src={item.image_path} />
+                                {item.name}
+                            </div>
+                        </div>
+                    )
+                })}
+            </OwlCarousel>
+        );
+    };
+
+    const renderPopularSection = () => {
+        if (books.length < 0) {
+            return '';
+        }
+        return (
+            <section className="popular-book section-spacing--top section-spacing--bottom position-relative">
+                <div className="popular-book__bg"/>
+                <div className="container-fluid popular-book__container">
+                    <h3 className="text-center">Popular Books</h3>
+                    <p className="section-header-row-spacing text-center w-75 ml-auto mr-auto">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros
+                        elementum nulla
+                        sodales ullamcorper.
+                    </p>
+                    <div className="popular-book__book-item-slider-wrapper">
+                        {renderFeaturedBooks()}
+                    </div>
+                </div>
+            </section>
+        );
     };
 
     return (
@@ -66,16 +110,20 @@ const Home = (props) => {
                 <div className="position-absolute landing__slider">
                     <div className="landing__owl-slider owl-carousel owl-theme">
                         <div className="item">
-                            <img src="img/landing_slider-1.jpg" alt="slide one" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-1.jpg" alt="slide one"
+                                 className="img-fluid landing__slider-img"/>
                         </div>
                         <div className="item">
-                            <img src="img/landing_slider-2.jpg" alt="slide two" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-2.jpg" alt="slide two"
+                                 className="img-fluid landing__slider-img"/>
                         </div>
                         <div className="item">
-                            <img src="img/landing_slider-3.jpg" alt="slide three" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-3.jpg" alt="slide three"
+                                 className="img-fluid landing__slider-img"/>
                         </div>
                         <div className="item">
-                            <img src="img/landing_slider-4.jpg" alt="slide three" className="img-fluid landing__slider-img"/>
+                            <img src="img/landing_slider-4.jpg" alt="slide three"
+                                 className="img-fluid landing__slider-img"/>
                         </div>
                     </div>
                 </div>
@@ -92,7 +140,8 @@ const Home = (props) => {
             <section className="about-us section-spacing--top section-spacing--bottom">
                 <div className="container">
                     <h3 className="text-center">About Us</h3>
-                    <p className="text-center text-description w-75 mx-auto section-header-row-spacing">Lorem ipsum dolor sit amet, consectetur
+                    <p className="text-center text-description w-75 mx-auto section-header-row-spacing">Lorem ipsum
+                        dolor sit amet, consectetur
                         adipiscing elit. Ut gravida, quam
                         vitae est Sed non eros elementum nulla
                         sodales ullamcorper.</p>
@@ -101,42 +150,48 @@ const Home = (props) => {
                             <div className="about-us__box mb-4">
                                 <i className="fas fa-book"/>
                                 <h4 className="mt-4">Member Card</h4>
-                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros pellentesque</p>
+                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                    pellentesque</p>
                             </div>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                             <div className="about-us__box mb-4">
                                 <i className="fas fa-book"/>
                                 <h4 className="mt-4">High Quality Books</h4>
-                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros pellentesque</p>
+                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                    pellentesque</p>
                             </div>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                             <div className="about-us__box mb-4">
                                 <i className="fas fa-book"/>
                                 <h4 className="mt-4">Free All Books</h4>
-                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros pellentesque</p>
+                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                    pellentesque</p>
                             </div>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                             <div className="about-us__box mb-4">
                                 <i className="fas fa-book"/>
                                 <h4 className="mt-4">Up To Date Books</h4>
-                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros pellentesque</p>
+                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                    pellentesque</p>
                             </div>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                             <div className="about-us__box mb-4">
                                 <i className="fas fa-book"/>
                                 <h4 className="mt-4">High Quality Books</h4>
-                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros pellentesque</p>
+                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                    pellentesque</p>
                             </div>
                         </div>
                         <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                             <div className="about-us__box mb-4">
                                 <i className="fas fa-book"/>
                                 <h4 className="mt-4">Free All Books</h4>
-                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros pellentesque</p>
+                                <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                    pellentesque</p>
                             </div>
                         </div>
                     </div>
@@ -145,7 +200,8 @@ const Home = (props) => {
             <section className="category section-spacing--top section-spacing--bottom">
                 <div className="container">
                     <h3 className="text-center">Our Category</h3>
-                    <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">Lorem ipsum dolor sit amet, consectetur
+                    <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">Lorem
+                        ipsum dolor sit amet, consectetur
                         adipiscing elit. Ut gravida, quam
                         vitae est Sed non eros elementum nulla
                         sodales ullamcorper.</p>
@@ -197,53 +253,12 @@ const Home = (props) => {
                     </div>
                 </div>
             </section>
-            <section className="popular-book section-spacing--top section-spacing--bottom position-relative">
-                <div className="popular-book__bg"/>
-                <div className="container-fluid popular-book__container">
-                    <h3 className="text-center">Popular Books</h3>
-                    <p className="section-header-row-spacing text-center w-75 ml-auto mr-auto">Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit. Ut gravida, quam
-                        vitae est Sed non eros elementum nulla sodales ullamcorper.</p>
-                    <div className="popular-book__book-item-slider-wrapper">
-                        <div className="popular-book__book-item-slider owl-carousel owl-theme">
-                            <div className="item">
-                                <div className="popular-book__item-box">
-                                    Book 1
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="popular-book__item-box">
-                                    Book 2
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="popular-book__item-box">
-                                    Book 3
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="popular-book__item-box">
-                                    Book 4
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="popular-book__item-box">
-                                    Book 5
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="popular-book__item-box">
-                                    Book 6
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {renderPopularSection()}
             <section className="meet-out-staff section-spacing--top section-spacing--bottom">
                 <div className="container">
                     <h3 className="text-center">Meet Our Staff</h3>
-                    <p className="section-header-row-spacing text-description text-center w-75 ml-auto mr-auto">Lorem ipsum dolor sit amet, consectetur
+                    <p className="section-header-row-spacing text-description text-center w-75 ml-auto mr-auto">Lorem
+                        ipsum dolor sit amet, consectetur
                         adipiscing elit. Ut gravida, quam
                         vitae est Sed non eros elementum nulla sodales ullamcorper.</p>
                     <div className="row">
@@ -307,7 +322,8 @@ const Home = (props) => {
                 <div className="what-people-say__content section-spacing--top section-spacing--bottom">
                     <div className="container">
                         <h3 className="text-center">What People Say</h3>
-                        <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">Lorem ipsum dolor sit amet, consectetur
+                        <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">Lorem
+                            ipsum dolor sit amet, consectetur
                             adipiscing elit. Ut gravida, quam
                             vitae est Sed non eros elementum nulla
                             sodales ullamcorper.</p>
@@ -318,9 +334,11 @@ const Home = (props) => {
                                         <h6 className="text-uppercase">John doe</h6>
                                         <h6>student</h6>
                                         <p className="mt-3">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum eligendi error
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                            eligendi error
                                             ex
-                                            exercitationem expedita inventore laudantium maxime minus nisi odit perspiciatis
+                                            exercitationem expedita inventore laudantium maxime minus nisi odit
+                                            perspiciatis
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
@@ -335,9 +353,11 @@ const Home = (props) => {
                                         <h6 className="text-uppercase">John doe</h6>
                                         <h6>student</h6>
                                         <p className="mt-3">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum eligendi error
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                            eligendi error
                                             ex
-                                            exercitationem expedita inventore laudantium maxime minus nisi odit perspiciatis
+                                            exercitationem expedita inventore laudantium maxime minus nisi odit
+                                            perspiciatis
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
@@ -352,9 +372,11 @@ const Home = (props) => {
                                         <h6 className="text-uppercase">John doe</h6>
                                         <h6>student</h6>
                                         <p className="mt-3">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum eligendi error
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                            eligendi error
                                             ex
-                                            exercitationem expedita inventore laudantium maxime minus nisi odit perspiciatis
+                                            exercitationem expedita inventore laudantium maxime minus nisi odit
+                                            perspiciatis
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
@@ -369,9 +391,11 @@ const Home = (props) => {
                                         <h6 className="text-uppercase">John doe</h6>
                                         <h6>student</h6>
                                         <p className="mt-3">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum eligendi error
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                            eligendi error
                                             ex
-                                            exercitationem expedita inventore laudantium maxime minus nisi odit perspiciatis
+                                            exercitationem expedita inventore laudantium maxime minus nisi odit
+                                            perspiciatis
                                             praesentium,
                                             repellendus sint unde velit vero voluptates? </p>
                                         <div className="what-people-say__slider-avatar">
@@ -389,7 +413,8 @@ const Home = (props) => {
                     <div className="row">
                         <div className="col-12 col-md-3">
                             <a href="#"><img src={appLogo} alt="library" height="50"/></a>
-                            <p className="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros elementum nulla sodales ullamcorper.</p>
+                            <p className="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida,
+                                quam vitae est Sed non eros elementum nulla sodales ullamcorper.</p>
                             <div className="space-10"/>
                             <ul className="list-inline list-unstyled social-list">
                                 <li className="list-inline-item"><a href="#"><i className="fab fa-facebook-f"
@@ -441,12 +466,13 @@ const Home = (props) => {
 Home.propTypes = {
     appSetting: PropTypes.object,
     history: PropTypes.object,
+    fetchFeaturedBooks: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
-    const { appSetting } = state;
-    return { appSetting }
+    const { appSetting, books, isLoading } = state;
+    return { appSetting, books, isLoading }
 };
 
-export default connect(mapStateToProps, {})(Home);
+export default connect(mapStateToProps, { fetchFeaturedBooks })(Home);
 
