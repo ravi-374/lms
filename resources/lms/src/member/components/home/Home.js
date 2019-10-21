@@ -38,16 +38,22 @@ const Home = (props) => {
         setSearch(event.target.value);
     };
 
+    const bookSliderOption = {
+        items : 6,
+        nav: true,
+        rewind: true,
+        autoplay: true,
+        margin: 10,
+        loop: true
+    }
+
     const renderFeaturedBooks = () => {
         return (
-            <OwlCarousel items={6} className="owl-theme" loop margin={10} nav autoplay>
+            <OwlCarousel className="owl-theme" {...bookSliderOption}>
                 {books.map((item, i) => {
                     return (
                         <div className="item" key={i}>
-                            <div className="popular-book__item-box">
                                 <img alt={item.image_path} src={item.image_path} />
-                                {item.name}
-                            </div>
                         </div>
                     )
                 })}

@@ -380,16 +380,6 @@ popular book style
 */
 .popular-book {
     color: white;
-
-    &__item-box {
-        background-color: #545454;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        text-transform: uppercase;
-        height: 350px;
-    }
 }
 
 .popular-book__container {
