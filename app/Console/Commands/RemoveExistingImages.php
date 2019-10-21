@@ -49,7 +49,12 @@ class RemoveExistingImages extends Command
 
         $imagesDirectory = public_path()."/uploads/".Setting::LOGO_PATH;
         $images = glob($imagesDirectory."/*");
-        $this->deleteImages($images);
+        $images = array_map(function ($record) {
+            if (basename($record) != Setting::DEFAULT_FAVICON_NAME && basename($record) != Setting::DEFAULT_LOGO_NAME) {
+                return $record;
+            }
+        }, $images);
+        $this->deleteImages(array_filter($images));
     }
 
     public function deleteImages($imagesArr)
