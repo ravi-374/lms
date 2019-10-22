@@ -145,6 +145,43 @@ const Home = (props) => {
                         <p className="landing__text-block-desc text-description--landing">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae
                             est Sed non eros elementum nulla sodales ullamcorper. </p>
+                        <div className="landing-search-box mt-5">
+                            <ul className="nav nav-tabs">
+                                <li className="nav-item">
+                                    <a className="nav-link active" data-toggle="tab" href="#book" role="tab"
+                                       aria-controls="book" aria-selected="true" id="book-tab">Book</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" data-toggle="tab" href="#author" role="tab"
+                                       aria-controls="author" aria-selected="false" id="author-tab">Author</a>
+                                </li>
+                            </ul>
+                            <div className="tab-content">
+                                <div id="book" className="tab-pane fade show active" role="tabpanel"
+                                     aria-labelledby="book-tab">
+                                    <div className="d-flex align-items-center">
+                                        <input type="text" placeholder="Enter book name"
+                                               onChange={(e) => onChangeInput(e)}/>
+                                        <span
+                                            className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
+                                            onClick={() => onSearch()}>
+                                        <i className="fas fa-search"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="author" className="tab-pane fade" role="tabpanel" aria-labelledby="author-tab">
+                                    <div className="d-flex align-items-center">
+                                        <input type="text" placeholder="Enter author name"
+                                               onChange={(e) => onChangeInput(e)}/>
+                                        <span
+                                            className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
+                                            onClick={() => onSearch('author')}>
+                                        <i className="fas fa-search"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
