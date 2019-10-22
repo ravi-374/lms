@@ -126,9 +126,10 @@ class IssuedBookRepositoryTest extends TestCase
      */
     public function test_unable_to_issue_book_when_issue_date_is_greater_than_today_date()
     {
+        $member = factory(Member::class)->create();
         $date = date('Y-m-d h:i:s', strtotime('+2 day'));
 
-        $this->issuedBookRepo->issueBook(['issued_on' => $date]);
+        $this->issuedBookRepo->issueBook(['issued_on' => $date, 'member_id' => $member->id]);
     }
 
     /**

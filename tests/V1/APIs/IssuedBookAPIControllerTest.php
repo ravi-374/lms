@@ -301,4 +301,28 @@ class IssuedBookAPIControllerTest extends TestCase
         $response = $response->original['data'];
         $this->assertTrue(count($response) > 0);
     }
+
+    /** @test */
+    public function test_member_not_allow_to_reserve_books_more_then_library_limit()
+    {
+        $member = factory(Member::class)->create();
+
+        for ($i = 0; $i <= 4; $i++) {
+            /** @var BookItem $bookItem */
+            $bookItem = factory(BookItem::class)->create();
+
+            $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+                'book_item_id' => $bookItem->id,
+                'member_id'    => $member->id,
+            ]);
+        }
+
+        $bookItem = factory(BookItem::class)->create();
+        $response = $this->postJson(route('api.b1.reserve-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $this->assertExceptionMessage($response, 'Your reserve books limit is exceed.');
+    }
 }

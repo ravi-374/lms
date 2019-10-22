@@ -39,6 +39,8 @@ class Setting extends Model
     const LIBRARY_LOGO = 'library_logo';
     const LIBRARY_NAME = 'library_name';
     const FAVICON_ICON = 'favicon_icon';
+    const RESERVE_BOOKS_LIMIT = 'reserve_books_limit';
+    const ISSUE_BOOKS_LIMIT = 'issue_books_limit';
 
     const DEFAULT_LOGO_NAME = 'logo-blue-black.png';
     const DEFAULT_FAVICON_NAME = 'favicon.ico';
