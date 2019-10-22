@@ -223,6 +223,8 @@ export const settingsKey = {
     LIBRARY_LOGO: 'library_logo',
     LIBRARY_FAVICON: 'favicon_icon',
     LANGUAGE: 'language',
+    ISSUE_BOOKS_LIMIT: 'issue_books_limit',
+    RESERVE_BOOKS_LIMIT: 'reserve_books_limit'
 };
 
 export const settingsDisplayName = {
@@ -230,6 +232,8 @@ export const settingsDisplayName = {
     APP_NAME: 'App Name',
     LIBRARY_LOGO: 'Library Logo',
     RETURN_DUE_DAYS: 'Return Due Days',
+    ISSUE_BOOKS_LIMIT: 'Max Issue Books Limit',
+    RESERVE_BOOKS_LIMIT: 'Max Reserve Books Limit'
 };
 
 export const bookItemActionType = {

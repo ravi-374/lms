@@ -17,5 +17,11 @@ export default formValues => {
     if (!formValues.language) {
         errors.language = getFormattedMessage('settings.select.language.validate.label');
     }
+    if (!formValues.reserve_books_limit) {
+        errors.language = getFormattedMessage('settings.input.max-reserve-books-limit.validate.label');
+    }
+    if (!formValues.issue_books_limit) {
+        errors.language = getFormattedMessage('settings.input.max-issue-books-limit.validate.label');
+    }
     return errors;
 };

@@ -50,13 +50,15 @@ const SettingsForm = (props) => {
     };
 
     const onSave = (formValues) => {
-        const { currency, issue_due_days, return_due_days, library_name, language } = formValues;
+        const { currency, issue_due_days, return_due_days, library_name, language, reserve_books_limit, issue_books_limit } = formValues;
         const settings = [
             prepareFormData(settingsKey.CURRENCY, currency.id, currency.name),
             prepareFormData(settingsKey.LIBRARY_NAME, library_name, settingsDisplayName.APP_NAME),
             prepareFormData(settingsKey.ISSUE_DUE_DAYS, issue_due_days, settingsDisplayName.ISSUE_DUE_DAYS),
             prepareFormData(settingsKey.RETURN_DUE_DAYS, return_due_days, settingsDisplayName.RETURN_DUE_DAYS),
             prepareFormData(settingsKey.LANGUAGE, language.id, language.name),
+            prepareFormData(settingsKey.RESERVE_BOOKS_LIMIT, reserve_books_limit, settingsDisplayName.RESERVE_BOOKS_LIMIT),
+            prepareFormData(settingsKey.ISSUE_BOOKS_LIMIT, issue_books_limit, settingsDisplayName.ISSUE_BOOKS_LIMIT)
         ];
         onSaveSettings(settings);
     };
@@ -160,6 +162,12 @@ const SettingsForm = (props) => {
                     <ImageCropper {...logoCropperOptions}/>
                     <ImagePicker {...logoPickerOptions}/>
                 </div>
+                <h6 className="settings__favicon-heading mt-3">{getFormattedMessage('image-picker.dropdown.favicon.label')}</h6>
+                <div>
+                    <Field name="file_name" type="hidden" component={InputGroup}/>
+                    <ImageCropper {...faviconCropperOptions}/>
+                    <ImagePicker {...faviconPickerOptions}/>
+                </div>
             </Col>
             <Col xs={10} className="settings__form">
                 <Row className="settings__form-columns">
@@ -182,6 +190,14 @@ const SettingsForm = (props) => {
                                required groupText="calendar" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
+                        <Field name='issue_books_limit' type="number" label="settings.input.max-issue-books-limit.label" min="0"
+                               required groupText="calendar" component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name='reserve_books_limit' type="number" label="settings.input.max-reserve-books-limit.label" min="0"
+                               required groupText="calendar" component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
                         <Field name='language' label="settings.select.language.label" required groupText="language"
                                options={bookLanguagesOptions} placeholder="settings.select.language.placeholder"
                                component={Select} isSearchable={true}/>
@@ -189,12 +205,6 @@ const SettingsForm = (props) => {
                 </Row>
             </Col>
             <Col xs={2} className="settings__favicon mt-2">
-                <h6 className="settings__favicon-heading">{getFormattedMessage('image-picker.dropdown.favicon.label')}</h6>
-                <div>
-                    <Field name="file_name" type="hidden" component={InputGroup}/>
-                    <ImageCropper {...faviconCropperOptions}/>
-                    <ImagePicker {...faviconPickerOptions}/>
-                </div>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={handleSubmit(onSave)} isHideCancel {...props}/>
