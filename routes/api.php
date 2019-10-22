@@ -40,3 +40,4 @@ Route::get('docs', function () {
 
 
 Route::get('books', 'BookAPIController@index');
+Route::get('total-books', 'BookAPIController@totalBooks');

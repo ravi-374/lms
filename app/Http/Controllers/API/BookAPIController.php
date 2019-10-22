@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
+use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -40,5 +41,15 @@ class BookAPIController extends AppBaseController
             $books->toArray(),
             'Books retrieved successfully.'
         );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function totalBooks()
+    {
+        $count = Book::count();
+
+        return $this->sendResponse($count, 'Books count retrieved successfully.');
     }
 }
