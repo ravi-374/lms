@@ -55,6 +55,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read mixed $expected_available_date
  * @method static Builder|IssuedBook lastIssuedBook()
  * @method static Builder|IssuedBook overDue()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook issued()
  */
 class IssuedBook extends Model
 {
@@ -129,6 +130,16 @@ class IssuedBook extends Model
     public function scopeReserve(Builder $query)
     {
         return $query->where('status', self::STATUS_RESERVED);
+    }
+
+    /**
+     * @param  Builder  $query
+     *
+     * @return Builder
+     */
+    public function scopeIssued(Builder $query)
+    {
+        return $query->where('status', self::STATUS_ISSUED);
     }
 
     /**

@@ -22,6 +22,8 @@ class CreateSettingsSeeder extends Seeder
         $settings[] = ['library_logo', 'logo-blue-black.png', 'Library Logo'];
         $settings[] = ['language', 'en', 'English'];
         $settings[] = ['favicon_icon', 'favicon.ico', 'Icon'];
+        $settings[] = ['reserve_books_limit', 5, 'Maximum reserve books limit'];
+        $settings[] = ['issue_books_limit', 5, 'Maximum issue books limit'];
 
         foreach ($settings as $setting) {
             Setting::create([
