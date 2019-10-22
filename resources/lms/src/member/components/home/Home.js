@@ -7,14 +7,15 @@ import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {appSettingsKey, Routes} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
-import {fetchFeaturedBooks} from "../../store/actions/bookAction";
+import {fetchBooksByNameOrAuthors, fetchFeaturedBooks} from "../../store/actions/bookAction";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 const Home = (props) => {
-    const { appSetting, books, history, fetchFeaturedBooks, isLoading } = props;
+    const {appSetting, books, searchBooks, totalRecord, history, fetchFeaturedBooks, fetchBooksByNameOrAuthors, isLoading} = props;
     const [search, setSearch] = useState(null);
+    const [searchBy, setSearchBy] = useState('book');
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
     const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
@@ -27,17 +28,66 @@ const Home = (props) => {
         document.body.appendChild(script);
     }, []);
 
-    const onSearch = (searchBy = 'book') => {
-        history.push({
-            pathname: Routes.MEMBER_DEFAULT,
-            search: `?${searchBy}= ${search}`
-        })
+    /**
+     * Search books
+     * @param searchBy
+     * @param page
+     */
+    const onSearch = (searchBy = 'book', page = 0) => {
+        setSearchBy(searchBy);
+        let skip = 0;
+        if (page > 0) {
+            skip = 4 * page;
+        }
+        let param = '?search=' + search + '&limit=4&by_books=1&skip=' + skip;
+        if (searchBy === 'book') {
+            param = '?search=' + search + '&limit=4&by_authors=1&skip=' + skip;
+        }
+        fetchBooksByNameOrAuthors(param);
     };
 
+    /**
+     * Render a page
+     * @returns {*}
+     */
+    const renderPageNumber = () => {
+        const page = totalRecord / 4;
+        for (let i = 1; i <= page; i++) {
+            return (
+                <li className="page-item"><a className="page-link" href="#">{i}</a></li>
+            )
+        }
+    };
+    /**
+     *  render pagination
+     * @returns {string|*}
+     */
+    const renderPagination = () => {
+        if (totalRecord < 5) {
+            return '';
+        }
+
+        return (
+            <div className="row justify-content-center no-gutters">
+                <nav aria-label="Page navigation">
+                    <ul className="pagination mb-0 mt-3">
+                        <li className="page-item"><a className="page-link" href="#">Previous- {totalRecord}</a></li>
+                        {
+                            renderPageNumber()
+                        }
+                        <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        );
+    };
+
+    // set search value while search
     const onChangeInput = (event) => {
         setSearch(event.target.value);
     };
 
+    // featured books slider options
     const bookSliderOption = {
         items: 6,
         nav: true,
@@ -57,7 +107,7 @@ const Home = (props) => {
                             <div className="popular-book__item-box">
                                 <img alt={item.image_path}
                                      src={item.image_path ? item.image_path : publicImagePath.BOOK_AVATAR}/>
-                                     <span className={'book-name'}>{item.name}</span>
+                                <span className={'book-name'}>{item.name}</span>
                             </div>
                         </div>
                     )
@@ -67,7 +117,7 @@ const Home = (props) => {
     };
 
     const renderPopularSection = () => {
-        if (books.length < 0) {
+        if (books.length < 1) {
             return '';
         }
         return (
@@ -88,8 +138,56 @@ const Home = (props) => {
         );
     };
 
+    const renderBook = (book) => {
+        return (
+            <div className="card book-search-card">
+                <div className="row no-gutters">
+                    <div className="book-search-card__col-left">
+                        <img alt={book.image_path} src={book.image_path ? book.image_path : publicImagePath.BOOK_AVATAR}
+                             className="card-img"/>
+                    </div>
+                    <div className="book-search-card__col-right">
+                        <div className="card-body">
+                            <h5 className="card-title">{book.name}</h5>
+                            <p className="card-text text-muted">By Mako Sheffield</p>
+                            <p className="card-text">
+                                {book.description}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const renderSearchedBooks = () => {
+        if (searchBooks.length < 1) {
+            return '';
+        }
+        return (
+            <section className="book-search section-spacing--top section-spacing--bottom">
+                <div className="container">
+                    <h2 className="book-search__result-heading text-description text-center">Result for</h2>
+                    <h1 className="book-search__book-name text-center mb-5">"{search}"</h1>
+                    <div className="row book-search-card-row">
+                        {
+                            books.map((item, i) => {
+                                return (
+                                    <div className="col-12 col-xl-6 book-search-card-container" key={i}>
+                                        {renderBook(item)}
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    {renderPagination()}
+                </div>
+            </section>
+        );
+    };
+
     return (
-        <>
+        <React.Fragment>
             <div className="animated fadeIn">
                 <header className="header position-fixed">
                     <HeaderTitle title="Landing"/>
@@ -170,7 +268,8 @@ const Home = (props) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <div id="author" className="tab-pane fade" role="tabpanel" aria-labelledby="author-tab">
+                                    <div id="author" className="tab-pane fade" role="tabpanel"
+                                         aria-labelledby="author-tab">
                                         <div className="d-flex align-items-center">
                                             <input type="text" placeholder="Enter author name"
                                                    onChange={(e) => onChangeInput(e)}/>
@@ -186,113 +285,7 @@ const Home = (props) => {
                         </div>
                     </div>
                 </section>
-                <section className="book-search section-spacing--top section-spacing--bottom">
-                    <div className="container">
-                        <h2 className="book-search__result-heading text-description text-center">Result for</h2>
-                        <h1 className="book-search__book-name text-center mb-5">"Harry potter"</h1>
-                        <div className="row book-search-card-row">
-                            <div className="col-12 col-xl-6 book-search-card-container">
-                                <div className="card book-search-card" data-toggle="modal" data-target="#myModal">
-                                    <div className="row no-gutters">
-                                        <div className="book-search-card__col-left">
-                                            <img src="img/book-detail-placeholder.png" className="card-img"
-                                                 alt="book name" />
-                                        </div>
-                                        <div className="book-search-card__col-right">
-                                            <div className="card-body">
-                                                <h5 className="card-title">The Art Of The Surf</h5>
-                                                <p className="card-text text-muted">By Mako Sheffield</p>
-                                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur
-                                                    adipisicing elit. A
-                                                    adipisci alias autem beatae dolore dolores ducimus id iste nisi odio
-                                                    officiis</p>
-                                                <p className="card-text text-muted book-search-card__publisher">Published
-                                                    by : John Doe</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-xl-6 book-search-card-container">
-                                <div className="card book-search-card">
-                                    <div className="row no-gutters">
-                                        <div className="book-search-card__col-left">
-                                            <img src="img/book-detail-placeholder.png" className="card-img"
-                                                 alt="book name"/>
-                                        </div>
-                                        <div className="book-search-card__col-right">
-                                            <div className="card-body">
-                                                <h5 className="card-title">The Art Of The Surf</h5>
-                                                <p className="card-text text-muted">By Mako Sheffield</p>
-                                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur
-                                                    adipisicing elit. A
-                                                    adipisci alias autem beatae dolore dolores ducimus id iste nisi odio
-                                                    officiis</p>
-                                                <p className="card-text text-muted book-search-card__publisher">Published
-                                                    by : John Doe</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-xl-6 book-search-card-container">
-                                <div className="card book-search-card">
-                                    <div className="row no-gutters">
-                                        <div className="book-search-card__col-left">
-                                            <img src="img/book-detail-placeholder.png" className="card-img"
-                                                 alt="book name" />
-                                        </div>
-                                        <div className="book-search-card__col-right">
-                                            <div className="card-body">
-                                                <h5 className="card-title">The Art Of The Surf</h5>
-                                                <p className="card-text text-muted">By Mako Sheffield</p>
-                                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur
-                                                    adipisicing elit. A
-                                                    adipisci alias autem beatae dolore dolores ducimus id iste nisi odio
-                                                    officiis</p>
-                                                <p className="card-text text-muted book-search-card__publisher">Published
-                                                    by : John Doe</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-xl-6 book-search-card-container">
-                                <div className="card book-search-card">
-                                    <div className="row no-gutters">
-                                        <div className="book-search-card__col-left">
-                                            <img src="img/book-detail-placeholder.png" className="card-img"
-                                                 alt="book name" />
-                                        </div>
-                                        <div className="book-search-card__col-right">
-                                            <div className="card-body">
-                                                <h5 className="card-title">The Art Of The Surf</h5>
-                                                <p className="card-text text-muted">By Mako Sheffield</p>
-                                                <p className="card-text">Lorem ipsum dolor sit amet, consectetur
-                                                    adipisicing elit. A
-                                                    adipisci alias autem beatae dolore dolores ducimus id iste nisi odio
-                                                    officiis</p>
-                                                <p className="card-text text-muted book-search-card__publisher">Published
-                                                    by : John Doe</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row justify-content-center no-gutters">
-                            <nav aria-label="Page navigation">
-                                <ul className="pagination mb-0 mt-3">
-                                    <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                </div>
-                </section>
+                {renderSearchedBooks()}
                 <section className="about-us section-spacing--top section-spacing--bottom">
                     <div className="container">
                         <h3 className="text-center">About Us</h3>
@@ -490,7 +483,8 @@ const Home = (props) => {
                                             <h6 className="text-uppercase">John doe</h6>
                                             <h6>student</h6>
                                             <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
+                                                earum
                                                 eligendi error
                                                 ex
                                                 exercitationem expedita inventore laudantium maxime minus nisi odit
@@ -509,7 +503,8 @@ const Home = (props) => {
                                             <h6 className="text-uppercase">John doe</h6>
                                             <h6>student</h6>
                                             <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
+                                                earum
                                                 eligendi error
                                                 ex
                                                 exercitationem expedita inventore laudantium maxime minus nisi odit
@@ -528,7 +523,8 @@ const Home = (props) => {
                                             <h6 className="text-uppercase">John doe</h6>
                                             <h6>student</h6>
                                             <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
+                                                earum
                                                 eligendi error
                                                 ex
                                                 exercitationem expedita inventore laudantium maxime minus nisi odit
@@ -547,7 +543,8 @@ const Home = (props) => {
                                             <h6 className="text-uppercase">John doe</h6>
                                             <h6>student</h6>
                                             <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta earum
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
+                                                earum
                                                 eligendi error
                                                 ex
                                                 exercitationem expedita inventore laudantium maxime minus nisi odit
@@ -617,58 +614,55 @@ const Home = (props) => {
                 </footer>
             </div>
             <div className="modal book-detail-modal" id="myModal">
-                    <div className="modal-dialog modal-lg">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h4 className="modal-title">The Art Of The Surf</h4>
-                                <button type="button" className="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div className="modal-body">
-                                <div className="d-flex flex-column flex-lg-row">
-                                    <div className="book-detail-modal__media">
-                                        <img src="img/book-detail-placeholder.png" className="card-img" alt="book name"/>
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h4 className="modal-title">The Art Of The Surf</h4>
+                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="d-flex flex-column flex-lg-row">
+                                <div className="book-detail-modal__media">
+                                    <img src="img/book-detail-placeholder.png" className="card-img" alt="book name"/>
+                                </div>
+                                <div className="pl-0 pl-lg-5">
+                                    <div className="d-flex mb-2">
+                                        <div className="book-detail-modal__detail-title">Description</div>
+                                        <div className="text-description">Lorem ipsum dolor sit amet, consectetur
+                                            adipisicing elit. Aperiam beatae consectetur culpa enim ex id inventore
+                                            libero minima molestias mollitia necessitatibus, obcaecati odit omnis quo,
+                                            repellat sit totam vel veniam.
+                                        </div>
                                     </div>
-                                    <div className="pl-0 pl-lg-5">
-                                        <div className="d-flex mb-2">
-                                            <div className="book-detail-modal__detail-title">Description</div>
-                                            <div className="text-description">Lorem ipsum dolor sit amet, consectetur
-                                                adipisicing elit. Aperiam beatae consectetur culpa enim ex id inventore
-                                                libero minima molestias mollitia necessitatibus, obcaecati odit omnis quo,
-                                                repellat sit totam vel veniam.
-                                            </div>
-                                        </div>
-                                        <div className="d-flex mb-2">
-                                            <div className="book-detail-modal__detail-title">Author</div>
-                                            <div className="text-description">John Doe</div>
-                                        </div>
-                                        <div className="d-flex mb-2">
-                                            <div className="book-detail-modal__detail-title">Genres</div>
-                                            <div className="text-description">John Doe</div>
-                                        </div>
-                                        <div className="d-flex mb-2">
-                                            <div className="book-detail-modal__detail-title">Publisher</div>
-                                            <div className="text-description">John Doe</div>
-                                        </div>
+                                    <div className="d-flex mb-2">
+                                        <div className="book-detail-modal__detail-title">Author</div>
+                                        <div className="text-description">John Doe</div>
+                                    </div>
+                                    <div className="d-flex mb-2">
+                                        <div className="book-detail-modal__detail-title">Genres</div>
+                                        <div className="text-description">John Doe</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-        </>
+            </div>
+        </React.Fragment>
     );
 };
 
 Home.propTypes = {
     appSetting: PropTypes.object,
     history: PropTypes.object,
+    totalRecord: PropTypes.number,
     fetchFeaturedBooks: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
-    const { appSetting, books, isLoading } = state;
-    return { appSetting, books, isLoading }
+    const {appSetting, books, searchBooks, totalRecord, isLoading} = state;
+    return {appSetting, books, searchBooks, totalRecord, isLoading}
 };
 
-export default connect(mapStateToProps, { fetchFeaturedBooks })(Home);
+export default connect(mapStateToProps, {fetchFeaturedBooks, fetchBooksByNameOrAuthors})(Home);
 

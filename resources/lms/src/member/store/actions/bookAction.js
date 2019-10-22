@@ -5,6 +5,7 @@ import {setLoading} from '../../../store/action/progressBarAction';
 import {apiBaseURL} from "../../../constants";
 import axios from 'axios';
 import {environment} from "../../../environment";
+import {setTotalRecord} from "../../../admin/store/actions/totalRecordAction";
 
 export const fetchBooks = () => async (dispatch) => {
     dispatch(setLoading(true));
@@ -24,6 +25,20 @@ export const fetchFeaturedBooks = () => async (dispatch) => {
     await axios.get(environment.URL + '/api/' + apiBaseURL.BOOK + '?is_featured=1')
         .then((response) => {
             dispatch({ type: bookActionType.FETCH_FEATURED_BOOKS, payload: response.data.data });
+            dispatch(setLoading(false));
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+            dispatch(setLoading(false));
+        });
+};
+
+export const fetchBooksByNameOrAuthors = (param) => async (dispatch) => {
+    dispatch(setLoading(true));
+    await axios.get(environment.URL + '/api/' + apiBaseURL.BOOK + param)
+        .then((response) => {
+            dispatch({ type: bookActionType.SEARCH_BOOKS, payload: response.data.data });
+            dispatch(setTotalRecord(response.data.totalRecords));
             dispatch(setLoading(false));
         })
         .catch(({ response }) => {
