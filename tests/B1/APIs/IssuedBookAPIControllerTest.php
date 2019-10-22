@@ -686,4 +686,28 @@ class IssuedBookAPIControllerTest extends TestCase
         $this->assertCount(1, $issueBookRecords);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
+
+    /** @test */
+    public function test_member_not_allow_to_issue_books_more_then_library_limit()
+    {
+        $member = factory(Member::class)->create();
+
+        for ($i = 0; $i <= 4; $i++) {
+            /** @var BookItem $bookItem */
+            $bookItem = factory(BookItem::class)->create();
+
+            $this->postJson(route('api.b1.issue-book', $bookItem->id), [
+                'book_item_id' => $bookItem->id,
+                'member_id'    => $member->id,
+            ]);
+        }
+
+        $bookItem = factory(BookItem::class)->create();
+        $response = $this->postJson(route('api.b1.issue-book', $bookItem->id), [
+            'book_item_id' => $bookItem->id,
+            'member_id'    => $member->id,
+        ]);
+
+        $this->assertExceptionMessage($response, 'Your issued books limit is exceed.');
+    }
 }
