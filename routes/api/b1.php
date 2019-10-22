@@ -152,6 +152,12 @@ Route::group(['middleware' => 'user.auth'], function () {
     // Currencies
     Route::get('currencies', 'CommonAPIController@currencies')->name('currencies');
     Route::get('dashboard-details', 'DashboardAPIController@dashboardDetails')->name('dashboard-details');
+
+    Route::get('book-requests', 'BookRequestAPIController@index')
+        ->name('book-requests');
+
+    Route::put('book-requests/{book_request}/status/{status}', 'BookRequestAPIController@updateStatus')
+        ->name('book-requests.update-status');
 });
 
 /** Password Reset API's For User */

@@ -32,6 +32,16 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::get('countries', 'CountryAPIController@index')->name('countries.index');
 
     Route::get('authors', 'AuthorAPIController@index')->name('authors.index');
+
+    /** Book Requests */
+    Route::post('book-requests', 'BookRequestAPIController@store')
+        ->name('book_requests.store');
+    Route::put('book-requests/{book_request}', 'BookRequestAPIController@update')
+        ->name('book_requests.update');
+    Route::delete('book-requests/{book_request}', 'BookRequestAPIController@destroy')
+        ->name('book_requests.delete');
+    Route::get('book-requests', 'BookRequestAPIController@index')
+        ->name('book_requests.index');
 });
 
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');
