@@ -194,4 +194,23 @@ class Book extends Model
 
         return implode(',', $authors);
     }
+
+    /**
+     * @return string
+     */
+    public function getGenresNameAttribute()
+    {
+        $genres = $this->genres->pluck('name')->toArray();
+
+        return implode(',', $genres);
+    }
+
+    public function apiObj()
+    {
+        $result = $this->toArray();
+        $result['authors_name'] = $this->authors_name;
+        $result['genres_name'] = $this->genres_name;
+
+        return $result;
+    }
 }

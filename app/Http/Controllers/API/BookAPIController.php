@@ -37,8 +37,12 @@ class BookAPIController extends AppBaseController
             $request->get('limit')
         );
 
+        $books = $books->map(function (Book $record) {
+            return $record->apiObj();
+        });
+
         return $this->sendResponse(
-            $books->toArray(),
+            $books,
             'Books retrieved successfully.'
         );
     }
