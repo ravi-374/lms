@@ -224,6 +224,126 @@ landing style
 }
 
 /*
+*---------
+Book search page style
+----------
+*/
+
+.book-search {
+    background: #ffffff;
+
+    .page-link {
+        color: #000000;
+    }
+
+    &__result-heading {
+        font-size: 15px;
+    }
+
+    &__book-name {
+        font-size: 18px;
+    }
+
+    .book-search-card-container {
+        &:nth-child(2n+1) {
+            .book-search-card {
+                &:hover {
+                    box-shadow: 0 0 20px rgba(#5dd8d3, .5);
+                }
+            }
+        }
+
+        &:nth-child(2n+2) {
+            .book-search-card {
+                &:hover {
+                    box-shadow: 0 0 20px rgba(#9364D4, .5);
+                }
+            }
+        }
+    }
+
+    .book-search-card-row {
+        @media (max-width: 575px) {
+            flex-flow: column;
+        }
+    }
+
+    .book-search-card {
+        margin-bottom: 30px;
+        border: 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+        transition: .3s ease;
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-text {
+            font-size: 15px;
+        }
+
+        &__publisher {
+            &.card-text {
+                font-size: 13px;
+            }
+        }
+    }
+
+    .book-search-card__col-left {
+        width: 100%;
+        max-width: 153px;
+
+        @media (max-width: 575px) {
+            max-width: initial;
+            padding: 20px;
+
+            img {
+                width: initial;
+                display: block;
+                margin: auto;
+            }
+        }
+    }
+
+    .book-search-card__col-right {
+        max-width: calc(100% - 153px);
+        width: 100%;
+
+        @media (max-width: 575px) {
+            max-width: initial;
+        }
+    }
+}
+
+.book-detail-modal {
+    .modal-header .close {
+        color: #000000;
+    }
+
+    &__media {
+        min-width: 157px;
+
+        @media (max-width: 991px) {
+            margin-bottom: 24px;
+
+            img {
+                display: block;
+                margin: auto;
+            }
+        }
+
+        img {
+            width: initial;
+        }
+    }
+
+    &__detail-title {
+        min-width: 110px;
+    }
+}
+
+/*
 *------------
 about us style
 ------------*
