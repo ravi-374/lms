@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
+use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,15 +31,29 @@ class BookAPIController extends AppBaseController
     public function index(Request $request)
     {
         $input = $request->except(['skip', 'limit']);
-        $books = $this->bookRepository->all(
+        $books = $this->bookRepository->searchBooks(
             $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
+        $books = $books->map(function (Book $record) {
+            return $record->apiObj();
+        });
+
         return $this->sendResponse(
-            $books->toArray(),
+            $books,
             'Books retrieved successfully.'
         );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function totalBooks()
+    {
+        $count = Book::count();
+
+        return $this->sendResponse($count, 'Books count retrieved successfully.');
     }
 }

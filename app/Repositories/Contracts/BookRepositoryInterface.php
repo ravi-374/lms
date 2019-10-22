@@ -98,4 +98,14 @@ interface BookRepositoryInterface
      * @return array
      */
     public function booksCountFromGenres();
+
+    /**
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
+     *
+     * @return Book[]|Collection
+     */
+    public function searchBooks($search = [], $skip = null, $limit = null, $columns = ['*']);
 }
