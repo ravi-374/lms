@@ -533,4 +533,27 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
         return [$genres, $booksCount, $colors, $colorsWithDifferentOpacity];
     }
+
+    /**
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
+     *
+     * @return Book[]|Collection
+     */
+    public function searchBooks($search = [], $skip = null, $limit = null, $columns = ['*'])
+    {
+        $query = $this->allQuery($search, $skip, $limit)->with(['authors']);
+        if (! empty($search['by_authors'])) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+            $query->orWhereHas('authors', function (Builder $query) use ($keywords) {
+                Author::filterByName($query, $keywords);
+            });
+        }
+
+        $bookRecords = $query->get();
+
+        return $bookRecords;
+    }
 }
