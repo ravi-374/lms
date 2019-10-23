@@ -52,10 +52,25 @@ class BookRequestRepository extends BaseRepository implements BookRequestReposit
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit);
-        $query->orderByDesc('created_at');
+        $search['order_by'] = (isset($search['order_by'])) ? $search['order_by'] : 'created_at';
+        $search['direction'] = (isset($search['direction'])) ? $search['direction'] : 'desc';
 
-        return $query->get();
+        if ($search['order_by'] == 'request_count') {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
+        $query = $this->allQuery($search, $skip, $limit);
+        $records = $query->get();
+
+        if (! empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = 'request_count';
+
+            $records = $records->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        }
+
+        return $records;
     }
 
     /**
