@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateTagsSeeder::class);
         $this->call(CreatePlansSeeder::class);
         $this->call(CreateSettingsSeeder::class);
+        $this->call(CreateHomepageSettingsSeeder::class);
     }
 }

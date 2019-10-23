@@ -39,5 +39,9 @@ Route::get('docs', function () {
 });
 
 
+/** Search books */
 Route::get('books', 'BookAPIController@index');
 Route::get('total-books', 'BookAPIController@totalBooks');
+
+/** homepage settings */
+Route::get('homepage-settings', 'HomepageSettingAPIController@index');
