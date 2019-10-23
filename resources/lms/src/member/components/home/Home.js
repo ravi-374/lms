@@ -12,6 +12,8 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 
+const genres = ['Business', 'Science', 'Sports', 'Politics'];
+
 const Home = (props) => {
     const {appSetting, books, searchBooks, totalRecord, history, fetchFeaturedBooks, fetchBooksByNameOrAuthors, isLoading} = props;
     const [search, setSearch] = useState(null);
@@ -63,7 +65,7 @@ const Home = (props) => {
      * @returns {string|*}
      */
     const renderPagination = () => {
-        if (totalRecord < 5) {
+        if (!totalRecord || totalRecord < 5) {
             return '';
         }
 
@@ -71,7 +73,7 @@ const Home = (props) => {
             <div className="row justify-content-center no-gutters">
                 <nav aria-label="Page navigation">
                     <ul className="pagination mb-0 mt-3">
-                        <li className="page-item"><a className="page-link" href="#">Previous- {totalRecord}</a></li>
+                        <li className="page-item"><a className="page-link" href="#">Previous</a></li>
                         {
                             renderPageNumber()
                         }
@@ -98,6 +100,10 @@ const Home = (props) => {
         responsive: false
     };
 
+    /**
+     *  Render Featured Books
+     * @returns {*}
+     */
     const renderFeaturedBooks = () => {
         return (
             <OwlCarousel className="owl-theme" {...bookSliderOption}>
@@ -116,6 +122,47 @@ const Home = (props) => {
         );
     };
 
+    /**
+     *  Render a Genres
+     * @returns {*}
+     */
+    const renderGenres = () => {
+        return (
+            <section className="category section-spacing--top section-spacing--bottom">
+                <div className="container">
+                    <h3 className="text-center">Our Genres</h3>
+                    <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros
+                        elementum nulla sodales ullamcorper.
+                    </p>
+                    <div className="row">
+                        {
+                            genres.map((genre) => {
+                                return (
+                                    <div className="col-12 col-sm-6 col-lg-3 category__box-col">
+                                        <div className="category__box">
+                                            <div className="category__box-icon-wrapper position-relative">
+                                                <div className="category__box-icon position-absolute">
+                                                    <i className="fas fa-book"/>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div className="text-center category__box-title">{genre}</div>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                </div>
+            </section>
+        );
+    };
+
+    /**
+     *  Render Popular Books Section
+     * @returns {string|*}
+     */
     const renderPopularSection = () => {
         if (books.length < 1) {
             return '';
@@ -127,8 +174,7 @@ const Home = (props) => {
                     <h3 className="text-center">Popular Books</h3>
                     <p className="section-header-row-spacing text-center w-75 ml-auto mr-auto">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros
-                        elementum nulla
-                        sodales ullamcorper.
+                        elementum nulla sodales ullamcorper.
                     </p>
                     <div className="popular-book__book-item-slider-wrapper">
                         {renderFeaturedBooks()}
@@ -138,6 +184,11 @@ const Home = (props) => {
         );
     };
 
+    /**
+     * Render Book Card
+     * @param book
+     * @returns {*}
+     */
     const renderBook = (book) => {
         return (
             <div className="card book-search-card">
@@ -160,6 +211,10 @@ const Home = (props) => {
         );
     };
 
+    /**
+     *  Render searched books
+     * @returns {string|*}
+     */
     const renderSearchedBooks = () => {
         if (searchBooks.length < 1) {
             return '';
@@ -240,10 +295,12 @@ const Home = (props) => {
                     <div className="container">
                         <div className="landing__text-block">
                             <h1 className="landing__text-block-title">
-                                More Than 458,948 Book Over Here </h1>
+                                More Than 458,948 Book Over Here
+                            </h1>
                             <p className="landing__text-block-desc text-description--landing">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae
-                                est Sed non eros elementum nulla sodales ullamcorper. </p>
+                                est Sed non eros elementum nulla sodales ullamcorper.
+                            </p>
                             <div className="landing-search-box mt-5">
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
@@ -289,153 +346,85 @@ const Home = (props) => {
                 <section className="about-us section-spacing--top section-spacing--bottom">
                     <div className="container">
                         <h3 className="text-center">About Us</h3>
-                        <p className="text-center text-description w-75 mx-auto section-header-row-spacing">Lorem ipsum
-                            dolor sit amet, consectetur
-                            adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla
-                            sodales ullamcorper.</p>
+                        <p className="text-center text-description w-75 mx-auto section-header-row-spacing">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
+                            vitae est Sed non eros elementum nulla sodales ullamcorper.
+                        </p>
                         <div className="row">
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                                 <div className="about-us__box mb-4">
                                     <i className="fas fa-book"/>
                                     <h4 className="mt-4">Member Card</h4>
-                                    <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                        pellentesque
+                                    </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                                 <div className="about-us__box mb-4">
                                     <i className="fas fa-book"/>
                                     <h4 className="mt-4">High Quality Books</h4>
-                                    <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                        pellentesque
+                                    </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                                 <div className="about-us__box mb-4">
                                     <i className="fas fa-book"/>
                                     <h4 className="mt-4">Free All Books</h4>
-                                    <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                        pellentesque
+                                    </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                                 <div className="about-us__box mb-4">
                                     <i className="fas fa-book"/>
                                     <h4 className="mt-4">Up To Date Books</h4>
-                                    <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                        pellentesque
+                                    </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                                 <div className="about-us__box mb-4">
                                     <i className="fas fa-book"/>
                                     <h4 className="mt-4">High Quality Books</h4>
-                                    <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                        pellentesque
+                                    </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                                 <div className="about-us__box mb-4">
                                     <i className="fas fa-book"/>
                                     <h4 className="mt-4">Free All Books</h4>
-                                    <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque</p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
+                                        pellentesque
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                <section className="category section-spacing--top section-spacing--bottom">
-                    <div className="container">
-                        <h3 className="text-center">Our Category</h3>
-                        <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">Lorem
-                            ipsum dolor sit amet, consectetur
-                            adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla
-                            sodales ullamcorper.</p>
-                        <div className="row">
-                            <div className="col-12 col-sm-6 col-lg-3 category__box-col">
-                                <div className="category__box">
-                                    <div className="category__box-icon-wrapper position-relative">
-                                        <div className="category__box-icon position-absolute">
-                                            <i className="fas fa-book"/>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div className="text-center category__box-title">Music and Art</div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-3 category__box-col">
-                                <div className="category__box">
-                                    <div className="category__box-icon-wrapper position-relative">
-                                        <div className="category__box-icon position-absolute">
-                                            <i className="fas fa-book"/>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div className="text-center category__box-title">Music and Art</div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-3 category__box-col">
-                                <div className="category__box">
-                                    <div className="category__box-icon-wrapper position-relative">
-                                        <div className="category__box-icon position-absolute">
-                                            <i className="fas fa-book"/>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div className="text-center category__box-title">Music and Art</div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-3 category__box-col">
-                                <div className="category__box">
-                                    <div className="category__box-icon-wrapper position-relative">
-                                        <div className="category__box-icon position-absolute">
-                                            <i className="fas fa-book"/>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div className="text-center category__box-title">Music and Art</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {renderGenres()}
                 {renderPopularSection()}
                 <section className="meet-out-staff section-spacing--top section-spacing--bottom">
                     <div className="container">
                         <h3 className="text-center">Meet Our Staff</h3>
-                        <p className="section-header-row-spacing text-description text-center w-75 ml-auto mr-auto">Lorem
-                            ipsum dolor sit amet, consectetur
-                            adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla sodales ullamcorper.</p>
+                        <p className="section-header-row-spacing text-description text-center w-75 ml-auto mr-auto">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
+                            vitae est Sed non eros elementum nulla sodales ullamcorper.
+                        </p>
                         <div className="row">
                             <div className="meet-out-staff__slider owl-carousel owl-theme">
-                                <div className="item">
-                                    <div className="card meet-out-staff__card p-3">
-                                        <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
-                                        <hr/>
-                                        <h5 className="text-center">John Doe</h5>
-                                        <p className="text-center text-muted">Designer</p>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="card meet-out-staff__card p-3">
-                                        <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
-                                        <hr/>
-                                        <h5 className="text-center">John Doe</h5>
-                                        <p className="text-center text-muted">Designer</p>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="card meet-out-staff__card p-3">
-                                        <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
-                                        <hr/>
-                                        <h5 className="text-center">John Doe</h5>
-                                        <p className="text-center text-muted">Designer</p>
-                                    </div>
-                                </div>
                                 <div className="item">
                                     <div className="card meet-out-staff__card p-3">
                                         <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
@@ -471,11 +460,10 @@ const Home = (props) => {
                     <div className="what-people-say__content section-spacing--top section-spacing--bottom">
                         <div className="container">
                             <h3 className="text-center">What People Say</h3>
-                            <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">Lorem
-                                ipsum dolor sit amet, consectetur
-                                adipiscing elit. Ut gravida, quam
-                                vitae est Sed non eros elementum nulla
-                                sodales ullamcorper.</p>
+                            <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
+                                vitae est Sed non eros elementum nulla sodales ullamcorper.
+                            </p>
                             <div className="what-people-say__owl-slider owl-carousel owl-theme">
                                 <div className="item">
                                     <div className="what-people-say__slider-section text-center mx-auto">
@@ -484,13 +472,10 @@ const Home = (props) => {
                                             <h6>student</h6>
                                             <p className="mt-3">
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum
-                                                eligendi error
-                                                ex
-                                                exercitationem expedita inventore laudantium maxime minus nisi odit
-                                                perspiciatis
-                                                praesentium,
-                                                repellendus sint unde velit vero voluptates? </p>
+                                                earum eligendi error ex exercitationem expedita inventore laudantium
+                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
+                                                velit vero voluptates?
+                                            </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-1.png" alt=""/>
                                             </div>
@@ -504,13 +489,10 @@ const Home = (props) => {
                                             <h6>student</h6>
                                             <p className="mt-3">
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum
-                                                eligendi error
-                                                ex
-                                                exercitationem expedita inventore laudantium maxime minus nisi odit
-                                                perspiciatis
-                                                praesentium,
-                                                repellendus sint unde velit vero voluptates? </p>
+                                                earum eligendi error ex exercitationem expedita inventore laudantium
+                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
+                                                velit vero voluptates?
+                                            </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-2.png" alt=""/>
                                             </div>
@@ -524,13 +506,10 @@ const Home = (props) => {
                                             <h6>student</h6>
                                             <p className="mt-3">
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum
-                                                eligendi error
-                                                ex
-                                                exercitationem expedita inventore laudantium maxime minus nisi odit
-                                                perspiciatis
-                                                praesentium,
-                                                repellendus sint unde velit vero voluptates? </p>
+                                                earum eligendi error ex exercitationem expedita inventore laudantium
+                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
+                                                velit vero voluptates?
+                                            </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-3.png" alt=""/>
                                             </div>
@@ -544,13 +523,10 @@ const Home = (props) => {
                                             <h6>student</h6>
                                             <p className="mt-3">
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum
-                                                eligendi error
-                                                ex
-                                                exercitationem expedita inventore laudantium maxime minus nisi odit
-                                                perspiciatis
-                                                praesentium,
-                                                repellendus sint unde velit vero voluptates? </p>
+                                                earum eligendi error ex exercitationem expedita inventore laudantium
+                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
+                                                velit vero voluptates?
+                                            </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-4.png" alt=""/>
                                             </div>
@@ -566,16 +542,21 @@ const Home = (props) => {
                         <div className="row">
                             <div className="col-12 col-md-3">
                                 <a href="#"><img src={appLogo} alt="library" height="50"/></a>
-                                <p className="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida,
-                                    quam vitae est Sed non eros elementum nulla sodales ullamcorper.</p>
+                                <p className="mt-3">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida,
+                                    quam vitae est Sed non eros elementum nulla sodales ullamcorper.
+                                </p>
                                 <div className="space-10"/>
                                 <ul className="list-inline list-unstyled social-list">
-                                    <li className="list-inline-item"><a href="#"><i className="fab fa-facebook-f"
-                                                                                    aria-hidden="true"/> </a></li>
-                                    <li className="list-inline-item"><a href="#"><i className="fab fa-twitter"
-                                                                                    aria-hidden="true"/></a></li>
-                                    <li className="list-inline-item"><a href="#"><i className="fab fa-linkedin-in"
-                                                                                    aria-hidden="true"/></a></li>
+                                    <li className="list-inline-item">
+                                        <a href="#"><i className="fab fa-facebook-f" aria-hidden="true"/></a>
+                                    </li>
+                                    <li className="list-inline-item">
+                                        <a href="#"><i className="fab fa-twitter" aria-hidden="true"/></a>
+                                    </li>
+                                    <li className="list-inline-item">
+                                        <a href="#"><i className="fab fa-linkedin-in" aria-hidden="true"/></a>
+                                    </li>
                                     <li className="list-inline-item"><a href="#"><i className="fab fa-github"/></a></li>
                                 </ul>
                                 <ul className="list-inline tip yellow">
