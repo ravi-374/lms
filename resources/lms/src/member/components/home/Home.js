@@ -123,7 +123,7 @@ const Home = (props) => {
     };
 
     /**
-     *  Render a Genres
+     * Render a Genres
      * @returns {*}
      */
     const renderGenres = () => {
@@ -160,7 +160,7 @@ const Home = (props) => {
     };
 
     /**
-     *  Render Popular Books Section
+     * Render Popular Books Section
      * @returns {string|*}
      */
     const renderPopularSection = () => {
@@ -212,13 +212,24 @@ const Home = (props) => {
     };
 
     /**
-     *  Render searched books
+     * Render searched books
      * @returns {string|*}
      */
     const renderSearchedBooks = () => {
-        if (searchBooks.length < 1) {
+        if (search === '' || searchBooks.length < 1) {
             return '';
         }
+
+        if (search !== '' || searchBooks.length < 1) {
+            return (
+                <section className="book-search section-spacing--top section-spacing--bottom">
+                    <div className="container">
+                        No Books Found.
+                    </div>
+                </section>
+            );
+        }
+
         return (
             <section className="book-search section-spacing--top section-spacing--bottom">
                 <div className="container">
@@ -226,7 +237,7 @@ const Home = (props) => {
                     <h1 className="book-search__book-name text-center mb-5">"{search}"</h1>
                     <div className="row book-search-card-row">
                         {
-                            books.map((item, i) => {
+                            searchBooks.map((item, i) => {
                                 return (
                                     <div className="col-12 col-xl-6 book-search-card-container" key={i}>
                                         {renderBook(item)}
