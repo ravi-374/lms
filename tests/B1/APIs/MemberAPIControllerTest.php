@@ -2,6 +2,7 @@
 
 namespace Tests\B1\APIs;
 
+use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -214,5 +215,59 @@ class MemberAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Member image removed successfully.');
         $this->assertEmpty($member->fresh()->image);
+    }
+
+    /** @test */
+    public function test_return_false_when_member_exceed_issued_books_limit()
+    {
+        $member = factory(Member::class)->create();
+
+        $issuedBooks = factory(IssuedBook::class, 5)->create([
+            'member_id' => $member->id, 'status' => IssuedBook::STATUS_ISSUED,
+        ]);
+
+        $response = $this->getJson(route('api.b1.members.check-books-limit', [$member->id, IssuedBook::STATUS_ISSUED]));
+
+        $this->assertSuccessMessageResponse($response, 'Books count retrieved successfully.');
+        $this->assertFalse($response->original['data']);
+    }
+
+    /** @test */
+    public function test_return_false_when_member_exceed_reserved_books_limit()
+    {
+        $member = factory(Member::class)->create();
+
+        $issuedBooks = factory(IssuedBook::class, 5)->create([
+            'member_id' => $member->id, 'status' => IssuedBook::STATUS_RESERVED,
+        ]);
+
+        $response = $this->getJson(route('api.b1.members.check-books-limit',
+            [$member->id, IssuedBook::STATUS_RESERVED]));
+
+        $this->assertSuccessMessageResponse($response, 'Books count retrieved successfully.');
+        $this->assertFalse($response->original['data']);
+    }
+
+    /** @test */
+    public function test_return_true_when_member_does_not_exceed_reserved_and_issue_books_limit()
+    {
+        $member = factory(Member::class)->create();
+
+        $reservedBooks = factory(IssuedBook::class, 2)->create([
+            'member_id' => $member->id, 'status' => IssuedBook::STATUS_RESERVED,
+        ]);
+        $issuedBooks = factory(IssuedBook::class, 2)->create([
+            'member_id' => $member->id, 'status' => IssuedBook::STATUS_ISSUED,
+        ]);
+
+        $response1 = $this->getJson(route('api.b1.members.check-books-limit', [
+            $member->id, IssuedBook::STATUS_RESERVED,
+        ]));
+        $response2 = $this->getJson(route('api.b1.members.check-books-limit', [
+            $member->id, IssuedBook::STATUS_ISSUED,
+        ]));
+
+        $this->assertTrue($response1->original['data']);
+        $this->assertTrue($response2->original['data']);
     }
 }

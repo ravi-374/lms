@@ -163,7 +163,8 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::resource('homepage-settings', 'HomepageSettingAPIController');
 
     /** Members issued/reserved books count */
-    Route::get('members/{member}/status/{status}', 'MemberAPIController@isAllowToReserveOrIssueBook');
+    Route::get('members/{member}/status/{status}', 'MemberAPIController@isAllowToReserveOrIssueBook')
+        ->name('members.check-books-limit');
 });
 
 /** Password Reset API's For User */
