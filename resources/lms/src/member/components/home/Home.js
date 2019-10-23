@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
@@ -13,18 +13,29 @@ import {toggleModal} from "../../../store/action/modalAction";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import {resetSearchBooks} from "../../store/actions/bookSearchAction";
+import {Button} from 'reactstrap';
+import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 
 const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
 const Home = (props) => {
-    const { appSetting, books, searchBooks, totalRecord, history, fetchFeaturedBooks, fetchBooksByNameOrAuthors, isLoading, toggleModal } = props;
-    const [search, setSearch] = useState(null);
+    let myRef = useRef();
+    const {appSetting, books, searchBooks, totalRecord, history, fetchFeaturedBooks, fetchBooksByNameOrAuthors, isLoading, toggleModal} = props;
+    const [search, setSearch] = useState('');
+    const [page, setPage] = useState(0);
     const [searchBy, setSearchBy] = useState('book');
+    const [book, setBook] = useState(null);
     const [isToggle, setToggle] = useState(false);
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
     const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
-
+    let about = undefined;
+    const modalOptions = {
+        toggleModal,
+        isToggle,
+        book
+    };
     useEffect(() => {
         fetchFeaturedBooks();
         const script = document.createElement("script");
@@ -33,9 +44,10 @@ const Home = (props) => {
         document.body.appendChild(script);
     }, []);
 
-    const openModal = () => {
+    const openModal = (book) => {
         setToggle(true);
         toggleModal();
+        setBook(book);
     };
 
     /**
@@ -45,15 +57,26 @@ const Home = (props) => {
      */
     const onSearch = (searchBy = 'book', page = 0) => {
         setSearchBy(searchBy);
-        let skip = 0;
-        if (page > 0) {
-            skip = 4 * page;
-        }
+        const skip = 4 * page;
         let param = '?search=' + search + '&limit=4&by_books=1&skip=' + skip;
         if (searchBy === 'book') {
             param = '?search=' + search + '&limit=4&by_authors=1&skip=' + skip;
         }
         fetchBooksByNameOrAuthors(param);
+    };
+
+    const onPrev = (e) => {
+        e.preventDefault();
+        const prevPage = page - 1;
+        setPage(prevPage);
+        onSearch(searchBy, prevPage);
+    };
+
+    const onNext = (e) => {
+        e.preventDefault();
+        const nextPage = page - 1;
+        setPage(nextPage);
+        onSearch(searchBy, nextPage);
     };
 
     /**
@@ -69,8 +92,15 @@ const Home = (props) => {
             <div className="row justify-content-center no-gutters">
                 <nav aria-label="Page navigation">
                     <ul className="pagination mb-0 mt-3">
-                        <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                        <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                        <li className="page-item">
+                            <Button disabled={page === 0} className="page-link" onClick={(e) => onPrev(e)}>Previous
+                            </Button>
+                        </li>
+                        <li className="page-item">
+                            <Button disabled={searchBooks.length < 4} className="page-link"
+                                    onClick={(e) => onNext(e)}>Next
+                            </Button>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -175,11 +205,6 @@ const Home = (props) => {
         );
     };
 
-    const modalOptions = {
-        toggleModal,
-        isToggle
-    };
-
     /**
      * Render Book Card
      * @param book
@@ -196,7 +221,7 @@ const Home = (props) => {
                     <div className="book-search-card__col-right">
                         <div className="card-body">
                             <h5 className="card-title">{book.name}</h5>
-                            <p className="card-text text-muted">By Mako Sheffield</p>
+                            <p className="card-text text-muted">By {book.authors_name}</p>
                             <p className="card-text">
                                 {book.description}
                             </p>
@@ -213,29 +238,29 @@ const Home = (props) => {
      */
     const renderSearchedBooks = () => {
         if (search === '' || searchBooks.length < 1) {
+            resetSearchBooks();
             return '';
         }
 
-        if (search !== '' && searchBooks.length < 1) {
-            return (
-                <section className="book-search section-spacing--top section-spacing--bottom">
-                    <div className="container">
-                        No Books Found.
-                    </div>
-                </section>
-            );
-        }
+        setTimeout(() => {
+            if (about) {
+                about.scrollIntoView({behavior: "smooth"});
+            }
+        }, 400);
 
         return (
-            <section className="book-search section-spacing--top section-spacing--bottom">
+            <section className="book-search section-spacing--top section-spacing--bottom" ref={(el) => {
+                about = el;
+            }}>
                 <div className="container">
                     <h2 className="book-search__result-heading text-description text-center">Result for</h2>
                     <h1 className="book-search__book-name text-center mb-5">"{search}"</h1>
-                    <div className="row book-search-card-row" onClick={() => openModal()}>
+                    <div className="row book-search-card-row">
                         {
                             searchBooks.map((item, i) => {
                                 return (
-                                    <div className="col-12 col-xl-6 book-search-card-container" key={i}>
+                                    <div className="col-12 col-xl-6 book-search-card-container"
+                                         onClick={() => openModal(item)} key={i}>
                                         {renderBook(item)}
                                     </div>
                                 )
@@ -250,6 +275,7 @@ const Home = (props) => {
 
     return (
         <React.Fragment>
+            <ProgressBar/>
             <div className="animated fadeIn">
                 <header className="header position-fixed">
                     <HeaderTitle title="Landing"/>
@@ -414,42 +440,6 @@ const Home = (props) => {
                 </section>
                 {renderGenres()}
                 {renderPopularSection()}
-                <section className="meet-out-staff section-spacing--top section-spacing--bottom">
-                    <div className="container">
-                        <h3 className="text-center">Meet Our Staff</h3>
-                        <p className="section-header-row-spacing text-description text-center w-75 ml-auto mr-auto">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
-                        <div className="row">
-                            <div className="meet-out-staff__slider owl-carousel owl-theme">
-                                <div className="item">
-                                    <div className="card meet-out-staff__card p-3">
-                                        <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
-                                        <hr/>
-                                        <h5 className="text-center">John Doe</h5>
-                                        <p className="text-center text-muted">Designer</p>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="card meet-out-staff__card p-3">
-                                        <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
-                                        <hr/>
-                                        <h5 className="text-center">John Doe</h5>
-                                        <p className="text-center text-muted">Designer</p>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="card meet-out-staff__card p-3">
-                                        <img src="img/staff/staff-member-place-holder.jpg" alt=""/>
-                                        <hr/>
-                                        <h5 className="text-center">John Doe</h5>
-                                        <p className="text-center text-muted">Designer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
                 <section className="what-people-say position-relative">
                     <div className="what-people-say__bg position-absolute">
                         <img src="img/user/user-slider-bg.jpg" alt="what people say" className="img-fluid"/>
@@ -592,19 +582,23 @@ const Home = (props) => {
 
 Home.propTypes = {
     appSetting: PropTypes.object,
-    books: PropTypes.object,
-    searchBooks: PropTypes.object,
+    books: PropTypes.array,
+    searchBooks: PropTypes.array,
     history: PropTypes.object,
     totalRecord: PropTypes.number,
-    isLoading: PropTypes.boolean,
     fetchFeaturedBooks: PropTypes.func,
     toggleModal: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
-    const { appSetting, books, searchBooks, totalRecord, isLoading } = state;
-    return { appSetting, books, searchBooks, totalRecord, isLoading }
+    const {appSetting, books, searchBooks, totalRecord, isLoading} = state;
+    return {appSetting, books, searchBooks, totalRecord, isLoading}
 };
 
-export default connect(mapStateToProps, { fetchFeaturedBooks, toggleModal, fetchBooksByNameOrAuthors })(Home);
+export default connect(mapStateToProps, {
+    fetchFeaturedBooks,
+    toggleModal,
+    fetchBooksByNameOrAuthors,
+    resetSearchBooks
+})(Home);
 
