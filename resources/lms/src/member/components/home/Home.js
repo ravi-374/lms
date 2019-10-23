@@ -38,10 +38,6 @@ const Home = (props) => {
     };
     useEffect(() => {
         fetchFeaturedBooks();
-        const script = document.createElement("script");
-        script.src = "js/home.js";
-        script.async = true;
-        document.body.appendChild(script);
     }, []);
 
     const openModal = (book) => {
@@ -121,6 +117,15 @@ const Home = (props) => {
         margin: 10,
         loop: true,
         responsive: false
+    };
+
+    // featured books slider options
+    const mainSliderOption = {
+        items: 1,
+        nav: true,
+        autoplay: true,
+        margin: 10,
+        loop: true,
     };
 
     /**
@@ -306,7 +311,7 @@ const Home = (props) => {
                 </header>
                 <section className="landing position-relative">
                     <div className="position-absolute landing__slider">
-                        <div className="landing__owl-slider owl-carousel owl-theme">
+                        <OwlCarousel className="owl-theme" {...mainSliderOption}>
                             <div className="item">
                                 <img src="img/landing_slider-1.jpg" alt="slide one"
                                      className="img-fluid landing__slider-img"/>
@@ -323,7 +328,7 @@ const Home = (props) => {
                                 <img src="img/landing_slider-4.jpg" alt="slide three"
                                      className="img-fluid landing__slider-img"/>
                             </div>
-                        </div>
+                        </OwlCarousel>
                     </div>
                     <div className="container">
                         <div className="landing__text-block">
