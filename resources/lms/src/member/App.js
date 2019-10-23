@@ -18,7 +18,6 @@ const Layout = lazy(() => import('./components/layout'));
 const Login = lazy(() => import('./components/auth/Login'));
 const ForgotPassword = lazy(() => import('./components/auth/ForgotPassword'));
 const ResetPassword = lazy(() => import('./components/auth/ResetPassword'));
-const Lending = lazy(() => import('./components/lending/Lending'));
 const Home = lazy(() => import('./components/home/Home'));
 
 const MemberApp = (props) => {
@@ -43,7 +42,6 @@ const MemberApp = (props) => {
                 <Switch>
                     {/*<Route exact={true} path={Routes.APP_HOME} name="Home" render={props => <Home {...props}/>}/>*/}
                     <Route path={Routes.MEMBER_HOME} name="home" render={props => <Home {...props}/>}/>
-                    <Route path={Routes.MEMBER_LENDING} name="Lending" render={props => <Lending {...props}/>}/>
                     <Route path={Routes.MEMBER_LOGIN} name="Login" render={props => <Login {...props}/>}/>
                     <Route path={Routes.MEMBER_FORGOT_PASSWORD} name="Forgot Password"
                            render={props => <ForgotPassword {...props}/>}/>
