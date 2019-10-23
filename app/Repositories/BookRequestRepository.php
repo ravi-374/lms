@@ -17,7 +17,11 @@ class BookRequestRepository extends BaseRepository implements BookRequestReposit
      * @var array
      */
     protected $fieldSearchable = [
-        'title',
+        'book_name',
+        'isbn',
+        'edition',
+        'format',
+        'member_id',
     ];
 
     /**

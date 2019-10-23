@@ -10,6 +10,7 @@ use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class BookRequestAPIController
@@ -57,7 +58,7 @@ class BookRequestAPIController extends AppBaseController
 
         $bookRequest = $this->bookRequestRepository->store($input);
 
-        return $this->sendResponse($bookRequest, 'Book requested successfully.');
+        return $this->sendResponse($bookRequest, 'Book requested created successfully.');
     }
 
     /**
@@ -68,7 +69,11 @@ class BookRequestAPIController extends AppBaseController
      */
     public function update(BookRequest $bookRequest, ApplyBookRequest $request)
     {
-        BookRequest::whereMemberId(Auth::id())->findOrFail($bookRequest->id);
+        $bookRequest = BookRequest::whereMemberId(Auth::id())->find($bookRequest->id);
+        if (empty($bookRequest)) {
+            throw new UnprocessableEntityHttpException('You can update only your book request.');
+        }
+
         $input = $request->all();
         $input['member_id'] = Auth::id();
 

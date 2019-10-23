@@ -154,7 +154,7 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::get('dashboard-details', 'DashboardAPIController@dashboardDetails')->name('dashboard-details');
 
     Route::get('book-requests', 'BookRequestAPIController@index')
-        ->name('book-requests');
+        ->name('book-requests.index');
 
     Route::put('book-requests/{book_request}/status/{status}', 'BookRequestAPIController@updateStatus')
         ->name('book-requests.update-status');
