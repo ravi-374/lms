@@ -158,6 +158,9 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     Route::put('book-requests/{book_request}/status/{status}', 'BookRequestAPIController@updateStatus')
         ->name('book-requests.update-status');
+
+    // HomeSettings
+    Route::resource('homepage-settings', 'HomepageSettingAPIController');
 });
 
 /** Password Reset API's For User */
