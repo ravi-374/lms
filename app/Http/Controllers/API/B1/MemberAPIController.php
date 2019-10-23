@@ -6,12 +6,14 @@ use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateMemberRequest;
 use App\Http\Requests\API\UpdateMemberRequest;
+use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class MemberController
@@ -163,5 +165,22 @@ class MemberAPIController extends AppBaseController
         $member = $request->user();
 
         return $this->sendResponse($member, 'Member details retrieved successfully.');
+    }
+
+    /**
+     * @param  Member  $member
+     * @param  int  $status
+     *
+     * @return JsonResponse
+     */
+    public function isAllowToReserveOrIssueBook(Member $member, $status)
+    {
+        if (! in_array($status, [IssuedBook::STATUS_ISSUED, IssuedBook::STATUS_RESERVED])) {
+            throw new UnprocessableEntityHttpException('Invalid status.');
+        }
+
+        $isAllow = $this->memberRepository->isAllowToReserveOrIssueBook($member->id, $status);
+
+        return $this->sendResponse($isAllow, 'Books count retrieved successfully.');
     }
 }
