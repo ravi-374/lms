@@ -14,10 +14,10 @@ class CreateHomepageSettingsSeeder extends Seeder
         $settings[] = ['github', '', 'Github link'];
         $settings[] = ['linkedin', '', 'Linkedin link'];
         $settings[] = ['twitter', '', 'Twitter link'];
-        $settings[] = ['contact_email', '', 'Contact email'];
-        $settings[] = ['contact_phone', '', 'Contact phone'];
-        $settings[] = ['website', '', 'Website'];
-        $settings[] = ['company_description', '', 'Company description'];
+        $settings[] = ['contact_email', 'contact@infyom.in', 'Contact email'];
+        $settings[] = ['contact_phone', 7096336561, 'Contact phone'];
+        $settings[] = ['website', 'www.infyom.com', 'Website'];
+        $settings[] = ['company_description', 'India\'s Leading Laravel Company.', 'Company description'];
 
 
         foreach ($settings as $setting) {
