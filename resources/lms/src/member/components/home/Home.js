@@ -49,18 +49,6 @@ const Home = (props) => {
     };
 
     /**
-     * Render a page
-     * @returns {*}
-     */
-    const renderPageNumber = () => {
-        const page = totalRecord / 4;
-        for (let i = 1; i <= page; i++) {
-            return (
-                <li className="page-item"><a className="page-link" href="#">{i}</a></li>
-            )
-        }
-    };
-    /**
      *  render pagination
      * @returns {string|*}
      */
@@ -74,9 +62,6 @@ const Home = (props) => {
                 <nav aria-label="Page navigation">
                     <ul className="pagination mb-0 mt-3">
                         <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                        {
-                            renderPageNumber()
-                        }
                         <li className="page-item"><a className="page-link" href="#">Next</a></li>
                     </ul>
                 </nav>
@@ -220,7 +205,7 @@ const Home = (props) => {
             return '';
         }
 
-        if (search !== '' || searchBooks.length < 1) {
+        if (search !== '' && searchBooks.length < 1) {
             return (
                 <section className="book-search section-spacing--top section-spacing--bottom">
                     <div className="container">
