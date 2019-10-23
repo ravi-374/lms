@@ -90,4 +90,14 @@ class BookRequestAPIController extends AppBaseController
 
         return $this->sendSuccess('Book requested deleted successfully.');
     }
+
+    /**
+     * @param  BookRequest  $bookRequest
+     *
+     * @return JsonResponse
+     */
+    public function show(BookRequest $bookRequest)
+    {
+        return $this->sendResponse($bookRequest, 'Book request retrieved successfully.');
+    }
 }

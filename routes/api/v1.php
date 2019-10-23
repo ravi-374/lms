@@ -40,6 +40,8 @@ Route::group(['middleware' => 'member.auth'], function () {
         ->name('book_requests.update');
     Route::delete('book-requests/{book_request}', 'BookRequestAPIController@destroy')
         ->name('book_requests.delete');
+    Route::get('book-requests/{book_request}', 'BookRequestAPIController@show')
+        ->name('book_requests.show');
     Route::get('book-requests', 'BookRequestAPIController@index')
         ->name('book_requests.index');
 });
