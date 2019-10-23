@@ -22,7 +22,10 @@ const mapStateToProps = state => {
 };
 
 GlobalModal.propTypes = {
-    title: PropTypes.object,
+    title: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string
+    ]),
     actions: PropTypes.element,
     content: PropTypes.oneOfType([
         PropTypes.element,

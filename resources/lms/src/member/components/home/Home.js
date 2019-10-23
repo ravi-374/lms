@@ -3,11 +3,13 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import './Home.scss';
+import HomeModal from './HomeModal';
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {appSettingsKey, Routes} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
 import {fetchBooksByNameOrAuthors, fetchFeaturedBooks} from "../../store/actions/bookAction";
+import {toggleModal} from "../../../store/action/modalAction";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -15,9 +17,10 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
 const Home = (props) => {
-    const {appSetting, books, searchBooks, totalRecord, history, fetchFeaturedBooks, fetchBooksByNameOrAuthors, isLoading} = props;
+    const { appSetting, books, searchBooks, totalRecord, history, fetchFeaturedBooks, fetchBooksByNameOrAuthors, isLoading, toggleModal } = props;
     const [search, setSearch] = useState(null);
     const [searchBy, setSearchBy] = useState('book');
+    const [isToggle, setToggle] = useState(false);
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
     const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
         publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
@@ -29,6 +32,11 @@ const Home = (props) => {
         script.async = true;
         document.body.appendChild(script);
     }, []);
+
+    const openModal = () => {
+        setToggle(true);
+        toggleModal();
+    };
 
     /**
      * Search books
@@ -133,13 +141,12 @@ const Home = (props) => {
                     <h3 className="text-center">Our Genres</h3>
                     <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros
-                        elementum nulla sodales ullamcorper.
-                    </p>
+                        elementum nulla sodales ullamcorper. </p>
                     <div className="row">
                         {
-                            genres.map((genre) => {
+                            genres.map((genre, index) => {
                                 return (
-                                    <div className="col-12 col-sm-6 col-lg-3 category__box-col">
+                                    <div className="col-12 col-sm-6 col-lg-3 category__box-col" key={index}>
                                         <div className="category__box">
                                             <div className="category__box-icon-wrapper position-relative">
                                                 <div className="category__box-icon position-absolute">
@@ -174,14 +181,18 @@ const Home = (props) => {
                     <h3 className="text-center">Popular Books</h3>
                     <p className="section-header-row-spacing text-center w-75 ml-auto mr-auto">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros
-                        elementum nulla sodales ullamcorper.
-                    </p>
+                        elementum nulla sodales ullamcorper. </p>
                     <div className="popular-book__book-item-slider-wrapper">
                         {renderFeaturedBooks()}
                     </div>
                 </div>
             </section>
         );
+    };
+
+    const modalOptions = {
+        toggleModal,
+        isToggle
     };
 
     /**
@@ -220,7 +231,7 @@ const Home = (props) => {
             return '';
         }
 
-        if (search !== '' || searchBooks.length < 1) {
+        if (search !== '' && searchBooks.length < 1) {
             return (
                 <section className="book-search section-spacing--top section-spacing--bottom">
                     <div className="container">
@@ -235,7 +246,7 @@ const Home = (props) => {
                 <div className="container">
                     <h2 className="book-search__result-heading text-description text-center">Result for</h2>
                     <h1 className="book-search__book-name text-center mb-5">"{search}"</h1>
-                    <div className="row book-search-card-row">
+                    <div className="row book-search-card-row" onClick={() => openModal()}>
                         {
                             searchBooks.map((item, i) => {
                                 return (
@@ -306,12 +317,10 @@ const Home = (props) => {
                     <div className="container">
                         <div className="landing__text-block">
                             <h1 className="landing__text-block-title">
-                                More Than 458,948 Book Over Here
-                            </h1>
+                                More Than 458,948 Book Over Here </h1>
                             <p className="landing__text-block-desc text-description--landing">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae
-                                est Sed non eros elementum nulla sodales ullamcorper.
-                            </p>
+                                est Sed non eros elementum nulla sodales ullamcorper. </p>
                             <div className="landing-search-box mt-5">
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
@@ -359,8 +368,7 @@ const Home = (props) => {
                         <h3 className="text-center">About Us</h3>
                         <p className="text-center text-description w-75 mx-auto section-header-row-spacing">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla sodales ullamcorper.
-                        </p>
+                            vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
                         <div className="row">
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
                                 <div className="about-us__box mb-4">
@@ -368,8 +376,7 @@ const Home = (props) => {
                                     <h4 className="mt-4">Member Card</h4>
                                     <p>
                                         Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque
-                                    </p>
+                                        pellentesque </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
@@ -378,8 +385,7 @@ const Home = (props) => {
                                     <h4 className="mt-4">High Quality Books</h4>
                                     <p>
                                         Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque
-                                    </p>
+                                        pellentesque </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
@@ -388,8 +394,7 @@ const Home = (props) => {
                                     <h4 className="mt-4">Free All Books</h4>
                                     <p>
                                         Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque
-                                    </p>
+                                        pellentesque </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
@@ -398,8 +403,7 @@ const Home = (props) => {
                                     <h4 className="mt-4">Up To Date Books</h4>
                                     <p>
                                         Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque
-                                    </p>
+                                        pellentesque </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
@@ -408,8 +412,7 @@ const Home = (props) => {
                                     <h4 className="mt-4">High Quality Books</h4>
                                     <p>
                                         Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque
-                                    </p>
+                                        pellentesque </p>
                                 </div>
                             </div>
                             <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
@@ -418,8 +421,7 @@ const Home = (props) => {
                                     <h4 className="mt-4">Free All Books</h4>
                                     <p>
                                         Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque
-                                    </p>
+                                        pellentesque </p>
                                 </div>
                             </div>
                         </div>
@@ -432,8 +434,7 @@ const Home = (props) => {
                         <h3 className="text-center">Meet Our Staff</h3>
                         <p className="section-header-row-spacing text-description text-center w-75 ml-auto mr-auto">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla sodales ullamcorper.
-                        </p>
+                            vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
                         <div className="row">
                             <div className="meet-out-staff__slider owl-carousel owl-theme">
                                 <div className="item">
@@ -473,8 +474,7 @@ const Home = (props) => {
                             <h3 className="text-center">What People Say</h3>
                             <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                                vitae est Sed non eros elementum nulla sodales ullamcorper.
-                            </p>
+                                vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
                             <div className="what-people-say__owl-slider owl-carousel owl-theme">
                                 <div className="item">
                                     <div className="what-people-say__slider-section text-center mx-auto">
@@ -485,8 +485,7 @@ const Home = (props) => {
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
                                                 earum eligendi error ex exercitationem expedita inventore laudantium
                                                 maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates?
-                                            </p>
+                                                velit vero voluptates? </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-1.png" alt=""/>
                                             </div>
@@ -502,8 +501,7 @@ const Home = (props) => {
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
                                                 earum eligendi error ex exercitationem expedita inventore laudantium
                                                 maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates?
-                                            </p>
+                                                velit vero voluptates? </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-2.png" alt=""/>
                                             </div>
@@ -519,8 +517,7 @@ const Home = (props) => {
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
                                                 earum eligendi error ex exercitationem expedita inventore laudantium
                                                 maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates?
-                                            </p>
+                                                velit vero voluptates? </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-3.png" alt=""/>
                                             </div>
@@ -536,8 +533,7 @@ const Home = (props) => {
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
                                                 earum eligendi error ex exercitationem expedita inventore laudantium
                                                 maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates?
-                                            </p>
+                                                velit vero voluptates? </p>
                                             <div className="what-people-say__slider-avatar">
                                                 <img src="img/user/avatar-4.png" alt=""/>
                                             </div>
@@ -555,8 +551,7 @@ const Home = (props) => {
                                 <a href="#"><img src={appLogo} alt="library" height="50"/></a>
                                 <p className="mt-3">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida,
-                                    quam vitae est Sed non eros elementum nulla sodales ullamcorper.
-                                </p>
+                                    quam vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
                                 <div className="space-10"/>
                                 <ul className="list-inline list-unstyled social-list">
                                     <li className="list-inline-item">
@@ -605,41 +600,7 @@ const Home = (props) => {
                     </div>
                 </footer>
             </div>
-            <div className="modal book-detail-modal" id="myModal">
-                <div className="modal-dialog modal-lg">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h4 className="modal-title">The Art Of The Surf</h4>
-                            <button type="button" className="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="d-flex flex-column flex-lg-row">
-                                <div className="book-detail-modal__media">
-                                    <img src="img/book-detail-placeholder.png" className="card-img" alt="book name"/>
-                                </div>
-                                <div className="pl-0 pl-lg-5">
-                                    <div className="d-flex mb-2">
-                                        <div className="book-detail-modal__detail-title">Description</div>
-                                        <div className="text-description">Lorem ipsum dolor sit amet, consectetur
-                                            adipisicing elit. Aperiam beatae consectetur culpa enim ex id inventore
-                                            libero minima molestias mollitia necessitatibus, obcaecati odit omnis quo,
-                                            repellat sit totam vel veniam.
-                                        </div>
-                                    </div>
-                                    <div className="d-flex mb-2">
-                                        <div className="book-detail-modal__detail-title">Author</div>
-                                        <div className="text-description">John Doe</div>
-                                    </div>
-                                    <div className="d-flex mb-2">
-                                        <div className="book-detail-modal__detail-title">Genres</div>
-                                        <div className="text-description">John Doe</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <HomeModal {...modalOptions}/>
         </React.Fragment>
     );
 };
@@ -649,12 +610,13 @@ Home.propTypes = {
     history: PropTypes.object,
     totalRecord: PropTypes.number,
     fetchFeaturedBooks: PropTypes.func,
+    toggleModal: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
-    const {appSetting, books, searchBooks, totalRecord, isLoading} = state;
-    return {appSetting, books, searchBooks, totalRecord, isLoading}
+    const { appSetting, books, searchBooks, totalRecord, isLoading } = state;
+    return { appSetting, books, searchBooks, totalRecord, isLoading }
 };
 
-export default connect(mapStateToProps, {fetchFeaturedBooks, fetchBooksByNameOrAuthors})(Home);
+export default connect(mapStateToProps, { fetchFeaturedBooks, toggleModal, fetchBooksByNameOrAuthors })(Home);
 
