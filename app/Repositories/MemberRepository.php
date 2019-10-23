@@ -4,7 +4,9 @@ namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
+use App\Models\IssuedBook;
 use App\Models\Member;
+use App\Models\Setting;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use Carbon\Carbon;
 use DB;
@@ -13,6 +15,7 @@ use Hash;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class MemberRepository
@@ -259,5 +262,32 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
         $members = prepareCountFromDate($startDate, $endDate, $records);
 
         return [$records->count(), $members];
+    }
+
+    /**
+     * @param  int  $memberId
+     * @param  int  $status
+     *
+     * @return bool
+     */
+    public function isAllowToReserveOrIssueBook($memberId, $status)
+    {
+        if (! in_array($status, [IssuedBook::STATUS_ISSUED, IssuedBook::STATUS_RESERVED])) {
+            throw new UnprocessableEntityHttpException('Invalid status.');
+        }
+
+        $query = IssuedBook::ofMember($memberId);
+        $query = ($status == IssuedBook::STATUS_ISSUED) ? $query->issued() : $query->reserve();
+        $booksLimit = ($status == IssuedBook::STATUS_ISSUED) ?
+            getSettingValueByKey(Setting::ISSUE_BOOKS_LIMIT) :
+            getSettingValueByKey(Setting::RESERVE_BOOKS_LIMIT);
+
+
+        $isAllow = true;
+        if ($booksLimit == $query->count()) {
+            $isAllow = false;
+        }
+
+        return $isAllow;
     }
 }

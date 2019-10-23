@@ -85,4 +85,12 @@ interface MemberRepositoryInterface
      * @return array
      */
     public function membersCount($today, $startDate = null, $endDate = null);
+
+    /**
+     * @param  int  $memberId
+     * @param  int  $status
+     *
+     * @return bool
+     */
+    public function isAllowToReserveOrIssueBook($memberId, $status);
 }

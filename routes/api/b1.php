@@ -161,6 +161,9 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     // HomeSettings
     Route::resource('homepage-settings', 'HomepageSettingAPIController');
+
+    /** Members issued/reserved books count */
+    Route::get('members/{member}/status/{status}', 'MemberAPIController@isAllowToReserveOrIssueBook');
 });
 
 /** Password Reset API's For User */
