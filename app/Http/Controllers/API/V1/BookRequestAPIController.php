@@ -58,7 +58,7 @@ class BookRequestAPIController extends AppBaseController
 
         $bookRequest = $this->bookRequestRepository->store($input);
 
-        return $this->sendResponse($bookRequest, 'Book requested created successfully.');
+        return $this->sendResponse($bookRequest->fresh(), 'Book requested created successfully.');
     }
 
     /**
@@ -79,7 +79,7 @@ class BookRequestAPIController extends AppBaseController
 
         $bookRequest = $this->bookRequestRepository->update($input, $bookRequest->id);
 
-        return $this->sendResponse($bookRequest, 'Book requested updated successfully.');
+        return $this->sendResponse($bookRequest->fresh(), 'Book requested updated successfully.');
     }
 
     /**
