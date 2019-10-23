@@ -646,8 +646,11 @@ const Home = (props) => {
 
 Home.propTypes = {
     appSetting: PropTypes.object,
+    books: PropTypes.object,
+    searchBooks: PropTypes.object,
     history: PropTypes.object,
     totalRecord: PropTypes.number,
+    isLoading: PropTypes.boolean,
     fetchFeaturedBooks: PropTypes.func,
 };
 
