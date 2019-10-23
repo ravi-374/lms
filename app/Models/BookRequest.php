@@ -37,8 +37,9 @@ class BookRequest extends Model
     const PENDING = 0;
     const APPROVED = 1;
     const AVAILABLE = 2;
+    const CANCELLED = 3;
 
-    const STATUS_ARR = [self::PENDING, self::APPROVED, self::AVAILABLE];
+    const STATUS_ARR = [self::PENDING, self::APPROVED, self::AVAILABLE, self::CANCELLED];
 
     public $table = 'book_requests';
 

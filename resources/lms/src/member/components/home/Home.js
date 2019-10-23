@@ -57,18 +57,6 @@ const Home = (props) => {
     };
 
     /**
-     * Render a page
-     * @returns {*}
-     */
-    const renderPageNumber = () => {
-        const page = totalRecord / 4;
-        for (let i = 1; i <= page; i++) {
-            return (
-                <li className="page-item"><a className="page-link" href="#">{i}</a></li>
-            )
-        }
-    };
-    /**
      *  render pagination
      * @returns {string|*}
      */
@@ -82,9 +70,6 @@ const Home = (props) => {
                 <nav aria-label="Page navigation">
                     <ul className="pagination mb-0 mt-3">
                         <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                        {
-                            renderPageNumber()
-                        }
                         <li className="page-item"><a className="page-link" href="#">Next</a></li>
                     </ul>
                 </nav>
@@ -607,8 +592,11 @@ const Home = (props) => {
 
 Home.propTypes = {
     appSetting: PropTypes.object,
+    books: PropTypes.object,
+    searchBooks: PropTypes.object,
     history: PropTypes.object,
     totalRecord: PropTypes.number,
+    isLoading: PropTypes.boolean,
     fetchFeaturedBooks: PropTypes.func,
     toggleModal: PropTypes.func
 };
