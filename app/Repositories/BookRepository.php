@@ -544,7 +544,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      */
     public function searchBooks($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit)->with(['authors']);
+        $query = Book::query();
         if (! empty($search['by_authors'])) {
             $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
             $query->whereHas('authors', function (Builder $query) use ($keywords) {
@@ -552,8 +552,22 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             });
         }
 
+        if (! empty($search['by_books'])) {
+            $query = filterByColumns($query, $search['search'], ['name', 'description']);
+        }
+
+        $count = $query->count();
+
+        if (! is_null($skip)) {
+            $query->skip($skip);
+        }
+
+        if (! is_null($limit)) {
+            $query->limit($limit);
+        }
+
         $bookRecords = $query->get();
 
-        return $bookRecords;
+        return [$bookRecords, $count];
     }
 }
