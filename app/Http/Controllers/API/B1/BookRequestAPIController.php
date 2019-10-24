@@ -60,6 +60,6 @@ class BookRequestAPIController extends AppBaseController
 
         $bookRequest->update(['status' => $status]);
 
-        return $this->sendSuccess('Book request status updated successfully.');
+        return $this->sendResponse($bookRequest->fresh(), 'Book request status updated successfully.');
     }
 }
