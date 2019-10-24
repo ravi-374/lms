@@ -144,6 +144,18 @@ Route::group(['middleware' => 'user.auth'], function () {
         // Upload library logo
         Route::post('upload-logo', 'SettingAPIController@uploadLogo')->name('upload-logo');
         Route::post('upload-favicon', 'SettingAPIController@uploadFaviconIcon')->name('upload-favicon');
+
+        /** Homepage settings */
+        Route::get('homepage-settings', 'HomepageSettingAPIController@index')->name('homepage-settings.index');
+        Route::put('homepage-settings', 'HomepageSettingAPIController@bulkUpdate')->name('homepage-settings.update');
+    });
+
+    Route::middleware('permission:manage_book_requests')->group(function () {
+        Route::get('book-requests', 'BookRequestAPIController@index')
+            ->name('book-requests.index');
+
+        Route::put('book-requests/{book_request}/status/{status}', 'BookRequestAPIController@updateStatus')
+            ->name('book-requests.update-status');
     });
 
     // Countries
@@ -152,15 +164,6 @@ Route::group(['middleware' => 'user.auth'], function () {
     // Currencies
     Route::get('currencies', 'CommonAPIController@currencies')->name('currencies');
     Route::get('dashboard-details', 'DashboardAPIController@dashboardDetails')->name('dashboard-details');
-
-    Route::get('book-requests', 'BookRequestAPIController@index')
-        ->name('book-requests.index');
-
-    Route::put('book-requests/{book_request}/status/{status}', 'BookRequestAPIController@updateStatus')
-        ->name('book-requests.update-status');
-
-    // HomeSettings
-    Route::resource('homepage-settings', 'HomepageSettingAPIController');
 
     /** Members issued/reserved books count */
     Route::get('members/{member}/status/{status}', 'MemberAPIController@isAllowToReserveOrIssueBook')

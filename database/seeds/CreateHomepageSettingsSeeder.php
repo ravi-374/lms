@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HomepageSetting;
 use Illuminate\Database\Seeder;
 
 /**
@@ -19,12 +20,12 @@ class CreateHomepageSettingsSeeder extends Seeder
         $settings[] = ['company_description', 'India\'s Leading Laravel Company.', 'Company description'];
 
 
-//        foreach ($settings as $setting) {
-//            HomepageSetting::create([
-//                'key'          => $setting[0],
-//                'value'        => $setting[1],
-//                'display_name' => $setting[2],
-//            ]);
-//        }
+        foreach ($settings as $setting) {
+            HomepageSetting::create([
+                'key'          => $setting[0],
+                'value'        => $setting[1],
+                'display_name' => $setting[2],
+            ]);
+        }
     }
 }
