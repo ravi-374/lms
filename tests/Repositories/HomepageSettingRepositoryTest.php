@@ -3,7 +3,7 @@
 namespace Tests\Repositories;
 
 use App\Models\HomepageSetting;
-use App\Repositories\Contracts\HomepageSettingRepositoryInterface;
+use App\Repositories\HomepageSettingRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -14,13 +14,13 @@ class HomepageSettingRepositoryTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @var HomepageSettingRepositoryInterface */
+    /** @var HomepageSettingRepository */
     protected $homepageSettingRepo;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->homepageSettingRepo = app(HomepageSettingRepositoryInterface::class);
+        $this->homepageSettingRepo = app(HomepageSettingRepository::class);
         $this->signInWithDefaultAdminUser();
     }
 
