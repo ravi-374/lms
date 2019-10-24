@@ -59,7 +59,7 @@
     <table class="account-verification__table">
         <tr>
             <td class="text-center">
-                <img class="logo" src="{{ url('images/'.$data['logo_url'])}}">
+                <img class="logo" src="{{ $data['logo_url'] }}">
             </td>
         </tr>
         <tr>
