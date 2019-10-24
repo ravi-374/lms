@@ -47,6 +47,7 @@ class AccountRepository implements AccountRepositoryInterface
     public function sendResetPasswordLinkMail($data)
     {
         try {
+            $data['logo_url'] = getLogoURL();
             Mail::send('auth.passwords.reset', ['data' => $data],
                 function (Message $message) use ($data) {
                     $message->subject('Password Reset Request Received');
