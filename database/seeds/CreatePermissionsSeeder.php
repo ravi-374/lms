@@ -85,6 +85,11 @@ class CreatePermissionsSeeder extends Seeder
             'display_name' => 'Can Manage Genres',
             'description'  => 'Manage Genres',
         ];
+        $permissions[] = [
+            'name'         => 'manage_book_requests',
+            'display_name' => 'Can Manage Book Requests',
+            'description'  => 'Manage Book Requests',
+        ];
 
         foreach ($permissions as $permission) {
             Permission::create($permission);
