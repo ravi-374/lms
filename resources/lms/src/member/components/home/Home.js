@@ -30,6 +30,7 @@ const Home = (props) => {
         searchBooks,
         totalRecords,
         totalBooks,
+        resetSearchBooks,
         fetchTotalBooks,
         fetchFeaturedBooks,
         fetchBooksByNameOrAuthors,
@@ -258,7 +259,6 @@ const Home = (props) => {
      */
     const renderSearchedBooks = () => {
         if (search === '' || searchBooks.length < 1) {
-            resetSearchBooks();
             return '';
         }
 
@@ -540,7 +540,8 @@ Home.propTypes = {
     totalRecords: PropTypes.number,
     totalBooks: PropTypes.number,
     fetchFeaturedBooks: PropTypes.func,
-    toggleModal: PropTypes.func
+    toggleModal: PropTypes.func,
+    resetSearchBooks: PropTypes.func
 };
 
 const mapStateToProps = (state) => {

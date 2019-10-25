@@ -19,7 +19,7 @@ export const findBooks = (params) => async (dispatch) => {
 };
 
 export const resetSearchBooks = () => (dispatch) => {
-    dispatch({ type: bookActionType.RESET_SEARCH_BOOKS, payload: [] });
+    dispatch({ type: bookActionType.RESET_SEARCH_BOOKS });
 };
 
 export const reserveBook = (bookItemId, index) => async (dispatch) => {
