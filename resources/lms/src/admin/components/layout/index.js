@@ -69,7 +69,6 @@ const renderAppHeader = (props, appName, appLogo, user) => {
         e.preventDefault();
         localStorage.removeItem('user');
         localStorage.removeItem(Tokens.ADMIN);
-        sessionStorage.setItem('prevAdminPrevUrl', window.location.href);
         props.history.push(Routes.MEMBER_HOME);
     };
     return (
