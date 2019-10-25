@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "图书成功退回。",
     "books-circulation.success.lost.message": "图书状态已成功设置为丢失。",
     "books-circulation.success.damage.message": "图书状态已成功设置为损坏。",
+    "books-circulation.issue.book-limit.message": "该成员超过发行书的限制。",
+    "books-circulation.reserve.book-limit.message": "该成员超出了储备书的限制。",
     "book-history.title": "书籍历史",
     "book-history.filter.available.label": "可得到",
     "book-history.filter.issued.label": "发行",

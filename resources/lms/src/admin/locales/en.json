@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "Book returned successfully.",
     "books-circulation.success.lost.message": "Book status set to lost successfully.",
     "books-circulation.success.damage.message": "Book status set to damaged successfully.",
+    "books-circulation.issue.book-limit.message": "This member exceed issue book limit.",
+    "books-circulation.reserve.book-limit.message": "This member exceed reserve book limit.",
     "book-history.title": "Book History",
     "book-history.filter.available.label": "Available",
     "book-history.filter.issued.label": "Issued",

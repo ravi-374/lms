@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "عاد الكتاب بنجاح.",
     "books-circulation.success.lost.message": "تم تعيين حالة دفتر المفقودة بنجاح.",
     "books-circulation.success.damage.message": "تم تعيين حالة الكتاب إلى تلف بنجاح.",
+    "books-circulation.issue.book-limit.message": "هذا العضو يتجاوز الحد المسموح به لدفتر الإصدار.",
+    "books-circulation.reserve.book-limit.message": "هذا العضو يتجاوز الحد الاحتياطي للكتاب.",
     "book-history.title": "كتاب التاريخ",
     "book-history.filter.available.label": "متاح",
     "book-history.filter.issued.label": "نشر",

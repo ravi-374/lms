@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "Kitap başarıyla geri döndü.",
     "books-circulation.success.lost.message": "Kitap durumu başarıyla kaybedildi.",
     "books-circulation.success.damage.message": "Kitap durumu başarıyla hasarlı olarak ayarlandı.",
+    "books-circulation.issue.book-limit.message": "Bu üye, sorunlu kitap limitini aşıyor.",
+    "books-circulation.reserve.book-limit.message": "Bu üye rezerv kitap limitini aşıyor.",
     "book-history.title": "Kitap Tarihi",
     "book-history.filter.available.label": "Mevcut",
     "book-history.filter.issued.label": "Veriliş",

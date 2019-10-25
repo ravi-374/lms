@@ -17,13 +17,16 @@ import {getFormattedMessage, getFormattedOptions, prepareFullNames} from "../../
 import {fetchBooks} from "../../store/actions/bookAction";
 import {fetchMembers} from "../../store/actions/memberAction";
 import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
+import {fetchAvailableBookLimit, clearAvailableBookLimit} from "../../store/actions/availableBookLimitAction";
 
 let bookId = null;
 let memberId = null;
+
 const BookCirculationForm = props => {
     const {
         initialValues, books, members, change, bookItems, fetchBooks,
-        fetchMembers, fetchAvailableBooks, onSaveBookCirculation, handleSubmit
+        fetchMembers, fetchAvailableBooks, onSaveBookCirculation, handleSubmit, fetchAvailableBookLimit,
+        clearAvailableBookLimit
     } = props;
     const [isDisabledItem, setDisabledItem] = useState(true);
     const [status, setStatus] = useState(null);
@@ -34,9 +37,11 @@ const BookCirculationForm = props => {
     const bookCirculationStatusOptions = getFormattedOptions(bookStatusOptions);
 
     useEffect(() => {
+        prepareInitialValues();
         fetchBooks();
         fetchMembers();
         prepareInitialValues();
+        clearAvailableBookLimit();
     }, []);
 
     const prepareInitialValues = () => {
@@ -44,6 +49,7 @@ const BookCirculationForm = props => {
         memberId = null;
         if (initialValues) {
             setStatus(initialValues.status.id);
+            memberId = initialValues.member.id;
             if (initialValues.reserve_date && initialValues.status.id === bookCirculationStatusConstant.BOOK_RESERVED) {
                 setSelectedDate(moment(initialValues.reserve_date).toDate());
                 props.change('reserve_date', initialValues.reserve_date);
@@ -98,22 +104,36 @@ const BookCirculationForm = props => {
         }
     };
 
+    const checkBookLimits = (status) => {
+        if (memberId && status) {
+            if (status === bookCirculationStatusConstant.BOOK_RESERVED ||
+                status === bookCirculationStatusConstant.BOOK_ISSUED) {
+                fetchAvailableBookLimit(memberId, status);
+            } else {
+                clearAvailableBookLimit();
+            }
+        }
+    };
+
     const onSelectBook = (option) => {
         props.change('book_item', null);
         bookId = option ? option.id : null;
         getBooks();
+        checkBookLimits(status);
     };
 
     const onSelectMember = (option) => {
         props.change('book_item', null);
         memberId = option ? option.id : null;
         getBooks();
+        checkBookLimits(status);
     };
 
     const onSelectBookStatus = (option) => {
         if (option) {
             setSelectedDate(moment().toDate());
             setStatus(option.id);
+            checkBookLimits(option.id);
         } else {
             setStatus(null);
         }
@@ -232,7 +252,6 @@ const BookCirculationForm = props => {
     );
 };
 
-
 BookCirculationForm.propTypes = {
     initialValues: PropTypes.object,
     books: PropTypes.array,
@@ -245,6 +264,8 @@ BookCirculationForm.propTypes = {
     fetchMembers: PropTypes.func,
     fetchAvailableBooks: PropTypes.func,
     toggleModal: PropTypes.func,
+    fetchAvailableBookLimit: PropTypes.func,
+    clearAvailableBookLimit:PropTypes.func,
 };
 
 const prepareBookItems = (books) => {
@@ -265,4 +286,7 @@ const bookCirculationForm = reduxForm({
     validate: bookCirculationValidate
 })(BookCirculationForm);
 
-export default connect(mapStateToProps, { fetchAvailableBooks, fetchBooks, fetchMembers })(bookCirculationForm);
+export default connect(mapStateToProps, {
+    fetchAvailableBooks, fetchBooks, fetchMembers,
+    fetchAvailableBookLimit, clearAvailableBookLimit,
+})(bookCirculationForm);

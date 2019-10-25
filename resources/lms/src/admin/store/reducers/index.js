@@ -33,6 +33,7 @@ import importBookReducer from './importBookReducer';
 import appSettingReducer from '../../../store/reducers/appSettingReducer';
 import authReducer from './authReducer';
 import dashBoardReducer from './dashBoardReducer';
+import availableBookLimitReducer from './availableBookLimitReducer';
 
 export default combineReducers({
     genres: genreReducer,
@@ -69,4 +70,5 @@ export default combineReducers({
     appSetting: appSettingReducer,
     auth: authReducer,
     dashBoard: dashBoardReducer,
+    bookLimit:availableBookLimitReducer
 });

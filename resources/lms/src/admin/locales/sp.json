@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "Libro devuelto con éxito.",
     "books-circulation.success.lost.message": "El estado del libro se estableció en perdido con éxito.",
     "books-circulation.success.damage.message": "Estado del libro establecido en dañado con éxito.",
+    "books-circulation.issue.book-limit.message": "Este miembro excede el límite del libro de problemas.",
+    "books-circulation.reserve.book-limit.message": "Este miembro excede el límite del libro de reserva.",
     "book-history.title": "Historia Del lLibro",
     "books-history.filter.available.label": "Disponible",
     "books-history.filter.issued.label": "Emitido",
