@@ -24,7 +24,17 @@ const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
 const Home = (props) => {
     let myRef = useRef();
-    const { appSetting, books, searchBooks, totalRecord, totalBooks, fetchTotalBooks, fetchFeaturedBooks, fetchBooksByNameOrAuthors, toggleModal } = props;
+    const {
+        appSetting,
+        books,
+        searchBooks,
+        totalRecords,
+        totalBooks,
+        fetchTotalBooks,
+        fetchFeaturedBooks,
+        fetchBooksByNameOrAuthors,
+        toggleModal
+    } = props;
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
     const [searchBy, setSearchBy] = useState('book');
@@ -74,7 +84,7 @@ const Home = (props) => {
 
     const onNext = (e) => {
         e.preventDefault();
-        const nextPage = page - 1;
+        const nextPage = page + 1;
         setPage(nextPage);
         onSearch(searchBy, nextPage);
     };
@@ -84,7 +94,7 @@ const Home = (props) => {
      * @returns {string|*}
      */
     const renderPagination = () => {
-        if (!totalRecord || totalRecord < 5) {
+        if (!totalRecords || totalRecords < 5) {
             return '';
         }
 
@@ -97,7 +107,8 @@ const Home = (props) => {
                             </Button>
                         </li>
                         <li className="page-item">
-                            <Button disabled={searchBooks.length < 4} className="page-link" onClick={(e) => onNext(e)}>Next
+                            <Button disabled={totalRecords <= page * 4 + 4} className="page-link"
+                                    onClick={(e) => onNext(e)}>Next
                             </Button>
                         </li>
                     </ul>
@@ -109,6 +120,7 @@ const Home = (props) => {
     // set search value while search
     const onChangeInput = (event) => {
         setSearch(event.target.value);
+        resetSearchBooks();
     };
 
     // featured books slider options
@@ -252,7 +264,7 @@ const Home = (props) => {
 
         setTimeout(() => {
             if (about) {
-                about.scrollIntoView({ behavior: "smooth" });
+                about.scrollIntoView({behavior: "smooth"});
             }
         }, 400);
 
@@ -281,7 +293,7 @@ const Home = (props) => {
         );
     };
 
-    const tabOptions = { onChangeInput, onSearch };
+    const tabOptions = {onChangeInput, onSearch};
     /**
      * Render Footer
      * @returns {*}
@@ -357,10 +369,10 @@ const Home = (props) => {
      */
     const renderWhatPeopleSays = () => {
         const peoples = [
-            { name: 'john dae', img: 'img/user/avatar-1.png' },
-            { name: 'john dae', img: 'img/user/avatar-2.png' },
-            { name: 'john dae', img: 'img/user/avatar-3.png' },
-            { name: 'john dae', img: 'img/user/avatar-4.png' },
+            {name: 'john dae', img: 'img/user/avatar-1.png'},
+            {name: 'john dae', img: 'img/user/avatar-2.png'},
+            {name: 'john dae', img: 'img/user/avatar-3.png'},
+            {name: 'john dae', img: 'img/user/avatar-4.png'},
         ];
         return (
             <section className="what-people-say position-relative">
@@ -525,15 +537,15 @@ Home.propTypes = {
     appSetting: PropTypes.object,
     books: PropTypes.array,
     searchBooks: PropTypes.array,
-    totalRecord: PropTypes.number,
+    totalRecords: PropTypes.number,
     totalBooks: PropTypes.number,
     fetchFeaturedBooks: PropTypes.func,
     toggleModal: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
-    const { appSetting, books, searchBooks, totalRecord, totalBooks, isLoading } = state;
-    return { appSetting, books, searchBooks, totalRecord, totalBooks, isLoading }
+    const {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading} = state;
+    return {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading}
 };
 
 export default connect(mapStateToProps, {

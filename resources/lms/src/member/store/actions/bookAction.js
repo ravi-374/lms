@@ -5,7 +5,7 @@ import {setLoading} from '../../../store/action/progressBarAction';
 import {apiBaseURL} from "../../../constants";
 import axios from 'axios';
 import {environment} from "../../../environment";
-import {setTotalRecord} from "../../../admin/store/actions/totalRecordAction";
+import {setTotalRecord} from "./totalRecordAction";
 
 export const fetchBooks = () => async (dispatch) => {
     dispatch(setLoading(true));
