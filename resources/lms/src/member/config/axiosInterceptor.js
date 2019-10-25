@@ -1,6 +1,6 @@
 import {errorMessage} from '../../appConstant';
 import {environment} from '../../environment';
-import {Routes, Tokens} from "../../constants";
+import {LocalStorageKey, Routes, Tokens} from "../../constants";
 
 export default {
     setupInterceptors: (axios, isToken = false, isFormData = false) => {
@@ -35,6 +35,7 @@ export default {
                 || error.response.data.message === errorMessage.MEMBER_OR_USER_DEACTIVATE) {
                 window.location.href = environment.URL + '/#' + Routes.MEMBER_HOME;
                 localStorage.removeItem(Tokens.MEMBER);
+                localStorage.removeItem(LocalStorageKey.MEMBER);
             }
             return Promise.reject({ ...error })
         };

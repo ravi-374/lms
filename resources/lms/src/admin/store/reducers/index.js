@@ -33,6 +33,7 @@ import importBookReducer from './importBookReducer';
 import appSettingReducer from '../../../store/reducers/appSettingReducer';
 import authReducer from './authReducer';
 import dashBoardReducer from './dashBoardReducer';
+import bookRequestReducer from './bookRequestReducer';
 import availableBookLimitReducer from './availableBookLimitReducer';
 
 export default combineReducers({
@@ -70,5 +71,6 @@ export default combineReducers({
     appSetting: appSettingReducer,
     adminAuth: authReducer,
     dashBoard: dashBoardReducer,
+    adminBookRequests: bookRequestReducer,
     bookLimit:availableBookLimitReducer
 });

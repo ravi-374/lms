@@ -6,12 +6,17 @@ export default {
         {
             name: getFormattedMessage("books.title"),
             url: '/app/books',
-            icon: 'fas fa-book',
+            icon: 'fa fa-book',
         },
         {
             name: getFormattedMessage("book-history.title"),
             url: '/app/book-history',
             icon: 'fas fa-book-reader',
-        }
+        },
+        {
+            name: getFormattedMessage("book-request.title"),
+            url: '/app/book-requests',
+            icon: 'fas fa-book',
+        },
     ]
 };

@@ -1,6 +1,6 @@
 import {errorMessage} from '../../appConstant';
 import {environment} from '../../environment';
-import {Routes, Tokens} from "../../constants";
+import {LocalStorageKey, Routes, Tokens} from "../../constants";
 
 export default {
     setupInterceptors: (axios, isToken = false, isFormData = false) => {
@@ -36,6 +36,7 @@ export default {
             ) {
                 window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
                 localStorage.removeItem(Tokens.ADMIN);
+                localStorage.removeItem(LocalStorageKey.USER);
             }
             return Promise.reject({...error})
         };

@@ -190,7 +190,8 @@ export const Permissions = {
     MANAGE_PLANS: 'manage_plans',
     MANAGE_TAGS: 'manage_tags',
     MANAGE_GENRES: 'manage_genres',
-    MANAGE_USERS: 'manage_users'
+    MANAGE_USERS: 'manage_users',
+    MANANGE_BOOK_REQUEST:'manage_book_requests'
 };
 
 export const memberBookHistoryActionType = {
@@ -330,6 +331,21 @@ export const chartLabelSelector = {
     LAST_MONTH: 'last_month',
     CUSTOM: 'custom',
 };
+
+export const bookRequestActionType = {
+    FETCH_ADMIN_BOOKS_REQUEST: 'FETCH_ADMIN_BOOKS_REQUEST',
+    FETCH_ADMIN_BOOK_REQUEST: 'FETCH_ADMIN_BOOK_REQUEST',
+    ADD_ADMIN_BOOK_REQUEST: 'ADD_ADMIN_BOOK_REQUEST',
+    EDIT_ADMIN_BOOK_REQUEST: 'EDIT_ADMIN_BOOK_REQUEST',
+    DELETE_ADMIN_BOOK_REQUEST: 'DELETE_ADMIN_BOOK_REQUEST',
+};
+
+export const bookRequestStatusOptions = [
+    { id: 0, name: 'book-request.filter.pending.label' },
+    { id: 1, name: 'book-request.filter.approved.label' },
+    { id: 2, name: 'book-request.filter.available.label' },
+    { id: 3, name: 'book-request.filter.cancel.label' }
+];
 
 export const availableBookLimitActionType = {
     FETCH_AVAILABLE_ISSUE_BOOK_LIMIT: 'FETCH_AVAILABLE_ISSUE_BOOK_LIMIT',
