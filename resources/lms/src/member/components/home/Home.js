@@ -543,4 +543,3 @@ export default connect(mapStateToProps, {
     resetSearchBooks,
     fetchTotalBooks
 })(Home);
-

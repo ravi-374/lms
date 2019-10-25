@@ -332,6 +332,10 @@ Book search page style
         max-width: calc(100% - 153px);
         width: 100%;
 
+        .card-body {
+            padding: 1.25rem 1.25rem 0 1.25rem;
+        }
+
         @media (max-width: 575px) {
             max-width: initial;
         }
