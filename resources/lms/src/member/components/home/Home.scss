@@ -1,3 +1,14 @@
+@import "../../../../../assets/css/poppins.css";
+
+.main-landing-page {
+    font-family: Poppins, sans-serif;
+}
+
+section {
+    z-index: 1;
+    position: relative;
+}
+
 .section-spacing--top {
     padding-top: 100px;
 }
@@ -179,6 +190,16 @@ landing style
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
+
+    .nav-link {
+        height: 56px;
+    }
+
+    .form__label {
+        vertical-align: initial;
+        position: relative;
+        top: 4px;
+    }
 }
 
 .landing-search-box .tab-pane.fade.active {
@@ -193,7 +214,7 @@ landing style
     padding: 15px;
 }
 
-.landing-search-box input {
+.landing-search-box .tab-content input {
     height: 40px !important;
     border: 1px solid #00c6ff;
     width: 100%;
@@ -381,7 +402,7 @@ about us style
     box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.01);
 }
 
-.about-us__box .fas {
+.about-us__box .fa {
     font-size: 43px;
 }
 
@@ -684,7 +705,8 @@ footer style
     position: -webkit-sticky;
     position: sticky;
     bottom: 0;
-    z-index: -1;
+    z-index: 0;
+    font-size: 17px;
 }
 
 .footer a {
@@ -699,4 +721,9 @@ footer style
 
 .card-img {
     height: 231px;
+}
+
+.book-form__filter-by {
+    display: flex;
+    align-items: baseline;
 }
