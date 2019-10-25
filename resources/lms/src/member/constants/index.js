@@ -88,3 +88,7 @@ export const bookRequestActionType = {
     EDIT_ADMIN_BOOK_REQUEST: 'EDIT_ADMIN_BOOK_REQUEST',
     DELETE_ADMIN_BOOK_REQUEST: 'DELETE_ADMIN_BOOK_REQUEST',
 };
+
+export const constants = {
+    SET_TOTAL_RECORD: 'SET_TOTAL_RECORD',
+};
