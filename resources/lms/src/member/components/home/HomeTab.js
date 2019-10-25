@@ -17,17 +17,25 @@ const HomeTab = (props) => {
     const [activeTab, setActiveTab] = useState('bookTab');
     const [isBookChecked, setIsBookChecked] = useState(true);
     const [isAuthorChecked, setIsAuthorChecked] = useState(false);
+    const [inputValue, setInputValue] = useState('');
 
     const onCheckedBook = () => {
         setActiveTab('bookTab');
         setIsBookChecked(!isBookChecked);
         setIsAuthorChecked(false);
+        setInputValue('');
     };
 
     const onCheckedAuthor = () => {
         setActiveTab('authorTab');
         setIsAuthorChecked(!isAuthorChecked);
         setIsBookChecked(false);
+        setInputValue('');
+    };
+
+    const onChangeInputData = (event) => {
+        onChangeInput(event);
+        setInputValue(event.target.value);
     };
 
     return (
@@ -53,7 +61,8 @@ const HomeTab = (props) => {
             <TabContent activeTab={activeTab}>
                 <TabPane tabId="bookTab">
                     <div className="d-flex align-items-center">
-                        <input type="text" placeholder="Book Name" onChange={(e) => onChangeInput(e)}/>
+                        <input type="text" placeholder="Book Name" value={inputValue}
+                               onChange={(e) => onChangeInputData(e)}/>
                         <span
                             className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
                             onClick={() => onSearch()}><i className="fa fa-search"/>
@@ -62,7 +71,8 @@ const HomeTab = (props) => {
                 </TabPane>
                 <TabPane tabId="authorTab">
                     <div className="d-flex align-items-center">
-                        <input type="text" placeholder="Author Name" onChange={(e) => onChangeInput(e)}/>
+                        <input type="text" placeholder="Author Name" value={inputValue}
+                               onChange={(e) => onChangeInputData(e)}/>
                         <span
                             className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
                             onClick={() => onSearch('author')}><i className="fa fa-search"/>
