@@ -5,13 +5,14 @@ namespace Tests\B1\APIs;
 use App\Models\BookRequest;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 /**
  * Class BookRequestAPIControllerTest
  */
 class BookRequestAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -33,6 +34,23 @@ class BookRequestAPIControllerTest extends TestCase
         $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take->original['data']);
         $this->assertCount(2, $skip->original['data']);
+    }
+
+    /** @test */
+    public function test_can_get_all_book_requests()
+    {
+        $this->mockRepo(self::$bookRequest);
+
+        /** @var BookRequest[] $bookRequests */
+        $bookRequests = factory(BookRequest::class, 5)->create();
+
+        $this->bookRequestRepository->expects('all')->andReturn($bookRequests);
+
+        $response = $this->getJson(route('api.b1.book-requests.index'));
+
+        $this->assertSuccessDataResponse(
+            $response, $bookRequests->toArray(), 'Requested books retrieved successfully.'
+        );
     }
 
     /** @test */
