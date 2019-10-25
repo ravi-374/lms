@@ -30,7 +30,7 @@ export const login = (user, history) => async (dispatch) => {
 };
 
 export const forgotPassword = (user) => async (dispatch) => {
-    await apiConfigWithRoot.post(apiBaseURL.FORGOT_PASSWORD, user)
+    await apiConfigWithRoot.post(apiBaseURL.MEMBER_FORGOT_PASSWORD, user)
         .then(() => {
             dispatch({ type: authActionType.FORGOT_PASSWORD, payload: true });
             dispatch(addToast({ text: getFormattedMessage('forgot-password.success.message') }));
@@ -41,7 +41,7 @@ export const forgotPassword = (user) => async (dispatch) => {
 };
 
 export const resetPassword = (user, history) => async (dispatch) => {
-    await apiConfigWithRoot.post(apiBaseURL.RESET_PASSWORD, user)
+    await apiConfigWithRoot.post(apiBaseURL.MEMBER_RESET_PASSWORD, user)
         .then(() => {
             dispatch({ type: authActionType.RESET_PASSWORD, payload: user });
             dispatch(addToast({ text: getFormattedMessage('reset-password.success.message') }));

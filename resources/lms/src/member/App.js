@@ -41,11 +41,11 @@ const MemberApp = (props) => {
             <React.Suspense fallback={<ProgressBar/>}>
                 <Switch>
                     {/*<Route exact={true} path={Routes.APP_HOME} name="Home" render={props => <Home {...props}/>}/>*/}
-                    <Route path={Routes.MEMBER_HOME} name="home" render={props => <Home {...props}/>}/>
-                    <Route path={Routes.MEMBER_LOGIN} name="Login" render={props => <Login {...props}/>}/>
-                    <Route path={Routes.MEMBER_FORGOT_PASSWORD} name="Forgot Password"
+                    <Route path={Routes.MEMBER_HOME} name="home" exact render={props => <Home {...props}/>}/>
+                    <Route path={Routes.MEMBER_LOGIN} name="Login" exact render={props => <Login {...props}/>}/>
+                    <Route path={Routes.MEMBER_FORGOT_PASSWORD} name="Forgot Password" exact
                            render={props => <ForgotPassword {...props}/>}/>
-                    <Route path={Routes.MEMBER_RESET_PASSWORD} name="Reset Password"
+                    <Route path={Routes.MEMBER_RESET_PASSWORD} name="Reset Password" exact
                            render={props => <ResetPassword {...props}/>}/>
                     <Route path="/app" render={props => <Layout {...props} {...routeProps}/>}/>
                     <Redirect from="*" to="/app"/>

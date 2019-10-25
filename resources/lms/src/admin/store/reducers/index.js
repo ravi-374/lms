@@ -68,7 +68,7 @@ export default combineReducers({
     profile: localStorageReducer,
     importBook: importBookReducer,
     appSetting: appSettingReducer,
-    auth: authReducer,
+    adminAuth: authReducer,
     dashBoard: dashBoardReducer,
     bookLimit:availableBookLimitReducer
 });

@@ -1,4 +1,4 @@
-import {authActionType} from '../../constants/index';
+import {authActionType} from '../../constants';
 
 export default (state = {}, action) => {
     switch (action.type) {
