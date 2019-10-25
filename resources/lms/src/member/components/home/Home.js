@@ -3,12 +3,14 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import './Home.scss';
+import HomeTab from './HomeTab';
 import HomeModal from './HomeModal';
 import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {appSettingsKey, Routes} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
 import {fetchBooksByNameOrAuthors, fetchFeaturedBooks} from "../../store/actions/bookAction";
+import {fetchTotalBooks} from "../../store/actions/tooalBookAction";
 import {toggleModal} from "../../../store/action/modalAction";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -16,12 +18,13 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import {resetSearchBooks} from "../../store/actions/bookSearchAction";
 import {Button} from 'reactstrap';
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
+import Truncate from "../../../shared/Truncate";
 
 const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
 const Home = (props) => {
     let myRef = useRef();
-    const {appSetting, books, searchBooks, totalRecord, history, fetchFeaturedBooks, fetchBooksByNameOrAuthors, isLoading, toggleModal} = props;
+    const { appSetting, books, searchBooks, totalRecord, totalBooks, fetchTotalBooks, fetchFeaturedBooks, fetchBooksByNameOrAuthors, toggleModal } = props;
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
     const [searchBy, setSearchBy] = useState('book');
@@ -37,6 +40,7 @@ const Home = (props) => {
         book
     };
     useEffect(() => {
+        fetchTotalBooks();
         fetchFeaturedBooks();
     }, []);
 
@@ -55,7 +59,7 @@ const Home = (props) => {
         setSearchBy(searchBy);
         const skip = 4 * page;
         let param = '?search=' + search + '&limit=4&by_books=1&skip=' + skip;
-        if (searchBy === 'book') {
+        if (searchBy === 'author') {
             param = '?search=' + search + '&limit=4&by_authors=1&skip=' + skip;
         }
         fetchBooksByNameOrAuthors(param);
@@ -93,8 +97,7 @@ const Home = (props) => {
                             </Button>
                         </li>
                         <li className="page-item">
-                            <Button disabled={searchBooks.length < 4} className="page-link"
-                                    onClick={(e) => onNext(e)}>Next
+                            <Button disabled={searchBooks.length < 4} className="page-link" onClick={(e) => onNext(e)}>Next
                             </Button>
                         </li>
                     </ul>
@@ -170,7 +173,7 @@ const Home = (props) => {
                                         <div className="category__box">
                                             <div className="category__box-icon-wrapper position-relative">
                                                 <div className="category__box-icon position-absolute">
-                                                    <i className="fas fa-book"/>
+                                                    <i className="fa fa-book"/>
                                                 </div>
                                             </div>
                                             <hr/>
@@ -228,7 +231,7 @@ const Home = (props) => {
                             <h5 className="card-title">{book.name}</h5>
                             <p className="card-text text-muted">By {book.authors_name}</p>
                             <p className="card-text">
-                                {book.description}
+                                <Truncate text={book.description} textLength={243}/>
                             </p>
                         </div>
                     </div>
@@ -249,7 +252,7 @@ const Home = (props) => {
 
         setTimeout(() => {
             if (about) {
-                about.scrollIntoView({behavior: "smooth"});
+                about.scrollIntoView({ behavior: "smooth" });
             }
         }, 400);
 
@@ -278,10 +281,172 @@ const Home = (props) => {
         );
     };
 
+    const tabOptions = { onChangeInput, onSearch };
+    /**
+     * Render Footer
+     * @returns {*}
+     */
+    const renderFooter = () => {
+        return (
+            <footer className="footer section-spacing--bottom section-spacing--top">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 col-md-3">
+                            <a href="#"><img src={appLogo} alt="library" height="50"/></a>
+                            <p className="mt-3">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida,
+                                quam vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
+                            <div className="space-10"/>
+                            <ul className="list-inline list-unstyled social-list">
+                                <li className="list-inline-item">
+                                    <a href="https://www.facebook.com/infyom" target="_blank"><i
+                                        className="fa fa-facebook" aria-hidden="true"/></a>
+                                </li>
+                                <li className="list-inline-item">
+                                    <a href="https://twitter.com/infyom" target="_blank"><i className="fa fa-twitter"
+                                                                                            aria-hidden="true"/></a>
+                                </li>
+                                <li className="list-inline-item">
+                                    <a href="https://in.linkedin.com/company/infyom-technologies" target="_blank"><i
+                                        className="fa fa-linkedin" aria-hidden="true"/></a>
+                                </li>
+                                <li className="list-inline-item"><a href="https://github.com/infyomlabs"
+                                                                    target="_blank"><i className="fa fa-github"/></a>
+                                </li>
+                            </ul>
+                            <ul className="list-inline tip yellow">
+                                <li><i className="icofont icofont-square"/></li>
+                                <li><i className="icofont icofont-square"/></li>
+                                <li><i className="icofont icofont-square"/></li>
+                            </ul>
+                        </div>
+                        <div className="col-12 col-md-3 ml-auto">
+                            <h4>Contact Us</h4>
+                            <table className="table borderless addr-dt">
+                                <tbody>
+                                <tr>
+                                    <td><i className="fa fa-map-marker"/></td>
+                                    <td>
+                                        <address className="mb-0">InfyOm Technologies</address>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i className="fa fa-envelope"/></td>
+                                    <td>contact@infyom.in</td>
+                                </tr>
+                                <tr>
+                                    <td><i className="fa fa-phone"/></td>
+                                    <td>+91 70963 36561</td>
+                                </tr>
+                                <tr>
+                                    <td><i className="fa fa-globe"/></td>
+                                    <td><a href="http://www.infyom.com/" target="_blank">www.infyom.com</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+    };
+
+    /**
+     *  Render what people says section
+     * @returns {*}
+     */
+    const renderWhatPeopleSays = () => {
+        const peoples = [
+            { name: 'john dae', img: 'img/user/avatar-1.png' },
+            { name: 'john dae', img: 'img/user/avatar-2.png' },
+            { name: 'john dae', img: 'img/user/avatar-3.png' },
+            { name: 'john dae', img: 'img/user/avatar-4.png' },
+        ];
+        return (
+            <section className="what-people-say position-relative">
+                <div className="what-people-say__bg position-absolute">
+                    <img src="img/user/user-slider-bg.jpg" alt="what people say" className="img-fluid"/>
+                </div>
+                <div className="what-people-say__content section-spacing--top section-spacing--bottom">
+                    <div className="container">
+                        <h3 className="text-center">What People Say</h3>
+                        <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
+                            vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
+                        <OwlCarousel className="what-people-say__owl-slider owl-theme" {...mainSliderOption}>
+                            {
+                                peoples.map((people, i) => {
+                                    return (
+                                        <div className="item" key={i}>
+                                            <div className="what-people-say__slider-section text-center mx-auto">
+                                                <div className="mt-3">
+                                                    <h6 className="text-uppercase">{people.name}</h6>
+                                                    <h6>student</h6>
+                                                    <p className="mt-3">
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum
+                                                        dicta earum eligendi error ex exercitationem expedita inventore
+                                                        laudantium maxime minus nisi odit perspiciatis praesentium,
+                                                        repellendus sint unde velit vero voluptates? </p>
+                                                    <div className="what-people-say__slider-avatar">
+                                                        <img src={people.img} alt=""/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            }
+                        </OwlCarousel>
+                    </div>
+                </div>
+            </section>
+        );
+    };
+
+    /**
+     *  Render About us Section
+     * @returns {*}
+     */
+    const renderAboutUs = () => {
+        const features = ['Member Card', 'High Quality Books', 'Free All Books', 'Up To Date Books', 'High QualityBooks', 'Free All Books'];
+        return (
+            <section className="about-us section-spacing--top section-spacing--bottom">
+                <div className="container">
+                    <h3 className="text-center">About Us</h3>
+                    <p className="text-center text-description w-75 mx-auto section-header-row-spacing">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
+                        vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
+                    <div className="row">
+                        {
+                            features.map((item, i) => {
+                                return (
+                                    <div className="col-12 col-sm-6 col-lg-4 about-us__box-col" key={i}>
+                                        <div className="about-us__box mb-4">
+                                            <i className="fa fa-book"/>
+                                            <h4 className="mt-4">{item}</h4>
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam
+                                                ultricies eros pellentesque </p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            </section>
+        );
+    };
+    const onToggleSidebar = () => {
+        const element = document.getElementById('navbarSupportedContent');
+        if (element) {
+            element.classList.toggle('show');
+        }
+    };
     return (
         <React.Fragment>
             <ProgressBar/>
-            <div className="animated fadeIn">
+            <div className="animated fadeIn main-landing-page">
                 <header className="header position-fixed">
                     <HeaderTitle title="Landing"/>
                     <div className="container">
@@ -292,9 +457,10 @@ const Home = (props) => {
                                 <span className="pl-3">{appName}</span>
                             </a>
                             <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <i className="fas fa-bars"/>
+                                    onClick={() => onToggleSidebar()} data-target="#navbarSupportedContent"
+                                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                <i className="fa fa-bars"/>
                             </button>
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav ml-auto text-uppercase">
@@ -313,19 +479,19 @@ const Home = (props) => {
                     <div className="position-absolute landing__slider">
                         <OwlCarousel className="owl-theme" {...mainSliderOption}>
                             <div className="item">
-                                <img src="img/landing_slider-1.jpg" alt="slide one"
+                                <img src="img/landing-slider/landing_slider-1.jpg" alt="slide one"
                                      className="img-fluid landing__slider-img"/>
                             </div>
                             <div className="item">
-                                <img src="img/landing_slider-2.jpg" alt="slide two"
+                                <img src="img/landing-slider/landing_slider-2.jpg" alt="slide two"
                                      className="img-fluid landing__slider-img"/>
                             </div>
                             <div className="item">
-                                <img src="img/landing_slider-3.jpg" alt="slide three"
+                                <img src="img/landing-slider/landing_slider-3.jpg" alt="slide three"
                                      className="img-fluid landing__slider-img"/>
                             </div>
                             <div className="item">
-                                <img src="img/landing_slider-4.jpg" alt="slide three"
+                                <img src="img/landing-slider/landing_slider-4.jpg" alt="slide three"
                                      className="img-fluid landing__slider-img"/>
                             </div>
                         </OwlCarousel>
@@ -333,252 +499,22 @@ const Home = (props) => {
                     <div className="container">
                         <div className="landing__text-block">
                             <h1 className="landing__text-block-title">
-                                More Than 458,948 Book Over Here </h1>
+                                More Than {totalBooks} Book Over Here </h1>
                             <p className="landing__text-block-desc text-description--landing">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae
                                 est Sed non eros elementum nulla sodales ullamcorper. </p>
                             <div className="landing-search-box mt-5">
-                                <ul className="nav nav-tabs">
-                                    <li className="nav-item">
-                                        <a className="nav-link active" data-toggle="tab" href="#book" role="tab"
-                                           aria-controls="book" aria-selected="true" id="book-tab">Book</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" data-toggle="tab" href="#author" role="tab"
-                                           aria-controls="author" aria-selected="false" id="author-tab">Author</a>
-                                    </li>
-                                </ul>
-                                <div className="tab-content">
-                                    <div id="book" className="tab-pane fade show active" role="tabpanel"
-                                         aria-labelledby="book-tab">
-                                        <div className="d-flex align-items-center">
-                                            <input type="text" placeholder="Enter book name"
-                                                   onChange={(e) => onChangeInput(e)}/>
-                                            <span
-                                                className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
-                                                onClick={() => onSearch()}>
-                                            <i className="fas fa-search"/>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div id="author" className="tab-pane fade" role="tabpanel"
-                                         aria-labelledby="author-tab">
-                                        <div className="d-flex align-items-center">
-                                            <input type="text" placeholder="Enter author name"
-                                                   onChange={(e) => onChangeInput(e)}/>
-                                            <span
-                                                className="landing-search-box__search-icon d-flex justify-content-center align-items-center"
-                                                onClick={() => onSearch('author')}>
-                                            <i className="fas fa-search"/>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <HomeTab {...tabOptions}/>
                             </div>
                         </div>
                     </div>
                 </section>
                 {renderSearchedBooks()}
-                <section className="about-us section-spacing--top section-spacing--bottom">
-                    <div className="container">
-                        <h3 className="text-center">About Us</h3>
-                        <p className="text-center text-description w-75 mx-auto section-header-row-spacing">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
-                        <div className="row">
-                            <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
-                                <div className="about-us__box mb-4">
-                                    <i className="fas fa-book"/>
-                                    <h4 className="mt-4">Member Card</h4>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque </p>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
-                                <div className="about-us__box mb-4">
-                                    <i className="fas fa-book"/>
-                                    <h4 className="mt-4">High Quality Books</h4>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque </p>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
-                                <div className="about-us__box mb-4">
-                                    <i className="fas fa-book"/>
-                                    <h4 className="mt-4">Free All Books</h4>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque </p>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
-                                <div className="about-us__box mb-4">
-                                    <i className="fas fa-book"/>
-                                    <h4 className="mt-4">Up To Date Books</h4>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque </p>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
-                                <div className="about-us__box mb-4">
-                                    <i className="fas fa-book"/>
-                                    <h4 className="mt-4">High Quality Books</h4>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque </p>
-                                </div>
-                            </div>
-                            <div className="col-12 col-sm-6 col-lg-4 about-us__box-col">
-                                <div className="about-us__box mb-4">
-                                    <i className="fas fa-book"/>
-                                    <h4 className="mt-4">Free All Books</h4>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam ultricies eros
-                                        pellentesque </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {renderAboutUs()}
                 {renderGenres()}
                 {renderPopularSection()}
-                <section className="what-people-say position-relative">
-                    <div className="what-people-say__bg position-absolute">
-                        <img src="img/user/user-slider-bg.jpg" alt="what people say" className="img-fluid"/>
-                    </div>
-                    <div className="what-people-say__content section-spacing--top section-spacing--bottom">
-                        <div className="container">
-                            <h3 className="text-center">What People Say</h3>
-                            <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                                vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
-                            <div className="what-people-say__owl-slider owl-carousel owl-theme">
-                                <div className="item">
-                                    <div className="what-people-say__slider-section text-center mx-auto">
-                                        <div className="mt-3">
-                                            <h6 className="text-uppercase">John doe</h6>
-                                            <h6>student</h6>
-                                            <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum eligendi error ex exercitationem expedita inventore laudantium
-                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates? </p>
-                                            <div className="what-people-say__slider-avatar">
-                                                <img src="img/user/avatar-1.png" alt=""/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="what-people-say__slider-section text-center mx-auto">
-                                        <div className="mt-3">
-                                            <h6 className="text-uppercase">John doe</h6>
-                                            <h6>student</h6>
-                                            <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum eligendi error ex exercitationem expedita inventore laudantium
-                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates? </p>
-                                            <div className="what-people-say__slider-avatar">
-                                                <img src="img/user/avatar-2.png" alt=""/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="what-people-say__slider-section text-center mx-auto">
-                                        <div className="mt-3">
-                                            <h6 className="text-uppercase">John doe</h6>
-                                            <h6>student</h6>
-                                            <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum eligendi error ex exercitationem expedita inventore laudantium
-                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates? </p>
-                                            <div className="what-people-say__slider-avatar">
-                                                <img src="img/user/avatar-3.png" alt=""/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="what-people-say__slider-section text-center mx-auto">
-                                        <div className="mt-3">
-                                            <h6 className="text-uppercase">John doe</h6>
-                                            <h6>student</h6>
-                                            <p className="mt-3">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dicta
-                                                earum eligendi error ex exercitationem expedita inventore laudantium
-                                                maxime minus nisi odit perspiciatis praesentium, repellendus sint unde
-                                                velit vero voluptates? </p>
-                                            <div className="what-people-say__slider-avatar">
-                                                <img src="img/user/avatar-4.png" alt=""/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <footer className="footer section-spacing--bottom section-spacing--top">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-12 col-md-3">
-                                <a href="#"><img src={appLogo} alt="library" height="50"/></a>
-                                <p className="mt-3">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida,
-                                    quam vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
-                                <div className="space-10"/>
-                                <ul className="list-inline list-unstyled social-list">
-                                    <li className="list-inline-item">
-                                        <a href="#"><i className="fab fa-facebook-f" aria-hidden="true"/></a>
-                                    </li>
-                                    <li className="list-inline-item">
-                                        <a href="#"><i className="fab fa-twitter" aria-hidden="true"/></a>
-                                    </li>
-                                    <li className="list-inline-item">
-                                        <a href="#"><i className="fab fa-linkedin-in" aria-hidden="true"/></a>
-                                    </li>
-                                    <li className="list-inline-item"><a href="#"><i className="fab fa-github"/></a></li>
-                                </ul>
-                                <ul className="list-inline tip yellow">
-                                    <li><i className="icofont icofont-square"/></li>
-                                    <li><i className="icofont icofont-square"/></li>
-                                    <li><i className="icofont icofont-square"/></li>
-                                </ul>
-                            </div>
-                            <div className="col-12 col-md-3 ml-auto">
-                                <h4>Contact Us</h4>
-                                <table className="table borderless addr-dt">
-                                    <tbody>
-                                    <tr>
-                                        <td><i className="fas fa-map-marker-alt"/></td>
-                                        <td>
-                                            <address className="mb-0">InfyOm Technologies</address>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="far fa-envelope"/></td>
-                                        <td>contact@infyom.in</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="fas fa-phone"/></td>
-                                        <td>+91 70963 36561</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i className="fas fa-globe-africa"/></td>
-                                        <td><a href="http://www.infyom.com/" target="_blank">www.infyom.com</a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                {renderWhatPeopleSays()}
+                {renderFooter()}
             </div>
             <HomeModal {...modalOptions}/>
         </React.Fragment>
@@ -589,21 +525,22 @@ Home.propTypes = {
     appSetting: PropTypes.object,
     books: PropTypes.array,
     searchBooks: PropTypes.array,
-    history: PropTypes.object,
     totalRecord: PropTypes.number,
+    totalBooks: PropTypes.number,
     fetchFeaturedBooks: PropTypes.func,
     toggleModal: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
-    const {appSetting, books, searchBooks, totalRecord, isLoading} = state;
-    return {appSetting, books, searchBooks, totalRecord, isLoading}
+    const { appSetting, books, searchBooks, totalRecord, totalBooks, isLoading } = state;
+    return { appSetting, books, searchBooks, totalRecord, totalBooks, isLoading }
 };
 
 export default connect(mapStateToProps, {
     fetchFeaturedBooks,
     toggleModal,
     fetchBooksByNameOrAuthors,
-    resetSearchBooks
+    resetSearchBooks,
+    fetchTotalBooks
 })(Home);
 

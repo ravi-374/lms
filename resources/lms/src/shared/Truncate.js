@@ -1,6 +1,6 @@
 export default ({text, textLength = 20}) => {
     const truncate = () => {
-        if (text.length > textLength) {
+        if (text && text.length > textLength) {
             return text.slice(0, textLength) + '...';
         }
         return text;

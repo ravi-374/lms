@@ -38,7 +38,7 @@ const MemberResetPassword = (props) => {
                                            placeholder="profile.input.confirm-password.label" groupText="icon-lock"
                                            component={CustomInputGroup}/>
                                     <Row>
-                                        <Col className="mt-2 d-flex justify-content-between">
+                                        <Col className="mt-2 d-flex justify-content-end">
                                             <Button color="primary" disabled={invalid} className="px-4">
                                                 {getFormattedMessage('global.input.reset-btn.label')}
                                             </Button>

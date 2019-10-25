@@ -16,7 +16,7 @@ const MemberForgotPassword = (props) => {
     const { handleSubmit, invalid, isSubmitted, forgotPassword } = props;
 
     const onSubmit = (formValues) => {
-        formValues.url = environment.URL + '/#' + Routes.ADMIN_RESET_PASSWORD;
+        formValues.url = environment.URL + '/#' + Routes.MEMBER_RESET_PASSWORD;
         forgotPassword(formValues);
     };
 

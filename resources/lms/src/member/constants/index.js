@@ -32,6 +32,7 @@ export const bookHistoryActionType = {
 
 export const bookActionType = {
     FETCH_BOOKS: 'FETCH_BOOKS',
+    FETCH_TOTAL_BOOKS: 'FETCH_TOTAL_BOOKS',
     FETCH_FEATURED_BOOKS: 'FETCH_FEATURED_BOOKS',
     SEARCH_BOOKS: 'SEARCH_BOOKS',
     RESERVE_BOOK: 'RESERVE_BOOK',

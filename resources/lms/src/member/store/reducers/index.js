@@ -17,6 +17,7 @@ import appSettingReducer from '../../../store/reducers/appSettingReducer';
 import settingReducer from './settingReducer';
 import authReducer from './authReducer';
 import bookRequestReducer from './bookRequestReducer';
+import totalBookReducer from "./totalBookReducer";
 
 export default combineReducers({
     isLoading: progressReduce,
@@ -30,6 +31,7 @@ export default combineReducers({
     countries: countryReducer,
     bookHistory: bookHistoryReducer,
     books: bookReducer,
+    totalBooks: totalBookReducer,
     searchBooks: bookSearchReducer,
     authors: authorReducer,
     profile: localStorageReducer,

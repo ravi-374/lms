@@ -72,7 +72,7 @@ ForgotPassword.propTypes = {
 
 const form = reduxForm({ form: 'forgotPasswordForm', validate: loginFormValidate })(ForgotPassword);
 const mapStateToProps = (state) => {
-    return { isSubmitted: !!state.auth.isSubmitted };
+    return { isSubmitted: !!state.adminAuth.isSubmitted };
 };
 
 export default connect(mapStateToProps, { forgotPassword })(form);
