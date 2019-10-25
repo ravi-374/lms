@@ -31,7 +31,7 @@ class BookAPIController extends AppBaseController
     public function index(Request $request)
     {
         $input = $request->except(['skip', 'limit']);
-        $books = $this->bookRepository->searchBooks(
+        list($books, $count) = $this->bookRepository->searchBooks(
             $input,
             $request->get('skip'),
             $request->get('limit')
@@ -44,7 +44,7 @@ class BookAPIController extends AppBaseController
         return $this->sendResponse(
             $books,
             'Books retrieved successfully.',
-            ['totalRecords' => count($books)]
+            ['totalRecords' => $count]
         );
     }
 

@@ -82,10 +82,16 @@ export default {
             permission: Permissions.MANAGE_BOOK_SERIES,
         },
         {
+            name: getFormattedMessage("book-request.title"),
+            url: '/app/admin/book-requests',
+            icon: 'fas fa-book',
+            permission: Permissions.MANANGE_BOOK_REQUEST,
+        },
+        {
             name: getFormattedMessage('settings.title'),
             url: '/app/admin/settings',
             icon: 'fa fa-cog',
             permission: Permissions.MANAGE_FINANCE,
-        }
+        },
     ],
 };

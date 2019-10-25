@@ -43,11 +43,11 @@ export const authorActionType = {
 };
 
 export const bookStatusOptions = [
-    {id: 1, name: 'Reserved'},
-    {id: 2, name: 'Issued'},
-    {id: 3, name: 'Returned'},
-    {id: 4, name: 'Available'},
-    {id: 5, name: 'Unreserved'}
+    { id: 1, name: 'Reserved' },
+    { id: 2, name: 'Issued' },
+    { id: 3, name: 'Returned' },
+    { id: 4, name: 'Available' },
+    { id: 5, name: 'Unreserved' }
 ];
 
 export const bookStatusConstant = {
@@ -68,9 +68,9 @@ export const settingActionType = {
 
 export const settingsKey = {
     LANGUAGE: 'language',
-    DEFAULT_LOCALE:'en',
-    LOCALE_ARABIC:'en',
-    LOCALE_SPANISH:'sp'
+    DEFAULT_LOCALE: 'en',
+    LOCALE_ARABIC: 'en',
+    LOCALE_SPANISH: 'sp'
 };
 
 export const authActionType = {
@@ -78,4 +78,12 @@ export const authActionType = {
     LOGOUT: 'LOGOUT',
     FORGOT_PASSWORD: 'FORGOT_PASSWORD',
     RESET_PASSWORD: 'RESET_PASSWORD',
+};
+
+export const bookRequestActionType = {
+    FETCH_ADMIN_BOOKS_REQUEST: 'FETCH_ADMIN_BOOKS_REQUEST',
+    FETCH_ADMIN_BOOK_REQUEST: 'FETCH_ADMIN_BOOK_REQUEST',
+    ADD_ADMIN_BOOK_REQUEST: 'ADD_ADMIN_BOOK_REQUEST',
+    EDIT_ADMIN_BOOK_REQUEST: 'EDIT_ADMIN_BOOK_REQUEST',
+    DELETE_ADMIN_BOOK_REQUEST: 'DELETE_ADMIN_BOOK_REQUEST',
 };

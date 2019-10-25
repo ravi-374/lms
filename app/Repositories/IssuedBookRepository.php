@@ -273,7 +273,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
         if ($bookItem->status == BookItem::STATUS_NOT_AVAILABLE) {
-            if (! empty($issueBook && $issueBook->note != $input['note'])) {
+            if (! empty($issueBook) && $issueBook->note != $input['note']) {
                 $issueBook->update(['note' => $input['note']]);
 
                 return $this->find($issueBook->id);

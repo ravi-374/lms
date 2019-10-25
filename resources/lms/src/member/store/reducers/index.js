@@ -16,6 +16,7 @@ import localStorageReducer from '../../../store/reducers/localStorageReducer';
 import appSettingReducer from '../../../store/reducers/appSettingReducer';
 import settingReducer from './settingReducer';
 import authReducer from './authReducer';
+import bookRequestReducer from './bookRequestReducer';
 
 export default combineReducers({
     isLoading: progressReduce,
@@ -35,4 +36,5 @@ export default combineReducers({
     appSetting: appSettingReducer,
     settings: settingReducer,
     auth: authReducer,
+    bookRequests:bookRequestReducer
 });

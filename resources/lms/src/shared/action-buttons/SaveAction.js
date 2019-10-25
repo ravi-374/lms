@@ -4,7 +4,7 @@ import {Button} from 'reactstrap';
 import './ActionButtons.scss';
 import {getFormattedMessage} from "../sharedMethod";
 
-const SaveAction = ({ onSave, onCancel, invalid, isHideCancel, pristine }) => {
+const SaveAction = ({ onSave, onCancel, invalid, isHideCancel, pristine, isDisableSubmit = false }) => {
     return (
         <div className="save-action">
             {!isHideCancel ?
@@ -12,7 +12,7 @@ const SaveAction = ({ onSave, onCancel, invalid, isHideCancel, pristine }) => {
                     {getFormattedMessage('global.input.cancel-btn.label')}
                 </Button> : null
             }
-            <Button onClick={onSave} disabled={invalid || pristine} color="primary" size="md"
+            <Button onClick={onSave} disabled={invalid || pristine || isDisableSubmit} color="primary" size="md"
                     className="save-action__save-btn">
                 {getFormattedMessage('global.input.save-btn.label')}
             </Button>
@@ -25,4 +25,4 @@ SaveAction.propTypes = {
     onCancel: PropTypes.func,
 };
 
-export default SaveAction ;
+export default SaveAction;

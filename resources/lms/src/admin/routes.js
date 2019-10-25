@@ -25,6 +25,7 @@ const UserDetails = React.lazy(() => import('./components/user-details/UserDetai
 const BookCirculationDetails = React.lazy(() => import('./components/book-circulation-details/BookCirculationDetails'));
 const UserProfile = React.lazy(() => import('./components/user-profile/UserProfile'));
 const Settings = React.lazy(() => import('./components/settings/Settings'));
+const BookRequests = React.lazy(() => import('./components/book-requests/BookRequests'));
 
 export default [
     {
@@ -187,5 +188,12 @@ export default [
         name: 'Settings',
         component: Settings,
         permission: Permissions.MANAGE_FINANCE
-    }
+    },
+    {
+        path: '/app/admin/book-requests',
+        exact: true,
+        name: 'BookRequests',
+        component: BookRequests,
+        permission: Permissions.MANANGE_BOOK_REQUEST
+    },
 ];

@@ -95,8 +95,10 @@ export const appSettingsKey = {
 export const apiBaseURL = {
     AUTHOR: 'authors',
     BOOK_LANGUAGE: 'book-languages',
+    BOOK_REQUEST: 'book-requests',
     BOOK: 'books',
     BOOK_DETAILS: 'get-book-details',
+    BOOK_LIMIT: 'books',
     BOOK_HISTORY: 'books-history',
     BOOK_ITEM: 'book-items',
     BOOK_SERIES: 'book-series',
@@ -123,4 +125,11 @@ export const apiBaseURL = {
     USER_LOGIN: 'login',
     USER_DETAILS: 'user-details',
     USER_PROFILE_UPDATE: 'update-user-profile',
+};
+
+export const bookRequestConstants = {
+    PENDING: 0,
+    APPROVED: 1,
+    AVAILABLE: 2,
+    CANCELLED: 3
 };

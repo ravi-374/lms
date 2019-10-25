@@ -122,3 +122,10 @@ function getRandomColor($opacity = 1, $colorType = 'bright', $colorFormat = 'rgb
         'opacity'    => $opacity,
     ));
 }
+
+function getLogoURL()
+{
+    $setting = Setting::where('key', Setting::LIBRARY_LOGO)->first();
+
+    return $setting->logo_url;
+}

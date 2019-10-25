@@ -111,7 +111,7 @@ class BookRequestRepository extends BaseRepository implements BookRequestReposit
     public function validate($input)
     {
         if (! in_array($input['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
-            throw new UnprocessableEntityHttpException('Invalid format');
+            throw new UnprocessableEntityHttpException('Invalid format.');
         }
 
         return true;

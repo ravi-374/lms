@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -8,18 +8,48 @@ import {bookCirculationStatusConstant, bookStatusOptions} from '../../constants'
 import Modal from '../../../shared/components/Modal';
 import {editBookCirculation, editBookCirculationStatus} from '../../store/actions/bookCirculationAction';
 import {editMemberBookHistory, editMemberBookHistoryStatus} from '../../store/actions/memberBookHistoryAction';
-import {getFormattedOptions} from "../../../shared/sharedMethod";
+import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
+import {addToast} from "../../../store/action/toastAction";
+import {clearAvailableBookLimit} from "../../store/actions/availableBookLimitAction";
+import {toastType} from "../../../member/constants";
 
 const EditBookCirculation = (props) => {
     const {
         toggleModal, className, editBookCirculationStatus, editBookCirculation,
         editMemberBookHistoryStatus, editMemberBookHistory,
-        title, bookCirculation, onSelectBook, bookId, isMemberBookHistory, filterObject
+        title, bookCirculation, onSelectBook, bookId, isMemberBookHistory, filterObject,
+        addToast, bookLimit, clearAvailableBookLimit
     } = props;
+    const [isDisableSubmit, setDisableSubmit] = useState(false);
     const modalOption = { toggleModal, className, title };
     const formOption = { onSelectBook, bookId };
     const bookCirculationStatusOptions = getFormattedOptions(bookStatusOptions);
     const { note, reserve_date, issued_on, return_date, member } = bookCirculation;
+
+    useEffect(() => {
+        displayLimitMessage(bookLimit);
+    }, [bookLimit]);
+
+    const displayLimitMessage = (bookLimit) => {
+        if (!!bookLimit.isIssueLimitExceed && !bookLimit.isIssueLimitExceed.isExceed) {
+            addToast({
+                text: getFormattedMessage('books-circulation.issue.book-limit.message'),
+                type: toastType.ERROR
+            });
+            setDisableSubmit(true);
+        }
+        else if (!!bookLimit.isReserveLimitExceed && !bookLimit.isReserveLimitExceed.isExceed) {
+            addToast({
+                text:
+                    getFormattedMessage('books-circulation.reserve.book-limit.message'),
+                type: toastType.ERROR
+            });
+            setDisableSubmit(true);
+        } else {
+            setDisableSubmit(false);
+        }
+    };
+
     const changeAbleFields = {
         book: bookCirculation.book_item.book,
         note,
@@ -56,18 +86,26 @@ const EditBookCirculation = (props) => {
                     break;
             }
         }
+        clearAvailableBookLimit();
+    };
+
+    const onCancel = () => {
+        clearAvailableBookLimit();
+        toggleModal();
     };
 
     const prepareFormOption = {
         onSaveBookCirculation,
-        onCancel: toggleModal,
-        initialValues: changeAbleFields
+        onCancel,
+        initialValues: changeAbleFields,
+        isDisableSubmit
     };
 
     return <Modal {...modalOption} content={<BookCirculationForm {...prepareFormOption} {...formOption} />}/>
 };
 
 EditBookCirculation.propTypes = {
+    bookLimit: PropTypes.object,
     bookCirculation: PropTypes.object,
     filterObject: PropTypes.object,
     title: PropTypes.object,
@@ -84,11 +122,19 @@ EditBookCirculation.propTypes = {
     fetchMembers: PropTypes.func,
     onSelectBook: PropTypes.func,
     toggleModal: PropTypes.func,
+    clearAvailableBookLimit: PropTypes.func,
+    addToast: PropTypes.func,
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => {
+    return { bookLimit: state.bookLimit }
+};
+
+export default connect(mapStateToProps, {
     editBookCirculation: editBookCirculation,
     editMemberBookHistory,
     editMemberBookHistoryStatus,
     editBookCirculationStatus: editBookCirculationStatus,
+    clearAvailableBookLimit,
+    addToast
 })(EditBookCirculation);
