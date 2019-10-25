@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "Книга успешно вернулась.",
     "books-circulation.success.lost.message": "Статус книги успешно установлен.",
     "books-circulation.success.damage.message": "Статус книги успешно установлен.",
+    "books-circulation.issue.book-limit.message": "Этот участник превышает лимит выдачи книги.",
+    "books-circulation.reserve.book-limit.message": "Этот участник превышает резервный лимит книги.",
     "book-history.title": "История Книги",
     "book-history.filter.available.label": "Доступный",
     "book-history.filter.issued.label": "Выпущен",

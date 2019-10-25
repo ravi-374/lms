@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "Buch erfolgreich zurückgegeben.",
     "books-circulation.success.lost.message": "Der Buchstatus wurde auf Erfolgreich verloren gesetzt.",
     "books-circulation.success.damage.message": "Der Buchstatus wurde auf Beschädigt gesetzt.",
+    "books-circulation.issue.book-limit.message": "Dieses Mitglied hat das Emissionslimit überschritten.",
+    "books-circulation.reserve.book-limit.message": "Dieses Mitglied hat das Limit für das Reservebuch überschritten.",
     "book-history.title": "Buchgeschichte",
     "book-history.filter.available.label": "Verfügbar",
     "book-history.filter.issued.label": "Problematisch",

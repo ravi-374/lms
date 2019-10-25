@@ -97,6 +97,7 @@ export const apiBaseURL = {
     BOOK_LANGUAGE: 'book-languages',
     BOOK: 'books',
     BOOK_DETAILS: 'get-book-details',
+    BOOK_LIMIT: 'books',
     BOOK_HISTORY: 'books-history',
     BOOK_ITEM: 'book-items',
     BOOK_SERIES: 'book-series',

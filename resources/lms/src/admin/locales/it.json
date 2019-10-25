@@ -121,6 +121,8 @@
     "books-circulation.success.return.message": "Libro restituito correttamente.",
     "books-circulation.success.lost.message": "Lo stato del libro è stato impostato su perso correttamente.",
     "books-circulation.success.damage.message": "Lo stato del libro è stato impostato su danneggiato correttamente.",
+    "books-circulation.issue.book-limit.message": "Questo membro supera il limite del libro di problemi.",
+    "books-circulation.reserve.book-limit.message": "This member is the limit for the reservebuch beyond.",
     "book-history.title": "Storia Del Libro",
     "book-history.filter.available.label": "A Disposizione",
     "book-history.filter.issued.label": "Rilasciato",
