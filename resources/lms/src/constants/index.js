@@ -101,6 +101,7 @@ export const apiBaseURL = {
     BOOK_HISTORY: 'books-history',
     BOOK_ITEM: 'book-items',
     BOOK_SERIES: 'book-series',
+    TOTAL_BOOKS: 'total-books',
     CURRENCY: 'currencies',
     CONFIG: 'config',
     COUNTRY: 'countries',
