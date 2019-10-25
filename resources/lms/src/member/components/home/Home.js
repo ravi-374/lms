@@ -9,7 +9,8 @@ import {publicImagePath, publicImagePathURL} from "../../../appConstant";
 import {appSettingsKey, Routes} from "../../../constants";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getCurrentMember} from "../../../admin/shared/sharedMethod";
-import {fetchBooksByNameOrAuthors, fetchFeaturedBooks, fetchTotalBooks} from "../../store/actions/bookAction";
+import {fetchBooksByNameOrAuthors, fetchFeaturedBooks} from "../../store/actions/bookAction";
+import {fetchTotalBooks} from "../../store/actions/tooalBookAction";
 import {toggleModal} from "../../../store/action/modalAction";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -23,7 +24,7 @@ const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
 const Home = (props) => {
     let myRef = useRef();
-    const {appSetting, books, searchBooks, totalRecord, totalBooks, fetchTotalBooks, fetchFeaturedBooks, fetchBooksByNameOrAuthors, toggleModal} = props;
+    const { appSetting, books, searchBooks, totalRecord, totalBooks, fetchTotalBooks, fetchFeaturedBooks, fetchBooksByNameOrAuthors, toggleModal } = props;
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
     const [searchBy, setSearchBy] = useState('book');
@@ -251,7 +252,7 @@ const Home = (props) => {
 
         setTimeout(() => {
             if (about) {
-                about.scrollIntoView({behavior: "smooth"});
+                about.scrollIntoView({ behavior: "smooth" });
             }
         }, 400);
 
@@ -280,7 +281,7 @@ const Home = (props) => {
         );
     };
 
-    const tabOptions = {onChangeInput, onSearch};
+    const tabOptions = { onChangeInput, onSearch };
     /**
      * Render Footer
      * @returns {*}
@@ -356,10 +357,10 @@ const Home = (props) => {
      */
     const renderWhatPeopleSays = () => {
         const peoples = [
-            {name: 'john dae', img: 'img/user/avatar-1.png'},
-            {name: 'john dae', img: 'img/user/avatar-2.png'},
-            {name: 'john dae', img: 'img/user/avatar-3.png'},
-            {name: 'john dae', img: 'img/user/avatar-4.png'},
+            { name: 'john dae', img: 'img/user/avatar-1.png' },
+            { name: 'john dae', img: 'img/user/avatar-2.png' },
+            { name: 'john dae', img: 'img/user/avatar-3.png' },
+            { name: 'john dae', img: 'img/user/avatar-4.png' },
         ];
         return (
             <section className="what-people-say position-relative">
@@ -531,8 +532,8 @@ Home.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const {appSetting, books, searchBooks, totalRecord, totalBooks, isLoading} = state;
-    return {appSetting, books, searchBooks, totalRecord, totalBooks, isLoading}
+    const { appSetting, books, searchBooks, totalRecord, totalBooks, isLoading } = state;
+    return { appSetting, books, searchBooks, totalRecord, totalBooks, isLoading }
 };
 
 export default connect(mapStateToProps, {
