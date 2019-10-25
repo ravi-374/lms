@@ -5,13 +5,14 @@ namespace Tests\V1\APIs;
 use App\Models\BookRequest;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use Tests\Traits\MockRepositories;
 
 /**
  * Class BookRequestAPIControllerTest
  */
 class BookRequestAPIControllerTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseTransactions, MockRepositories;
 
     public function setUp(): void
     {
@@ -29,6 +30,39 @@ class BookRequestAPIControllerTest extends TestCase
         $this->assertSuccessMessageResponse($response, 'Book requested created successfully.');
         $this->assertArrayHasKey('id', $response->original['data']);
         $this->assertEquals($fakeBookRequest['book_name'], $response->original['data']['book_name']);
+    }
+
+    /** @test */
+    public function test_member_create_book_request()
+    {
+        $this->mockRepo(self::$bookRequest);
+
+        $bookRequest = factory(BookRequest::class)->create();
+
+        $this->bookRequestRepository->expects('store')->andReturn($bookRequest);
+
+        $response = $this->postJson(route('api.v1.book-requests.store'), $bookRequest->toArray());
+
+        $this->assertSuccessMessageResponse(
+            $response, 'Book requested created successfully.'
+        );
+    }
+
+    /** @test */
+    public function test_can_get_all_book_requests()
+    {
+        $this->mockRepo(self::$bookRequest);
+
+        /** @var BookRequest[] $bookRequests */
+        $bookRequests = factory(BookRequest::class, 5)->create();
+
+        $this->bookRequestRepository->expects('all')->andReturn($bookRequests);
+
+        $response = $this->getJson(route('api.v1.book-requests.index'));
+
+        $this->assertSuccessDataResponse(
+            $response, $bookRequests->toArray(), 'Requested books retrieved successfully.'
+        );
     }
 
     /** @test */

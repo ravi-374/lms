@@ -6,6 +6,7 @@ use App\Repositories\AuthorRepository;
 use App\Repositories\BookItemRepository;
 use App\Repositories\BookLanguageRepository;
 use App\Repositories\BookRepository;
+use App\Repositories\BookRequestRepository;
 use App\Repositories\BookSeriesRepository;
 use App\Repositories\CountryRepository;
 use App\Repositories\GenreRepository;
@@ -41,6 +42,7 @@ trait MockRepositories
     public static $setting = 'settingRepository';
     public static $tag = 'tagRepository';
     public static $user = 'userRepository';
+    public static $bookRequest = 'bookRequestRepository';
 
     /** @var MockInterface */
     protected $authorRepository;
@@ -74,6 +76,8 @@ trait MockRepositories
     protected $tagRepository;
     /** @var MockInterface */
     protected $userRepository;
+    /** @var MockInterface */
+    protected $bookRequestRepository;
 
     /**
      * Mock given repo
@@ -136,6 +140,9 @@ trait MockRepositories
                     break;
                 case self::$user:
                     $repoInstance = UserRepository::class;
+                    break;
+                case self::$bookRequest:
+                    $repoInstance = BookRequestRepository::class;
                     break;
             }
 
