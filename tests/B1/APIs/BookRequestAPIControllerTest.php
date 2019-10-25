@@ -59,4 +59,32 @@ class BookRequestAPIControllerTest extends TestCase
         $this->assertSuccessMessageResponse($response, 'Book request status updated successfully.');
         $this->assertEquals(BookRequest::APPROVED, $bookRequest->fresh()->status);
     }
+
+    /** @test */
+    public function test_can_return_requested_books_count_from_isbn_number()
+    {
+        $bookRequest = factory(BookRequest::class)->create();
+        factory(BookRequest::class)->create(['isbn' => $bookRequest->isbn]);
+
+        $response = $this->getJson(route('api.b1.book-requests.index'));
+
+        $this->assertEquals(2, $response->original['data'][0]['request_count']);
+    }
+
+    /** @test */
+    public function test_book_requests_sort_by_book_name()
+    {
+        $bookRequest1 = factory(BookRequest::class)->create(['book_name' => 'ABCDE']);
+        $bookRequest2 = factory(BookRequest::class)->create(['book_name' => 'ZDZDZD']);
+
+        $responseDesc = $this->getJson(route('api.b1.book-requests.index',
+                ['order_by' => 'book_name', 'direction' => 'desc'])
+        );
+        $responseAsc = $this->getJson(route('api.b1.book-requests.index',
+                ['order_by' => 'book_name', 'direction' => 'asc'])
+        );
+
+        $this->assertEquals($bookRequest1->id, $responseAsc->original['data'][0]->id);
+        $this->assertEquals($bookRequest2->id, $responseDesc->original['data'][0]->id);
+    }
 }

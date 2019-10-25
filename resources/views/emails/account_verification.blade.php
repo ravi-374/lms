@@ -59,7 +59,7 @@
     <table class="account-verification__table">
         <tr>
             <td class="text-center">
-                <img class="logo" src="{{url('img/logo-red-black.png')}}" alt="InfyOm Logo">
+                <img class="logo" src="{{ $data['logo_url'] }}">
             </td>
         </tr>
         <tr>

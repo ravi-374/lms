@@ -24,6 +24,7 @@ class AccountRepository implements AccountRepositoryInterface
     {
         $data['link'] = URL::to('/api/v1/members/activate?token='.$activateCode);
         $data['username'] = $username;
+        $data['logo_url'] = getLogoURL();
 
         try {
             Mail::send('emails.account_verification', ['data' => $data],
@@ -47,6 +48,7 @@ class AccountRepository implements AccountRepositoryInterface
     public function sendResetPasswordLinkMail($data)
     {
         try {
+            $data['logo_url'] = getLogoURL();
             Mail::send('auth.passwords.reset', ['data' => $data],
                 function (Message $message) use ($data) {
                     $message->subject('Password Reset Request Received');
