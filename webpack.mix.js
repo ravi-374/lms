@@ -38,8 +38,11 @@ module.exports = {
 // used to run app using reactjs
 mix.js('resources/lms/src/index.js', 'public/js/app.js').version();
 mix.styles([
-    'resources/assets/css/noid-font-style.css',
+    'resources/assets/css/font-awesome-5.11.2.css',
+    'resources/assets/css/bootstrap.min.css',
+    'resources/assets/css/bootstrap.min.css',
 ], 'public/css/app.css').version();
-mix.copy('resources/assets/fonts', 'public/fonts');
-mix.copy('resources/assets/banners', 'public/images/banner');
+mix.copy('resources/assets/webfonts', 'public/webfonts');
+mix.copy('resources/assets/js/jquery.min.1.11.3.js', 'public/js/jquery.min.1.11.3.js');
+mix.copy('resources/assets/js/redoc.standalone.js', 'public/js/redoc.standalone.js');
 mix.copy('resources/assets/img', 'public/img');

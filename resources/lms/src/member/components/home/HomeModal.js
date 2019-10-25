@@ -51,7 +51,7 @@ const HomeModal = (props) => {
     const modalOptions = {
         title: book ? book.name : '',
         content,
-        className: 'book-detail-modal',
+        className: 'book-detail-modal modal-lg',
         toggleModal
     };
 
