@@ -556,6 +556,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $query = filterByColumns($query, $search['search'], ['name', 'description']);
         }
 
+        if (! empty($search['is_featured'])) {
+            $query->where('is_featured', true);
+        }
+
         $count = $query->count();
 
         if (! is_null($skip)) {

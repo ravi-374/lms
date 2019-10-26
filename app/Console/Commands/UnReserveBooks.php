@@ -21,7 +21,7 @@ class UnReserveBooks extends Command
      *
      * @var string
      */
-    protected $description = 'Reserved and not issued still valid due time books are un-reserved.';
+    protected $description = 'Reserved due books are un-reserved automatically.';
 
     /**
      * Execute the console command.
