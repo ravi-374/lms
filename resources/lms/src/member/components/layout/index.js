@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import navigation from '../../config/navbarConfig';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import routes from '../../routes';
-import {Routes, Tokens} from "../../../constants";
+import {loggedConstant, Routes, Tokens} from "../../../constants";
 import {checkExistingRoute} from "../../../shared/sharedMethod";
 
 const Footer = lazy(() => import('./Footer'));
@@ -42,6 +42,7 @@ const renderAppHeader = (props, appName, appLogo, member) => {
         props.history.push(Routes.MEMBER_HOME);
         localStorage.removeItem('member');
         localStorage.removeItem(Tokens.MEMBER);
+        localStorage.setItem(loggedConstant.IS_MEMBER_LOGOUT, 'true');
     };
     return (
         <AppHeader fixed>

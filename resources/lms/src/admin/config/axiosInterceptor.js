@@ -1,6 +1,6 @@
 import {errorMessage} from '../../appConstant';
 import {environment} from '../../environment';
-import {LocalStorageKey, Routes, Tokens} from "../../constants";
+import {LocalStorageKey, loggedConstant, Routes, Tokens} from "../../constants";
 
 export default {
     setupInterceptors: (axios, isToken = false, isFormData = false) => {
@@ -11,8 +11,9 @@ export default {
                 let token = localStorage.getItem(Tokens.ADMIN);
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
-                } else {
-                 //  window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
+                }
+                if (localStorage.getItem(loggedConstant.IS_USER_LOGOUT)) {
+                    window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
                 }
                 if (isFormData) {
                     config.headers['Content-Type'] = 'multipart/form-data';
@@ -38,7 +39,7 @@ export default {
                 localStorage.removeItem(Tokens.ADMIN);
                 localStorage.removeItem(LocalStorageKey.USER);
             }
-            return Promise.reject({...error})
+            return Promise.reject({ ...error })
         };
         const successHandler = (response) => {
             return response;

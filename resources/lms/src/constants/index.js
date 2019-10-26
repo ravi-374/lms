@@ -136,3 +136,8 @@ export const bookRequestConstants = {
     AVAILABLE: 2,
     CANCELLED: 3
 };
+
+export const loggedConstant = {
+    IS_USER_LOGOUT: 'isUserLogout',
+    IS_MEMBER_LOGOUT: 'isMemberLogout'
+};

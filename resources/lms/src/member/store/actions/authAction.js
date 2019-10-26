@@ -3,7 +3,7 @@ import apiConfig from '../../config/apiConfigWithoutToken';
 import apiConfigWithRoot from '../../config/apiConfigwithoutTokenWithRoot';
 import {addToast} from '../../../store/action/toastAction';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {apiBaseURL, LocalStorageKey, Routes, Tokens} from "../../../constants";
+import {apiBaseURL, LocalStorageKey, loggedConstant, Routes, Tokens} from "../../../constants";
 import {setUserProfile} from "../../../store/action/localStorageAction";
 import {getLocalStorageDataByEncryptKey} from "../../../shared/sharedMethod";
 
@@ -19,6 +19,7 @@ export const login = (user, history) => async (dispatch) => {
                 }
             }
             localStorage.setItem(Tokens.MEMBER, response.data.data.token);
+            localStorage.removeItem(loggedConstant.IS_MEMBER_LOGOUT);
             dispatch(setUserProfile(LocalStorageKey.MEMBER, response.data.data.user));
             history.push(Routes.MEMBER_DEFAULT);
             dispatch({ type: authActionType.LOGIN, payload: response.data.data });

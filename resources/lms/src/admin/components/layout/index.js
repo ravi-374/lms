@@ -14,7 +14,7 @@ import {
 import PropTypes from 'prop-types';
 import navigation from '../../config/navbarConfig';
 import routes from "../../routes";
-import {Routes, Tokens} from "../../../constants";
+import {loggedConstant, Routes, Tokens} from "../../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {checkExistingRoute} from "../../../shared/sharedMethod";
 
@@ -69,6 +69,7 @@ const renderAppHeader = (props, appName, appLogo, user) => {
         e.preventDefault();
         localStorage.removeItem('user');
         localStorage.removeItem(Tokens.ADMIN);
+        localStorage.setItem(loggedConstant.IS_USER_LOGOUT, 'true');
         props.history.push(Routes.MEMBER_HOME);
     };
     return (

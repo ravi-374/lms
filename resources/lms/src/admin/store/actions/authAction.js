@@ -5,7 +5,7 @@ import {addToast} from '../../../store/action/toastAction'
 import {getFormattedMessage} from '../../../shared/sharedMethod'
 import {
     apiBaseURL,
-    LocalStorageKey,
+    LocalStorageKey, loggedConstant,
     Routes,
     Tokens,
 } from '../../../constants'
@@ -24,6 +24,7 @@ export const login = (user, history) => async (dispatch) => {
             }
         }
         localStorage.setItem(Tokens.ADMIN, response.data.data.token);
+        localStorage.removeItem(loggedConstant.IS_USER_LOGOUT);
         dispatch(setUserProfile(LocalStorageKey.USER, response.data.data.user));
         dispatch({ type: authActionType.LOGIN, payload: response.data.data });
         dispatch(addToast({ text: getFormattedMessage('login.success.logged.message') }));
