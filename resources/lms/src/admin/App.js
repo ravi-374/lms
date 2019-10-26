@@ -17,6 +17,7 @@ import {fetchAppSetting} from '../store/action/appSettingAction'
 import {fetchSettings} from './store/actions/settingAction'
 import {fetchConfig} from './store/actions/configAction'
 import {getUserProfile} from '../store/action/localStorageAction'
+import {environment} from "../environment";
 
 const Layout = React.lazy(() => import('./components/layout'));
 const Login = React.lazy(() => import('./components/auth/Login'));
@@ -56,6 +57,8 @@ const AdminApp = (props) => {
         if (localStorage.getItem(Tokens.ADMIN)) {
             fetchConfig();
             getUserProfile(LocalStorageKey.USER);
+        } else {
+            window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
         }
     }, []);
 
