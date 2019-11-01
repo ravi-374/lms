@@ -43,6 +43,7 @@ mix.styles([
     'resources/assets/css/bootstrap.min.css',
 ], 'public/css/app.css').version();
 mix.copy('resources/assets/webfonts', 'public/webfonts');
-mix.copy('resources/assets/js/jquery.min.1.11.3.js', 'public/js/jquery.min.1.11.3.js');
-mix.copy('resources/assets/js/redoc.standalone.js', 'public/js/redoc.standalone.js');
+mix.babel('resources/assets/js/jquery.min.1.11.3.js', 'public/js/jquery.min.1.11.3.js');
+mix.babel('resources/assets/js/redoc.standalone.js', 'public/js/redoc.standalone.js');
 mix.copy('resources/assets/img', 'public/img');
+mix.babel('public/js/app.js', 'public/js/app.js').version();
