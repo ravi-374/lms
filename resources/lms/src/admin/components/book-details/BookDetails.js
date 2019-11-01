@@ -11,12 +11,14 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {getFormattedMessage, prepareFullNames} from "../../../shared/sharedMethod";
 import {fetchBook} from '../../store/actions/bookAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import Viewer from 'react-viewer';
 
 const BookDetail = props => {
     const { book, toggleModal, history, fetchBook, match } = props;
     const [isParentToggle, setIsParentToggle] = useState(false);
     const [isToggle, setIsToggle] = useState(false);
     const cardModalProps = { book, toggleModal, isToggle };
+    const [ visible, setVisible ] = useState(false);
 
     useEffect(() => {
         fetchBook(+match.params.id);
@@ -67,7 +69,16 @@ const BookDetail = props => {
                                 <Row className="book-detail-row no-gutters">
                                     <div className="book-image-container">
                                         <div className="book-image-holder">
-                                            <img src={imageUrl} height="250" alt={imageUrl}/>
+                                            <div>
+                                                <img onClick={() => {
+                                                    setVisible(true);
+                                                }} src={imageUrl} height="250" alt={imageUrl}/>
+                                                <Viewer
+                                                    visible={visible} onClose={() => {
+                                                    setVisible(false);
+                                                }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="book-detail">
