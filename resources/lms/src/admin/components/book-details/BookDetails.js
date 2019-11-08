@@ -14,11 +14,11 @@ import {toggleModal} from '../../../store/action/modalAction';
 import Viewer from 'react-viewer';
 
 const BookDetail = props => {
-    const { book, toggleModal, history, fetchBook, match } = props;
+    const {book, toggleModal, history, fetchBook, match} = props;
     const [isParentToggle, setIsParentToggle] = useState(false);
     const [isToggle, setIsToggle] = useState(false);
-    const cardModalProps = { book, toggleModal, isToggle };
-    const [ visible, setVisible ] = useState(false);
+    const cardModalProps = {book, toggleModal, isToggle};
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         fetchBook(+match.params.id);
@@ -73,10 +73,10 @@ const BookDetail = props => {
                                                 <img onClick={() => {
                                                     setVisible(true);
                                                 }} src={imageUrl} height="250" alt={imageUrl}/>
-                                                <Viewer
+                                                <Viewer loop={false} changeable={false} showTotal={false}
                                                     visible={visible} onClose={() => {
                                                     setVisible(false);
-                                                }}
+                                                }} images={[{src: imageUrl, alt: imageUrl}]}
                                                 />
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@ const BookDetail = props => {
                                                     {getFormattedMessage('books.edit-book-details.table.genres.column')}
                                                 </span>
                                                 <span>
-                                                    {book.genres.map((({ name }) => name)).join(',  ')}
+                                                    {book.genres.map((({name}) => name)).join(',  ')}
                                                 </span>
                                             </div>
                                             <div className="book-detail__item">
@@ -102,7 +102,7 @@ const BookDetail = props => {
                                                   {getFormattedMessage('books.edit-book-details.table.authors.column')}
                                                 </span>
                                                 <span>
-                                                    {prepareFullNames(book.authors).map((({ name }) => name)).join(',  ')}
+                                                    {prepareFullNames(book.authors).map((({name}) => name)).join(',  ')}
                                                 </span>
                                             </div>
                                             {book.tags.length > 0 ?
@@ -111,7 +111,7 @@ const BookDetail = props => {
                                                     {getFormattedMessage('books.edit-book-details.table.tags.column')}
                                                     </span>
                                                     <span>
-                                                    {book.tags.map((({ name }) => name)).join(',  ')}
+                                                    {book.tags.map((({name}) => name)).join(',  ')}
                                                 </span>
                                                 </div> : null
                                             }
@@ -165,7 +165,7 @@ BookDetail.propTypes = {
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { books, isToggle } = state;
+    const {books, isToggle} = state;
     return {
         book: books.find(book => book.id === +ownProp.match.params.id), isToggle
     }
