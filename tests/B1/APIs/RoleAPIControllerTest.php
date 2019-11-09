@@ -30,7 +30,7 @@ class RoleAPIControllerTest extends TestCase
         /** @var Role[] $roles */
         $roles = factory(Role::class, 5)->create();
 
-        $this->roleRepository->expects('all')->andReturn($roles);
+        $this->roleRepository->shouldReceive('all')->twice()->andReturn($roles);
 
         $response = $this->getJson(route('api.b1.roles.index'));
 

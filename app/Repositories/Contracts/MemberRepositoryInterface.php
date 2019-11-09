@@ -34,7 +34,7 @@ interface MemberRepositoryInterface
      * @param  int|null  $limit
      * @param  array  $columns
      *
-     * @return Member[]|Collection
+     * @return Member[]|Collection|int
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 

@@ -43,12 +43,11 @@ class IssuedBookAPIController extends AppBaseController
             return $issuedBook->apiObj();
         });
 
-        $totalRecords = (! empty($search['search'])) ? count($records) : IssuedBook::ofMember($search['member_id'])->count();
-
+        $input['withCount'] = 1;
         return $this->sendResponse(
             $records,
             'Books history retrieved successfully.',
-            ['totalRecords' => $totalRecords]
+            ['totalRecords' => $this->issuedBookRepository->all($input)]
         );
     }
 

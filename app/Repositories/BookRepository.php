@@ -75,7 +75,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
      * @param  int|null  $limit
      * @param  array  $columns
      *
-     * @return Book[]|Collection
+     * @return Book[]|Collection|int
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
@@ -87,6 +87,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
         $query = $this->allQuery($search, $skip, $limit)->with(['authors', 'items.publisher', 'items.language']);
         $this->applyDynamicSearch($search, $query);
+
+        if (! empty($search['withCount'])) {
+            return $query->count();
+        }
 
         $bookRecords = $query->get();
 

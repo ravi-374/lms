@@ -45,7 +45,7 @@ class PublisherAPIController extends AppBaseController
         return $this->sendResponse(
             $publishers->toArray(),
             'Publishers retrieved successfully.',
-            $this->getTotalRecords(Publisher::class, $input, $publishers)
+            ['totalRecords' => $this->publisherRepository->all($input)->count()]
         );
     }
 

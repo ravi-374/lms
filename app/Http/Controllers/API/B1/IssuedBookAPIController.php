@@ -43,10 +43,11 @@ class IssuedBookAPIController extends AppBaseController
             return $issuedBook->apiObj();
         });
 
+        $input['withCount'] = 1;
         return $this->sendResponse(
             $issuedBooks,
             'Issued Books retrieved successfully.',
-            $this->getTotalRecords(IssuedBook::class, $input, $issuedBooks)
+            ['totalRecords' => $this->issuedBookRepository->all($input)]
         );
     }
 

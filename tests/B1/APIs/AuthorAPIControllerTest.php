@@ -28,7 +28,9 @@ class AuthorAPIControllerTest extends TestCase
 
         $authors = factory(Author::class, 5)->create();
 
-        $this->authorRepository->expects('all')->andReturn($authors);
+        $this->authorRepository->shouldReceive('all')
+            ->twice()
+            ->andReturn($authors);
 
         $response = $this->getJson(route('api.b1.authors.index'));
 

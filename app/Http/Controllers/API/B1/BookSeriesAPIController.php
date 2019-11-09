@@ -35,13 +35,18 @@ class BookSeriesAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $bookSeries = $this->bookSeriesRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($bookSeries->toArray(), 'Book Series retrieved successfully.');
+        return $this->sendResponse(
+            $bookSeries->toArray(),
+            'Book Series retrieved successfully.',
+            ['totalRecords' => $this->bookSeriesRepository->all($input)->count()]
+        );
     }
 
     /**

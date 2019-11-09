@@ -35,13 +35,18 @@ class MembershipPlanAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $membershipPlans = $this->membershipPlanRepo->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip', null),
             $request->get('limit', null)
         );
 
-        return $this->sendResponse($membershipPlans->toArray(), 'Membership Plans retrieved successfully.');
+        return $this->sendResponse(
+            $membershipPlans->toArray(),
+            'Membership Plans retrieved successfully.',
+            ['totalRecords' => $this->membershipPlanRepo->all($input)->count()]
+        );
     }
 
     /**

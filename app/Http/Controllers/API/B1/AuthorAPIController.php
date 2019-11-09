@@ -44,7 +44,7 @@ class AuthorAPIController extends AppBaseController
         return $this->sendResponse(
             $authors->toArray(),
             'Authors retrieved successfully.',
-            $this->getTotalRecords(Author::class, $input, $authors)
+            ['totalRecords' => $this->authorRepository->all($input)->count()]
         );
     }
 

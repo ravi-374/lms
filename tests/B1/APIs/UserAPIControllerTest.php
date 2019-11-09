@@ -30,7 +30,7 @@ class UserAPIControllerTest extends TestCase
         /** @var User $users */
         $users = factory(User::class, 5)->create();
 
-        $this->userRepository->expects('all')->andReturn($users);
+        $this->userRepository->shouldReceive('all')->twice()->andReturn($users);
 
         $response = $this->getJson(route('api.b1.users.index'));
 

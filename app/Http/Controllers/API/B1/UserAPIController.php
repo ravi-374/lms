@@ -43,10 +43,11 @@ class UserAPIController extends AppBaseController
             $request->get('limit')
         );
 
+        $input['withCount'] = 1;
         return $this->sendResponse(
             $users->toArray(),
             'Users retrieved successfully.',
-            $this->getTotalRecords(User::class, $input, $users)
+            ['totalRecords' => $this->userRepository->all($input)]
         );
     }
 

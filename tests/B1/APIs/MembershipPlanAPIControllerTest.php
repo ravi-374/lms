@@ -29,7 +29,7 @@ class MembershipPlanAPIControllerTest extends TestCase
         /** @var MembershipPlan[] $membershipPlan */
         $membershipPlan = factory(MembershipPlan::class, 5)->create();
 
-        $this->membershipPlanRepository->expects('all')->andReturn($membershipPlan);
+        $this->membershipPlanRepository->shouldReceive('all')->twice()->andReturn($membershipPlan);
 
         $response = $this->getJson(route('api.b1.membership-plans.index'));
 
