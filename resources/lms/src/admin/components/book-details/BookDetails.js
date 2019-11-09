@@ -73,10 +73,12 @@ const BookDetail = props => {
                                                 <img onClick={() => {
                                                     setVisible(true);
                                                 }} src={imageUrl} height="250" alt={imageUrl}/>
-                                                <Viewer loop={false} changeable={false} showTotal={false}
-                                                    visible={visible} onClose={() => {
+                                                <Viewer changeable={false}
+                                                        loop={false} zIndex={1100} scalable={false}
+                                                        noNavbar={true} visible={visible}
+                                                        onClose={() => {
                                                     setVisible(false);
-                                                }} images={[{src: imageUrl, alt: imageUrl}]}
+                                                }} images={[{src: imageUrl, alt: ''}]}
                                                 />
                                             </div>
                                         </div>
