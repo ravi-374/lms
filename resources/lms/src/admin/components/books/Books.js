@@ -14,9 +14,12 @@ import {getFormattedMessage, prepareFullNames} from "../../../shared/sharedMetho
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {fetchBooks} from '../../store/actions/bookAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import Viewer from "react-viewer";
 
 const Books = (props) => {
     const { books, history, isLoading, toggleModal, totalRecord, fetchBooks } = props;
+    const [visible, setVisible] = useState(false);
+    const [imageUrl, setImageUrl] = useState('');
     const [book, setBook] = useState(null);
     const cardModalProps = {
         book,
@@ -32,6 +35,13 @@ const Books = (props) => {
         toggleModal();
     };
 
+    const openImage = (imageUrl) => {
+        if (imageUrl !== null && imageUrl !== '') {
+            setImageUrl(imageUrl);
+            setVisible(true);
+        }
+    };
+
     const goToBookDetail = (bookId) => {
         history.push(`${Routes.BOOKS + bookId}/details`);
     };
@@ -41,9 +51,18 @@ const Books = (props) => {
             name: getFormattedMessage('books.table.cover.column'),
             selector: 'image',
             width: '100px',
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
             cell: row => {
                 const imageUrl = row.image ? publicImagePathURL.BOOK_AVATAR_URL + row.image : publicImagePath.BOOK_AVATAR;
-                return <img className="books-table-row__cover-img" src={imageUrl} alt={imageUrl}/>
+                return (
+                    <div>
+                        <img onClick={() => {
+                            openImage(imageUrl);
+                        }} src={imageUrl} height="50" alt={imageUrl}/>
+                    </div>
+                )
             },
         },
         {
@@ -95,6 +114,11 @@ const Books = (props) => {
                         {getFormattedMessage('books.input.new-btn.label')}
                     </Link>
                 </div>
+                <Viewer changeable={false} loop={false} zIndex={1100} scalable={false}
+                        noNavbar={true} visible={visible} onClose={() => {
+                    setVisible(false);
+                }} images={[{src: imageUrl, alt: ''}]}
+                />
             </Col>
             <Col sm={12}>
                 <div className="sticky-table-container">
