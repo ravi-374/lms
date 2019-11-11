@@ -51,7 +51,7 @@ class UserRepository extends BaseRepository
      * @param  int|null  $limit
      * @param  array  $columns
      *
-     * @return User[]|Collection
+     * @return User[]|Collection|int
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
@@ -63,6 +63,11 @@ class UserRepository extends BaseRepository
 
         $query = $this->allQuery($search, $skip, $limit)->with('roles', 'address');
         $query = $this->applyDynamicSearch($search, $query);
+
+        if (! empty($search['withCount'])) {
+            return $query->count();
+        }
+
         $users = $query->orderByDesc('id')->get();
 
         if (! empty($orderBy)) {

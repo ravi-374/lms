@@ -40,8 +40,8 @@ Route::get('docs', function () {
 
 
 /** Search books */
-Route::get('books', 'BookAPIController@index');
-Route::get('total-books', 'BookAPIController@totalBooks');
+Route::get('books', 'BookAPIController@index')->name('books.index');
+Route::get('total-books', 'BookAPIController@totalBooks')->name('books.count');
 
 /** homepage settings */
 Route::get('homepage-settings', 'HomepageSettingAPIController@index');

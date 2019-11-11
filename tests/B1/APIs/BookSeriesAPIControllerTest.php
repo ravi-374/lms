@@ -29,7 +29,7 @@ class BookSeriesAPIControllerTest extends TestCase
         /** @var BookSeries[] $bookSeries */
         $bookSeries = factory(BookSeries::class, 5)->create();
 
-        $this->bookSeriesRepository->expects('all')->andReturn($bookSeries);
+        $this->bookSeriesRepository->shouldReceive('all')->twice()->andReturn($bookSeries);
 
         $response = $this->getJson(route('api.b1.book-series.index'));
 

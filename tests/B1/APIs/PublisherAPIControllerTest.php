@@ -29,7 +29,7 @@ class PublisherAPIControllerTest extends TestCase
         /** @var Publisher[] $publishers */
         $publishers = factory(Publisher::class, 5)->create();
 
-        $this->publisherRepository->expects('all')->andReturn($publishers);
+        $this->publisherRepository->shouldReceive('all')->twice()->andReturn($publishers);
 
         $response = $this->getJson(route('api.b1.publishers.index'));
 

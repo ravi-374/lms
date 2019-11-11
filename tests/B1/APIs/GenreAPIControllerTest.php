@@ -29,7 +29,7 @@ class GenreAPIControllerTest extends TestCase
         /** @var Genre[] $genres */
         $genres = factory(Genre::class, 5)->create();
 
-        $this->genreRepository->expects('all')->andReturn($genres);
+        $this->genreRepository->shouldReceive('all')->twice()->andReturn($genres);
 
         $response = $this->getJson(route('api.b1.genres.index'));
 

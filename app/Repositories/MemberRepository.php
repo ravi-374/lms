@@ -65,7 +65,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
      * @param  int|null  $limit
      * @param  array  $columns
      *
-     * @return Member[]|Collection
+     * @return Member[]|Collection|int
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
@@ -77,6 +77,11 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
 
         $query = $this->allQuery($search, $skip, $limit)->with('address', 'membershipPlan');
         $query = $this->applyDynamicSearch($search, $query);
+
+        if (! empty($search['withCount'])) {
+            return $query->count();
+        }
+
         $members = $query->orderByDesc('id')->get();
 
         if (! empty($orderBy)) {

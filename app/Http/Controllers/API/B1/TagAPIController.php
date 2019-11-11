@@ -44,7 +44,7 @@ class TagAPIController extends AppBaseController
         return $this->sendResponse(
             $tags->toArray(),
             'Tags retrieved successfully.',
-            $this->getTotalRecords(Tag::class, $input, $tags)
+            ['totalRecords' => $this->tagRepository->all($input)->count()]
         );
     }
 

@@ -29,7 +29,7 @@ class BookLanguageAPIControllerTest extends TestCase
         /** @var BookLanguage[] $bookLanguages */
         $bookLanguages = factory(BookLanguage::class, 5)->create();
 
-        $this->bookLanguageRepository->expects('all')->andReturn($bookLanguages);
+        $this->bookLanguageRepository->shouldReceive('all')->twice()->andReturn($bookLanguages);
 
         $response = $this->getJson(route('api.b1.book-languages.index'));
 

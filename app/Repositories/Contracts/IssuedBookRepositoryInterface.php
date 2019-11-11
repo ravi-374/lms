@@ -27,7 +27,7 @@ interface IssuedBookRepositoryInterface
      * @param  int|null  $limit
      * @param  array  $columns
      *
-     * @return IssuedBook[]|Collection
+     * @return IssuedBook[]|Collection|int
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
 
