@@ -114,7 +114,7 @@ const Books = (props) => {
                         {getFormattedMessage('books.input.new-btn.label')}
                     </Link>
                 </div>
-                <Viewer changeable={false} loop={false} zIndex={1100} scalable={false}
+                <Viewer drag={false} changeable={false} loop={false} zIndex={1100} scalable={false}
                         noNavbar={true} visible={visible} onClose={() => {
                     setVisible(false);
                 }} images={[{src: imageUrl, alt: ''}]}
