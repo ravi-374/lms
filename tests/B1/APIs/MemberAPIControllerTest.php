@@ -30,7 +30,7 @@ class MemberAPIControllerTest extends TestCase
         /** @var Member[] $members */
         $members = factory(Member::class, 5)->create();
 
-        $this->memberRepository->expects('all')->andReturn($members);
+        $this->memberRepository->shouldReceive('all')->twice()->andReturn($members);
 
         $response = $this->getJson(route('api.b1.members.index'));
 

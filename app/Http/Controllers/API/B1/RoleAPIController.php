@@ -36,13 +36,18 @@ class RoleAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->except(['skip', 'limit']);
         $roles = $this->roleRepository->all(
-            $request->except(['skip', 'limit']),
+            $input,
             $request->get('skip'),
             $request->get('limit')
         );
 
-        return $this->sendResponse($roles->toArray(), 'Roles retrieved successfully.');
+        return $this->sendResponse(
+            $roles->toArray(),
+            'Roles retrieved successfully.',
+            ['totalRecords' => $this->roleRepository->all($input)->count()]
+        );
     }
 
     /**

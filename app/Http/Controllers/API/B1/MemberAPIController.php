@@ -45,10 +45,11 @@ class MemberAPIController extends AppBaseController
             $request->get('limit')
         );
 
+        $input['withCount'] = 1;
         return $this->sendResponse(
             $members->toArray(),
             'Members retrieved successfully.',
-            $this->getTotalRecords(Member::class, $input, $members)
+            ['totalRecords' => $this->memberRepository->all($input)]
         );
     }
 

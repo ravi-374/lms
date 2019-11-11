@@ -28,7 +28,7 @@ class TagAPIControllerTest extends TestCase
         /** @var Tag $tags */
         $tags = factory(Tag::class, 5)->create();
 
-        $this->tagRepository->expects('all')->andReturn($tags);
+        $this->tagRepository->shouldReceive('all')->twice()->andReturn($tags);
 
         $response = $this->getJson(route('api.b1.tags.index'));
 

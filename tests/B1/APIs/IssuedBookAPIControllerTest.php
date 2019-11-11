@@ -32,7 +32,7 @@ class IssuedBookAPIControllerTest extends TestCase
         /** @var IssuedBook[] $issuedBooks */
         $issuedBooks = factory(IssuedBook::class, 5)->create();
 
-        $this->issuedBookRepository->expects('all')->andReturn($issuedBooks);
+        $this->issuedBookRepository->shouldReceive('all')->twice()->andReturn($issuedBooks);
 
         $response = $this->getJson(route('api.b1.books-history'));
 

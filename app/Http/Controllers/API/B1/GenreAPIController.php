@@ -44,7 +44,7 @@ class GenreAPIController extends AppBaseController
         return $this->sendResponse(
             $genres->toArray(),
             'Genres retrieved successfully.',
-            $this->getTotalRecords(Genre::class, $input, $genres)
+            ['totalRecords' => $this->genreRepository->all($input)->count()]
         );
     }
 

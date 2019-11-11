@@ -66,7 +66,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @param  int|null  $limit
      * @param  array  $columns
      *
-     * @return IssuedBook[]|Collection
+     * @return IssuedBook[]|Collection|int
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
@@ -89,6 +89,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $query->when(! empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
         });
+
+        if (! empty($search['withCount'])) {
+            return $query->count();
+        }
 
         $bookRecords = $query->orderByDesc('id')->get();
 

@@ -45,7 +45,7 @@ class BookLanguageAPIController extends AppBaseController
         return $this->sendResponse(
             $bookLanguages->toArray(),
             'Book Languages retrieved successfully.',
-            $this->getTotalRecords(BookLanguage::class, $input, $bookLanguages)
+            ['totalRecords' => $this->bookLanguageRepository->all($input)->count()]
         );
     }
 

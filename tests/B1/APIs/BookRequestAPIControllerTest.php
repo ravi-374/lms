@@ -44,7 +44,7 @@ class BookRequestAPIControllerTest extends TestCase
         /** @var BookRequest[] $bookRequests */
         $bookRequests = factory(BookRequest::class, 5)->create();
 
-        $this->bookRequestRepository->expects('all')->andReturn($bookRequests);
+        $this->bookRequestRepository->shouldReceive('all')->twice()->andReturn($bookRequests);
 
         $response = $this->getJson(route('api.b1.book-requests.index'));
 
