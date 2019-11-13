@@ -120,6 +120,7 @@ export const apiBaseURL = {
     PUBLISHER: 'publishers',
     ROLE: 'roles',
     SETTING: 'settings',
+    HOME_SETTING: 'homepage-settings',
     SEARCH_BOOK: 'search-books',
     TAG: 'tags',
     UPLOAD_LOGO: 'upload-logo',

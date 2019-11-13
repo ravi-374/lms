@@ -400,5 +400,15 @@
     "users.success.edit.message": "User updated successfully.",
     "users.success.delete.message": "User deleted successfully.",
     "users.success.active-account.message": "User activated successfully.",
-    "users.success.inactive-account.message": "User Inactivated successfully."
+    "users.success.inactive-account.message": "User Inactivated successfully.",
+    "cms.title": "CMS",
+    "home-settings.title": "Home Settings",
+    "home-settings.success.create.message": "Home Settings saved successfully.",
+    "home-settings.input.facebook.label": "Facebook",
+    "home-settings.input.github.label": "Github",
+    "home-settings.input.linkedin.label": "Linkedin",
+    "home-settings.input.twitter.label": "Twitter",
+    "home-settings.input.contact_email.label": "Contact Email",
+    "home-settings.input.contact_phone.label": "Contact Phone",
+    "home-settings.input.company_description.label": "Company Description"
 }

@@ -214,6 +214,8 @@ export const settingsActionsType = {
     POST_LOGO: 'POST_LOGO',
     POST_FAVICON: 'POST_FAVICON',
     FETCH_CURRENCIES: 'FETCH_CURRENCIES',
+    FETCH_HOME_SETTINGS: 'FETCH_HOME_SETTINGS',
+    POST_HOME_SETTINGS: 'POST_HOME_SETTINGS',
 };
 
 export const settingsKey = {
@@ -351,4 +353,24 @@ export const availableBookLimitActionType = {
     FETCH_AVAILABLE_ISSUE_BOOK_LIMIT: 'FETCH_AVAILABLE_ISSUE_BOOK_LIMIT',
     FETCH_AVAILABLE_RESERVE_BOOK_LIMIT: 'FETCH_AVAILABLE_RESERVE_BOOK_LIMIT',
     CLEAR_AVAILABLE_RESERVE_BOOK_LIMIT: 'CLEAR_AVAILABLE_RESERVE_BOOK_LIMIT',
+};
+
+export const homeSettingsKey = {
+    FACEBOOK: 'facebook',
+    GITHUB: 'github',
+    LINKEDIN: 'linkedin',
+    TWITTER: 'twitter',
+    CONTACT_EMAIl: 'contact_email',
+    CONTACT_PHONE: 'contact_phone',
+    COMPANY_DESCRIPTION: 'company_description',
+};
+
+export const homeSettingsDisplayName = {
+    FACEBOOK: 'Facebook',
+    GITHUB: 'Github',
+    LINKEDIN: 'Linkedin',
+    TWITTER: 'Twitter',
+    CONTACT_EMAIl: 'Contact Email',
+    CONTACT_PHONE: 'Contact Phone',
+    COMPANY_DESCRIPTION: 'Company Description',
 };

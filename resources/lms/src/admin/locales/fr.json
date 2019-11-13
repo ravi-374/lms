@@ -200,7 +200,7 @@
     "dashboard.chart.filter.last-month.label": "Le Mois Dernier",
     "dashboard.chart.filter.intermediate.label": "Mois Entre",
     "dashboard.chart.filter.custom.label": "Gamme Personnalisée",
-    "dashboard.chart.empty-message.label":"Aucune donnée disponible...",
+    "dashboard.chart.empty-message.label": "Aucune donnée disponible...",
     "forgot-password.title": "Mot De Passe Oublié",
     "forgot-password.note": "Entrez Votre Email Pour Réinitialiser Un Mot De Passe",
     "forgot-password.email.note": "Le lien de réinitialisation a été envoyé survotre adresse postale. veuillez vérifier votre e-mail.",
@@ -396,5 +396,15 @@
     "users.success.edit.message": "Utilisateur mis à jour avec succès.",
     "users.success.delete.message": "Utilisateur supprimé avec succès.",
     "users.success.active-account.message": "Utilisateur activé avec succès.",
-    "users.success.inactive-account.message": "Utilisateur inactif avec succès."
+    "users.success.inactive-account.message": "Utilisateur inactif avec succès.",
+    "cms.title": "CMS",
+    "home-settings.title": "Paramètres d'accueil",
+    "home-settings.success.create.message": "Accueil Paramètres enregistrés avec succès.",
+    "home-settings.input.facebook.label": "Facebook",
+    "home-settings.input.github.label": "Github",
+    "home-settings.input.linkedin.label": "Linkedin",
+    "home-settings.input.twitter.label": "Twitter",
+    "home-settings.input.contact_email.label": "Email du contact",
+    "home-settings.input.contact_phone.label": "Numéro du contact",
+    "home-settings.input.company_description.label": "Description de l'entreprise"
 }
