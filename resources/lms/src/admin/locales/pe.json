@@ -406,5 +406,12 @@
     "home-settings.input.twitter.label": "توییتر",
     "home-settings.input.contact_email.label": "تماس با ایمیل",
     "home-settings.input.contact_phone.label": "تماس با تلفن",
-    "home-settings.input.company_description.label": "توضیحات شرکت"
+    "home-settings.input.company_description.label": "توضیحات شرکت",
+    "home-settings.input.facebook.validate.label": "فیس بوک باید مورد نیاز باشد.",
+    "home-settings.input.github.validate.label": "Github باید مورد نیاز باشد.",
+    "home-settings.input.linkedin.validate.label": "لینکدین باید مورد نیاز باشد.",
+    "home-settings.input.twitter.validate.label": "توییتر مورد نیاز است.",
+    "home-settings.input.contact_email.validate.label": "تماس با ایمیل لازم است",
+    "home-settings.input.contact_phone.validate.label": "تلفن تماس لازم است.",
+    "home-settings.input.company_description.validate.label": "توضیحات شرکت باید مورد نیاز باشد."
 }

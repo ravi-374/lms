@@ -4,11 +4,12 @@ import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import PropTypes from 'prop-types';
 import './HomeSettings.scss';
-import {homeSettingsKey, languageOptions, homeSettingsDisplayName} from '../../constants';
+import {languageOptions} from '../../constants';
 import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import {getFormattedMessage, getFormattedOptions} from '../../../shared/sharedMethod';
 import homeSettingsFormValidate from "./homeSettingsFormValidate";
+import {homeSettingsDisplayName, homeSettingsKey} from "../../../constants";
 
 const HomeSettingsForm = (props) => {
     const {
@@ -42,31 +43,31 @@ const HomeSettingsForm = (props) => {
     return (
         <Row className="settings">
             <Col xs={6}>
-                <Field name='facebook' type="text" label="home-settings.input.facebook.label" required groupText="list"
+                <Field name='facebook' type="text" label="home-settings.input.facebook.label" required groupText="facebook-f"
                        component={InputGroup} inputRef={settingRef}/>
             </Col>
             <Col xs={6}>
-                <Field name='github' type="text" label="home-settings.input.github.label" required groupText="list"
+                <Field name='github' type="text" label="home-settings.input.github.label" required groupText="github"
                        component={InputGroup}/>
             </Col>
             <Col xs={6}>
-                <Field name='linkedin' type="text" label="home-settings.input.linkedin.label" required groupText="list"
+                <Field name='linkedin' type="text" label="home-settings.input.linkedin.label" required groupText="linkedin-in"
                        component={InputGroup}/>
             </Col>
             <Col xs={6}>
-                <Field name='twitter' type="text" label="home-settings.input.twitter.label" required groupText="list"
+                <Field name='twitter' type="text" label="home-settings.input.twitter.label" required groupText="twitter"
                        component={InputGroup}/>
             </Col>
             <Col xs={6}>
-                <Field name='contact_email' type="email" label="home-settings.input.contact_email.label" required groupText="list"
+                <Field name='contact_email' type="email" label="home-settings.input.contact_email.label" required groupText="at"
                        component={InputGroup}/>
             </Col>
             <Col xs={6}>
-                <Field name='contact_phone' type="number" label="home-settings.input.contact_phone.label" required groupText="list"
+                <Field name='contact_phone' type="number" label="home-settings.input.contact_phone.label" required groupText="phone"
                        component={InputGroup}/>
             </Col>
             <Col xs={6}>
-                <Field name='company_description' type="textarea" label="home-settings.input.company_description.label" required groupText="list"
+                <Field name='company_description' type="textarea" label="home-settings.input.company_description.label" required groupText="pen"
                        component={InputGroup}/>
             </Col>
             <Col xs={12}>

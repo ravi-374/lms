@@ -406,5 +406,12 @@
     "home-settings.input.twitter.label": "推特",
     "home-settings.input.contact_email.label": "联系电子邮件",
     "home-settings.input.contact_phone.label": "联系电话",
-    "home-settings.input.company_description.label": "公司介绍"
+    "home-settings.input.company_description.label": "公司介绍",
+    "home-settings.input.facebook.validate.label": "必须使用Facebook。",
+    "home-settings.input.github.validate.label": "Github是必需的。",
+    "home-settings.input.linkedin.validate.label": "必须提供Linkedin。",
+    "home-settings.input.twitter.validate.label": "必须使用Twitter。",
+    "home-settings.input.contact_email.validate.label": "必须填写联系电子邮件。",
+    "home-settings.input.contact_phone.validate.label": "必须填写联系电话。",
+    "home-settings.input.company_description.validate.label": "必须提供公司说明。"
 }

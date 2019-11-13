@@ -406,5 +406,12 @@
     "home-settings.input.twitter.label": "щебет",
     "home-settings.input.contact_email.label": "Почта для связи",
     "home-settings.input.contact_phone.label": "Контактный телефон",
-    "home-settings.input.company_description.label": "Описание Компании"
+    "home-settings.input.company_description.label": "Описание Компании",
+    "home-settings.input.facebook.validate.label": "Facebook должен быть обязательным.",
+    "home-settings.input.github.validate.label": "Github должен быть обязательным.",
+    "home-settings.input.linkedin.validate.label": "Linkedin должен быть обязательным.",
+    "home-settings.input.twitter.validate.label": "Twitter должен быть обязательным.",
+    "home-settings.input.contact_email.validate.label": "Контактный адрес электронной почты должен быть обязательным.",
+    "home-settings.input.contact_phone.validate.label": "Контактный телефон должен быть обязательным.",
+    "home-settings.input.company_description.validate.label": "Описание компании должно быть обязательным."
 }

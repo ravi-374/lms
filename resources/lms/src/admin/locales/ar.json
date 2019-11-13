@@ -405,5 +405,12 @@
     "home-settings.input.twitter.label": "تويتر",
     "home-settings.input.contact_email.label": "تواصل بالبريد الاكتروني",
     "home-settings.input.contact_phone.label": "هاتف الاتصال",
-    "home-settings.input.company_description.label": "وصف الشركة"
+    "home-settings.input.company_description.label": "وصف الشركة",
+    "home-settings.input.facebook.validate.label": "يجب أن يكون Facebook مطلوبًا.",
+    "home-settings.input.github.validate.label": "يجب أن يكون جيثب مطلوبًا.",
+    "home-settings.input.linkedin.validate.label": "ينكدين يجب أن تكون مطلوبة.",
+    "home-settings.input.twitter.validate.label": "يجب أن يكون Twitter مطلوبًا.",
+    "home-settings.input.contact_email.validate.label": "الاتصال البريد الإلكتروني يجب أن يكون مطلوبا.",
+    "home-settings.input.contact_phone.validate.label": "الاتصال الهاتف يجب أن يكون مطلوبا.",
+    "home-settings.input.company_description.validate.label": "يجب أن يكون وصف الشركة مطلوبًا."
 }

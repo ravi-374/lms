@@ -406,5 +406,12 @@
     "home-settings.input.twitter.label": "Gorjeo",
     "home-settings.input.contact_email.label": "Email de contacto",
     "home-settings.input.contact_phone.label": "teléfono de contacto",
-    "home-settings.input.company_description.label": "Descripción de la compañía"
+    "home-settings.input.company_description.label": "Descripción de la compañía",
+    "home-settings.input.facebook.validate.label": "Facebook debe ser requerido.",
+    "home-settings.input.github.validate.label": "Github debe ser requerido.",
+    "home-settings.input.linkedin.validate.label": "Linkedin debe ser requerido.",
+    "home-settings.input.twitter.validate.label": "Twitter debe ser requerido.",
+    "home-settings.input.contact_email.validate.label": "Se requiere un correo electrónico de contacto.",
+    "home-settings.input.contact_phone.validate.label": "Se requiere un teléfono de contacto.",
+    "home-settings.input.company_description.validate.label": "Se requiere un teléfono de contacto."
 }

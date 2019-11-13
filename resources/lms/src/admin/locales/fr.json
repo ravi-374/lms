@@ -406,5 +406,12 @@
     "home-settings.input.twitter.label": "Twitter",
     "home-settings.input.contact_email.label": "Email du contact",
     "home-settings.input.contact_phone.label": "Numéro du contact",
-    "home-settings.input.company_description.label": "Description de l'entreprise"
+    "home-settings.input.company_description.label": "Description de l'entreprise",
+    "home-settings.input.facebook.validate.label": "Facebook doit être requis.",
+    "home-settings.input.github.validate.label": "Github doit être requis.",
+    "home-settings.input.linkedin.validate.label": "Linkedin doit être requis.",
+    "home-settings.input.twitter.validate.label": "Twitter doit être requis.",
+    "home-settings.input.contact_email.validate.label": "L'email de contact doit être requis.",
+    "home-settings.input.contact_phone.validate.label": "Le numéro de téléphone doit être requis.",
+    "home-settings.input.company_description.validate.label": "La description de l'entreprise doit être obligatoire."
 }

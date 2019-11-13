@@ -4,15 +4,14 @@ import {Card, CardBody, Col, Row} from 'reactstrap';
 import PropTypes from 'prop-types';
 import _ from "lodash";
 import HomeSettingsForm from "./HomeSettingsForm";
-import {homeSettingsKey, languageOptions} from '../../constants';
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
-import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
-import {fetchHomeSettings, postHomeSettings} from '../../store/actions/settingAction';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {homeSettingsKey} from "../../../constants";
+import {fetchHomeSettings, postHomeSettings} from "../../store/actions/settingAction";
 
 const HomeSettings = (props) => {
     const {fetchHomeSettings, postHomeSettings, homeSettings} = props;
-    const bookLanguagesOptions = getFormattedOptions(languageOptions);
 
     useEffect(() => {
         fetchHomeSettings(true);
@@ -58,14 +57,14 @@ const HomeSettings = (props) => {
 };
 
 HomeSettings.propTypes = {
-    settings: PropTypes.object,
+    homeSettings: PropTypes.object,
     fetchHomeSettings: PropTypes.func,
     postHomeSettings: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
-    const {settings} = state;
-    const settingsArray = Object.values(settings);
+    const {homeSettings} = state;
+    const settingsArray = Object.values(homeSettings);
     const settingsArr = _.mapKeys(settingsArray, 'key');
     return {
         homeSettings: settingsArr

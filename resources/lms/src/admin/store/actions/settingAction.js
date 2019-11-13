@@ -6,7 +6,7 @@ import {getOrSetCurrency} from "../../../store/action/currencyAction";
 import apiConfigWthFormData from "../../config/apiConfigWthFormData";
 import {editAppSetting} from "../../../store/action/appSettingAction";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {apiBaseURL} from "../../../constants";
+import {apiBaseURL, homeSettingsActionsType} from "../../../constants";
 
 export const fetchSettings = (isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
@@ -81,22 +81,21 @@ export const fetchHomeSettings = (isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
     await apiConfig.get(apiBaseURL.HOME_SETTING)
         .then((response) => {
-            dispatch({ type: settingsActionsType.FETCH_HOME_SETTINGS, payload: response.data.data });
+            dispatch({type: homeSettingsActionsType.FETCH_HOME_SETTINGS, payload: response.data.data});
             isLoading ? dispatch(setLoading(false)) : null;
         })
-        .catch(({ response }) => {
+        .catch(({response}) => {
             isLoading ? dispatch(setLoading(false)) : null;
         });
 };
 
 export const postHomeSettings = (homeSettings) => async (dispatch) => {
-    await apiConfig.post(apiBaseURL.HOME_SETTING, homeSettings)
+    await apiConfig.put(apiBaseURL.HOME_SETTING, homeSettings)
         .then((response) => {
-            dispatch({ type: settingsActionsType.POST_HOME_SETTINGS, payload: response.data.data });
-            dispatch(editAppSetting(prepareAppSetting(response.data.data)));
-            dispatch(addToast({ text: getFormattedMessage('settings.success.create.message') }));
+            dispatch({type: homeSettingsActionsType.PUT_HOME_SETTINGS, payload: response.data.data});
+            dispatch(addToast({text: getFormattedMessage('home-settings.success.create.message')}));
         })
-        .catch(({ response }) => {
-            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        .catch(({response}) => {
+            dispatch(addToast({text: response.data.message, type: toastType.ERROR}));
         });
 };

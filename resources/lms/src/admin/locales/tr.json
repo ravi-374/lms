@@ -398,7 +398,7 @@
     "users.success.active-account.message": "Kullanıcı başarıyla etkinleştirildi.",
     "users.success.inactive-account.message": "Kullanıcı başarıyla devre dışı bırakıldı.",
     "cms.title": "CMS",
-    "home-setting.title": "Configuraciones de inicio...",
+    "home-settings.title": "Configuraciones de inicio...",
     "home-settings.success.create.message": "Ev Ayarları başarıyla kaydedildi.",
     "home-settings.input.facebook.label": "Facebook",
     "home-settings.input.github.label": "Github",
@@ -406,5 +406,12 @@
     "home-settings.input.twitter.label": "щебет",
     "home-settings.input.contact_email.label": "Почта для связи",
     "home-settings.input.contact_phone.label": "Контактный телефон",
-    "home-settings.input.company_description.label": "Описание Компании"
+    "home-settings.input.company_description.label": "Описание Компании",
+    "home-settings.input.facebook.validate.label": "Facebook gerekli olmalı.",
+    "home-settings.input.github.validate.label": "Github gerekli olmalı.",
+    "home-settings.input.linkedin.validate.label": "Linkedin gerekli olmalı.",
+    "home-settings.input.twitter.validate.label": "Twitter gerekli olmalı.",
+    "home-settings.input.contact_email.validate.label": "İletişim e-postası gerekli olmalıdır.",
+    "home-settings.input.contact_phone.validate.label": "İletişim Telefonu gerekli olmalıdır.",
+    "home-settings.input.company_description.validate.label": "Şirket tanımı gerekli olmalıdır."
 }

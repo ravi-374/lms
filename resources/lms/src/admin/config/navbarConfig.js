@@ -99,7 +99,7 @@ export default {
                     icon: 'fa fa-cog'
                 },
                 {
-                    name: getFormattedMessage('home-setting.title'),
+                    name: getFormattedMessage('home-settings.title'),
                     url: '/app/admin/home-settings',
                     icon: 'fa fa-cogs'
                 },

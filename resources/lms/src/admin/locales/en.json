@@ -410,5 +410,12 @@
     "home-settings.input.twitter.label": "Twitter",
     "home-settings.input.contact_email.label": "Contact Email",
     "home-settings.input.contact_phone.label": "Contact Phone",
-    "home-settings.input.company_description.label": "Company Description"
+    "home-settings.input.company_description.label": "Company Description",
+    "home-settings.input.facebook.validate.label": "Facebook must be required.",
+    "home-settings.input.github.validate.label": "Github must be required.",
+    "home-settings.input.linkedin.validate.label": "Linkedin must be required.",
+    "home-settings.input.twitter.validate.label": "Twitter must be required.",
+    "home-settings.input.contact_email.validate.label": "Contact Email must be required.",
+    "home-settings.input.contact_phone.validate.label": "Contact Phone must be required.",
+    "home-settings.input.company_description.validate.label": "Company Description must be required."
 }
