@@ -407,6 +407,8 @@
     "home-settings.input.contact_email.label": "Почта для связи",
     "home-settings.input.contact_phone.label": "Контактный телефон",
     "home-settings.input.company_description.label": "Описание Компании",
+    "home-settings.input.website.label": "Веб-сайт",
+    "home-settings.input.website.validate.label": "Сайт должен быть обязательным.",
     "home-settings.input.facebook.validate.label": "Facebook должен быть обязательным.",
     "home-settings.input.github.validate.label": "Github должен быть обязательным.",
     "home-settings.input.linkedin.validate.label": "Linkedin должен быть обязательным.",

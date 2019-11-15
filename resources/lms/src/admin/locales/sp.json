@@ -407,6 +407,8 @@
     "home-settings.input.contact_email.label": "Email de contacto",
     "home-settings.input.contact_phone.label": "teléfono de contacto",
     "home-settings.input.company_description.label": "Descripción de la compañía",
+    "home-settings.input.website.label": "Sitio web",
+      "home-settings.input.website.validate.label": "El sitio web debe ser requerido.",
     "home-settings.input.facebook.validate.label": "Facebook debe ser requerido.",
     "home-settings.input.github.validate.label": "Github debe ser requerido.",
     "home-settings.input.linkedin.validate.label": "Linkedin debe ser requerido.",

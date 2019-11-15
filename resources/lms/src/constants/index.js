@@ -157,6 +157,7 @@ export const homeSettingsKey = {
     CONTACT_EMAIl: 'contact_email',
     CONTACT_PHONE: 'contact_phone',
     COMPANY_DESCRIPTION: 'company_description',
+    WEBSITE:'website',
 };
 
 export const homeSettingsDisplayName = {
@@ -167,4 +168,5 @@ export const homeSettingsDisplayName = {
     CONTACT_EMAIl: 'Contact Email',
     CONTACT_PHONE: 'Contact Phone',
     COMPANY_DESCRIPTION: 'Company Description',
+    WEBSITE:'Website',
 };
