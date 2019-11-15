@@ -11,13 +11,13 @@ class CreateHomepageSettingsSeeder extends Seeder
     public function run()
     {
         $settings[] = ['facebook', 'https://www.facebook.com/infyom', 'Facebook link'];
-        $settings[] = ['github', '', 'https://github.com/InfyOmLabs'];
-        $settings[] = ['linkedin', '', 'https://in.linkedin.com/company/infyom-technologies'];
-        $settings[] = ['twitter', '', 'infyom'];
-        $settings[] = ['contact_email', '', 'contact@infyom.in'];
-        $settings[] = ['contact_phone', '', '7096336561'];
-        $settings[] = ['website', '', 'http://www.infyom.com/'];
-        $settings[] = ['company_description', '', 'Leading Laravel Development Company Of India.'];
+        $settings[] = ['github', 'https://github.com/InfyOmLabs', 'Github link'];
+        $settings[] = ['linkedin', 'https://in.linkedin.com/company/infyom-technologies', 'Linkedin link'];
+        $settings[] = ['twitter', 'infyom', 'Twitter link'];
+        $settings[] = ['contact_email', 'contact@infyom.in', 'Contact Email'];
+        $settings[] = ['contact_phone', '7096336561', 'Contact Phone'];
+        $settings[] = ['website', 'http://www.infyom.com', 'Website'];
+        $settings[] = ['company_description', 'Leading Laravel Development Company Of India.', 'Company Description'];
 
 
         foreach ($settings as $setting) {
