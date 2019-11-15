@@ -73,7 +73,7 @@ const BookDetail = props => {
                                                 <img onClick={() => {
                                                     setVisible(true);
                                                 }} src={imageUrl} height="250" alt={imageUrl}/>
-                                                <Viewer changeable={false} drag={false}
+                                                <Viewer changeable={false} drag={false} disableMouseZoom={true}
                                                         loop={false} zIndex={1100} scalable={false}
                                                         noNavbar={true} visible={visible}
                                                         onClose={() => {

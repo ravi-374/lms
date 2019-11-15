@@ -115,7 +115,7 @@ const Books = (props) => {
                     </Link>
                 </div>
                 <Viewer drag={false} changeable={false} loop={false} zIndex={1100} scalable={false}
-                        noNavbar={true} visible={visible} onClose={() => {
+                        noNavbar={true} visible={visible} disableMouseZoom={true} onClose={() => {
                     setVisible(false);
                 }} images={[{src: imageUrl, alt: ''}]}
                 />
