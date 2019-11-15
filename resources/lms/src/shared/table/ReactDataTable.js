@@ -73,8 +73,7 @@ const ReactTable = (props) => {
         const filters = {
             order_By: orderBy,
             limit: perPage,
-            skip: searchText !== '' || filterText !== intl.formatMessage({ id: FilterOption.ALL }) ? 0
-                : (page - 1) * perPage,
+            skip: searchText !== '' ? 0 : (page - 1) * perPage,
             direction: direction,
             search: isShowFilterField && filterText !== intl.formatMessage({ id: FilterOption.ALL }) &&
             searchText === '' ? filterText.toLowerCase() : '' ||

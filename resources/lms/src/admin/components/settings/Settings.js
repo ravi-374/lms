@@ -108,7 +108,6 @@ Settings.propTypes = {
     postAppFavicon: PropTypes.func
 };
 
-
 const prepareCurrencies = (currencies) => {
     let currenciesArray = [];
     currencies.forEach(cur => currenciesArray.push({
