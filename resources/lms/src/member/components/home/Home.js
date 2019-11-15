@@ -19,6 +19,8 @@ import {resetSearchBooks} from "../../store/actions/bookSearchAction";
 import {Button} from 'reactstrap';
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import Truncate from "../../../shared/Truncate";
+import {fetchHomeSettings} from "../../store/actions/homeSettingAction";
+import _ from "lodash";
 
 const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
@@ -34,7 +36,10 @@ const Home = (props) => {
         fetchTotalBooks,
         fetchFeaturedBooks,
         fetchBooksByNameOrAuthors,
-        toggleModal
+        toggleModal,
+        fetchHomeSettings,
+        homeSettings,
+        isLoading
     } = props;
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
@@ -53,6 +58,7 @@ const Home = (props) => {
     useEffect(() => {
         fetchTotalBooks();
         fetchFeaturedBooks();
+        fetchHomeSettings();
     }, []);
 
     const openModal = (book) => {
@@ -306,24 +312,29 @@ const Home = (props) => {
                         <div className="col-12 col-md-3">
                             <a href="#"><img src={appLogo} alt="library" height="50"/></a>
                             <p className="mt-3">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida,
-                                quam vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
+                                {homeSettings.company_description ? homeSettings.company_description.value : ''}
+                            </p>
                             <div className="space-10"/>
                             <ul className="list-inline list-unstyled social-list">
                                 <li className="list-inline-item">
-                                    <a href="https://www.facebook.com/infyom" target="_blank"><i
-                                        className="fa fa-facebook" aria-hidden="true"/></a>
+                                    <a href={homeSettings.facebook ? homeSettings.facebook.value : ''} target="_blank">
+                                        <i className="fa fa-facebook" aria-hidden="true"/>
+                                    </a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href="https://twitter.com/infyom" target="_blank"><i className="fa fa-twitter"
-                                                                                            aria-hidden="true"/></a>
+                                    <a href={homeSettings.twitter ? homeSettings.twitter.value : ''} target="_blank">
+                                        <i className="fa fa-twitter" aria-hidden="true"/>
+                                    </a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href="https://in.linkedin.com/company/infyom-technologies" target="_blank"><i
-                                        className="fa fa-linkedin" aria-hidden="true"/></a>
+                                    <a href={homeSettings.linkedin ? homeSettings.linkedin.value : ''} target="_blank">
+                                        <i className="fa fa-linkedin" aria-hidden="true"/>
+                                    </a>
                                 </li>
-                                <li className="list-inline-item"><a href="https://github.com/infyomlabs"
-                                                                    target="_blank"><i className="fa fa-github"/></a>
+                                <li className="list-inline-item">
+                                    <a href={homeSettings.github ? homeSettings.github.value : ''} target="_blank">
+                                        <i className="fa fa-github"/>
+                                    </a>
                                 </li>
                             </ul>
                             <ul className="list-inline tip yellow">
@@ -344,11 +355,11 @@ const Home = (props) => {
                                 </tr>
                                 <tr>
                                     <td><i className="fa fa-envelope"/></td>
-                                    <td>contact@infyom.in</td>
+                                    <td>{homeSettings.contact_email ? homeSettings.contact_email.value : ''}</td>
                                 </tr>
                                 <tr>
                                     <td><i className="fa fa-phone"/></td>
-                                    <td>+91 70963 36561</td>
+                                    <td>{homeSettings.contact_phone ? homeSettings.contact_phone.value : ''}</td>
                                 </tr>
                                 <tr>
                                     <td><i className="fa fa-globe"/></td>
@@ -455,9 +466,11 @@ const Home = (props) => {
             element.classList.toggle('show');
         }
     };
+    if (isLoading) {
+        return <ProgressBar/>
+    }
     return (
         <React.Fragment>
-            <ProgressBar/>
             <div className="animated fadeIn main-landing-page">
                 <header className="header position-fixed">
                     <HeaderTitle title="Landing"/>
@@ -545,12 +558,16 @@ Home.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading} = state;
-    return {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading}
+    const {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings} = state;
+    const settingsArray = Object.values(homeSettings);
+    const settingsArr = _.mapKeys(settingsArray, 'key');
+    console.log(settingsArr);
+    return {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings: settingsArr}
 };
 
 export default connect(mapStateToProps, {
     fetchFeaturedBooks,
+    fetchHomeSettings,
     toggleModal,
     fetchBooksByNameOrAuthors,
     resetSearchBooks,

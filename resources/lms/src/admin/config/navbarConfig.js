@@ -87,11 +87,23 @@ export default {
             icon: 'fas fa-book',
             permission: Permissions.MANANGE_BOOK_REQUEST,
         },
+
         {
-            name: getFormattedMessage('settings.title'),
-            url: '/app/admin/settings',
-            icon: 'fa fa-cog',
-            permission: Permissions.MANAGE_FINANCE,
+            name: getFormattedMessage("cms.title"),
+            icon: 'icon-layers',
+            permission: Permissions.MANAGE_SETTINGS,
+            children: [
+                {
+                    name: getFormattedMessage('settings.title'),
+                    url: '/app/admin/settings',
+                    icon: 'fa fa-cog'
+                },
+                {
+                    name: getFormattedMessage('home-settings.title'),
+                    url: '/app/admin/home-settings',
+                    icon: 'fa fa-cogs'
+                },
+            ]
         },
     ],
 };

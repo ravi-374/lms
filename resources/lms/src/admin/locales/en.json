@@ -400,5 +400,22 @@
     "users.success.edit.message": "User updated successfully.",
     "users.success.delete.message": "User deleted successfully.",
     "users.success.active-account.message": "User activated successfully.",
-    "users.success.inactive-account.message": "User Inactivated successfully."
+    "users.success.inactive-account.message": "User Inactivated successfully.",
+    "cms.title": "CMS",
+    "home-settings.title": "Home Settings",
+    "home-settings.success.create.message": "Home Settings saved successfully.",
+    "home-settings.input.facebook.label": "Facebook",
+    "home-settings.input.github.label": "Github",
+    "home-settings.input.linkedin.label": "Linkedin",
+    "home-settings.input.twitter.label": "Twitter",
+    "home-settings.input.contact_email.label": "Contact Email",
+    "home-settings.input.contact_phone.label": "Contact Phone",
+    "home-settings.input.company_description.label": "Company Description",
+    "home-settings.input.facebook.validate.label": "Facebook must be required.",
+    "home-settings.input.github.validate.label": "Github must be required.",
+    "home-settings.input.linkedin.validate.label": "Linkedin must be required.",
+    "home-settings.input.twitter.validate.label": "Twitter must be required.",
+    "home-settings.input.contact_email.validate.label": "Contact Email must be required.",
+    "home-settings.input.contact_phone.validate.label": "Contact Phone must be required.",
+    "home-settings.input.company_description.validate.label": "Company Description must be required."
 }

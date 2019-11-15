@@ -1,6 +1,7 @@
 import React from 'react';
 import {Permissions} from './constants';
 import {Routes} from "../constants";
+import HomeSettings from "./components/home-settings/HomeSettings";
 
 const Dashboard = React.lazy(() => import('./components/dashboard/Dashboard'));
 const Users = React.lazy(() => import('./components/users/Users'));
@@ -195,5 +196,12 @@ export default [
         name: 'BookRequests',
         component: BookRequests,
         permission: Permissions.MANANGE_BOOK_REQUEST
+    },
+    {
+        path: '/app/admin/home-settings',
+        exact: true,
+        name: 'HomeSettings',
+        component: HomeSettings,
+        permission: Permissions.MANAGE_SETTINGS
     },
 ];

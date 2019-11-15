@@ -120,6 +120,7 @@ export const apiBaseURL = {
     PUBLISHER: 'publishers',
     ROLE: 'roles',
     SETTING: 'settings',
+    HOME_SETTING: 'homepage-settings',
     SEARCH_BOOK: 'search-books',
     TAG: 'tags',
     UPLOAD_LOGO: 'upload-logo',
@@ -140,4 +141,30 @@ export const bookRequestConstants = {
 export const loggedConstant = {
     IS_USER_LOGOUT: 'isUserLogout',
     IS_MEMBER_LOGOUT: 'isMemberLogout'
+};
+
+// used in admin and member both
+export const homeSettingsActionsType = {
+    FETCH_HOME_SETTINGS: 'FETCH_HOME_SETTINGS',
+    PUT_HOME_SETTINGS: 'PUT_HOME_SETTINGS',
+};
+
+export const homeSettingsKey = {
+    FACEBOOK: 'facebook',
+    GITHUB: 'github',
+    LINKEDIN: 'linkedin',
+    TWITTER: 'twitter',
+    CONTACT_EMAIl: 'contact_email',
+    CONTACT_PHONE: 'contact_phone',
+    COMPANY_DESCRIPTION: 'company_description',
+};
+
+export const homeSettingsDisplayName = {
+    FACEBOOK: 'Facebook',
+    GITHUB: 'Github',
+    LINKEDIN: 'Linkedin',
+    TWITTER: 'Twitter',
+    CONTACT_EMAIl: 'Contact Email',
+    CONTACT_PHONE: 'Contact Phone',
+    COMPANY_DESCRIPTION: 'Company Description',
 };
