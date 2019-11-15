@@ -408,6 +408,8 @@
     "home-settings.input.contact_phone.label": "تماس با تلفن",
     "home-settings.input.company_description.label": "توضیحات شرکت",
     "home-settings.input.facebook.validate.label": "فیس بوک باید مورد نیاز باشد.",
+    "home-settings.input.website.label": "سایت اینترنتی",
+      "home-settings.input.website.validate.label": "وب سایت لازم است",
     "home-settings.input.github.validate.label": "Github باید مورد نیاز باشد.",
     "home-settings.input.linkedin.validate.label": "لینکدین باید مورد نیاز باشد.",
     "home-settings.input.twitter.validate.label": "توییتر مورد نیاز است.",

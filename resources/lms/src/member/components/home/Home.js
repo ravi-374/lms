@@ -322,7 +322,7 @@ const Home = (props) => {
                                     </a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href={homeSettings.twitter ? homeSettings.twitter.value : ''} target="_blank">
+                                    <a href={homeSettings.twitter ? 'https://twitter.com/' + homeSettings.twitter.value : ''} target="_blank">
                                         <i className="fa fa-twitter" aria-hidden="true"/>
                                     </a>
                                 </li>
@@ -350,7 +350,7 @@ const Home = (props) => {
                                 <tr>
                                     <td><i className="fa fa-map-marker"/></td>
                                     <td>
-                                        <address className="mb-0">InfyOm Technologies</address>
+                                        <address className="mb-0">{appName}</address>
                                     </td>
                                 </tr>
                                 <tr>
@@ -363,7 +363,12 @@ const Home = (props) => {
                                 </tr>
                                 <tr>
                                     <td><i className="fa fa-globe"/></td>
-                                    <td><a href="http://www.infyom.com/" target="_blank">www.infyom.com</a></td>
+                                    <td>
+                                        <a href={homeSettings.website ? homeSettings.website.value : ''}
+                                           target="_blank">
+                                            {homeSettings.website ? homeSettings.website.value.replace('https://','') : ''}
+                                        </a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

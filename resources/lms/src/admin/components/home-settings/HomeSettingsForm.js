@@ -27,7 +27,7 @@ const HomeSettingsForm = (props) => {
     };
 
     const onSave = (formValues) => {
-        const {facebook, github, linkedin, twitter, contact_email, contact_phone, company_description} = formValues;
+        const {facebook, github, linkedin, twitter, contact_email, contact_phone, company_description, website} = formValues;
         const homeSettings = [
             prepareFormData(homeSettingsKey.FACEBOOK, facebook, homeSettingsDisplayName.FACEBOOK),
             prepareFormData(homeSettingsKey.GITHUB, github, homeSettingsDisplayName.GITHUB),
@@ -36,6 +36,7 @@ const HomeSettingsForm = (props) => {
             prepareFormData(homeSettingsKey.CONTACT_EMAIl, contact_email, homeSettingsDisplayName.CONTACT_EMAIl),
             prepareFormData(homeSettingsKey.CONTACT_PHONE, contact_phone, homeSettingsDisplayName.CONTACT_PHONE),
             prepareFormData(homeSettingsKey.COMPANY_DESCRIPTION, company_description, homeSettingsDisplayName.COMPANY_DESCRIPTION),
+            prepareFormData(homeSettingsKey.WEBSITE, website, homeSettingsDisplayName.WEBSITE),
         ];
         onSaveHomeSettings(homeSettings);
     };
@@ -67,8 +68,12 @@ const HomeSettingsForm = (props) => {
                        component={InputGroup}/>
             </Col>
             <Col xs={6}>
-                <Field name='company_description' type="textarea" label="home-settings.input.company_description.label" required groupText="pen"
+                <Field name='company_description' type="textarea" label="home-settings.input.company_description.label" required groupText="list"
                        component={InputGroup}/>
+            </Col>
+            <Col xs={6}>
+                <Field name='website' type="text" label="home-settings.input.website.label"
+                       required groupText="globe" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={handleSubmit(onSave)} isHideCancel {...props}/>

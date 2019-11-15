@@ -30,6 +30,7 @@ const HomeSettings = (props) => {
             contact_email: homeSettings[homeSettingsKey.CONTACT_EMAIl] ? homeSettings[homeSettingsKey.CONTACT_EMAIl].value : null,
             contact_phone: homeSettings[homeSettingsKey.CONTACT_PHONE] ? homeSettings[homeSettingsKey.CONTACT_PHONE].value : null,
             company_description: homeSettings[homeSettingsKey.COMPANY_DESCRIPTION] ? homeSettings[homeSettingsKey.COMPANY_DESCRIPTION].value : null,
+            website: homeSettings[homeSettingsKey.WEBSITE] ? homeSettings[homeSettingsKey.WEBSITE].value : null,
         },
         onSaveHomeSettings
     };

@@ -406,6 +406,8 @@
     "home-settings.input.contact_email.label": "تواصل بالبريد الاكتروني",
     "home-settings.input.contact_phone.label": "هاتف الاتصال",
     "home-settings.input.company_description.label": "وصف الشركة",
+    "home-settings.input.website.label": "موقع الكتروني",
+    "home-settings.input.website.validate.label": "يجب أن يكون موقع الويب مطلوبًا.",
     "home-settings.input.facebook.validate.label": "يجب أن يكون Facebook مطلوبًا.",
     "home-settings.input.github.validate.label": "يجب أن يكون جيثب مطلوبًا.",
     "home-settings.input.linkedin.validate.label": "ينكدين يجب أن تكون مطلوبة.",

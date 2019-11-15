@@ -407,6 +407,8 @@
     "home-settings.input.contact_email.label": "Почта для связи",
     "home-settings.input.contact_phone.label": "Контактный телефон",
     "home-settings.input.company_description.label": "Описание Компании",
+    "home-settings.input.website.label": "İnternet sitesi",
+      "home-settings.input.website.validate.label": "Web sitesi gerekli olmalı.",
     "home-settings.input.facebook.validate.label": "Facebook gerekli olmalı.",
     "home-settings.input.github.validate.label": "Github gerekli olmalı.",
     "home-settings.input.linkedin.validate.label": "Linkedin gerekli olmalı.",
