@@ -41,6 +41,12 @@ export const postSettings = (settings) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.SETTING, settings)
         .then((response) => {
             dispatch({ type: settingsActionsType.POST_SETTINGS, payload: response.data.data });
+            const currencies = response.data.data.filter(setting => setting.key === settingsKey.CURRENCY)
+                .map(({value, display_name}) => ({
+                    id: value,
+                    name: display_name,
+                }));
+            dispatch(getOrSetCurrency(currencies[0].id));
             dispatch(editAppSetting(prepareAppSetting(response.data.data)));
             dispatch(addToast({ text: getFormattedMessage('settings.success.create.message') }));
         })
