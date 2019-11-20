@@ -7,7 +7,6 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\ResetPasswordLinkRequest;
 use App\Http\Requests\API\ResetPasswordRequest;
 use App\Models\Member;
-use App\Repositories\AccountRepository;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterFace;
 use App\Repositories\MemberRepository;
@@ -20,6 +19,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use JWTAuth;
+use Redirect;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Validator;
 
@@ -71,9 +71,6 @@ class MemberAuthController extends AppBaseController
 
         $token = JWTAuth::fromUser($member);
 
-        $accountRepository = new AccountRepository();
-        $accountRepository->sendConfirmEmail($member);
-
         return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
     }
 
@@ -84,27 +81,30 @@ class MemberAuthController extends AppBaseController
      */
     public function verifyAccount(Request $request)
     {
+        $url = config('app.url');
         $token = $request->get('token', null);
         if (empty($token)) {
-            return $this->sendError('token not found.');
+            return Redirect::to($url.'/#app/login?success=0&msg=token not found.');
         }
+
         try {
             $token = Crypt::decrypt($token);
             list($memberId, $activationCode) = $result = explode('|', $token);
             if (count($result) < 2) {
-                return $this->sendError('token not found.');
+                return Redirect::to($url.'/#app/login?success=0&msg=token not found.');
             }
+
             /** @var Member $member */
             $member = Member::whereActivationCode($activationCode)->findOrFail($memberId);
             if (empty($member)) {
-                return $this->sendError('This account activation token is invalid.');
+                return Redirect::to($url.'/#app/login?success=0&msg=This account activation token is invalid.');
             }
             $member->is_active = 1;
             $member->save();
 
-            return $this->sendSuccess('Your account has been activated successfully.');
+            return Redirect::to($url.'/#app/login?success=1&msg=Your account has been activated successfully.');
         } catch (Exception $e) {
-            return $this->sendError('Something went wrong.');
+            return Redirect::to($url.'/#app/login?success=0&msg=Something went wrong.');
         }
     }
 
