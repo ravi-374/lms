@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Models\Setting;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use Carbon\Carbon;
+use Crypt;
 use DB;
 use Exception;
 use Hash;
@@ -157,6 +158,16 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
                 $member->address()->save($address);
             }
             DB::commit();
+
+            $accountRepository = new AccountRepository();
+            $name = $member->first_name.' '.$member->last_name;
+            $key = $member->id.'|'.$member->activation_code;
+            $code = Crypt::encrypt($key);
+            $accountRepository->sendConfirmEmail(
+                $name,
+                $member->email,
+                $code
+            );
 
             return Member::with('address', 'membershipPlan')->findOrFail($member->id);
         } catch (Exception $e) {
