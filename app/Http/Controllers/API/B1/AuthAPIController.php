@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Redirect;
 
 /**
  * Class AuthAPIController
@@ -42,29 +43,31 @@ class AuthAPIController extends AppBaseController
      */
     public function verifyAccount(Request $request)
     {
+        $url = config('app.url');
         $token = $request->get('token', null);
         if (empty($token)) {
-            return $this->sendError('token not found.');
+            return Redirect::to($url.'/#app/admin/login?success=0&msg=token not found.');
         }
+
         try {
             $token = Crypt::decrypt($token);
             list($memberId, $email) = $result = explode('|', $token);
 
             if (count($result) < 2) {
-                return $this->sendError('token not found.');
+                return Redirect::to($url.'/#app/admin/login?success=0&msg=token not found.');
             }
 
             /** @var User $user */
             $user = User::whereEmail($email)->findOrFail($memberId);
             if (empty($user)) {
-                return $this->sendError('User not found.');
+                return Redirect::to($url.'/#app/admin/login?success=0&msg=User not found.');
             }
             $user->is_active = 1;
             $user->save();
 
-            return $this->sendSuccess('Your account has been activated successfully.');
+            return Redirect::to($url.'/#app/admin/login?success=1&msg=Your account has been activated successfully.');
         } catch (Exception $e) {
-            return $this->sendError('Something went wrong.');
+            return Redirect::to($url.'/#app/admin/login?success=0&msg=Something went wrong.');
         }
     }
 }
