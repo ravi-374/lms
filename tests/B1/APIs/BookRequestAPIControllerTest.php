@@ -79,6 +79,22 @@ class BookRequestAPIControllerTest extends TestCase
     }
 
     /** @test */
+    public function test_not_allow_to_update_book_request_same_status_twice()
+    {
+        $bookRequest = factory(BookRequest::class)->create();
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::APPROVED])
+        );
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::APPROVED])
+        );
+
+        $this->assertExceptionMessage($response, 'Book request is already Approved.');
+    }
+
+    /** @test */
     public function test_can_return_requested_books_count_from_isbn_number()
     {
         $bookRequest = factory(BookRequest::class)->create();

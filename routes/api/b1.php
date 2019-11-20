@@ -170,6 +170,8 @@ Route::group(['middleware' => 'user.auth'], function () {
         ->name('members.check-books-limit');
 });
 
+Route::get('activate-user', 'AuthAPIController@verifyAccount')->name('activate-user');
+
 /** Password Reset API's For User */
 Route::post('send-reset-password-link', 'AccountAPIController@sendResetPasswordLink');
 Route::post('reset-password', 'AccountAPIController@resetPassword')->name('reset-password');

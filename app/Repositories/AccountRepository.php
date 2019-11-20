@@ -2,7 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\Member;
 use App\Repositories\Contracts\AccountRepositoryInterface;
+use App\User;
+use Crypt;
 use Exception;
 use Illuminate\Mail\Message;
 use Mail;
@@ -14,27 +17,56 @@ use URL;
 class AccountRepository implements AccountRepositoryInterface
 {
     /**
-     * @param  string  $username
-     * @param  string  $email
-     * @param  string  $activateCode
+     * @param  Member  $member
      *
      * @throws Exception
      */
-    public function sendConfirmEmail($username, $email, $activateCode)
+    public function sendConfirmEmail($member)
     {
-        $data['link'] = URL::to('/api/v1/members/activate?token='.$activateCode);
-        $data['username'] = $username;
+        $name = $member->first_name.' '.$member->last_name;
+        $key = $member->id.'|'.$member->activation_code;
+        $code = Crypt::encrypt($key);
+
+        $data['link'] = URL::to('/api/v1/activate-member?token='.$code);
+        $data['username'] = $name;
         $data['logo_url'] = getLogoURL();
 
         try {
             Mail::send('emails.account_verification', ['data' => $data],
-                function (Message $message) use ($email) {
+                function (Message $message) use ($member) {
                     $message->subject('Activate your account');
-                    $message->to($email);
+                    $message->to($member->email);
                 });
 
         } catch (Exception $e) {
-            throw new Exception('Unable to send confirmation mail.');
+            throw new Exception('Unable to send confirmation mail : '.$e->getMessage());
+        }
+    }
+
+    /**
+     * @param  User  $user
+     *
+     * @throws Exception
+     */
+    public function sendConfirmEmailForUser($user)
+    {
+        $name = $user->first_name.' '.$user->last_name;
+        $key = $user->id.'|'.$user->email;
+        $code = Crypt::encrypt($key);
+
+        $data['link'] = URL::to('/api/b1/activate-user?token='.$code);
+        $data['username'] = $name;
+        $data['logo_url'] = getLogoURL();
+
+        try {
+            Mail::send('emails.account_verification', ['data' => $data],
+                function (Message $message) use ($user) {
+                    $message->subject('Activate your account');
+                    $message->to($user->email);
+                });
+
+        } catch (Exception $e) {
+            throw new Exception('Unable to send confirmation mail : '.$e->getMessage());
         }
     }
 

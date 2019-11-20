@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App;
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
+use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
 use DB;
 use Exception;
@@ -144,6 +146,12 @@ class UserRepository extends BaseRepository
                 $user->update(['image' => $imagePath]);
             }
             DB::commit();
+
+            if (! $user->is_active) {
+                /** @var AccountRepositoryInterface $accountRepository */
+                $accountRepository = App::make(AccountRepositoryInterface::class);
+                $accountRepository->sendConfirmEmailForUser($user);
+            }
 
             return $this->find($user->id);
         } catch (Exception $e) {

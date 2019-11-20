@@ -41,6 +41,11 @@ class BookRequest extends Model
 
     const STATUS_ARR = [self::PENDING, self::APPROVED, self::AVAILABLE, self::CANCELLED];
 
+    const STATUS_TEXT = [
+        self::PENDING   => 'Pending', self::APPROVED => 'Approved', self::AVAILABLE => 'Available',
+        self::CANCELLED => 'Cancelled',
+    ];
+
     public $table = 'book_requests';
 
     protected $appends = ['request_count'];
