@@ -7,6 +7,7 @@ use App\Repositories\AuthorRepository;
 use App\Repositories\AuthRepository;
 use App\Repositories\BookItemRepository;
 use App\Repositories\BookLanguageRepository;
+use App\Repositories\BookRenewalRequestRepository;
 use App\Repositories\BookRepository;
 use App\Repositories\BookRequestRepository;
 use App\Repositories\BookSeriesRepository;
@@ -15,6 +16,7 @@ use App\Repositories\Contracts\AuthorRepositoryInterface;
 use App\Repositories\Contracts\AuthRepositoryInterface;
 use App\Repositories\Contracts\BookItemRepositoryInterface;
 use App\Repositories\Contracts\BookLanguageRepositoryInterface;
+use App\Repositories\Contracts\BookRenewalRequestRepositoryInterface;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use App\Repositories\Contracts\BookRequestRepositoryInterface;
 use App\Repositories\Contracts\BookSeriesRepositoryInterface;
@@ -77,6 +79,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CountryRepositoryInterface::class, CountryRepository::class);
         $this->app->bind(BookRequestRepositoryInterface::class, BookRequestRepository::class);
         $this->app->bind(HomepageSettingRepositoryInterface::class, HomepageSettingRepository::class);
+        $this->app->bind(BookRenewalRequestRepositoryInterface::class, BookRenewalRequestRepository::class);
     }
 
     /**

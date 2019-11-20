@@ -35,6 +35,12 @@ Route::group(['middleware' => 'member.auth'], function () {
 
     /** Book Requests */
     Route::resource('book-requests', 'BookRequestAPIController');
+
+    /** Book Renewal Request's */
+    Route::resource('book-renewal-requests', 'BookRenewalRequestAPIController');
+
+    Route::get('books-for-renewal', 'BookRenewalRequestAPIController@booksForRenewal')
+        ->name('books-for-renewal');
 });
 
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');
