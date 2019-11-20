@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Member;
+use App\User;
 use Exception;
 
 /**
@@ -25,4 +26,11 @@ interface AccountRepositoryInterface
      * @return bool
      */
     public function sendResetPasswordLinkMail($data);
+
+    /**
+     * @param  User  $user
+     *
+     * @throws Exception
+     */
+    public function sendConfirmEmailForUser($user);
 }

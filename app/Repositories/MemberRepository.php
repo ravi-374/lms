@@ -2,11 +2,13 @@
 
 namespace App\Repositories;
 
+use App;
 use App\Exceptions\ApiOperationFailedException;
 use App\Models\Address;
 use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Models\Setting;
+use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use Carbon\Carbon;
 use DB;
@@ -159,8 +161,11 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
             }
             DB::commit();
 
-            $accountRepository = new AccountRepository();
-            $accountRepository->sendConfirmEmail($member);
+            if (! $member->is_active) {
+                /** @var AccountRepositoryInterface $accountRepository */
+                $accountRepository = App::make(AccountRepositoryInterface::class);
+                $accountRepository->sendConfirmEmail($member);
+            }
 
             return Member::with('address', 'membershipPlan')->findOrFail($member->id);
         } catch (Exception $e) {

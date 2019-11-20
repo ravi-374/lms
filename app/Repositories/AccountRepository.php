@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Member;
 use App\Repositories\Contracts\AccountRepositoryInterface;
+use App\User;
 use Crypt;
 use Exception;
 use Illuminate\Mail\Message;
@@ -16,14 +17,14 @@ use URL;
 class AccountRepository implements AccountRepositoryInterface
 {
     /**
-     * @param  Member  $object
+     * @param  Member  $member
      *
      * @throws Exception
      */
-    public function sendConfirmEmail($object)
+    public function sendConfirmEmail($member)
     {
-        $name = $object->first_name.' '.$object->last_name;
-        $key = $object->id.'|'.$object->activation_code;
+        $name = $member->first_name.' '.$member->last_name;
+        $key = $member->id.'|'.$member->activation_code;
         $code = Crypt::encrypt($key);
 
         $data['link'] = URL::to('/api/v1/activate-member?token='.$code);
@@ -32,9 +33,36 @@ class AccountRepository implements AccountRepositoryInterface
 
         try {
             Mail::send('emails.account_verification', ['data' => $data],
-                function (Message $message) use ($object) {
+                function (Message $message) use ($member) {
                     $message->subject('Activate your account');
-                    $message->to($object->email);
+                    $message->to($member->email);
+                });
+
+        } catch (Exception $e) {
+            throw new Exception('Unable to send confirmation mail : '.$e->getMessage());
+        }
+    }
+
+    /**
+     * @param  User  $user
+     *
+     * @throws Exception
+     */
+    public function sendConfirmEmailForUser($user)
+    {
+        $name = $user->first_name.' '.$user->last_name;
+        $key = $user->id.'|'.$user->email;
+        $code = Crypt::encrypt($key);
+
+        $data['link'] = URL::to('/api/b1/activate-user?token='.$code);
+        $data['username'] = $name;
+        $data['logo_url'] = getLogoURL();
+
+        try {
+            Mail::send('emails.account_verification', ['data' => $data],
+                function (Message $message) use ($user) {
+                    $message->subject('Activate your account');
+                    $message->to($user->email);
                 });
 
         } catch (Exception $e) {
