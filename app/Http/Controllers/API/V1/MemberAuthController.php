@@ -7,7 +7,6 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\ResetPasswordLinkRequest;
 use App\Http\Requests\API\ResetPasswordRequest;
 use App\Models\Member;
-use App\Repositories\AccountRepository;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterFace;
 use App\Repositories\MemberRepository;
@@ -70,9 +69,6 @@ class MemberAuthController extends AppBaseController
         $member = $this->memberRepository->storeMember($input);
 
         $token = JWTAuth::fromUser($member);
-
-        $accountRepository = new AccountRepository();
-        $accountRepository->sendConfirmEmail($member);
 
         return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
     }
