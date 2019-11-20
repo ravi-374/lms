@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Member;
 use Exception;
 
 /**
@@ -10,13 +11,11 @@ use Exception;
 interface AccountRepositoryInterface
 {
     /**
-     * @param  string  $username
-     * @param  string  $email
-     * @param  string  $activateCode
+     * @param  Member  $member
      *
      * @throws Exception
      */
-    public function sendConfirmEmail($username, $email, $activateCode);
+    public function sendConfirmEmail($member);
 
     /**
      * @param  array  $data

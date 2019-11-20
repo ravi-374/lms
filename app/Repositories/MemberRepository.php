@@ -9,7 +9,6 @@ use App\Models\Member;
 use App\Models\Setting;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use Carbon\Carbon;
-use Crypt;
 use DB;
 use Exception;
 use Hash;
@@ -144,6 +143,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
             DB::beginTransaction();
             $input['password'] = Hash::make($input['password']);
             $input['member_id'] = $this->generateMemberId();
+            $input['activation_code'] = uniqid();
             $member = Member::create($input);
             if (! empty($input['image'])) {
                 $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
@@ -160,14 +160,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
             DB::commit();
 
             $accountRepository = new AccountRepository();
-            $name = $member->first_name.' '.$member->last_name;
-            $key = $member->id.'|'.$member->activation_code;
-            $code = Crypt::encrypt($key);
-            $accountRepository->sendConfirmEmail(
-                $name,
-                $member->email,
-                $code
-            );
+            $accountRepository->sendConfirmEmail($member);
 
             return Member::with('address', 'membershipPlan')->findOrFail($member->id);
         } catch (Exception $e) {

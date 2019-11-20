@@ -72,15 +72,7 @@ class MemberAuthController extends AppBaseController
         $token = JWTAuth::fromUser($member);
 
         $accountRepository = new AccountRepository();
-        $name = $member->first_name.' '.$member->last_name;
-
-        $key = $member->id.'|'.$member->activation_code;
-        $code = Crypt::encrypt($key);
-        $accountRepository->sendConfirmEmail(
-            $name,
-            $member->email,
-            $code
-        );
+        $accountRepository->sendConfirmEmail($member);
 
         return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
     }

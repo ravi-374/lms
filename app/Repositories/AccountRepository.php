@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Member;
 use App\Repositories\Contracts\AccountRepositoryInterface;
+use Crypt;
 use Exception;
 use Illuminate\Mail\Message;
 use Mail;
@@ -14,27 +16,29 @@ use URL;
 class AccountRepository implements AccountRepositoryInterface
 {
     /**
-     * @param  string  $username
-     * @param  string  $email
-     * @param  string  $activateCode
+     * @param  Member  $object
      *
      * @throws Exception
      */
-    public function sendConfirmEmail($username, $email, $activateCode)
+    public function sendConfirmEmail($object)
     {
-        $data['link'] = URL::to('/api/v1/members/activate?token='.$activateCode);
-        $data['username'] = $username;
+        $name = $object->first_name.' '.$object->last_name;
+        $key = $object->id.'|'.$object->activation_code;
+        $code = Crypt::encrypt($key);
+
+        $data['link'] = URL::to('/api/v1/activate-member?token='.$code);
+        $data['username'] = $name;
         $data['logo_url'] = getLogoURL();
 
         try {
             Mail::send('emails.account_verification', ['data' => $data],
-                function (Message $message) use ($email) {
+                function (Message $message) use ($object) {
                     $message->subject('Activate your account');
-                    $message->to($email);
+                    $message->to($object->email);
                 });
 
         } catch (Exception $e) {
-            throw new Exception('Unable to send confirmation mail.');
+            throw new Exception('Unable to send confirmation mail : '.$e->getMessage());
         }
     }
 
