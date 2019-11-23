@@ -146,6 +146,12 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             });
         });
 
+        $query->when(! empty($search['books_for_renewal']), function (Builder $query) use ($search) {
+            $now = Carbon::now()->toDateTimeString();
+            $before1Day = Carbon::now()->addDay()->toDateTimeString();
+            $query->whereBetween('return_due_date', [$now, $before1Day]);
+        });
+
         return $query;
     }
 

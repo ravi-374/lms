@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App;
+use App\Models\Member;
 use App\Traits\CommonMiddlewareFunctions;
 use App\User;
 use Auth;
@@ -38,7 +39,7 @@ class MemberAuth
 
         if (App::isLocal() && empty($token)) {
             /** @var User $user */
-            $user = User::whereEmail('admin@lms.local')->first();
+            $user = Member::whereEmail('member@lms.com')->first();
             if ($user) {
                 Auth::loginUsingId($user->id);
 
