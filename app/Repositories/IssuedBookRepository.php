@@ -82,7 +82,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             unset($search['search']);
         }
 
-        $with = ['issuer', 'returner', 'bookItem.book', 'member'];
+        $with = ['issuer', 'returner', 'bookItem.book', 'member', 'bookItem.renewedBooks'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
         $query = $this->applyDynamicSearch($search, $query);
 

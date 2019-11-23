@@ -48,6 +48,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read mixed $expected_available_date
  * @property-read Publisher|null $publisher
  * @property-read BookLanguage|null $language
+ * @property-read int $book_item_status
+ * @property-read int|null $issued_books_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BookRenewalRequest[] $renewedBooks
+ * @property-read int|null $renewed_book_count
  */
 class BookItem extends Model
 {
@@ -175,5 +179,13 @@ class BookItem extends Model
         }
 
         return IssuedBook::STATUS_AVAILABLE;
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function renewedBooks()
+    {
+        return $this->hasMany(BookRenewalRequest::class, 'book_id');
     }
 }

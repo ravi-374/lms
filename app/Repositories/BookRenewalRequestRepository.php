@@ -159,7 +159,10 @@ class BookRenewalRequestRepository extends BaseRepository implements BookRenewal
         // 2. Now, create new record as issued book
         $issuedBookRepo->issueBook($input);
 
-        BookRenewalRequest::create(array_merge($input, ['status' => BookRenewalRequest::APPROVED]));
+        BookRenewalRequest::create(array_merge(
+            $input,
+            ['status' => BookRenewalRequest::APPROVED, 'book_id' => $bookItem->id]
+        ));
 
         return $issuedBook;
     }
