@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\BookItem;
 use App\Models\BookRenewalRequest;
+use App\Models\IssuedBook;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -50,4 +52,12 @@ interface BookRenewalRequestRepositoryInterface
      * @return bool
      */
     public function updateStatus($bookRenewalRequest, $status);
+
+    /**
+     * @param  BookItem  $bookItem
+     * @param  int  $memberId
+     *
+     * @return IssuedBook
+     */
+    public function renewBook($bookItem, $memberId);
 }

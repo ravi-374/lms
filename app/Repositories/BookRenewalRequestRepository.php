@@ -5,8 +5,10 @@ namespace App\Repositories;
 use App;
 use App\Models\BookItem;
 use App\Models\BookRenewalRequest;
+use App\Models\IssuedBook;
 use App\Repositories\Contracts\BookRenewalRequestRepositoryInterface;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
+use Carbon\Carbon;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -128,5 +130,37 @@ class BookRenewalRequestRepository extends BaseRepository implements BookRenewal
         $bookRenewalRequest->update(['status' => $status]);
 
         return true;
+    }
+
+    /**
+     * @param  BookItem  $bookItem
+     * @param  int  $memberId
+     *
+     * @return IssuedBook
+     */
+    public function renewBook($bookItem, $memberId)
+    {
+        $issuedBook = $bookItem->lastIssuedBook;
+
+        $diffInDay = Carbon::parse($issuedBook->return_due_date)->diffInDays(Carbon::now());
+        if ($diffInDay > 1) {
+            throw new UnprocessableEntityHttpException('You can only renew book before 1 day.');
+        }
+
+        /** @var IssuedBookRepositoryInterface $issuedBookRepo */
+        $issuedBookRepo = App::make(IssuedBookRepositoryInterface::class);
+
+        $input['member_id'] = $memberId;
+        $input['book_item_id'] = $bookItem->id;
+
+        // 1. First change current record to return
+        $issuedBookRepo->returnBook($input);
+
+        // 2. Now, create new record as issued book
+        $issuedBookRepo->issueBook($input);
+
+        BookRenewalRequest::create(array_merge($input, ['status' => BookRenewalRequest::APPROVED]));
+
+        return $issuedBook;
     }
 }

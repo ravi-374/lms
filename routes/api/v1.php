@@ -41,6 +41,8 @@ Route::group(['middleware' => 'member.auth'], function () {
 
     Route::get('books-for-renewal', 'BookRenewalRequestAPIController@booksForRenewal')
         ->name('books-for-renewal');
+
+    Route::post('books/{book_item}/renew', 'BookRenewalRequestAPIController@renewBook');
 });
 
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');

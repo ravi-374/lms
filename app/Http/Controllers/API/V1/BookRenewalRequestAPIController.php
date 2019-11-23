@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\CreateBookRenewalRequestRequest;
 use App\Http\Requests\API\UpdateBookRenewalRequestRequest;
+use App\Models\BookItem;
 use App\Models\BookRenewalRequest;
 use App\Models\IssuedBook;
 use App\Repositories\Contracts\BookRenewalRequestRepositoryInterface;
@@ -128,5 +129,17 @@ class BookRenewalRequestAPIController extends AppBaseController
         $bookRenewalRequest->delete();
 
         return $this->sendSuccess('Book renewal request deleted successfully.');
+    }
+
+    /**
+     * @param  BookItem  $bookItem
+     *
+     * @return JsonResponse
+     */
+    public function renewBook(BookItem $bookItem)
+    {
+        $issuedBook = $this->bookRenewalRequestRepository->renewBook($bookItem, Auth::id());
+
+        return $this->sendResponse($issuedBook, 'Book renewed successfully.');
     }
 }
