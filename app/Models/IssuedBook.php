@@ -206,16 +206,6 @@ class IssuedBook extends Model
         $record['issuer_name'] = $this->issuer_name;
         $record['returner_name'] = $this->returner_name;
 
-        $renewedCount = 0;
-        $record['is_allow_to_renew'] = true;
-        if (isset($record['book_item']['renewed_books'])) {
-            $renewedCount = count($record['book_item']['renewed_books']);
-
-            if ($renewedCount == getSettingValueByKey(Setting::MAX_RENEW_BOOK_LIMIT)) {
-                $record['is_allow_to_renew'] = false;
-            }
-        }
-
         if (isset($record['book_item']['last_issued_book'])) {
             $record['expected_available_date'] = $this->getExpectedAvailableDate($record['book_item']['last_issued_book']);
         }

@@ -82,7 +82,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             unset($search['search']);
         }
 
-        $with = ['issuer', 'returner', 'bookItem.book', 'member', 'bookItem.renewedBooks'];
+        $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
         $query = $this->applyDynamicSearch($search, $query);
 
@@ -144,12 +144,6 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             $query->orWhereHas('member', function (Builder $query) use ($searchString) {
                 filterByColumns($query, $searchString, ['first_name', 'last_name']);
             });
-        });
-
-        $query->when(! empty($search['books_for_renewal']), function (Builder $query) use ($search) {
-            $now = Carbon::now()->toDateTimeString();
-            $before1Day = Carbon::now()->addDay()->toDateTimeString();
-            $query->whereBetween('return_due_date', [$now, $before1Day]);
         });
 
         return $query;
