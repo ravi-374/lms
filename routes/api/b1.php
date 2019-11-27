@@ -151,7 +151,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 
         // Manage Testimonials
         Route::resource('testimonials', 'TestimonialAPIController');
-        Route::post('testimonials/{testimonial}', 'TestimonialAPIController@update');
+        Route::post('testimonials/{testimonial}', 'TestimonialAPIController@update')->name('testimonials.update');
     });
 
     Route::middleware('permission:manage_book_requests')->group(function () {
