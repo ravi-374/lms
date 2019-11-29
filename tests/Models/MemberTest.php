@@ -18,7 +18,7 @@ class MemberTest extends TestCase
     {
         $member = factory(Member::class)->create(['image' => $this->faker->imageUrl()]);
 
-        $member = Member::first();
+        $member = Member::whereId($member->id)->first();
 
         $this->assertNotEmpty($member->image_path);
     }

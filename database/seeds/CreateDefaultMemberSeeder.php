@@ -17,6 +17,7 @@ class CreateDefaultMemberSeeder extends Seeder
         $plan = MembershipPlan::whereName('Silver')->first();
 
         $input = [
+            'member_id'          => uniqid(),
             'first_name'         => 'LMS',
             'last_name'          => 'Member',
             'email'              => 'member@lms.com',
