@@ -1,0 +1,1 @@
+ALTER TABLE members ADD email_verified_at Datetime NULL;

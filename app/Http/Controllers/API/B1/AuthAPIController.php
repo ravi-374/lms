@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\B1;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Contracts\AuthRepositoryInterface;
 use App\User;
+use Carbon\Carbon;
 use Crypt;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -63,6 +64,7 @@ class AuthAPIController extends AppBaseController
                 return Redirect::to($url.'/#app/admin/login?success=0&msg=User not found.');
             }
             $user->is_active = 1;
+            $user->email_verified_at = Carbon::now();
             $user->save();
 
             return Redirect::to($url.'/#app/admin/login?success=1&msg=Your account has been activated successfully.');

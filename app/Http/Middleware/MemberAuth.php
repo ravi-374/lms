@@ -78,6 +78,10 @@ class MemberAuth
         $member = JWTAuth::parseToken()->authenticate();
         Auth::loginUsingId($member->id);
 
+        if (! $member->email_verified_at) {
+            throw new UnauthorizedException('Please verify your email.', 401);
+        }
+
         if (! $member->is_active) {
             throw new UnauthorizedException('Your account is not active.', 401);
         }

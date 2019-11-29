@@ -100,6 +100,7 @@ class MemberAuthController extends AppBaseController
                 return Redirect::to($url.'/#app/login?success=0&msg=This account activation token is invalid.');
             }
             $member->is_active = 1;
+            $member->email_verified_at = 1;
             $member->save();
 
             return Redirect::to($url.'/#app/login?success=1&msg=Your account has been activated successfully.');

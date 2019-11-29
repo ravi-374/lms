@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App;
+use App\Models\Role;
 use App\Traits\CommonMiddlewareFunctions;
 use App\User;
 use Auth;
@@ -78,6 +79,10 @@ class UserAuth
         /** @var User $user */
         $user = JWTAuth::parseToken()->authenticate();
         Auth::login($user);
+
+        if (! $user->hasRole(Role::ROLE_ADMIN) && ! $user->email_verified_at) {
+            throw new UnauthorizedException('Please verify your email.', 401);
+        }
 
         if (! $user->is_active) {
             throw new UnauthorizedException('Your account is not active.', 401);
