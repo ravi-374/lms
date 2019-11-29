@@ -123,5 +123,22 @@
     "reset-password.success.message": "Şifre başarıyla güncellendi.",
     "toast.success.message": "Başarı",
     "toast.warning.message": "Uyarı",
-    "toast.error.message": "Hata"
+    "toast.error.message": "Hata",
+    "registration.input.first-name.label": "İsim",
+    "registration.input.last-name.label": "Soyadı",
+    "registration.input.email.label": "E-posta",
+    "registration.input.password.label": "Yeni Şifre",
+    "registration.input.confirm-password.label": "Şifreyi Onayla",
+    "registration.input.first-name.validate.label": "İlk isim gerekli olmalı.",
+    "registration.input.last-name.validate.label": "Soyadı gerekli olmalı.",
+    "registration.input.email-required.validate.label": "E-posta gerekli olmalı.",
+    "registration.input.password-required.validate.label": "Şifre gerekli olmalı.",
+    "registration.input.password-invalid.validate.label": "Şifre 5 karakterden büyük olmalıdır.",
+    "registration.input.confirm-password.validate.label": "Parolanın eşleşmesi gerektiğini onaylayın.",
+    "registration.title": "kayıt",
+    "registration.link.registration.title": "Oturum aç",
+    "registration.note": "Üyeliğinizi kaydedin.",
+    "registration.submit.title": "Kayıt olmak",
+    "registration.success.message": "Kayıt işlemi başarılı oldu. Lütfen hesabınızı doğrulamak için postanızı kontrol edin.",
+    "registration.register.link.title": "Yeni üyelik"
 }

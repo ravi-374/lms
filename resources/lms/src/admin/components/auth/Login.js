@@ -11,15 +11,22 @@ import CustomInputGroup from '../../../shared/components/CustomInputGroup';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage, getLocalStorageDataByEncryptKey} from "../../../shared/sharedMethod";
 import {login} from "../../store/actions/authAction";
+import {displayMessage} from "../../../store/action/toastAction";
 
 const Login = (props) => {
-    const { handleSubmit, invalid, history, initialize, login } = props;
+    const { handleSubmit, invalid, history, initialize, login, displayMessage } = props;
 
     useEffect(() => {
         if (localStorage.getItem(Tokens.ADMIN)) {
             history.push(Routes.ADMIN_DEFAULT);
         }
         initialize(getLocalStorageDataByEncryptKey('currentUser'));
+        const params = new URLSearchParams(props.location.search);
+        const msg = params.get('msg');
+        const success = params.get('success');
+        if (msg) {
+            displayMessage(msg, +success);
+        }
     }, []);
 
     const onLogin = async (formValues) => {
@@ -71,9 +78,10 @@ Login.propTypes = {
     invalid: PropTypes.bool,
     initialize: PropTypes.func,
     login: PropTypes.func,
+    displayMessage: PropTypes.func,
     handleSubmit: PropTypes.func
 };
 
 const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(Login);
 
-export default connect(null, { login })(form);
+export default connect(null, { login, displayMessage })(form);

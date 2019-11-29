@@ -126,5 +126,22 @@
     "reset-password.success.message": "Contraseña actualizada exitosamente.",
     "toast.success.message": "Éxito",
     "toast.warning.message": "Advertencia",
-    "toast.error.message": "Error"
+    "toast.error.message": "Error",
+    "registration.input.first-name.label": "Primer Nombre",
+    "registration.input.last-name.label": "Apellido",
+    "registration.input.email.label": "Email",
+    "registration.input.password.label": "Contraseña",
+    "registration.input.confirm-password.label": "Confirmar Contraseña",
+    "registration.input.first-name.validate.label": "Nombre debe ser requerido.",
+    "registration.input.last-name.validate.label": "El apellido debe ser requerido.",
+    "registration.input.email-required.validate.label": "El correo electrónico debe ser requerido.",
+    "registration.input.password-required.validate.label": "La contraseña debe ser requerida.",
+    "registration.input.password-invalid.validate.label": "La contraseña debe tener más de 5 caracteres.",
+    "registration.input.confirm-password.validate.label": "Confirme que la contraseña debe coincidir.",
+    "registration.title": "Registro",
+    "registration.link.registration.title": "Iniciar sesión",
+    "registration.note": "Registre su membresía.",
+    "registration.submit.title": "Registro",
+    "registration.success.message": "El registro ha sido exitoso. Por favor revise su correo para verificar su cuenta.",
+    "registration.register.link.title": "Membresía nueva"
 }

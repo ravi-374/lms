@@ -124,5 +124,21 @@
     "reset-password.success.message": "Password aggiornata correttamente.",
     "toast.success.message": "Successo",
     "toast.warning.message": "avvertimento",
-    "toast.error.message": "Errore"
+    "toast.error.message": "Errore",
+    "registration.input.first-name.label": "Nome Di Battesimo",
+    "registration.input.last-name.label": "Cognome",
+    "registration.input.email.label": "E-mail",
+    "registration.input.password.label": "Password",
+    "registration.input.confirm-password.label": "Conferma Password",
+    "registration.input.first-name.validate.label": "Nome deve essere richiesto",
+    "registration.input.last-name.validate.label": "Cognome deve essere richiesto.",
+    "registration.input.email-required.validate.label": "Email deve essere richiesta.",
+    "registration.input.password-required.validate.label": "È richiesta la password.",
+    "registration.input.password-invalid.validate.label": "La password deve contenere più di 5 caratteri.",
+    "registration.input.confirm-password.validate.label": "Conferma la password deve essere abbinata.",
+    "registration.title": "Registrazione",
+    "registration.note": "Registra la tua iscrizione.",
+    "registration.submit.title": "Registrare",
+    "registration.success.message": "La registrazione è andata a buon fine. Controlla la tua posta per verificare il tuo account.",
+    "registration.register.link.title": "Nuova iscrizione"
 }

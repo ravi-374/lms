@@ -124,5 +124,22 @@
     "reset-password.success.message": "Senha atualizada com sucesso.",
     "toast.success.message": "Sucesso",
     "toast.warning.message": "Aviso",
-    "toast.error.message": "Erro"
+    "toast.error.message": "Erro",
+    "registration.input.first-name.label": "Primeiro Nome",
+    "registration.input.last-name.label": "Último Nome",
+    "registration.input.email.label": "O Email",
+    "registration.input.password.label": "Senha",
+    "registration.input.confirm-password.label": "Confirme A Senha",
+    "registration.input.first-name.validate.label": "O primeiro nome deve ser obrigatório.",
+    "registration.input.last-name.validate.label": "O sobrenome deve ser obrigatório.",
+    "registration.input.email-required.validate.label": "O email deve ser obrigatório.",
+    "registration.input.password-required.validate.label": "A senha deve ser obrigatória.",
+    "registration.input.password-invalid.validate.label": "A senha deve ter mais de 5 caracteres.",
+    "registration.input.confirm-password.validate.label": "Confirme se a senha deve ser correspondida.",
+    "registration.title": "Cadastro",
+    "registration.link.login.title": "Entrar",
+    "registration.note": "Registre sua associação.",
+    "registration.submit.title": "registo",
+    "registration.success.message": "O registro foi bem-sucedido. Verifique seu e-mail para verificar sua conta.",
+    "registration.register.link.title": "Nova associação"
 }

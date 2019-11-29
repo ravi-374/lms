@@ -347,6 +347,13 @@ export const bookRequestStatusOptions = [
     { id: 3, name: 'book-request.filter.cancel.label' }
 ];
 
+export const bookRequestStatus = {
+    PENDING: 0,
+    APPROVED: 1,
+    AVAILABLE: 2,
+    CANCEL: 3
+};
+
 export const availableBookLimitActionType = {
     FETCH_AVAILABLE_ISSUE_BOOK_LIMIT: 'FETCH_AVAILABLE_ISSUE_BOOK_LIMIT',
     FETCH_AVAILABLE_RESERVE_BOOK_LIMIT: 'FETCH_AVAILABLE_RESERVE_BOOK_LIMIT',

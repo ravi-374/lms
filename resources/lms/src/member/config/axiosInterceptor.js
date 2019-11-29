@@ -12,8 +12,10 @@ export default {
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
                 }
-                if (localStorage.getItem(loggedConstant.IS_MEMBER_LOGOUT)) {
-                    window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
+                if (!token) {
+                    if (!window.location.href.includes('login')) {
+                        window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
+                    }
                 }
                 if (isFormData) {
                     config.headers['Content-Type'] = 'multipart/form-data';
@@ -38,7 +40,7 @@ export default {
                 localStorage.removeItem(Tokens.MEMBER);
                 localStorage.removeItem(LocalStorageKey.MEMBER);
             }
-            return Promise.reject({ ...error })
+            return Promise.reject({...error})
         };
         const successHandler = (response) => {
             return response;
