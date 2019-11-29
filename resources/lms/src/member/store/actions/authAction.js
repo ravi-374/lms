@@ -6,6 +6,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {apiBaseURL, LocalStorageKey, loggedConstant, Routes, Tokens} from "../../../constants";
 import {setUserProfile} from "../../../store/action/localStorageAction";
 import {getLocalStorageDataByEncryptKey} from "../../../shared/sharedMethod";
+import {setLoading} from "../../../store/action/progressBarAction";
 
 export const login = (user, history) => async (dispatch) => {
     const { email, password } = user;
@@ -50,5 +51,27 @@ export const resetPassword = (user, history) => async (dispatch) => {
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        });
+};
+
+/**
+ * This method used for register a member
+ * @param user
+ * @param history
+ * @returns {Function}
+ */
+export const registration = (user, history) => async (dispatch) => {
+    dispatch(setLoading(true));
+    const { email, password, first_name, last_name } = user;
+    await apiConfig.post(apiBaseURL.MEMBER_REGISTRATION, {  email, password, first_name, last_name })
+        .then((response) => {
+            history.push(Routes.MEMBER_LOGIN);
+            dispatch({ type: authActionType.REGISTRATION, payload: response.data.data });
+            dispatch(addToast({ text: getFormattedMessage('registration.success.message') }));
+            dispatch(setLoading(false));
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+            dispatch(setLoading(false));
         });
 };

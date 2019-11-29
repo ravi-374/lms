@@ -19,6 +19,7 @@ const Login = lazy(() => import('./components/auth/Login'));
 const ForgotPassword = lazy(() => import('./components/auth/ForgotPassword'));
 const ResetPassword = lazy(() => import('./components/auth/ResetPassword'));
 const Home = lazy(() => import('./components/home/Home'));
+const Registration = lazy(() => import('./components/auth/registration/Registration'));
 
 const MemberApp = (props) => {
     const { getUserProfile, fetchSettings, settings, fetchAppSetting, appSetting, member } = props;
@@ -43,6 +44,7 @@ const MemberApp = (props) => {
                     {/*<Route exact={true} path={Routes.APP_HOME} name="Home" render={props => <Home {...props}/>}/>*/}
                     <Route path={Routes.MEMBER_HOME} name="home" exact render={props => <Home {...props}/>}/>
                     <Route path={Routes.MEMBER_LOGIN} name="Login" exact render={props => <Login {...props}/>}/>
+                    <Route path={Routes.MEMBER_REGISTRATION} name="registration" exact render={props => <Registration {...props}/>}/>
                     <Route path={Routes.MEMBER_FORGOT_PASSWORD} name="Forgot Password" exact
                            render={props => <ForgotPassword {...props}/>}/>
                     <Route path={Routes.MEMBER_RESET_PASSWORD} name="Reset Password" exact

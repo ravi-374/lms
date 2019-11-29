@@ -126,5 +126,21 @@
     "reset-password.success.message": "Mot de passe mis à jour avec succès.",
     "toast.success.message": "Succès",
     "toast.warning.message": "Attention",
-    "toast.error.message": "Erreur"
+    "toast.error.message": "Erreur",
+    "registration.input.first-name.label": "Prénom",
+    "registration.input.last-name.label": "Nom De Famille",
+    "registration.input.email.label": "Email",
+    "registration.input.password.label": "Mot De Passe",
+    "registration.input.confirm-password.label": "Confirmez Le Mot De Passe",
+    "registration.input.first-name.validate.label": "Le prénom doit être obligatoire.",
+    "registration.input.last-name.validate.label": "Le nom de famille doit être obligatoire",
+    "registration.input.email-required.validate.label": "Email doit être requis.",
+    "registration.input.password-required.validate.label": "Le mot de passe doit être requis.",
+    "registration.input.password-invalid.validate.label": "Le mot de passe doit comporter plus de 5 caractères.",
+    "registration.title": "enregistrement",
+    "registration.link.login.title": "S'identifier",
+    "registration.note": "Enregistrez votre adhésion.",
+    "registration.submit.title": "registre",
+    "registration.success.message": "L'inscription a réussi. Veuillez vérifier votre courrier pour vérifier votre compte.",
+    "registration.register.link.title": "Nouvelle adhésion"
 }

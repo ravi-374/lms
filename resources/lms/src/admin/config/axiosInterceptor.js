@@ -12,8 +12,10 @@ export default {
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
                 }
-                if (localStorage.getItem(loggedConstant.IS_USER_LOGOUT)) {
-                    window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
+                if (!token) {
+                    if (!window.location.href.includes('login')) {
+                        window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
+                    }
                 }
                 if (isFormData) {
                     config.headers['Content-Type'] = 'multipart/form-data';

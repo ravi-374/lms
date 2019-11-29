@@ -3,17 +3,17 @@ import {Col, Row} from 'reactstrap';
 import {Field, reduxForm} from 'redux-form';
 import PropTypes from 'prop-types';
 import bookRequestValidate from './bookRequestValidate';
-import {bookFormatOptions, bookRequestStatusOptions} from "../../../admin/constants";
+import {bookCirculationStatusConstant, bookFormatOptions, bookRequestStatusOptions} from "../../../admin/constants";
 import InputGroup from '../../../shared/components/InputGroup';
 import Select from '../../../shared/components/Select';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import {getFormattedOptions} from "../../../shared/sharedMethod";
+import {bookRequestStatus} from "../../constants";
 
 const BookRequestForm = props => {
-    const { onSaveBookRequest, handleSubmit } = props;
+    const { onSaveBookRequest, handleSubmit, initialValues } = props;
     const inputRef = createRef();
     const bookFormats = getFormattedOptions(bookFormatOptions);
-    const booRequestStatus = getFormattedOptions(bookRequestStatusOptions);
 
     useEffect(() => {
         inputRef.current.focus();
@@ -22,6 +22,24 @@ const BookRequestForm = props => {
     const onSave = formValues => {
         const { status } = formValues;
         onSaveBookRequest(status.id);
+    };
+
+    // used for render a book request status options
+    const renderBookStatusOption = () => {
+        const booKRequestStatus = getFormattedOptions(bookRequestStatusOptions);
+        switch (initialValues.status.id) {
+            case bookRequestStatus.APPROVED:
+                // remove pending af request approved
+                return booKRequestStatus.filter(bookStatus => bookStatus.id !== bookRequestStatus.PENDING);
+            case bookRequestStatus.AVAILABLE:
+                // remove pending and approve option from dropdown af request approved and book available for use
+                return booKRequestStatus.filter(bookStatus => bookStatus.id !== bookRequestStatus.PENDING
+                    || bookStatus.id !== bookRequestStatus.APPROVED);
+            case bookRequestStatus.CANCEL:
+                return booKRequestStatus.filter(bookStatus => bookStatus.id === bookCirculationStatusConstant.CANCEL);
+            default:
+                return booKRequestStatus; // return all options
+        }
     };
 
     return (
@@ -44,9 +62,9 @@ const BookRequestForm = props => {
                        disabled={true}/>
             </Col>
             <Col xs={12}>
-                <Field name="status" label="books-circulation.select.status.label" required options={booRequestStatus}
-                       placeholder="books-circulation.select.status.placeholder" groupText="info-circle"
-                       component={Select}/>
+                <Field name="status" label="books-circulation.select.status.label" required
+                       options={renderBookStatusOption()} groupText="info-circle"
+                       placeholder="books-circulation.select.status.placeholder" component={Select}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={handleSubmit(onSave)} {...props}/>

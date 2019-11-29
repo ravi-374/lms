@@ -15,15 +15,22 @@ import {
     getLocalStorageDataByKey
 } from "../../../shared/sharedMethod";
 import {login} from "../../store/actions/authAction";
+import {displayMessage} from "../../../store/action/toastAction";
 
 const MemberLogin = (props) => {
-    const { handleSubmit, invalid, history, initialize, login } = props;
+    const {handleSubmit, invalid, history, initialize, login, displayMessage} = props;
 
     useEffect(() => {
         if (getLocalStorageDataByKey(Tokens.MEMBER)) {
             history.push(Routes.MEMBER_DEFAULT);
         }
         initialize(getLocalStorageDataByEncryptKey('currentMember'));
+        const params = new URLSearchParams(props.location.search);
+        const msg = params.get('msg');
+        const success = params.get('success');
+        if (msg) {
+            displayMessage(msg, +success);
+        }
     }, []);
 
     const onLogin = async (formValues) => {
@@ -50,10 +57,16 @@ const MemberLogin = (props) => {
                                                label={getFormattedMessage('login.checkbox.remember.label')}
                                                component={CheckBox}/>
                                     </div>
-                                    <div className="d-flex justify-content-between">
-                                        <Button color="primary" disabled={invalid} className="px-4">
+                                    <div className="d-flex">
+                                        <Button color="primary" disabled={invalid} className="w-100">
                                             {getFormattedMessage('login.title')}
                                         </Button>
+                                    </div>
+                                    <div className="d-flex justify-content-between">
+                                        <Link to={Routes.MEMBER_REGISTRATION} color="link"
+                                              className="px-0 mt-2 text-right">
+                                            {getFormattedMessage('registration.register.link.title')}
+                                        </Link>
                                         <Link to={Routes.MEMBER_FORGOT_PASSWORD} color="link"
                                               className="px-0 mt-2 text-right">
                                             {getFormattedMessage('login.link.forgot-password.title')}
@@ -75,9 +88,10 @@ MemberLogin.propTypes = {
     invalid: PropTypes.bool,
     initialize: PropTypes.func,
     login: PropTypes.func,
+    displayMessage: PropTypes.func,
     handleSubmit: PropTypes.func,
 };
 
-const form = reduxForm({ form: 'loginForm', validate: loginFormValidate })(MemberLogin);
+const form = reduxForm({form: 'loginForm', validate: loginFormValidate})(MemberLogin);
 
-export default connect(null, { login })(form);
+export default connect(null, {login, displayMessage})(form);

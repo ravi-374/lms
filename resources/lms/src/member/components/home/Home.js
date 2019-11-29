@@ -322,7 +322,8 @@ const Home = (props) => {
                                     </a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <a href={homeSettings.twitter ? 'https://twitter.com/' + homeSettings.twitter.value : ''} target="_blank">
+                                    <a href={homeSettings.twitter ? 'https://twitter.com/' + homeSettings.twitter.value : ''}
+                                       target="_blank">
                                         <i className="fa fa-twitter" aria-hidden="true"/>
                                     </a>
                                 </li>
@@ -366,7 +367,7 @@ const Home = (props) => {
                                     <td>
                                         <a href={homeSettings.website ? homeSettings.website.value : ''}
                                            target="_blank">
-                                            {homeSettings.website ? homeSettings.website.value.replace('https://','') : ''}
+                                            {homeSettings.website ? homeSettings.website.value.replace('https://', '') : ''}
                                         </a>
                                     </td>
                                 </tr>
@@ -500,6 +501,12 @@ const Home = (props) => {
                                             {getCurrentMember() ? 'Books' : 'Login'}
                                         </Link>
                                     </li>
+                                    {getCurrentMember() ?
+                                        '' : <li className="nav-item">
+                                            <Link to={Routes.MEMBER_REGISTRATION} className="nav-link">
+                                                Registration
+                                            </Link>
+                                        </li>}
                                 </ul>
                             </div>
                         </nav>
@@ -566,7 +573,6 @@ const mapStateToProps = (state) => {
     const {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings} = state;
     const settingsArray = Object.values(homeSettings);
     const settingsArr = _.mapKeys(settingsArray, 'key');
-    console.log(settingsArr);
     return {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings: settingsArr}
 };
 

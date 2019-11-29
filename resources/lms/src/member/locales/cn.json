@@ -124,5 +124,22 @@
     "reset-password.success.message": "密码更新成功。",
     "toast.success.message": "成功",
     "toast.warning.message": "警告",
-    "toast.error.message": "错误"
+    "toast.error.message": "错误",
+    "registration.input.first-name.label": "名字",
+    "registration.input.last-name.label": "姓",
+    "registration.input.email.label": "电子邮件",
+    "registration.input.password.label": "密码",
+    "registration.input.confirm-password.label": "确认密码",
+    "registration.input.first-name.validate.label": "必须要有名字。",
+    "registration.input.last-name.validate.label": "姓氏必须是必填项。",
+    "registration.input.email-required.validate.label": "必须提供电子邮件。",
+    "registration.input.password-required.validate.label": "必须提供密码。",
+    "registration.input.password-invalid.validate.label": "密码必须大于5个字符。",
+    "registration.input.confirm-password.validate.label": "确认密码必须匹配。",
+    "registration.title": "注册",
+    "registration.link.login.title": "登录",
+    "registration.note": "注册您的会员资格。",
+    "registration.submit.title": "寄存器",
+    "registration.success.message": "注册成功。 请检查您的邮件以验证您的帐户。",
+    "registration.register.link.title": "新会员"
 }

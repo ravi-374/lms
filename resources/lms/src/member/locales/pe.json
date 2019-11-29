@@ -124,5 +124,22 @@
     "reset-password.success.message": "رمز عبور با موفقیت به روز شد.",
     "toast.success.message": "موفقیت",
     "toast.warning.message": "هشدار دهنده",
-    "toast.error.message": "خطا"
+    "toast.error.message": "خطا",
+    "registration.input.first-name.label": "نام کوچک",
+    "registration.input.last-name.label": "نام خانوادگی",
+    "registration.input.email.label": "پست الکترونیک",
+    "registration.input.password.label": "کلمه عبور",
+    "registration.input.confirm-password.label": "رمز عبور را تأیید کنید",
+    "registration.input.first-name.validate.label": "نام لازم است.",
+    "registration.input.last-name.validate.label": "نام خانوادگی لازم است",
+    "registration.input.email-required.validate.label": "ایمیل لازم است",
+    "registration.input.password-required.validate.label": "رمز عبور لازم است",
+    "registration.input.password-invalid.validate.label": "رمز عبور باید بیشتر از 5 نویسه باشد.",
+    "registration.input.confirm-password.validate.label": "تأیید رمز عبور باید مطابقت داشته باشد.",
+    "registration.title": "ثبت",
+    "registration.link.login.title": "ورود",
+    "registration.note": "عضویت خود را ثبت کنید.",
+    "registration.submit.title": "ثبت نام",
+    "registration.success.message": "ثبت نام موفقیت آمیز بوده است. لطفاً نامه خود را برای تأیید حساب خود بررسی کنید.",
+    "registration.register.link.title": "عضویت جدید"
 }

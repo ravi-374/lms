@@ -124,5 +124,22 @@
     "reset-password.success.message": "Password updated successfully.",
     "toast.success.message": "Success",
     "toast.warning.message": "Warning",
-    "toast.error.message": "Error"
+    "toast.error.message": "Error",
+    "registration.input.first-name.label": "First Name",
+    "registration.input.last-name.label": "Last Name",
+    "registration.input.email.label": "Email",
+    "registration.input.password.label": "Password",
+    "registration.input.confirm-password.label": "Confirm Password",
+    "registration.input.first-name.validate.label": "First name must be required.",
+    "registration.input.last-name.validate.label": "Last name must be required.",
+    "registration.input.email-required.validate.label": "Email must be required.",
+    "registration.input.password-required.validate.label": "Password must be required.",
+    "registration.input.password-invalid.validate.label": "Password must be greater than 5 characters.",
+    "registration.input.confirm-password.validate.label": "Confirm password must be matched.",
+    "registration.title": "Registration",
+    "registration.link.login.title": "Login",
+    "registration.note": "Register your membership.",
+    "registration.submit.title": "Register",
+    "registration.success.message": "Registration has been successful. Please check your mail for verify your account.",
+    "registration.register.link.title": "New Membership"
 }

@@ -7,7 +7,12 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
-import {bookFormatOptions} from "../../../admin/constants";
+import {
+    bookCirculationStatusConstant,
+    bookFormatOptions,
+    bookRequestStatus,
+    bookRequestStatusOptions
+} from "../../../admin/constants";
 import BookRequestStatus from '../../../shared/book-request-status/BookRequestStatus';
 import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
@@ -77,12 +82,24 @@ const BookRequests = (props) => {
             name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
             right: true,
-            cell: row => <ModalAction onOpenModal={onClickModal} item={row} isHideDeleteIcon={true}/>,
+            cell: row => renderBookRequestAction(row),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
     ];
+
+    const renderBookRequestAction = (row) => {
+        switch (row.status) {
+            case bookRequestStatus.APPROVED:
+            case bookRequestStatus.PENDING:
+                return <ModalAction onOpenModal={onClickModal} item={row} isHideDeleteIcon={true}/>;
+            case bookRequestStatus.AVAILABLE:
+            case bookRequestStatus.CANCEL:
+            default:
+                return '';
+        }
+    };
 
     return (
         <Row className="animated fadeIn">
