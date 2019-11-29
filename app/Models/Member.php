@@ -71,6 +71,7 @@ class Member extends Authenticatable implements JWTSubject
         'is_active',
         'image',
         'activation_code',
+        'email_verified_at',
     ];
 
     /**
