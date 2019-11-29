@@ -68,6 +68,7 @@ class User extends Authenticatable implements JWTSubject
         'phone',
         'image',
         'is_active',
+        'email_verified_at',
     ];
 
     protected $appends = ['image_path'];
