@@ -47,6 +47,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read MembershipPlan $membershipPlan
  * @property string|null $activation_code
  * @method static Builder|Member whereActivationCode($value)
+ * @property string|null $email_verified_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereEmailVerifiedAt($value)
  */
 class Member extends Authenticatable implements JWTSubject
 {
