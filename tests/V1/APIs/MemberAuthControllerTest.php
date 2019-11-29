@@ -65,7 +65,7 @@ class MemberAuthControllerTest extends TestCase
     {
         $response = $this->getJson(route('api.v1.activate-member'));
 
-        $this->assertJsonErrorMessageResponse($response, 'token not found.');
+        $this->assertStringContainsString("#app/login?success=0&msg=token not found.", $response->getTargetUrl());
     }
 
     /** @test */
@@ -81,7 +81,9 @@ class MemberAuthControllerTest extends TestCase
 
         $response = $this->getJson(route('api.v1.activate-member', ['token='.$token]));
 
-        $this->assertSuccessMessageResponse($response, 'Your account has been activated successfully.');
+        $this->assertStringContainsString(
+            '#app/login?success=1&msg=Your account has been activated successfully.', $response->getTargetUrl()
+        );
         $this->assertTrue($member->fresh()->is_active);
     }
 

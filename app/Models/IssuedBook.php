@@ -205,6 +205,7 @@ class IssuedBook extends Model
         $record = $this->toArray();
         $record['issuer_name'] = $this->issuer_name;
         $record['returner_name'] = $this->returner_name;
+
         if (isset($record['book_item']['last_issued_book'])) {
             $record['expected_available_date'] = $this->getExpectedAvailableDate($record['book_item']['last_issued_book']);
         }

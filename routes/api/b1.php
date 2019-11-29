@@ -168,14 +168,6 @@ Route::group(['middleware' => 'user.auth'], function () {
     /** Members issued/reserved books count */
     Route::get('members/{member}/status/{status}', 'MemberAPIController@isAllowToReserveOrIssueBook')
         ->name('members.check-books-limit');
-
-    /** Book Renewal Requests */
-    Route::get('book-renewal-requests', 'BookRenewalRequestAPIController@index');
-    Route::put(
-        'book-renewal-requests/{book_renewal_request}/status/{status}',
-        'BookRenewalRequestAPIController@updateRequestStatus'
-    );
-
 });
 
 Route::get('activate-user', 'AuthAPIController@verifyAccount')->name('activate-user');

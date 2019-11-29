@@ -54,6 +54,10 @@ class BookRequestAPIController extends AppBaseController
      */
     public function updateStatus(BookRequest $bookRequest, $status)
     {
+        if ($bookRequest->status == BookRequest::CANCELLED || $bookRequest->status == BookRequest::AVAILABLE) {
+            throw new UnprocessableEntityHttpException('Invalid action.');
+        }
+
         if (! in_array($status, BookRequest::STATUS_ARR)) {
             throw new UnprocessableEntityHttpException('Invalid status.');
         }
