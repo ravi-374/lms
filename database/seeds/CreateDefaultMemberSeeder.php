@@ -28,9 +28,5 @@ class CreateDefaultMemberSeeder extends Seeder
 
         /** @var Member $member */
         $member = Member::create($input);
-
-        /** @var Role $adminRole */
-        $adminRole = Role::whereName('admin')->first();
-        $member->roles()->attach($adminRole);
     }
 }
