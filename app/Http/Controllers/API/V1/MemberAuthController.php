@@ -7,6 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\ResetPasswordLinkRequest;
 use App\Http\Requests\API\ResetPasswordRequest;
 use App\Models\Member;
+use App\Models\MembershipPlan;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterFace;
 use App\Repositories\MemberRepository;
@@ -66,7 +67,9 @@ class MemberAuthController extends AppBaseController
             return $this->sendError($errors, 422);
         }
 
+        $silver = MembershipPlan::whereName('Silver')->first();
         $input['activation_code'] = uniqid();
+        $input['membership_plan_id'] = $silver->id;
         $member = $this->memberRepository->storeMember($input);
 
         $token = JWTAuth::fromUser($member);
