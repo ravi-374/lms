@@ -66,7 +66,7 @@ class BookRequestAPIController extends AppBaseController
             throw new UnprocessableEntityHttpException('Book request is already '.BookRequest::STATUS_TEXT[$status].'.');
         }
 
-        $bookRequest->update(['status' => $status]);
+        BookRequest::whereIsbn($bookRequest->isbn)->update(['status' => $status]);
 
         return $this->sendResponse($bookRequest->fresh(), 'Book request status updated successfully.');
     }
