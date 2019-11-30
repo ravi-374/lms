@@ -142,5 +142,6 @@
     "registration.note": "Registrieren Sie Ihre Mitgliedschaft.",
     "registration.submit.title": "Registrieren",
     "registration.success.message": "Die Registrierung war erfolgreich. Bitte überprüfen Sie Ihre E-Mails, um Ihr Konto zu bestätigen.",
-    "registration.register.link.title": "Neue Mitgliedschaft"
+    "registration.register.link.title": "Neue Mitgliedschaft",
+    "modal.delete.message": "Sind Sie sicher, dass Sie Löschen möchten "
 }

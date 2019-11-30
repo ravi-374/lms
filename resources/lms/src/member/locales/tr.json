@@ -140,5 +140,6 @@
     "registration.note": "Üyeliğinizi kaydedin.",
     "registration.submit.title": "Kayıt olmak",
     "registration.success.message": "Kayıt işlemi başarılı oldu. Lütfen hesabınızı doğrulamak için postanızı kontrol edin.",
-    "registration.register.link.title": "Yeni üyelik"
+    "registration.register.link.title": "Yeni üyelik",
+    "modal.delete.message": "Silmek istediğine emin misin "
 }

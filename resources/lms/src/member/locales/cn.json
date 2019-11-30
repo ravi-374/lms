@@ -141,5 +141,6 @@
     "registration.note": "注册您的会员资格。",
     "registration.submit.title": "寄存器",
     "registration.success.message": "注册成功。 请检查您的邮件以验证您的帐户。",
-    "registration.register.link.title": "新会员"
+    "registration.register.link.title": "新会员",
+    "modal.delete.message": "你确定你要删除 "
 }

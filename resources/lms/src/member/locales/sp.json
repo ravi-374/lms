@@ -143,5 +143,6 @@
     "registration.note": "Registre su membresía.",
     "registration.submit.title": "Registro",
     "registration.success.message": "El registro ha sido exitoso. Por favor revise su correo para verificar su cuenta.",
-    "registration.register.link.title": "Membresía nueva"
+    "registration.register.link.title": "Membresía nueva",
+    "modal.delete.message": "Estas seguro que quieres borrarlo "
 }

@@ -141,5 +141,6 @@
     "registration.note": "Registre sua associação.",
     "registration.submit.title": "registo",
     "registration.success.message": "O registro foi bem-sucedido. Verifique seu e-mail para verificar sua conta.",
-    "registration.register.link.title": "Nova associação"
+    "registration.register.link.title": "Nova associação",
+    "modal.delete.message": "Tem certeza de que deseja excluir "
 }

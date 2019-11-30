@@ -140,5 +140,6 @@
     "registration.note": "تسجيل عضويتك.",
     "registration.submit.title": "تسجيل",
     "registration.success.message":"تم التسجيل بنجاح. يرجى التحقق من البريد الخاص بك للتحقق من حسابك.",
-    "registration.register.link.title": "عضوية جديدة"
+    "registration.register.link.title": "عضوية جديدة",
+    "modal.delete.message": " هل أنت متأكد أنك تريد حذف"
 }

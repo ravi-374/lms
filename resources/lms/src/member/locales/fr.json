@@ -142,5 +142,6 @@
     "registration.note": "Enregistrez votre adhésion.",
     "registration.submit.title": "registre",
     "registration.success.message": "L'inscription a réussi. Veuillez vérifier votre courrier pour vérifier votre compte.",
-    "registration.register.link.title": "Nouvelle adhésion"
+    "registration.register.link.title": "Nouvelle adhésion",
+    "modal.delete.message": "Etes-vous sûr que vous voulez supprimer "
 }
