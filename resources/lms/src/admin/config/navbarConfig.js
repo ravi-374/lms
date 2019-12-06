@@ -103,6 +103,11 @@ export default {
                     url: '/app/admin/home-settings',
                     icon: 'fa fa-cogs'
                 },
+                {
+                    name: getFormattedMessage('testimonials.title'),
+                    url: '/app/admin/testimonials',
+                    icon: 'fa fa-quote-left'
+                },
             ]
         },
     ],

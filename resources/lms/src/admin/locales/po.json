@@ -415,5 +415,22 @@
     "home-settings.input.twitter.validate.label": "O Twitter deve ser obrigatório.",
     "home-settings.input.contact_email.validate.label": "O e-mail de contato deve ser obrigatório.",
     "home-settings.input.contact_phone.validate.label": "O telefone de contato deve ser obrigatório.",
-    "home-settings.input.company_description.validate.label": "A descrição da empresa deve ser obrigatória."
+    "home-settings.input.company_description.validate.label": "A descrição da empresa deve ser obrigatória.",
+    "testimonials.title": "Depoimentos",
+    "testimonials.empty-state.title": "Ainda não há depoimentos ...",
+    "testimonials.success.create.message": "Depoimento salvo com sucesso.",
+    "testimonials.success.edit.message": "Depoimento atualizado com sucesso.",
+    "testimonials.success.delete.message": "Depoimento excluído com sucesso.",
+    "testimonials.input.occupation.label": "Ocupação",
+    "testimonials.input.name.label": "Nome",
+    "testimonials.input.description.label": "Descrição",
+    "react-data-table.occupation.column": "Ocupação",
+    "react-data-table.image.column": "Perfil",
+    "testimonials.input.name.validate.label": "O nome deve ser obrigatório.",
+    "testimonials.input.occupation.validate.label": "A ocupação deve ser obrigatória.",
+    "testimonials.input.description.validate.label": "A descrição deve ser obrigatória.",
+    "testimonials.modal.add.title": "Novo Depoimento",
+    "testimonials.modal.edit.title": "Editar Depoimento",
+    "testimonials.modal.delete.title": "Excluir Depoimento",
+    "testimonials.profile": "Perfil de depoimento"
 }

@@ -415,5 +415,22 @@
     "home-settings.input.twitter.validate.label": "Twitter debe ser requerido.",
     "home-settings.input.contact_email.validate.label": "Se requiere un correo electrónico de contacto.",
     "home-settings.input.contact_phone.validate.label": "Se requiere un teléfono de contacto.",
-    "home-settings.input.company_description.validate.label": "Se requiere un teléfono de contacto."
+    "home-settings.input.company_description.validate.label": "Se requiere un teléfono de contacto.",
+    "testimonials.title": "Testimonios",
+    "testimonials.empty-state.title": "Aún no hay testimonios ...",
+    "testimonials.success.create.message": "Testimonio guardado con éxito.",
+    "testimonials.success.edit.message": "Testimonio actualizado con éxito.",
+    "testimonials.success.delete.message": "Testimonio eliminado con éxito.",
+    "testimonials.input.occupation.label": "Ocupación",
+    "testimonials.input.name.label": "Nombre",
+    "testimonials.input.description.label": "Descripción",
+    "react-data-table.occupation.column": "Ocupación",
+    "react-data-table.image.column": "Perfil",
+    "testimonials.input.name.validate.label": "Nombre debe ser requerido.",
+    "testimonials.input.occupation.validate.label": "La ocupación debe ser requerida.",
+    "testimonials.input.description.validate.label": "La descripción debe ser requerida.",
+    "testimonials.modal.add.title": "Nuevo testimonio",
+    "testimonials.modal.edit.title": "Editar testimonio",
+    "testimonials.modal.delete.title": "Delete testimonio",
+    "testimonials.profile": "Perfil Testimonial"
 }

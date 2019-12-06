@@ -415,5 +415,22 @@
     "home-settings.input.twitter.validate.label": "Twitter muss erforderlich sein.",
     "home-settings.input.contact_email.validate.label": "Kontakt E-Mail muss erforderlich sein.",
     "home-settings.input.contact_phone.validate.label": "Kontakttelefon muss erforderlich sein.",
-    "home-settings.input.company_description.validate.label": "Firmenbeschreibung muss angefordert werden."
+    "home-settings.input.company_description.validate.label": "Firmenbeschreibung muss angefordert werden.",
+    "testimonials.title": "Referenzen",
+    "testimonials.empty-state.title": "Noch keine Bewertungen ...",
+    "testimonials.success.create.message": "Testimonial erfolgreich gespeichert.",
+    "testimonials.success.edit.message": "Testimonial erfolgreich aktualisiert.",
+    "testimonials.success.delete.message": "Testimonial erfolgreich gelöscht.",
+    "testimonials.input.occupation.label": "Besetzung",
+    "testimonials.input.name.label": "Name",
+    "testimonials.input.description.label": "Beschreibung",
+    "react-data-table.occupation.column": "Besetzung",
+    "react-data-table.image.column": "Profil",
+    "testimonials.input.name.validate.label": "Name muss angegeben werden",
+    "testimonials.input.occupation.validate.label": "Beruf muss erforderlich sein.",
+    "testimonials.input.description.validate.label": "Die Beschreibung muss erforderlich sein.",
+    "testimonials.modal.add.title": "Neues Testimonial",
+    "testimonials.modal.edit.title": "Erfahrungsbericht bearbeiten",
+    "testimonials.modal.delete.title": "Testimonial löschen",
+    "testimonials.profile": "Zeugnis Profil"
 }

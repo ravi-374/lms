@@ -415,5 +415,22 @@
     "home-settings.input.twitter.validate.label": "Twitter deve essere richiesto.",
     "home-settings.input.contact_email.validate.label": "Email di contatto obbligatoria.",
     "home-settings.input.contact_phone.validate.label": "Telefono di contatto deve essere richiesto.",
-    "home-settings.input.company_description.validate.label": "Deve essere richiesta la descrizione dell'azienda."
+    "home-settings.input.company_description.validate.label": "Deve essere richiesta la descrizione dell'azienda.",
+    "testimonials.title": "Testimonianze",
+    "testimonials.empty-state.title": "Ancora nessuna testimonianza ...",
+    "testimonials.success.create.message": "Testimonianza salvata correttamente.",
+    "testimonials.success.edit.message": "Testimonianza aggiornata con successo.",
+    "testimonials.success.delete.message": "Testimonianza eliminata correttamente.",
+    "testimonials.input.occupation.label": "Occupazione",
+    "testimonials.input.name.label": "Nome",
+    "testimonials.input.description.label": "Descrizione",
+    "react-data-table.occupation.column": "Occupazione",
+    "react-data-table.image.column": "Profilo",
+    "testimonials.input.name.validate.label": "Il nome deve essere richiesto.",
+    "testimonials.input.occupation.validate.label": "L'occupazione deve essere richiesta.",
+    "testimonials.input.description.validate.label": "La descrizione deve essere obbligatoria",
+    "testimonials.modal.add.title": "Nuova testimonianza",
+    "testimonials.modal.edit.title": "Modifica testimonianza",
+    "testimonials.modal.delete.title": "Elimina testimonianza",
+    "testimonials.profile": "Profilo della testimonianza"
 }

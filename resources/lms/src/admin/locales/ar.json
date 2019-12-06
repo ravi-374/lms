@@ -414,5 +414,22 @@
     "home-settings.input.twitter.validate.label": "يجب أن يكون Twitter مطلوبًا.",
     "home-settings.input.contact_email.validate.label": "الاتصال البريد الإلكتروني يجب أن يكون مطلوبا.",
     "home-settings.input.contact_phone.validate.label": "الاتصال الهاتف يجب أن يكون مطلوبا.",
-    "home-settings.input.company_description.validate.label": "يجب أن يكون وصف الشركة مطلوبًا."
+    "home-settings.input.company_description.validate.label": "يجب أن يكون وصف الشركة مطلوبًا.",
+    "testimonials.title": "الشهادات - التوصيات",
+    "testimonials.empty-state.title": "لا شهادات حتى الآن ...",
+    "testimonials.success.create.message": "تم حفظ الشهادة بنجاح.",
+    "testimonials.success.edit.message": "تم تحديث الشهادة بنجاح.",
+    "testimonials.success.delete.message": "تم حذف الشهادة بنجاح.",
+    "testimonials.input.occupation.label": "احتلال",
+    "testimonials.input.name.label": "اسم",
+    "testimonials.input.description.label": "وصف",
+    "react-data-table.occupation.column": "احتلال",
+    "react-data-table.image.column": "الملف الشخصي",
+    "testimonials.input.name.validate.label": "يجب أن يكون الاسم مطلوبًا.",
+    "testimonials.input.occupation.validate.label": "يجب أن يكون الاحتلال مطلوبًا.",
+    "testimonials.input.description.validate.label": "يجب أن يكون الوصف مطلوبًا.",
+    "testimonials.modal.add.title": "شهادة جديدة",
+    "testimonials.modal.edit.title": "تحرير التزكية",
+    "testimonials.modal.delete.title": "حذف التزكية",
+    "testimonials.profile": "الملف الشخصي شهادة"
 }

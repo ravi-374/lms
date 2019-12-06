@@ -415,5 +415,22 @@
     "home-settings.input.twitter.validate.label": "توییتر مورد نیاز است.",
     "home-settings.input.contact_email.validate.label": "تماس با ایمیل لازم است",
     "home-settings.input.contact_phone.validate.label": "تلفن تماس لازم است.",
-    "home-settings.input.company_description.validate.label": "توضیحات شرکت باید مورد نیاز باشد."
+    "home-settings.input.company_description.validate.label": "توضیحات شرکت باید مورد نیاز باشد.",
+    "testimonials.title": "توصیفات",
+    "testimonials.empty-state.title": "هنوز هیچ توصیفی ...",
+    "testimonials.success.create.message": "شهادت با موفقیت ذخیره شد.",
+    "testimonials.success.edit.message": "شهادت با موفقیت به روز شد.",
+    "testimonials.success.delete.message": "شهادت با موفقیت حذف شد.",
+    "testimonials.input.occupation.label": "اشتغال",
+    "testimonials.input.name.label": "نام",
+    "testimonials.input.description.label": "شرح",
+    "react-data-table.occupation.column": "اشتغال",
+    "react-data-table.image.column": "مشخصات",
+    "testimonials.input.name.validate.label": "نام لازم است",
+    "testimonials.input.occupation.validate.label": "شغل باید مورد نیاز باشد.",
+    "testimonials.input.description.validate.label": "توضیحات لازم است",
+    "testimonials.modal.add.title": "توصیف جدید",
+    "testimonials.modal.edit.title": "ویرایش شهادت",
+    "testimonials.modal.delete.title": "شهادت را حذف کنید",
+    "testimonials.profile": "پروفایل شهادت"
 }

@@ -415,5 +415,22 @@
     "home-settings.input.twitter.validate.label": "Twitter doit être requis.",
     "home-settings.input.contact_email.validate.label": "L'email de contact doit être requis.",
     "home-settings.input.contact_phone.validate.label": "Le numéro de téléphone doit être requis.",
-    "home-settings.input.company_description.validate.label": "La description de l'entreprise doit être obligatoire."
+    "home-settings.input.company_description.validate.label": "La description de l'entreprise doit être obligatoire.",
+    "testimonials.title": "Témoignages",
+    "testimonials.empty-state.title": "Pas encore de témoignages ...",
+    "testimonials.success.create.message": "Témoignage enregistré avec succès.",
+    "testimonials.success.edit.message": "Témoignage mis à jour avec succès.",
+    "testimonials.success.delete.message": "Témoignage supprimé avec succès.",
+    "testimonials.input.occupation.label": "Occupation",
+    "testimonials.input.name.label": "prénom",
+    "testimonials.input.description.label": "La description",
+    "react-data-table.occupation.column": "Occupation",
+    "react-data-table.image.column": "Profil",
+    "testimonials.input.name.validate.label": "Le nom doit être obligatoire.",
+    "testimonials.input.occupation.validate.label": "L'occupation doit être requise.",
+    "testimonials.input.description.validate.label": "Une description doit être exigée.",
+    "testimonials.modal.add.title": "Nouveau témoignage",
+    "testimonials.modal.edit.title": "Modifier le témoignage",
+    "testimonials.modal.delete.title": "Supprimer témoignage",
+    "testimonials.profile": "Profil de témoignage"
 }

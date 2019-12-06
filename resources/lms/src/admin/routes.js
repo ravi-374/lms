@@ -27,6 +27,7 @@ const BookCirculationDetails = React.lazy(() => import('./components/book-circul
 const UserProfile = React.lazy(() => import('./components/user-profile/UserProfile'));
 const Settings = React.lazy(() => import('./components/settings/Settings'));
 const BookRequests = React.lazy(() => import('./components/book-requests/BookRequests'));
+const Testimonials = React.lazy(() => import('./components/testimonials/Testimonials'));
 
 export default [
     {
@@ -202,6 +203,13 @@ export default [
         exact: true,
         name: 'HomeSettings',
         component: HomeSettings,
+        permission: Permissions.MANAGE_SETTINGS
+    },
+    {
+        path: '/app/admin/testimonials',
+        exact: true,
+        name: 'Testimonials',
+        component: Testimonials,
         permission: Permissions.MANAGE_SETTINGS
     },
 ];

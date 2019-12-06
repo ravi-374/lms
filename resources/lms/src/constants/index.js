@@ -128,6 +128,7 @@ export const apiBaseURL = {
     UPLOAD_LOGO: 'upload-logo',
     UPLOAD_FAVICON: 'upload-favicon',
     USER: 'users',
+    TESTIMONIAL: 'testimonials',
     USER_LOGIN: 'login',
     USER_DETAILS: 'user-details',
     USER_PROFILE_UPDATE: 'update-user-profile',

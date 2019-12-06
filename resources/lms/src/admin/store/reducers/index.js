@@ -36,6 +36,7 @@ import dashBoardReducer from './dashBoardReducer';
 import bookRequestReducer from './bookRequestReducer';
 import availableBookLimitReducer from './availableBookLimitReducer';
 import homeSettingReducer from "./homeSettingReducer";
+import testimonialReducer from "./testimonialReducer";
 
 export default combineReducers({
     genres: genreReducer,
@@ -74,5 +75,6 @@ export default combineReducers({
     dashBoard: dashBoardReducer,
     adminBookRequests: bookRequestReducer,
     bookLimit:availableBookLimitReducer,
-    homeSettings: homeSettingReducer
+    homeSettings: homeSettingReducer,
+    testimonials:testimonialReducer
 });

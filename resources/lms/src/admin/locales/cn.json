@@ -415,5 +415,22 @@
     "home-settings.input.twitter.validate.label": "必须使用Twitter。",
     "home-settings.input.contact_email.validate.label": "必须填写联系电子邮件。",
     "home-settings.input.contact_phone.validate.label": "必须填写联系电话。",
-    "home-settings.input.company_description.validate.label": "必须提供公司说明。"
+    "home-settings.input.company_description.validate.label": "必须提供公司说明。",
+    "testimonials.title": "感言",
+    "testimonials.empty-state.title": "尚无推荐...",
+    "testimonials.success.create.message": "证明保存成功。",
+    "testimonials.success.edit.message": "推荐书已成功更新。",
+    "testimonials.success.delete.message": "推荐书已成功删除。",
+    "testimonials.input.occupation.label": "占用",
+    "testimonials.input.name.label": "名称",
+    "testimonials.input.description.label": "描述",
+    "react-data-table.occupation.column": "占用",
+    "react-data-table.image.column": "轮廓",
+    "testimonials.input.name.validate.label": "名称必须为必填项。",
+    "testimonials.input.occupation.validate.label": "必须进行职业。",
+    "testimonials.input.description.validate.label": "必须提供说明。",
+    "testimonials.modal.add.title": "新推荐书",
+    "testimonials.modal.edit.title": "编辑推荐书",
+    "testimonials.modal.delete.title": "删除推荐",
+    "testimonials.profile": "感言"
 }

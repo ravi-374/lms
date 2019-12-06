@@ -419,5 +419,22 @@
     "home-settings.input.twitter.validate.label": "Twitter must be required.",
     "home-settings.input.contact_email.validate.label": "Contact Email must be required.",
     "home-settings.input.contact_phone.validate.label": "Contact Phone must be required.",
-    "home-settings.input.company_description.validate.label": "Company Description must be required."
+    "home-settings.input.company_description.validate.label": "Company Description must be required.",
+    "testimonials.title": "Testimonials",
+    "testimonials.empty-state.title": "No testimonials yet...",
+    "testimonials.success.create.message": "Testimonial saved successfully.",
+    "testimonials.success.edit.message": "Testimonial updated successfully.",
+    "testimonials.success.delete.message": "Testimonial deleted successfully.",
+    "testimonials.input.occupation.label": "Occupation",
+    "testimonials.input.name.label": "Name",
+    "testimonials.input.description.label": "Description",
+    "react-data-table.occupation.column": "Occupation",
+    "react-data-table.image.column": "Profile",
+    "testimonials.input.name.validate.label": "Name must be required.",
+    "testimonials.input.occupation.validate.label": "Occupation must be required.",
+    "testimonials.input.description.validate.label": "Description must be required.",
+    "testimonials.modal.add.title": "New Testimonial",
+    "testimonials.modal.edit.title": "Edit Testimonial",
+    "testimonials.modal.delete.title": "Delete Testimonial",
+    "testimonials.profile": "Testimonial Profile"
 }
