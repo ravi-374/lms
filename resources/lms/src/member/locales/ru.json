@@ -141,7 +141,7 @@
     "registration.link.login.title": "Авторизоваться",
     "registration.note": "Зарегистрируйте свое членство.",
     "registration.submit.title": "регистр",
-    "registration.success.message": "Регистрация прошла успешно. Пожалуйста, проверьте вашу почту для подтверждения вашей учетной записи.",
+    "registration.success.message": "Вы успешно зарегистрировались, пожалуйста, подтвердите вашу электронную почту и войдите",
     "registration.register.link.title": "Новое членство",
     "modal.delete.message": "Вы уверены, что хотите удалить "
 }

@@ -139,7 +139,7 @@
     "registration.link.registration.title": "Oturum aç",
     "registration.note": "Üyeliğinizi kaydedin.",
     "registration.submit.title": "Kayıt olmak",
-    "registration.success.message": "Kayıt işlemi başarılı oldu. Lütfen hesabınızı doğrulamak için postanızı kontrol edin.",
+    "registration.success.message": "Başarıyla kaydoldunuz, lütfen e-postanızı ve giriş bilgilerinizi doğrulayın",
     "registration.register.link.title": "Yeni üyelik",
     "modal.delete.message": "Silmek istediğine emin misin "
 }

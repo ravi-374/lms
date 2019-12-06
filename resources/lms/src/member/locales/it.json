@@ -139,7 +139,7 @@
     "registration.title": "Registrazione",
     "registration.note": "Registra la tua iscrizione.",
     "registration.submit.title": "Registrare",
-    "registration.success.message": "La registrazione è andata a buon fine. Controlla la tua posta per verificare il tuo account.",
+    "registration.success.message": "Ti sei registrato correttamente, per favore verifica la tua email e accedi",
     "registration.register.link.title": "Nuova iscrizione",
     "modal.delete.message": "Sei sicuro di voler eliminare?"
 }

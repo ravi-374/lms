@@ -139,7 +139,7 @@
     "registration.link.login.title": "Oturum aç",
     "registration.note": "تسجيل عضويتك.",
     "registration.submit.title": "تسجيل",
-    "registration.success.message":"تم التسجيل بنجاح. يرجى التحقق من البريد الخاص بك للتحقق من حسابك.",
+    "registration.success.message":"لقد قمت بالتسجيل بنجاح ، يرجى التحقق من بريدك الإلكتروني وتسجيل الدخول",
     "registration.register.link.title": "عضوية جديدة",
     "modal.delete.message": " هل أنت متأكد أنك تريد حذف"
 }

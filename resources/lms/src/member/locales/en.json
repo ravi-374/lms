@@ -140,7 +140,7 @@
     "registration.link.login.title": "Login",
     "registration.note": "Register your membership.",
     "registration.submit.title": "Register",
-    "registration.success.message": "Registration has been successful. Please check your mail for verify your account.",
+    "registration.success.message": "You have registered successfully, please verify your email and login.",
     "registration.register.link.title": "New Membership",
     "modal.delete.message": "Are you sure you want to delete "
 }

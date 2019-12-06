@@ -140,7 +140,7 @@
     "registration.link.login.title": "ورود",
     "registration.note": "عضویت خود را ثبت کنید.",
     "registration.submit.title": "ثبت نام",
-    "registration.success.message": "ثبت نام موفقیت آمیز بوده است. لطفاً نامه خود را برای تأیید حساب خود بررسی کنید.",
+    "registration.success.message": "شما با موفقیت ثبت نام کرده اید ، لطفاً ایمیل و ورود خود را تأیید کنید",
     "registration.register.link.title": "عضویت جدید",
     "modal.delete.message": " آیا مطمئنید که میخواهید حذف کنید"
 }
