@@ -45,3 +45,6 @@ Route::get('total-books', 'BookAPIController@totalBooks')->name('books.count');
 
 /** homepage settings */
 Route::get('homepage-settings', 'HomepageSettingAPIController@index');
+
+/** Get all testimonials */
+Route::get('testimonials', 'TestimonialAPIController@index');
