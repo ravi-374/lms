@@ -7,6 +7,7 @@ use App\Models\Testimonial;
 use App\Repositories\Contracts\TestimonialRepositoryInterface;
 use App\Traits\ImageTrait;
 use Exception;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Class TestimonialRepository
@@ -48,8 +49,8 @@ class TestimonialRepository extends BaseRepository implements TestimonialReposit
     public function store($input)
     {
         try {
-            if (isset($input['photo']) && ! empty($input['photo'])) {
-                $input['image'] = ImageTrait::makeImage($input['photo'], Testimonial::IMAGE_PATH);
+            if (isset($input['image']) && ! empty($input['image'])) {
+                $input['image'] = ImageTrait::makeImage($input['image'], Testimonial::IMAGE_PATH);
             }
 
             return Testimonial::create($input);
@@ -76,9 +77,9 @@ class TestimonialRepository extends BaseRepository implements TestimonialReposit
 
         try {
 
-            if (isset($input['photo']) && ! empty($input['photo'])) {
+            if (isset($input['image']) && ($input['image'] instanceof UploadedFile)) {
                 $testimonial->deleteTestimonialImage();
-                $input['image'] = ImageTrait::makeImage($input['photo'], Testimonial::IMAGE_PATH);
+                $input['image'] = ImageTrait::makeImage($input['image'], Testimonial::IMAGE_PATH);
             }
 
             $testimonial->update($input);
