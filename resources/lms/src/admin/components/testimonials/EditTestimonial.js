@@ -3,9 +3,20 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import TestimonialForm from './TestimonialForm';
 import Modal from '../../../shared/components/Modal';
-import {prepareProfileData} from "../../../shared/sharedMethod";
 import prepareTestimonialFormData from "./prepareTestimonialFormData";
 import {editTestimonial} from "../../store/actions/testimonialAction";
+
+const prepareInitialValue = (testimonial) => {
+    const { id, name, occupation, description, image } = testimonial;
+    return {
+        id,
+        name,
+        occupation,
+        description,
+        image,
+        file_name: !!image
+    };
+};
 
 const EditTestimonial = (props) => {
     const { testimonial, editTestimonial, toggleModal } = props;
@@ -17,7 +28,7 @@ const EditTestimonial = (props) => {
     const prepareFormOption = {
         onSaveTestimonial,
         onCancel: toggleModal,
-        initialValues: prepareProfileData(testimonial),
+        initialValues: prepareInitialValue(testimonial),
     };
 
     return <Modal {...props} content={<TestimonialForm {...prepareFormOption}/>}/>

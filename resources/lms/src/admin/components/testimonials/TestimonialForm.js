@@ -17,9 +17,9 @@ const TestimonialForm = (props) => {
     const inputRef = createRef();
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
         !!initialValues.image ?
-            publicImagePathURL.USER_AVATAR_URL + initialValues.image :
-            !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
-        !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
+            publicImagePathURL.TESTIMONIAL_AVATAR_URL + initialValues.image :
+            !!initialValues.isCreate ? publicImagePath.TESTIMONIAL_AVATAR_URL : null,
+        !!initialValues.isCreate ? publicImagePath.TESTIMONIAL_AVATAR_URL : null,
         !(!!initialValues.image),
     );
 

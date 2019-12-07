@@ -13,7 +13,9 @@ export default {
                     config.headers['Authorization'] = `Bearer ${token}`;
                 }
                 if (!token) {
-                    if (!window.location.href.includes('login') && !window.location.href.includes('reset-password')) {
+                    if (!window.location.href.includes('login')
+                        && !window.location.href.includes('reset-password')
+                        && !window.location.href.includes('landing')) {
                         window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
                     }
                 }

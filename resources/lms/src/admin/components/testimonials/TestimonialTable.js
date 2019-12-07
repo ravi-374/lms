@@ -18,7 +18,7 @@ const TestimonialTable = (props) => {
             selector: 'image',
             width: '90px',
             cell: row => {
-                const imageUrl = row.image ? publicImagePathURL.USER_AVATAR_URL + row.image : null;
+                const imageUrl = row.image ? publicImagePathURL.TESTIMONIAL_AVATAR_URL + row.image : null;
                 if (imageUrl)
                     return <img src={imageUrl ? imageUrl : null} className="testimonial-table-row__profile-img"
                                 alt={imageUrl}/>;

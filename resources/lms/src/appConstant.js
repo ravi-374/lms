@@ -32,6 +32,7 @@ export const publicImagePath = {
 
 export const publicImagePathURL = {
     USER_AVATAR_URL: 'uploads/users/',
+    TESTIMONIAL_AVATAR_URL: 'uploads/testimonials/',
     MEMBER_AVATAR_URL: 'uploads/members/',
     BOOK_AVATAR_URL: 'uploads/books/',
     IMAGE_URL: 'uploads/images/'

@@ -21,6 +21,7 @@ import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import Truncate from "../../../shared/Truncate";
 import {fetchHomeSettings} from "../../store/actions/homeSettingAction";
 import _ from "lodash";
+import {fetchTestimonials} from "../../store/actions/testimonialAction";
 
 const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
@@ -36,10 +37,12 @@ const Home = (props) => {
         fetchTotalBooks,
         fetchFeaturedBooks,
         fetchBooksByNameOrAuthors,
+        fetchTestimonials,
         toggleModal,
         fetchHomeSettings,
         homeSettings,
-        isLoading
+        isLoading,
+        testimonials
     } = props;
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
@@ -59,6 +62,7 @@ const Home = (props) => {
         fetchTotalBooks();
         fetchFeaturedBooks();
         fetchHomeSettings();
+        fetchTestimonials();
     }, []);
 
     const openModal = (book) => {
@@ -385,12 +389,7 @@ const Home = (props) => {
      * @returns {*}
      */
     const renderWhatPeopleSays = () => {
-        const peoples = [
-            {name: 'john dae', img: 'img/user/avatar-1.png'},
-            {name: 'john dae', img: 'img/user/avatar-2.png'},
-            {name: 'john dae', img: 'img/user/avatar-3.png'},
-            {name: 'john dae', img: 'img/user/avatar-4.png'},
-        ];
+
         return (
             <section className="what-people-say position-relative">
                 <div className="what-people-say__bg position-absolute">
@@ -404,20 +403,16 @@ const Home = (props) => {
                             vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
                         <OwlCarousel className="what-people-say__owl-slider owl-theme" {...mainSliderOption}>
                             {
-                                peoples.map((people, i) => {
+                                testimonials.map((people, i) => {
                                     return (
                                         <div className="item" key={i}>
                                             <div className="what-people-say__slider-section text-center mx-auto">
                                                 <div className="mt-3">
                                                     <h6 className="text-uppercase">{people.name}</h6>
                                                     <h6>student</h6>
-                                                    <p className="mt-3">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum
-                                                        dicta earum eligendi error ex exercitationem expedita inventore
-                                                        laudantium maxime minus nisi odit perspiciatis praesentium,
-                                                        repellendus sint unde velit vero voluptates? </p>
+                                                    <p className="mt-3">{}</p>
                                                     <div className="what-people-say__slider-avatar">
-                                                        <img src={people.img} alt=""/>
+                                                        <img src={people.image_path} alt=""/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -566,19 +561,30 @@ Home.propTypes = {
     totalBooks: PropTypes.number,
     fetchFeaturedBooks: PropTypes.func,
     toggleModal: PropTypes.func,
-    resetSearchBooks: PropTypes.func
+    resetSearchBooks: PropTypes.func,
+    testimonials: PropTypes.array
 };
 
 const mapStateToProps = (state) => {
-    const {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings} = state;
+    const { appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings, testimonials } = state;
     const settingsArray = Object.values(homeSettings);
     const settingsArr = _.mapKeys(settingsArray, 'key');
-    return {appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings: settingsArr}
+    return {
+        appSetting,
+        books,
+        searchBooks,
+        totalRecords,
+        totalBooks,
+        isLoading,
+        homeSettings: settingsArr,
+        testimonials
+    }
 };
 
 export default connect(mapStateToProps, {
     fetchFeaturedBooks,
     fetchHomeSettings,
+    fetchTestimonials,
     toggleModal,
     fetchBooksByNameOrAuthors,
     resetSearchBooks,
