@@ -9,7 +9,7 @@ use App\Http\Requests\API\ResetPasswordRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
 use App\Repositories\Contracts\AccountRepositoryInterface;
-use App\Repositories\Contracts\MemberRepositoryInterFace;
+use App\Repositories\Contracts\MemberRepositoryInterface;
 use App\Repositories\MemberRepository;
 use App\User;
 use Crypt;
