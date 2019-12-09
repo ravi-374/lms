@@ -30,6 +30,7 @@ use App\Repositories\Contracts\RoleRepositoryInterface;
 use App\Repositories\Contracts\SeriesBookRepositoryInterface;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
+use App\Repositories\Contracts\TestimonialRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\CountryRepository;
 use App\Repositories\GenreRepository;
@@ -43,6 +44,7 @@ use App\Repositories\RoleRepository;
 use App\Repositories\SeriesBookRepository;
 use App\Repositories\SettingRepository;
 use App\Repositories\TagRepository;
+use App\Repositories\TestimonialRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -77,6 +79,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CountryRepositoryInterface::class, CountryRepository::class);
         $this->app->bind(BookRequestRepositoryInterface::class, BookRequestRepository::class);
         $this->app->bind(HomepageSettingRepositoryInterface::class, HomepageSettingRepository::class);
+        $this->app->bind(TestimonialRepositoryInterface::class, TestimonialRepository::class);
     }
 
     /**

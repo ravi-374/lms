@@ -148,6 +148,10 @@ Route::group(['middleware' => 'user.auth'], function () {
         /** Homepage settings */
         Route::get('homepage-settings', 'HomepageSettingAPIController@index')->name('homepage-settings.index');
         Route::put('homepage-settings', 'HomepageSettingAPIController@bulkUpdate')->name('homepage-settings.update');
+
+        // Manage Testimonials
+        Route::resource('testimonials', 'TestimonialAPIController');
+        Route::post('testimonials/{testimonial}', 'TestimonialAPIController@update')->name('testimonials.update');
     });
 
     Route::middleware('permission:manage_book_requests')->group(function () {
