@@ -48,14 +48,14 @@ class Testimonial extends Model
 
     public function getImagePathAttribute()
     {
-        if (! empty($this->image)) {
+        if (!empty($this->image)) {
             return $this->imageUrl(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image);
         }
     }
 
     public function deleteTestimonialImage()
     {
-        if (! empty($this->image)) {
+        if (!empty($this->image)) {
             self::deleteImage(self::IMAGE_PATH.DIRECTORY_SEPARATOR.$this->image); // thumbnail
 
             $this->update(['image' => null]);
