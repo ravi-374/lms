@@ -1,4 +1,5 @@
 @import "../../../../../assets/css/poppins.css";
+@import "../../../scss/variables";
 
 .main-landing-page {
     font-family: Poppins, sans-serif;
@@ -692,6 +693,15 @@ what people say style
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
+    background: $image-avatar;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+    span {
+        font-size: 25px;
+        color: $white;
+    }
 }
 
 .what-people-say__slider-avatar img {

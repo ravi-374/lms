@@ -22,6 +22,7 @@ import Truncate from "../../../shared/Truncate";
 import {fetchHomeSettings} from "../../store/actions/homeSettingAction";
 import _ from "lodash";
 import {fetchTestimonials} from "../../store/actions/testimonialAction";
+import {getAvatarName} from "../../../shared/sharedMethod";
 
 const genres = ['Business', 'Science', 'Sports', 'Politics'];
 
@@ -398,9 +399,6 @@ const Home = (props) => {
                 <div className="what-people-say__content section-spacing--top section-spacing--bottom">
                     <div className="container">
                         <h3 className="text-center">What People Say</h3>
-                        <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                            vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
                         <OwlCarousel className="what-people-say__owl-slider owl-theme" {...mainSliderOption}>
                             {
                                 testimonials.map((people, i) => {
@@ -409,10 +407,15 @@ const Home = (props) => {
                                             <div className="what-people-say__slider-section text-center mx-auto">
                                                 <div className="mt-3">
                                                     <h6 className="text-uppercase">{people.name}</h6>
-                                                    <h6>student</h6>
-                                                    <p className="mt-3">{}</p>
+                                                    <h6 className="text-uppercase">{people.occupation}</h6>
+                                                    <p className="text-center text-description--landing w-75 mx-auto section-header-row-spacing">
+                                                        {people.description}
+                                                    </p>
                                                     <div className="what-people-say__slider-avatar">
-                                                        <img src={people.image_path} alt=""/>
+                                                        {people.image_path !== null ?
+                                                            <img src={people.image_path} alt=""/> :
+                                                            <span>{getAvatarName(people.name)}</span>
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>

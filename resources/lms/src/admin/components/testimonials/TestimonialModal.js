@@ -16,7 +16,7 @@ export const TestimonialModal = (props) => {
         NewComponent: CreateTestimonial,
         EditComponent: EditTestimonial,
         DeleteComponent: DeleteTestimonial,
-        deleteKey: testimonial ? testimonial.first_name + ' ' + testimonial.last_name : null,
+        deleteKey: testimonial ? testimonial.name : null,
         editConfig,
         delConfig,
         isWide: true,

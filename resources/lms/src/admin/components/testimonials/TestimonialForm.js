@@ -46,11 +46,11 @@ const TestimonialForm = (props) => {
                 <Row>
                     <Col xs={6}>
                         <Field name="name" label="testimonials.input.name.label" required inputRef={inputRef}
-                               groupText="testimonial-circle-o" component={InputGroup}/>
+                               groupText="user-circle-o" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name="occupation" label="testimonials.input.occupation.label" required
-                               groupText="testimonial" component={InputGroup}/>
+                               groupText="user-circle-o" component={InputGroup}/>
                     </Col>
                     <Col xs={12}>
                         <Field name="description" required cols={90} rows={7} label="testimonials.input.description.label" component={TextArea}/>

@@ -22,7 +22,7 @@ const TestimonialTable = (props) => {
                 if (imageUrl)
                     return <img src={imageUrl ? imageUrl : null} className="testimonial-table-row__profile-img"
                                 alt={imageUrl}/>;
-                return <div className="testimonial__avatar">
+                return <div className="user__avatar">
                     <span>{getAvatarName(row.name)}</span>
                 </div>;
             }
