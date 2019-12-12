@@ -27,6 +27,10 @@ class UpdateTestimonialRequest extends APIRequest
      */
     public function rules()
     {
-        return Testimonial::$rules;
+        return[
+            'name'        => 'required|unique:testimonials,name,'.$this->testimonial->id,
+            'occupation'  => 'required',
+            'description' => 'required',
+        ];
     }
 }
