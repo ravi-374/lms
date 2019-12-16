@@ -172,6 +172,8 @@ Route::group(['middleware' => 'user.auth'], function () {
     /** Members issued/reserved books count */
     Route::get('members/{member}/status/{status}', 'MemberAPIController@isAllowToReserveOrIssueBook')
         ->name('members.check-books-limit');
+
+    Route::put('change-password','ChangeAdminPasswordAPIController@changePassword');
 });
 
 Route::get('activate-user', 'AuthAPIController@verifyAccount')->name('activate-user');
