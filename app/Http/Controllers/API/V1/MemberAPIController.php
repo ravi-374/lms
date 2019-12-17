@@ -21,6 +21,7 @@ class MemberAPIController extends AppBaseController
 {
     /**
      * @param  Request  $request
+     *
      * @return JsonResponse
      */
     public function getLoggedInMemberDetails(Request $request)
@@ -40,6 +41,7 @@ class MemberAPIController extends AppBaseController
      * @throws Exception
      *
      * @throws ApiOperationFailedException
+     *
      * @return JsonResponse
      */
     public function updateMemberProfile(
@@ -71,6 +73,7 @@ class MemberAPIController extends AppBaseController
 
     /**
      * @param  ChangePasswordRequest  $request
+     *
      * @return JsonResponse
      */
     public function changePassword(ChangePasswordRequest $request)

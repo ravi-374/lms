@@ -155,6 +155,7 @@ class UserAPIController extends AppBaseController
 
     /**
      * @param  Request  $request
+     *
      * @return JsonResponse
      */
     public function getLoggedInUserDetails(Request $request)
@@ -173,6 +174,7 @@ class UserAPIController extends AppBaseController
      * @throws Exception
      *
      * @throws ApiOperationFailedException
+     *
      * @return JsonResponse
      */
     public function updateUserProfile(UpdateUserProfileRequest $request)
@@ -188,6 +190,7 @@ class UserAPIController extends AppBaseController
 
     /**
      * @param  ChangePasswordRequest  $request
+     *
      * @return JsonResponse
      */
     public function changePassword(ChangePasswordRequest $request)

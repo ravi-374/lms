@@ -22,7 +22,7 @@
 {{-- favicon--}}
 
 <!-- Fonts -->
-{{--    <link href="{{ mix('css/app.css') }}" rel="stylesheet">--}}
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
