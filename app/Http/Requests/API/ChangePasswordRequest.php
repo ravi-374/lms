@@ -1,11 +1,13 @@
 <?php
 
-
 namespace App\Http\Requests\API;
 
-
 use InfyOm\Generator\Request\APIRequest;
-class ChangeAdminPasswordRequest extends APIRequest
+
+/**
+ * Class ChangePasswordRequest
+ */
+class ChangePasswordRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +28,8 @@ class ChangeAdminPasswordRequest extends APIRequest
     {
         return [
             'current_password' => 'required',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password'
+            'password'         => 'required',
+            'confirm_password' => 'required|same:password',
         ];
     }
 }

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\API\ChangePasswordRequest;
 use App\Http\Requests\API\UpdateMemberProfileRequest;
 use App\Models\Member;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use Auth;
 use Exception;
+use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -35,9 +37,9 @@ class MemberAPIController extends AppBaseController
      * @param  UpdateMemberProfileRequest  $request
      * @param  MemberRepositoryInterface  $memberRepository
      *
-     * @throws ApiOperationFailedException
      * @throws Exception
      *
+     * @throws ApiOperationFailedException
      * @return JsonResponse
      */
     public function updateMemberProfile(
@@ -65,5 +67,24 @@ class MemberAPIController extends AppBaseController
         $member->deleteMemberImage();
 
         return $this->sendSuccess('Member image removed successfully.');
+    }
+
+    /**
+     * @param  ChangePasswordRequest  $request
+     * @return JsonResponse
+     */
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $input = $request->all();
+        $user = Auth::user();
+
+        if (! Hash::check($input['current_password'], $user->password)) {
+            return $this->sendError("Invalid current password");
+        }
+
+        $user->password = Hash::make($input['password']);
+        $user->save();
+
+        return $this->sendSuccess("Password changed successfully");
     }
 }

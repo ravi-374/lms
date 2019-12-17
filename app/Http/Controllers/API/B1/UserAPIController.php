@@ -4,12 +4,15 @@ namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\API\ChangePasswordRequest;
 use App\Http\Requests\API\CreateUserRequest;
 use App\Http\Requests\API\UpdateUserProfileRequest;
 use App\Http\Requests\API\UpdateUserRequest;
 use App\Repositories\UserRepository;
 use App\User;
+use Auth;
 use Exception;
+use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -44,6 +47,7 @@ class UserAPIController extends AppBaseController
         );
 
         $input['withCount'] = 1;
+
         return $this->sendResponse(
             $users->toArray(),
             'Users retrieved successfully.',
@@ -166,9 +170,9 @@ class UserAPIController extends AppBaseController
     /**
      * @param  UpdateUserProfileRequest  $request
      *
-     * @throws ApiOperationFailedException
      * @throws Exception
      *
+     * @throws ApiOperationFailedException
      * @return JsonResponse
      */
     public function updateUserProfile(UpdateUserProfileRequest $request)
@@ -180,5 +184,24 @@ class UserAPIController extends AppBaseController
         $user = $this->userRepository->update($input, $userId);
 
         return $this->sendResponse($user->toArray(), 'User profile updated successfully.');
+    }
+
+    /**
+     * @param  ChangePasswordRequest  $request
+     * @return JsonResponse
+     */
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $input = $request->all();
+        $user = Auth::user();
+
+        if (! Hash::check($input['current_password'], $user->password)) {
+            return $this->sendError("Invalid current password");
+        }
+
+        $user->password = Hash::make($input['password']);
+        $user->save();
+
+        return $this->sendSuccess("Password changed successfully");
     }
 }

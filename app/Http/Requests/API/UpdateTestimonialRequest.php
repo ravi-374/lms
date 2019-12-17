@@ -27,9 +27,6 @@ class UpdateTestimonialRequest extends APIRequest
      */
     public function rules()
     {
-        $updateRules=Testimonial::$rules;
-        $updateRules['name'] = 'required|unique:testimonials,name,'.$this->route('testimonial')->id;
-
-        return $updateRules;
+        return Testimonial::$rules;
     }
 }

@@ -36,7 +36,7 @@ Route::group(['middleware' => 'member.auth'], function () {
     /** Book Requests */
     Route::resource('book-requests', 'BookRequestAPIController');
 
-    Route::put('change-password','ChangeMemberPasswordAPIController@changePassword');
+    Route::put('change-password', 'MemberAPIController@changePassword');
 });
 
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');

@@ -33,7 +33,7 @@ class Testimonial extends Model
 
     const IMAGE_PATH = 'testimonials';
     public static $rules = [
-        'name'        => 'required|unique:testimonials,name',
+        'name'        => 'required',
         'occupation'  => 'required',
         'description' => 'required',
     ];
