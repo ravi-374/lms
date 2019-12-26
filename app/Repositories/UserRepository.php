@@ -129,7 +129,8 @@ class UserRepository extends BaseRepository
         try {
             DB::beginTransaction();
 
-            $input['password'] = Hash::make($input['password']);
+            $plainPassword = $input['password'];    
+            $input['password']  = Hash::make($input['password']);
             $user = User::create($input);
             if (! empty($input['role_id'])) {
                 $user->roles()->sync([$input['role_id']]);
@@ -147,11 +148,9 @@ class UserRepository extends BaseRepository
             }
             DB::commit();
 
-            if (! $user->is_active) {
-                /** @var AccountRepositoryInterface $accountRepository */
-                $accountRepository = App::make(AccountRepositoryInterface::class);
-                $accountRepository->sendConfirmEmailForUser($user);
-            }
+            /** @var AccountRepositoryInterface $accountRepository */
+            $accountRepository = App::make(AccountRepositoryInterface::class);
+            $accountRepository->sendConfirmEmailForUser($user, ['password' => $plainPassword]);
 
             return $this->find($user->id);
         } catch (Exception $e) {

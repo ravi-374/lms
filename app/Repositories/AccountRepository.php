@@ -18,10 +18,11 @@ class AccountRepository implements AccountRepositoryInterface
 {
     /**
      * @param  Member  $member
+     * @param  array  $options
      *
      * @throws Exception
      */
-    public function sendConfirmEmail($member)
+    public function sendConfirmEmail($member, $options = [])
     {
         $name = $member->first_name.' '.$member->last_name;
         $key = $member->id.'|'.$member->activation_code;
@@ -30,6 +31,7 @@ class AccountRepository implements AccountRepositoryInterface
         $data['link'] = URL::to('/api/v1/activate-member?token='.$code);
         $data['username'] = $name;
         $data['logo_url'] = getLogoURL();
+        $data['password'] = $options['password'];
 
         try {
             Mail::send('emails.account_verification', ['data' => $data],
@@ -45,10 +47,11 @@ class AccountRepository implements AccountRepositoryInterface
 
     /**
      * @param  User  $user
+     * @param  array  $options
      *
      * @throws Exception
      */
-    public function sendConfirmEmailForUser($user)
+    public function sendConfirmEmailForUser($user, $options = [])
     {
         $name = $user->first_name.' '.$user->last_name;
         $key = $user->id.'|'.$user->email;

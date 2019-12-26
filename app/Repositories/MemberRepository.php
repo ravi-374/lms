@@ -143,7 +143,8 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     {
         try {
             DB::beginTransaction();
-            $input['password'] = Hash::make($input['password']);
+            $plainPassword = $input['password'];
+            $input['password']  = Hash::make($input['password']);
             $input['member_id'] = $this->generateMemberId();
             $input['activation_code'] = uniqid();
             $member = Member::create($input);
@@ -161,11 +162,9 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
             }
             DB::commit();
 
-            if (! $member->is_active) {
-                /** @var AccountRepositoryInterface $accountRepository */
-                $accountRepository = App::make(AccountRepositoryInterface::class);
-                $accountRepository->sendConfirmEmail($member);
-            }
+            /** @var AccountRepositoryInterface $accountRepository */
+            $accountRepository = App::make(AccountRepositoryInterface::class);
+            $accountRepository->sendConfirmEmail($member, ['password' => $plainPassword]);
 
             return Member::with('address', 'membershipPlan')->findOrFail($member->id);
         } catch (Exception $e) {

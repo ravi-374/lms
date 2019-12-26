@@ -13,10 +13,11 @@ interface AccountRepositoryInterface
 {
     /**
      * @param  Member  $member
+     * @param  array $options
      *
      * @throws Exception
      */
-    public function sendConfirmEmail($member);
+    public function sendConfirmEmail($member, $options = []);
 
     /**
      * @param  array  $data
@@ -29,8 +30,9 @@ interface AccountRepositoryInterface
 
     /**
      * @param  User  $user
-     *
+     * @param  array  $options
+     * 
      * @throws Exception
      */
-    public function sendConfirmEmailForUser($user);
+    public function sendConfirmEmailForUser($user, $options = []);
 }
