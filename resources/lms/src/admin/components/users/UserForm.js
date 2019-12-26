@@ -26,11 +26,9 @@ const UserForm = (props) => {
     const [isActive, setActive] = useState(initialValues.is_active);
     const inputRef = createRef();
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
-        !!initialValues.image ?
-            publicImagePathURL.USER_AVATAR_URL + initialValues.image :
-            !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
+        initialValues.image_path ? initialValues.image_path : null,
         !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
-        !(!!initialValues.image),
+        !(!!initialValues.image_path),
     );
 
     useEffect(() => {

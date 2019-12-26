@@ -8,8 +8,7 @@ import {settingsKey} from "../../admin/constants";
 const ReactHelmet = (props) => {
     const { title, settings } = props;
     const appName = settings[settingsKey.LIBRARY_NAME] ? settings[settingsKey.LIBRARY_NAME].value : null;
-    const appLogo = settings[settingsKey.LIBRARY_FAVICON] ?
-        publicImagePathURL.IMAGE_URL + settings[settingsKey.LIBRARY_FAVICON].value : publicImagePath.APP_FAVICON;
+    const appLogo = settings[settingsKey.LIBRARY_FAVICON] ? settings[settingsKey.LIBRARY_FAVICON].logo_url : publicImagePath.APP_FAVICON;
 
     return (
         <Helmet onChangeClientState={() => {

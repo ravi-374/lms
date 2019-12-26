@@ -26,11 +26,10 @@ const MemberForm = (props) => {
     const [isActive, setActive] = useState(initialValues.is_active);
     const inputRef = createRef();
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
-        !!initialValues.image ?
-            publicImagePathURL.MEMBER_AVATAR_URL + initialValues.image :
+        !!initialValues.image_path ? initialValues.image_path :
             !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
         !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
-        !(!!initialValues.image),
+        !(!!initialValues.image_path),
     );
 
     useEffect(() => {

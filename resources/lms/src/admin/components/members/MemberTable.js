@@ -21,7 +21,7 @@ const MemberTable = (props) => {
             selector: 'image',
             width: '95px',
             cell: row => {
-                const imageUrl = row.image ? publicImagePathURL.MEMBER_AVATAR_URL + row.image : null;
+                const imageUrl = row.image_path ? row.image_path : null;
                 if (imageUrl)
                     return <img src={imageUrl ? imageUrl : null} className="member-table-row__profile-img"
                                 alt={imageUrl}/>;

@@ -3,7 +3,7 @@ import {Field, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import PropTypes from 'prop-types';
 import './Testimonials.scss';
-import {publicImagePath, publicImagePathURL} from '../../../appConstant';
+import {publicImagePath} from '../../../appConstant';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
@@ -16,11 +16,10 @@ const TestimonialForm = (props) => {
     const { initialValues, change, onSaveTestimonial, handleSubmit } = props;
     const inputRef = createRef();
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
-        !!initialValues.image ?
-            publicImagePathURL.TESTIMONIAL_AVATAR_URL + initialValues.image :
-            !!initialValues.isCreate ? publicImagePath.TESTIMONIAL_AVATAR_URL : null,
-        !!initialValues.isCreate ? publicImagePath.TESTIMONIAL_AVATAR_URL : null,
-        !(!!initialValues.image),
+        !!initialValues.image_path ? initialValues.image_path : null,
+        !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
+        !!initialValues.isCreate ? publicImagePath.USER_AVATAR : null,
+        !(!!initialValues.image_path),
     );
 
     useEffect(() => {
@@ -53,7 +52,8 @@ const TestimonialForm = (props) => {
                                groupText="user-circle-o" component={InputGroup}/>
                     </Col>
                     <Col xs={12}>
-                        <Field name="description" required cols={90} rows={7} label="testimonials.input.description.label" component={TextArea}/>
+                        <Field name="description" required cols={90} rows={7}
+                               label="testimonials.input.description.label" component={TextArea}/>
                     </Col>
                 </Row>
             </Col>

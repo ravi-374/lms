@@ -46,7 +46,7 @@ const BookDetail = props => {
         setIsParentToggle,
     };
 
-    const imageUrl = book.image ? publicImagePathURL.BOOK_AVATAR_URL + book.image : publicImagePath.BOOK_AVATAR;
+    const imageUrl = book.image_path ? book.image_path : publicImagePath.BOOK_AVATAR;
 
     return (
         <div className="animated fadeIn">

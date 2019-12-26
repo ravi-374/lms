@@ -26,8 +26,7 @@ const MemberApp = (props) => {
     const messages = settings[settingsKey.LANGUAGE] ? LocaleData[settings[settingsKey.LANGUAGE].value]
         : LocaleData[settingsKey.DEFAULT_LOCALE];
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
-    const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
-        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
+    const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ? appSetting[appSettingsKey.LIBRARY_LOGO].logo_url : publicImagePath.APP_LOGO;
     const routeProps = { appLogo, appName, member };
     addRTLSupport(settings[settingsKey.LANGUAGE] ? settings[settingsKey.LANGUAGE].value : settingsKey.DEFAULT_LOCALE);
 

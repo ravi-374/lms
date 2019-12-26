@@ -112,9 +112,6 @@
     "profile.input.phone.validate.label": "Telefono no. debe ser de 10 dígitos.",
     "profile.input.email-required.validate.label": "El correo electrónico debe ser requerido.",
     "profile.input.email-invalid.validate.label": "Dirección de correo electrónico no válida",
-    "profile.input.password-required.validate.label": "La contraseña debe ser requerida.",
-    "profile.input.password-invalid.validate.label": "La contraseña debe tener más de 5 caracteres.",
-    "profile.input.confirm-password.validate.label": "Confirme que la contraseña debe coincidir.",
     "profile.success.update.message": "Perfil actualizado con éxito.",
     "react-data-table.row-per-page": "Filas por página:",
     "react-data-table.action.column": "Acción",
@@ -144,5 +141,16 @@
     "registration.submit.title": "Registro",
     "registration.success.message": "Te has registrado correctamente, verifica tu correo electrónico e inicia sesión",
     "registration.register.link.title": "Membresía nueva",
-    "modal.delete.message": "Estas seguro que quieres borrarlo "
+    "modal.delete.message": "Estas seguro que quieres borrarlo ",
+    "change-password.title": "Cambia la contraseña",
+    "change-password.old_password.input.validate.msg": "La contraseña actual debe ser requerida.",
+    "change-password.password.input.validate.msg": "La contraseña debe ser requerida.",
+    "change-password.confirm_password.input.validate.msg": "Confirmar contraseña debe ser requerida.",
+    "change-password.match_password.input.validate.msg": "Confirme que la contraseña debe coincidir.",
+    "change-password.input.old_password.label": "contraseña actual",
+    "change-password.input.password.label": "Contraseña",
+    "change-password.input.confirm-password.label": "Confirmar contraseña",
+    "change-password.input.password-length.validate.label": "La contraseña debe tener más de 5 caracteres.",
+    "change-password.success.message": "La contraseña ha sido modificada con éxito.",
+    "change-password.model.header-title": "Cambia la contraseña"
 }

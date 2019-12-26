@@ -110,9 +110,6 @@
     "profile.input.phone.validate.label": "Телефонный номер. должен быть из 10 цифр.",
     "profile.input.email-required.validate.label": "Адрес электронной почты должен быть обязательным.",
     "profile.input.email-invalid.validate.label": "Неверный адрес электронной почты.",
-    "profile.input.password-required.validate.label": "Пароль должен быть обязательным.",
-    "profile.input.password-invalid.validate.label": "Пароль должен быть больше 5 символов.",
-    "profile.input.confirm-password.validate.label": "Подтвердите пароль должен совпадать.",
     "profile.success.update.message": "Профиль успешно обновлен.",
     "react-data-table.row-per-page": "Строка номинальной страницы:",
     "react-data-table.action.column": "Действие",
@@ -143,5 +140,16 @@
     "registration.submit.title": "регистр",
     "registration.success.message": "Вы успешно зарегистрировались, пожалуйста, подтвердите вашу электронную почту и войдите",
     "registration.register.link.title": "Новое членство",
-    "modal.delete.message": "Вы уверены, что хотите удалить "
+    "modal.delete.message": "Вы уверены, что хотите удалить ",
+    "change-password.title": "Изменить пароль",
+    "change-password.old_password.input.validate.msg": "Текущий пароль должен быть обязательным.",
+    "change-password.password.input.validate.msg": "Пароль должен быть обязательным.",
+    "change-password.confirm_password.input.validate.msg": "Подтвердите пароль должен быть обязательным.",
+    "change-password.match_password.input.validate.msg": "Подтвердите пароль должен совпадать.",
+    "change-password.input.old_password.label": "текущий пароль",
+    "change-password.input.password.label": "пароль",
+    "change-password.input.confirm-password.label": "Подтвердите Пароль",
+    "change-password.input.password-length.validate.label": "Пароль должен быть больше 5 символов.",
+    "change-password.success.message": "Пароль был успешно изменен.",
+    "change-password.model.header-title": "Изменить пароль"
 }
