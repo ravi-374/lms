@@ -36,8 +36,7 @@ const mapStateToProps = state => {
 
 ChangePassword.propTypes = {
     onChangePassword: PropTypes.func,
-    toggleChangePasswordModal: PropTypes.func,
-    isChangePasswordModelToggle: PropTypes.boolean
+    toggleChangePasswordModal: PropTypes.func
 };
 
 export default connect(mapStateToProps, { onChangePassword })(ChangePassword);
