@@ -69,6 +69,7 @@
         <tr>
             <td>
                 <p>Dear {{ucfirst($data['username'])}},</p>
+                <p>Your password is : {{ $data['password'] }}</p>
                 <p>Click the link below to activate your account.</p>
             </td>
         </tr>
