@@ -5,5 +5,6 @@ export default formValues => {
     if (!formValues.name) {
         errors.name = getFormattedMessage('genres.input.name.validate.label');
     }
+
     return errors;
 };

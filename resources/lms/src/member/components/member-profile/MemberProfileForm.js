@@ -4,7 +4,6 @@ import {Row, Col} from 'reactstrap';
 import PropTypes from 'prop-types';
 import memberValidate from './memberProfileValidate';
 import './MemberProfile.scss';
-import {publicImagePathURL} from '../../../appConstant';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import InputGroup from '../../../shared/components/InputGroup';
 import ImagePicker from '../../../shared/image-picker/ImagePicker';
@@ -18,9 +17,8 @@ const MemberProfileForm = (props) => {
     const [isPasswordHidden, setPasswordHidden] = useState(true);
     const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(true);
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
-        !!initialValues.image ?
-            publicImagePathURL.MEMBER_AVATAR_URL + initialValues.image : null, null,
-        !(!!initialValues.image),
+        !!initialValues.image_path ? initialValues.image_path : null, null,
+        !(!!initialValues.image_path),
     );
 
     const onSave = (formValues) => {
@@ -72,18 +70,6 @@ const MemberProfileForm = (props) => {
                         <Field name="phone" type="number" label="profile.input.phone.label"
                                onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
                                component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="password" label="profile.input.password.label"
-                               type={isPasswordHidden ? 'password' : 'text'} onClick={onclickPassword} groupText="lock"
-                               isAppendIcon appendGroupText={isPasswordHidden ? 'eye-slash' : 'eye'}
-                               component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="confirm_password" label="profile.input.confirm-password.label"
-                               onClick={onclickConfirmPassword} type={isConfirmPasswordHidden ? 'password' : 'text'}
-                               groupText="lock" isAppendIcon
-                               appendGroupText={isConfirmPasswordHidden ? 'eye-slash' : 'eye'} component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>

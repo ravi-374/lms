@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
 import PropTypes from 'prop-types';
-import {publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 import {getAvatarName, getFormattedMessage} from "../../../shared/sharedMethod";
+import ChangePassword from "../change-password/ChangePassword.js";
+import {connect} from "react-redux";
+import {toggleChangePasswordModal} from "../../../store/action/changePasswordModalAction";
 
 const MemberHeader = (props) => {
-    const { member, history, appName, appLogo } = props;
+    const { member, history, appName, appLogo, toggleChangePasswordModal } = props;
+    const cardModalProps = { toggleChangePasswordModal };
     let imageUrl = null;
 
     if (member) {
@@ -15,14 +18,19 @@ const MemberHeader = (props) => {
         if (member.last_name) {
             member.name += ' ' + member.last_name;
         }
-        if (member.image) {
-            imageUrl = publicImagePathURL.MEMBER_AVATAR_URL + member.image;
+        if (member.image_path) {
+            imageUrl = member.image_path;
         }
     }
 
     const goToMemberProfile = () => {
         history.push(Routes.MEMBER_PROFILE);
     };
+
+    const toggle = () => {
+        toggleChangePasswordModal();
+    };
+
 
     return (
         <>
@@ -47,10 +55,14 @@ const MemberHeader = (props) => {
                         <DropdownItem onClick={goToMemberProfile}><i className="fa fa-cog"/>
                             {getFormattedMessage('profile.title')}
                         </DropdownItem>
+                        <DropdownItem onClick={toggle}><i className="fa fa-lock"/>
+                            {getFormattedMessage('change-password.title')}
+                        </DropdownItem>
                         <DropdownItem onClick={e => props.onLogout(e)}><i className="fa fa-lock"/>
                             {getFormattedMessage('header.logout.title')}
                         </DropdownItem>
                     </DropdownMenu>
+                    <ChangePassword {...cardModalProps}/>
                 </AppHeaderDropdown>
             </Nav>
         </>
@@ -64,4 +76,4 @@ MemberHeader.propTypes = {
     appLogo: PropTypes.string,
 };
 
-export default MemberHeader;
+export default connect(null, { toggleChangePasswordModal })(MemberHeader);

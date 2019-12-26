@@ -50,8 +50,7 @@ const Settings = (props) => {
     };
 
     const getLogo = (settings, key) => {
-        return settings && settings[key] ?
-            publicImagePathURL.IMAGE_URL + settings[key].value : null
+        return settings && settings[key] ? settings[key].logo_url : null
     };
 
     const prepareFormOption = {

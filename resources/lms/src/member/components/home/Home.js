@@ -51,8 +51,7 @@ const Home = (props) => {
     const [book, setBook] = useState(null);
     const [isToggle, setToggle] = useState(false);
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
-    const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ?
-        publicImagePathURL.IMAGE_URL + appSetting[appSettingsKey.LIBRARY_LOGO].value : publicImagePath.APP_LOGO;
+    const appLogo = appSetting[appSettingsKey.LIBRARY_LOGO] ? appSetting[appSettingsKey.LIBRARY_LOGO].logo_url : publicImagePath.APP_LOGO;
     let about = undefined;
     const modalOptions = {
         toggleModal,

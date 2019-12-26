@@ -21,6 +21,7 @@ import totalBookReducer from "./totalBookReducer";
 import totalRecordReduce from "../../../admin/store/reducers/totalRecordReduce";
 import homeSettingReducer from "./homeSettingReducer";
 import testimonialReducer from "./testimonialReducer";
+import changePasswordModalReducer from "../../../store/reducers/changePasswordModalReducer";
 
 export default combineReducers({
     isLoading: progressReduce,
@@ -44,5 +45,6 @@ export default combineReducers({
     bookRequests: bookRequestReducer,
     totalRecords: totalRecordReduce,
     homeSettings: homeSettingReducer,
-    testimonials: testimonialReducer
+    testimonials: testimonialReducer,
+    isChangePasswordModelToggle: changePasswordModalReducer
 });

@@ -36,8 +36,7 @@ const BookSearchTable = (props) => {
             </thead>
             <tbody>
             {books.map((book, index) => {
-                const imageUrl = book.book.image ?
-                    publicImagePathURL.BOOK_AVATAR_URL + book.book.image : publicImagePath.BOOK_AVATAR;
+                const imageUrl = book.book.image_path ? book.book.image_path : publicImagePath.BOOK_AVATAR;
 
                 return (
                     <tr className="book__table-row" key={book.id.toString()}>

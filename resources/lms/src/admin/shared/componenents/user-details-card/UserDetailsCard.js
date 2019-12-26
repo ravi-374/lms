@@ -7,8 +7,8 @@ import {publicImagePathURL} from "../../../../appConstant";
 
 const UserDetailsCard = props => {
     const { user, isMember } = props;
-    const imageUrl = user.image && !isMember ? publicImagePathURL.USER_AVATAR_URL + user.image :
-        user.image && isMember ? publicImagePathURL.MEMBER_AVATAR_URL + user.image : null;
+    const imageUrl = user.image_path && !isMember ? user.image_path :
+        user.image_path && isMember ? user.image_path : null;
     const fullAddress = prepareFullAddress(user.address);
 
     return (

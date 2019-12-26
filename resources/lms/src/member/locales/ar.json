@@ -109,9 +109,6 @@
     "profile.input.phone.validate.label": "رقم الهاتف. يجب أن يكون من 10 أرقام.",
     "profile.input.email-required.validate.label": "يجب أن يكون البريد الإلكتروني مطلوبًا.",
     "profile.input.email-invalid.validate.label": "عنوان البريد الإلكتروني غير صالح.",
-    "profile.input.password-required.validate.label": "يجب أن تكون كلمة المرور مطلوبة.",
-    "profile.input.password-invalid.validate.label": "يجب أن تكون كلمة المرور أكبر من 5 أحرف.",
-    "profile.input.confirm-password.validate.label": "تأكيد كلمة المرور يجب أن تكون مطابقة.",
     "profile.success.update.message": "تم تحديث الملف الشخصي بنجاح.",
     "react-data-table.row-per-page": "الصفوف الاسمية الصفحة:",
     "react-data-table.action.column": "عمل",
@@ -141,5 +138,16 @@
     "registration.submit.title": "تسجيل",
     "registration.success.message":"لقد قمت بالتسجيل بنجاح ، يرجى التحقق من بريدك الإلكتروني وتسجيل الدخول",
     "registration.register.link.title": "عضوية جديدة",
-    "modal.delete.message": " هل أنت متأكد أنك تريد حذف"
+    "modal.delete.message": " هل أنت متأكد أنك تريد حذف",
+    "change-password.title": "تغيير كلمة السر",
+    "change-password.old_password.input.validate.msg": "يجب أن تكون كلمة المرور الحالية مطلوبة.",
+    "change-password.password.input.validate.msg": "يجب أن تكون كلمة المرور مطلوبة.",
+    "change-password.confirm_password.input.validate.msg": "تأكيد كلمة المرور يجب أن تكون مطلوبة.",
+    "change-password.match_password.input.validate.msg": "تأكيد كلمة المرور يجب أن تكون مطابقة.",
+    "change-password.input.old_password.label": "كلمة المرور الحالية",
+    "change-password.input.password.label": "كلمه السر",
+    "change-password.input.confirm-password.label": "تأكيد كلمة المرور",
+    "change-password.input.password-length.validate.label": "يجب أن تكون كلمة المرور أكبر من 5 أحرف.",
+    "change-password.success.message": "تم تغيير كلمة المرور بنجاح.",
+    "change-password.model.header-title": "تغيير كلمة السر"
 }

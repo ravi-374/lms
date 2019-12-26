@@ -15,19 +15,6 @@ export default formValues => {
     if (formValues.email && !emailExpression.test(formValues.email)) {
         errors.email = getFormattedMessage('profile.input.email-invalid.validate.label');
     }
-    if (!formValues.password) {
-        errors.password = getFormattedMessage('profile.input.password-required.validate.label');
-    }
-    if (formValues.password && formValues.password.length < 6) {
-        errors.password = getFormattedMessage('profile.input.password-invalid.validate.label');
-    }
-
-    if (formValues.password_new && formValues.password_new.length < 6) {
-        errors.password_new = getFormattedMessage('profile.input.password-invalid.validate.label');
-    }
-    if (formValues.confirm_password !== formValues.password_new) {
-        errors.confirm_password = getFormattedMessage('profile.input.confirm-password.validate.label');
-    }
     const phoneExpression = /^\d{10}$/;
     if (formValues.phone && !phoneExpression.test(formValues.phone)) {
         errors.phone = getFormattedMessage('profile.input.phone.validate.label');

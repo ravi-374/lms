@@ -27,10 +27,8 @@ const BookDetailsForm = (props) => {
     } = props;
     const [isFeatured, setIsFeatured] = useState(!!(initialValues && initialValues.is_featured));
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
-        !!initialValues.image ?
-            publicImagePathURL.BOOK_AVATAR_URL + initialValues.image : publicImagePath.BOOK_AVATAR,
-        publicImagePath.BOOK_AVATAR,
-        !(!!initialValues.image)
+        !!initialValues.image_path ? initialValues.image_path : publicImagePath.BOOK_AVATAR,
+        publicImagePath.BOOK_AVATAR, !(!!initialValues.image)
     );
     const [onChangeAuthor] = bookCreationWarning(change);
     const [onChangeGenres] = bookCreationWarning(change);

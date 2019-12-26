@@ -7,7 +7,8 @@ export const constants = {
     ADD_TOAST: 'ADD_TOAST',
     REMOVE_TOAST: 'REMOVE_TOAST',
     ERROR_ACTION: 'ERROR_ACTION',
-    GET_SET_CURRENCY: 'GET_SET_CURRENCY'
+    GET_SET_CURRENCY: 'GET_SET_CURRENCY',
+    CHANGE_PASSWORD_MODEL_ACTION: 'CHANGE_PASSWORD_MODEL_ACTION'
 };
 
 export const countryCode = {
@@ -132,6 +133,7 @@ export const apiBaseURL = {
     USER_LOGIN: 'login',
     USER_DETAILS: 'user-details',
     USER_PROFILE_UPDATE: 'update-user-profile',
+    CHANGE_PASSWORD: 'change-password'
 };
 
 export const bookRequestConstants = {

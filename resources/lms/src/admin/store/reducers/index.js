@@ -37,6 +37,7 @@ import bookRequestReducer from './bookRequestReducer';
 import availableBookLimitReducer from './availableBookLimitReducer';
 import homeSettingReducer from "./homeSettingReducer";
 import testimonialReducer from "./testimonialReducer";
+import changePasswordModalReducer from "../../../store/reducers/changePasswordModalReducer";
 
 export default combineReducers({
     genres: genreReducer,
@@ -74,7 +75,8 @@ export default combineReducers({
     adminAuth: authReducer,
     dashBoard: dashBoardReducer,
     adminBookRequests: bookRequestReducer,
-    bookLimit:availableBookLimitReducer,
+    bookLimit: availableBookLimitReducer,
     homeSettings: homeSettingReducer,
-    testimonials:testimonialReducer
+    testimonials: testimonialReducer,
+    isChangePasswordModelToggle: changePasswordModalReducer
 });
