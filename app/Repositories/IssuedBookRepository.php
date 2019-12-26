@@ -201,7 +201,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function issueBook($input)
     {
         $issuedBooksCount = IssuedBook::ofMember($input['member_id'])->issued()->count();
-        if ($issuedBooksCount == getSettingValueByKey(Setting::ISSUE_BOOKS_LIMIT)) {
+        if ($issuedBooksCount >= getSettingValueByKey(Setting::ISSUE_BOOKS_LIMIT)) {
             throw new UnprocessableEntityHttpException('Your issued books limit is exceed.');
         }
 
@@ -265,7 +265,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function reserveBook($input)
     {
         $reserveBooksCount = IssuedBook::ofMember($input['member_id'])->reserve()->count();
-        if ($reserveBooksCount == getSettingValueByKey(Setting::RESERVE_BOOKS_LIMIT)) {
+        if ($reserveBooksCount >= getSettingValueByKey(Setting::RESERVE_BOOKS_LIMIT)) {
             throw new UnprocessableEntityHttpException('Your reserve books limit is exceed.');
         }
 
