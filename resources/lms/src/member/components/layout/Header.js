@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
 import PropTypes from 'prop-types';
-import {publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 import {getAvatarName, getFormattedMessage} from "../../../shared/sharedMethod";
 import ChangePassword from "../change-password/ChangePassword.js";
+import {connect} from "react-redux";
+import {toggleChangePasswordModal} from "../../../store/action/changePasswordModalAction";
 
 const MemberHeader = (props) => {
-    const { member, history, appName, appLogo } = props;
-    const [isOpen, setIsOpen] = useState(false);
+    const { member, history, appName, appLogo, toggleChangePasswordModal } = props;
+    const cardModalProps = { toggleChangePasswordModal };
     let imageUrl = null;
 
     if (member) {
@@ -18,7 +19,7 @@ const MemberHeader = (props) => {
             member.name += ' ' + member.last_name;
         }
         if (member.image_path) {
-            imageUrl =  member.image_path;
+            imageUrl = member.image_path;
         }
     }
 
@@ -27,10 +28,9 @@ const MemberHeader = (props) => {
     };
 
     const toggle = () => {
-        setIsOpen(!isOpen);
+        toggleChangePasswordModal();
     };
 
-    const cardModalProps = { toggle, isOpen };
 
     return (
         <>
@@ -76,4 +76,4 @@ MemberHeader.propTypes = {
     appLogo: PropTypes.string,
 };
 
-export default MemberHeader;
+export default connect(null, { toggleChangePasswordModal })(MemberHeader);

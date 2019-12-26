@@ -7,7 +7,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {Modal, ModalBody, ModalHeader} from "reactstrap";
 
 const ChangePassword = (props) => {
-    const { onChangePassword, toggle, isOpen } = props;
+    const { onChangePassword, toggleChangePasswordModal, isChangePasswordModelToggle } = props;
 
     const onSaveChangePassword = (formValues) => {
         onChangePassword(formValues);
@@ -15,12 +15,14 @@ const ChangePassword = (props) => {
 
     const prepareFormOption = {
         onSaveChangePassword,
-        onCancel: toggle,
+        onCancel: toggleChangePasswordModal,
     };
 
     return (
-        <Modal isOpen={isOpen} toggle={toggle} className={'modal-primary primary modal-config--small'}>
-            <ModalHeader toggle={toggle}>{getFormattedMessage('change-password.model.header-title')}</ModalHeader>
+        <Modal isOpen={isChangePasswordModelToggle} toggle={toggleChangePasswordModal}
+               className={'modal-primary primary modal-config--small'}>
+            <ModalHeader
+                toggle={toggleChangePasswordModal}>{getFormattedMessage('change-password.model.header-title')}</ModalHeader>
             <ModalBody>
                 <ChangePasswordForm{...prepareFormOption}/>
             </ModalBody>
@@ -28,9 +30,14 @@ const ChangePassword = (props) => {
     );
 };
 
-ChangePassword.propTypes = {
-    onChangePassword: PropTypes.func,
-    toggle: PropTypes.func
+const mapStateToProps = state => {
+    return { isChangePasswordModelToggle: state.isChangePasswordModelToggle };
 };
 
-export default connect(null, { onChangePassword })(ChangePassword);
+ChangePassword.propTypes = {
+    onChangePassword: PropTypes.func,
+    toggleChangePasswordModal: PropTypes.func,
+    isChangePasswordModelToggle: PropTypes.boolean
+};
+
+export default connect(mapStateToProps, { onChangePassword })(ChangePassword);

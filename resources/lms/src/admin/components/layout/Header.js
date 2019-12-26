@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, Nav} from 'reactstrap';
 import {AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler} from '@coreui/react';
 import PropTypes from 'prop-types';
-import {publicImagePathURL} from '../../../appConstant';
 import {Routes} from "../../../constants";
 import {getAvatarName, getFormattedMessage} from "../../../shared/sharedMethod";
 import ChangePassword from "../change-password/ChangePassword";
+import {connect} from "react-redux";
+import {toggleChangePasswordModal} from "../../../store/action/changePasswordModalAction";
 
 const Header = (props) => {
-    const { user, history, appName, appLogo } = props;
-    const [isOpen, setIsOpen] = useState(false);
+    const { user, history, appName, appLogo, toggleChangePasswordModal } = props;
+    const cardModalProps = { toggleChangePasswordModal };
+
     let imageUrl = null;
     if (user) {
         user.name = user.first_name;
@@ -26,10 +28,8 @@ const Header = (props) => {
     };
 
     const toggle = () => {
-        setIsOpen(!isOpen);
+        toggleChangePasswordModal()
     };
-
-    const cardModalProps = { toggle, isOpen };
 
     return (
         <>
@@ -75,4 +75,4 @@ Header.propTypes = {
     appLogo: PropTypes.string
 };
 
-export default Header;
+export default connect(null, { toggleChangePasswordModal })(Header);
