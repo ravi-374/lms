@@ -18,8 +18,7 @@ const UserProfileForm = (props) => {
     const [isPasswordHidden, setPasswordHidden] = useState(true);
     const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(true);
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
-        !!initialValues.image ?
-            publicImagePathURL.USER_AVATAR_URL + initialValues.image : null, null,
+        !!initialValues.image_path ? initialValues.image_path : null, null,
         !(!!initialValues.image),
     );
 
@@ -71,18 +70,6 @@ const UserProfileForm = (props) => {
                         <Field name="phone" type="number" label="profile.input.phone.label"
                                onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
                                component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="password_new" label="profile.input.password.label"
-                               type={isPasswordHidden ? 'password' : 'text'} onClick={onclickPassword} groupText="lock"
-                               isAppendIcon appendGroupText={isPasswordHidden ? 'eye-slash' : 'eye'}
-                               component={InputGroup}/>
-                    </Col>
-                    <Col xs={6}>
-                        <Field name="confirm_password" label="profile.input.confirm-password.label"
-                               onClick={onclickConfirmPassword} type={isConfirmPasswordHidden ? 'password' : 'text'}
-                               groupText="lock" isAppendIcon
-                               appendGroupText={isConfirmPasswordHidden ? 'eye-slash' : 'eye'} component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>

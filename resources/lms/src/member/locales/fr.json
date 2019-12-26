@@ -112,9 +112,6 @@
     "profile.input.phone.validate.label": "Pas de téléphone. doit être de 10 chiffres.",
     "profile.input.email-required.validate.label": "Email doit être requis.",
     "profile.input.email-invalid.validate.label": "Adresse e-mail invalide.",
-    "profile.input.password-required.validate.label": "Le mot de passe doit être requis.",
-    "profile.input.password-invalid.validate.label": "Le mot de passe doit comporter plus de 5 caractères.",
-    "profile.input.confirm-password.validate.label": "Confirmez que le mot de passe doit correspondre.",
     "profile.success.update.message": "Mise à jour du profil réussie.",
     "react-data-table.row-per-page": "Lignes par page:",
     "react-data-table.action.column": "Action",
@@ -143,5 +140,16 @@
     "registration.submit.title": "registre",
     "registration.success.message": "Vous vous êtes inscrit avec succès, veuillez vérifier votre adresse e-mail et vous connecter",
     "registration.register.link.title": "Nouvelle adhésion",
-    "modal.delete.message": "Etes-vous sûr que vous voulez supprimer "
+    "modal.delete.message": "Etes-vous sûr que vous voulez supprimer",
+    "change-password.title": "Changer le mot de passe",
+    "change-password.old_password.input.validate.msg": "Le mot de passe actuel doit être requis.",
+    "change-password.password.input.validate.msg": "Un mot de passe doit être requis.",
+    "change-password.confirm_password.input.validate.msg": "Confirmer que le mot de passe doit être requis.",
+    "change-password.match_password.input.validate.msg": "Confirmez que le mot de passe doit correspondre.",
+    "change-password.input.old_password.label": "Mot de passe actuel",
+    "change-password.input.password.label": "Mot de passe",
+    "change-password.input.confirm-password.label": "Confirmez le mot de passe",
+    "change-password.input.password-length.validate.label": "Le mot de passe doit comporter plus de 5 caractères.",
+    "change-password.success.message": "Le mot de passe a été modifié avec succès.",
+    "change-password.model.header-title": "Changer le mot de passe"
 }

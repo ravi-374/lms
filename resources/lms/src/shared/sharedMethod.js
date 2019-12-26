@@ -108,7 +108,7 @@ export const prepareFullAddress = (address) => {
 };
 
 export const prepareProfileData = (userProfile) => {
-    const { id, is_active, first_name, last_name, email, password, phone, address, image, roles, membership_plan } = userProfile;
+    const { id, is_active, first_name, last_name, email, password, phone, address, image, image_path, roles, membership_plan } = userProfile;
     const changeAbleFields = {
         id,
         is_active,
@@ -117,6 +117,7 @@ export const prepareProfileData = (userProfile) => {
         email,
         password,
         image,
+        image_path,
         phone,
         file_name: !!image
     };

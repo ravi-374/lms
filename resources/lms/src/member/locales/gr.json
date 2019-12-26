@@ -110,9 +110,6 @@
     "profile.input.phone.validate.label": "Telefon-Nr. muss 10-stellig sein.",
     "profile.input.email-required.validate.label": "E-Mail muss erforderlich sein.",
     "profile.input.email-invalid.validate.label": "Ungültige E-Mail-Adresse.",
-    "profile.input.password-required.validate.label": "Passwort muss erforderlich sein.",
-    "profile.input.password-invalid.validate.label": "Das Passwort muss länger als 5 Zeichen sein.",
-    "profile.input.confirm-password.validate.label": "Passwort bestätigen muss übereinstimmen.",
     "profile.success.update.message": "Profil erfolgreich aktualisiert.",
     "react-data-table.row-per-page": "Zeilen pro seite:",
     "react-data-table.action.column": "Aktion",
@@ -143,5 +140,16 @@
     "registration.submit.title": "Registrieren",
     "registration.success.message": "Sie haben sich erfolgreich registriert, überprüfen Sie bitte Ihre E-Mail-Adresse und melden Sie sich an",
     "registration.register.link.title": "Neue Mitgliedschaft",
-    "modal.delete.message": "Sind Sie sicher, dass Sie Löschen möchten "
+    "modal.delete.message": "Sind Sie sicher, dass Sie Löschen möchten ",
+    "change-password.title": "Passwort ändern",
+    "change-password.old_password.input.validate.msg": "Das aktuelle Passwort muss angegeben werden.",
+    "change-password.password.input.validate.msg": "Passwort muss erforderlich sein.",
+    "change-password.confirm_password.input.validate.msg": "Passwort bestätigen muss erforderlich sein.",
+    "change-password.match_password.input.validate.msg": "Passwort bestätigen muss übereinstimmen.",
+    "change-password.input.old_password.label": "Jetziges Passwort",
+    "change-password.input.password.label": "Passwort",
+    "change-password.input.confirm-password.label": "Kennwort bestätigen",
+    "change-password.input.password-length.validate.label": "Das Passwort muss länger als 5 Zeichen sein.",
+    "change-password.success.message": "Passwort wurde erfolgreich geändert.",
+    "change-password.model.header-title": "Passwort ändern"
 }

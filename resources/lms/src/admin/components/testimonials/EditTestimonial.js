@@ -7,13 +7,14 @@ import prepareTestimonialFormData from "./prepareTestimonialFormData";
 import {editTestimonial} from "../../store/actions/testimonialAction";
 
 const prepareInitialValue = (testimonial) => {
-    const { id, name, occupation, description, image } = testimonial;
+    const { id, name, occupation, description, image, image_path } = testimonial;
     return {
         id,
         name,
         occupation,
         description,
         image,
+        image_path,
         file_name: !!image
     };
 };

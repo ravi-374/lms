@@ -132,6 +132,7 @@ export const apiBaseURL = {
     USER_LOGIN: 'login',
     USER_DETAILS: 'user-details',
     USER_PROFILE_UPDATE: 'update-user-profile',
+    CHANGE_PASSWORD: 'change-password'
 };
 
 export const bookRequestConstants = {

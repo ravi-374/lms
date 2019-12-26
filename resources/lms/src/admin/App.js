@@ -35,8 +35,7 @@ const AdminApp = (props) => {
         : null;
     let appLogo = appSetting[appSettingsKey.LIBRARY_LOGO]
         ?
-        publicImagePathURL.IMAGE_URL +
-        appSetting[appSettingsKey.LIBRARY_LOGO].value
+        appSetting[appSettingsKey.LIBRARY_LOGO].logo_url
         : publicImagePath.APP_LOGO;
     const routeProps = { appLogo, appName, permissions, user };
     addRTLSupport(settings[settingsKey.LANGUAGE]
@@ -77,7 +76,7 @@ const AdminApp = (props) => {
             </React.Suspense>
         </IntlProvider>
     )
-}
+};
 
 AdminApp.propTypes = {
     user: PropTypes.object,

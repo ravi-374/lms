@@ -12,6 +12,10 @@ export const genreActionType = {
     DELETE_GENRE: 'DELETE_GENRE',
 };
 
+export const passwordActionType = {
+    CHANGE_PASSWORD: 'CHANGE_PASSWORD',
+};
+
 export const tagActionType = {
     FETCH_TAGS: 'FETCH_TAGS',
     FETCH_TAG: 'FETCH_TAG',

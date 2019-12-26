@@ -55,7 +55,7 @@ const Books = (props) => {
             allowOverflow: true,
             button: true,
             cell: row => {
-                const imageUrl = row.image ? publicImagePathURL.BOOK_AVATAR_URL + row.image : publicImagePath.BOOK_AVATAR;
+                const imageUrl = row.image_path ? row.image_path : publicImagePath.BOOK_AVATAR;
                 return (
                     <div>
                         <img onClick={() => {
