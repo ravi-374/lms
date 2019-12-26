@@ -60,6 +60,7 @@ class AccountRepository implements AccountRepositoryInterface
         $data['link'] = URL::to('/api/b1/activate-user?token='.$code);
         $data['username'] = $name;
         $data['logo_url'] = getLogoURL();
+        $data['password'] = $options['password'];
 
         try {
             Mail::send('emails.account_verification', ['data' => $data],
