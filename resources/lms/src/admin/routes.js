@@ -28,6 +28,8 @@ const UserProfile = React.lazy(() => import('./components/user-profile/UserProfi
 const Settings = React.lazy(() => import('./components/settings/Settings'));
 const BookRequests = React.lazy(() => import('./components/book-requests/BookRequests'));
 const Testimonials = React.lazy(() => import('./components/testimonials/Testimonials'));
+const CreateMember = React.lazy(() => import('./components/members/CreateMember'));
+const EditMember = React.lazy(() => import('./components/members/EditMember'));
 
 export default [
     {
@@ -126,6 +128,20 @@ export default [
         exact: true,
         name: 'Members',
         component: Members,
+        permission: Permissions.MANAGE_MEMBERS
+    },
+    {
+        path: `${Routes.MEMBERS}new`,
+        exact: true,
+        name: 'CreateMember',
+        component: CreateMember,
+        permission: Permissions.MANAGE_MEMBERS
+    },
+    {
+        path: `${Routes.MEMBERS}:id/edit`,
+        exact: true,
+        name: 'EditMember',
+        component: EditMember,
         permission: Permissions.MANAGE_MEMBERS
     },
     {

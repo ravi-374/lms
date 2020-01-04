@@ -4,15 +4,24 @@ import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
 import DeleteAction from '../../../shared/action-buttons/DeleteAction';
 import {deleteMember} from '../../store/actions/memberAction';
+import {getFormattedMessage} from "../../../shared/sharedMethod";
 
 const DeleteMember = (props) => {
-    const { memberId, deleteMember, toggleModal } = props;
+    const { member, deleteMember, toggleModal } = props;
+    if (!member) {
+        return '';
+    }
+    const fullName = member.first_name + ' ' + member.last_name;
+    const content = member ?
+        <>{getFormattedMessage('members.delete.message')}&nbsp;"{`${fullName}`}" ?</> : null;
+    const title = getFormattedMessage('members.modal.delete.title');
 
     const onDeleteMember = () => {
-        deleteMember(memberId);
+        deleteMember(member.id);
     };
 
-    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteMember} onCancel={toggleModal}/>}/>
+    return <Modal {...props} actions={<DeleteAction onDelete={onDeleteMember} onCancel={toggleModal}/>}
+                  content={content} title={title}/>
 };
 
 DeleteMember.propTypes = {
