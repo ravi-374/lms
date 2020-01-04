@@ -10,7 +10,7 @@ import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 
 const EditMember = (props) => {
-    const { member, match, editMember, history, fetchMember } = props;
+    const { member, match, editMember, history, fetchMember, isLoading } = props;
 
     useEffect(() => {
         fetchMember(+match.params.id, true);
@@ -24,7 +24,7 @@ const EditMember = (props) => {
         formValues.roles = [];
         editMember(member.id, prepareFormData(formValues), history);
     };
-
+    
     const goBack = () => {
         history.goBack();
     };
@@ -35,6 +35,9 @@ const EditMember = (props) => {
         initialValues: prepareProfileData(member),
     };
 
+    if (isLoading) {
+        return <ProgressBar/>
+    }
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
@@ -59,11 +62,11 @@ EditMember.propTypes = {
     member: PropTypes.object,
     editMember: PropTypes.func,
     fetchMember: PropTypes.func,
-    history: PropTypes.func,
+    history: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProp) => {
-    const { members } = state;
-    return { member: members.find(member => member.id === +ownProp.match.params.id) }
+    const { members, isLoading } = state;
+    return { member: members.find(member => member.id === +ownProp.match.params.id), isLoading }
 };
 export default connect(mapStateToProps, { editMember, fetchMember })(EditMember);
