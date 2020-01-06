@@ -1,27 +1,27 @@
-import React, {useEffect} from 'react';
-import {Button, Card, CardBody, Col, Row} from 'reactstrap';
+import React, {useEffect, useState} from 'react';
+import {Card, CardBody, Col, Row} from 'reactstrap';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
-import MemberModal from './MemberModal';
 import Member from './MemberTable';
 import './Members.scss';
-import {FilterOption} from "../../../constants";
+import {FilterOption, Routes} from "../../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {openModal} from "../../../shared/custom-hooks";
 import {toggleModal} from '../../../store/action/modalAction';
 import {activeInactiveMember, fetchMembers} from '../../store/actions/memberAction';
 import {fetchMembershipPlans} from "../../store/actions/membershipPlanAction";
+import {Link} from "react-router-dom";
+import DeleteMember from "./DeleteMember";
 
 const Members = (props) => {
     const {
         members, fetchMembers, toggleModal, history, isLoading, totalRecord,
         membershipPlans, activeInactiveMember, fetchMembershipPlans
     } = props;
-    const [isCreate, isEdit, isDelete, member, onOpenModal] = openModal();
-    const cardModalProps = { member, isCreate, isEdit, isDelete, toggleModal };
+    const [member, setMember] = useState(null);
+    const cardModalProps = { member, toggleModal };
     const intl = useIntl();
 
     useEffect(() => {
@@ -37,8 +37,12 @@ const Members = (props) => {
     };
 
     const onClickModal = (isEdit, member = null, isDelete = false) => {
-        onOpenModal(isEdit, member, isDelete);
-        toggleModal();
+        if (isDelete) {
+            setMember(member);
+            toggleModal();
+        } else {
+            history.push(Routes.MEMBERS + member.id + '/edit');
+        }
     };
 
     const cardBodyProps = {
@@ -63,9 +67,9 @@ const Members = (props) => {
                 <HeaderTitle title="Members"/>
                 <h5 className="page-heading">{getFormattedMessage('members.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                    <Link to={`${Routes.MEMBERS}new`} size="md" className="btn btn-primary ml-2">
                         {getFormattedMessage('members.modal.add.title')}
-                    </Button>
+                    </Link>
                 </div>
             </Col>
             <Col sm={12}>
@@ -73,7 +77,7 @@ const Members = (props) => {
                     <Card>
                         <CardBody>
                             <Member {...cardBodyProps}/>
-                            <MemberModal {...cardModalProps}/>
+                            <DeleteMember {...cardModalProps}/>
                         </CardBody>
                     </Card>
                 </div>
@@ -90,8 +94,7 @@ Members.propTypes = {
     isLoading: PropTypes.bool,
     fetchMembers: PropTypes.func,
     activeInactiveMember: PropTypes.func,
-    fetchMembershipPlans: PropTypes.func,
-    toggleModal: PropTypes.func,
+    fetchMembershipPlans: PropTypes.func
 };
 
 const mapStateToProps = (state) => {

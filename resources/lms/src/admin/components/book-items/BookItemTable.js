@@ -39,7 +39,7 @@ export const BookItemTable = (props) => {
                             <td className="book-item__table-price">{priceFormatter(bookItem.price, currency)}</td>
                             <td className="book-item__table-status">{renderBookItemStatus(bookItem)}</td>
                             <td className="text-center book-item__table-action">
-                                <ModalAction isHideDeleteIcon={true} onOpenModal={onClickModal} item={bookItem}/>
+                                <ModalAction onOpenModal={onClickModal} item={bookItem}/>
                             </td>
                         </tr>
                     )

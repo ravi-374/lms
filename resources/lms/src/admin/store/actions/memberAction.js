@@ -7,7 +7,7 @@ import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
 import {setTotalRecord} from "./totalRecordAction";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {apiBaseURL} from "../../../constants";
+import {apiBaseURL, Routes} from "../../../constants";
 
 export const fetchMembers = (filter = {}, isLoading = false) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
@@ -41,24 +41,24 @@ export const fetchMember = (memberId, isLoading = false) => async (dispatch) => 
         });
 };
 
-export const addMember = (member) => async (dispatch) => {
+export const addMember = (member, history) => async (dispatch) => {
     await apiConfigWthFormData.post(apiBaseURL.MEMBER, member)
         .then((response) => {
             dispatch({ type: memberActionType.ADD_MEMBER, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('members.success.create.message') }));
-            dispatch(toggleModal());
+            history.push(Routes.MEMBERS);
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };
 
-export const editMember = (memberId, member) => async (dispatch) => {
+export const editMember = (memberId, member, history) => async (dispatch) => {
     await apiConfigWthFormData.post(apiBaseURL.MEMBER + '/' + memberId, member)
         .then((response) => {
             dispatch({ type: memberActionType.EDIT_MEMBER, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('members.success.edit.message') }));
-            dispatch(toggleModal());
+            history.push(Routes.MEMBERS);
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
