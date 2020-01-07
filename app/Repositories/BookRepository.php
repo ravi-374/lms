@@ -213,10 +213,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 }
             }
 
-            if (! isset($item['price']) || empty($item['price'])) {
-                throw new UnprocessableEntityHttpException('Please enter book item price.');
-            }
-
             if (isset($item['book_code'])) {
                 if (strlen($item['book_code']) > 8 || strlen($item['book_code']) < 8) {
                     throw new UnprocessableEntityHttpException('Book code must be 8 character long.');
