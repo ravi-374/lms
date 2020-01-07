@@ -15,8 +15,8 @@ export default formValues => {
     if (!formValues.language) {
         errors.language = getFormattedMessage('books.items.select.language.validate.label');
     }
-    if (!formValues.price) {
-        errors.price = getFormattedMessage('books.items.input.price.validate.label');
-    }
+    // if (!formValues.price) { Remove comment for make price required
+    //     errors.price = getFormattedMessage('books.items.input.price.validate.label');
+    // }
     return errors;
 };

@@ -76,7 +76,7 @@ const BookItemForm = (props) => {
                        component={InputGroup}/>
             </Col>
             <Col xs={6}>
-                <Field name="price" min="1" type="number" label="books.items.input.price.label" required
+                <Field name="price" min="1" type="number" label="books.items.input.price.label"
                        groupText={mapCurrencyCode(currency)} component={InputGroup}/>
             </Col>
             <Col xs={6}>

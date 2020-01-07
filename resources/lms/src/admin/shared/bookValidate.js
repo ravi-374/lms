@@ -33,10 +33,10 @@ export default formValues => {
                 bookErrors.language = getFormattedMessage('books.items.select.language.validate.label');
                 booksArrayErrors[index] = bookErrors
             }
-            if (!item || !item.price) {
-                bookErrors.price = getFormattedMessage('books.items.input.price.validate.label');
-                booksArrayErrors[index] = bookErrors
-            }
+            // if (!item || !item.price) {
+            //     bookErrors.price = getFormattedMessage('books.items.input.price.validate.label');
+            //     booksArrayErrors[index] = bookErrors
+            // }
         });
         if (booksArrayErrors.length) {
             errors.items = booksArrayErrors

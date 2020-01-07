@@ -71,7 +71,7 @@ const BookItemsCard = (props) => {
                 <tr>
                     <th className="book-items-card__item-header">{getFormattedMessage('books.items.input.edition.label')}</th>
                     <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.format.label')}</th>
-                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.input.price.label')}</th>
+                    <th>{getFormattedMessage('books.items.input.price.label')}</th>
                     <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.language.label')}</th>
                     <th>{getFormattedMessage('books.items.select.publisher.label')}</th>
                     <th className="text-center">{getFormattedMessage('react-data-table.action.column')}</th>
