@@ -171,17 +171,17 @@ class BookRepositoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
-     * @expectedExceptionMessage Please enter book item price.
      */
-    public function it_can_not_store_book_without_book_item_price()
+    public function it_can_store_book_without_book_item_price()
     {
         /** @var BookItem $bookLanguage */
         $bookLanguage = factory(BookLanguage::class)->create();
 
         $input['items'] = [['language_id' => $bookLanguage->id, 'price' => null]];
 
-        $this->bookRepo->validateInput($input);
+        $response = $this->bookRepo->validateInput($input);
+
+        $this->assertTrue($response);
     }
 
     /**
