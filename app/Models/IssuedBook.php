@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|IssuedBook whereUpdatedAt($value)
  * @mixin Eloquent
  * @property-read BookItem $bookItem
+ * @property-read Book $book
+ * @property-read BookLanguage|null $language
  * @property-read Member $member
  * @method static Builder|IssuedBook reserve()
  * @method static Builder|IssuedBook ofMember($memberId)
@@ -306,5 +308,37 @@ class IssuedBook extends Model
 
         return $query->where('status', self::STATUS_ISSUED)
             ->whereRaw('DATE(return_due_date) < ?', [$now]);
+    }
+
+    /**
+     * @return array
+     */
+    public function apiM1Obj()
+    {
+
+        $record = [
+            "id"            => $this->id,
+            "status"        => $this->status
+        ];
+        $record['expected_available_date'] = $this->expected_available_date;
+
+        return $record;
+    }
+
+    /**
+     * @return array
+     */
+    public function apiM1BookHistoryObj()
+    {
+
+        $record = [
+            "id"            => $this->id,
+            "book_code"     => $this->bookItem->book_code,
+            "book_name"     => $this->bookItem->book->name,
+            "image"     => $this->bookItem->book->image,
+            "status"        => $this->status,
+        ];
+
+        return $record;
     }
 }
