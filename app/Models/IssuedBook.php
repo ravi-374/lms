@@ -332,15 +332,11 @@ class IssuedBook extends Model
     {
 
         $record = [
-            "id"              => $this->id,
-            "book_code"       => $this->bookItem->book_code,
-            "book_name"       => $this->bookItem->book->name,
-            "image"           => $this->bookItem->book->image,
-            "issue_due_date"  => $this->issue_due_date,
-            "reserve_date"    => $this->reserve_date,
-            "return_date"     => $this->return_date,
-            "return_due_date" => $this->return_due_date,
-            "issue_date"      => $this->issued_on,
+            "id"        => $this->id,
+            "book_code" => $this->bookItem->book_code,
+            "book_name" => $this->bookItem->book->name,
+            "image"     => $this->bookItem->book->image,
+            "status"    => $this->status,
         ];
 
         return $record;
