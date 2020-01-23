@@ -337,6 +337,29 @@ paths:
           "200":
             description: Book requested deleted successfully.
 
+  "/books/{id}/book-history":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Book History
+      summary: get specific book history details.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookItem Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Books history Details retrieved successfully..
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookHistoryResponse"
+
 components:
   securitySchemes:
     Bearer:
@@ -942,3 +965,39 @@ components:
           type: string
         password:
           type: string
+    BookHistoryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            book_code:
+              type: string
+            book_name:
+              type: string
+            image:
+              type: string
+            edition:
+              type: string
+            issue_due_date:
+              type: string
+            reserve_date:
+              type: string
+            return_date:
+              type: string
+            return_due_date:
+              type: string
+            issue_date:
+              type: string
+            language_name:
+              type: string
+            status:
+              type: integer
+            expected_available_date:
+              type: string

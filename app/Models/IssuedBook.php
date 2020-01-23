@@ -354,7 +354,7 @@ class IssuedBook extends Model
             "status"          => $this->status,
             "edition"         => $this->bookItem->edition,
             "issue_due_date"  => $this->issue_due_date,
-            "reserve_date"    => $this->reserve_date,
+            "reserve_date"    => Carbon::parse($this->reserve_date)-> toDateTimeString(),
             "return_date"     => $this->return_date,
             "return_due_date" => $this->return_due_date,
             "issue_date"      => $this->issued_on,
