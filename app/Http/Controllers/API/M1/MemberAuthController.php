@@ -71,7 +71,7 @@ class MemberAuthController extends AppBaseController
         $silver = MembershipPlan::whereName('Silver')->first();
         $input['activation_code'] = uniqid();
         $input['membership_plan_id'] = $silver->id;
-        $member = $this->memberRepository->storeMember($input);
+        $member = $this->memberRepository->registerMember($input);
 
         $token = JWTAuth::fromUser($member);
 
