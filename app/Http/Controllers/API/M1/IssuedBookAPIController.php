@@ -53,11 +53,10 @@ class IssuedBookAPIController extends AppBaseController
 
     /**
      * @param  BookItem  $bookItem
-     * @param  Request  $request
      *
      * @return JsonResponse
      */
-    public function booksHistoryDetail(BookItem $bookItem, Request $request)
+    public function booksHistoryDetail(BookItem $bookItem)
     {
         $lastIssuedBook = $bookItem->lastIssuedBook;
 
