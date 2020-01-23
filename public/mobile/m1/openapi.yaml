@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: http://local.lms.com/api/m1
+  - url: /api/m1
 
 info:
   version: 1.0.0
