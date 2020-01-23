@@ -13,12 +13,17 @@ Route::group(['middleware' => 'member.auth'], function () {
         ->name('update-member-profile');
     // books history
     Route::get('books-history', 'IssuedBookAPIController@booksHistory')->name('books-history.index');
+    // Book history Details
+    Route::get('books/{book_item}/book-history', 'IssuedBookAPIController@booksHistoryDetail')
+        ->name('book-history');
     // Reserve Book
     Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')
         ->name('reserve-book');
     // Un-Reserve Book
     Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook')
         ->name('un-reserve-book');
+    // Book Requests
+    Route::resource('book-requests', 'BookRequestAPIController');
     // Change Password
     Route::put('change-password', 'MemberAPIController@changePassword');
 });
