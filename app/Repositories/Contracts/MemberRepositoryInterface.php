@@ -93,4 +93,25 @@ interface MemberRepositoryInterface
      * @return bool
      */
     public function isAllowToReserveOrIssueBook($memberId, $status);
+
+    /**
+     * @param  array  $input
+     * @param  int  $id
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return Member
+     */
+    public function updateMemberProfile($input, $id);
+
+    /**
+     * @param  array  $input
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return Member
+     */
+    public function registerMember($input);
 }

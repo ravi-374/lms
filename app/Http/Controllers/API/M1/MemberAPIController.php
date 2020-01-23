@@ -52,7 +52,7 @@ class MemberAPIController extends AppBaseController
         unset($input['email']);
         unset($input['membership_plan_id']);
 
-        $updateMember = $memberRepository->update($input, Auth::id());
+        $updateMember = $memberRepository->updateMemberProfile($input, Auth::id());
 
         return $this->sendResponse($updateMember->toArray(), 'Member profile updated successfully.');
     }

@@ -39,6 +39,10 @@ Route::get('docs', function () {
     return view('redoc.index');
 });
 
+Route::get('mobile-apis', function () {
+    return view('mobile.index');
+});
+
 
 /** Search books */
 Route::get('books', 'BookAPIController@index')->name('books.index');

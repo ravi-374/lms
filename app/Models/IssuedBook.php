@@ -58,6 +58,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|IssuedBook lastIssuedBook()
  * @method static Builder|IssuedBook overDue()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook issued()
+ * @property-read Collection|Author[] $authors
  */
 class IssuedBook extends Model
 {
@@ -315,14 +316,11 @@ class IssuedBook extends Model
      */
     public function apiM1Obj()
     {
-
-        $record = [
-            "id"            => $this->id,
-            "status"        => $this->status
+        return [
+            "id"                      => $this->id,
+            "status"                  => $this->status,
+            "expected_available_date" => $this->expected_available_date,
         ];
-        $record['expected_available_date'] = $this->expected_available_date;
-
-        return $record;
     }
 
     /**
@@ -330,7 +328,6 @@ class IssuedBook extends Model
      */
     public function apiM1BookHistoryObj()
     {
-
         $record = [
             "id"        => $this->id,
             "book_code" => $this->bookItem->book_code,
@@ -338,6 +335,32 @@ class IssuedBook extends Model
             "image"     => $this->bookItem->book->image,
             "status"    => $this->status,
         ];
+
+        return $record;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function apiM1BookHistoryDetailObj()
+    {
+
+        $record = [
+            "id"              => $this->id,
+            "book_code"       => $this->bookItem->book_code,
+            "book_name"       => $this->bookItem->book->name,
+            "image"           => $this->bookItem->book->image,
+            "status"          => $this->status,
+            "edition"         => $this->bookItem->edition,
+            "issue_due_date"  => $this->issue_due_date,
+            "reserve_date"    => $this->reserve_date,
+            "return_date"     => $this->return_date,
+            "return_due_date" => $this->return_due_date,
+            "issue_date"      => $this->issued_on,
+            "language_name"   => $this->bookItem->language->language_name,
+        ];
+        $record['expected_available_date'] = $this->expected_available_date;
 
         return $record;
     }
