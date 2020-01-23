@@ -93,4 +93,37 @@ class BookRequest extends Model
     {
         return BookRequest::whereIsbn($this->isbn)->count();
     }
+
+    /**
+     * @return array
+     */
+    public function apiM1BookRequestListObj()
+    {
+
+        $record = [
+            "id"              => $this->id,
+            "book_name"       => $this->book_name,
+            "isbn"           => $this->isbn,
+            "status"          => $this->status,
+        ];
+
+        return $record;
+    }
+
+    /**
+     * @return array
+     */
+    public function apiM1BookRequestObj()
+    {
+
+        $record = [
+            "id"              => $this->id,
+            "book_name"       => $this->book_name,
+            "isbn"           => $this->isbn,
+            "status"          => $this->status,
+            "edition"          => $this->edition,
+        ];
+
+        return $record;
+    }
 }

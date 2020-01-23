@@ -228,6 +228,115 @@ paths:
         "200":
           description: Password updated successfully.
 
+  '/book-requests':
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Book Requests
+      summary: book request.
+      parameters:
+        - name: book_name
+          in: query
+          description: book name
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Requested books retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookRequestResponse"
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Book Requests
+      summary: create book-request.
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookRequest"
+        required: true
+      responses:
+        "200":
+          description: Book requested created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateBookRequestResponse"
+
+  "/book-requests/{id}":
+      put:
+        security:
+          - Bearer: []
+        tags:
+          - Book Requests
+        summary: update book-request.
+        description: ""
+        parameters:
+          - name: id
+            in: path
+            description: BookRequest Id
+            required: true
+            schema:
+              type: integer
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateBookRequest"
+          required: true
+        responses:
+          "200":
+            description: Book requested updated successfully.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CreateBookRequestResponse"
+      get:
+        security:
+          - Bearer: []
+        tags:
+          - Book Requests
+        summary: get specific book-request.
+        description: ""
+        parameters:
+          - name: id
+            in: path
+            description: BookRequest Id
+            required: true
+            schema:
+              type: integer
+        responses:
+          "200":
+            description: Book request retrieved successfully.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/GetBookRequestResponse"
+      delete:
+        security:
+          - Bearer: []
+        tags:
+          - Book Requests
+        summary: delete specific book-request.
+        description: ""
+        parameters:
+          - name: id
+            in: path
+            description: BookRequest Id
+            required: true
+            schema:
+              type: integer
+        responses:
+          "200":
+            description: Book requested deleted successfully.
+
 components:
   securitySchemes:
     Bearer:
@@ -671,6 +780,84 @@ components:
                 type: string
               status:
                 type: integer
+    BookRequestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              book_name:
+                type: string
+              isbn:
+                type: integer
+              status:
+                type: integer
+    CreateBookRequestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+            type: object
+            properties:
+              id:
+                type: integer
+              book_name:
+                type: string
+              isbn:
+                type: string
+              status:
+                type: integer
+              edition:
+                type: string
+    GetBookRequestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            book_name:
+              type: string
+            isbn:
+              type: string
+            status:
+              type: integer
+            edition:
+              type: string
+            fomrat:
+              type: integer
+    CreateBookRequest:
+      type: object
+      required:
+        - book_name
+        - isbn
+        - format
+        - edition
+      properties:
+        book_name:
+          type: string
+        isbn:
+          type: string
+        status:
+          type: integer
+        edition:
+          type: string
 
     ReserveBook:
       type: object
