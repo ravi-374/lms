@@ -57,6 +57,26 @@ class IssuedBookAPIController extends AppBaseController
      *
      * @return JsonResponse
      */
+    public function booksHistoryDetail(BookItem $bookItem, Request $request)
+    {
+        $lastIssuedBook = $bookItem->lastIssuedBook;
+
+        $result = [];
+        if (! empty($lastIssuedBook)) {
+            $result = $lastIssuedBook->apiM1BookHistoryDetailObj();
+        }
+
+        return $this->sendResponse(
+            $result,
+            'Books history Details retrieved successfully.');
+    }
+
+    /**
+     * @param  BookItem  $bookItem
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     */
     public function reserveBook(BookItem $bookItem, Request $request)
     {
         $input = $request->all();
