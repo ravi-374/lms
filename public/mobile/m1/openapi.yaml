@@ -1,4 +1,7 @@
 openapi: 3.0.0
+servers:
+  - url: http://local.lms.com/api/m1
+
 info:
   version: 1.0.0
   title: Library Management System APIs
@@ -32,7 +35,7 @@ paths:
         responses:
           "200":
             description: Logged out successfully.
-  '/m1/books-history':
+  '/books-history':
     get:
       security:
         - Bearer: []
@@ -60,7 +63,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IssuedBookResponse"
-  '/m1/search-books':
+  '/search-books':
     get:
       security:
         - Bearer: []
@@ -88,7 +91,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BookItemResponse"
 
-  '/m1/member-details':
+  '/member-details':
     get:
       security:
         - Bearer: []
@@ -103,7 +106,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MemberResponse"
-  "/m1/update-member-profile":
+  "/update-member-profile":
     post:
       security:
         - Bearer: []
@@ -125,7 +128,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UpdateMemberProfileResponse"
 
-  "/m1/register-member":
+  "/register-member":
     post:
       security:
         - Bearer: []
@@ -146,7 +149,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RegisterMemberProfileResponse"
-  "/m1/books/{id}/reserve-book":
+  "/books/{id}/reserve-book":
     post:
       security:
         - Bearer: []
@@ -168,7 +171,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedIssuedBookResponse"
-  "/m1/books/{id}/un-reserve-book":
+  "/books/{id}/un-reserve-book":
     post:
       security:
         - Bearer: []
@@ -190,7 +193,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedIssuedBookResponse"
-  '/m1/send-reset-member-password-link':
+  '/send-reset-member-password-link':
     post:
       security:
         - Bearer: []
@@ -207,7 +210,7 @@ paths:
       responses:
         "200":
           description: Password reset link sent successfully.
-  '/m1/reset-member-password':
+  '/reset-member-password':
     post:
       security:
         - Bearer: []
