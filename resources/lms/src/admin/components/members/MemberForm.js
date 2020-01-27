@@ -21,8 +21,9 @@ import {fetchMembershipPlans} from "../../store/actions/membershipPlanAction";
 const MemberForm = (props) => {
     const {
         initialValues, membershipPlans, countries, change,
-        handleSubmit, onSaveMember, fetchCountries, fetchMembershipPlans
+        handleSubmit, onSaveMember, fetchCountries, fetchMembershipPlans, isEditMode
     } = props;
+
     const [isActive, setActive] = useState(initialValues.is_active);
     const inputRef = createRef();
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
@@ -80,12 +81,14 @@ const MemberForm = (props) => {
                         <Field name="email" label="profile.input.email.label" required groupText="envelope"
                                autoComplete={initialValues ? 'off' : 'new-email'} component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    {initialValues.isCreate ?
+                     <Col xs={6}>
                         <Field name={initialValues.isCreate ? 'password' : 'password_new'}
-                               label="profile.input.password.label" required={!initialValues.isCreate}
+                               label="profile.input.password.label" required={initialValues.isCreate}
                                autoComplete={initialValues ? 'off' : 'new-password'} type="password" groupText="lock"
                                component={InputGroup}/>
-                    </Col>
+                    </Col>: null}
+
                     <Col xs={6}>
                         <Field name="phone" type="number" label="profile.input.phone.label"
                                onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"

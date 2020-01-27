@@ -14,7 +14,7 @@ import {getAvatarName} from "../../../shared/sharedMethod";
 import {addToast} from '../../../store/action/toastAction';
 
 const UserTable = (props) => {
-    const { users, onClickModal, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
+    const { users, onClickModal, setActiveInactive, history, isLoading, totalRecord, onChangeData, user } = props;
     const columns = [
         {
             name: getFormattedMessage('profile.title'),
@@ -78,7 +78,7 @@ const UserTable = (props) => {
             center: true,
             width: '150px',
             cell: row => <ModalAction onOpenModal={onClickModal} isHideDetailIcon={false}
-                                      goToDetailScreen={goToUserDetail} item={row}/>
+                                      goToDetailScreen={goToUserDetail} item={row} isHideDeleteIcon={user.id === row.id}/>
         }];
 
     const onChecked = (user) => {
@@ -95,6 +95,7 @@ const UserTable = (props) => {
 };
 
 UserTable.propTypes = {
+    user: PropTypes.object,
     history: PropTypes.object,
     users: PropTypes.array,
     totalRecord: PropTypes.number,
@@ -104,5 +105,11 @@ UserTable.propTypes = {
     setActiveInactive: PropTypes.func,
 };
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.profile
+    }
+};
+
 const userForm = reduxForm({ form: 'userForm' })(UserTable);
-export default connect(null, { addToast })(userForm);
+export default connect(mapStateToProps, { addToast })(userForm);
