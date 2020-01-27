@@ -24,7 +24,7 @@ const EditMember = (props) => {
         formValues.roles = [];
         editMember(member.id, prepareFormData(formValues), history);
     };
-    
+
     const goBack = () => {
         history.goBack();
     };
@@ -49,7 +49,7 @@ const EditMember = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <MemberForm{...prepareFormOption}/>
+                            <MemberForm {...prepareFormOption} />
                         </CardBody>
                     </Card>
                 </div>
