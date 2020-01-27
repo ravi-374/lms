@@ -5,7 +5,7 @@ const MemberFooter = ({ appName }) => {
 
     return (
         <>
-            <span><a href="https://infyom.com">{appName}</a> &copy; 2019 InfyOmLabs.</span>
+            <span><a href="https://infyom.com">{appName}</a> &copy; {(new Date().getFullYear())} InfyOmLabs.</span>
             <span className="app-footer__power-by">Powered by <a href="https://coreui.io/">CoreUI</a></span>
         </>
     );
