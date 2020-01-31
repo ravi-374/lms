@@ -17,7 +17,7 @@ import {toggleModal} from '../../../store/action/modalAction';
 import {fetchRoles} from '../../store/actions/roleAction';
 
 const Roles = (props) => {
-    const { roles, fetchRoles, sortAction, sortObject, toggleModal } = props;
+    const { roles, fetchRoles, sortAction, sortObject, toggleModal, searchText } = props;
     const [isCreate, isEdit, isDelete, role, onOpenModal] = openModal();
     const cardModalProps = { role, isCreate, isEdit, isDelete, toggleModal };
 
@@ -52,7 +52,7 @@ const Roles = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {roles.length > 0 ? <Role {...cardBodyProps}/> :
-                                <EmptyComponent title={getFormattedMessage('roles.empty-state.title')}/>}
+                                <EmptyComponent title={searchText ? getFormattedMessage('roles.not.found.empty-state.title') : getFormattedMessage('roles.empty-state.title')}/>}
                             <RoleModal {...cardModalProps}/>
                         </CardBody>
                     </Card>
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         rolesArray = sortFilter(rolesArray, sortObject);
     }
-    return { roles: rolesArray, sortObject };
+    return { roles: rolesArray, sortObject, searchText };
 };
 
 export default connect(mapStateToProps, { fetchRoles, sortAction, toggleModal })(Roles);

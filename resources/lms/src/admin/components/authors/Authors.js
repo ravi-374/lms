@@ -61,7 +61,9 @@ const Authors = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={authors} columns={columns} loading={isLoading}
-                                            emptyStateMessageId="authors.empty-state.title" totalRows={totalRecord}
+                                            emptyStateMessageId="authors.empty-state.title"
+                                            emptyNotFoundStateMessageId="authors.not.found.empty-state.title"
+                                            totalRows={totalRecord}
                                             onChange={onChange}/>
                             <AuthorModal {...cardModalProps}/>
                         </CardBody>

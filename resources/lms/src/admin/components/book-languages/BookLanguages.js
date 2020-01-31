@@ -69,6 +69,7 @@ const BookLanguages = (props) => {
                         <CardBody>
                             <ReactDataTable items={bookLanguages} columns={columns} loading={isLoading}
                                             emptyStateMessageId="book-languages.empty-state.title"
+                                            emptyNotFoundStateMessageId="book-languages.not.found.empty-state.title"
                                             totalRows={totalRecord} onChange={onChange}/>
                             <BookLanguageModal {...cardModalProps}/>
                         </CardBody>

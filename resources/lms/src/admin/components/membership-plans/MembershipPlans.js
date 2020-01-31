@@ -19,7 +19,7 @@ import {sortAction} from '../../../store/action/sortAction';
 const MembershipPlans = (props) => {
     const {
         membershipPlans, sortAction, sortObject, toggleModal, currency,
-        fetchMembershipPlans
+        fetchMembershipPlans, searchText
     } = props;
     const [isCreate, isEdit, isDelete, membershipPlan, onOpenModal] = openModal();
     const cardModalProps = { membershipPlan, isCreate, isEdit, isDelete, toggleModal, currency };
@@ -55,7 +55,8 @@ const MembershipPlans = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {membershipPlans.length > 0 ? <MembershipPlan {...cardBodyProps}/> :
-                                <EmptyComponent title={getFormattedMessage('membership-plans.empty-state.title')}/>}
+                                <EmptyComponent title={searchText ? getFormattedMessage('membership-plans.not.found.empty-state.title') :
+                                    getFormattedMessage('membership-plans.empty-state.title')}/>}
                             <MembershipPlanModal {...cardModalProps}/>
                         </CardBody>
                     </Card>
@@ -85,7 +86,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         membershipPlansArray = sortFilter(membershipPlansArray, sortObject);
     }
-    return { membershipPlans: membershipPlansArray, sortObject, currency };
+    return { membershipPlans: membershipPlansArray, sortObject, currency, searchText };
 };
 
 export default connect(mapStateToProps, { fetchMembershipPlans, sortAction, toggleModal })(MembershipPlans);

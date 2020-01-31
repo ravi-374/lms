@@ -104,6 +104,7 @@ const BookHistoryTable = (props) => {
 
     return (
         <ReactDataTable items={bookHistory} columns={columns} emptyStateMessageId="books-history.empty-state.title"
+                        emptyNotFoundStateMessageId="books-history.not.found.empty-state.title"
                         loading={isLoading} totalRows={totalRecord} onChange={onChangeFilter}/>
     );
 };

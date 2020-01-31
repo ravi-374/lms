@@ -15,7 +15,7 @@ const ReactTable = (props) => {
         defaultLimit = Filters.OBJ.limit, isShortEmptyState,
         items, onChange, columns, loading, paginationRowsPerPageOptions = [10, 15, 25, 50, 100], totalRows,
         isShowFilterField, isShowSearchField = true, filterOptions = [], searchKey = '', filterKey = null,
-        emptyStateMessageId = '', filterKeyName = 'filterItem'
+        emptyStateMessageId = '', filterKeyName = 'filterItem', emptyNotFoundStateMessageId = ''
     } = props;
     const intl = new useIntl();
     const [perPage, setPerPages] = useState(defaultLimit);
@@ -99,7 +99,9 @@ const ReactTable = (props) => {
         isLoading: loading,
         isMediumEmptyState: !isShortEmptyState ? true : undefined,
         isShortEmptyState: isShortEmptyState ? true : undefined,
-        title: loading ? getFormattedMessage('react-data-table.loader.title') : getFormattedMessage(emptyStateMessageId)
+        title: loading ? getFormattedMessage('react-data-table.loader.title') :
+            searchText ? getFormattedMessage(emptyNotFoundStateMessageId) :
+                getFormattedMessage(emptyStateMessageId)
     };
 
     return (

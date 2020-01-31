@@ -60,6 +60,7 @@ const Tags = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={tags} columns={columns} emptyStateMessageId="tags.empty-state.title"
+                                            emptyNotFoundStateMessageId="tags.not.found.empty-state.title"
                                             loading={isLoading} totalRows={totalRecord} onChange={onChange}/>
                             <TagModal {...cardModalProps}/>
                         </CardBody>

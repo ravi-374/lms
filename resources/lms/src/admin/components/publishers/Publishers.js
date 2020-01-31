@@ -60,7 +60,9 @@ const Publishers = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={publishers} columns={columns}
-                                            emptyStateMessageId="publishers.empty-state.title" loading={isLoading}
+                                            emptyStateMessageId="publishers.empty-state.title"
+                                            emptyNotFoundStateMessageId="publishers.not.found.empty-state.title"
+                                            loading={isLoading}
                                             totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <PublisherModal {...cardModalProps}/>
                         </CardBody>

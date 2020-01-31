@@ -20,7 +20,7 @@ import {sortAction} from '../../../store/action/sortAction';
 const BooksSeries = (props) => {
     const {
         booksSeries, fetchBooksSeries,
-        sortAction, sortObject, toggleModal, history,
+        sortAction, sortObject, toggleModal, history, searchText
     } = props;
     const [bookSeries, setBookSeries] = useState(null);
     const cardModalProps = { bookSeries, toggleModal };
@@ -56,7 +56,8 @@ const BooksSeries = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
-                                <EmptyComponent title={getFormattedMessage('books-series.empty-state.title')}/>}
+                                <EmptyComponent title={searchText ? getFormattedMessage('books-series.not.found.empty-state.title') :
+                                    getFormattedMessage('books-series.empty-state.title')}/>}
                             <DeleteBookSeries {...cardModalProps}/>
                         </CardBody>
                     </Card>
@@ -86,7 +87,7 @@ const mapStateToProps = (state) => {
     if (sortObject) {
         booksSeriesArray = sortFilter(booksSeriesArray, sortObject);
     }
-    return { booksSeries: booksSeriesArray, sortObject };
+    return { booksSeries: booksSeriesArray, sortObject, searchText };
 };
 
 export default connect(mapStateToProps, { fetchBooksSeries, sortAction, toggleModal })(BooksSeries);
