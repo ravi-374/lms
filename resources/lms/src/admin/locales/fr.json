@@ -115,7 +115,7 @@
     "books-circulation.select.book.validate.label": "Livre doit être requis.",
     "books-circulation.select.member.validate.label": "Le membre doit être requis.",
     "books-circulation.select.book-item.validate.label": "Le livre doit être requis.",
-    "books-circulation.select.status.validate.label": "Le statut de diffusion du livre doit être requis.", ,
+    "books-circulation.select.status.validate.label": "Le statut de diffusion du livre doit être requis.",
     "books-circulation.not.found.empty-state.title" : "Aucun historique de diffusion de livre trouvé ...",
     "books-circulation.empty-state.title": "Aucun historique de diffusion de livres n'a encore été ajouté ...",
     "books-circulation.success.reserve.message": "Livre réservé avec succès.",

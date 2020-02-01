@@ -115,7 +115,7 @@
     "books-circulation.select.book.validate.label": "El libro debe ser requerido.",
     "books-circulation.select.member.validate.label": "El miembro debe ser requerido.",
     "books-circulation.select.book-item.validate.label": "El artículo del libro debe ser requerido.",
-    "books-circulation.select.status.validate.label": "Se debe requerir el estado de circulación del libro.", ,
+    "books-circulation.select.status.validate.label": "Se debe requerir el estado de circulación del libro.",
     "books-circulation.not.found.empty-state.title" : "No se encontró historial de circulación de libros ...",
     "books-circulation.empty-state.title": "Aún no se ha agregado el historial de circulación de libros ...",
     "books-circulation.success.reserve.message": "Libro reservado con éxito.",
