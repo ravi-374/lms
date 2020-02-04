@@ -12,16 +12,12 @@ use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use App\Repositories\MemberRepository;
 use App\User;
-use Carbon\Carbon;
 use Crypt;
 use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use JWTAuth;
-use Redirect;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Validator;
 
@@ -87,7 +83,6 @@ class MemberAuthController extends AppBaseController
      */
     public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
     {
-        $url = $request->get('url');
         $data = [];
         /** @var User $member */
         $member = Member::whereEmail($request->get('email'))->first();
@@ -98,7 +93,7 @@ class MemberAuthController extends AppBaseController
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = $url.'?token='.$encodedToken;
+        $data['link'] = $encodedToken; // TODO : this need to be refacored when mobile guys implement send reset password link functionality
         $data['first_name'] = $member->first_name;
         $data['last_name'] = $member->last_name;
         $data['email'] = $member->email;
