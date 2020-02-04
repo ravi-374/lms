@@ -956,11 +956,8 @@ components:
       type: object
       required:
         - email
-        - url
       properties:
         email:
-          type: string
-        url:
           type: string
     UpdatePassword:
       type: object
