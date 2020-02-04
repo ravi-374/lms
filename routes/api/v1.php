@@ -37,6 +37,11 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::resource('book-requests', 'BookRequestAPIController');
 
     Route::put('change-password', 'MemberAPIController@changePassword');
+
+    /** My Settings */
+    Route::get('my-settings', 'MemberSettingAPIController@index');
+    Route::post('update-settings', 'MemberSettingAPIController@update');
+
 });
 
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');
