@@ -153,18 +153,16 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
     {
         $query->when(! empty($search['search']), function (Builder $query) use ($search) {
             $query->whereHas('book', function (Builder $query) use ($search) {
-                $ids = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+                $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
 
-                // search by book's Id
+                // Search by book's names
                 if (! empty($search['search_by_book'])) {
-                    Book::filterByKeywords($query, $ids);
+                    Book::filterByKeywords($query, $keywords);
                 } else {
                     // search by book author's Id
-                    if (! empty($search['search_by_author'])) {
-                        $query->whereHas('authors', function (Builder $query) use ($search, $ids) {
-                            Author::filterByKeywords($query, $ids);
-                        });
-                    }
+                    $query->whereHas('authors', function (Builder $query) use ($search, $keywords) {
+                        Author::filterByKeywords($query, $keywords);
+                    });
                 }
             });
         });
