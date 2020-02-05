@@ -38,4 +38,13 @@ interface BookItemRepositoryInterface
      * @return BookItem[]|Collection
      */
     public function searchBooks($search = [], $skip = null, $limit = null);
+
+    /**
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     *
+     * @return BookItem[]|Collection
+     */
+    public function searchBooksByName($search = [], $skip = null, $limit = null);
 }
