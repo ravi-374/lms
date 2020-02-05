@@ -91,6 +91,31 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
 
     /**
      * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     *
+     * @return BookItem[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function searchBooksByName($search = [], $skip = null, $limit = null)
+    {
+        $query = $this->allQuery($search, $skip, $limit)->with([
+            'book.authors',
+            'lastIssuedBook',
+            'publisher',
+            'language',
+        ]);
+        $query = $this->applyDynamicSearchBook($search, $query);
+
+        $query->orderBy('status');
+
+        $records = $query->get();
+        $records = $this->sortByReturnDueDate($records);
+
+        return $records;
+    }
+
+    /**
+     * @param  array  $search
      * @param  Builder  $query
      *
      * @return Builder
@@ -111,6 +136,35 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
                     $query->whereHas('authors', function (Builder $query) use ($search, $ids) {
                         Author::filterById($query, $ids);
                     });
+                }
+            });
+        });
+
+        return $query;
+    }
+
+    /**
+     * @param  array  $search
+     * @param  Builder  $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearchBook($search, $query)
+    {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
+            $query->whereHas('book', function (Builder $query) use ($search) {
+                $ids = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+                // search by book's Id
+                if (! empty($search['search_by_book'])) {
+                    Book::filterByKeywords($query, $ids);
+                } else {
+                    // search by book author's Id
+                    if (! empty($search['search_by_author'])) {
+                        $query->whereHas('authors', function (Builder $query) use ($search, $ids) {
+                            Author::filterByKeywords($query, $ids);
+                        });
+                    }
                 }
             });
         });

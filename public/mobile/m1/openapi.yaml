@@ -71,7 +71,7 @@ paths:
         - BookItems
       summary: book search.
       parameters:
-        - name: id
+        - name: search
           in: query
           description: book ids
           required: false
@@ -79,7 +79,7 @@ paths:
             type: string
         - name: search_by_book
           in: query
-          description: search by book true = 1/false =0
+          description: Pass 1 to search by books names and pass 0 to search books by authors
           required: false
           schema:
             type: integer

@@ -30,7 +30,7 @@ class BookItemAPIController extends AppBaseController
     {
         $input = $request->except(['limit', 'skip']);
 
-        $records = $this->bookItemRepo->searchBooks(
+        $records = $this->bookItemRepo->searchBooksByName(
             $input,
             $request->get('skip', null),
             $request->get('limit', null)
