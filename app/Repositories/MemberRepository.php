@@ -303,4 +303,98 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
 
         return $isAllow;
     }
+
+    /**
+     * @param  array  $input
+     * @param  int  $id
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return Member
+     */
+    public function updateMemberProfile($input, $id)
+    {
+        try {
+            DB::beginTransaction();
+            if (! empty($input['password'])) {
+                $input['password'] = Hash::make($input['password']);
+            }
+            $image = (! empty($input['image'])) ? $input['image'] : null;
+            unset($input['image']);
+
+            /** @var Member $member */
+            $member = $this->findOrFail($id);
+            $member->update($input);
+
+            if (! empty($image)) {
+                $member->deleteMemberImage(); // delete old image;
+                $imagePath = Member::makeImage($image, Member::IMAGE_PATH);
+                $member->update(['image' => $imagePath]);
+            }
+
+            if (! empty($input['remove_image'])) {
+                $member->deleteMemberImage();
+            }
+
+            /** @var UserRepository $userRepo */
+            $userRepo = app(UserRepository::class);
+            $addressArr = $userRepo->makeAddressArray($input);
+            if (! empty($addressArr)) {
+                $isUpdate = $member->address()->update($addressArr);
+                if (! $isUpdate) {
+                    $address = new Address($addressArr);
+                    $member->address()->save($address);
+                }
+            }
+            DB::commit();
+
+            return Member::with('address')->findOrFail($member->id);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw  new ApiOperationFailedException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param  array  $input
+     *
+     * @throws ApiOperationFailedException
+     * @throws Exception
+     *
+     * @return Member
+     */
+    public function registerMember($input)
+    {
+        try {
+            DB::beginTransaction();
+            $plainPassword = $input['password'];
+            $input['password']  = Hash::make($input['password']);
+            $input['member_id'] = $this->generateMemberId();
+            $input['activation_code'] = uniqid();
+            $member = Member::create($input);
+            if (! empty($input['image'])) {
+                $imagePath = Member::makeImage($input['image'], Member::IMAGE_PATH);
+                $member->update(['image' => $imagePath]);
+            }
+
+            /** @var UserRepository $userRepo */
+            $userRepo = app(UserRepository::class);
+            $addressArr = $userRepo->makeAddressArray($input);
+            if (! empty($addressArr)) {
+                $address = new Address($addressArr);
+                $member->address()->save($address);
+            }
+            DB::commit();
+
+            /** @var AccountRepositoryInterface $accountRepository */
+            $accountRepository = App::make(AccountRepositoryInterface::class);
+            $accountRepository->sendConfirmEmail($member, ['password' => $plainPassword]);
+
+            return Member::with('address')->findOrFail($member->id);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw  new ApiOperationFailedException($e->getMessage());
+        }
+    }
 }
