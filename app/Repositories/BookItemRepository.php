@@ -98,14 +98,22 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
      */
     public function searchBooksByName($search = [], $skip = null, $limit = null)
     {
-        $query = $this->allQuery($search, $skip, $limit)->with([
+        $query = BookItem::with([
             'book.authors',
             'lastIssuedBook',
             'publisher',
             'language',
         ]);
+
         $query = $this->applyDynamicSearchBook($search, $query);
 
+        if (! is_null($skip)) {
+            $query->skip($skip);
+        }
+
+        if (! is_null($limit)) {
+            $query->limit($limit);
+        }
         $query->orderBy('status');
 
         $records = $query->get();
