@@ -71,9 +71,9 @@ paths:
         - BookItems
       summary: book search.
       parameters:
-        - name: Search String like "harry potter"
+        - name: search
           in: query
-          description: book ids
+          description: Search String like "harry potter"
           required: false
           schema:
             type: string
