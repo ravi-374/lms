@@ -121,4 +121,9 @@ class Author extends Model
 
         return $query;
     }
+
+    public function getFullNameAttribute($value)
+    {
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+    }
 }
