@@ -173,9 +173,6 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::get('members/{member}/status/{status}', 'MemberAPIController@isAllowToReserveOrIssueBook')
         ->name('members.check-books-limit');
 
-    /** Penalties */
-    Route::post('penalty', 'PenaltyAPIController@penaltyCharge');
-
     Route::put('change-password', 'UserAPIController@changePassword');
 });
 
