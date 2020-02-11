@@ -46,7 +46,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 
         // add book items
         Route::post('books/{book}/items', 'BookAPIController@addItems')->name('books.add-items');
-        //        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
+        Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
         // Get available books
         Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks')
             ->name('books.available-books');
@@ -175,6 +175,8 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     /** Penalties */
     Route::post('penalty', 'PenaltyAPIController@penaltyCharge');
+
+    Route::put('change-password', 'UserAPIController@changePassword');
 });
 
 Route::get('activate-user', 'AuthAPIController@verifyAccount')->name('activate-user');

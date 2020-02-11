@@ -1,6 +1,5 @@
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Styles -->
     <style>
         .verification-btn {
@@ -70,6 +69,7 @@
         <tr>
             <td>
                 <p>Dear {{ucfirst($data['username'])}},</p>
+                <p>Your password is : {{ $data['password'] }}</p>
                 <p>Click the link below to activate your account.</p>
             </td>
         </tr>

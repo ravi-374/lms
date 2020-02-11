@@ -1,0 +1,13 @@
+@import "../../../scss/variables";
+
+.books {
+
+    &-table-row {
+
+        &__cover-img {
+            width: 30px;
+            height: 30px;
+
+        }
+    }
+}

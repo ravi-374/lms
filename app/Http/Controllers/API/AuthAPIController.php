@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
 use App\Models\Member;
+use App\Models\Role;
 use App\Models\Setting;
 use App\User;
 use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 use JWTAuth;
 
 class AuthAPIController extends AppBaseController
@@ -35,6 +37,10 @@ class AuthAPIController extends AppBaseController
 
         if (! Hash::check($password, $user->password)) {
             return $this->sendError('Invalid username or password', 422);
+        }
+
+        if (! $user->hasRole(Role::ROLE_ADMIN) && ! $user->email_verified_at) {
+            throw new UnauthorizedException('Please verify your email.', 401);
         }
 
         if (! $user->is_active) {
@@ -70,6 +76,10 @@ class AuthAPIController extends AppBaseController
             return $this->sendError('Invalid email or password.', 422);
         }
 
+        if (! $member->email_verified_at) {
+            throw new UnauthorizedException('Please verify your email.', 401);
+        }
+
         if (! $member->is_active) {
             return $this->sendError('Your account is not active', 401);
         }
@@ -84,7 +94,16 @@ class AuthAPIController extends AppBaseController
      */
     public function getLibraryDetails()
     {
-        $settings = Setting::whereIn('key', [Setting::LIBRARY_LOGO, Setting::LIBRARY_NAME, Setting::FAVICON_ICON])->get();
+        $settings = Setting::whereIn('key',
+            [Setting::LIBRARY_LOGO, Setting::LIBRARY_NAME, Setting::FAVICON_ICON])->get();
+
+        $settings = $settings->map(function (Setting $record) {
+            if ($record->key == Setting::LIBRARY_LOGO || $record->key == Setting::FAVICON_ICON) {
+                $record->append('logo_url');
+            }
+
+            return $record;
+        });
 
         return $this->sendResponse($settings->toArray(), 'Library details retrieved successfully.');
     }

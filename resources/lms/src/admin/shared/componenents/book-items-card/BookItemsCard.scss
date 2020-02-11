@@ -1,0 +1,18 @@
+@import "../../../../scss/variables";
+
+.book-items-card {
+
+    &__item-header:after {
+        content: "*";
+        color: $red;
+    }
+
+    &__format, &__language, &__publisher {
+        width: 20%;
+    }
+
+    &__action-btn {
+        margin-top: 10px;
+    }
+
+}

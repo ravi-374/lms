@@ -1,7 +1,5 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <!-- Styles -->
     <style>
         .contact_us_mail {

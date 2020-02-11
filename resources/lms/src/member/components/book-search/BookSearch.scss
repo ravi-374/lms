@@ -1,0 +1,67 @@
+.book {
+
+    &-search-col {
+        position: relative;
+        z-index: 1;
+    }
+
+    &-form {
+        &__filter-by {
+            display: flex;
+            align-items: baseline;
+
+            &-label {
+                min-width: 117px;
+                position: relative;
+                top: 3px;
+                text-align: right;
+            }
+        }
+
+        &__input-label {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: right;
+            min-width: 114px;
+
+            &--invalid {
+                margin-top: -77px;
+            }
+        }
+
+        &__input-book {
+            margin-left: 15px;
+            display: inline-block;
+            width: 50%;
+        }
+
+        &__btn {
+            display: flex;
+            margin-top: 14px;
+            max-width: 430px;
+            justify-content: center;
+        }
+    }
+
+    &__table-row {
+        &-cover, &-book-code, &-action, &-language {
+            width: 100px;
+        }
+
+        &-expected-available-date {
+            width: 190px;
+        }
+
+        &-status {
+            width: 100px;
+        }
+    }
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}

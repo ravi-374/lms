@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreatePlansSeeder::class);
         $this->call(CreateSettingsSeeder::class);
         $this->call(CreateHomepageSettingsSeeder::class);
+        $this->call(CreateDefaultMemberSeeder::class);
+        $this->call(DefaultMemberSettingsSeeder::class);
     }
 }

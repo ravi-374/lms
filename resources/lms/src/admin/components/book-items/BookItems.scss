@@ -1,0 +1,18 @@
+.book-item {
+
+    &__table {
+
+        &-book-code {
+            width: 135px;
+        }
+
+        &-status, &-action {
+            width: 100px;
+            text-align: center;
+        }
+        &-price {
+            width: 150px;
+            text-align: right;
+        }
+    }
+}

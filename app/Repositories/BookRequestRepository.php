@@ -70,7 +70,11 @@ class BookRequestRepository extends BaseRepository implements BookRequestReposit
             $records = $records->sortBy($orderString, SORT_REGULAR, $sortDescending);
         }
 
-        return $records;
+        $records = $records->groupBy('isbn')->map(function ($records) {
+            return $records[0];
+        });
+
+        return $records->values();
     }
 
     /**

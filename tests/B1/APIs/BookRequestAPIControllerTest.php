@@ -79,19 +79,77 @@ class BookRequestAPIControllerTest extends TestCase
     }
 
     /** @test */
-    public function test_not_allow_to_update_book_request_same_status_twice()
+    public function test_admin_can_change_request_status_from_approve_to_available()
+    {
+        $bookRequest = factory(BookRequest::class)->create(['status' => BookRequest::APPROVED]);
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::CANCELLED])
+        );
+
+        $this->assertSuccessMessageResponse($response, 'Book request status updated successfully.');
+        $this->assertEquals(BookRequest::CANCELLED, $bookRequest->fresh()->status);
+    }
+
+    /** @test */
+    public function test_admin_can_change_request_status_from_pending_to_cancelled()
     {
         $bookRequest = factory(BookRequest::class)->create();
 
         $response = $this->putJson(route('api.b1.book-requests.update-status',
-                [$bookRequest->id, BookRequest::APPROVED])
+                [$bookRequest->id, BookRequest::AVAILABLE])
+        );
+
+        $this->assertSuccessMessageResponse($response, 'Book request status updated successfully.');
+        $this->assertEquals(BookRequest::AVAILABLE, $bookRequest->fresh()->status);
+    }
+
+    /** @test */
+    public function test_not_allow_to_update_book_request_when_request_is_cancelled()
+    {
+        $bookRequest = factory(BookRequest::class)->create();
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::AVAILABLE])
+        );
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::CANCELLED])
+        );
+
+        $this->assertExceptionMessage($response, 'Invalid action.');
+    }
+
+    /** @test */
+    public function test_not_allow_to_update_book_request_with_invalid_action()
+    {
+        $bookRequest = factory(BookRequest::class)->create();
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::CANCELLED])
         );
 
         $response = $this->putJson(route('api.b1.book-requests.update-status',
                 [$bookRequest->id, BookRequest::APPROVED])
         );
 
-        $this->assertExceptionMessage($response, 'Book request is already Approved.');
+        $this->assertExceptionMessage($response, 'Invalid action.');
+    }
+
+    /** @test */
+    public function test_not_allow_to_update_book_request_with_same_status_twice()
+    {
+        $bookRequest = factory(BookRequest::class)->create();
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::PENDING])
+        );
+
+        $response = $this->putJson(route('api.b1.book-requests.update-status',
+                [$bookRequest->id, BookRequest::PENDING])
+        );
+
+        $this->assertExceptionMessage($response, 'Book request is already Pending.');
     }
 
     /** @test */
