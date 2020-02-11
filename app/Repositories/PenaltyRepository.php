@@ -49,15 +49,17 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
         $issuedbook = IssuedBook::whereBookItemId($input['book_id'])->first();
         $data['collect_penalty'] = false;
 
-        $date = Carbon::parse($input['return_date']);
-        $returnDate = Carbon::parse($issuedbook->issued_on)->addDays(IssuedBook::BOOK_RETURN_PERIOD);
-        $days = $date->diffInDays($returnDate);
-        if ($days) {
-            $data['collect_penalty'] = true;
-            $data['penalty_amount'] = Setting::PENALTY_PER_DAY * $days;
-            $data['total_due_days'] = $days;
+        $returnDate = Carbon::parse($input['return_date']);
+        $returnDueDate = Carbon::parse($issuedbook->issued_on)->addDays(IssuedBook::BOOK_RETURN_PERIOD);
+        if($returnDate > $returnDueDate) {
+            $days = $returnDate->diffInDays($returnDueDate);
+            if ($days) {
+                $data['collect_penalty'] = true;
+                $data['penalty_amount'] = Setting::PENALTY_PER_DAY * $days;
+                $data['total_due_days'] = $days;
 
-            return $data;
+                return $data;
+            }
         }
 
         return $data;
