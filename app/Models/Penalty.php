@@ -45,7 +45,7 @@ class Penalty extends Model
     protected $fillable = [
         'member_id',
         'book_item_id',
-        'actual_penalty',
+        'penalty_collect',
         'collected_penalty',
         'notes',
         'collected_at',
@@ -58,7 +58,7 @@ class Penalty extends Model
     protected $casts = [
         'member_id'         => 'integer',
         'book_item_id'      => 'integer',
-        'actual_penalty'    => 'double',
+        'penalty_collect'    => 'double',
         'collected_penalty' => 'double',
         'notes'             => 'string',
         'collected_at'      => 'datetime',
