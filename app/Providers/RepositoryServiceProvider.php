@@ -24,6 +24,7 @@ use App\Repositories\Contracts\HomepageSettingRepositoryInterface;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use App\Repositories\Contracts\MembershipPlanRepositoryInterface;
+use App\Repositories\Contracts\PenaltyRepositoryInterface;
 use App\Repositories\Contracts\PermissionRepositoryInterface;
 use App\Repositories\Contracts\PublisherRepositoryInterface;
 use App\Repositories\Contracts\RoleRepositoryInterface;
@@ -38,6 +39,7 @@ use App\Repositories\HomepageSettingRepository;
 use App\Repositories\IssuedBookRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\MembershipPlanRepository;
+use App\Repositories\PenaltyRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\PublisherRepository;
 use App\Repositories\RoleRepository;
@@ -80,6 +82,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BookRequestRepositoryInterface::class, BookRequestRepository::class);
         $this->app->bind(HomepageSettingRepositoryInterface::class, HomepageSettingRepository::class);
         $this->app->bind(TestimonialRepositoryInterface::class, TestimonialRepository::class);
+        $this->app->bind(PenaltyRepositoryInterface::class, PenaltyRepository::class);
     }
 
     /**

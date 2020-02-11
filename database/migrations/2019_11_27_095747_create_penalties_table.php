@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateFinesTable extends Migration
+class CreatePenaltiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,12 @@ class CreateFinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fines', function (Blueprint $table) {
+        Schema::create('penalties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('member_id')->nullable();
             $table->unsignedInteger('book_item_id')->nullable();
-            $table->double('fine');
+            $table->double('actual_penalty');
+            $table->double('collected_penalty');
             $table->text('notes');
             $table->dateTime('collected_at');
             $table->unsignedBigInteger('collected_by')->nullable();
@@ -43,6 +44,6 @@ class CreateFinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fines');
+        Schema::dropIfExists('penalties');
     }
 }
