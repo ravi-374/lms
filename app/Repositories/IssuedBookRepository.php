@@ -346,10 +346,6 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
             $input['actual_penalty'] = $charge * $days;
 
-            if ($input['actual_penalty'] != $input['collected_penalty']) {
-                throw new UnprocessableEntityHttpException('Collected penalty amount is invalid.');
-            }
-
             $penalty = Penalty::create(array_merge($input,
                 [
                     'notes'        => $input['note'],
