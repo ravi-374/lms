@@ -285,7 +285,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
      */
     public function isAllowToReserveOrIssueBook($memberId, $status)
     {
-        if (! in_array($status, [IssuedBook::STATUS_ISSUED, IssuedBook::STATUS_RESERVED, IssuedBook::STATUS_RETURNED])) {
+        if (! in_array($status, [IssuedBook::STATUS_ISSUED, IssuedBook::STATUS_RESERVED])) {
             throw new UnprocessableEntityHttpException('Invalid status.');
         }
 
