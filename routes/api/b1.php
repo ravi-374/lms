@@ -175,6 +175,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 
     /** Penalties */
     Route::get('penalties', 'PenaltyAPIController@index');
+    Route::get('books/{book_item_id}/is-due', 'PenaltyAPIController@calculatePenaltyAmount');
 
     Route::put('change-password', 'UserAPIController@changePassword');
 });

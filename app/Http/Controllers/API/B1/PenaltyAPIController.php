@@ -45,4 +45,20 @@ class PenaltyAPIController extends AppBaseController
             ['totalRecords' => $this->penaltyRepo->all($input)->count()]
         );
     }
+
+    /**
+     * @param int $bookItemId
+     *
+     * @return JsonResponse
+     */
+    public function calculatePenaltyAmount($bookItemId)
+    {
+        $penalty = $this->penaltyRepo->calculatePenaltyAmount($bookItemId);
+
+        if(!$penalty) {
+            return $this->sendResponse(true, 'Book returned before due date.');
+        }
+
+        return $this->sendResponse($penalty, 'Penalty amount calculated successfully.');
+    }
 }

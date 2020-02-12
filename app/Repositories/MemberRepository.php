@@ -283,7 +283,7 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
      *
      * @return bool
      */
-    public function isAllowToReserveOrIssueBook($memberId, $status, $bookItemId)
+    public function isAllowToReserveOrIssueBook($memberId, $status)
     {
         if (! in_array($status, [IssuedBook::STATUS_ISSUED, IssuedBook::STATUS_RESERVED, IssuedBook::STATUS_RETURNED])) {
             throw new UnprocessableEntityHttpException('Invalid status.');
@@ -299,26 +299,6 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
         $isAllow = true;
         if ($booksLimit == $query->count()) {
             $isAllow = false;
-        }
-
-        if (IssuedBook::STATUS_RETURNED == $status) {
-            /** @var IssuedBook $issuedbook */
-            $issuedbook = IssuedBook::whereBookItemId($bookItemId)->first();
-
-            $returnDate = Carbon::now();
-            $returnDueDate = Carbon::parse($issuedbook->issued_on)->addDays(IssuedBook::BOOK_RETURN_PERIOD);
-            if ($returnDate > $returnDueDate) {
-                $days = $returnDate->diffInDays($returnDueDate);
-                if ($days) {
-                    $charge = Setting::where('key', '=', 'penalty_per_day')
-                        ->pluck('value')->first();
-                    $data['penalty_collect'] = true;
-                    $data['actual_penalty'] = $charge * $days;
-                    $data['total_days'] = $days;
-
-                    return $data;
-                }
-            }
         }
 
         return $isAllow;

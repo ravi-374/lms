@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Penalty;
 use App\Models\Setting;
@@ -19,7 +20,7 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
     protected $fieldSearchable = [
         'member_id',
         'book_item_id',
-        'penalty_collect',
+        'penalty_collected',
         'collected_by',
     ];
 
@@ -40,28 +41,27 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
     }
 
     /**
-     * @param  array  $input
+     * @param  int  $bookItemId
      *
      * @return mixed
      */
-    public function penaltyCharge($input)
+    public function calculatePenaltyAmount($bookItemId)
     {
-        /** @var IssuedBook $issuedbook */
-        $issuedbook = IssuedBook::whereBookItemId($input['book_id'])->first();
-        $data['collect_penalty'] = false;
+        /** @var BookItem $bookItem */
+        $bookItem = BookItem::findOrFail($bookItemId);
 
-        $returnDate = Carbon::parse($input['return_date']);
-        $returnDueDate = Carbon::parse($issuedbook->issued_on)->addDays(IssuedBook::BOOK_RETURN_PERIOD);
-        if($returnDate > $returnDueDate) {
-            $days = $returnDate->diffInDays($returnDueDate);
-            if ($days) {
-                $data['collect_penalty'] = true;
-                $data['penalty_amount'] = Setting::PENALTY_PER_DAY * $days;
-                $data['total_due_days'] = $days;
+        $returnDate = Carbon::now();
+        $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->issued_on)
+            ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
 
-                return $data;
-            }
+        if ($returnDate < $returnDueDate) {
+            return false;
         }
+
+        $days = $returnDate->diffInDays($returnDueDate);
+        $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
+        $data['total_due_amount'] = $charge * $days;
+        $data['total_due_days'] = $days;
 
         return $data;
     }

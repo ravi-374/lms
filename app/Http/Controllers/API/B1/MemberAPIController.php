@@ -171,18 +171,16 @@ class MemberAPIController extends AppBaseController
     /**
      * @param  Member  $member
      * @param  int  $status
-     * @param  Request  $request
      *
      * @return JsonResponse
      */
-    public function isAllowToReserveOrIssueBook(Member $member, $status, Request $request)
+    public function isAllowToReserveOrIssueBook(Member $member, $status)
     {
-        if (! in_array($status, [IssuedBook::STATUS_ISSUED, IssuedBook::STATUS_RESERVED, IssuedBook::STATUS_RETURNED])) {
+        if (! in_array($status, [IssuedBook::STATUS_ISSUED, IssuedBook::STATUS_RESERVED])) {
             throw new UnprocessableEntityHttpException('Invalid status.');
         }
 
-        $bookItemId = $request->get('bookItemId');
-        $isAllow = $this->memberRepository->isAllowToReserveOrIssueBook($member->id, $status, $bookItemId);
+        $isAllow = $this->memberRepository->isAllowToReserveOrIssueBook($member->id, $status);
 
         return $this->sendResponse($isAllow, 'Books count retrieved successfully.');
     }

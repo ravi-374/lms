@@ -44,7 +44,7 @@ class Setting extends Model
 
     const DEFAULT_LOGO_NAME = 'logo-blue-black.png';
     const DEFAULT_FAVICON_NAME = 'favicon.ico';
-    const PENALTY_PER_DAY = 10;
+    const PENALTY_PER_DAY = 'penalty_per_day';
 
     const LOGO_PATH = 'images';
 

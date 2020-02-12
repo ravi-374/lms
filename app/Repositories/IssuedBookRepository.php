@@ -331,16 +331,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             throw new UnprocessableEntityHttpException('Book must be issued before returning it.');
         }
 
-        if ($input['penalty_collect'] && $input['collected_penalty'] != 0) {
-            $penalty = Penalty::create([
-                'member_id'         => $input['member_id'],
-                'book_item_id'      => $input['book_item_id'],
-                'penalty_collect'   => $input['penalty_collect'],
-                'collected_penalty' => $input['collected_penalty'],
-                'notes'             => $input['note'],
-                'collected_at'      => Carbon::now(),
-                'collected_by'      => Auth::id(),
-            ]);
+        if ($input['penalty_collected'] && $input['collected_penalty'] != 0) {
+            $penalty = Penalty::create(array_merge($input,
+                [
+                    'notes'        => $input['note'],
+                    'collected_at' => Carbon::now(),
+                    'collected_by' => Auth::id(),
+                ]));
         }
 
         $issueBook->update([

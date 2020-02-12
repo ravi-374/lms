@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int|null $member_id
  * @property int|null $book_item_id
- * @property float $actual_penalty
  * @property float $collected_penalty
+ * @property float $penalty_collected
  * @property string $notes
  * @property \Illuminate\Support\Carbon $collected_at
  * @property int|null $collected_by
@@ -20,11 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereActualPenalty($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereBookItemId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedPenalty($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty wherePenaltyCollected($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereMemberId($value)
@@ -45,7 +45,7 @@ class Penalty extends Model
     protected $fillable = [
         'member_id',
         'book_item_id',
-        'penalty_collect',
+        'penalty_collected',
         'collected_penalty',
         'notes',
         'collected_at',
@@ -58,7 +58,7 @@ class Penalty extends Model
     protected $casts = [
         'member_id'         => 'integer',
         'book_item_id'      => 'integer',
-        'penalty_collect'    => 'double',
+        'penalty_collected' => 'double',
         'collected_penalty' => 'double',
         'notes'             => 'string',
         'collected_at'      => 'datetime',

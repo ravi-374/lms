@@ -69,7 +69,6 @@ class IssuedBook extends Model
     const STATUS_UN_RESERVED = 5;
     const STATUS_LOST = 6;
     const STATUS_DAMAGED = 7;
-    const BOOK_RETURN_PERIOD = 15;
 
     const STATUS_IN_STRING = ['issued', 'reserved', 'returned', 'unreserved', 'lost', 'damage'];
 

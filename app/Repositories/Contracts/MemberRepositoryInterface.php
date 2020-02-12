@@ -89,11 +89,10 @@ interface MemberRepositoryInterface
     /**
      * @param  int  $memberId
      * @param  int  $status
-     * @param int $bookItemId
      *
      * @return bool
      */
-    public function isAllowToReserveOrIssueBook($memberId, $status, $bookItemId);
+    public function isAllowToReserveOrIssueBook($memberId, $status);
 
     /**
      * @param  array  $input

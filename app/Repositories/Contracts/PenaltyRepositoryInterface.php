@@ -31,4 +31,11 @@ interface PenaltyRepositoryInterface
      * @return Penalty[]|Collection
      */
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']);
+
+    /**
+     * @param  int  $bookItemId
+     *
+     * @return mixed
+     */
+    public function calculatePenaltyAmount($bookItemId);
 }
