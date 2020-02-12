@@ -55,7 +55,10 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
             ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
 
         if ($returnDate < $returnDueDate) {
-            return false;
+            $data['total_due_amount'] = 0;
+            $data['total_due_days'] = 0;
+
+            return $data;
         }
 
         $days = $returnDate->diffInDays($returnDueDate);

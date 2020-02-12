@@ -55,10 +55,6 @@ class PenaltyAPIController extends AppBaseController
     {
         $penalty = $this->penaltyRepo->calculatePenaltyAmount($bookItemId);
 
-        if(!$penalty) {
-            return $this->sendResponse(true, 'Book returned before due date.');
-        }
-
         return $this->sendResponse($penalty, 'Penalty amount calculated successfully.');
     }
 }
