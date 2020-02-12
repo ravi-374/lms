@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Fine
+ * Class Penalty
  *
  * @property int $id
  * @property int|null $member_id
