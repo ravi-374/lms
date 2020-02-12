@@ -16,7 +16,7 @@ class CreatePenaltiesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('member_id')->nullable();
             $table->unsignedInteger('book_item_id')->nullable();
-            $table->boolean('penalty_collected')->default(0);;
+            $table->double('actual_penalty');;
             $table->double('collected_penalty');
             $table->text('notes');
             $table->dateTime('collected_at');

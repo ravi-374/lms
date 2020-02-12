@@ -45,7 +45,7 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
      *
      * @return mixed
      */
-    public function calculatePenaltyAmount($bookItemId)
+    public function checkIsBookItemDue($bookItemId)
     {
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($bookItemId);

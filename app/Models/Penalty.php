@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $member_id
  * @property int|null $book_item_id
  * @property float $collected_penalty
- * @property float $penalty_collected
+ * @property float $actual_penalty
  * @property string $notes
  * @property \Illuminate\Support\Carbon $collected_at
  * @property int|null $collected_by
@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereBookItemId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedPenalty($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereActualPenalty($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty wherePenaltyCollected($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereId($value)
@@ -45,7 +45,7 @@ class Penalty extends Model
     protected $fillable = [
         'member_id',
         'book_item_id',
-        'penalty_collected',
+        'actual_penalty',
         'collected_penalty',
         'notes',
         'collected_at',
@@ -58,7 +58,7 @@ class Penalty extends Model
     protected $casts = [
         'member_id'         => 'integer',
         'book_item_id'      => 'integer',
-        'penalty_collected' => 'double',
+        'actual_penalty'    => 'double',
         'collected_penalty' => 'double',
         'notes'             => 'string',
         'collected_at'      => 'datetime',

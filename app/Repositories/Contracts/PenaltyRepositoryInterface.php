@@ -37,5 +37,5 @@ interface PenaltyRepositoryInterface
      *
      * @return mixed
      */
-    public function calculatePenaltyAmount($bookItemId);
+    public function checkIsBookItemDue($bookItemId);
 }

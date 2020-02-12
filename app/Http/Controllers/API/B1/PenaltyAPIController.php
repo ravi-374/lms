@@ -51,10 +51,10 @@ class PenaltyAPIController extends AppBaseController
      *
      * @return JsonResponse
      */
-    public function calculatePenaltyAmount($bookItemId)
+    public function checkIsBookItemDue($bookItemId)
     {
-        $penalty = $this->penaltyRepo->calculatePenaltyAmount($bookItemId);
+        $penalty = $this->penaltyRepo->checkIsBookItemDue($bookItemId);
 
-        return $this->sendResponse($penalty, 'Penalty amount calculated successfully.');
+        return $this->sendResponse($penalty, 'Book item penalty information retrieved successfully.');
     }
 }

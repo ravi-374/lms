@@ -331,7 +331,25 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             throw new UnprocessableEntityHttpException('Book must be issued before returning it.');
         }
 
-        if ($input['penalty_collected'] && $input['collected_penalty'] != 0) {
+        if ($input['penalty_collected']) {
+            if (empty($input['collected_penalty'])) {
+                throw new UnprocessableEntityHttpException('Please collect penalty amount.');
+            }
+
+            $bookItem = BookItem::findOrFail($input['book_item_id']);
+
+            $returnDate = Carbon::now();
+            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->issued_on)
+                ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
+
+            $days = $returnDate->diffInDays($returnDueDate);
+            $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
+            $input['actual_penalty'] = $charge * $days;
+
+            if ($input['actual_penalty'] != $input['collected_penalty']) {
+                throw new UnprocessableEntityHttpException('Collected penalty amount is invalid.');
+            }
+
             $penalty = Penalty::create(array_merge($input,
                 [
                     'notes'        => $input['note'],
