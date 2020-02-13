@@ -331,7 +331,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             throw new UnprocessableEntityHttpException('Book must be issued before returning it.');
         }
 
-        if ($input['penalty_collected']) {
+        if (isset($input['penalty_collected'])) {
             if (empty($input['collected_penalty'])) {
                 throw new UnprocessableEntityHttpException('Please collect penalty amount.');
             }
