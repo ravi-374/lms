@@ -88,6 +88,7 @@ class MemberSettingRepository extends BaseRepository implements MemberSettingRep
                 'setting_id' => $setting->id,
                 'member_id'  => Auth::id(),
                 'value'      => $data['value'],
+                'key'        => $setting->key,
             ]);
         }
 
