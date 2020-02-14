@@ -4,7 +4,7 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {IntlProvider} from 'react-intl';
 import LocaleData from './locales';
-import {fetchSettings} from "./store/actions/settingAction";
+import {fetchSettings} from "./store/actions/getLanguageAction";
 import {settingsKey} from "./constants";
 import {appSettingsKey, LocalStorageKey, Routes} from "../constants";
 import {publicImagePath, publicImagePathURL} from "../appConstant";

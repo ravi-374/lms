@@ -2,9 +2,11 @@ import {settingActionType} from '../../constants';
 import _ from 'lodash';
 
 export default (state = {}, action) => {
-    switch (action.type) {
+    const { type, payload } = action;
+    switch (type) {
         case settingActionType.FETCH_SETTING:
-            return { ..._.mapKeys(action.payload, 'key') };
+        case settingActionType.POST_SETTINGS:
+            return { ..._.mapKeys(payload, 'key') };
         default:
             return state;
     }
