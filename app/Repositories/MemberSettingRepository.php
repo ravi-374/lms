@@ -84,11 +84,14 @@ class MemberSettingRepository extends BaseRepository implements MemberSettingRep
         foreach ($input as $data) {
             /** @var MemberSetting $setting */
             $setting = MemberSetting::where('key', $data['key'])->first();
-            $settings[] = MemberSettingValue::create([
+            $memberSetting = MemberSettingValue::create([
                 'setting_id' => $setting->id,
                 'member_id'  => Auth::id(),
                 'value'      => $data['value'],
-            ]);
+            ])->toArray();
+            $memberSetting['key'] = $setting->key;
+
+            $settings[] = $memberSetting;
         }
 
         return $settings;
