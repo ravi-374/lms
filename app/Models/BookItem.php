@@ -134,6 +134,14 @@ class BookItem extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getBookItemNameAttribute()
+    {
+        return $this->book->name;
+    }
+
+    /**
      * @return string|null
      */
     public function getExpectedAvailableDateAttribute()

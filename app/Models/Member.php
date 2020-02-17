@@ -155,6 +155,14 @@ class Member extends Authenticatable implements JWTSubject
     }
 
     /**
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->first_name).' '.ucfirst($this->last_name);
+    }
+
+    /**
      *
      * @return MorphOne
      */
