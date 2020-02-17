@@ -37,6 +37,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read mixed $member_name
  * @property-read \App\Models\Member|null $member
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedPenalty($value)
+ * @property int|null $issued_book_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereIssuedBookId($value)
  */
 class Penalty extends Model
 {
@@ -61,6 +63,7 @@ class Penalty extends Model
         'notes',
         'collected_at',
         'collected_by',
+        'issued_book_id',
     ];
 
     /**

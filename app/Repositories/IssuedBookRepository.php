@@ -348,9 +348,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
             $penalty = Penalty::create(array_merge($input,
                 [
-                    'notes'        => $input['note'],
-                    'collected_at' => Carbon::now(),
-                    'collected_by' => Auth::id(),
+                    'notes'          => $input['note'],
+                    'collected_at'   => Carbon::now(),
+                    'collected_by'   => Auth::id(),
+                    'issued_book_id' => $issueBook->id,
                 ]));
         }
 

@@ -16,6 +16,7 @@ class CreatePenaltiesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('member_id')->nullable();
             $table->unsignedInteger('book_item_id')->nullable();
+            $table->unsignedInteger('issued_book_id')->nullable();
             $table->double('actual_penalty');;
             $table->double('collected_penalty');
             $table->text('notes');
@@ -32,6 +33,10 @@ class CreatePenaltiesTable extends Migration
                 ->onDelete('set null');
 
             $table->foreign('collected_by')->references('id')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+
+            $table->foreign('issued_book_id')->references('id')->on('issued_books')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
         });
