@@ -11,6 +11,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchAuthors} from '../../store/actions/authorAction';
+import {icon} from "../../../constants";
 
 const Authors = (props) => {
     const { authors, toggleModal, totalRecord, isLoading, fetchAuthors } = props;
@@ -62,7 +63,7 @@ const Authors = (props) => {
                         <CardBody>
                             <ReactDataTable items={authors} columns={columns} loading={isLoading}
                                             emptyStateMessageId="authors.empty-state.title" totalRows={totalRecord}
-                                            onChange={onChange}/>
+                                            onChange={onChange} icon={(icon.AUTHORS)}/>
                             <AuthorModal {...cardModalProps}/>
                         </CardBody>
                     </Card>

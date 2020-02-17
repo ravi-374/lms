@@ -11,6 +11,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
 import {fetchPublishers} from '../../store/actions/publisherAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import {icon} from "../../../constants";
 
 const Publishers = (props) => {
     const { publishers, fetchPublishers, toggleModal, totalRecord, isLoading } = props;
@@ -59,7 +60,7 @@ const Publishers = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={publishers} columns={columns}
+                            <ReactDataTable items={publishers} columns={columns} icon={(icon.PUBLISHER)}
                                             emptyStateMessageId="publishers.empty-state.title" loading={isLoading}
                                             totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <PublisherModal {...cardModalProps}/>

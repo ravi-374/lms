@@ -15,7 +15,7 @@ const ReactTable = (props) => {
         defaultLimit = Filters.OBJ.limit, isShortEmptyState,
         items, onChange, columns, loading, paginationRowsPerPageOptions = [10, 15, 25, 50, 100], totalRows,
         isShowFilterField, isShowSearchField = true, filterOptions = [], searchKey = '', filterKey = null,
-        emptyStateMessageId = '', filterKeyName = 'filterItem'
+        emptyStateMessageId = '', filterKeyName = 'filterItem', icon
     } = props;
     const intl = new useIntl();
     const [perPage, setPerPages] = useState(defaultLimit);
@@ -96,6 +96,7 @@ const ReactTable = (props) => {
         },
     };
     const emptyStateProps = {
+        icon: icon,
         isLoading: loading,
         isMediumEmptyState: !isShortEmptyState ? true : undefined,
         isShortEmptyState: isShortEmptyState ? true : undefined,

@@ -178,3 +178,20 @@ export const homeSettingsDisplayName = {
     COMPANY_DESCRIPTION: 'Company Description',
     WEBSITE:'Website',
 };
+
+export const icon = {
+    BOOK: 'fa fa-2x fa-book',
+    BOOKCIRCULATION: 'fas fa-2x fa-book-reader',
+    MEMBER: 'fas fa-2x fa-users',
+    GENRES: 'fas fa-2x fa-layer-group',
+    AUTHORS: 'fas fa-2x fa-user-friends',
+    PUBLISHER: 'fas fa-2x fa-atlas',
+    BOOK_LANGUAGE: 'fa fa-2x fa-globe',
+    TAG: 'fas fa-2x fa-tags',
+    USERS: 'fa fa-2x fa-user',
+    ROLE: 'fas fa-2x fa-user-shield',
+    MEMBER_PLAN: 'fa-2x icon-docs',
+    BOOK_SERIES: 'fas fa-2x fa-swatchbook',
+    BOOK_REQUEST: 'fas fa-2x fa-book',
+    TESTIMONIAL: 'fa fa-2x fa-quote-left',
+};

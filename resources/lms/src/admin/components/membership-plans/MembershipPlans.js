@@ -15,6 +15,7 @@ import {openModal} from "../../../shared/custom-hooks";
 import {fetchMembershipPlans} from '../../store/actions/membershipPlanAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {sortAction} from '../../../store/action/sortAction';
+import {icon} from "../../../constants";
 
 const MembershipPlans = (props) => {
     const {
@@ -55,7 +56,7 @@ const MembershipPlans = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {membershipPlans.length > 0 ? <MembershipPlan {...cardBodyProps}/> :
-                                <EmptyComponent title={getFormattedMessage('membership-plans.empty-state.title')}/>}
+                                <EmptyComponent title={getFormattedMessage('membership-plans.empty-state.title')} icon={(icon.MEMBER_PLAN)}/>}
                             <MembershipPlanModal {...cardModalProps}/>
                         </CardBody>
                     </Card>
