@@ -9,7 +9,7 @@ import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import DeleteBook from './DeleteBook';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ModalAction from "../../../shared/action-buttons/ModalAction";
-import {Routes} from "../../../constants";
+import {Routes, icon} from "../../../constants";
 import {getFormattedMessage, prepareFullNames} from "../../../shared/sharedMethod";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {fetchBooks} from '../../store/actions/bookAction';
@@ -100,6 +100,7 @@ const Books = (props) => {
         },
     ];
 
+
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
@@ -126,7 +127,7 @@ const Books = (props) => {
                         <CardBody>
                             <ReactDataTable items={books} columns={columns} loading={isLoading}
                                             emptyStateMessageId="books.empty-state.title" totalRows={totalRecord}
-                                            onChange={onChange}/>
+                                            onChange={onChange} icon={(icon.BOOK)}/>
                             <DeleteBook {...cardModalProps}/>
                         </CardBody>
                     </Card>

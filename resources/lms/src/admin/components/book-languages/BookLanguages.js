@@ -12,6 +12,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
+import {icon} from "../../../constants";
 
 const BookLanguages = (props) => {
     const { bookLanguages, toggleModal, totalRecord, isLoading, fetchBookLanguages } = props;
@@ -69,7 +70,7 @@ const BookLanguages = (props) => {
                         <CardBody>
                             <ReactDataTable items={bookLanguages} columns={columns} loading={isLoading}
                                             emptyStateMessageId="book-languages.empty-state.title"
-                                            totalRows={totalRecord} onChange={onChange}/>
+                                            totalRows={totalRecord} onChange={onChange} icon={(icon.BOOK_LANGUAGE)}/>
                             <BookLanguageModal {...cardModalProps}/>
                         </CardBody>
                     </Card>

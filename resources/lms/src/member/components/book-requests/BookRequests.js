@@ -14,6 +14,7 @@ import {openModal} from "../../../shared/custom-hooks";
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBookRequests} from "../../store/actions/bookRequestAction";
 import {bookRequestConstants} from "../../../constants";
+import {icon} from "../../../constants";
 
 const BookRequests = (props) => {
     const { bookRequests, toggleModal, totalRecord, isLoading, fetchBookRequests } = props;
@@ -107,7 +108,7 @@ const BookRequests = (props) => {
                         <CardBody>
                             <ReactDataTable items={bookRequests} columns={columns} loading={isLoading}
                                             emptyStateMessageId="book-request.empty-state.title" totalRows={totalRecord}
-                                            onChange={onChange}/>
+                                            onChange={onChange} icon={(icon.BOOK)}/>
                             <BookRequestModal {...cardModalProps}/>
                         </CardBody>
                     </Card>
