@@ -121,10 +121,11 @@ const BooksCirculation = (props) => {
                         <CardBody>
                             <ReactDataTable items={booksCirculation} isShowFilterField
                                             emptyStateMessageId="books-circulation.empty-state.title"
+                                            emptyNotFoundStateMessageId="books-circulation.not.found.empty-state.title"
                                             filterKeyName={storageKey.BOOK_CIRCULATION}
                                             filterOptions={bookCirculationStatusFilter} filterKey={getStoredFilterKey()}
                                             columns={columns} loading={isLoading} totalRows={totalRecord}
-                                            onChange={onChange} icon={(icon.BOOKCIRCULATION)}/>
+                                            onChange={onChange} icon={(icon.BOOK_CIRCULATION)}/>
                             <BookCirculationModal {...cardModalProps}/>
                         </CardBody>
                     </Card>
