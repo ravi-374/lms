@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
+use App\Models\Penalty;
 use App\Models\Setting;
 use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Auth;
@@ -330,12 +331,36 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             throw new UnprocessableEntityHttpException('Book must be issued before returning it.');
         }
 
+        if (isset($input['penalty_collected'])) {
+            if (empty($input['collected_penalty'])) {
+                throw new UnprocessableEntityHttpException('Please collect penalty amount.');
+            }
+
+            $bookItem = BookItem::findOrFail($input['book_item_id']);
+
+            $returnDate = Carbon::now();
+            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->issued_on)
+                ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
+
+            $days = $returnDate->diffInDays($returnDueDate);
+            $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
+            $input['actual_penalty'] = $charge * $days;
+
+            $penalty = Penalty::create(array_merge($input,
+                [
+                    'notes'        => $input['note'],
+                    'collected_at' => Carbon::now(),
+                    'collected_by' => Auth::id(),
+                ]));
+        }
+
         $issueBook->update([
             'return_date' => (! empty($input['return_date'])) ? $input['return_date'] : Carbon::now(),
             'note'        => ! empty($input['note']) ? $input['note'] : null,
             'status'      => IssuedBook::STATUS_RETURNED,
             'returner_id' => Auth::id(),
         ]);
+
         $bookItem->update(['status' => BookItem::STATUS_AVAILABLE]);
 
         return $this->find($issueBook->id);

@@ -178,4 +178,20 @@ class BookItem extends Model
 
         return IssuedBook::STATUS_AVAILABLE;
     }
+
+    /**
+     * @return array
+     */
+    public function apiM1Obj()
+    {
+        $bookItem = [
+            "id"            => $this->id,
+            "name"          => $this->book->name,
+            "status"        => $this->status,
+            "language_name" => $this->language->language_name,
+            "authors"       => implode(',', $this->book->authors->pluck('full_name')->toArray()),
+        ];
+
+        return $bookItem;
+    }
 }

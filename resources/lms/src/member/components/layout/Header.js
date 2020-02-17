@@ -5,12 +5,16 @@ import PropTypes from 'prop-types';
 import {Routes} from "../../../constants";
 import {getAvatarName, getFormattedMessage} from "../../../shared/sharedMethod";
 import ChangePassword from "../change-password/ChangePassword.js";
+import ChangeLanguage from "../change-language/ChangeLanguage";
 import {connect} from "react-redux";
 import {toggleChangePasswordModal} from "../../../store/action/changePasswordModalAction";
+import {toggleChangeLanguageModal} from "../../../store/action/changeLanguageModalAction";
 
 const MemberHeader = (props) => {
-    const { member, history, appName, appLogo, toggleChangePasswordModal } = props;
+    const { member, history, appName, appLogo, toggleChangePasswordModal, toggleChangeLanguageModal } = props;
     const cardModalProps = { toggleChangePasswordModal };
+    const languageModalProps = {toggleChangeLanguageModal}
+    const [toggleOpen, setToggle] = useState(true);
     let imageUrl = null;
 
     if (member) {
@@ -28,9 +32,14 @@ const MemberHeader = (props) => {
     };
 
     const toggle = () => {
+        setToggle(true);
         toggleChangePasswordModal();
     };
 
+    const languageToggle = () => {
+        setToggle(false);
+        toggleChangeLanguageModal();
+    }
 
     return (
         <>
@@ -58,11 +67,17 @@ const MemberHeader = (props) => {
                         <DropdownItem onClick={toggle}><i className="fa fa-lock"/>
                             {getFormattedMessage('change-password.title')}
                         </DropdownItem>
+                        <DropdownItem onClick={languageToggle}><i className="fa fa-language"/>
+                            {getFormattedMessage('change-language.title')}
+                        </DropdownItem>
                         <DropdownItem onClick={e => props.onLogout(e)}><i className="fa fa-lock"/>
                             {getFormattedMessage('header.logout.title')}
                         </DropdownItem>
                     </DropdownMenu>
-                    <ChangePassword {...cardModalProps}/>
+                    {toggleOpen ?
+                        <ChangePassword {...cardModalProps}/> :
+                        <ChangeLanguage {...languageModalProps}/>
+                        }
                 </AppHeaderDropdown>
             </Nav>
         </>
@@ -76,4 +91,4 @@ MemberHeader.propTypes = {
     appLogo: PropTypes.string,
 };
 
-export default connect(null, { toggleChangePasswordModal })(MemberHeader);
+export default connect(null, { toggleChangePasswordModal , toggleChangeLanguageModal })(MemberHeader);

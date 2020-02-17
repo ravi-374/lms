@@ -22,6 +22,7 @@ import totalRecordReduce from "../../../admin/store/reducers/totalRecordReduce";
 import homeSettingReducer from "./homeSettingReducer";
 import testimonialReducer from "./testimonialReducer";
 import changePasswordModalReducer from "../../../store/reducers/changePasswordModalReducer";
+import changeLanguageModalReducer from "../../../store/reducers/changeLanguageModalReducer";
 
 export default combineReducers({
     isLoading: progressReduce,
@@ -46,5 +47,6 @@ export default combineReducers({
     totalRecords: totalRecordReduce,
     homeSettings: homeSettingReducer,
     testimonials: testimonialReducer,
-    isChangePasswordModelToggle: changePasswordModalReducer
+    isChangePasswordModelToggle: changePasswordModalReducer,
+    isChangeLanguageModelToggle: changeLanguageModalReducer,
 });

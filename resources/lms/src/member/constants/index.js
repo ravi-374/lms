@@ -64,11 +64,12 @@ export const bookItemStatusConstants = {
 };
 
 export const settingActionType = {
-    FETCH_SETTING: 'FETCH_SETTING'
+    FETCH_SETTING: 'FETCH_SETTING',
+    POST_SETTINGS: 'POST_SETTINGS'
 };
 
 export const settingsKey = {
-    LANGUAGE: 'language',
+    LANGUAGE: 'current_language',
     DEFAULT_LOCALE: 'en',
     LOCALE_ARABIC: 'en',
     LOCALE_SPANISH: 'sp'
@@ -93,3 +94,17 @@ export const bookRequestActionType = {
 export const constants = {
     SET_TOTAL_RECORD: 'SET_TOTAL_RECORD',
 };
+
+export const languageOptions = [
+    { id: 'ar', name: 'member.select.language.arabic.label', display_name: 'Arabic' },
+    { id: 'cn', name: 'member.select.language.chinese.label', display_name: 'Chinese' },
+    { id: 'en', name: 'member.select.language.english.label', display_name: 'English' },
+    { id: 'fr', name: 'member.select.language.french.label', display_name: 'French' },
+    { id: 'gr', name: 'member.select.language.german.label', display_name: 'German' },
+    { id: 'it', name: 'member.select.language.italian.label', display_name: 'Italian' },
+    { id: 'pe', name: 'member.select.language.persian.label', display_name: 'Persian' },
+    { id: 'po', name: 'member.select.language.portuguese.label', display_name: 'Portuguese' },
+    { id: 'ru', name: 'member.select.language.russian.label', display_name: 'Russian' },
+    { id: 'sp', name: 'member.select.language.spanish.label', display_name: 'Spanish' },
+    { id: 'tr', name: 'member.select.language.turkish.label', display_name: 'Turkish' },
+];
