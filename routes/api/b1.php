@@ -174,7 +174,9 @@ Route::group(['middleware' => 'user.auth'], function () {
         ->name('members.check-books-limit');
 
     /** Penalties */
-    Route::get('penalties', 'PenaltyAPIController@index');
+    Route::middleware('permission:manage_penalties')->group(function () {
+        Route::get('penalties', 'PenaltyAPIController@index');
+    });
     Route::get('books/{book_item_id}/is-due', 'PenaltyAPIController@checkIsBookItemDue');
 
     Route::put('change-password', 'UserAPIController@changePassword');
