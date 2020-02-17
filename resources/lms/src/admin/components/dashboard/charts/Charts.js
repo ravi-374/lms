@@ -15,6 +15,7 @@ import DatePicker from "../../../../shared/components/DatePicker";
 import {dateFormat} from "../../../../constants";
 import {chartLabels, chartLabelSelector} from "../../../constants";
 import {getFormattedMessage, getFormattedOptions} from "../../../../shared/sharedMethod";
+import {icon} from "../../../../constants";
 
 const Charts = (props) => {
     const {
@@ -235,7 +236,7 @@ const Charts = (props) => {
                                         {renderEmptyDataSet(doughnut.datasets) ? <Doughnut data={doughnut} options={BookCirculationOptions}/> :
                                             <div className="chart-wrapper-empty-component">
                                                 <EmptyComponent isShort title={getFormattedMessage
-                                                ('dashboard.chart.empty-message.label')}/>
+                                                ('dashboard.chart.empty-message.label')} icon={(icon.BOOK_CIRCULATION)}/>
                                             </div>}
                                     </div>
                                 </CardBody>
@@ -250,7 +251,7 @@ const Charts = (props) => {
                                             <Pie data={pie} options={options}/> :
                                             <div className="chart-wrapper-empty-component">
                                                 <EmptyComponent isShort title={getFormattedMessage
-                                                ('dashboard.chart.empty-message.label')}/>
+                                                ('dashboard.chart.empty-message.label')} icon={(icon.BOOK)}/>
                                             </div>
                                         }
                                     </div>

@@ -15,6 +15,7 @@ import {openModal} from "../../../shared/custom-hooks";
 import {sortAction} from '../../../store/action/sortAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchRoles} from '../../store/actions/roleAction';
+import {icon} from "../../../constants";
 
 const Roles = (props) => {
     const { roles, fetchRoles, sortAction, sortObject, toggleModal, searchText } = props;
@@ -52,7 +53,7 @@ const Roles = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {roles.length > 0 ? <Role {...cardBodyProps}/> :
-                                <EmptyComponent title={searchText ? getFormattedMessage('roles.not.found.empty-state.title') : getFormattedMessage('roles.empty-state.title')}/>}
+                                <EmptyComponent icon={(icon.ROLE)}  title={searchText ? getFormattedMessage('roles.not.found.empty-state.title') : getFormattedMessage('roles.empty-state.title')}/>}
                             <RoleModal {...cardModalProps}/>
                         </CardBody>
                     </Card>

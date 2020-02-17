@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import BookCirculationModal from './BookCirculationModal';
 import './BooksCirculation.scss';
-import {Routes} from "../../../constants";
+import {Routes, icon} from "../../../constants";
 import {bookCirculationFilterOptions, storageKey} from "../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {dateFormatter, getFormattedMessage, getFormattedOptions} from '../../../shared/sharedMethod';
@@ -125,7 +125,7 @@ const BooksCirculation = (props) => {
                                             filterKeyName={storageKey.BOOK_CIRCULATION}
                                             filterOptions={bookCirculationStatusFilter} filterKey={getStoredFilterKey()}
                                             columns={columns} loading={isLoading} totalRows={totalRecord}
-                                            onChange={onChange}/>
+                                            onChange={onChange} icon={(icon.BOOK_CIRCULATION)}/>
                             <BookCirculationModal {...cardModalProps}/>
                         </CardBody>
                     </Card>

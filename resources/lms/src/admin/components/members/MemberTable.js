@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import './Members.scss';
 import {publicImagePathURL} from '../../../appConstant';
-import {Routes} from "../../../constants";
+import {Routes, icon} from "../../../constants";
 import {storageKey} from "../../constants";
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import ToggleSwitch from '../../../shared/components/ToggleSwitch';
@@ -102,7 +102,7 @@ const MemberTable = (props) => {
                         emptyNotFoundStateMessageId="member.not.found.empty-state.title"
                         isShowFilterField filterOptions={membershipPlansOptions} filterKey={getStoredFilterKey()}
                         loading={isLoading} totalRows={totalRecord} onChange={onChangeData}
-                        filterKeyName={storageKey.MEMBERS}/>
+                        filterKeyName={storageKey.MEMBERS} icon={(icon.MEMBER)}/>
     );
 };
 

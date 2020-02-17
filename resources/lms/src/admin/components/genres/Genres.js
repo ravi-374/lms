@@ -11,6 +11,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
 import {fetchGenres} from '../../store/actions/genreAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import {icon} from "../../../constants";
 
 const Genres = (props) => {
     const { genres, fetchGenres, toggleModal, isLoading, totalRecord } = props;
@@ -63,7 +64,7 @@ const Genres = (props) => {
                                             emptyStateMessageId="genres.empty-state.title"
                                             emptyNotFoundStateMessageId="genres.not.found.empty-state.title"
                                             totalRows={totalRecord}
-                                            onOpenModal={onOpenModal} onChange={onChange}/>
+                                            onOpenModal={onOpenModal} onChange={onChange} icon={(icon.GENRES)}/>
                             <GenreModal {...cardModalProps}/>
                         </CardBody>
                     </Card>

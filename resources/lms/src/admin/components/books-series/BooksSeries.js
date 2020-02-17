@@ -16,6 +16,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {fetchBooksSeries} from '../../store/actions/bookSeriesAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {sortAction} from '../../../store/action/sortAction';
+import {icon} from "../../../constants";
 
 const BooksSeries = (props) => {
     const {
@@ -57,7 +58,8 @@ const BooksSeries = (props) => {
                             </div>
                             {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
                                 <EmptyComponent title={searchText ? getFormattedMessage('books-series.not.found.empty-state.title') :
-                                    getFormattedMessage('books-series.empty-state.title')}/>}
+                                        getFormattedMessage('books-series.empty-state.title')}
+                                    icon={(icon.BOOK_SERIES)}/>}
                             <DeleteBookSeries {...cardModalProps}/>
                         </CardBody>
                     </Card>

@@ -12,6 +12,7 @@ import {getCurrentUser} from "../../shared/sharedMethod";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {getAvatarName} from "../../../shared/sharedMethod";
 import {addToast} from '../../../store/action/toastAction';
+import {icon} from "../../../constants";
 
 const UserTable = (props) => {
     const { users, onClickModal, setActiveInactive, history, isLoading, totalRecord, onChangeData, user } = props;
@@ -88,10 +89,11 @@ const UserTable = (props) => {
     const goToUserDetail = (userId) => {
         history.push(`${Routes.USERS + userId}/details`);
     };
+
     return (
         <ReactDataTable items={users} columns={columns} emptyStateMessageId="users.empty-state.title"
                         emptyNotFoundStateMessageId="users.not.found.empty-state.title"
-                        loading={isLoading} totalRows={totalRecord} onChange={onChangeData}/>
+                        loading={isLoading} totalRows={totalRecord} onChange={onChangeData} icon={(icon.USERS)}/>
     );
 };
 

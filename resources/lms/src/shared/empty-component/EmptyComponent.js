@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './EmptyComponent.scss';
 
 const EmptyComponent = (props) => {
-    const { title, isShort, isMediumEmptyState, isLoading, isShortEmptyState } = props;
+    const { title, isShort, isMediumEmptyState, isLoading, isShortEmptyState, icon } = props;
     const prepareClassName = () => {
         if (isMediumEmptyState) {
             return 'empty-component empty-component--mid';
@@ -19,7 +19,7 @@ const EmptyComponent = (props) => {
 
     return (
         <div className={prepareClassName()}>
-            {!isLoading ? <i className="fa fa-2x fa-ban"/> : <i className="fa fa-2x fa-spinner"/>}
+            {!isLoading ? <i className={icon === undefined ? "fa fa-2x fa-ban" : icon}/> : <i className="fa fa-2x fa-spinner"/>}
             <h5 className="empty-component__title">{title}</h5>
         </div>
     );

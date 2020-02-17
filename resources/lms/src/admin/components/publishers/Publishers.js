@@ -11,6 +11,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
 import {fetchPublishers} from '../../store/actions/publisherAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import {icon} from "../../../constants";
 
 const Publishers = (props) => {
     const { publishers, fetchPublishers, toggleModal, totalRecord, isLoading } = props;
@@ -62,7 +63,7 @@ const Publishers = (props) => {
                             <ReactDataTable items={publishers} columns={columns}
                                             emptyStateMessageId="publishers.empty-state.title"
                                             emptyNotFoundStateMessageId="publishers.not.found.empty-state.title"
-                                            loading={isLoading}
+                                            loading={isLoading} icon={(icon.PUBLISHER)}
                                             totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <PublisherModal {...cardModalProps}/>
                         </CardBody>

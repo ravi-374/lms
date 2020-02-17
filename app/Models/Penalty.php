@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Penalty
@@ -31,6 +32,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\BookItem|null $bookItem
+ * @property-read mixed $book_item_name
+ * @property-read mixed $member_name
+ * @property-read \App\Models\Member|null $member
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedPenalty($value)
  */
 class Penalty extends Model
 {
@@ -38,6 +44,11 @@ class Penalty extends Model
      * @var string
      */
     public $table = 'penalties';
+
+    /**
+     * @var array
+     */
+    protected $appends = ['member_name', 'book_item_name'];
 
     /**
      * @var array
@@ -64,4 +75,36 @@ class Penalty extends Model
         'collected_at'      => 'datetime',
         'collected_by'      => 'integer',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function bookItem()
+    {
+        return $this->belongsTo(BookItem::class, 'book_item_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMemberNameAttribute()
+    {
+        return $this->member->full_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBookItemNameAttribute()
+    {
+        return $this->bookItem->book_item_name;
+    }
 }

@@ -11,6 +11,7 @@ import ModalAction from "../../../shared/action-buttons/ModalAction";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
+import {icon} from "../../../constants";
 
 const Tags = (props) => {
     const { tags, toggleModal, fetchTags, totalRecord, isLoading } = props;
@@ -61,7 +62,7 @@ const Tags = (props) => {
                         <CardBody>
                             <ReactDataTable items={tags} columns={columns} emptyStateMessageId="tags.empty-state.title"
                                             emptyNotFoundStateMessageId="tags.not.found.empty-state.title"
-                                            loading={isLoading} totalRows={totalRecord} onChange={onChange}/>
+                                            loading={isLoading} totalRows={totalRecord} onChange={onChange} icon={(icon.TAG)}/>
                             <TagModal {...cardModalProps}/>
                         </CardBody>
                     </Card>

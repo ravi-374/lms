@@ -9,6 +9,7 @@ import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {getAvatarName} from "../../../shared/sharedMethod";
 import {addToast} from '../../../store/action/toastAction';
+import {icon} from "../../../constants";
 
 const TestimonialTable = (props) => {
     const { testimonials, onClickModal, isLoading, totalRecord, onChangeData } = props;
@@ -49,7 +50,7 @@ const TestimonialTable = (props) => {
         }];
 
     return (
-        <ReactDataTable items={testimonials} columns={columns}
+        <ReactDataTable items={testimonials} columns={columns} icon={(icon.TESTIMONIAL)}
                         emptyStateMessageId="testimonials.empty-state.title"
                         emptyNotFoundStateMessageId="testimonials.not.found.empty-state.title"
                         loading={isLoading} totalRows={totalRecord} onChange={onChangeData}/>

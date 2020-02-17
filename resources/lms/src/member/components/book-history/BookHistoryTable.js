@@ -6,6 +6,7 @@ import {bookCirculationStatusConstant,} from '../../constants';
 import {dateFormatter, getFormattedMessage} from '../../../shared/sharedMethod';
 import BookStatus from "../../../shared/book-status/book-status";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {icon} from "../../../constants";
 
 const BookHistoryTable = (props) => {
     const { bookHistory, onOpenModal, onChangeFilter, totalRecord, isLoading } = props;
@@ -105,7 +106,8 @@ const BookHistoryTable = (props) => {
     return (
         <ReactDataTable items={bookHistory} columns={columns} emptyStateMessageId="books-history.empty-state.title"
                         emptyNotFoundStateMessageId="books-history.not.found.empty-state.title"
-                        loading={isLoading} totalRows={totalRecord} onChange={onChangeFilter}/>
+                        loading={isLoading} totalRows={totalRecord} onChange={onChangeFilter}
+                        icon={(icon.BOOK_CIRCULATION)}/>
     );
 };
 
