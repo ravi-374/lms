@@ -24,6 +24,8 @@ Route::group(['middleware' => 'member.auth'], function () {
         ->name('un-reserve-book');
     // Book Requests
     Route::resource('book-requests', 'BookRequestAPIController');
+
+    Route::get('countries', 'CountryAPIController@index')->name('countries.index');
     // Change Password
     Route::put('change-password', 'MemberAPIController@changePassword');
 });

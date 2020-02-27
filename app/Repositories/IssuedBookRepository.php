@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App;
+use App\Models\Author;
+use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
 use App\Models\Setting;
@@ -121,6 +123,94 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         };
 
         return $bookRecords->values();
+    }
+    /**
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     *
+     * @return IssuedBook[]|Collection|int
+     */
+    public function searchBookHistory($search = [], $skip = null, $limit = null)
+    {
+        $orderBy = null;
+        if (! empty($search['order_by']) && in_array($search['order_by'],
+                ['name', 'book_code', 'member_name', 'reserved_on', 'issue_due_date'])) {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
+        if (! empty($search['search']) && in_array($search['search'], IssuedBook::STATUS_IN_STRING)) {
+            $search['status'] = IssuedBook::getStatusFromString($search['search']);
+            unset($search['search']);
+        }
+
+        $with = ['issuer', 'returner', 'bookItem.book', 'member'];
+        $query = $this->allQuery($search, $skip, $limit)->with($with);
+        $query = $this->applyDynamicSearchBookHistory($search, $query);
+
+        $query->when(! empty($search['due_date']), function (Builder $query) use ($search) {
+            $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
+        });
+
+        if (! empty($search['withCount'])) {
+            return $query->count();
+        }
+
+        $bookRecords = $query->orderByDesc('id')->get();
+
+        if (! empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = '';
+            switch ($orderBy) {
+                case 'name' :
+                    $orderString = 'bookItem.book.name';
+                    break;
+                case 'book_code' :
+                    $orderString = 'bookItem.book_code';
+                    break;
+                case 'member_name' :
+                    $orderString = 'member.first_name';
+                    break;
+                case 'reserved_on' :
+                    $orderString = 'reserve_date';
+                    break;
+                case 'issue_due_date':
+                    $orderString = 'issue_due_date';
+                    break;
+            }
+
+            $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        };
+
+        return $bookRecords->values();
+    }
+
+    /**
+     * @param  array  $search
+     * @param  Builder  $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearchBookHistory($search, $query)
+    {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
+            $query->whereHas('bookItem.book', function (Builder $query) use ($search) {
+                $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+                // Search by book's names
+                if (! empty($search['search_by_book'])) {
+                    Book::filterByKeywords($query, $keywords);
+                } else {
+                    // search by book author's Id
+                    $query->whereHas('authors', function (Builder $query) use ($search, $keywords) {
+                        Author::filterByKeywords($query, $keywords);
+                    });
+                }
+            });
+        });
+
+        return $query;
     }
 
     /**

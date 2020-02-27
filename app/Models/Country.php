@@ -12,6 +12,8 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $title
+ * @property string $name
+ * @property string $code
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @method static Builder|Country newModelQuery()
@@ -42,4 +44,18 @@ class Country extends Model
         'name' => 'string',
         'code' => 'string',
     ];
+
+    /**
+     * @return array
+     */
+    public function apiM1Obj()
+    {
+        $country = [
+            "id"   => $this->id,
+            "name" => $this->name,
+            "code" => $this->code,
+        ];
+
+        return $country;
+    }
 }

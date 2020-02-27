@@ -34,4 +34,14 @@ interface BookRequestRepositoryInterface
      * @return BookRequest|Collection
      */
     public function update($input, $id);
+
+    /**
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
+     *
+     * @return BookRequest[]|Collection
+     */
+    public function searchBookRequest($search = [], $skip = null, $limit = null, $columns = ['*']);
 }

@@ -9,7 +9,6 @@ use App\Http\Requests\API\UpdateMemberProfileRequest;
 use App\Models\Member;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use Auth;
-use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,11 +36,8 @@ class MemberAPIController extends AppBaseController
     /**
      * @param  UpdateMemberProfileRequest  $request
      * @param  MemberRepositoryInterface  $memberRepository
-     *
-     * @throws Exception
-     *
+     * @param  Member  $member
      * @throws ApiOperationFailedException
-     *
      * @return JsonResponse
      */
     public function updateMemberProfile(
@@ -52,9 +48,17 @@ class MemberAPIController extends AppBaseController
         unset($input['email']);
         unset($input['membership_plan_id']);
 
+        $member = Auth::user();
         $updateMember = $memberRepository->updateMemberProfile($input, Auth::id());
+        $result = $updateMember->toArray();
+        $address = $member->address;
+        unset($result['address']);
+        if (! empty($address)) {
+            $address = $address->apiM1AddressObj();
+            $result = array_merge($result, $address);
+        }
 
-        return $this->sendResponse($updateMember->toArray(), 'Member profile updated successfully.');
+        return $this->sendResponse($result, 'Member profile updated successfully.');
     }
 
     /**
