@@ -132,6 +132,7 @@ Route::group(['middleware' => 'user.auth'], function () {
         // get books history for admin users
         Route::get('books-history', 'IssuedBookAPIController@index')->name('books-history');
         Route::get('issued-books/{issued_book}', 'IssuedBookAPIController@show')->name('issued-book.show');
+        Route::delete('issued-books/{issued_book}', 'IssuedBookAPIController@destroy');
     });
 
     /** Get App Config */
