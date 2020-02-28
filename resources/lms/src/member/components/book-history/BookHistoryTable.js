@@ -105,7 +105,9 @@ const BookHistoryTable = (props) => {
 
     return (
         <ReactDataTable items={bookHistory} columns={columns} emptyStateMessageId="books-history.empty-state.title"
-                        icon={(icon.BOOKCIRCULATION)} loading={isLoading} totalRows={totalRecord} onChange={onChangeFilter}/>
+                        emptyNotFoundStateMessageId="books-history.not.found.empty-state.title"
+                        loading={isLoading} totalRows={totalRecord} onChange={onChangeFilter}
+                        icon={(icon.BOOK_CIRCULATION)}/>
     );
 };
 
