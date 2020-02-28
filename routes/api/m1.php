@@ -23,6 +23,7 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::post('books/{book_item}/un-reserve-book', 'IssuedBookAPIController@unReserveBook')
         ->name('un-reserve-book');
     // Book Requests
+
     Route::resource('book-requests', 'BookRequestAPIController');
     // Change Password
     Route::put('change-password', 'MemberAPIController@changePassword');
