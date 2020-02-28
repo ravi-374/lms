@@ -458,5 +458,12 @@
     "settings.input.max-issue-books-limit.label": "Maximales Limit für Ausgabenbücher",
     "settings.input.max-reserve-books-limit.label": "Maximales Limit für Reservebücher",
     "settings.input.max-reserve-books-limit.validate.label": "Es muss ein maximales Limit für Reservebücher angegeben werden.",
-    "settings.input.max-issue-books-limit.validate.label": "Das maximale Limit für Hefte muss angegeben werden."
+    "settings.input.max-issue-books-limit.validate.label": "Das maximale Limit für Hefte muss angegeben werden.",
+    "settings.input.penalty.label": "Strafe pro Tag",
+    "penalties.title": "Strafen",
+    "penalties.empty-state.title": "Noch kein Strafverlauf hinzugefügt ...",
+    "react-data-table.book-name.column": "Buchname",
+    "react-data-table.collected_by.column": "Gesammelt von",
+    "react-data-table.amount.column": "Menge",
+    "react-data-table.date.column": "Datum"
 }

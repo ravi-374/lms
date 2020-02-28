@@ -458,5 +458,12 @@
     "settings.input.max-issue-books-limit.label": "Límite máximo de libros de edición",
     "settings.input.max-reserve-books-limit.label": "Límite máximo de libros de reserva",
     "settings.input.max-reserve-books-limit.validate.label": "Se requiere un límite máximo de libros de reserva.",
-    "settings.input.max-issue-books-limit.validate.label": "El límite máximo de libros de emisión debe ser obligatorio."
+    "settings.input.max-issue-books-limit.validate.label": "El límite máximo de libros de emisión debe ser obligatorio.",
+    "settings.input.penalty.label": "Günlük Penaltı",
+    "penalties.title": "cezalar",
+    "penalties.empty-state.title": "Henüz Penaltı geçmişi eklenmedi ...",
+    "react-data-table.book-name.column": "Kitap Adı",
+    "react-data-table.collected_by.column": "Toplandı",
+    "react-data-table.amount.column": "Miktar",
+    "react-data-table.date.column": "tarih"
 }

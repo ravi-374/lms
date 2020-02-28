@@ -458,5 +458,12 @@
     "settings.input.max-issue-books-limit.label": "最高发行量限制",
     "settings.input.max-reserve-books-limit.label": "最大储备书数限制",
     "settings.input.max-reserve-books-limit.validate.label": "必须规定最大储备书数量。",
-    "settings.input.max-issue-books-limit.validate.label": "必须设置最大发行书籍数量限制。"
+    "settings.input.max-issue-books-limit.validate.label": "必须设置最大发行书籍数量限制。",
+    "settings.input.penalty.label": "每日罚款",
+    "penalties.title": "罚则",
+    "penalties.empty-state.title": "尚未添加处罚记录...",
+    "react-data-table.book-name.column": "书名",
+    "react-data-table.collected_by.column": "收集者",
+    "react-data-table.amount.column": "量",
+    "react-data-table.date.column": "日期"
 }

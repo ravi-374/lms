@@ -111,6 +111,7 @@ export const apiBaseURL = {
     COUNTRY: 'countries',
     DASHBOARD_DETAILS: 'dashboard-details',
     GENRE: 'genres',
+    PENALTY: 'penalties',
     ISSUED_BOOK: 'issued-books',
     ADMIN_FORGOT_PASSWORD: 'send-reset-password-link',
     ADMIN_RESET_PASSWORD: 'reset-password',
@@ -194,4 +195,5 @@ export const icon = {
     BOOK_SERIES: 'fas fa-2x fa-swatchbook',
     BOOK_REQUEST: 'fas fa-2x fa-book',
     TESTIMONIAL: 'fa fa-2x fa-quote-left',
+    RUPEE: 'fa fa-2x fa-rupee',
 };

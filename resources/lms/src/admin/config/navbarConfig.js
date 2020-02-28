@@ -87,6 +87,12 @@ export default {
             icon: 'fas fa-book',
             permission: Permissions.MANANGE_BOOK_REQUEST,
         },
+        {
+            name: getFormattedMessage("penalties.title"),
+            url: '/app/admin/penalties',
+            icon: 'fas fa-rupee',
+            permission: Permissions.MANAGE_PENALTIES,
+        },
 
         {
             name: getFormattedMessage("cms.title"),

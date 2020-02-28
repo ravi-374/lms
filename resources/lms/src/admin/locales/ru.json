@@ -458,5 +458,12 @@
     "settings.input.max-issue-books-limit.label": "Максимальное количество книг",
     "settings.input.max-reserve-books-limit.label": "Макс. Резерв книг",
     "settings.input.max-reserve-books-limit.validate.label": "Максимальный лимит резервных книг должен быть обязательным.",
-    "settings.input.max-issue-books-limit.validate.label": "Максимальный лимит выдачи книг должен быть обязательным."
+    "settings.input.max-issue-books-limit.validate.label": "Максимальный лимит выдачи книг должен быть обязательным.",
+    "settings.input.penalty.label": "Штраф за день",
+    "penalties.title": "Штрафы",
+    "penalties.empty-state.title": "История штрафов еще не добавлена ...",
+    "react-data-table.book-name.column": "Название книги",
+    "react-data-table.collected_by.column": "Собранный",
+    "react-data-table.amount.column": "Количество",
+    "react-data-table.date.column": "Дата"
 }

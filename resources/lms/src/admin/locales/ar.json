@@ -457,5 +457,12 @@
     "settings.input.max-issue-books-limit.label": "حد أقصى لعدد الكتب",
     "settings.input.max-reserve-books-limit.label": "الحد الأقصى للكتب الاحتياطية",
     "settings.input.max-reserve-books-limit.validate.label": "يجب حجز الحد الأقصى لدفاتر الاحتياطي.",
-    "settings.input.max-issue-books-limit.validate.label": "يجب أن يكون الحد الأقصى لعدد كتب الإصدار مطلوبًا."
+    "settings.input.max-issue-books-limit.validate.label": "يجب أن يكون الحد الأقصى لعدد كتب الإصدار مطلوبًا.",
+    "settings.input.penalty.label": "عقوبة لكل يوم",
+    "penalties.title": "ضربات الجزاء",
+    "penalties.empty-state.title": "لم تتم إضافة تاريخ عقوبة بعد ...",
+    "react-data-table.book-name.column": "اسم الكتاب",
+    "react-data-table.collected_by.column": "جمع بواسطة",
+    "react-data-table.amount.column": "كمية",
+    "react-data-table.date.column": "تاريخ"
 }
