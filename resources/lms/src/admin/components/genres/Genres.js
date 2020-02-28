@@ -61,7 +61,9 @@ const Genres = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={genres} columns={columns} loading={isLoading}
-                                            emptyStateMessageId="genres.empty-state.title" totalRows={totalRecord}
+                                            emptyStateMessageId="genres.empty-state.title"
+                                            emptyNotFoundStateMessageId="genres.not-found.empty-state.title"
+                                            totalRows={totalRecord}
                                             onOpenModal={onOpenModal} onChange={onChange} icon={(icon.GENRES)}/>
                             <GenreModal {...cardModalProps}/>
                         </CardBody>

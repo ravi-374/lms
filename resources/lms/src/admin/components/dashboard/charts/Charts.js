@@ -236,7 +236,7 @@ const Charts = (props) => {
                                         {renderEmptyDataSet(doughnut.datasets) ? <Doughnut data={doughnut} options={BookCirculationOptions}/> :
                                             <div className="chart-wrapper-empty-component">
                                                 <EmptyComponent isShort title={getFormattedMessage
-                                                ('dashboard.chart.empty-message.label')} icon={(icon.BOOKCIRCULATION)}/>
+                                                ('dashboard.chart.empty-message.label')} icon={(icon.BOOK_CIRCULATION)}/>
                                             </div>}
                                     </div>
                                 </CardBody>

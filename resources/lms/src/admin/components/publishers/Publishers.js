@@ -60,8 +60,10 @@ const Publishers = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={publishers} columns={columns} icon={(icon.PUBLISHER)}
-                                            emptyStateMessageId="publishers.empty-state.title" loading={isLoading}
+                            <ReactDataTable items={publishers} columns={columns}
+                                            emptyStateMessageId="publishers.empty-state.title"
+                                            emptyNotFoundStateMessageId="publishers.not-found.empty-state.title"
+                                            loading={isLoading} icon={(icon.PUBLISHER)}
                                             totalRows={totalRecord} onOpenModal={onOpenModal} onChange={onChange}/>
                             <PublisherModal {...cardModalProps}/>
                         </CardBody>

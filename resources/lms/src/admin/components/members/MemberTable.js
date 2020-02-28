@@ -99,6 +99,7 @@ const MemberTable = (props) => {
 
     return (
         <ReactDataTable items={members} columns={columns} emptyStateMessageId="members.empty-state.title"
+                        emptyNotFoundStateMessageId="member.not-found.empty-state.title"
                         isShowFilterField filterOptions={membershipPlansOptions} filterKey={getStoredFilterKey()}
                         loading={isLoading} totalRows={totalRecord} onChange={onChangeData}
                         filterKeyName={storageKey.MEMBERS} icon={(icon.MEMBER)}/>
