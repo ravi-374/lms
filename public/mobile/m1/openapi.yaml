@@ -44,6 +44,18 @@ paths:
       summary: get books history.
       description: ""
       parameters:
+        - name: search
+          in: query
+          description: search string like Harry Potter or Chetan Bhagat
+          required: false
+          schema:
+            type: string
+        - name: search_by_book
+          in: query
+          description: Pass 1 to search by books names and pass 0 to search books by authors
+          required: false
+          schema:
+            type: integer
         - name: skip
           in: query
           description: skip record
@@ -227,6 +239,23 @@ paths:
       responses:
         "200":
           description: Password updated successfully.
+  '/change-password':
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: change password
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePassword"
+        required: true
+      responses:
+        "200":
+          description: Password changed successfully
 
   '/book-requests':
     get:
@@ -236,12 +265,18 @@ paths:
         - Book Requests
       summary: book request.
       parameters:
-        - name: book_name
+        - name: search
           in: query
-          description: book name
+          description: search string like Harry Potter or Chetan Bhagat
           required: false
           schema:
             type: string
+        - name: search_by_book
+          in: query
+          description: Pass 1 to search by books names
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: Requested books retrieved successfully.
@@ -359,6 +394,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BookHistoryResponse"
+
+  /countries:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Countries
+      summary: get Countries.
+      description: ""
+      parameters:
+        - name: limit
+          in: query
+          description: limit record
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: skip record
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Countries retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryResponse"
 
 components:
   securitySchemes:
@@ -597,8 +661,18 @@ components:
             type: string
           image:
             type: string
-          address:
+          address_1:
             type: string
+          address_2:
+            type: string
+          state:
+            type: string
+          city:
+            type: string
+          zip:
+            type: string
+          country_id:
+            type: integer
 
     UpdateMemberProfileResponse:
       type: object
@@ -634,8 +708,18 @@ components:
             type: string
           image:
             type: string
-          address:
+          address_1:
             type: string
+          address_2:
+            type: string
+          state:
+            type: string
+          city:
+            type: string
+          zip:
+            type: string
+          country_id:
+            type: integer
           image_path:
             type: string
           membership_plan_id:
@@ -810,6 +894,16 @@ components:
                 type: string
               status:
                 type: integer
+              isbn_no:
+                type: string
+              edition:
+                type: string
+              book_code:
+                type: string
+              expected_available_date:
+                type: string
+              is_reserved:
+                type: boolean
     BookRequestResponse:
       type: object
       properties:
@@ -965,8 +1059,15 @@ components:
         - token
         - password
       properties:
-        token:
+        password:
           type: string
+    ChangePassword:
+      type: object
+      required:
+        - current_password
+        - password
+        - confirm_password
+      properties:
         password:
           type: string
     BookHistoryResponse:
@@ -1005,3 +1106,21 @@ components:
               type: integer
             expected_available_date:
               type: string
+    CountryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              code:
+                type: string

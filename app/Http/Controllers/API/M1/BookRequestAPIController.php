@@ -37,7 +37,7 @@ class BookRequestAPIController extends AppBaseController
         $input = $request->except(['limit', 'skip']);
         $input['member_id'] = Auth::id();
 
-        $records = $this->bookRequestRepository->all(
+        $records = $this->bookRequestRepository->searchBookRequest(
             $input,
             $request->get('skip', null),
             $request->get('limit', null)
