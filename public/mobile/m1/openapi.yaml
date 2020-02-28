@@ -44,6 +44,12 @@ paths:
       summary: get books history.
       description: ""
       parameters:
+        - name: search
+          in: query
+          description: search string like Harry Potter or Chetan Bhagat
+          required: false
+          schema:
+            type: string
         - name: search_by_book
           in: query
           description: Pass 1 to search by books names and pass 0 to search books by authors
@@ -233,6 +239,23 @@ paths:
       responses:
         "200":
           description: Password updated successfully.
+  '/change-password':
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Members
+      summary: change password
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePassword"
+        required: true
+      responses:
+        "200":
+          description: Password changed successfully
 
   '/book-requests':
     get:
@@ -242,15 +265,15 @@ paths:
         - Book Requests
       summary: book request.
       parameters:
-        - name: Search String like "harry potter"
+        - name: search
           in: query
-          description: book name
+          description: search string like Harry Potter or Chetan Bhagat
           required: false
           schema:
             type: string
         - name: search_by_book
           in: query
-          description: Pass 1 to search by books names and pass 0 to search books by authors
+          description: Pass 1 to search by books names
           required: false
           schema:
             type: integer
@@ -1036,8 +1059,15 @@ components:
         - token
         - password
       properties:
-        token:
+        password:
           type: string
+    ChangePassword:
+      type: object
+      required:
+        - current_password
+        - password
+        - confirm_password
+      properties:
         password:
           type: string
     BookHistoryResponse:

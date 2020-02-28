@@ -127,14 +127,8 @@ class BookRequestRepository extends BaseRepository implements BookRequestReposit
         $query->when(! empty($search['search']), function (Builder $query) use ($search) {
                 $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
 
-                // Search by book's names
                 if (! empty($search['search_by_book'])) {
-                    Book::filterByKeywords($query, $keywords);
-                } else {
-                    // search by book author's Id
-                    $query->whereHas('member', function (Builder $query) use ($search, $keywords) {
-                        Author::filterByKeywords($query, $keywords);
-                    });
+                    BookRequest::filterByKeywords($query, $keywords);
                 }
         });
 
