@@ -444,5 +444,12 @@
     "settings.input.max-issue-books-limit.label": "Limite máximo de livros de edições",
     "settings.input.max-reserve-books-limit.label": "Limite máximo de livros de reserva",
     "settings.input.max-reserve-books-limit.validate.label": "O limite máximo de livros de reserva deve ser necessário.",
-    "settings.input.max-issue-books-limit.validate.label": "O limite máximo de livros de edições deve ser necessário."
+    "settings.input.max-issue-books-limit.validate.label": "O limite máximo de livros de edições deve ser necessário.",
+    "settings.input.penalty.label": "Pena por dia",
+    "penalties.title": "Sanções",
+    "penalties.empty-state.title": "Nenhum histórico de penalidades adicionado ainda ...",
+    "react-data-table.book-name.column": "Nome do livro",
+    "react-data-table.collected_by.column": "Coletado por",
+    "react-data-table.amount.column": "Montante",
+    "react-data-table.date.column": "Encontro"
 }

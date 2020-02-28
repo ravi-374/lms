@@ -444,5 +444,12 @@
     "settings.input.max-issue-books-limit.label": "Limite massimo libri di emissione",
     "settings.input.max-reserve-books-limit.label": "Limite massimo di libri di riserva",
     "settings.input.max-reserve-books-limit.validate.label": "È necessario richiedere il limite massimo dei libri di riserva.",
-    "settings.input.max-issue-books-limit.validate.label": "È necessario un limite massimo per i libri di emissione."
+    "settings.input.max-issue-books-limit.validate.label": "È necessario un limite massimo per i libri di emissione.",
+    "settings.input.penalty.label": "مجازات در روز",
+    "penalties.title": "مجازات ها",
+    "penalties.empty-state.title": "هنوز سابقه پنالتی اضافه نشده است ...",
+    "react-data-table.book-name.column": "نام کتاب",
+    "react-data-table.collected_by.column": "جمع آوری شده توسط",
+    "react-data-table.amount.column": "میزان",
+    "react-data-table.date.column": "تاریخ"
 }

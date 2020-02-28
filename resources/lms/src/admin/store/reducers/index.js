@@ -4,6 +4,7 @@ import progressReduce from '../../../store/reducers/progressReducer';
 import searchReducer from '../../../store/reducers/searchReducer';
 import sortReducer from '../../../store/reducers/sortReducer';
 import genreReducer from './genreReducer';
+import penaltyReducer from './penaltyReducer';
 import toastReducer from '../../../store/reducers/toastReducer';
 import modalReducer from '../../../store/reducers/modalReducer';
 import priceReducer from '../../../store/reducers/currencyReducer';
@@ -41,6 +42,7 @@ import changePasswordModalReducer from "../../../store/reducers/changePasswordMo
 
 export default combineReducers({
     genres: genreReducer,
+    penalties: penaltyReducer,
     tags: tagReducer,
     authors: authorReducer,
     publishers: publisherReducer,

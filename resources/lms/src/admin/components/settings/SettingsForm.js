@@ -50,10 +50,11 @@ const SettingsForm = (props) => {
     };
 
     const onSave = (formValues) => {
-        const { currency, issue_due_days, return_due_days, library_name, language, reserve_books_limit, issue_books_limit } = formValues;
+        const { currency, issue_due_days, return_due_days, library_name, language, reserve_books_limit, issue_books_limit, penalty_per_day } = formValues;
         const settings = [
             prepareFormData(settingsKey.CURRENCY, currency.id, currency.name),
             prepareFormData(settingsKey.LIBRARY_NAME, library_name, settingsDisplayName.APP_NAME),
+            prepareFormData(settingsKey.PENALTY_PER_DAY, penalty_per_day, settingsDisplayName.PENALTY_PER_DAY),
             prepareFormData(settingsKey.ISSUE_DUE_DAYS, issue_due_days, settingsDisplayName.ISSUE_DUE_DAYS),
             prepareFormData(settingsKey.RETURN_DUE_DAYS, return_due_days, settingsDisplayName.RETURN_DUE_DAYS),
             prepareFormData(settingsKey.LANGUAGE, language.id, language.name),
@@ -201,6 +202,10 @@ const SettingsForm = (props) => {
                         <Field name='language' label="settings.select.language.label" required groupText="language"
                                options={bookLanguagesOptions} placeholder="settings.select.language.placeholder"
                                component={Select} isSearchable={true}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name='penalty_per_day' type="number" label="settings.input.penalty.label" min="0"
+                                required groupText={groupText} component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>

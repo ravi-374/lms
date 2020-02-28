@@ -12,6 +12,10 @@ export const genreActionType = {
     DELETE_GENRE: 'DELETE_GENRE',
 };
 
+export const penaltyActionType = {
+    FETCH_PENALTY: 'FETCH_PENALTY',
+};
+
 export const passwordActionType = {
     CHANGE_PASSWORD: 'CHANGE_PASSWORD',
 };
@@ -194,6 +198,7 @@ export const Permissions = {
     MANAGE_PLANS: 'manage_plans',
     MANAGE_TAGS: 'manage_tags',
     MANAGE_GENRES: 'manage_genres',
+    MANAGE_PENALTIES: 'manage_penalties',
     MANAGE_USERS: 'manage_users',
     MANANGE_BOOK_REQUEST:'manage_book_requests'
 };
@@ -229,7 +234,8 @@ export const settingsKey = {
     LIBRARY_FAVICON: 'favicon_icon',
     LANGUAGE: 'language',
     ISSUE_BOOKS_LIMIT: 'issue_books_limit',
-    RESERVE_BOOKS_LIMIT: 'reserve_books_limit'
+    RESERVE_BOOKS_LIMIT: 'reserve_books_limit',
+    PENALTY_PER_DAY: 'penalty_per_day'
 };
 
 export const settingsDisplayName = {
@@ -238,7 +244,8 @@ export const settingsDisplayName = {
     LIBRARY_LOGO: 'Library Logo',
     RETURN_DUE_DAYS: 'Return Due Days',
     ISSUE_BOOKS_LIMIT: 'Max Issue Books Limit',
-    RESERVE_BOOKS_LIMIT: 'Max Reserve Books Limit'
+    RESERVE_BOOKS_LIMIT: 'Max Reserve Books Limit',
+    PENALTY_PER_DAY: 'Penalty Per Day'
 };
 
 export const bookItemActionType = {
