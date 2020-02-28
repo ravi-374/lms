@@ -181,7 +181,7 @@ export const homeSettingsDisplayName = {
 
 export const icon = {
     BOOK: 'fa fa-2x fa-book',
-    BOOKCIRCULATION: 'fas fa-2x fa-book-reader',
+    BOOK_CIRCULATION: 'fas fa-2x fa-book-reader',
     MEMBER: 'fas fa-2x fa-users',
     GENRES: 'fas fa-2x fa-layer-group',
     AUTHORS: 'fas fa-2x fa-user-friends',

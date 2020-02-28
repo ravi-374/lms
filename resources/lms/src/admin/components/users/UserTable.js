@@ -92,6 +92,7 @@ const UserTable = (props) => {
 
     return (
         <ReactDataTable items={users} columns={columns} emptyStateMessageId="users.empty-state.title"
+                        emptyNotFoundStateMessageId="users.not-found.empty-state.title"
                         loading={isLoading} totalRows={totalRecord} onChange={onChangeData} icon={(icon.USERS)}/>
     );
 };
