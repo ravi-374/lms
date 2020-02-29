@@ -2,6 +2,7 @@ import React from 'react';
 
 export const constants = {
     SET_TOTAL_RECORD: 'SET_TOTAL_RECORD',
+    PENALTIY_MODAL_ACTION: 'PENALTIY_MODAL_ACTION'
 };
 
 export const genreActionType = {
