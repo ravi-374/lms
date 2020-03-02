@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Models\Book;
 use App\Models\BookItem;
-use App\Models\IssuedBook;
 use App\Models\Penalty;
 use App\Models\Setting;
 use App\Repositories\Contracts\PenaltyRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class PenaltyRepository
@@ -18,11 +19,29 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
      * @var array
      */
     protected $fieldSearchable = [
-        'member_id',
-        'book_item_id',
-        'penalty_collected',
-        'collected_by',
+        'collected_penalty',
     ];
+
+    public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
+    {
+        $query = $this->allQuery($search, $skip, $limit);
+        $query = $this->applyDynamicSearch($search, $query);
+
+        return $query->get();
+    }
+
+    public function applyDynamicSearch($search, $query)
+    {
+        $query->when(isset($search['search']), function (Builder $query) use ($search) {
+            $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+            $query->orwhereHas('bookItem.book', function (Builder $query) use ($keywords) {
+                Book::filterByKeywords($query, $keywords);
+            });
+        });
+
+        return $query;
+    }
 
     /**
      * @inheritDoc

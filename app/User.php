@@ -154,4 +154,18 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->morphOne(Address::class, 'owner')->with('country');
     }
+
+    /**
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        $fullName = ucfirst($this->first_name);
+
+        if (! empty($this->last_name)) {
+            $fullName .= ' '.ucfirst($this->last_name);
+        }
+
+        return $fullName;
+    }
 }
