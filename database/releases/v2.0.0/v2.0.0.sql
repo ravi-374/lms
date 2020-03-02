@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Feb 29, 2020 at 10:57 AM
+-- Generation Time: Mar 02, 2020 at 05:34 AM
 -- Server version: 8.0.18
 -- PHP Version: 7.3.12
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `penalties` (
   `issued_book_id` int(10) UNSIGNED DEFAULT NULL,
   `actual_penalty` double NOT NULL,
   `collected_penalty` double NOT NULL,
-  `notes` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notes` text COLLATE utf8mb4_unicode_ci,
   `collected_at` datetime NOT NULL,
   `collected_by` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
