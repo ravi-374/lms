@@ -30,6 +30,7 @@ const BookRequests = React.lazy(() => import('./components/book-requests/BookReq
 const Testimonials = React.lazy(() => import('./components/testimonials/Testimonials'));
 const CreateMember = React.lazy(() => import('./components/members/CreateMember'));
 const EditMember = React.lazy(() => import('./components/members/EditMember'));
+const Penalties = React.lazy(() => import('./components/Penalties/Penalties'));
 
 export default [
     {
@@ -199,6 +200,13 @@ export default [
         name: 'UserProfile',
         component: UserProfile,
         permission: Permissions.MANAGE_USERS
+    },
+    {
+        path: '/app/admin/penalties',
+        exact: true,
+        name: 'Penalties',
+        component: Penalties,
+        permission: Permissions.MANAGE_PENALTIES
     },
     {
         path: '/app/admin/settings',

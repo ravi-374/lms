@@ -56,7 +56,7 @@ const MembershipPlans = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {membershipPlans.length > 0 ? <MembershipPlan {...cardBodyProps}/> :
-                                <EmptyComponent title={searchText ? getFormattedMessage('membership-plans.not.found.empty-state.title') :
+                                <EmptyComponent title={searchText ? getFormattedMessage('membership-plans.not-found.empty-state.title') :
                                    getFormattedMessage('membership-plans.empty-state.title')} icon={(icon.MEMBER_PLAN)}/>}
                             <MembershipPlanModal {...cardModalProps}/>
                         </CardBody>

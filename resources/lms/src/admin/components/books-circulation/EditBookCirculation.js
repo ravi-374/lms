@@ -24,8 +24,7 @@ const EditBookCirculation = (props) => {
     const modalOption = { toggleModal, className, title };
     const formOption = { onSelectBook, bookId };
     const bookCirculationStatusOptions = getFormattedOptions(bookStatusOptions);
-    const { note, reserve_date, issued_on, return_date, member } = bookCirculation;
-
+    const { note, reserve_date, issued_on, return_date, member, return_due_date } = bookCirculation;
     useEffect(() => {
         displayLimitMessage(bookLimit);
     }, [bookLimit]);
@@ -61,7 +60,10 @@ const EditBookCirculation = (props) => {
             name: bookCirculation.book_item.edition + ` (${bookCirculation.book_item.book_code})`
         },
         member: member ? { id: member.id, name: member.first_name + ' ' + member.last_name } : null,
-        status: bookCirculationStatusOptions.find(bookCirculationStatus => bookCirculationStatus.id === +bookCirculation.status)
+        return_due_date: return_due_date,
+        status: bookCirculationStatusOptions.find(bookCirculationStatus => bookCirculationStatus.id === +bookCirculation.status),
+        penalty_collected: false,
+        collected_penalty: 0
     };
 
     const onSaveBookCirculation = (formValues) => {

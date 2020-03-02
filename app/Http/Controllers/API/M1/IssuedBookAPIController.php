@@ -33,7 +33,7 @@ class IssuedBookAPIController extends AppBaseController
         $search = $request->all();
         $search['member_id'] = Auth::id();
 
-        $records = $this->issuedBookRepository->all(
+        $records = $this->issuedBookRepository->searchBookHistory(
             $search,
             $request->get('skip', null),
             $request->get('limit', null)

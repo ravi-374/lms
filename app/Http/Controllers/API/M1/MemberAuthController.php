@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\M1;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\API\ResetPasswordLinkRequest;
 use App\Http\Requests\API\ResetPasswordRequest;
 use App\Models\Member;
 use App\Models\MembershipPlan;
@@ -19,6 +18,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use URL;
 use Validator;
 
 /**
@@ -75,14 +75,18 @@ class MemberAuthController extends AppBaseController
     }
 
     /**
-     * @param  ResetPasswordLinkRequest  $request
+     * @param  Request  $request
      *
      * @throws Exception
      *
      * @return JsonResponse
      */
-    public function sendResetPasswordLink(ResetPasswordLinkRequest $request)
+    public function sendResetPasswordLink(Request $request)
     {
+        if (empty($request->get('email'))) {
+            throw new UnprocessableEntityHttpException('Email field is required.');
+        }
+
         $data = [];
         /** @var User $member */
         $member = Member::whereEmail($request->get('email'))->first();
@@ -93,7 +97,7 @@ class MemberAuthController extends AppBaseController
         $token = Crypt::encrypt($key);
         $encodedToken = urlencode($token);
         $data['token'] = $encodedToken;
-        $data['link'] = $encodedToken; // TODO : this need to be refacored when mobile guys implement send reset password link functionality
+        $data['link'] = URL::to('/#/app/reset-password');
         $data['first_name'] = $member->first_name;
         $data['last_name'] = $member->last_name;
         $data['email'] = $member->email;

@@ -52,7 +52,7 @@ const TestimonialTable = (props) => {
     return (
         <ReactDataTable items={testimonials} columns={columns} icon={(icon.TESTIMONIAL)}
                         emptyStateMessageId="testimonials.empty-state.title"
-                        emptyNotFoundStateMessageId="testimonials.not.found.empty-state.title"
+                        emptyNotFoundStateMessageId="testimonials.not-found.empty-state.title"
                         loading={isLoading} totalRows={totalRecord} onChange={onChangeData}/>
     );
 };

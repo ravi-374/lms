@@ -2,9 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Models\Author;
+use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\BookRequest;
 use App\Repositories\Contracts\BookRequestRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -75,6 +78,61 @@ class BookRequestRepository extends BaseRepository implements BookRequestReposit
         });
 
         return $records->values();
+    }
+
+    /**
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     * @param  array  $columns
+     *
+     * @return BookRequest[]|Collection
+     */
+    public function searchBookRequest($search = [], $skip = null, $limit = null, $columns = ['*'])
+    {
+        $search['order_by'] = (isset($search['order_by'])) ? $search['order_by'] : 'created_at';
+        $search['direction'] = (isset($search['direction'])) ? $search['direction'] : 'desc';
+
+        if ($search['order_by'] == 'request_count') {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
+        $query = $this->allQuery($search, $skip, $limit);
+        $query = $this->applyDynamicSearchBook($search, $query);
+        $records = $query->get();
+
+        if (! empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = 'request_count';
+
+            $records = $records->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        }
+
+        $records = $records->groupBy('isbn')->map(function ($records) {
+            return $records[0];
+        });
+
+        return $records->values();
+    }
+
+    /**
+     * @param  array  $search
+     * @param  Builder  $query
+     *
+     * @return Builder
+     */
+    public function applyDynamicSearchBook($search, $query)
+    {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
+                $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
+
+                if (! empty($search['search_by_book'])) {
+                    BookRequest::filterByKeywords($query, $keywords);
+                }
+        });
+
+        return $query;
     }
 
     /**

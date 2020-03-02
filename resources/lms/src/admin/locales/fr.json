@@ -126,6 +126,11 @@
     "books-circulation.success.damage.message": "Statut du livre défini pour être endommagé avec succès.",
     "books-circulation.issue.book-limit.message": "Ce membre dépasse la limite du livre d'émission.",
     "books-circulation.reserve.book-limit.message": "Ce membre dépasse la limite du livre de réserve.",
+    "books-circulation.return.modal.penalties-warning.label": "Pénalités Attention!",
+    "books-circulation.return.book-due.label": "Sanctions",
+    "books-circulation.input.amount.label": "Montante",
+    "books-circulation.penalties.customer-return-book.message": "Le retour de livre est en retard de {lateDays} jours, donc une pénalité de {amount} sera facturée.",
+    "books-circulation.checkbox.pay-amount.label": "Pénalité perçue",
     "book-history.title": "Histoire du livre",
     "book-history.filter.available.label": "Disponible",
     "book-history.filter.issued.label": "Publié",
@@ -230,6 +235,7 @@
     "global.input.cancel-btn.label": "Annuler",
     "global.input.yes-btn.label": "Oui",
     "global.input.no-btn.label": "Non",
+    "global.input.ok-btn.label": "D'accord",
     "global.input.back-btn.label": "Retour",
     "global.input.search-btn.label": "Chercher",
     "global.input.submit-btn.label": "Soumettre",
@@ -458,5 +464,12 @@
     "settings.input.max-issue-books-limit.label": "Limite maximale des livres",
     "settings.input.max-reserve-books-limit.label": "Max reserve books lsimit",
     "settings.input.max-reserve-books-limit.validate.label": "La limite maximale de livres de réserve doit être requise.",
-    "settings.input.max-issue-books-limit.validate.label": "Le nombre maximum de livres à émettre doit être requis."
+    "settings.input.max-issue-books-limit.validate.label": "Le nombre maximum de livres à émettre doit être requis.",
+    "settings.input.penalty.label": "Pénalité par jour",
+    "penalties.title": "Sanctions",
+    "penalties.empty-state.title": "Aucun historique de pénalité ajouté pour le moment ...",
+    "react-data-table.book-name.column": "Nom du livre",
+    "react-data-table.collected_by.column": "Collecté par",
+    "react-data-table.amount.column": "Montante",
+    "react-data-table.date.column": "Date"
 }

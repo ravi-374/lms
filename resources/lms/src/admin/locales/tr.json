@@ -126,6 +126,11 @@
     "books-circulation.success.damage.message": "Kitap durumu başarıyla hasarlı olarak ayarlandı.",
     "books-circulation.issue.book-limit.message": "Bu üye, sorunlu kitap limitini aşıyor.",
     "books-circulation.reserve.book-limit.message": "Bu üye rezerv kitap limitini aşıyor.",
+    "books-circulation.return.modal.penalties-warning.label": "Cezalar Uyarı!",
+    "books-circulation.return.book-due.label": "cezalar",
+    "books-circulation.input.amount.label": "Miktar",
+    "books-circulation.penalties.customer-return-book.message": "Kitap iadesi {lateDays} gün gecikti, bu nedenle {amount} ceza tahsil edilecektir.",
+    "books-circulation.checkbox.pay-amount.label": "Toplanan Ceza",
     "book-history.title": "Kitap Tarihi",
     "book-history.filter.available.label": "Mevcut",
     "book-history.filter.issued.label": "Veriliş",
@@ -229,6 +234,7 @@
     "global.input.cancel-btn.label": "İptal Etmek",
     "global.input.yes-btn.label": "Evet",
     "global.input.no-btn.label": "Hayır",
+    "global.input.ok-btn.label": "Tamam",
     "global.input.back-btn.label": "Geri",
     "global.input.search-btn.label": "Ara",
     "global.input.submit-btn.label": "Sunmak",
@@ -458,5 +464,12 @@
     "settings.input.max-issue-books-limit.label": "Límite máximo de libros de edición",
     "settings.input.max-reserve-books-limit.label": "Límite máximo de libros de reserva",
     "settings.input.max-reserve-books-limit.validate.label": "Se requiere un límite máximo de libros de reserva.",
-    "settings.input.max-issue-books-limit.validate.label": "El límite máximo de libros de emisión debe ser obligatorio."
+    "settings.input.max-issue-books-limit.validate.label": "El límite máximo de libros de emisión debe ser obligatorio.",
+    "settings.input.penalty.label": "Günlük Penaltı",
+    "penalties.title": "cezalar",
+    "penalties.empty-state.title": "Henüz Penaltı geçmişi eklenmedi ...",
+    "react-data-table.book-name.column": "Kitap Adı",
+    "react-data-table.collected_by.column": "Toplandı",
+    "react-data-table.amount.column": "Miktar",
+    "react-data-table.date.column": "tarih"
 }

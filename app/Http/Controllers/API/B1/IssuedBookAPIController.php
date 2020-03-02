@@ -11,6 +11,7 @@ use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class IssuedBookController
@@ -44,6 +45,7 @@ class IssuedBookAPIController extends AppBaseController
         });
 
         $input['withCount'] = 1;
+
         return $this->sendResponse(
             $issuedBooks,
             'Issued Books retrieved successfully.',
@@ -172,6 +174,13 @@ class IssuedBookAPIController extends AppBaseController
     {
         /** @var IssuedBook $issuedBook */
         $issuedBook = $this->issuedBookRepository->findOrFail($id);
+
+        if (! in_array($issuedBook->status, [
+            IssuedBook::STATUS_UN_RESERVED, IssuedBook::STATUS_RETURNED, IssuedBook::STATUS_DAMAGED,
+            IssuedBook::STATUS_LOST,
+        ])) {
+            throw new UnprocessableEntityHttpException('You can not delete issued/reserved book record.');
+        }
 
         $issuedBook->delete();
 

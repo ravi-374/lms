@@ -19,7 +19,7 @@ class CreatePenaltiesTable extends Migration
             $table->unsignedInteger('issued_book_id')->nullable();
             $table->double('actual_penalty');;
             $table->double('collected_penalty');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->dateTime('collected_at');
             $table->unsignedBigInteger('collected_by')->nullable();
             $table->timestamps();

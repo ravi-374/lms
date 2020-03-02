@@ -127,7 +127,7 @@ const Books = (props) => {
                         <CardBody>
                             <ReactDataTable items={books} columns={columns} loading={isLoading}
                                             emptyStateMessageId="books.empty-state.title" totalRows={totalRecord}
-                                            emptyNotFoundStateMessageId="book.not.found.empty-state.title"
+                                            emptyNotFoundStateMessageId="book.not-found.empty-state.title"
                                             onChange={onChange} icon={(icon.BOOK)}/>
                             <DeleteBook {...cardModalProps}/>
                         </CardBody>

@@ -121,7 +121,7 @@ const BooksCirculation = (props) => {
                         <CardBody>
                             <ReactDataTable items={booksCirculation} isShowFilterField
                                             emptyStateMessageId="books-circulation.empty-state.title"
-                                            emptyNotFoundStateMessageId="books-circulation.not.found.empty-state.title"
+                                            emptyNotFoundStateMessageId="books-circulation.not-found.empty-state.title"
                                             filterKeyName={storageKey.BOOK_CIRCULATION}
                                             filterOptions={bookCirculationStatusFilter} filterKey={getStoredFilterKey()}
                                             columns={columns} loading={isLoading} totalRows={totalRecord}

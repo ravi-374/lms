@@ -126,6 +126,11 @@
     "books-circulation.success.damage.message": "تم تعيين حالة الكتاب إلى تلف بنجاح.",
     "books-circulation.issue.book-limit.message": "هذا العضو يتجاوز الحد المسموح به لدفتر الإصدار.",
     "books-circulation.reserve.book-limit.message": "هذا العضو يتجاوز الحد الاحتياطي للكتاب.",
+    "books-circulation.return.modal.penalties-warning.label": "تحذير العقوبات!",
+    "books-circulation.return.book-due.label": "ضربات الجزاء",
+    "books-circulation.input.amount.label": "كمية",
+    "books-circulation.penalties.customer-return-book.message": "يُعد إرجاع الكتاب {lateDays} متأخرًا ، لذا سيتم فرض غرامة {amount}.",
+    "books-circulation.checkbox.pay-amount.label": "العقوبة التي تم جمعها",
     "book-history.title": "كتاب التاريخ",
     "book-history.filter.available.label": "متاح",
     "book-history.filter.issued.label": "نشر",
@@ -228,6 +233,7 @@
     "global.input.cancel-btn.label": "إلغاء",
     "global.input.yes-btn.label": "نعم",
     "global.input.no-btn.label": "لا",
+    "global.input.ok-btn.label": "حسنا",
     "global.input.back-btn.label": "عودة",
     "global.input.submit-btn.label": "تقديم",
     "global.input.search-btn.label": "بحث",
@@ -457,5 +463,12 @@
     "settings.input.max-issue-books-limit.label": "حد أقصى لعدد الكتب",
     "settings.input.max-reserve-books-limit.label": "الحد الأقصى للكتب الاحتياطية",
     "settings.input.max-reserve-books-limit.validate.label": "يجب حجز الحد الأقصى لدفاتر الاحتياطي.",
-    "settings.input.max-issue-books-limit.validate.label": "يجب أن يكون الحد الأقصى لعدد كتب الإصدار مطلوبًا."
+    "settings.input.max-issue-books-limit.validate.label": "يجب أن يكون الحد الأقصى لعدد كتب الإصدار مطلوبًا.",
+    "settings.input.penalty.label": "عقوبة لكل يوم",
+    "penalties.title": "ضربات الجزاء",
+    "penalties.empty-state.title": "لم تتم إضافة تاريخ عقوبة بعد ...",
+    "react-data-table.book-name.column": "اسم الكتاب",
+    "react-data-table.collected_by.column": "جمع بواسطة",
+    "react-data-table.amount.column": "كمية",
+    "react-data-table.date.column": "تاريخ"
 }

@@ -53,7 +53,9 @@ const Roles = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {roles.length > 0 ? <Role {...cardBodyProps}/> :
-                                <EmptyComponent icon={(icon.ROLE)}  title={searchText ? getFormattedMessage('roles.not.found.empty-state.title') : getFormattedMessage('roles.empty-state.title')}/>}
+                                <EmptyComponent icon={(icon.ROLE)}
+                                title={searchText ? getFormattedMessage('roles.not-found.empty-state.title') :
+                                        getFormattedMessage('roles.empty-state.title')} />}
                             <RoleModal {...cardModalProps}/>
                         </CardBody>
                     </Card>

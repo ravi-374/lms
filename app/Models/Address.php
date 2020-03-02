@@ -25,7 +25,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Collection|Address[] $owner
- * @property-read Collection|Country $country
+ * @property-read Country|null $country
  * @method static Builder|Address newModelQuery()
  * @method static Builder|Address newQuery()
  * @method static Builder|Address query()
@@ -85,5 +85,23 @@ class Address extends Model
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
+     * @return array
+     */
+    public function apiM1AddressObj()
+    {
+        $record = [
+            "address_1"  => $this->address_1,
+            "address_2"  => $this->address_2,
+            "city"       => $this->city,
+            "state"      => $this->state,
+            "country"      => $this->country->name,
+            "country_id" => $this->country_id,
+            "zip"        => $this->zip,
+        ];
+
+        return $record;
     }
 }

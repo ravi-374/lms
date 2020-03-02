@@ -4,6 +4,7 @@ import progressReduce from '../../../store/reducers/progressReducer';
 import searchReducer from '../../../store/reducers/searchReducer';
 import sortReducer from '../../../store/reducers/sortReducer';
 import genreReducer from './genreReducer';
+import penaltyReducer from './penaltyReducer';
 import toastReducer from '../../../store/reducers/toastReducer';
 import modalReducer from '../../../store/reducers/modalReducer';
 import priceReducer from '../../../store/reducers/currencyReducer';
@@ -37,10 +38,12 @@ import bookRequestReducer from './bookRequestReducer';
 import availableBookLimitReducer from './availableBookLimitReducer';
 import homeSettingReducer from "./homeSettingReducer";
 import testimonialReducer from "./testimonialReducer";
+import returnDueDateReducer from "./penaltiesModalReducer";
 import changePasswordModalReducer from "../../../store/reducers/changePasswordModalReducer";
 
 export default combineReducers({
     genres: genreReducer,
+    penalties: penaltyReducer,
     tags: tagReducer,
     authors: authorReducer,
     publishers: publisherReducer,
@@ -78,5 +81,6 @@ export default combineReducers({
     bookLimit: availableBookLimitReducer,
     homeSettings: homeSettingReducer,
     testimonials: testimonialReducer,
-    isChangePasswordModelToggle: changePasswordModalReducer
+    isChangePasswordModelToggle: changePasswordModalReducer,
+    isReturnDueDateModal: returnDueDateReducer,
 });

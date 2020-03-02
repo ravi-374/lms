@@ -57,7 +57,7 @@ const BooksSeries = (props) => {
                                 <CustomSearchField/>
                             </div>
                             {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
-                                <EmptyComponent title={searchText ? getFormattedMessage('books-series.not.found.empty-state.title') :
+                                <EmptyComponent title={searchText ? getFormattedMessage('books-series.not-found.empty-state.title') :
                                         getFormattedMessage('books-series.empty-state.title')}
                                     icon={(icon.BOOK_SERIES)}/>}
                             <DeleteBookSeries {...cardModalProps}/>

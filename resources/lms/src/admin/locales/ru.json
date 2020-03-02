@@ -126,6 +126,11 @@
     "books-circulation.success.damage.message": "Статус книги успешно установлен.",
     "books-circulation.issue.book-limit.message": "Этот участник превышает лимит выдачи книги.",
     "books-circulation.reserve.book-limit.message": "Этот участник превышает резервный лимит книги.",
+    "books-circulation.return.modal.penalties-warning.label": "Штрафы Предупреждение!",
+    "books-circulation.return.book-due.label": "Штрафы",
+    "books-circulation.input.amount.label": "Количество",
+    "books-circulation.penalties.customer-return-book.message": "Возврат книги на {lateDays} дней, поэтому {amount} штраф будет взиматься.",
+    "books-circulation.checkbox.pay-amount.label": "Собранный штраф",
     "book-history.title": "История Книги",
     "book-history.filter.available.label": "Доступный",
     "book-history.filter.issued.label": "Выпущен",
@@ -229,6 +234,7 @@
     "global.input.cancel-btn.label": "Отмена",
     "global.input.yes-btn.label": "Да",
     "global.input.no-btn.label": "Нет",
+    "global.input.ok-btn.label": "Ok",
     "global.input.back-btn.label": "Назад",
     "global.input.search-btn.label": "Поиск",
     "global.input.submit-btn.label": "Представить",
@@ -458,5 +464,12 @@
     "settings.input.max-issue-books-limit.label": "Максимальное количество книг",
     "settings.input.max-reserve-books-limit.label": "Макс. Резерв книг",
     "settings.input.max-reserve-books-limit.validate.label": "Максимальный лимит резервных книг должен быть обязательным.",
-    "settings.input.max-issue-books-limit.validate.label": "Максимальный лимит выдачи книг должен быть обязательным."
+    "settings.input.max-issue-books-limit.validate.label": "Максимальный лимит выдачи книг должен быть обязательным.",
+    "settings.input.penalty.label": "Штраф за день",
+    "penalties.title": "Штрафы",
+    "penalties.empty-state.title": "История штрафов еще не добавлена ...",
+    "react-data-table.book-name.column": "Название книги",
+    "react-data-table.collected_by.column": "Собранный",
+    "react-data-table.amount.column": "Количество",
+    "react-data-table.date.column": "Дата"
 }

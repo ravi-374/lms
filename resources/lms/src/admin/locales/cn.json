@@ -126,6 +126,11 @@
     "books-circulation.success.damage.message": "图书状态已成功设置为损坏。",
     "books-circulation.issue.book-limit.message": "该成员超过发行书的限制。",
     "books-circulation.reserve.book-limit.message": "该成员超出了储备书的限制。",
+    "books-circulation.return.modal.penalties-warning.label": "罚则警告！",
+    "books-circulation.return.book-due.label": "罚则",
+    "books-circulation.input.amount.label": "量",
+    "books-circulation.penalties.customer-return-book.message": "预定退还时间晚{lateDays}天，因此将收取{amount}罚款。",
+    "books-circulation.checkbox.pay-amount.label": "罚款收集",
     "book-history.title": "书籍历史",
     "book-history.filter.available.label": "可得到",
     "book-history.filter.issued.label": "发行",
@@ -229,6 +234,7 @@
     "global.input.cancel-btn.label": "取消",
     "global.input.yes-btn.label": "是",
     "global.input.no-btn.label": "没有",
+    "global.input.ok-btn.label": "好",
     "global.input.back-btn.label": "背部",
     "global.input.search-btn.label": "搜索",
     "global.input.submit-btn.label": "提交",
@@ -458,5 +464,12 @@
     "settings.input.max-issue-books-limit.label": "最高发行量限制",
     "settings.input.max-reserve-books-limit.label": "最大储备书数限制",
     "settings.input.max-reserve-books-limit.validate.label": "必须规定最大储备书数量。",
-    "settings.input.max-issue-books-limit.validate.label": "必须设置最大发行书籍数量限制。"
+    "settings.input.max-issue-books-limit.validate.label": "必须设置最大发行书籍数量限制。",
+    "settings.input.penalty.label": "每日罚款",
+    "penalties.title": "罚则",
+    "penalties.empty-state.title": "尚未添加处罚记录...",
+    "react-data-table.book-name.column": "书名",
+    "react-data-table.collected_by.column": "收集者",
+    "react-data-table.amount.column": "量",
+    "react-data-table.date.column": "日期"
 }

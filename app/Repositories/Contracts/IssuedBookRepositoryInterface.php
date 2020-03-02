@@ -110,4 +110,13 @@ interface IssuedBookRepositoryInterface
      * @return array
      */
     public function overDueBooksCount($today, $startDate = null, $endDate = null);
+
+    /**
+     * @param  array  $search
+     * @param  int|null  $skip
+     * @param  int|null  $limit
+     *
+     * @return IssuedBook[]|Collection|int
+     */
+    public function searchBookHistory($search = [], $skip = null, $limit = null);
 }

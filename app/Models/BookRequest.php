@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -99,7 +100,6 @@ class BookRequest extends Model
      */
     public function apiM1BookRequestListObj()
     {
-
         $record = [
             "id"              => $this->id,
             "book_name"       => $this->book_name,
@@ -115,7 +115,6 @@ class BookRequest extends Model
      */
     public function apiM1BookRequestObj()
     {
-
         $record = [
             "id"              => $this->id,
             "book_name"       => $this->book_name,
@@ -125,5 +124,16 @@ class BookRequest extends Model
         ];
 
         return $record;
+    }
+
+    public static function filterByKeywords(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(book_name) LIKE ?', ['%'.strtolower(trim($keyword)).'%']);
+            }
+        });
+
+        return $query;
     }
 }

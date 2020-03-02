@@ -126,6 +126,11 @@
     "books-circulation.success.damage.message": "Book status set to damaged successfully.",
     "books-circulation.issue.book-limit.message": "This member exceed issue book limit.",
     "books-circulation.reserve.book-limit.message": "This member exceed reserve book limit.",
+    "books-circulation.return.modal.penalties-warning.label": "Penalties Warning !",
+    "books-circulation.return.book-due.label": "Penalties",
+    "books-circulation.input.amount.label": "Amount",
+    "books-circulation.penalties.customer-return-book.message": "Book return is {lateDays} days late, so {amount} penalty will be charged.",
+    "books-circulation.checkbox.pay-amount.label": "Penalty Collected",
     "book-history.title": "Book History",
     "book-history.filter.available.label": "Available",
     "book-history.filter.issued.label": "Issued",
@@ -225,6 +230,7 @@
     "genres.success.edit.message": "Genre updated successfully.",
     "genres.success.delete.message": "Genre deleted successfully.",
     "global.input.save-btn.label": "Save",
+    "global.input.ok-btn.label": "Ok",
     "global.input.apply-btn.label": "Apply",
     "global.input.cancel-btn.label": "Cancel",
     "global.input.yes-btn.label": "Yes",
@@ -458,5 +464,12 @@
     "settings.input.max-issue-books-limit.label": "Max Issue Books Limit",
     "settings.input.max-reserve-books-limit.label": "Max Reserve Books Limit",
     "settings.input.max-reserve-books-limit.validate.label": "Max reserve books limit must be required.",
-    "settings.input.max-issue-books-limit.validate.label": "Max issue books limit must be required."
+    "settings.input.max-issue-books-limit.validate.label": "Max issue books limit must be required.",
+    "settings.input.penalty.label": "Penalty Per Day",
+    "penalties.title": "Penalties",
+    "penalties.empty-state.title": "No Penalty history added yet...",
+    "react-data-table.book-name.column": "Book Name",
+    "react-data-table.collected_by.column": "Collected By",
+    "react-data-table.amount.column": "Amount",
+    "react-data-table.date.column": "Date"
 }
