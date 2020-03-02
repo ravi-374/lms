@@ -67,7 +67,8 @@ const Penalties = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={penalties} columns={columns} loading={isLoading}
-                                emptyStateMessageId="penalties.empty-state.title" totalRows={totalRecord}
+                                emptyStateMessageId="penalties.empty-state.title"
+                                emptyNotFoundStateMessageId="penalties.not-found.empty-state.title" totalRows={totalRecord}
                                 onChange={onChange} icon={(icon.RUPEE)}/>
                         </CardBody>
                     </Card>
