@@ -4,9 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Book;
 use App\Models\BookItem;
+use App\Models\Member;
 use App\Models\Penalty;
 use App\Models\Setting;
 use App\Repositories\Contracts\PenaltyRepositoryInterface;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -37,6 +39,14 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
 
             $query->orwhereHas('bookItem.book', function (Builder $query) use ($keywords) {
                 Book::filterByKeywords($query, $keywords);
+            });
+
+            $query->orwhereHas('member', function (Builder $query) use ($keywords) {
+                Member::filterByMemberName($query, $keywords);
+            });
+
+            $query->orwhereHas('collectedBy', function (Builder $query) use ($keywords) {
+                User::filterByMemberName($query, $keywords);
             });
         });
 
