@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Address;
 use App\Traits\ImageTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -153,5 +154,37 @@ class User extends Authenticatable implements JWTSubject
     public function address()
     {
         return $this->morphOne(Address::class, 'owner')->with('country');
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        $fullName = ucfirst($this->first_name);
+
+        if (! empty($this->last_name)) {
+            $fullName .= ' '.ucfirst($this->last_name);
+        }
+
+        return $fullName;
+    }
+
+    /**
+     * @param  Builder  $query
+     * @param  array  $keywords
+     *
+     * @return mixed
+     */
+    public static function filterByMemberName(&$query, $keywords)
+    {
+        $query->where(function (Builder $query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhereRaw('lower(first_name) LIKE ?', [trim(strtolower($keyword))]);
+                $query->orWhereRaw('lower(last_name) LIKE ?', [trim(strtolower($keyword))]);
+            }
+        });
+
+        return $query;
     }
 }
