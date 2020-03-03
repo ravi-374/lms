@@ -108,7 +108,7 @@ const BookRequests = (props) => {
                         <CardBody>
                             <ReactDataTable items={bookRequests} columns={columns} loading={isLoading}
                                             emptyStateMessageId="book-request.empty-state.title"
-                                            emptyNotFoundStateMessageId="books-request.not.found.empty-state.title"
+                                            emptyNotFoundStateMessageId="books-request.not-found.empty-state.title"
                                             totalRows={totalRecord} onChange={onChange} icon={(icon.BOOK)}/>
                             <BookRequestModal {...cardModalProps}/>
                         </CardBody>
