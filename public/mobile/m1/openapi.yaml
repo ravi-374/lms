@@ -1070,6 +1070,10 @@ components:
       properties:
         password:
           type: string
+        current_password:
+          type: string
+        confirm_password:
+          type: string
     BookHistoryResponse:
       type: object
       properties:
