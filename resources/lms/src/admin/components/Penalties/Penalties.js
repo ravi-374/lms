@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
-import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {getFormattedMessage, dateFormatter} from "../../../shared/sharedMethod";
 import {fetchPenalties} from '../../store/actions/penaltyAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {icon} from "../../../constants";
@@ -51,7 +51,7 @@ const Penalties = (props) => {
             selector: 'collected_at',
             width: '300px',
             sortable: true,
-            cell: row => <span>{row.collected_at}</span>,
+            cell: row => <span>{dateFormatter(row.collected_at)}</span>,
         }
     ];
 
