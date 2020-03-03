@@ -14,7 +14,7 @@
     "book-request.input.status.validate.label": "وضعیت کتاب مورد نیاز است.",
     "book-request.input.format.validate.label": "قالب کتاب مورد نیاز است.",
     "book-request.empty-state.title": "هیچ درخواستی برای کتاب هنوز ...",
-    "books-request.not-found.empty-state.title": "هیچ سابقه درخواست کتاب یافت نشد ...",
+    "books-request.not-found.empty-state.title": "هیچ درخواستی برای کتاب یافت نشد ...",
     "book-request.success.create.message": "درخواست کتاب با موفقیت ذخیره شد.",
     "book-request.success.edit.message": "درخواست کتاب با موفقیت به روز شد.",
     "book-request.success.delete.message": "درخواست کتاب با موفقیت حذف شد.",

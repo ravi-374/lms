@@ -34,10 +34,10 @@ const Penalties = (props) => {
         },
         {
             name: getFormattedMessage('react-data-table.collected_by.column'),
-            selector: 'collected_by',
+            selector: 'collected_by_name',
             width: '230px',
             sortable: true,
-            cell: row => <span>{row.collected_by}</span>,
+            cell: row => <span>{row.collected_by_name}</span>,
         },
         {
             name: getFormattedMessage('react-data-table.amount.column'),
@@ -67,7 +67,8 @@ const Penalties = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={penalties} columns={columns} loading={isLoading}
-                                emptyStateMessageId="penalties.empty-state.title" totalRows={totalRecord}
+                                emptyStateMessageId="penalties.empty-state.title"
+                                emptyNotFoundStateMessageId="penalties.not-found.empty-state.title" totalRows={totalRecord}
                                 onChange={onChange} icon={(icon.RUPEE)}/>
                         </CardBody>
                     </Card>
