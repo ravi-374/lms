@@ -49,7 +49,6 @@ const Penalties = (props) => {
         {
             name: getFormattedMessage('react-data-table.date.column'),
             selector: 'collected_at',
-            width: '300px',
             sortable: true,
             cell: row => <span>{dateFormatter(row.collected_at)}</span>,
         }
