@@ -26,10 +26,42 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
 
     public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
+        $orderBy = null;
+        if (! empty($search['order_by']) && in_array($search['order_by'],
+                ['book_item_name', 'actual_penalty', 'member_name', 'collected_by_name'])) {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
+
         $query = $this->allQuery($search, $skip, $limit);
         $query = $this->applyDynamicSearch($search, $query);
+        $records = $query->get();
 
-        return $query->get();
+
+        if (! empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = '';
+            switch ($orderBy) {
+                case 'book_item_name' :
+                    $orderString = 'bookItem.book.name';
+                    break;
+                case 'actual_penalty' :
+                    $orderString = 'actual_penalty';
+                    break;
+                case 'member_name' :
+                    $orderString = 'member.first_name';
+                    break;
+                case 'collected_by_name' :
+                    $orderString = 'collectecBy.first_name';
+                    break;
+            }
+
+            $records = $records->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        };
+
+
+        return $records->values();
     }
 
     public function applyDynamicSearch($search, $query)
