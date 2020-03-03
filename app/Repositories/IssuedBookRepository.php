@@ -408,11 +408,11 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             ->ofMember($input['member_id'])->whereStatus(IssuedBook::STATUS_RETURNED)
             ->first();
 
-        if (! empty($returnedBook)) {
-            $returnedBook->update(['note' => $input['note']]);
-
-            return $this->find($returnedBook->id);
-        }
+//        if (! empty($returnedBook)) {
+//            $returnedBook->update(['note' => $input['note']]);
+//
+//            return $this->find($returnedBook->id);
+//        }
 
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
@@ -429,8 +429,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             $bookItem = BookItem::findOrFail($input['book_item_id']);
 
             $returnDate = Carbon::now();
-            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->issued_on)
-                ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
+            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->return_due_date);
 
             $days = $returnDate->diffInDays($returnDueDate);
             $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
