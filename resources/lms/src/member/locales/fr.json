@@ -14,7 +14,7 @@
     "book-request.input.status.validate.label": "Le statut du livre doit être requis.",
     "book-request.input.format.validate.label": "Le format du livre doit être requis.",
     "book-request.empty-state.title": "Aucune demande de livre pour l'instant ...",
-    "books-request.not-found.empty-state.title": "Aucun historique de demande de livre trouvé ...",
+    "books-request.not-found.empty-state.title": "Aucune demande de livre trouvée ...",
     "book-request.success.create.message": "Demande de livre enregistrée avec succès.",
     "book-request.success.edit.message": "Demande de livre mise à jour avec succès.",
     "book-request.success.delete.message": "Demande de livre supprimée avec succès.",
