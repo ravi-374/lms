@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Penalty;
+use Exception;
 use Illuminate\Support\Collection;
 
 /**
@@ -38,4 +39,13 @@ interface PenaltyRepositoryInterface
      * @return mixed
      */
     public function checkIsBookItemDue($bookItemId);
+
+    /**
+     * @param  array  $issuedBookId
+     *
+     * @throws Exception
+     *
+     * @return bool
+     */
+    public function sendBookDueMail($issuedBookId);
 }
