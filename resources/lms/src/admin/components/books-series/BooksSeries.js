@@ -54,7 +54,7 @@ const BooksSeries = (props) => {
                     <Card>
                         <CardBody>
                             <div className="d-flex justify-content-end mb-2">
-                                <CustomSearchField/>
+                            {booksSeries.length > 0 ? <CustomSearchField/> : null }
                             </div>
                             {booksSeries.length > 0 ? <BookSeries {...cardBodyProps}/> :
                                 <EmptyComponent title={searchText ? getFormattedMessage('books-series.not-found.empty-state.title') :
