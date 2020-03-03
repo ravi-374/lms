@@ -129,10 +129,11 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @param  array  $search
      * @param  int|null  $skip
      * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return IssuedBook[]|Collection|int
      */
-    public function searchBookHistory($search = [], $skip = null, $limit = null)
+    public function searchBookHistory($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
         if (! empty($search['order_by']) && in_array($search['order_by'],
@@ -196,7 +197,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function applyDynamicSearchBookHistory($search, $query)
     {
         $query->when(! empty($search['search']), function (Builder $query) use ($search) {
-            $query->whereHas('bookItem.book', function (Builder $query) use ($search) {
+            $query->orWhereHas('bookItem.book', function (Builder $query) use ($search) {
                 $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
 
                 // Search by book's names
