@@ -333,6 +333,7 @@
     "profile.success.update.message": "Профиль успешно обновлен.",
     "react-data-table.row-per-page": "Строка номинальной страницы:",
     "react-data-table.action.column": "Действие",
+    "react-data-table.name.column": "Имя",
     "react-data-table.member.column": "член",
     "react-data-table.status.column": "Статус",
     "react-data-table.loader.title": "Загрузка ...",

@@ -333,6 +333,7 @@
     "profile.success.update.message": "个人资料已成功更新。",
     "react-data-table.row-per-page": "行标准页：",
     "react-data-table.action.column": "行动",
+    "react-data-table.name.column": "名称",
     "react-data-table.member.column": "会员",
     "react-data-table.status.column": "状态",
     "react-data-table.loader.title": "载入中...",
