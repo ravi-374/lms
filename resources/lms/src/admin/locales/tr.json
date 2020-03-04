@@ -333,7 +333,7 @@
     "profile.success.update.message": "Profil başarıyla güncellendi.",
     "react-data-table.row-per-page": "Satır par sayfası:",
     "react-data-table.action.column": "Aksiyon",
-    "react-data-table.name.column": "İsim",
+    "react-data-table.member.column": "üye",
     "react-data-table.status.column": "Durum",
     "react-data-table.loader.title": "Yükleniyor...",
     "redux-form.field-array.no-item.message.validate": "En az bir öğe gerekli.",
@@ -471,6 +471,7 @@
     "penalties.not-found.empty-state.title": "Ceza bulunamadı ...",
     "react-data-table.book-name.column": "Kitap Adı",
     "react-data-table.collected_by.column": "Toplandı",
-    "react-data-table.amount.column": "Miktar",
+    "react-data-table.actual_penalty.column": "Gerçek Ceza",
+    "react-data-table.collected_penalty.column": "Toplanan Ceza",
     "react-data-table.date.column": "tarih"
 }

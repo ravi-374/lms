@@ -333,7 +333,7 @@
     "profile.success.update.message": "Profil erfolgreich aktualisiert.",
     "react-data-table.row-per-page": "Zeilen pro seite:",
     "react-data-table.action.column": "Aktion",
-    "react-data-table.name.column": "Name",
+    "react-data-table.member.column": "Mitglied",
     "react-data-table.status.column": "Status",
     "react-data-table.loader.title": "Wird geladen...",
     "redux-form.field-array.no-item.message.validate": "Es muss mindestens ein Artikel erforderlich sein.",
@@ -471,6 +471,7 @@
     "penalties.not-found.empty-state.title": "Keine Strafe gefunden ...",
     "react-data-table.book-name.column": "Buchname",
     "react-data-table.collected_by.column": "Gesammelt von",
-    "react-data-table.amount.column": "Menge",
+    "react-data-table.actual_penalty.column": "Tatsächliche Strafe",
+    "react-data-table.collected_penalty.column": "Gesammelte Strafe",
     "react-data-table.date.column": "Datum"
 }

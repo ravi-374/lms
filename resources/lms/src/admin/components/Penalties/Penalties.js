@@ -19,9 +19,8 @@ const Penalties = (props) => {
 
     const columns = [
         {
-            name: getFormattedMessage('react-data-table.name.column'),
+            name: getFormattedMessage('react-data-table.member.column'),
             selector: 'member_name',
-            width: '330px',
             sortable: true,
             cell: row => <span>{row.member_name}</span>,
         },
@@ -35,22 +34,30 @@ const Penalties = (props) => {
         {
             name: getFormattedMessage('react-data-table.collected_by.column'),
             selector: 'collected_by_name',
-            width: '230px',
+            width: '330px',
             sortable: true,
             cell: row => <span>{row.collected_by_name}</span>,
         },
         {
-            name: getFormattedMessage('react-data-table.amount.column'),
+            name: getFormattedMessage('react-data-table.date.column'),
+            selector: 'collected_at',
+            width: '250px',
+            sortable: true,
+            cell: row => <span>{dateFormatter(row.collected_at)}</span>,
+        },
+        {
+            name: getFormattedMessage('react-data-table.actual_penalty.column'),
             selector: 'actual_penalty',
             width: '230px',
             sortable: true,
             cell: row => <span>{row.actual_penalty}</span>,
         },
         {
-            name: getFormattedMessage('react-data-table.date.column'),
-            selector: 'collected_at',
+            name: getFormattedMessage('react-data-table.collected_penalty.column'),
+            selector: 'collected_penalty',
+            width: '230px',
             sortable: true,
-            cell: row => <span>{dateFormatter(row.collected_at)}</span>,
+            cell: row => <span>{row.collected_penalty}</span>,
         }
     ];
 

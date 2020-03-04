@@ -332,7 +332,7 @@
     "profile.success.update.message": "تم تحديث الملف الشخصي بنجاح.",
     "react-data-table.row-per-page": "الصفوف الاسمية الصفحة:",
     "react-data-table.action.column": "عمل",
-    "react-data-table.name.column": "اسم",
+    "react-data-table.member.column": "عضو",
     "react-data-table.status.column": "الحالة",
     "react-data-table.loader.title": "جار التحميل...",
     "redux-form.field-array.no-item.message.validate": "يجب طلب عنصر واحد على الأقل.",
@@ -470,6 +470,7 @@
     "penalties.not-found.empty-state.title": "لا توجد عقوبة ...",
     "react-data-table.book-name.column": "اسم الكتاب",
     "react-data-table.collected_by.column": "جمع بواسطة",
-    "react-data-table.amount.column": "كمية",
+    "react-data-table.actual_penalty.column": "عقوبة فعلية",
+    "react-data-table.collected_penalty.column": "جمعت عقوبة",
     "react-data-table.date.column": "تاريخ"
 }
