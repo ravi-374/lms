@@ -333,6 +333,7 @@
     "profile.success.update.message": "Profil erfolgreich aktualisiert.",
     "react-data-table.row-per-page": "Zeilen pro seite:",
     "react-data-table.action.column": "Aktion",
+    "react-data-table.name.column": "Name",
     "react-data-table.member.column": "Mitglied",
     "react-data-table.status.column": "Status",
     "react-data-table.loader.title": "Wird geladen...",

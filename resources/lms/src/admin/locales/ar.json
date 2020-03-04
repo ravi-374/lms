@@ -332,6 +332,7 @@
     "profile.success.update.message": "تم تحديث الملف الشخصي بنجاح.",
     "react-data-table.row-per-page": "الصفوف الاسمية الصفحة:",
     "react-data-table.action.column": "عمل",
+    "react-data-table.name.column": "اسم",
     "react-data-table.member.column": "عضو",
     "react-data-table.status.column": "الحالة",
     "react-data-table.loader.title": "جار التحميل...",

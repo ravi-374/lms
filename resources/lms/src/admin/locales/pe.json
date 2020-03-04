@@ -333,6 +333,7 @@
     "profile.success.update.message": "نمایه با موفقیت به روز شد.",
     "react-data-table.row-per-page": "ردیف صفحه:",
     "react-data-table.action.column": "عمل",
+    "react-data-table.name.column": "نام",
     "react-data-table.member.column": "عضو",
     "react-data-table.status.column": "وضعیت",
     "react-data-table.loader.title": "بارگذاری...",
