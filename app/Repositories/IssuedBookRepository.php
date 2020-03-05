@@ -429,10 +429,10 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
             $bookItem = BookItem::findOrFail($input['book_item_id']);
 
-            $returnDate = Carbon::now();
-            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->return_due_date);
+            $returnDate = Carbon::now()->toDateString();
+            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->return_due_date)->toDateString();
 
-            $days = $returnDate->diffInDays($returnDueDate);
+            $days = Carbon::parse($returnDate)->diffInDays($returnDueDate);
             $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
             $input['actual_penalty'] = $charge * $days;
 
