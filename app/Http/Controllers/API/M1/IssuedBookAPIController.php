@@ -52,18 +52,16 @@ class IssuedBookAPIController extends AppBaseController
     }
 
     /**
-     * @param  BookItem  $bookItem
+     * @param  int  $issuedBookId
      *
      * @return JsonResponse
      */
-    public function booksHistoryDetail(BookItem $bookItem)
+    public function booksHistoryDetail($issuedBookId)
     {
-        $lastIssuedBook = $bookItem->lastIssuedBook;
+        /** @var IssuedBook $issuedBook */
+        $issuedBook = IssuedBook::findOrFail($issuedBookId);
 
-        $result = [];
-        if (! empty($lastIssuedBook)) {
-            $result = $lastIssuedBook->apiM1BookHistoryDetailObj();
-        }
+        $result = $issuedBook->apiM1BookHistoryDetailObj();
 
         return $this->sendResponse(
             $result,

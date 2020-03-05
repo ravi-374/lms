@@ -27,14 +27,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/LoginResponse"
   /logout:
-      post:
-        tags:
-          - User Authentication
-        summary: Logout user and invalidate JWT token.
-        description: ""
-        responses:
-          "200":
-            description: Logged out successfully.
+    post:
+      tags:
+        - User Authentication
+      summary: Logout user and invalidate JWT token.
+      description: ""
+      responses:
+        "200":
+          description: Logged out successfully.
   '/books-history':
     get:
       security:
@@ -128,7 +128,7 @@ paths:
       description: ""
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/UpdateProfile"
         required: true
@@ -306,71 +306,71 @@ paths:
                 $ref: "#/components/schemas/CreateBookRequestResponse"
 
   "/book-requests/{id}":
-      put:
-        security:
-          - Bearer: []
-        tags:
-          - Book Requests
-        summary: update book-request.
-        description: ""
-        parameters:
-          - name: id
-            in: path
-            description: BookRequest Id
-            required: true
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Book Requests
+      summary: update book-request.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookRequest Id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
             schema:
-              type: integer
-        requestBody:
+              $ref: "#/components/schemas/CreateBookRequest"
+        required: true
+      responses:
+        "200":
+          description: Book requested updated successfully.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateBookRequest"
+                $ref: "#/components/schemas/CreateBookRequestResponse"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Book Requests
+      summary: get specific book-request.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookRequest Id
           required: true
-        responses:
-          "200":
-            description: Book requested updated successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/CreateBookRequestResponse"
-      get:
-        security:
-          - Bearer: []
-        tags:
-          - Book Requests
-        summary: get specific book-request.
-        description: ""
-        parameters:
-          - name: id
-            in: path
-            description: BookRequest Id
-            required: true
-            schema:
-              type: integer
-        responses:
-          "200":
-            description: Book request retrieved successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/GetBookRequestResponse"
-      delete:
-        security:
-          - Bearer: []
-        tags:
-          - Book Requests
-        summary: delete specific book-request.
-        description: ""
-        parameters:
-          - name: id
-            in: path
-            description: BookRequest Id
-            required: true
-            schema:
-              type: integer
-        responses:
-          "200":
-            description: Book requested deleted successfully.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book request retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetBookRequestResponse"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Book Requests
+      summary: delete specific book-request.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: BookRequest Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book requested deleted successfully.
 
   "/books/{id}/book-history":
     get:
@@ -429,6 +429,11 @@ components:
     Bearer:
       type: apiKey
       name: Authorization
+      in: header
+
+    Accept:
+      type: apiKey
+      name: Accept
       in: header
   schemas:
     LoginResponse:
@@ -619,7 +624,7 @@ components:
         email:
           type: string
         email_verified_at:
-            type: string
+          type: string
         phone:
           type: string
         image:
@@ -638,41 +643,36 @@ components:
           type: boolean
 
     UpdateProfile:
-        type: object
-        required:
-          - first_name
-          - last_name
-          - email
-          - password
-        properties:
-          id:
-            type: integer
-          member_id:
-            type: string
-          first_name:
-            type: string
-          last_name:
-            type: string
-          email:
-            type: string
-          email_verified_at:
-            type: string
-          phone:
-            type: string
-          image:
-            type: string
-          address_1:
-            type: string
-          address_2:
-            type: string
-          state:
-            type: string
-          city:
-            type: string
-          zip:
-            type: string
-          country_id:
-            type: integer
+      type: object
+      required:
+        - first_name
+        - last_name
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        image:
+          type: string
+          format: binary
+        address_1:
+          type: string
+        address_2:
+          type: string
+        state:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        country_id:
+          type: integer
 
     UpdateMemberProfileResponse:
       type: object
@@ -685,55 +685,55 @@ components:
           $ref: "#/components/schemas/UpdateProfile1"
 
     UpdateProfile1:
-        type: object
-        required:
-          - first_name
-          - last_name
-          - email
-          - password
-        properties:
-          id:
-            type: integer
-          member_id:
-            type: string
-          first_name:
-            type: string
-          last_name:
-            type: string
-          email:
-            type: string
-          email_verified_at:
-            type: string
-          phone:
-            type: string
-          image:
-            type: string
-          address_1:
-            type: string
-          address_2:
-            type: string
-          state:
-            type: string
-          city:
-            type: string
-          zip:
-            type: string
-          country_id:
-            type: integer
-          image_path:
-            type: string
-          membership_plan_id:
-            type: string
-          activation_code:
-            type: string
-          created_at:
-            type: string
-          updated_at:
-            type: string
-          is_default:
-            type: integer
-          is_active:
-            type: boolean
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+      properties:
+        id:
+          type: integer
+        member_id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        email_verified_at:
+          type: string
+        phone:
+          type: string
+        image:
+          type: string
+        address_1:
+          type: string
+        address_2:
+          type: string
+        state:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        country_id:
+          type: integer
+        image_path:
+          type: string
+        membership_plan_id:
+          type: string
+        activation_code:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        is_default:
+          type: integer
+        is_active:
+          type: boolean
 
     RegisterProfile:
       type: object
@@ -770,55 +770,55 @@ components:
           type: integer
 
     RegisterMemberProfileResponse:
-        type: object
-        properties:
-          success:
-            type: boolean
-          message:
-            type: string
-          data:
-            $ref: "#/components/schemas/RegisterProfile1"
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/RegisterProfile1"
 
     RegisterProfile1:
-        type: object
-        required:
-          - first_name
-          - last_name
-          - email
-          - password
-        properties:
-          id:
-            type: integer
-          member_id:
-            type: string
-          first_name:
-            type: string
-          last_name:
-            type: string
-          email:
-            type: string
-          email_verified_at:
-            type: string
-          phone:
-            type: string
-          image:
-            type: string
-          address:
-            type: string
-          image_path:
-            type: string
-          membership_plan_id:
-            type: string
-          activation_code:
-            type: string
-          created_at:
-            type: string
-          updated_at:
-            type: string
-          is_default:
-            type: integer
-          is_active:
-            type: boolean
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+      properties:
+        id:
+          type: integer
+        member_id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        email_verified_at:
+          type: string
+        phone:
+          type: string
+        image:
+          type: string
+        address:
+          type: string
+        image_path:
+          type: string
+        membership_plan_id:
+          type: string
+        activation_code:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        is_default:
+          type: integer
+        is_active:
+          type: boolean
 
 
     UpdateBookItem:
@@ -932,18 +932,18 @@ components:
         message:
           type: string
         data:
-            type: object
-            properties:
-              id:
-                type: integer
-              book_name:
-                type: string
-              isbn:
-                type: string
-              status:
-                type: integer
-              edition:
-                type: string
+          type: object
+          properties:
+            id:
+              type: integer
+            book_name:
+              type: string
+            isbn:
+              type: string
+            status:
+              type: integer
+            edition:
+              type: string
     GetBookRequestResponse:
       type: object
       properties:
@@ -1014,21 +1014,21 @@ components:
               status:
                 type: integer
     ReservedIssuedBookResponse:
-        type: object
-        properties:
-          success:
-            type: boolean
-          message:
-            type: string
-          data:
-              type: object
-              properties:
-                id:
-                  type: integer
-                status:
-                  type: integer
-                expected_available_date:
-                  type: string
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+            status:
+              type: integer
+            expected_available_date:
+              type: string
     CreateIssueBook:
       type: object
       properties:
