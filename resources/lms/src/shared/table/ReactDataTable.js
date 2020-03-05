@@ -112,9 +112,10 @@ const ReactTable = (props) => {
                     <FilterField options={filterOptions} filterKeyName={filterKeyName} filterKey={filterKey}
                                  handleFilter={handleFilter}/>
                 </div> : null}
-                <div className={isShowFilterField ? 'search-filter-container__search-input' : ''}>
-                    {isShowSearchField && items.length !== 0 || searchText || loading ? <SearchField handleSearch={handleSearch}/> : null}
-                </div>
+                {isShowFilterField && items.length !== 0 || searchText || loading  ?
+                    <div className="search-filter-container__search-input">
+                        <SearchField handleSearch={handleSearch}/>
+                    </div> : null}
             </div>
             <DataTable noDataComponent={<EmptyComponent {...emptyStateProps}/>}
                        paginationRowsPerPageOptions={paginationRowsPerPageOptions} sortIcon={renderSortIcons(direction)}
