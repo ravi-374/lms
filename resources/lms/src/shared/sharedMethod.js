@@ -152,6 +152,10 @@ export const getFormattedMessage = (id) => {
     return <FormattedMessage id={id} defaultMessgae={id}/>
 };
 
+export const getDynamicFormattedMessage = (id, values) => {
+    return <FormattedMessage id={id} defaultMessgae={id} values={values}/>
+};
+
 export const addRTLSupport = (rtlLang) => {
     const html = document.getElementsByTagName("html")[0];
     const att = document.createAttribute("dir");

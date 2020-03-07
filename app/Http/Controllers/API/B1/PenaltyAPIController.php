@@ -69,10 +69,6 @@ class PenaltyAPIController extends AppBaseController
      */
     public function sendBookDueMail(Request $request, $issuedBookId)
     {
-        if (empty($request->get('email'))) {
-            throw new UnprocessableEntityHttpException('Email field is required.');
-        }
-
         /** @var Member $member */
         $member = Member::whereEmail($request->get('email'))->first();
         if (! $member) {

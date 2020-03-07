@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -39,6 +40,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereCollectedPenalty($value)
  * @property int|null $issued_book_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Penalty whereIssuedBookId($value)
+ * @property-read \App\User|null $collectedBy
+ * @property-read mixed $collected_by_name
  */
 class Penalty extends Model
 {
@@ -50,7 +53,7 @@ class Penalty extends Model
     /**
      * @var array
      */
-    protected $appends = ['member_name', 'book_item_name'];
+    protected $appends = ['member_name', 'book_item_name', 'collected_by_name'];
 
     /**
      * @var array
@@ -101,6 +104,20 @@ class Penalty extends Model
     public function getMemberNameAttribute()
     {
         return $this->member->full_name;
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function collectedBy()
+    {
+        return $this->belongsTo(User::class, 'collected_by');
+    }
+
+
+    public function getCollectedByNameAttribute()
+    {
+        return $this->collectedBy->full_name;
     }
 
     /**

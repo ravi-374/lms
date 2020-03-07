@@ -1,6 +1,6 @@
-import React, {useEffect, useState, createRef} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Field, reduxForm} from 'redux-form';
+import {Field, formValueSelector, reduxForm} from 'redux-form';
 import {Col, Row} from 'reactstrap';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -17,7 +17,10 @@ import {getFormattedMessage, getFormattedOptions, prepareFullNames} from "../../
 import {fetchBooks} from "../../store/actions/bookAction";
 import {fetchMembers} from "../../store/actions/memberAction";
 import {fetchAvailableBooks} from '../../store/actions/availableBooksAction';
-import {fetchAvailableBookLimit, clearAvailableBookLimit} from "../../store/actions/availableBookLimitAction";
+import {clearAvailableBookLimit, fetchAvailableBookLimit} from "../../store/actions/availableBookLimitAction";
+import PenaltyWarningModal from './PenaltyWarningModal';
+import {toggleDueBookModal} from '../../store/actions/toggleDueBookModal';
+import CheckBox from "../../../shared/components/CheckBox";
 
 let bookId = null;
 let memberId = null;
@@ -26,7 +29,7 @@ const BookCirculationForm = props => {
     const {
         initialValues, books, members, change, bookItems, fetchBooks,
         fetchMembers, fetchAvailableBooks, onSaveBookCirculation, handleSubmit, fetchAvailableBookLimit,
-        clearAvailableBookLimit
+        clearAvailableBookLimit, toggleDueBookModal, hasPenaltyCollected, penaltyPreDays
     } = props;
     const [isDisabledItem, setDisabledItem] = useState(true);
     const [status, setStatus] = useState(null);
@@ -66,13 +69,15 @@ const BookCirculationForm = props => {
     };
 
     const prepareFormValues = (formValues) => {
-        const { book, book_item, member, note } = formValues;
+        const {book, book_item, member, note, collected_penalty, penalty_collected} = formValues;
         const formData = {
             book_id: book.id,
             book_item_id: book_item.id,
             member_id: member.id,
             note,
-            status: formValues.status.id
+            status: formValues.status.id,
+            collected_penalty,
+            penalty_collected
         };
         switch (status) {
             case bookCirculationStatusConstant.BOOK_RESERVED:
@@ -129,11 +134,23 @@ const BookCirculationForm = props => {
         checkBookLimits(status);
     };
 
+    const getDaysFromDueDate = (returnDueDate) => {
+        return moment().diff(moment(returnDueDate, 'YYYY-MM-DD hh:mm:ss'), 'days');
+    };
+
     const onSelectBookStatus = (option) => {
         if (option) {
             setSelectedDate(moment().toDate());
             setStatus(option.id);
             checkBookLimits(option.id);
+            if (option.id === bookCirculationStatusConstant.BOOK_RETURNED) {
+                const days = getDaysFromDueDate(initialValues.return_due_date);
+                if (days > 0) {
+                    props.change('penalty_collected', true);
+                    props.change('collected_penalty', days * penaltyPreDays);
+                    toggleDueBookModal();
+                }
+            }
         } else {
             setStatus(null);
         }
@@ -141,6 +158,15 @@ const BookCirculationForm = props => {
 
     const onSelectDate = (date) => {
         setSelectedDate(date);
+        if (status === bookCirculationStatusConstant.BOOK_RETURNED) {
+            const returnDue = moment(initialValues.return_due_date, 'YYYY-MM-DD hh:mm:ss');
+            const days = moment(date, 'dddd MM, YYYY hh:mm:s').diff(returnDue, 'days');
+            if (days > 0) {
+                props.change('collected_penalty', days * penaltyPreDays);
+            } else {
+                props.change('collected_penalty', 0);
+            }
+        }
     };
 
     const renderDatePicker = (status) => {
@@ -182,6 +208,35 @@ const BookCirculationForm = props => {
         )
     };
 
+    const renderLateFeeInputs = (status) => {
+        if (!status || status !== bookCirculationStatusConstant.BOOK_RETURNED) {
+            return null;
+        }
+
+        const days = getDaysFromDueDate(initialValues.return_due_date);
+
+        if (days <= 0) {
+            return null;
+        }
+
+        return (
+            <Row>
+                <Col xs={6}>
+                    <Field name="penalty_collected"
+                           label={getFormattedMessage('books-circulation.checkbox.pay-amount.label')}
+                           component={CheckBox}/>
+                </Col>
+                <Col xs={6}>
+                    {hasPenaltyCollected ?
+                        <Field name='collected_penalty'
+                               label="books-circulation.input.amount.label" min="0"
+                               groupText="rupee" component={InputGroup}/> : ''
+                    }
+                </Col>
+            </Row>
+        )
+    };
+
     const renderBookStatusOption = () => {
         if (initialValues) {
             switch (initialValues.status.id) {
@@ -194,8 +249,8 @@ const BookCirculationForm = props => {
                 case bookCirculationStatusConstant.BOOK_ISSUED:
                     return bookCirculationStatusOptions.filter(bookStatus => bookStatus.id === bookCirculationStatusConstant.BOOK_RETURNED
                         || bookStatus.id === bookCirculationStatusConstant.BOOK_LOST || bookStatus.id === bookCirculationStatusConstant.BOOK_DAMAGED);
-                case  bookCirculationStatusConstant.BOOK_LOST:
-                case  bookCirculationStatusConstant.BOOK_DAMAGED:
+                case bookCirculationStatusConstant.BOOK_LOST:
+                case bookCirculationStatusConstant.BOOK_DAMAGED:
                     return bookCirculationStatusOptions.filter(bookStatus => bookStatus.id === bookCirculationStatusConstant.BOOK_RETURNED);
                 default:
                     return [];
@@ -205,6 +260,13 @@ const BookCirculationForm = props => {
                 || bookStatus.id === bookCirculationStatusConstant.BOOK_RESERVED);
         }
     };
+
+    const penaltyWarningModelProps = {
+        toggleDueBookModal,
+        collectedPenalty: initialValues ? getDaysFromDueDate(initialValues.return_due_date) * penaltyPreDays : 0,
+        lateDays: initialValues ? getDaysFromDueDate(initialValues.return_due_date) : 0,
+    };
+
     return (
         <Row className="animated fadeIn m-3">
             <Col xs={6}>
@@ -245,6 +307,10 @@ const BookCirculationForm = props => {
                     </Col>
                 </Row>
             </Col>
+            <PenaltyWarningModal  {...penaltyWarningModelProps}/>
+            <Col xs={12}>
+                {renderLateFeeInputs(status)}
+            </Col>
             <Col xs={12}>
                 <SaveAction onSave={handleSubmit(onSave)} {...props}/>
             </Col>
@@ -276,17 +342,27 @@ const prepareBookItems = (books) => {
     return bookArray;
 };
 
-const mapStateToProps = (state) => {
-    const { books, members, availableBooks } = state;
-    return { books, members: prepareFullNames(members), bookItems: prepareBookItems(availableBooks) }
-};
-
 const bookCirculationForm = reduxForm({
     form: 'bookCirculationForm',
     validate: bookCirculationValidate
 })(BookCirculationForm);
 
+const selector = formValueSelector('bookCirculationForm');
+
+const mapStateToProps = (state) => {
+    const { books, members, availableBooks, settings } = state;
+    const hasPenaltyCollected = selector(state, 'penalty_collected');
+
+    return {
+        books, members: prepareFullNames(members),
+        bookItems: prepareBookItems(availableBooks),
+        hasPenaltyCollected: hasPenaltyCollected,
+        penaltyPreDays: settings.penalty_per_day.value
+    }
+};
+
 export default connect(mapStateToProps, {
     fetchAvailableBooks, fetchBooks, fetchMembers,
     fetchAvailableBookLimit, clearAvailableBookLimit,
+    toggleDueBookModal
 })(bookCirculationForm);

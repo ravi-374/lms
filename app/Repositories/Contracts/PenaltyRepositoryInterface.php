@@ -41,7 +41,7 @@ interface PenaltyRepositoryInterface
     public function checkIsBookItemDue($bookItemId);
 
     /**
-     * @param  array  $issuedBookId
+     * @param  int  $issuedBookId
      *
      * @throws Exception
      *

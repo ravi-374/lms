@@ -14,7 +14,7 @@
     "book-request.input.status.validate.label": "Book status must be required.",
     "book-request.input.format.validate.label": "Book format must be required.",
     "book-request.empty-state.title": "No book-requests yet...",
-    "books-request.not-found.empty-state.title": "No book-request history found...",
+    "books-request.not-found.empty-state.title": "No book-request found...",
     "book-request.success.create.message": "Book request saved successfully.",
     "book-request.success.edit.message": "Book request updated successfully.",
     "book-request.success.delete.message": "Book request deleted successfully.",

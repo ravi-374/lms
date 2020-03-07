@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
-import {getFormattedMessage} from "../../../shared/sharedMethod";
+import {getFormattedMessage, dateFormatter, priceFormatter} from "../../../shared/sharedMethod";
 import {fetchPenalties} from '../../store/actions/penaltyAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {icon} from "../../../constants";
 
 const Penalties = (props) => {
-    const { penalties, fetchPenalties, toggleModal, isLoading, totalRecord } = props;
+    const { penalties, fetchPenalties, toggleModal, isLoading, totalRecord, currency } = props;
 
     const onChange = (filter) => {
         fetchPenalties(filter, true);
@@ -19,9 +19,8 @@ const Penalties = (props) => {
 
     const columns = [
         {
-            name: getFormattedMessage('react-data-table.name.column'),
+            name: getFormattedMessage('react-data-table.member.column'),
             selector: 'member_name',
-            width: '330px',
             sortable: true,
             cell: row => <span>{row.member_name}</span>,
         },
@@ -34,24 +33,31 @@ const Penalties = (props) => {
         },
         {
             name: getFormattedMessage('react-data-table.collected_by.column'),
-            selector: 'collected_by',
-            width: '230px',
+            selector: 'collected_by_name',
+            width: '330px',
             sortable: true,
-            cell: row => <span>{row.collected_by}</span>,
-        },
-        {
-            name: getFormattedMessage('react-data-table.amount.column'),
-            selector: 'actual_penalty',
-            width: '230px',
-            sortable: true,
-            cell: row => <span>{row.actual_penalty}</span>,
+            cell: row => <span>{row.collected_by_name}</span>,
         },
         {
             name: getFormattedMessage('react-data-table.date.column'),
             selector: 'collected_at',
-            width: '300px',
+            width: '250px',
             sortable: true,
-            cell: row => <span>{row.collected_at}</span>,
+            cell: row => <span>{dateFormatter(row.collected_at)}</span>,
+        },
+        {
+            name: getFormattedMessage('react-data-table.actual_penalty.column'),
+            selector: 'actual_penalty',
+            width: '230px',
+            sortable: true,
+            cell: row => <span>{priceFormatter(row.actual_penalty, currency)}</span>,
+        },
+        {
+            name: getFormattedMessage('react-data-table.collected_penalty.column'),
+            selector: 'collected_penalty',
+            width: '230px',
+            sortable: true,
+            cell: row => <span>{priceFormatter(row.collected_penalty, currency)}</span>,
         }
     ];
 
@@ -67,7 +73,8 @@ const Penalties = (props) => {
                     <Card>
                         <CardBody>
                             <ReactDataTable items={penalties} columns={columns} loading={isLoading}
-                                emptyStateMessageId="penalties.empty-state.title" totalRows={totalRecord}
+                                emptyStateMessageId="penalties.empty-state.title"
+                                emptyNotFoundStateMessageId="penalties.not-found.empty-state.title" totalRows={totalRecord}
                                 onChange={onChange} icon={(icon.RUPEE)}/>
                         </CardBody>
                     </Card>
@@ -86,8 +93,8 @@ Penalties.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { penalties, isLoading, totalRecord } = state;
-    return { penalties, isLoading, totalRecord };
+    const { penalties, isLoading, totalRecord, currency } = state;
+    return { penalties, isLoading, totalRecord, currency };
 };
 
 export default connect(mapStateToProps, { fetchPenalties, toggleModal })(Penalties);

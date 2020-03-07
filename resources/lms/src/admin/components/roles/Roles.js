@@ -50,7 +50,7 @@ const Roles = (props) => {
                     <Card>
                         <CardBody>
                             <div className="d-flex justify-content-end mb-2">
-                                <CustomSearchField/>
+                                {roles.length > 0 ? <CustomSearchField/> : null}
                             </div>
                             {roles.length > 0 ? <Role {...cardBodyProps}/> :
                                 <EmptyComponent icon={(icon.ROLE)}

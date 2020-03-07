@@ -5,9 +5,10 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Validation\ValidationException;
 use Response;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class Handler extends ExceptionHandler
 {
@@ -84,6 +85,10 @@ class Handler extends ExceptionHandler
                 $validator = $exception->validator;
                 $message = $validator->errors()->first();
             }
+        }
+
+        if ($exception instanceof TokenExpiredException) {
+            $code = HttpResponse::HTTP_UNAUTHORIZED;
         }
 
         if ($request->expectsJson() or $request->isXmlHttpRequest()) {

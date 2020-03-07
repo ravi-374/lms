@@ -129,10 +129,11 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
      * @param  array  $search
      * @param  int|null  $skip
      * @param  int|null  $limit
+     * @param  array  $columns
      *
      * @return IssuedBook[]|Collection|int
      */
-    public function searchBookHistory($search = [], $skip = null, $limit = null)
+    public function searchBookHistory($search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $orderBy = null;
         if (! empty($search['order_by']) && in_array($search['order_by'],
@@ -196,7 +197,7 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     public function applyDynamicSearchBookHistory($search, $query)
     {
         $query->when(! empty($search['search']), function (Builder $query) use ($search) {
-            $query->whereHas('bookItem.book', function (Builder $query) use ($search) {
+            $query->orWhereHas('bookItem.book', function (Builder $query) use ($search) {
                 $keywords = explode_trim_remove_empty_values_from_array($search['search'], ' ');
 
                 // Search by book's names
@@ -408,11 +409,11 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             ->ofMember($input['member_id'])->whereStatus(IssuedBook::STATUS_RETURNED)
             ->first();
 
-        if (! empty($returnedBook)) {
-            $returnedBook->update(['note' => $input['note']]);
-
-            return $this->find($returnedBook->id);
-        }
+//        if (! empty($returnedBook)) {
+//            $returnedBook->update(['note' => $input['note']]);
+//
+//            return $this->find($returnedBook->id);
+//        }
 
         /** @var BookItem $bookItem */
         $bookItem = BookItem::findOrFail($input['book_item_id']);
@@ -421,18 +422,17 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             throw new UnprocessableEntityHttpException('Book must be issued before returning it.');
         }
 
-        if (isset($input['penalty_collected'])) {
+        if (isset($input['penalty_collected']) && $input['penalty_collected'] == true) {
             if (empty($input['collected_penalty'])) {
                 throw new UnprocessableEntityHttpException('Please collect penalty amount.');
             }
 
             $bookItem = BookItem::findOrFail($input['book_item_id']);
 
-            $returnDate = Carbon::now();
-            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->issued_on)
-                ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
+            $returnDate = Carbon::now()->toDateString();
+            $returnDueDate = Carbon::parse($bookItem->lastIssuedBook->return_due_date)->toDateString();
 
-            $days = $returnDate->diffInDays($returnDueDate);
+            $days = Carbon::parse($returnDate)->diffInDays($returnDueDate);
             $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
             $input['actual_penalty'] = $charge * $days;
 
