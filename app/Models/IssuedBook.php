@@ -304,9 +304,6 @@ class IssuedBook extends Model
             case 'damage' :
                 $status = self::STATUS_DAMAGED;
                 break;
-            case 'archived' :
-                $status = self::STATUS_ARCHIVED;
-                break;
         }
 
         return $status;
@@ -338,11 +335,12 @@ class IssuedBook extends Model
     public function apiM1BookHistoryObj()
     {
         $record = [
-            "id"        => $this->id,
-            "book_code" => $this->bookItem->book_code,
-            "book_name" => $this->bookItem->book->name,
-            "image"     => $this->bookItem->book->image,
-            "status"    => $this->status,
+            "id"           => $this->id,
+            "book_code"    => $this->bookItem->book_code,
+            "book_name"    => $this->bookItem->book->name,
+            "book_item_id" => $this->bookItem->id,
+            "image"        => $this->bookItem->book->image,
+            "status"       => $this->status,
         ];
 
         return $record;
@@ -363,7 +361,7 @@ class IssuedBook extends Model
             "status"          => $this->status,
             "edition"         => $this->bookItem->edition,
             "issue_due_date"  => $this->issue_due_date,
-            "reserve_date"    => Carbon::parse($this->reserve_date)-> toDateTimeString(),
+            "reserve_date"    => Carbon::parse($this->reserve_date)->toDateTimeString(),
             "return_date"     => $this->return_date,
             "return_due_date" => $this->return_due_date,
             "issue_date"      => $this->issued_on,

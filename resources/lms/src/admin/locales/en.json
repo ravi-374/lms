@@ -334,6 +334,7 @@
     "react-data-table.row-per-page": "Rows par page:",
     "react-data-table.action.column": "Action",
     "react-data-table.name.column": "Name",
+    "react-data-table.member.column": "Member",
     "react-data-table.status.column": "Status",
     "react-data-table.loader.title": "Loading...",
     "redux-form.field-array.no-item.message.validate": "At least one item must be required.",
@@ -471,6 +472,7 @@
     "penalties.not-found.empty-state.title": "No penalty found...",
     "react-data-table.book-name.column": "Book Name",
     "react-data-table.collected_by.column": "Collected By",
-    "react-data-table.amount.column": "Amount",
+    "react-data-table.actual_penalty.column": "Actual Penalty",
+    "react-data-table.collected_penalty.column": "Collected Penalty",
     "react-data-table.date.column": "Date"
 }

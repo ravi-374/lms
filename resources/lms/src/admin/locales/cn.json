@@ -334,6 +334,7 @@
     "react-data-table.row-per-page": "行标准页：",
     "react-data-table.action.column": "行动",
     "react-data-table.name.column": "名称",
+    "react-data-table.member.column": "会员",
     "react-data-table.status.column": "状态",
     "react-data-table.loader.title": "载入中...",
     "redux-form.field-array.no-item.message.validate": "必须至少有一个项目。",
@@ -471,6 +472,7 @@
     "penalties.not-found.empty-state.title": "找不到罚款...",
     "react-data-table.book-name.column": "书名",
     "react-data-table.collected_by.column": "收集者",
-    "react-data-table.amount.column": "量",
+    "react-data-table.actual_penalty.column": "实际罚款",
+    "react-data-table.collected_penalty.column": "罚款",
     "react-data-table.date.column": "日期"
 }

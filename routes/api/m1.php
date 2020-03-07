@@ -30,6 +30,7 @@ Route::group(['middleware' => 'member.auth'], function () {
     // Change Password
     Route::put('change-password', 'MemberAPIController@changePassword');
 });
+Route::post('logout', 'MemberAuthController@logout');
 
 Route::post('member-login', 'AuthAPIController@memberLogin');
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');

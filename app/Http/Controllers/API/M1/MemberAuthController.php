@@ -50,28 +50,32 @@ class MemberAuthController extends AppBaseController
      */
     public function register(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'email'      => 'required|unique:members|max:255',
-            'first_name' => 'required|string|max:255',
-            'last_name'  => 'required|string|max:255',
-            'password'   => 'required|string|max:255|min:8',
-        ]);
+        try {
+            $input = $request->all();
+            $validator = Validator::make($input, [
+                'email'      => 'required|unique:members|max:255',
+                'first_name' => 'required|string|max:255',
+                'last_name'  => 'required|string|max:255',
+                'password'   => 'required|string|max:255|min:8',
+            ]);
 
-        if ($validator->fails()) {
-            $errors = $validator->errors()->first();
+            if ($validator->fails()) {
+                $errors = $validator->errors()->first();
 
-            return $this->sendError($errors, 422);
+                return $this->sendError($errors, 422);
+            }
+
+            $silver = MembershipPlan::whereName('Silver')->first();
+            $input['activation_code'] = uniqid();
+            $input['membership_plan_id'] = $silver->id;
+            $member = $this->memberRepository->registerMember($input);
+
+            $token = JWTAuth::fromUser($member);
+
+            return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage());
         }
-
-        $silver = MembershipPlan::whereName('Silver')->first();
-        $input['activation_code'] = uniqid();
-        $input['membership_plan_id'] = $silver->id;
-        $member = $this->memberRepository->registerMember($input);
-
-        $token = JWTAuth::fromUser($member);
-
-        return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
     }
 
     /**
@@ -83,28 +87,32 @@ class MemberAuthController extends AppBaseController
      */
     public function sendResetPasswordLink(Request $request)
     {
-        if (empty($request->get('email'))) {
-            throw new UnprocessableEntityHttpException('Email field is required.');
+        try {
+            if (empty($request->get('email'))) {
+                throw new UnprocessableEntityHttpException('Email field is required.');
+            }
+
+            $data = [];
+            /** @var User $member */
+            $member = Member::whereEmail($request->get('email'))->first();
+            if (! $member) {
+                throw new UnprocessableEntityHttpException('Given Email does not exist in our system.');
+            }
+            $key = $member->email.'|'.date('Y-m-d H:i:s');
+            $token = Crypt::encrypt($key);
+            $encodedToken = urlencode($token);
+            $data['token'] = $encodedToken;
+            $data['link'] = URL::to("//token=$encodedToken");
+            $data['first_name'] = $member->first_name;
+            $data['last_name'] = $member->last_name;
+            $data['email'] = $member->email;
+
+            $this->accountRepo->sendResetPasswordLinkMail($data);
+
+            return $this->sendSuccess('Password reset link sent successfully.');
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage());
         }
-
-        $data = [];
-        /** @var User $member */
-        $member = Member::whereEmail($request->get('email'))->first();
-        if (! $member) {
-            throw new UnprocessableEntityHttpException('Given Email does not exist in our system.');
-        }
-        $key = $member->email.'|'.date('Y-m-d H:i:s');
-        $token = Crypt::encrypt($key);
-        $encodedToken = urlencode($token);
-        $data['token'] = $encodedToken;
-        $data['link'] = URL::to("//token=$encodedToken");
-        $data['first_name'] = $member->first_name;
-        $data['last_name'] = $member->last_name;
-        $data['email'] = $member->email;
-
-        $this->accountRepo->sendResetPasswordLinkMail($data);
-
-        return $this->sendSuccess('Password reset link sent successfully.');
     }
 
     /**
@@ -114,22 +122,36 @@ class MemberAuthController extends AppBaseController
      */
     public function resetPassword(ResetPasswordRequest $request)
     {
-        $input = $request->all();
-        $token = Crypt::decrypt($input['token']);
-        list($email, $registerTime) = explode('|', $token);
+        try {
+            $input = $request->all();
+            $token = Crypt::decrypt($input['token']);
+            list($email, $registerTime) = explode('|', $token);
 
-        $member = Member::whereEmail($email)->first();
-        if (! $member) {
-            return $this->sendError('User with given email not available.');
+            $member = Member::whereEmail($email)->first();
+            if (! $member) {
+                return $this->sendError('User with given email not available.');
+            }
+
+            //check activated link has expired in 1 hour
+            if ((strtotime(date('Y-m-d H:i:s')) - strtotime($registerTime)) / (60 * 60) > 1) {
+                return $this->sendError('The activate link has expired.');
+            }
+
+            $member->update(['password' => Hash::make($input['password'])]);
+
+            return $this->sendSuccess('Password updated successfully.');
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage());
         }
+    }
 
-        //check activated link has expired in 1 hour
-        if ((strtotime(date('Y-m-d H:i:s')) - strtotime($registerTime)) / (60 * 60) > 1) {
-            return $this->sendError('The activate link has expired.');
-        }
+    /**
+     * @return JsonResponse
+     */
+    public function logout()
+    {
+        \Auth::logout();
 
-        $member->update(['password' => Hash::make($input['password'])]);
-
-        return $this->sendSuccess('Password updated successfully.');
+        return $this->sendSuccess('Logout successfully.');
     }
 }

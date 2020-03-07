@@ -334,6 +334,7 @@
     "react-data-table.row-per-page": "Pagina della riga di righe:",
     "react-data-table.action.column": "Azione",
     "react-data-table.name.column": "Nome",
+    "react-data-table.member.column": "Membro",
     "react-data-table.status.column": "Stato",
     "react-data-table.loader.title": "Caricamento in corso...",
     "redux-form.field-array.no-item.message.validate": "È necessario almeno un articolo.",
@@ -471,6 +472,7 @@
     "penalties.not-found.empty-state.title": "Nessuna penalità trovata ...",
     "react-data-table.book-name.column": "Nome del libro",
     "react-data-table.collected_by.column": "Raccolto da",
-    "react-data-table.amount.column": "Quantità",
+    "react-data-table.actual_penalty.column": "Pena effettiva",
+    "react-data-table.collected_penalty.column": "Pena riscossa",
     "react-data-table.date.column": "Data"
 }
