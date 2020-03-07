@@ -80,6 +80,12 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             unset($search['order_by']);
         }
 
+        $archived = false;
+        if (isset($search['search']) && $search['search'] == IssuedBook::STATUS_ARCHIVED) {
+            unset($search['search']);
+            $archived = true;
+        }
+
         if (! empty($search['search']) && in_array($search['search'], IssuedBook::STATUS_IN_STRING)) {
             $search['status'] = IssuedBook::getStatusFromString($search['search']);
             unset($search['search']);
@@ -88,6 +94,9 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
         $query = $this->applyDynamicSearch($search, $query);
+        if ($archived) {
+            $query->onlyTrashed();
+        }
 
         $query->when(! empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);

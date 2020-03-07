@@ -64,6 +64,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class IssuedBook extends Model
 {
     use SoftDeletes;
+
     const STATUS_RESERVED = 1;
     const STATUS_ISSUED = 2;
     const STATUS_RETURNED = 3;
@@ -71,6 +72,7 @@ class IssuedBook extends Model
     const STATUS_UN_RESERVED = 5;
     const STATUS_LOST = 6;
     const STATUS_DAMAGED = 7;
+    const STATUS_ARCHIVED = 'archived';
 
     const STATUS_IN_STRING = ['issued', 'reserved', 'returned', 'unreserved', 'lost', 'damage'];
 
@@ -85,6 +87,8 @@ class IssuedBook extends Model
     ];
 
     public $table = 'issued_books';
+
+    protected $dates = ['deleted_at'];
 
     protected $appends = ['issue_due_date'];
 
@@ -299,6 +303,9 @@ class IssuedBook extends Model
                 break;
             case 'damage' :
                 $status = self::STATUS_DAMAGED;
+                break;
+            case 'archived' :
+                $status = self::STATUS_ARCHIVED;
                 break;
         }
 

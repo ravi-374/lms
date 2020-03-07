@@ -39,18 +39,9 @@ class IssuedBookAPIController extends AppBaseController
             $request->get('skip'),
             $request->get('limit')
         );
-        if ($request['archived'] == true) {
-            /** @var IssuedBook $issueBook */
-            $issuedBooks = IssuedBook::with(['issuer', 'returner', 'bookItem.book', 'member'])->onlyTrashed()->get();
-
             $issuedBooks = $issuedBooks->map(function (IssuedBook $issuedBook) {
                 return $issuedBook->apiObj();
             });
-        } else {
-            $issuedBooks = $issuedBooks->map(function (IssuedBook $issuedBook) {
-                return $issuedBook->apiObj();
-            });
-        }
 
         $input['withCount'] = 1;
 
