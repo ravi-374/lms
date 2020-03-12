@@ -103,6 +103,7 @@
     "books-circulation.filter.unreserved.label": "Senza Riserve",
     "books-circulation.filter.damaged.label": "Danneggiato",
     "books-circulation.filter.lost.label": "Perso",
+    "books-circulation.filter.archived.label": "Archiviata",
     "books-circulation.select.book.label": "Libro",
     "books-circulation.select.member.label": "Membro",
     "books-circulation.select.book-item.label": "Articolo Del Libro",

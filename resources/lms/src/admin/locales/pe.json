@@ -103,6 +103,7 @@
     "books-circulation.filter.unreserved.label": "بدون محافظت",
     "books-circulation.filter.damaged.label": "آسیب دیده",
     "books-circulation.filter.lost.label": "کم شده",
+    "books-circulation.filter.archived.label": "بایگانی شده",
     "books-circulation.select.book.label": "کتاب",
     "books-circulation.select.member.label": "عضو",
     "books-circulation.select.book-item.label": "کتاب مورد",

@@ -103,6 +103,7 @@
     "books-circulation.filter.unreserved.label": "未保留",
     "books-circulation.filter.damaged.label": "破损",
     "books-circulation.filter.lost.label": "丢失",
+    "books-circulation.filter.archived.label": "已封存",
     "books-circulation.select.book.label": "书",
     "books-circulation.select.member.label": "会员",
     "books-circulation.select.book-item.label": "书籍项目",

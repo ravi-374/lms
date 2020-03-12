@@ -103,6 +103,7 @@
     "books-circulation.filter.unreserved.label": "Koşulsuz",
     "books-circulation.filter.damaged.label": "Hasarlı",
     "books-circulation.filter.lost.label": "Kayıp",
+    "books-circulation.filter.archived.label": "Arşivlenen",
     "books-circulation.select.book.label": "Kitap",
     "books-circulation.select.member.label": "Üye",
     "books-circulation.select.book-item.label": "Kitap Öğesi",

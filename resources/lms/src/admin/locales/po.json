@@ -103,6 +103,7 @@
     "books-circulation.filter.unreserved.label": "Não Reservado",
     "books-circulation.filter.damaged.label": "Estragada",
     "books-circulation.filter.lost.label": "Perdido",
+    "books-circulation.filter.archived.label": "Arquivada",
     "books-circulation.select.book.label": "Livro",
     "books-circulation.select.member.label": "Membro",
     "books-circulation.select.book-item.label": "Item Do Livro",
