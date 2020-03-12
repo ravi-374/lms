@@ -15,6 +15,15 @@ export default formValues => {
     if (formValues.email && !emailExpression.test(formValues.email)) {
         errors.email = getFormattedMessage('profile.input.email-invalid.validate.label');
     }
+    if (!formValues.password) {
+        errors.password = getFormattedMessage('change-password.password.input.validate.msg');
+    }
+    if(!formValues.confirm_password) {
+        errors.confirm_password = getFormattedMessage('change-password.confirm_password.input.validate.msg');
+    }
+    if (formValues.confirm_password && formValues.password !== formValues.confirm_password) {
+        errors.confirm_password = getFormattedMessage('change-password.match_password.input.validate.msg');
+    }
     const phoneExpression = /^\d{10}$/;
     if (formValues.phone && !phoneExpression.test(formValues.phone)) {
         errors.phone = getFormattedMessage('profile.input.phone.validate.label');

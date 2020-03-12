@@ -25,6 +25,8 @@ const MemberForm = (props) => {
     } = props;
 
     const [isActive, setActive] = useState(initialValues.is_active);
+    const [isPassword, setIsPassword] = useState(true);
+    const [isConfirmPassword, setIsConfirmPassword] = useState(true);
     const inputRef = createRef();
     const [image, isDefaultImage, file, onFileChange, onRemovePhoto] = imagePicker(change,
         !!initialValues.image_path ? initialValues.image_path :
@@ -54,6 +56,15 @@ const MemberForm = (props) => {
         onRemovePhoto,
         onFileChange
     };
+
+    const onClickShowPassword = () => {
+        setIsPassword(!isPassword);
+    };
+
+    const onClickShowConfirmPassword = () => {
+        setIsConfirmPassword(!isConfirmPassword);
+    };
+
     return (
         <Row className="animated fadeIn member-form m-3">
             <Col xs={8} className="primary-detail">
@@ -82,13 +93,21 @@ const MemberForm = (props) => {
                                autoComplete={initialValues ? 'off' : 'new-email'} component={InputGroup}/>
                     </Col>
                     {initialValues.isCreate ?
-                     <Col xs={6}>
-                        <Field name={initialValues.isCreate ? 'password' : 'password_new'}
-                               label="profile.input.password.label" required={initialValues.isCreate}
-                               autoComplete={initialValues ? 'off' : 'new-password'} type="password" groupText="lock"
-                               component={InputGroup}/>
-                    </Col>: null}
-
+                        <Col xs={6}>
+                            <Field name="password" label="profile.input.password.label" required
+                                autoComplete={initialValues ? 'off' : 'new-password'} type={isPassword ? "password" : "text"}
+                                groupText="lock" component={InputGroup} appendGroupText={isPassword ? "eye-slash" : "eye"}
+                                isAppendIcon onClick={() => onClickShowPassword()}/>
+                        </Col>
+                    : null}
+                    {initialValues.isCreate ?
+                        <Col xs={6}>
+                            <Field name="confirm_password" label="profile.input.confirm-password.label" required
+                                autoComplete={initialValues ? 'off' : 'new-password'} type={isConfirmPassword ? "password" : "text"}
+                                groupText="lock" component={InputGroup} appendGroupText={isConfirmPassword ? "eye-slash" : "eye"}
+                                isAppendIcon onClick={() => onClickShowConfirmPassword()}/>
+                        </Col>
+                    :null}
                     <Col xs={6}>
                         <Field name="phone" type="number" label="profile.input.phone.label"
                                onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
