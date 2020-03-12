@@ -112,7 +112,7 @@ const ReactTable = (props) => {
                     <FilterField options={filterOptions} filterKeyName={filterKeyName} filterKey={filterKey}
                                  handleFilter={handleFilter}/>
                 </div> : null}
-                {isShowFilterField && items.length !== 0 || searchText || loading  ?
+                {isShowSearchField && items.length !== 0 || searchText || loading  ?
                     <div className="search-filter-container__search-input">
                         <SearchField handleSearch={handleSearch}/>
                     </div> : null}
