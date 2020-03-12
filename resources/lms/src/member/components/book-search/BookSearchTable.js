@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Button, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -6,9 +6,12 @@ import {bookItemStatusConstants} from "../../constants";
 import {dateFormatter, getFormattedMessage, prepareFullNames} from '../../../shared/sharedMethod';
 import {publicImagePath, publicImagePathURL} from '../../../appConstant';
 import {reserveBook} from '../../store/actions/bookSearchAction';
+import Viewer from "react-viewer";
 
 const BookSearchTable = (props) => {
     const { books, reserveBook } = props;
+    const [imageUrl, setImageUrl] = useState('');
+    const [hasImageViwerVisible, setHasImageViwerVisible] = useState(false);
 
     const renderActionButton = (book, index) => {
         switch (book.status) {
@@ -16,6 +19,13 @@ const BookSearchTable = (props) => {
                 return <Button color="primary" onClick={() => reserveBook(book.id, index)}>Reserve</Button>;
             default:
                 return null;
+        }
+    };
+
+    const openImage = (imageUrl) => {
+        if (imageUrl !== null && imageUrl !== '') {
+            setImageUrl(imageUrl);
+            setHasImageViwerVisible(true);
         }
     };
 
@@ -41,7 +51,9 @@ const BookSearchTable = (props) => {
                 return (
                     <tr className="book__table-row" key={book.id.toString()}>
                         <td className="text-center align-middle book__table-row-cover">
-                            <img src={imageUrl} alt={imageUrl} height="30"/>
+                            <img onClick={() => {
+                                openImage(imageUrl);
+                                }} src={imageUrl} alt={imageUrl} height="30"/>
                         </td>
                         <td className="align-middle book__table-row-book-code"
                             style={{ width: '100px' }}>{book.book_code}</td>
@@ -70,6 +82,10 @@ const BookSearchTable = (props) => {
                                 </span>}
                         </td>
                         <td className="text-center align-middle book__table-row-action">{renderActionButton(book, index)}</td>
+                        <Viewer drag={false} changeable={false} loop={false} zIndex={1100} scalable={false}
+                            noNavbar={true} visible={hasImageViwerVisible} disableMouseZoom={true}
+                            onClose={() => {setHasImageViwerVisible(false);}}
+                            images={[{src: imageUrl, alt: ''}]} />
                     </tr>
                 )
             })}
