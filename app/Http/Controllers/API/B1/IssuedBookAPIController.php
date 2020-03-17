@@ -39,10 +39,9 @@ class IssuedBookAPIController extends AppBaseController
             $request->get('skip'),
             $request->get('limit')
         );
-
-        $issuedBooks = $issuedBooks->map(function (IssuedBook $issuedBook) {
-            return $issuedBook->apiObj();
-        });
+            $issuedBooks = $issuedBooks->map(function (IssuedBook $issuedBook) {
+                return $issuedBook->apiObj();
+            });
 
         $input['withCount'] = 1;
 

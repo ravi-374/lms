@@ -281,7 +281,8 @@ export const bookCirculationFilterOptions = [
     { id: 4, name: 'books-circulation.filter.reserved.label', defaultValue: 'Reserved' },
     { id: 5, name: 'books-circulation.filter.unreserved.label', defaultValue: 'Unreserved' },
     { id: 6, name: 'books-circulation.filter.damaged.label', defaultValue: 'Damaged' },
-    { id: 7, name: 'books-circulation.filter.lost.label', defaultValue: 'Lost' }
+    { id: 7, name: 'books-circulation.filter.lost.label', defaultValue: 'Lost' },
+    { id: 8, name: 'books-circulation.filter.archived.label', defaultValue: 'Archived' }
 ];
 
 export const importActionType = {

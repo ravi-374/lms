@@ -53,7 +53,7 @@ const MembershipPlans = (props) => {
                     <Card>
                         <CardBody>
                             <div className="d-flex justify-content-end mb-2">
-                                {membershipPlans.length > 0 ? <CustomSearchField/> : null }
+                                {membershipPlans.length > 0 || searchText ? <CustomSearchField/> : null }
                             </div>
                             {membershipPlans.length > 0 ? <MembershipPlan {...cardBodyProps}/> :
                                 <EmptyComponent title={searchText ? getFormattedMessage('membership-plans.not-found.empty-state.title') :

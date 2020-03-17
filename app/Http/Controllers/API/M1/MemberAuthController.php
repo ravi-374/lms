@@ -102,7 +102,7 @@ class MemberAuthController extends AppBaseController
             $token = Crypt::encrypt($key);
             $encodedToken = urlencode($token);
             $data['token'] = $encodedToken;
-            $data['link'] = URL::to('/#/app/reset-password');
+            $data['link'] = URL::to("//token=$encodedToken");
             $data['first_name'] = $member->first_name;
             $data['last_name'] = $member->last_name;
             $data['email'] = $member->email;
