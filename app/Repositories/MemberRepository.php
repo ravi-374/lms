@@ -359,12 +359,11 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
     /**
      * @param  array  $input
      *
+     * @param  bool  $sendMail
      * @throws ApiOperationFailedException
-     * @throws Exception
-     *
      * @return Member
      */
-    public function registerMember($input)
+    public function registerMember($input, $sendMail = true)
     {
         try {
             DB::beginTransaction();
@@ -387,9 +386,11 @@ class MemberRepository extends BaseRepository implements MemberRepositoryInterfa
             }
             DB::commit();
 
-            /** @var AccountRepositoryInterface $accountRepository */
-            $accountRepository = App::make(AccountRepositoryInterface::class);
-            $accountRepository->sendConfirmEmail($member, ['password' => $plainPassword]);
+            if ($sendMail) {
+                /** @var AccountRepositoryInterface $accountRepository */
+                $accountRepository = App::make(AccountRepositoryInterface::class);
+                $accountRepository->sendConfirmEmail($member, ['password' => $plainPassword]);
+            }
 
             return Member::with('address')->findOrFail($member->id);
         } catch (Exception $e) {
