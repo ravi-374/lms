@@ -33,10 +33,10 @@ class BookRepositoryTest extends TestCase
         $books = factory(Book::class, 5)->create();
 
         $allBooks = $this->bookRepo->all();
-        $take3 = $this->bookRepo->all([], null, 3);
-        $skip4 = $this->bookRepo->all([], 4, 5);
+        $take3 = $this->bookRepo->all([], 21, 3);
+        $skip4 = $this->bookRepo->all([], 23, 4);
 
-        $this->assertCount(5, $allBooks);
+        $this->assertCount(24, $allBooks);
         $this->assertCount(3, $take3);
         $this->assertCount(1, $skip4);
     }

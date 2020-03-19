@@ -28,10 +28,10 @@ class BookRequestAPIControllerTest extends TestCase
 
         $response = $this->getJson(route('api.b1.book-requests.index'));
         $take = $this->getJson(route('api.b1.book-requests.index', ['limit' => 3]));
-        $skip = $this->getJson(route('api.b1.book-requests.index', ['limit' => 3, 'skip' => 3]));
+        $skip = $this->getJson(route('api.b1.book-requests.index', ['limit' => 3, 'skip' => 7]));
 
         $this->assertSuccessMessageResponse($response, 'Requested books retrieved successfully.');
-        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(9, $response->original['data']);
         $this->assertCount(3, $take->original['data']);
         $this->assertCount(2, $skip->original['data']);
     }

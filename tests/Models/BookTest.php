@@ -24,8 +24,6 @@ class BookTest extends TestCase
         $author1->books()->sync([$book->id]);
         $author2->books()->sync([$book->id]);
 
-        $book = Book::first();
-
         $this->assertNotEmpty($book->authors_name);
         $this->assertEquals($author1->first_name.','.$author2->first_name, $book->authors_name);
     }

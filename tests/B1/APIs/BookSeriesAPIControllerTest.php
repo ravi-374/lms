@@ -54,7 +54,7 @@ class BookSeriesAPIControllerTest extends TestCase
             ]
         ));
 
-        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(7, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 

@@ -46,7 +46,7 @@ class AuthorAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.v1.authors.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.v1.authors.index', ['search' => $authors[0]->first_name]));
 
-        $this->assertCount(15, $response->original['data'], '10 default');
+        $this->assertCount(18, $response->original['data'], '13 default');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 

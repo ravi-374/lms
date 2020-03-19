@@ -32,7 +32,7 @@ class DashboardAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(5, $response['total_books']);
+        $this->assertEquals(24, $response['total_books']);
     }
 
     /** @test */
@@ -45,7 +45,7 @@ class DashboardAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(7, $response['total_reserved_books']);
+        $this->assertEquals(10, $response['total_reserved_books']);
     }
 
     /** @test */
@@ -58,7 +58,7 @@ class DashboardAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(2, $response['total_issued_books']);
+        $this->assertEquals(5, $response['total_issued_books']);
     }
 
     /** @test */
@@ -71,7 +71,7 @@ class DashboardAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(2, $response['total_available_books']);
+        $this->assertEquals(14, $response['total_available_books']);
     }
 
     /** @test */
@@ -90,7 +90,7 @@ class DashboardAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(3, $response['total_overdue_books']);
+        $this->assertEquals(6, $response['total_overdue_books']);
     }
 
     /** @test */
@@ -102,6 +102,6 @@ class DashboardAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(1 + 3, $response['total_members']);
+        $this->assertEquals(7, $response['total_members']);
     }
 }

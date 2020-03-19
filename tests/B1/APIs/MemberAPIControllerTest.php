@@ -52,8 +52,8 @@ class MemberAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.b1.members.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.b1.members.index', ['search' => $members[0]->first_name]));
 
-        $this->assertCount(6, $response->original['data']);
-        $this->assertEquals(6, $response->original['totalRecords']);
+        $this->assertCount(9, $response->original['data']);
+        $this->assertEquals(9, $response->original['totalRecords']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 

@@ -30,8 +30,6 @@ class BookItemTest extends TestCase
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
 
-        $bookItem = BookItem::first();
-
         $this->assertNotEmpty($bookItem->book_item_status);
         $this->assertEquals(IssuedBook::STATUS_RESERVED, $bookItem->book_item_status);
     }
@@ -39,9 +37,8 @@ class BookItemTest extends TestCase
     /** @test */
     public function test_return_issued_book_available_when_book_is_returned()
     {
-        factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
-
-        $bookItem = BookItem::first();
+        $bookItem = factory(BookItem::class)->create();
+        factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED, 'book_item_id' => $bookItem->id]);
 
         $this->assertNotEmpty($bookItem->book_item_status);
         $this->assertEquals(IssuedBook::STATUS_AVAILABLE, $bookItem->book_item_status);
@@ -50,9 +47,8 @@ class BookItemTest extends TestCase
     /** @test */
     public function test_return_empty_available_date_when_book_is_not_issued()
     {
-        factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
-
-        $bookItem = BookItem::first();
+        $bookItem = factory(BookItem::class)->create();
+        factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED, 'book_item_id' => $bookItem->id]);
 
         $this->assertNull($bookItem->expected_available_date);
     }
@@ -66,7 +62,7 @@ class BookItemTest extends TestCase
             'status'       => IssuedBook::STATUS_RESERVED,
         ]);
 
-        $bookItem = BookItem::with('lastIssuedBook')->first();
+        $bookItem = BookItem::with('lastIssuedBook')->find($bookItem->id);
 
         $returnDueDays = getSettingValueByKey(Setting::RETURN_DUE_DAYS);
         $expectedAvailableDate = Carbon::now()->addDays($returnDueDays)->toDateTimeString();
@@ -85,8 +81,6 @@ class BookItemTest extends TestCase
             'book_item_id' => $bookItem->id,
             'status'       => IssuedBook::STATUS_ISSUED,
         ]);
-
-        $bookItem = BookItem::first();
 
         $this->assertNotEmpty($bookItem->expected_available_date);
         $this->assertEquals($issuedBook->return_due_date, $bookItem->expected_available_date);

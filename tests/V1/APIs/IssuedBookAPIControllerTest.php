@@ -59,7 +59,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
-        $this->assertEquals(5, $totalRecords);
+        $this->assertEquals(16, $totalRecords);
     }
 
     /** @test */
@@ -234,7 +234,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertCount(1, $response);
-        $this->assertEquals($returnDueDate, $response[0]['return_due_date']);
+        $this->assertEquals($returnDueDate, Carbon::parse($response[0]['return_due_date'])->toDateString());
     }
 
     /** @test */
