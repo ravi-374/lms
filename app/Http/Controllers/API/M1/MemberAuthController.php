@@ -11,6 +11,7 @@ use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\MemberRepositoryInterface;
 use App\Repositories\MemberRepository;
 use App\User;
+use Carbon\Carbon;
 use Crypt;
 use Exception;
 use Hash;
@@ -68,7 +69,9 @@ class MemberAuthController extends AppBaseController
             $silver = MembershipPlan::whereName('Silver')->first();
             $input['activation_code'] = uniqid();
             $input['membership_plan_id'] = $silver->id;
-            $member = $this->memberRepository->registerMember($input);
+            $input['email_verified_at'] = Carbon::now();
+            $input['is_active'] = true;
+            $member = $this->memberRepository->registerMember($input, false);
 
             $token = JWTAuth::fromUser($member);
 
@@ -102,7 +105,7 @@ class MemberAuthController extends AppBaseController
             $token = Crypt::encrypt($key);
             $encodedToken = urlencode($token);
             $data['token'] = $encodedToken;
-            $data['link'] = URL::to('/#/app/reset-password');
+            $data['link'] = URL::to("//token=$encodedToken");
             $data['first_name'] = $member->first_name;
             $data['last_name'] = $member->last_name;
             $data['email'] = $member->email;

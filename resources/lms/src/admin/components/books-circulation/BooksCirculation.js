@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import BookCirculationModal from './BookCirculationModal';
 import './BooksCirculation.scss';
 import {Routes, icon} from "../../../constants";
-import {bookCirculationFilterOptions, storageKey} from "../../constants";
+import {bookCirculationFilterOptions, storageKey, bookCirculationStatusConstant} from "../../constants";
 import ProgressBar from '../../../shared/progress-bar/ProgressBar';
 import {dateFormatter, getFormattedMessage, getFormattedOptions} from '../../../shared/sharedMethod';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
@@ -94,9 +94,12 @@ const BooksCirculation = (props) => {
         {
             name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
+            width: '160px',
             right: true,
-            cell: row => <ModalAction isHideDeleteIcon={true} isHideDetailIcon={false}
-                                      goToDetailScreen={gotToBookHistoryDetail} onOpenModal={onClickModal} item={row}/>,
+            cell: row => <ModalAction isHideDeleteIcon={row.status === bookCirculationStatusConstant.BOOK_RETURNED ||
+                                row.status === bookCirculationStatusConstant.BOOK_UN_RESERVED ? false : true}
+                                isHideDetailIcon={false}
+                                goToDetailScreen={gotToBookHistoryDetail} onOpenModal={onClickModal} item={row}/>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
