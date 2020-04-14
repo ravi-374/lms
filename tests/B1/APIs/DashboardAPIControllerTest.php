@@ -102,6 +102,6 @@ class DashboardAPIControllerTest extends TestCase
 
         $this->assertSuccessMessageResponse($response, 'Dashboard details retrieved successfully.');
         $response = $response->original['data'];
-        $this->assertEquals(7, $response['total_members']);
+        $this->assertEquals(6, $response['total_members']);
     }
 }

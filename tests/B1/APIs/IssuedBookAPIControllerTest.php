@@ -71,10 +71,10 @@ class IssuedBookAPIControllerTest extends TestCase
         $take3 = $this->getJson(route('api.b1.books-history', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.b1.books-history', ['skip' => 2, 'limit' => 2]));
 
-        $this->assertCount(16, $response->original['data']);
+        $this->assertCount(15, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
-        $this->assertEquals(16, $response->original['totalRecords']);
+        $this->assertEquals(15, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -629,7 +629,7 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $issueBookRecords = IssuedBook::all();
-        $this->assertCount(13, $issueBookRecords);
+        $this->assertCount(12, $issueBookRecords);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
@@ -659,7 +659,7 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $issueBookRecords = IssuedBook::all();
-        $this->assertCount(13, $issueBookRecords);
+        $this->assertCount(12, $issueBookRecords);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
@@ -683,7 +683,7 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $issueBookRecords = IssuedBook::all();
-        $this->assertCount(12, $issueBookRecords);
+        $this->assertCount(11, $issueBookRecords);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
