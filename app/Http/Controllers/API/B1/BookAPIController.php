@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Exceptions\ApiOperationFailedException;
+use App\Exports\BookExport;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\AddBookItemRequest;
 use App\Http\Requests\API\BookDetailsRequest;
@@ -10,9 +11,11 @@ use App\Http\Requests\API\CreateBookRequest;
 use App\Http\Requests\API\UpdateBookRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -170,5 +173,17 @@ class BookAPIController extends AppBaseController
         $bookDetails = $this->bookRepository->getBookDetailsFromISBN($request->get('isbn'));
 
         return Response::json($bookDetails, 200);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function exportBooks()
+    {
+        $filename = 'exports/Books-'.time().'.xlsx';
+        Excel::store(new BookExport, $filename, 'local');
+        $path = asset('uploads/'.$filename);
+
+        return $this->sendResponse($path, 'Book details exported successfully.');
     }
 }
