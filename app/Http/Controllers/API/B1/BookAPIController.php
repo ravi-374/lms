@@ -184,7 +184,7 @@ class BookAPIController extends AppBaseController
         Excel::store(new BookExport, $filename, config('filesystems.default'));
         $path = asset('uploads/'.$filename);
 
-        return $this->sendResponse(['url' => $path], 'Book details exported successfully.');
+        return $this->sendResponse($path, 'Book details exported successfully.');
     }
 
     /**
