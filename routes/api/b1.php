@@ -54,6 +54,9 @@ Route::group(['middleware' => 'user.auth'], function () {
         // Update book status
         Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus')
             ->name('books.update-book-status');
+
+        // export book
+        Route::get('book-export','BookAPIController@exportBooks');
     });
     // Get book details from third-party api
     Route::get('get-book-details', 'BookAPIController@getBookDetails');
