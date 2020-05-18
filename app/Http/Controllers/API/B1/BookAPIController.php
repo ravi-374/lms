@@ -7,6 +7,7 @@ use App\Exports\BookExport;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\AddBookItemRequest;
 use App\Http\Requests\API\BookDetailsRequest;
+use App\Http\Requests\API\BookImportRequest;
 use App\Http\Requests\API\CreateBookRequest;
 use App\Http\Requests\API\UpdateBookRequest;
 use App\Models\Book;
@@ -184,5 +185,17 @@ class BookAPIController extends AppBaseController
         $path = asset('uploads/'.$filename);
 
         return $this->sendResponse(['url' => $path], 'Book details exported successfully.');
+    }
+
+    /**
+     * @param  BookImportRequest  $request
+     *
+     * @return JsonResponse
+     */
+    public function importBooks(BookImportRequest $request)
+    {
+        $this->bookRepository->importBooks($request->all());
+
+        return $this->sendSuccess('Books imported successfully.');
     }
 }

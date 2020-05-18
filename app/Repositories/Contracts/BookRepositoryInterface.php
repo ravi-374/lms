@@ -108,4 +108,11 @@ interface BookRepositoryInterface
      * @return Book[]|Collection
      */
     public function searchBooks($search = [], $skip = null, $limit = null, $columns = ['*']);
+
+    /**
+     * @param  array  $input
+     *
+     * @return mixed
+     */
+    public function importBooks($input);
 }

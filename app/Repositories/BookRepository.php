@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Exceptions\ApiOperationFailedException;
 use App\Exceptions\MissingPropertyException;
+use App\Imports\BookImport;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookItem;
@@ -19,6 +20,7 @@ use Exception;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -573,5 +575,38 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         $bookRecords = $query->get();
 
         return [$bookRecords, $count];
+    }
+
+    /**
+     * @param  array  $input
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return bool
+     */
+    public function importBooks($input)
+    {
+        try {
+            /** @var UploadedFile $file */
+            $file = $input['file'];
+
+            $extension = $file->getClientOriginalExtension();
+            if (! in_array($extension, ['xlsx', 'xls'])) {
+                throw new ApiOperationFailedException('File must be xlsx or xls. Received: '.htmlspecialchars(strip_tags($extension)));
+            }
+
+            $path = Book::IMPORT.'/'.time().'.'.$extension;
+            $filePath = public_path('uploads/').$path;
+            move_uploaded_file($file->getRealPath(), $filePath); // for temp use only
+
+            \Maatwebsite\Excel\Facades\Excel::import(new BookImport, $path, 'local', \Maatwebsite\Excel\Excel::XLSX);
+
+            // Delete file from system
+            unlink($filePath);
+
+            return true;
+        } catch (Exception $e) {
+            throw new ApiOperationFailedException($e->getMessage());
+        }
     }
 }

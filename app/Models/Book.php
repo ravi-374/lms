@@ -54,6 +54,7 @@ class Book extends Model
     }
 
     const IMAGE_PATH = 'books';
+    const IMPORT = 'books/import';
 
     public $table = 'books';
 

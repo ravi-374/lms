@@ -57,6 +57,7 @@ Route::group(['middleware' => 'user.auth'], function () {
 
         // export book
         Route::get('books-export', 'BookAPIController@exportBooks');
+        Route::post('books-import', 'BookAPIController@importBooks');
     });
     // Get book details from third-party api
     Route::get('get-book-details', 'BookAPIController@getBookDetails');
