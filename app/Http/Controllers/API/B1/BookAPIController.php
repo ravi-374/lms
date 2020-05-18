@@ -180,7 +180,7 @@ class BookAPIController extends AppBaseController
     public function exportBooks()
     {
         $filename = 'exports/Books-'.time().'.xlsx';
-        Excel::store(new BookExport, $filename, 'local');
+        Excel::store(new BookExport, $filename, config('filesystems.default'));
         $path = asset('uploads/'.$filename);
 
         return $this->sendResponse(['url' => $path], 'Book details exported successfully.');
