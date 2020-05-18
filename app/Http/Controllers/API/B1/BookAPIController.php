@@ -11,7 +11,6 @@ use App\Http\Requests\API\CreateBookRequest;
 use App\Http\Requests\API\UpdateBookRequest;
 use App\Models\Book;
 use App\Repositories\Contracts\BookRepositoryInterface;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -184,6 +183,6 @@ class BookAPIController extends AppBaseController
         Excel::store(new BookExport, $filename, 'local');
         $path = asset('uploads/'.$filename);
 
-        return $this->sendResponse($path, 'Book details exported successfully.');
+        return $this->sendResponse(['url' => $path], 'Book details exported successfully.');
     }
 }
