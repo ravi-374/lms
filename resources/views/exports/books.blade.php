@@ -14,8 +14,8 @@
     @foreach($books as $book)
         <tr>
             <td>{{ $book->name }}</td>
-            <td>{{ $book->image }}</td>
-            <td>{{ $book->description }}</td>
+            <td>{{ $book->image ? $book->image_path : '' }}</td>
+            <td>{!!  nl2br(e($book->description)) !!} </td>
             <td>{{ $book->published_on }}</td>
             <td>{{ $book->isbn }}</td>
             <td>{{ $book->url }}</td>
