@@ -467,6 +467,7 @@
     "settings.input.max-reserve-books-limit.label": "Limite máximo de livros de reserva",
     "settings.input.max-reserve-books-limit.validate.label": "O limite máximo de livros de reserva deve ser necessário.",
     "settings.input.max-issue-books-limit.validate.label": "O limite máximo de livros de edições deve ser necessário.",
+    "settings.input.book-due-reminder-before-days.label": "Lembrete de Reserva Antes de Dias",
     "settings.input.penalty.label": "Pena por dia",
     "penalties.title": "Sanções",
     "penalties.empty-state.title": "Nenhuma penalidade adicionada ainda ...",

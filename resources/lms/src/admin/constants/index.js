@@ -236,7 +236,8 @@ export const settingsKey = {
     LANGUAGE: 'language',
     ISSUE_BOOKS_LIMIT: 'issue_books_limit',
     RESERVE_BOOKS_LIMIT: 'reserve_books_limit',
-    PENALTY_PER_DAY: 'penalty_per_day'
+    PENALTY_PER_DAY: 'penalty_per_day',
+    BOOK_DUE_REMINDER_BEFORE_DAYS: 'book_due_reminder_before_days'
 };
 
 export const settingsDisplayName = {
@@ -246,7 +247,8 @@ export const settingsDisplayName = {
     RETURN_DUE_DAYS: 'Return Due Days',
     ISSUE_BOOKS_LIMIT: 'Max Issue Books Limit',
     RESERVE_BOOKS_LIMIT: 'Max Reserve Books Limit',
-    PENALTY_PER_DAY: 'Penalty Per Day'
+    PENALTY_PER_DAY: 'Penalty Per Day',
+    BOOK_DUE_REMINDER_BEFORE_DAYS: 'Book Due Reminder Before Days'
 };
 
 export const bookItemActionType = {

@@ -467,6 +467,7 @@
     "settings.input.max-reserve-books-limit.label": "Límite máximo de libros de reserva",
     "settings.input.max-reserve-books-limit.validate.label": "Se requiere un límite máximo de libros de reserva.",
     "settings.input.max-issue-books-limit.validate.label": "El límite máximo de libros de emisión debe ser obligatorio.",
+    "settings.input.book-due-reminder-before-days.label": "Gün Öncesi Son Ödeme Tarihi",
     "settings.input.penalty.label": "Günlük Penaltı",
     "penalties.title": "cezalar",
     "penalties.empty-state.title": "Henüz Penaltı eklenmedi ...",

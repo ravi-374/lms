@@ -467,6 +467,7 @@
     "settings.input.max-reserve-books-limit.label": "最大储备书数限制",
     "settings.input.max-reserve-books-limit.validate.label": "必须规定最大储备书数量。",
     "settings.input.max-issue-books-limit.validate.label": "必须设置最大发行书籍数量限制。",
+    "settings.input.book-due-reminder-before-days.label": "提前预定提醒",
     "settings.input.penalty.label": "每日罚款",
     "penalties.title": "罚则",
     "penalties.empty-state.title": "尚未添加罚款...",

@@ -50,7 +50,8 @@ const SettingsForm = (props) => {
     };
 
     const onSave = (formValues) => {
-        const { currency, issue_due_days, return_due_days, library_name, language, reserve_books_limit, issue_books_limit, penalty_per_day } = formValues;
+        const { currency, issue_due_days, return_due_days, library_name, language, reserve_books_limit,
+            issue_books_limit, penalty_per_day, book_due_reminder_before_days } = formValues;
         const settings = [
             prepareFormData(settingsKey.CURRENCY, currency.id, currency.name),
             prepareFormData(settingsKey.LIBRARY_NAME, library_name, settingsDisplayName.APP_NAME),
@@ -59,7 +60,9 @@ const SettingsForm = (props) => {
             prepareFormData(settingsKey.RETURN_DUE_DAYS, return_due_days, settingsDisplayName.RETURN_DUE_DAYS),
             prepareFormData(settingsKey.LANGUAGE, language.id, language.name),
             prepareFormData(settingsKey.RESERVE_BOOKS_LIMIT, reserve_books_limit, settingsDisplayName.RESERVE_BOOKS_LIMIT),
-            prepareFormData(settingsKey.ISSUE_BOOKS_LIMIT, issue_books_limit, settingsDisplayName.ISSUE_BOOKS_LIMIT)
+            prepareFormData(settingsKey.ISSUE_BOOKS_LIMIT, issue_books_limit, settingsDisplayName.ISSUE_BOOKS_LIMIT),
+            prepareFormData(settingsKey.BOOK_DUE_REMINDER_BEFORE_DAYS, book_due_reminder_before_days,
+                settingsDisplayName.BOOK_DUE_REMINDER_BEFORE_DAYS)
         ];
         onSaveSettings(settings);
     };
@@ -199,13 +202,18 @@ const SettingsForm = (props) => {
                                required groupText="calendar" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
-                        <Field name='language' label="settings.select.language.label" required groupText="language"
-                               options={bookLanguagesOptions} placeholder="settings.select.language.placeholder"
-                               component={Select} isSearchable={true}/>
+                        <Field name='book_due_reminder_before_days' type="number"
+                            label="settings.input.book-due-reminder-before-days.label" min="0"
+                            required groupText="calendar" component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name='penalty_per_day' type="number" label="settings.input.penalty.label" min="0"
                                 required groupText={groupText} component={InputGroup}/>
+                    </Col>
+                    <Col xs={6}>
+                        <Field name='language' label="settings.select.language.label" required groupText="language"
+                            options={bookLanguagesOptions} placeholder="settings.select.language.placeholder"
+                            component={Select} isSearchable={true}/>
                     </Col>
                 </Row>
             </Col>

@@ -466,6 +466,7 @@
     "settings.input.max-reserve-books-limit.label": "الحد الأقصى للكتب الاحتياطية",
     "settings.input.max-reserve-books-limit.validate.label": "يجب حجز الحد الأقصى لدفاتر الاحتياطي.",
     "settings.input.max-issue-books-limit.validate.label": "يجب أن يكون الحد الأقصى لعدد كتب الإصدار مطلوبًا.",
+    "settings.input.book-due-reminder-before-days.label": "تذكير كتاب مستحقة قبل أيام",
     "settings.input.penalty.label": "عقوبة لكل يوم",
     "penalties.title": "ضربات الجزاء",
     "penalties.empty-state.title": "لم تتم إضافة أي عقوبة بعد ...",
