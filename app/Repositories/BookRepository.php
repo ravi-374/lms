@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -595,14 +596,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 throw new ApiOperationFailedException('File must be xlsx or xls. Received: '.htmlspecialchars(strip_tags($extension)));
             }
 
-            $path = Book::IMPORT.'/'.time().'.'.$extension;
-            $filePath = public_path('uploads/').$path;
-            move_uploaded_file($file->getRealPath(), $filePath); // for temp use only
-
-            \Maatwebsite\Excel\Facades\Excel::import(new BookImport, $path, 'local', \Maatwebsite\Excel\Excel::XLSX);
-
-            // Delete file from system
-            unlink($filePath);
+            /** @var BookImport $import */
+            $import = Excel::import(new BookImport(), $file->getRealPath());
 
             return true;
         } catch (Exception $e) {

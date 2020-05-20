@@ -55,7 +55,7 @@ Route::group(['middleware' => 'user.auth'], function () {
         Route::put('books/{book_item}/update-book-status', 'BookItemAPIController@updateBookStatus')
             ->name('books.update-book-status');
 
-        // export book
+        // import/export books
         Route::get('books-export', 'BookAPIController@exportBooks');
         Route::post('books-import', 'BookAPIController@importBooks');
     });
