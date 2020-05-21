@@ -2,47 +2,26 @@
 
 namespace App\Imports;
 
-use App\Exceptions\ApiOperationFailedException;
 use App\Models\Book;
 use App\Traits\ImageTrait;
 use Arr;
-use DB;
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Validator;
-use Log;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
-use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Validators\Failure;
 
-class BookImport implements ToCollection, SkipsOnFailure
+class BookImport implements ToCollection
 {
-    use SkipsFailures;
-
     /**
      * @param  Collection  $rows
-     *
-     * @throws ApiOperationFailedException
      */
     public function collection(Collection $rows)
     {
-        try {
-            DB::beginTransaction();
+        // convert to array and remove header from array
+        $row = $rows->toArray();
+        $bookArray = Arr::except($row, '0');
 
-            // convert to array and remove header from array
-            $row = $rows->toArray();
-            $bookArray = Arr::except($row, '0');
-
-            // TODO :: need to uncomment after adding of skipOnFailure
-            // validate date 
-//            foreach ($bookArray as $book) {
-//                Validator::make($book, [
-//                    '3' => 'nullable|date_format:Y-m-d H:i:s',
-//                ])->validate();
-//            }
-            
-            foreach ($bookArray as $row) {
+        foreach ($bookArray as $row) {
+            try {
                 // check if book exists
                 $bookExists = Book::whereName($row[0])->exists();
                 if (! $bookExists) {
@@ -62,12 +41,9 @@ class BookImport implements ToCollection, SkipsOnFailure
                         'is_featured'  => ($this->isEmpty($row[6]) == 'Yes') ? 1 : 0,
                     ]);
                 }
+            } catch (Exception $e) {
+                continue;
             }
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            throw new ApiOperationFailedException($e->getMessage());
         }
     }
 
@@ -83,16 +59,5 @@ class BookImport implements ToCollection, SkipsOnFailure
         }
 
         return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function onFailure(Failure ...$failures)
-    {
-        foreach ($failures as $failure) {
-            $failure->errors(); // Actual error messages from Laravel validator
-            Log::info($failure->values()[0]); // The values of the row that has failed.
-        }
     }
 }

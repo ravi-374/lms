@@ -596,8 +596,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 throw new ApiOperationFailedException('File must be xlsx or xls. Received: '.htmlspecialchars(strip_tags($extension)));
             }
 
-            /** @var BookImport $import */
-            $import = Excel::import(new BookImport(), $file->getRealPath());
+            Excel::import(new BookImport(), $file->getRealPath());
 
             return true;
         } catch (Exception $e) {
