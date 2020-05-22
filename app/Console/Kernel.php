@@ -27,6 +27,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('lms:un-reserve-books')
             ->daily();
+        $schedule->command('lms:book-due-reminder')
+            ->daily();
     }
 
     /**

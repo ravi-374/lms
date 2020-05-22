@@ -63,8 +63,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class IssuedBook extends Model
 {
-    use SoftDeletes;
-
     const STATUS_RESERVED = 1;
     const STATUS_ISSUED = 2;
     const STATUS_RETURNED = 3;
