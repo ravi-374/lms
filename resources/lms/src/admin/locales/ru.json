@@ -467,6 +467,7 @@
     "settings.input.max-reserve-books-limit.label": "Макс. Резерв книг",
     "settings.input.max-reserve-books-limit.validate.label": "Максимальный лимит резервных книг должен быть обязательным.",
     "settings.input.max-issue-books-limit.validate.label": "Максимальный лимит выдачи книг должен быть обязательным.",
+    "settings.input.book-due-reminder-before-days.label": "Книжное напоминание до дней",
     "settings.input.penalty.label": "Штраф за день",
     "penalties.title": "Штрафы",
     "penalties.empty-state.title": "Штраф еще не добавлен ...",
