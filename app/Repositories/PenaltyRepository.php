@@ -2,15 +2,20 @@
 
 namespace App\Repositories;
 
+use App\Mail\MarkdownMail;
 use App\Models\Book;
 use App\Models\BookItem;
+use App\Models\IssuedBook;
 use App\Models\Member;
 use App\Models\Penalty;
 use App\Models\Setting;
 use App\Repositories\Contracts\PenaltyRepositoryInterface;
 use App\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class PenaltyRepository
@@ -128,5 +133,45 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
         $data['total_due_days'] = $days;
 
         return $data;
+    }
+
+    /**
+     * @param  int  $issuedBookId
+     *
+     * @throws Exception
+     *
+     * @return bool
+     */
+    public function sendBookDueMail($issuedBookId)
+    {
+        try {
+            /** @var IssuedBook $issuedBook */
+            $issuedBook = IssuedBook::with('member')->findOrFail($issuedBookId);
+
+            $returnDate = Carbon::now();
+
+            if (Carbon::now()->toDateTimeString() < Carbon::parse($issuedBook->return_date)->toDateTimeString()) {
+                throw new UnprocessableEntityHttpException('Book is not due yet.');
+            }
+
+            $days = $returnDate->diffInDays($issuedBook->return_date);
+            $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
+            $data['total_due_amount'] = $charge * $days;
+            $data['total_due_days'] = $days;
+            $data['first_name'] = $issuedBook->member->first_name;
+            $data['last_name'] = $issuedBook->member->last_name;
+            $data['book_name'] = $issuedBook->bookItem->book->name;
+            $data['due_date'] = Carbon::parse($issuedBook->return_date)->toDateString();
+
+            Mail::to($issuedBook->member->email)
+                ->send(new MarkdownMail('emails.book_due',
+                    getSettingValueByKey(Setting::LIBRARY_NAME).' - Your book was due ',
+                    $data));
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        return true;
     }
 }

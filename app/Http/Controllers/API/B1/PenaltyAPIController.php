@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\B1;
 
 use App\Http\Controllers\AppBaseController;
-use App\Models\IssuedBook;
 use App\Repositories\Contracts\PenaltyRepositoryInterface;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -56,5 +56,18 @@ class PenaltyAPIController extends AppBaseController
         $penalty = $this->penaltyRepo->checkIsBookItemDue($bookItemId);
 
         return $this->sendResponse($penalty, 'Book item penalty information retrieved successfully.');
+    }
+
+    /**
+     * @param  int  $issuedBookId
+     *
+     * @throws Exception
+     * @return JsonResponse
+     */
+    public function sendBookDueMail($issuedBookId)
+    {
+        $this->penaltyRepo->sendBookDueMail($issuedBookId);
+
+        return $this->sendSuccess('Your Mail successfully Send.');
     }
 }

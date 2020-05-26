@@ -185,6 +185,8 @@ Route::group(['middleware' => 'user.auth'], function () {
     Route::get('books/{book_item_id}/is-due', 'PenaltyAPIController@checkIsBookItemDue');
 
     Route::put('change-password', 'UserAPIController@changePassword');
+
+    Route::post('book-history/{issued_book_id}/send-book-due-mail', 'PenaltyAPIController@sendBookDueMail');
 });
 
 Route::get('activate-user', 'AuthAPIController@verifyAccount')->name('activate-user');
