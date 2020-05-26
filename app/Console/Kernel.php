@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\BookDueReminderMail;
+use App\Console\Commands\RemoveExistingImages;
 use App\Console\Commands\UnReserveBooks;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,6 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         UnReserveBooks::class,
+        RemoveExistingImages::class,
+        BookDueReminderMail::class,
     ];
 
     /**
