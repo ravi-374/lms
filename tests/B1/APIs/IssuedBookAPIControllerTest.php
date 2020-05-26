@@ -49,7 +49,7 @@ class IssuedBookAPIControllerTest extends TestCase
             'status'       => IssuedBook::STATUS_LOST,
         ];
 
-        $response = $this->putJson(route('api.b1.update-issued-book-status', $issuedBook->id), $input);
+        $response = $this->putJson(route('api.b1.update-issued-book-status', $issuedBook->book_item_id), $input);
 
         $this->assertSuccessDataResponse(
             $response,
@@ -71,10 +71,10 @@ class IssuedBookAPIControllerTest extends TestCase
         $take3 = $this->getJson(route('api.b1.books-history', ['limit' => 3]));
         $skip2 = $this->getJson(route('api.b1.books-history', ['skip' => 2, 'limit' => 2]));
 
-        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(15, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
-        $this->assertEquals(5, $response->original['totalRecords']);
+        $this->assertEquals(15, $response->original['totalRecords']);
     }
 
     /** @test */
@@ -108,7 +108,7 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_sort_issued_book_records_by_book_code()
     {
-        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'AB1234XYZ']);
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => '0000156']);
         $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
 
         $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZAD587RE']);
@@ -134,10 +134,10 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_sort_issued_book_records_by_member_name()
     {
-        $member1 = factory(Member::class)->create(['first_name' => 'ABHI']);
+        $member1 = factory(Member::class)->create(['first_name' => 'AROUND']);
         $issuedBook1 = factory(IssuedBook::class)->create(['member_id' => $member1->id]);
 
-        $member2 = factory(Member::class)->create(['first_name' => 'VISHAL']);
+        $member2 = factory(Member::class)->create(['first_name' => 'gdf']);
         $issuedBook2 = factory(IssuedBook::class)->create(['member_id' => $member2->id]);
 
         $responseAsc = $this->getJson(route('api.b1.books-history', [
@@ -160,7 +160,7 @@ class IssuedBookAPIControllerTest extends TestCase
     /** @test */
     public function test_can_sort_issued_book_records_by_reserve_on()
     {
-        $reservedOn = date('Y-m-d H:i:s');
+        $reservedOn = null;
         $reservedFutureDate = date('Y-m-d H:i:s', strtotime('+15 days'));
         $firstIssuedBook = factory(IssuedBook::class)->create(['reserve_date' => $reservedOn]);
         $secondIssueBook = factory(IssuedBook::class)->create(['reserve_date' => $reservedFutureDate]);
@@ -221,7 +221,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $response = $response->original['data'];
         $this->assertCount(1, $response);
-        $this->assertEquals($returnDueDate, $response[0]['return_due_date']);
+        $this->assertEquals($returnDueDate, Carbon::parse($response[0]['return_due_date'])->toDateString());
     }
 
     /** @test */
@@ -629,7 +629,7 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $issueBookRecords = IssuedBook::all();
-        $this->assertCount(2, $issueBookRecords);
+        $this->assertCount(12, $issueBookRecords);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
@@ -659,7 +659,7 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $issueBookRecords = IssuedBook::all();
-        $this->assertCount(2, $issueBookRecords);
+        $this->assertCount(12, $issueBookRecords);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 
@@ -683,7 +683,7 @@ class IssuedBookAPIControllerTest extends TestCase
         ]);
 
         $issueBookRecords = IssuedBook::all();
-        $this->assertCount(1, $issueBookRecords);
+        $this->assertCount(11, $issueBookRecords);
         $this->assertEquals(BookItem::STATUS_NOT_AVAILABLE, $bookItem->fresh()->status);
     }
 

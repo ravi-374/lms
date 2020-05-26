@@ -55,7 +55,7 @@ class BookItemRepositoryTest extends TestCase
         $take3 = $this->bookItemRepo->all([], null, 3);
         $skip2 = $this->bookItemRepo->all([], 2, 5);
 
-        $this->assertCount(10, $allBookItems);
+        $this->assertCount(30, $allBookItems);
         $this->assertCount(3, $take3);
         $this->assertCount(5, $skip2);
     }
@@ -73,8 +73,8 @@ class BookItemRepositoryTest extends TestCase
 
         $ids = $allBookItems->pluck('id')->toArray();
         $this->assertCount(2, $ids);
-        $this->assertContains($bookItems[0]->book_id, $ids);
-        $this->assertContains($bookItems[1]->book_id, $ids);
+        $this->assertContains($bookItems[0]->id, $ids);
+        $this->assertContains($bookItems[1]->id, $ids);
     }
 
     /** @test */

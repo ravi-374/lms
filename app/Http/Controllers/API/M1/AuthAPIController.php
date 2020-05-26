@@ -37,7 +37,7 @@ class AuthAPIController extends AppBaseController
         }
 
         if (! $member->email_verified_at) {
-            throw new UnauthorizedException('Please verify your email.', 401);
+            return $this->sendError('Please verify your email.', 401);
         }
 
         if (! $member->is_active) {

@@ -16,7 +16,7 @@ export default {
                     if (!window.location.href.includes('login')
                         && !window.location.href.includes('reset-password')
                         && !window.location.href.includes('landing')) {
-                        window.location.href = environment.URL + '/#' + Routes.MEMBER_LOGIN;
+                        window.location.href = environment.URL + '/#' + Routes.MEMBER_HOME;
                     }
                 }
                 if (isFormData) {

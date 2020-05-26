@@ -86,3 +86,17 @@ export const deleteBook = (bookId) => async (dispatch) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };
+
+export const exportBook = (isLoading = false) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
+    let url = apiBaseURL.BOOKS_EXPORT;
+    await apiConfig.get(url)
+        .then((response) => {
+            dispatch({ type: bookActionType.EXPORT_BOOK, payload: response.data.data });
+            isLoading ? dispatch(setLoading(false)) : null;
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+            isLoading ? dispatch(setLoading(false)) : null;
+        });
+};

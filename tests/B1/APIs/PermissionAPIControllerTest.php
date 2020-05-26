@@ -50,7 +50,7 @@ class PermissionAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.b1.permissions.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.b1.permissions.index', ['search' => $permissions[0]->name]));
 
-        $this->assertCount(20, $response->original['data'], '15 defaults');
+        $this->assertCount(21, $response->original['data'], '15 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 

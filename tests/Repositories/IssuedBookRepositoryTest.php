@@ -43,8 +43,8 @@ class IssuedBookRepositoryTest extends TestCase
         $resultAsc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'asc']);
         $resultDesc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'desc']);
 
-        $this->assertCount(2, $resultAsc);
-        $this->assertCount(2, $resultDesc);
+        $this->assertCount(12, $resultAsc);
+        $this->assertCount(12, $resultDesc);
         $this->assertEquals($book1->id, $resultAsc[0]->bookItem->book->id);
         $this->assertEquals($book2->id, $resultDesc[0]->bookItem->book->id);
     }
@@ -52,7 +52,7 @@ class IssuedBookRepositoryTest extends TestCase
     /** @test */
     public function test_can_sort_issued_book_by_book_code()
     {
-        $bookItem1 = factory(BookItem::class)->create(['book_code' => 'ABCDE']);
+        $bookItem1 = factory(BookItem::class)->create(['book_code' => '000000']);
         $issuedBook1 = factory(IssuedBook::class)->create(['book_item_id' => $bookItem1->id]);
 
         $bookItem2 = factory(BookItem::class)->create(['book_code' => 'ZERO']);
@@ -61,8 +61,8 @@ class IssuedBookRepositoryTest extends TestCase
         $resultAsc = $this->issuedBookRepo->all(['order_by' => 'book_code', 'direction' => 'asc']);
         $resultDesc = $this->issuedBookRepo->all(['order_by' => 'book_code', 'direction' => 'desc']);
 
-        $this->assertEquals($bookItem1->id, $resultAsc[0]->bookItem->book->id);
-        $this->assertEquals($bookItem2->id, $resultDesc[0]->bookItem->book->id);
+        $this->assertEquals($bookItem1->id, $resultAsc[0]->bookItem->id);
+        $this->assertEquals($bookItem2->id, $resultDesc[0]->bookItem->id);
     }
 
     /** @test */
@@ -74,8 +74,8 @@ class IssuedBookRepositoryTest extends TestCase
         $issuedBooks = $this->issuedBookRepo->all(['search' => 'issued']);
         $unReserveBooks = $this->issuedBookRepo->all(['search' => 'unreserved']);
 
-        $this->assertCount(1, $issuedBooks);
-        $this->assertCount(1, $unReserveBooks);
+        $this->assertCount(4, $issuedBooks);
+        $this->assertCount(2, $unReserveBooks);
         $this->assertEquals($reserveBookItem->id, $issuedBooks[0]->id);
         $this->assertEquals($unReserveBookItem->id, $unReserveBooks[0]->id);
     }

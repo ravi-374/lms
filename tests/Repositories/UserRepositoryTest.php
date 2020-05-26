@@ -33,9 +33,9 @@ class UserRepositoryTest extends TestCase
 
         $users = $this->userRepo->all();
         $take3 = $this->userRepo->all([], null, 3);
-        $skip4 = $this->userRepo->all([], 4, 5);
+        $skip4 = $this->userRepo->all([], 7, 5);
 
-        $this->assertCount(11, $users, '1 default user');
+        $this->assertCount(12, $users, '1 default user');
         $this->assertCount(3, $take3);
         $this->assertCount(5, $skip4);
     }

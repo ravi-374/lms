@@ -26,5 +26,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateHomepageSettingsSeeder::class);
         $this->call(CreateDefaultMemberSeeder::class);
         $this->call(DefaultMemberSettingsSeeder::class);
+        $this->call(CreateBookDueReminderSetting::class);
     }
 }

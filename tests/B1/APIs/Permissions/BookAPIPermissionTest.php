@@ -149,7 +149,7 @@ class BookAPIPermissionTest extends TestCase
         $this->assignPermissions($this->loggedInUserId, ['manage_books']);
         $items = factory(BookItem::class, 2)->create();
 
-        $response = $this->getJson(route('api.b1.books.available-books', [$items[0]->id, 'member_id' => 1]));
+        $response = $this->getJson(route('api.b1.books.available-books', [$items[0]->book->id, 'member_id' => 1]));
 
         $this->assertSuccessMessageResponse($response, 'Books history retrieved successfully.');
     }

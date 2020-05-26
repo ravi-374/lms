@@ -30,9 +30,9 @@ class BookRequestRepositoryTest extends TestCase
 
         $response = $this->bookRequestRepo->all();
         $take3 = $this->bookRequestRepo->all([], null, 3);
-        $skip3 = $this->bookRequestRepo->all([], 3, 4);
+        $skip3 = $this->bookRequestRepo->all([], 7, 4);
 
-        $this->assertCount(5, $response);
+        $this->assertCount(9, $response);
         $this->assertCount(3, $take3);
         $this->assertCount(2, $skip3);
     }

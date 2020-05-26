@@ -46,7 +46,7 @@ class BookItemAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.v1.search-books.index', ['skip' => 2, 'limit' => 2]));
         $searchByBookCode = $this->getJson(route('api.v1.search-books.index', ['search' => $bookItems[0]->book_code]));
 
-        $this->assertCount(5, $response->original['data']);
+        $this->assertCount(24, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
 

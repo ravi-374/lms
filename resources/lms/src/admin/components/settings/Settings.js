@@ -63,6 +63,8 @@ const Settings = (props) => {
             reserve_books_limit: settings[settingsKey.RESERVE_BOOKS_LIMIT] ? settings[settingsKey.RESERVE_BOOKS_LIMIT].value : null,
             library_name: settings[settingsKey.LIBRARY_NAME] ? settings[settingsKey.LIBRARY_NAME].value : null,
             penalty_per_day: settings[settingsKey.PENALTY_PER_DAY] ? settings[settingsKey.PENALTY_PER_DAY].value : null,
+            book_due_reminder_before_days: settings[settingsKey.BOOK_DUE_REMINDER_BEFORE_DAYS] ?
+                settings[settingsKey.BOOK_DUE_REMINDER_BEFORE_DAYS].value : null,
             library_logo: getLogo(settings, settingsKey.LIBRARY_LOGO),
             library_favicon: getLogo(settings, settingsKey.LIBRARY_FAVICON),
             language: bookLanguagesOptions.find(lang => lang.id === selectedLanguage.id),

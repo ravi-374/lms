@@ -42,7 +42,7 @@ class IssueBookTest extends TestCase
         $book2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
 
         $books = IssuedBook::reserve()->get();
-        $this->assertCount(1, $books);
+        $this->assertCount(4, $books);
 
         /** @var IssuedBook $firstBook */
         $firstBook = $books->first();
@@ -72,8 +72,8 @@ class IssueBookTest extends TestCase
         $book1 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
         $book2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
 
-        $issuedBooks = IssuedBook::lastIssuedBook()->get();
-        $this->assertCount(1, $issuedBooks);
+        $issuedBooks = IssuedBook::lastIssuedBook()->latest()->get();
+        $this->assertCount(9, $issuedBooks);
         $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBooks[0]->status);
     }
 
@@ -170,8 +170,6 @@ class IssueBookTest extends TestCase
             'issuer_id' => $user->id,
         ]);
 
-        $issueBook = IssuedBook::first();
-
         $this->assertNotEmpty($issueBook->issuer_name);
         $this->assertEquals($user->first_name." ".$user->last_name, $issueBook->issuer_name);
     }
@@ -185,8 +183,6 @@ class IssueBookTest extends TestCase
             'status'      => IssuedBook::STATUS_ISSUED,
             'returner_id' => $user->id,
         ]);
-
-        $issueBook = IssuedBook::first();
 
         $this->assertNotEmpty($issueBook->returner_name);
         $this->assertEquals($user->first_name." ".$user->last_name, $issueBook->returner_name);

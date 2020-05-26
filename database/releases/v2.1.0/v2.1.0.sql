@@ -1,0 +1,1 @@
+ALTER TABLE issued_books ADD COLUMN deleted_at TIMESTAMP NULL;

@@ -2,7 +2,8 @@ import React from 'react';
 
 export const constants = {
     SET_TOTAL_RECORD: 'SET_TOTAL_RECORD',
-    PENALTIY_MODAL_ACTION: 'PENALTIY_MODAL_ACTION'
+    PENALTIY_MODAL_ACTION: 'PENALTIY_MODAL_ACTION',
+    IMPORT_BOOK_MODAL_ACTION: 'IMPORT_BOOK_MODAL_ACTION'
 };
 
 export const genreActionType = {
@@ -12,6 +13,10 @@ export const genreActionType = {
     EDIT_GENRE: 'EDIT_GENRE',
     DELETE_GENRE: 'DELETE_GENRE',
 };
+
+export const fileActionType = {
+    ADD_FILE: 'ADD_FILE',
+}
 
 export const penaltyActionType = {
     FETCH_PENALTY: 'FETCH_PENALTY',
@@ -77,7 +82,8 @@ export const bookActionType = {
     FETCH_BOOK: 'FETCH_BOOK',
     ADD_BOOK: 'ADD_BOOK',
     EDIT_BOOK: 'EDIT_BOOK',
-    DELETE_BOOK: 'DELETE_BOOK'
+    DELETE_BOOK: 'DELETE_BOOK',
+    EXPORT_BOOK: 'EXPORT_BOOK'
 };
 
 export const availableBookActionType = {
@@ -236,7 +242,8 @@ export const settingsKey = {
     LANGUAGE: 'language',
     ISSUE_BOOKS_LIMIT: 'issue_books_limit',
     RESERVE_BOOKS_LIMIT: 'reserve_books_limit',
-    PENALTY_PER_DAY: 'penalty_per_day'
+    PENALTY_PER_DAY: 'penalty_per_day',
+    BOOK_DUE_REMINDER_BEFORE_DAYS: 'book_due_reminder_before_days'
 };
 
 export const settingsDisplayName = {
@@ -246,7 +253,8 @@ export const settingsDisplayName = {
     RETURN_DUE_DAYS: 'Return Due Days',
     ISSUE_BOOKS_LIMIT: 'Max Issue Books Limit',
     RESERVE_BOOKS_LIMIT: 'Max Reserve Books Limit',
-    PENALTY_PER_DAY: 'Penalty Per Day'
+    PENALTY_PER_DAY: 'Penalty Per Day',
+    BOOK_DUE_REMINDER_BEFORE_DAYS: 'Book Due Reminder Before Days'
 };
 
 export const bookItemActionType = {
