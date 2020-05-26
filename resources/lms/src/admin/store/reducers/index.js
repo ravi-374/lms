@@ -39,6 +39,9 @@ import availableBookLimitReducer from './availableBookLimitReducer';
 import homeSettingReducer from "./homeSettingReducer";
 import testimonialReducer from "./testimonialReducer";
 import returnDueDateReducer from "./penaltiesModalReducer";
+import importBookModalReducer from "./importBookModalReducer";
+import fileReducer from "./fileReducer";
+import exportBook from "./exportBook";
 import changePasswordModalReducer from "../../../store/reducers/changePasswordModalReducer";
 
 export default combineReducers({
@@ -83,4 +86,7 @@ export default combineReducers({
     testimonials: testimonialReducer,
     isChangePasswordModelToggle: changePasswordModalReducer,
     isReturnDueDateModal: returnDueDateReducer,
+    isImportBookModal: importBookModalReducer,
+    file: fileReducer,
+    exportBooks: exportBook,
 });

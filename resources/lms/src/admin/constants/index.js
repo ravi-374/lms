@@ -2,7 +2,8 @@ import React from 'react';
 
 export const constants = {
     SET_TOTAL_RECORD: 'SET_TOTAL_RECORD',
-    PENALTIY_MODAL_ACTION: 'PENALTIY_MODAL_ACTION'
+    PENALTIY_MODAL_ACTION: 'PENALTIY_MODAL_ACTION',
+    IMPORT_BOOK_MODAL_ACTION: 'IMPORT_BOOK_MODAL_ACTION'
 };
 
 export const genreActionType = {
@@ -12,6 +13,10 @@ export const genreActionType = {
     EDIT_GENRE: 'EDIT_GENRE',
     DELETE_GENRE: 'DELETE_GENRE',
 };
+
+export const fileActionType = {
+    ADD_FILE: 'ADD_FILE',
+}
 
 export const penaltyActionType = {
     FETCH_PENALTY: 'FETCH_PENALTY',
@@ -77,7 +82,8 @@ export const bookActionType = {
     FETCH_BOOK: 'FETCH_BOOK',
     ADD_BOOK: 'ADD_BOOK',
     EDIT_BOOK: 'EDIT_BOOK',
-    DELETE_BOOK: 'DELETE_BOOK'
+    DELETE_BOOK: 'DELETE_BOOK',
+    EXPORT_BOOK: 'EXPORT_BOOK'
 };
 
 export const availableBookActionType = {
