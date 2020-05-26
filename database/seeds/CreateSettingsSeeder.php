@@ -25,7 +25,6 @@ class CreateSettingsSeeder extends Seeder
         $settings[] = ['reserve_books_limit', 5, 'Maximum reserve books limit'];
         $settings[] = ['issue_books_limit', 5, 'Maximum issue books limit'];
         $settings[] = ['penalty_per_day', 10, 'Penalty amount per day'];
-        $settings[] = ['book_due_reminder_before_days', 2, 'Book Due Reminder Before Days'];
 
         foreach ($settings as $setting) {
             Setting::create([
