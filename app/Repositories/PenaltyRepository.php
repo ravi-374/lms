@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Mail\MarkdownMail;
 use App\Models\Book;
 use App\Models\BookItem;
 use App\Models\IssuedBook;
@@ -12,9 +13,9 @@ use App\Repositories\Contracts\PenaltyRepositoryInterface;
 use App\User;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Mail\Message;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
  * Class PenaltyRepository
@@ -148,26 +149,27 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
             $issuedBook = IssuedBook::with('member')->findOrFail($issuedBookId);
 
             $returnDate = Carbon::now();
-            $returnDueDate = Carbon::parse($issuedBook->return_due_date)
-                ->addDays(getSettingValueByKey(Setting::RETURN_DUE_DAYS));
 
-            $days = $returnDate->diffInDays($returnDueDate);
+            if (Carbon::now()->toDateTimeString() < Carbon::parse($issuedBook->return_date)->toDateTimeString()) {
+                throw new UnprocessableEntityHttpException('Book is not due yet.');
+            }
+
+            $days = $returnDate->diffInDays($issuedBook->return_date);
             $charge = getSettingValueByKey(Setting::PENALTY_PER_DAY);
             $data['total_due_amount'] = $charge * $days;
             $data['total_due_days'] = $days;
             $data['first_name'] = $issuedBook->member->first_name;
             $data['last_name'] = $issuedBook->member->last_name;
             $data['book_name'] = $issuedBook->bookItem->book->name;
-            $data['logo_url'] = getLogoURL();
+            $data['due_date'] = Carbon::parse($issuedBook->return_date)->toDateString();
 
-            Mail::send('emails.book_due', ['data' => $data],
-                function (Message $message) use ($issuedBook) {
-                    $message->subject('Your Book is due.');
-                    $message->to($issuedBook->member->email);
-                });
+            Mail::to($issuedBook->member->email)
+                ->send(new MarkdownMail('emails.book_due',
+                    getSettingValueByKey(Setting::LIBRARY_NAME).' - Your book was due ',
+                    $data));
 
         } catch (Exception $e) {
-            throw new Exception('Unable to send mail, Please contact to your administrator');
+            throw new Exception($e->getMessage());
         }
 
         return true;
