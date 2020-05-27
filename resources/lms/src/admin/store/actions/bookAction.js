@@ -87,13 +87,14 @@ export const deleteBook = (bookId) => async (dispatch) => {
         });
 };
 
-export const exportBook = (isLoading = false) => async (dispatch) => {
+export const exportBook = (cb, isLoading = true) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
     let url = apiBaseURL.BOOKS_EXPORT;
     await apiConfig.get(url)
         .then((response) => {
             dispatch({ type: bookActionType.EXPORT_BOOK, payload: response.data.data });
             isLoading ? dispatch(setLoading(false)) : null;
+            cb({ url: response.data.data })
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

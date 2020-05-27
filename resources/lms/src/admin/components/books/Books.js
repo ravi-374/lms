@@ -18,10 +18,11 @@ import Viewer from 'react-viewer';
 import ImportBook from './ImportBook';
 import {Dropdown} from 'react-bootstrap';
 import {importBookByFile} from '../../store/actions/fileAction';
+import {environment} from '../../../environment';
 
 const Books = (props) => {
     const { books, history, isLoading, toggleModal, totalRecord, fetchBooks,
-        toggleImportBookModal, exportBooks, exportBook, importBookByFile } = props;
+        toggleImportBookModal, exportBook, importBookByFile } = props;
     const [visible, setVisible] = useState(false);
     const [importBook, setImportBook] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
@@ -31,10 +32,6 @@ const Books = (props) => {
         toggleModal,
     };
 
-    useEffect(() => {
-        exportBook();
-    }, []);
-
     const onChange = (filter) => {
         fetchBooks(filter, history, true);
     };
@@ -42,6 +39,14 @@ const Books = (props) => {
     const onClickModal = () => {
         setImportBook(true);
         toggleImportBookModal();
+    };
+
+    const onClickExport = () => {
+        exportBook((res) => {
+            if(res.url) {
+                window.open(res.url, "_self")
+            }
+        });
     };
 
     const onOpenModal = (book = null) => {
@@ -151,7 +156,7 @@ const Books = (props) => {
                             <Dropdown.Item onClick={() => onClickModal()}>
                                 {getFormattedMessage('books.import-file-btn.label')}
                             </Dropdown.Item>
-                            <Dropdown.Item href={exportBooks[0]} download>
+                            <Dropdown.Item onClick={() => onClickExport()}>
                                 {getFormattedMessage('books.export-btn.label')}
                             </Dropdown.Item>
                         </Dropdown.Menu>
@@ -194,8 +199,8 @@ Books.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { books, isLoading, totalRecord, exportBooks } = state;
-    return { books, isLoading, totalRecord, exportBooks };
+    const { books, isLoading, totalRecord } = state;
+    return { books, isLoading, totalRecord };
 };
 
 export default connect(mapStateToProps, { fetchBooks, exportBook, toggleModal, toggleImportBookModal, importBookByFile })(Books);
