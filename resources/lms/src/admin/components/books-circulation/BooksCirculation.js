@@ -15,6 +15,7 @@ import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {openModal} from "../../../shared/custom-hooks";
 import {toggleModal} from '../../../store/action/modalAction';
 import {fetchBooksCirculation} from '../../store/actions/bookCirculationAction';
+import MailSend from './MailSend';
 
 const BooksCirculation = (props) => {
     const { booksCirculation, fetchBooksCirculation, toggleModal, history, isLoading, totalRecord } = props;
@@ -90,6 +91,13 @@ const BooksCirculation = (props) => {
             selector: 'status',
             center: true,
             cell: row => <BookStatus status={row.status} item={row}/>
+        },
+        {
+            name: getFormattedMessage('books-circulation.table.mail.column'),
+            width: '100px',
+            selector: 'return_due_date',
+            center: true,
+            cell: row => <MailSend return_due_date={row.return_due_date} book_item_id={row.book_item_id} status={row.status}/>
         },
         {
             name: getFormattedMessage('react-data-table.action.column'),
