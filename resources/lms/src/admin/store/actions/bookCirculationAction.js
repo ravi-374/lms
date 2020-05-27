@@ -89,3 +89,15 @@ export const deleteBookCirculation = (bookId) => async (dispatch) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };
+
+export const sendMail = (id, cb) => async (dispatch) => {
+    await apiConfig.post(`book-history/${id}/send-book-due-mail`, null)
+        .then((response) => {
+            dispatch(addToast({ text: getFormattedMessage('books-circulation.success.reminder.message')}));
+            cb({});
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+            cb({});
+        });
+}
