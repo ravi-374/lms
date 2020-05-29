@@ -606,6 +606,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
             return true;
         } catch (Exception $e) {
+            // Delete file from system
+            unlink($filePath);
             throw new ApiOperationFailedException($e->getMessage());
         }
     }
