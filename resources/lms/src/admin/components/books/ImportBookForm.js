@@ -22,7 +22,7 @@ const ImportBookForm = (props) => {
                 <Col xs={12}>
                     <label className="file">
                         <span className="text-primary">
-                            {getFormattedMessage('books.items.browse-btn.label')}
+                            {getFormattedMessage('books.items.choose-btn.label')}
                         </span>
                         <input className="file__input-type" name="file" type="file"
                             onChange={onChange} accept=".xlsx, .xls, .csv"/>
