@@ -17,6 +17,7 @@ use Arr;
 use Carbon\Carbon;
 use DB;
 use Exception;
+use File;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -602,12 +603,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             \Maatwebsite\Excel\Facades\Excel::import(new BookImport, $path, 'local', \Maatwebsite\Excel\Excel::XLSX);
 
             // Delete file from system
-            unlink($filePath);
+            File::delete($filePath);
 
             return true;
         } catch (Exception $e) {
             // Delete file from system
-            unlink($filePath);
+            File::delete($filePath);
             throw new ApiOperationFailedException($e->getMessage());
         }
     }
