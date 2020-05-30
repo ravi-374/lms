@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Book;
 use App\Traits\ImageTrait;
 use Arr;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -19,6 +20,7 @@ class BookImport implements ToCollection
         // convert to array and remove header from array
         $row = $rows->toArray();
         $bookArray = Arr::except($row, '0');
+        $featuredArray = ['yes', 'true', '1'];
 
         foreach ($bookArray as $row) {
             try {
@@ -30,6 +32,10 @@ class BookImport implements ToCollection
                         $row[1] = ImageTrait::makeImageFromURL($row[1], Book::IMAGE_PATH);
                     }
 
+                    // change date format
+//                    $publishedOn = $this->isEmpty($row[3]) != null
+//                        ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($this->isEmpty($row[3]))) : null;
+                    
                     // import books
                     Book::create([
                         'name'         => $this->isEmpty($row[0]),
@@ -38,7 +44,9 @@ class BookImport implements ToCollection
                         'published_on' => $this->isEmpty($row[3]),
                         'isbn'         => $this->isEmpty($row[4]),
                         'url'          => $this->isEmpty($row[5]),
-                        'is_featured'  => ($this->isEmpty($row[6]) == 'Yes') ? 1 : 0,
+                        'is_featured'  => $this->isEmpty($row[6]) 
+                            ? (in_array(strtolower($row[6]), $featuredArray) ? 1 : 0) 
+                            : null,
                     ]);
                 }
             } catch (Exception $e) {
