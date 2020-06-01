@@ -599,8 +599,9 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $path = Book::IMPORT.'/'.time().'.'.$extension;
             $filePath = public_path('uploads/').$path;
             move_uploaded_file($file->getRealPath(), $filePath); // for temp use only
+            $readerType = ($extension == 'xlsx' ? \Maatwebsite\Excel\Excel::XLSX : \Maatwebsite\Excel\Excel::XLS);
 
-            \Maatwebsite\Excel\Facades\Excel::import(new BookImport, $path, 'local', \Maatwebsite\Excel\Excel::XLSX);
+            \Maatwebsite\Excel\Facades\Excel::import(new BookImport, $path, 'local', $readerType);
 
             // Delete file from system
             File::delete($filePath);
