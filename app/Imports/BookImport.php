@@ -33,19 +33,19 @@ class BookImport implements ToCollection
                     }
 
                     // change date format
-//                    $publishedOn = $this->isEmpty($row[3]) != null
-//                        ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($this->isEmpty($row[3]))) : null;
-                    
+                    $publishedOn = $this->isEmpty($row[3]) != null
+                        ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($this->isEmpty($row[3]))) : null;
+
                     // import books
                     Book::create([
                         'name'         => $this->isEmpty($row[0]),
                         'image'        => $this->isEmpty($row[1]),
                         'description'  => $this->isEmpty($row[2]),
-                        'published_on' => $this->isEmpty($row[3]),
+                        'published_on' => $publishedOn,
                         'isbn'         => $this->isEmpty($row[4]),
                         'url'          => $this->isEmpty($row[5]),
-                        'is_featured'  => $this->isEmpty($row[6]) 
-                            ? (in_array(strtolower($row[6]), $featuredArray) ? 1 : 0) 
+                        'is_featured'  => $this->isEmpty($row[6])
+                            ? (in_array(strtolower($row[6]), $featuredArray) ? 1 : 0)
                             : null,
                     ]);
                 }
