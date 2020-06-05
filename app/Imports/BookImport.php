@@ -20,7 +20,7 @@ class BookImport implements ToCollection
         // convert to array and remove header from array
         $row = $rows->toArray();
         $bookArray = Arr::except($row, '0');
-        $featuredArray = ['yes', 'true', '1'];
+        $featuredArray = ['yes', 'true', '1', '0', 'false'];
 
         foreach ($bookArray as $row) {
             try {
@@ -30,6 +30,15 @@ class BookImport implements ToCollection
                     // set image URL
                     if (! empty($row[1])) {
                         $row[1] = ImageTrait::makeImageFromURL($row[1], Book::IMAGE_PATH);
+                    }
+
+                    $isFeatured = 0;
+                    if (isset($row[6]) && in_array(strtolower($row[6]), ['1', 'true', 'yes'])) {
+                        $isFeatured = 1;
+                    }
+
+                    if (isset($row[6]) && in_array(strtolower($row[6]), ['0', 'false', 'no'])) {
+                        $isFeatured = 0;
                     }
 
                     // change date format
@@ -44,12 +53,13 @@ class BookImport implements ToCollection
                         'published_on' => $publishedOn,
                         'isbn'         => $this->isEmpty($row[4]),
                         'url'          => $this->isEmpty($row[5]),
-                        'is_featured'  => $this->isEmpty($row[6])
-                            ? (in_array(strtolower($row[6]), $featuredArray) ? 1 : 0)
-                            : null,
+                        'is_featured'  => $isFeatured,
                     ]);
                 }
             } catch (Exception $e) {
+                echo "<pre>";
+                print_r($e->getMessage());
+                die;
                 continue;
             }
         }
