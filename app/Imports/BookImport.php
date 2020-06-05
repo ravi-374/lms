@@ -57,9 +57,6 @@ class BookImport implements ToCollection
                     ]);
                 }
             } catch (Exception $e) {
-                echo "<pre>";
-                print_r($e->getMessage());
-                die;
                 continue;
             }
         }
