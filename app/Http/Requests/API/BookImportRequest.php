@@ -26,6 +26,6 @@ class BookImportRequest extends APIRequest
      */
     public function rules()
     {
-        return ['file' => 'required|mimes:xls,xlsx'];
+        return ['file' => 'required'];
     }
 }
