@@ -59,7 +59,7 @@ class IssuedBookAPIControllerTest extends TestCase
 
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
-        $this->assertEquals(15, $totalRecords);
+        $this->assertEquals(5, $totalRecords);
     }
 
     /** @test */

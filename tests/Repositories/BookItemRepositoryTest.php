@@ -55,7 +55,7 @@ class BookItemRepositoryTest extends TestCase
         $take3 = $this->bookItemRepo->all([], null, 3);
         $skip2 = $this->bookItemRepo->all([], 2, 5);
 
-        $this->assertCount(30, $allBookItems);
+        $this->assertCount(10, $allBookItems);
         $this->assertCount(3, $take3);
         $this->assertCount(5, $skip2);
     }

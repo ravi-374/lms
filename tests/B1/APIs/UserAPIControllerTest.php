@@ -52,10 +52,10 @@ class UserAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.b1.users.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.b1.users.index', ['search' => $users[0]->first_name]));
 
-        $this->assertCount(7, $response->original['data'], '1 defaults');
+        $this->assertCount(6, $response->original['data'], '1 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
-        $this->assertEquals(7, $response->original['totalRecords'], '1 defaults');
+        $this->assertEquals(6, $response->original['totalRecords'], '1 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 6);

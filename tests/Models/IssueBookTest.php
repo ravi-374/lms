@@ -42,7 +42,7 @@ class IssueBookTest extends TestCase
         $book2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_RETURNED]);
 
         $books = IssuedBook::reserve()->get();
-        $this->assertCount(4, $books);
+        $this->assertCount(1, $books);
 
         /** @var IssuedBook $firstBook */
         $firstBook = $books->first();
@@ -73,7 +73,7 @@ class IssueBookTest extends TestCase
         $book2 = factory(IssuedBook::class)->create(['status' => IssuedBook::STATUS_ISSUED]);
 
         $issuedBooks = IssuedBook::lastIssuedBook()->latest()->get();
-        $this->assertCount(9, $issuedBooks);
+        $this->assertCount(1, $issuedBooks);
         $this->assertEquals(IssuedBook::STATUS_ISSUED, $issuedBooks[0]->status);
     }
 

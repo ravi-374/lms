@@ -51,10 +51,10 @@ class PublisherAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.b1.publishers.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.b1.publishers.index', ['search' => $publishers[0]->name]));
 
-        $this->assertCount(18, $response->original['data'], '12 defaults');
+        $this->assertCount(17, $response->original['data'], '12 defaults');
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
-        $this->assertEquals(18, $response->original['totalRecords'], '12 defaults');
+        $this->assertEquals(17, $response->original['totalRecords'], '12 defaults');
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 17,

@@ -34,9 +34,9 @@ class MemberRepositoryTest extends TestCase
         $take3 = $this->memberRepo->all([], null, 3);
         $skip4 = $this->memberRepo->all([], 9, 8);
 
-        $this->assertCount(13, $members);
+        $this->assertCount(11, $members);
         $this->assertCount(3, $take3);
-        $this->assertCount(4, $skip4);
+        $this->assertCount(2, $skip4);
     }
 
     /** @test */

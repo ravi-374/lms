@@ -43,8 +43,8 @@ class IssuedBookRepositoryTest extends TestCase
         $resultAsc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'asc']);
         $resultDesc = $this->issuedBookRepo->all(['order_by' => 'name', 'direction' => 'desc']);
 
-        $this->assertCount(12, $resultAsc);
-        $this->assertCount(12, $resultDesc);
+        $this->assertCount(2, $resultAsc);
+        $this->assertCount(2, $resultDesc);
         $this->assertEquals($book1->id, $resultAsc[0]->bookItem->book->id);
         $this->assertEquals($book2->id, $resultDesc[0]->bookItem->book->id);
     }
@@ -74,8 +74,8 @@ class IssuedBookRepositoryTest extends TestCase
         $issuedBooks = $this->issuedBookRepo->all(['search' => 'issued']);
         $unReserveBooks = $this->issuedBookRepo->all(['search' => 'unreserved']);
 
-        $this->assertCount(4, $issuedBooks);
-        $this->assertCount(2, $unReserveBooks);
+        $this->assertCount(1, $issuedBooks);
+        $this->assertCount(1, $unReserveBooks);
         $this->assertEquals($reserveBookItem->id, $issuedBooks[0]->id);
         $this->assertEquals($unReserveBookItem->id, $unReserveBooks[0]->id);
     }

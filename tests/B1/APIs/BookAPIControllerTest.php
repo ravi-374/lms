@@ -55,10 +55,10 @@ class BookAPIControllerTest extends TestCase
         $skip2 = $this->getJson(route('api.b1.books.index', ['skip' => 2, 'limit' => 2]));
         $searchByName = $this->getJson(route('api.b1.books.index', ['search' => $books[0]->name]));
 
-        $this->assertCount(24, $response->original['data']);
+        $this->assertCount(5, $response->original['data']);
         $this->assertCount(3, $take3->original['data']);
         $this->assertCount(2, $skip2->original['data']);
-        $this->assertEquals(24, $response->original['totalRecords']);
+        $this->assertEquals(5, $response->original['totalRecords']);
 
         $search = $searchByName->original['data'];
         $this->assertTrue(count($search) > 0 && count($search) < 5);
