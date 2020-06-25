@@ -11,7 +11,6 @@ use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\UnauthorizedException;
-use JWTAuth;
 
 class AuthAPIController extends AppBaseController
 {
@@ -47,7 +46,7 @@ class AuthAPIController extends AppBaseController
             return $this->sendError('Your account is not active', 401);
         }
 
-        $token = JWTAuth::fromUser($user);
+        $token = $user->createToken('admin_token')->plainTextToken;
 
         return $this->sendResponse(['token' => $token, 'user' => $user], 'Logged in successfully.');
     }
@@ -84,7 +83,7 @@ class AuthAPIController extends AppBaseController
             return $this->sendError('Your account is not active', 401);
         }
 
-        $token = JWTAuth::fromUser($member);
+        $token = $member->createToken('member_token')->plainTextToken;
 
         return $this->sendResponse(['token' => $token, 'user' => $member], 'Logged in successfully.');
     }

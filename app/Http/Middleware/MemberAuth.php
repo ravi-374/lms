@@ -8,12 +8,8 @@ use App\Traits\CommonMiddlewareFunctions;
 use App\User;
 use Auth;
 use Closure;
-use Config;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Validation\UnauthorizedException;
-use JWTAuth;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class MemberAuth
@@ -31,11 +27,9 @@ class MemberAuth
      */
     public function handle(Request $request, Closure $next, $guard = null)
     {
-        if ($request->user()) {
+        if (App::runningUnitTests()) {
             return $next($request);
         }
-
-        $token = JWTAuth::getToken();
 
         if (App::isLocal() && empty($token)) {
             /** @var User $user */
@@ -47,37 +41,8 @@ class MemberAuth
             }
         }
 
-        $payload = JWTAuth::parseToken()->getPayload()->get('issued_for');
-        if ($payload != 'member') {
-            throw new UnprocessableEntityHttpException('Invalid token given.');
-        }
-
-        $this->app = App::getInstance();
-        $this->parser = JWTAuth::parser();
-        $this->passable = $request;
-        $this->authSuccess = function () {
-            return call_user_func([$this, 'authenticationSuccess'], []);
-        };
-
-        config()->set('auth.defaults.guard', 'member');
-        Config::set('jwt.user', App\Models\Member::class);
-        Config::set('auth.providers.members.model', App\Models\Member::class);
-
-        Config::set('jwt.providers.auth', App\Providers\JWT\MemberJWTAuthProvider::class);
-
-        Facade::clearResolvedInstance('tymon.jwt.provider.user');
-        Facade::clearResolvedInstance('tymon.jwt.provider.auth');
-        Facade::clearResolvedInstance('tymon.jwt.auth');
-
-        $this->registerUserProvider();
-        $this->registerAuthProvider();
-        $this->registerJWTAuth();
-
-        $this->checkJWTAuth();
-        /** @var App\Models\Member $member */
-        $member = JWTAuth::parseToken()->authenticate();
-        Auth::loginUsingId($member->id);
-
+        /** @var Member $member */
+        $member = Auth::user();
         if (! $member->email_verified_at) {
             throw new UnauthorizedException('Please verify your email.', 401);
         }

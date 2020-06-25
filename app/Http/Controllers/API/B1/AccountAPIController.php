@@ -7,7 +7,6 @@ use App\Http\Requests\API\ResetPasswordLinkRequest;
 use App\Http\Requests\API\ResetPasswordRequest;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\User;
-use Auth;
 use Crypt;
 use Exception;
 use Hash;
@@ -79,8 +78,6 @@ class AccountAPIController extends AppBaseController
         }
 
         $user->update(['password' => Hash::make($input['password'])]);
-
-        Auth::login($user);
 
         return $this->sendSuccess('Password updated successfully.');
     }

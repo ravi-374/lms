@@ -17,7 +17,6 @@ use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use JWTAuth;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use URL;
 use Validator;
@@ -73,7 +72,7 @@ class MemberAuthController extends AppBaseController
             $input['is_active'] = true;
             $member = $this->memberRepository->registerMember($input, false);
 
-            $token = JWTAuth::fromUser($member);
+            $token = $member->createToken('member_token')->plainTextToken;
 
             return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
         } catch (Exception $e) {

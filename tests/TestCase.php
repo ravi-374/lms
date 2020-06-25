@@ -11,6 +11,7 @@ use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\TestResponse;
+use Laravel\Sanctum\Sanctum;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -26,8 +27,9 @@ abstract class TestCase extends BaseTestCase
     {
         $user = User::first();
         $this->loggedInUserId = $user->id;
+        Sanctum::actingAs($user, ['*']);
 
-        return $this->actingAs($user);
+        return $user;
     }
 
     public function signInWithMember()
@@ -35,7 +37,9 @@ abstract class TestCase extends BaseTestCase
         $member = factory(Member::class)->create();
         $this->loggedInMemberId = $member->id;
 
-        return $this->actingAs($member);
+        Sanctum::actingAs($member);
+
+        return $member;
     }
 
     public function __construct($name = null, array $data = [], $dataName = '')

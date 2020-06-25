@@ -4,6 +4,7 @@ namespace Tests\V1\APIs;
 
 use App\Models\Member;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Tests\Traits\MockRepositories;
 
@@ -70,7 +71,7 @@ class MemberAPIControllerTest extends TestCase
     public function test_can_remove_image()
     {
         $member = factory(Member::class)->create(['image' => 'image.jpg']);
-        $this->actingAs($member);
+        Sanctum::actingAs($member);
 
         $response = $this->postJson(route('api.v1.remove-image'));
 

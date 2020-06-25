@@ -6,7 +6,6 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use JWTAuth;
 use Tests\TestCase;
 
 /**
@@ -21,7 +20,7 @@ class RoleAPIPermissionTest extends TestCase
         parent::setUp();
 
         $this->loggedInUserId = factory(User::class)->create();
-        $token = JWTAuth::fromUser($this->loggedInUserId);
+        $token = $this->loggedInUserId->createToken('admin_token')->plainTextToken;
         $this->defaultHeaders = ['HTTP_Authorization' => 'Bearer '.$token];
     }
 

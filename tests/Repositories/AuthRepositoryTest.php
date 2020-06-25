@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Repositories\AuthRepository;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /**
@@ -32,7 +33,7 @@ class AuthRepositoryTest extends TestCase
     {
         /** @var User $farhan */
         $farhan = factory(User::class)->create();
-        $this->actingAs($farhan);
+        Sanctum::actingAs($farhan);
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create();

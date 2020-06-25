@@ -20,7 +20,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use JWTAuth;
 use Redirect;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Validator;
@@ -73,7 +72,7 @@ class MemberAuthController extends AppBaseController
         $input['membership_plan_id'] = $silver->id;
         $member = $this->memberRepository->storeMember($input);
 
-        $token = JWTAuth::fromUser($member);
+        $token = $member->createToken('member_token')->plainTextToken;
 
         return $this->sendResponse(['token' => $token, 'user' => $member], 'Registered successfully.');
     }

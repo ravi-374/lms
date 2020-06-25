@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /**
@@ -28,7 +29,7 @@ class AuthAPIControllerTest extends TestCase
     public function test_can_get_app_config()
     {
         $farhan = factory(User::class)->create();
-        $this->actingAs($farhan);
+        Sanctum::actingAs($farhan);
 
         /** @var Permission $permission */
         $permission = factory(Permission::class)->create();

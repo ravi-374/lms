@@ -7,7 +7,6 @@ use App\Models\IssuedBook;
 use App\Models\Member;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use JWTAuth;
 use Tests\TestCase;
 
 /**
@@ -21,8 +20,9 @@ class IssuedBookAPIPermissionTest extends TestCase
     {
         parent::setUp();
 
+        /** @var User loggedInUserId */
         $this->loggedInUserId = factory(User::class)->create();
-        $token = JWTAuth::fromUser($this->loggedInUserId);
+        $token = $this->loggedInUserId->createToken('admin_token')->plainTextToken;
         $this->defaultHeaders = ['HTTP_Authorization' => 'Bearer '.$token];
     }
 

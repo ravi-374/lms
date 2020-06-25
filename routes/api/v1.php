@@ -2,7 +2,7 @@
 /**
  * Member Auth Middleware
  */
-Route::group(['middleware' => 'member.auth'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'member.auth']], function () {
     // Reserve Book
     Route::post('books/{book_item}/reserve-book', 'IssuedBookAPIController@reserveBook')
         ->name('reserve-book');

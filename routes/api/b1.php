@@ -3,7 +3,7 @@
 /**
  * user Auth Middleware
  */
-Route::group(['middleware' => 'user.auth'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
     // Genre Routes
     Route::middleware('permission:manage_genres')->group(function () {
         Route::resource('genres', 'GenreAPIController');

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * App\Models\Member
@@ -50,9 +50,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $email_verified_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereEmailVerifiedAt($value)
  */
-class Member extends Authenticatable implements JWTSubject
+class Member extends Authenticatable
 {
-    use ImageTrait;
+    use ImageTrait, HasApiTokens;
     const SUSPENDED = 0;
     const IS_ACTIVE = 1;
     const IMAGE_PATH = 'members';
