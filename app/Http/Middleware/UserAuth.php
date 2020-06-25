@@ -33,18 +33,6 @@ class UserAuth
             return $next($request);
         }
 
-
-//        if (App::isLocal() && empty($token)) {
-//            /** @var User $user */
-//            $user = User::whereEmail('admin@lms.com')->first();
-//            if ($user) {
-//                Auth::loginUsingId($user->id);
-//
-//                return $next($request);
-//            }
-//        }
-
-
         /** @var User $user */
         $user = Auth::user();
 

@@ -31,16 +31,6 @@ class MemberAuth
             return $next($request);
         }
 
-        if (App::isLocal() && empty($token)) {
-            /** @var User $user */
-            $user = Member::whereEmail('member@lms.com')->first();
-            if ($user) {
-                Auth::loginUsingId($user->id);
-
-                return $next($request);
-            }
-        }
-
         /** @var Member $member */
         $member = Auth::user();
         if (! $member->email_verified_at) {
