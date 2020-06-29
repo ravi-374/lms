@@ -45,6 +45,9 @@ const UserTable = (props) => {
         {
             name: getFormattedMessage('profile.input.phone.label'),
             selector: 'phone',
+            cell: row => {
+                return <span>{ row.phone ? row.phone : 'N/A' }</span>
+            },
             sortable: true,
         },
         {

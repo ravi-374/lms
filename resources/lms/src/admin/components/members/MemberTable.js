@@ -45,6 +45,9 @@ const MemberTable = (props) => {
             name: getFormattedMessage('profile.input.phone.label'),
             selector: 'phone',
             sortable: true,
+            cell: row => {
+                return <span>{ row.phone ? row.phone : 'N/A' }</span>
+            },
         },
         {
             name: getFormattedMessage('members.select.plan.label'),
