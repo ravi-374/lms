@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response as HttpResponse;
@@ -87,7 +88,7 @@ class Handler extends ExceptionHandler
             }
         }
 
-        if ($exception instanceof TokenExpiredException) {
+        if ($exception instanceof AuthenticationException) {
             $code = HttpResponse::HTTP_UNAUTHORIZED;
         }
 
