@@ -31,6 +31,13 @@ export default {
             error => errorHandler(error)
         );
         const errorHandler = (error) => {
+
+            if(error.response.status === 401) {
+                window.location.href = environment.URL + '/#' + Routes.ADMIN_LOGIN;
+                localStorage.removeItem(Tokens.ADMIN);
+                localStorage.removeItem(LocalStorageKey.USER);
+            }
+
             if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED
                 || error.response.data.message === errorMessage.TOKEN_INVALID
                 || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
