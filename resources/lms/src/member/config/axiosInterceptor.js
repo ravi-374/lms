@@ -33,6 +33,12 @@ export default {
             error => errorHandler(error)
         );
         const errorHandler = (error) => {
+            if(error.response.status === 401) {
+                return window.location.href = environment.URL + '/#' + Routes.MEMBER_HOME;
+                localStorage.removeItem(Tokens.MEMBER);
+                localStorage.removeItem(LocalStorageKey.MEMBER);
+            }
+
             if (error.response.data.message === errorMessage.TOKEN_NOT_PROVIDED
                 || error.response.data.message === errorMessage.TOKEN_INVALID
                 || error.response.data.message === errorMessage.TOKEN_INVALID_SIGNATURE
