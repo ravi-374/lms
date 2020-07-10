@@ -51,9 +51,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read string $bookRequest
  * @property-read int $book_item_status
  * @property-read int|null $issued_books_count
+ * @property string|null $file_name
+ * @property-read string $book_item_name
+ * @property-read int $e_book_url
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereFileName($value)
  */
 class BookItem extends Model
 {
+    const DOCUMENT_PATH = 'book-items';
+
     const STATUS_AVAILABLE = 1;
     const STATUS_NOT_AVAILABLE = 2;
     const STATUS_LOST = 3;
@@ -68,9 +74,10 @@ class BookItem extends Model
 
     const FORMAT_HARDCOVER = 1;
     const FORMAT_PAPERBACK = 2;
+    const FORMAT_E_BOOK = 3;
 
     public $table = 'book_items';
-    protected $appends = ['book_item_status'];
+    protected $appends = ['book_item_status','e_book_url'];
 
     public $fillable = [
         'book_id',
@@ -82,6 +89,7 @@ class BookItem extends Model
         'price',
         'language_id',
         'publisher_id',
+        'file_name',
     ];
 
     /**
@@ -186,6 +194,19 @@ class BookItem extends Model
         }
 
         return IssuedBook::STATUS_AVAILABLE;
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function getEBookUrlAttribute()
+    {
+        if ($this->format == BookItem::FORMAT_E_BOOK) {
+            return storage_path('app/public/'.BookItem::DOCUMENT_PATH.'/'.$this->file_name);
+        }
+
+        return null;
     }
 
     /**

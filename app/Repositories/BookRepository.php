@@ -211,8 +211,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             }
 
             if (isset($item['format'])) {
-                if (! in_array($item['format'], [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK])) {
+                if (!in_array($item['format'],
+                    [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK, BookItem::FORMAT_E_BOOK])) {
                     throw new UnprocessableEntityHttpException('Invalid Book Format.');
+                }
+                if ($item['format'] == BookItem::FORMAT_E_BOOK && !isset($item['file'])) {
+                    throw new UnprocessableEntityHttpException('Upload pdf file.');
                 }
             }
 
@@ -312,6 +316,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     $item = new BookItem();
                     $item->book_code = isset($bookItem['book_code']) ? $bookItem['book_code'] : $this->generateUniqueBookCode();
                     $item->status = BookItem::STATUS_AVAILABLE;
+                }
+
+                if (isset($bookItem['format']) && $bookItem['format'] == BookItem::FORMAT_E_BOOK && !empty($bookItem['file'])) {
+                    $item->file_name = ImageTrait::makeAttachment($bookItem['file'], BookItem::DOCUMENT_PATH);
                 }
 
                 $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
