@@ -29,6 +29,9 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::get('countries', 'CountryAPIController@index')->name('countries.index');
     // Change Password
     Route::put('change-password', 'MemberAPIController@changePassword');
+    
+    // download e-book
+    Route::get('member/book-items/{book_item}/download', 'BookItemAPIController@downloadEBook')->name('member.download-e-book');
 });
 Route::post('logout', 'MemberAuthController@logout');
 

@@ -42,4 +42,21 @@ class BookItemAPIController extends AppBaseController
 
         return $this->sendResponse($records, 'BookItem retrieved successfully.');
     }
+    
+    /**
+     * @param  BookItem  $bookItem
+     *
+     * @return JsonResponse|null
+     */
+    public function downloadEBook(BookItem $bookItem)
+    {
+        if ($bookItem->format == BookItem::FORMAT_E_BOOK) {
+            $path = storage_path().'/app/public/'.BookItem::DOCUMENT_PATH.'/'.$bookItem->file_name;
+            if (file_exists($path)) {
+                return Response::download($path);
+            }
+        }
+
+        return $this->sendError('File Not Found.');
+    }
 }

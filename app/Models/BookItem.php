@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\BookItem
@@ -203,7 +204,8 @@ class BookItem extends Model
     public function getEBookUrlAttribute()
     {
         if ($this->format == BookItem::FORMAT_E_BOOK) {
-            return storage_path('app/public/'.BookItem::DOCUMENT_PATH.'/'.$this->file_name);
+            return Auth::user()->hasRole(Role::ROLE_ADMIN) ? url('admin/book-items/'.$this->id.'/download') :
+                url('member/book-items/'.$this->id.'/download');
         }
 
         return null;
