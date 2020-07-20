@@ -148,4 +148,35 @@ trait ImageTrait
 
         return str_replace($entities, $replacements, urlencode($url));
     }
+
+    /**
+     * @param UploadedFile $file
+     * @param string $path
+     *
+     * @throws ApiOperationFailedException
+     *
+     * @return string
+     */
+    public static function makeAttachment($file, $path)
+    {
+        try {
+            $fileName = '';
+            if (! empty($file)) {
+                $extension = $file->getClientOriginalExtension();
+                if (! in_array(strtolower($extension), ['pdf', 'doc', 'docx', 'txt'])) {
+                    throw new ApiOperationFailedException('Invalid Attachment', Response::HTTP_BAD_REQUEST);
+                }
+                $originalName = $file->getClientOriginalName();
+                $date = Carbon::now()->format('Y-m-d');
+                $originalName = sha1($originalName.time());
+                $fileName = $date.'_'.uniqid().'_'.$originalName.'.'.$extension;
+                $contents = file_get_contents($file->getRealPath());
+                Storage::disk('public')->put($path.DIRECTORY_SEPARATOR.$fileName, $contents);
+            }
+
+            return $fileName;
+        } catch (Exception $e) {
+            throw new ApiOperationFailedException($e->getMessage(), $e->getCode());
+        }
+    }
 }
