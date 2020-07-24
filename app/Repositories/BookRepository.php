@@ -319,7 +319,11 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 }
 
                 if (isset($bookItem['format']) && $bookItem['format'] == BookItem::FORMAT_E_BOOK && !empty($bookItem['file'])) {
-                    $item->file_name = ImageTrait::makeAttachment($bookItem['file'], BookItem::DOCUMENT_PATH);
+                    $item->file_name = ImageTrait::makeAttachment(
+                        $bookItem['file'],
+                        BookItem::DOCUMENT_PATH,
+                        config('app.ebook_disk')
+                    );
                 }
 
                 $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';

@@ -150,14 +150,14 @@ trait ImageTrait
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $path
+     * @param  UploadedFile  $file
+     * @param  string  $path
      *
+     * @param  null  $disk
      * @throws ApiOperationFailedException
-     *
      * @return string
      */
-    public static function makeAttachment($file, $path)
+    public static function makeAttachment($file, $path, $disk)
     {
         try {
             $fileName = '';
@@ -171,7 +171,7 @@ trait ImageTrait
                 $originalName = sha1($originalName.time());
                 $fileName = $date.'_'.uniqid().'_'.$originalName.'.'.$extension;
                 $contents = file_get_contents($file->getRealPath());
-                Storage::disk('public')->put($path.DIRECTORY_SEPARATOR.$fileName, $contents);
+                Storage::disk($disk)->put($path.DIRECTORY_SEPARATOR.$fileName, $contents);
             }
 
             return $fileName;
