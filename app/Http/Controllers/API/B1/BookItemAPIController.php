@@ -9,6 +9,7 @@ use App\Repositories\Contracts\BookItemRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Storage;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -115,15 +116,24 @@ class BookItemAPIController extends AppBaseController
     /**
      * @param  BookItem  $bookItem
      *
-     * @return JsonResponse|null
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|JsonResponse|\Illuminate\Http\Response
      */
     public function downloadEBook(BookItem $bookItem)
     {
         if ($bookItem->format == BookItem::FORMAT_E_BOOK) {
-            $path = storage_path().'/app/public/'.BookItem::DOCUMENT_PATH.'/'.$bookItem->file_name;
-            if (file_exists($path)) {
-                return Response::download($path);
-            }
+            $mime = Storage::disk(config('app.ebook_disk'))->mimeType(BookItem::DOCUMENT_PATH.'/'.$bookItem->file_name);
+            $file = Storage::disk(config('app.ebook_disk'))->get(BookItem::DOCUMENT_PATH.'/'.$bookItem->file_name);
+
+            $headers = [
+                'Content-Type'        => $mime,
+                'Content-Description' => 'File Transfer',
+                'Content-Disposition' => "attachment; filename={$bookItem->file_name}",
+                'filename'            => $bookItem->file_name,
+            ];
+
+            return response($file, 200, $headers);
         }
 
         return $this->sendError('File Not Found.');
