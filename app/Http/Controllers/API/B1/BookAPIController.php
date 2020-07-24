@@ -142,9 +142,9 @@ class BookAPIController extends AppBaseController
      */
     public function addItems(Book $book, AddBookItemRequest $request)
     {
-        $items = $request->get('items');
+        $items = $request->all();
 
-        $book = $this->bookRepository->addBookItems($book, $items);
+        $book = $this->bookRepository->addBookItems($book, $items['items']);
 
         return $this->sendResponse($book->toArray(), 'Book items added successfully.');
     }
