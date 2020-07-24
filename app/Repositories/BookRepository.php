@@ -216,7 +216,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     throw new UnprocessableEntityHttpException('Invalid Book Format.');
                 }
                 if ($item['format'] == BookItem::FORMAT_E_BOOK && !isset($item['file'])) {
-                    throw new UnprocessableEntityHttpException('Upload pdf file.');
+                    throw new UnprocessableEntityHttpException('E-Book is required.');
                 }
             }
 
