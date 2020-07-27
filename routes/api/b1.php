@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
         Route::post('books-import', 'BookAPIController@importBooks');
 
         // download e-book
-        Route::get('admin/book-items/{book_item}/download',
+        Route::get('book-items/{book_item}/download',
             'BookItemAPIController@downloadEBook')->name('admin.download-e-book');
     });
     // Get book details from third-party api

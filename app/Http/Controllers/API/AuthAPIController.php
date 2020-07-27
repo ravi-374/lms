@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
 use App\Models\Member;
-use App\Models\Role;
 use App\Models\Setting;
 use App\User;
 use Hash;
@@ -38,7 +37,7 @@ class AuthAPIController extends AppBaseController
             return $this->sendError('Invalid username or password', 422);
         }
 
-        if (! $user->hasRole(Role::ROLE_ADMIN) && ! $user->email_verified_at) {
+        if (! $user->email_verified_at) {
             throw new UnauthorizedException('Please verify your email.', 401);
         }
 
