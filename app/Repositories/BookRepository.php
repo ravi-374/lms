@@ -88,13 +88,23 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             unset($search['order_by']);
         }
 
-        $query = $this->allQuery($search, $skip, $limit)->with(['authors', 'items.publisher', 'items.language']);
+        $query = $this->allQuery($search, $skip, $limit);
         $this->applyDynamicSearch($search, $query);
 
         if (! empty($search['withCount'])) {
             return $query->count();
         }
 
+        if (isset($search['is_ebooks']) && $search['is_ebooks']) {
+            $query = $query->with(['authors', 'items' => function ($query) {
+                    $query->where('format', '=', BookItem::FORMAT_E_BOOK);
+                    $query->with(['publisher', 'language']);
+                },
+            ]);
+        } else {
+            $query = $query->with(['authors', 'items.publisher', 'items.language']);
+        }
+        
         $bookRecords = $query->get();
 
         if (! empty($orderBy)) {
@@ -215,9 +225,10 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     [BookItem::FORMAT_HARDCOVER, BookItem::FORMAT_PAPERBACK, BookItem::FORMAT_E_BOOK])) {
                     throw new UnprocessableEntityHttpException('Invalid Book Format.');
                 }
-                if ($item['format'] == BookItem::FORMAT_E_BOOK && !isset($item['file'])) {
+            }
+
+            if ($this->checkBookItemIsEBOOK($item) && !isset($item['file'])) {
                     throw new UnprocessableEntityHttpException('E-Book is required.');
-                }
             }
 
             if (isset($item['book_code'])) {
@@ -318,7 +329,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     $item->status = BookItem::STATUS_AVAILABLE;
                 }
 
-                if (isset($bookItem['format']) && $bookItem['format'] == BookItem::FORMAT_E_BOOK && !empty($bookItem['file'])) {
+                if ($this->checkBookItemIsEBOOK($bookItem) && !empty($bookItem['file'])) {
+                    $item->file_name = ImageTrait::makeAttachment($bookItem['file'], BookItem::DOCUMENT_PATH);
                     $item->file_name = ImageTrait::makeAttachment(
                         $bookItem['file'],
                         BookItem::DOCUMENT_PATH,
@@ -332,7 +344,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
                 $item->publisher_id = isset($bookItem['publisher_id']) ? $bookItem['publisher_id'] : null;
                 $item->language_id = isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
-                $item->status = isset($bookItem['status']) ? $bookItem['status'] : BookItem::STATUS_AVAILABLE;
+
+                if ($this->checkBookItemIsEBOOK($bookItem)) {
+                    $item->status = BookItem::STATUS_AVAILABLE;
+                } else {
+                    $item->status = isset($bookItem['status']) ? $bookItem['status'] : BookItem::STATUS_AVAILABLE;
+                }
 
                 $book->items()->save($item);
             }
@@ -624,5 +641,19 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             File::delete($filePath);
             throw new ApiOperationFailedException($e->getMessage());
         }
+    }
+
+    /**
+     * @param  array  $input
+     *
+     * @return bool
+     */
+    public function checkBookItemIsEBOOK($input)
+    {
+        if (isset($input['format']) && $input['format'] == BookItem::FORMAT_E_BOOK) {
+            return true;
+        }
+
+        return false;
     }
 }
