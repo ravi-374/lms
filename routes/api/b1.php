@@ -69,6 +69,9 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
     // Book search
     Route::get('search-books', 'BookItemAPIController@searchBooks')->name('books.search-books');
 
+    // get e-books
+    Route::get('e-books', 'BookAPIController@getEBooks')->name('e-books');
+
     // Users
     Route::middleware('permission:manage_users')->group(function () {
         Route::resource('users', 'UserAPIController');
