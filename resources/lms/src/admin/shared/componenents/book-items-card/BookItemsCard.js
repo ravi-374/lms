@@ -4,6 +4,7 @@ import {Button, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 import './BookItemsCard.scss';
 import CustomInput from '../../../../shared/components/CustomInput';
+import InputFile from '../../../../admin/components/book-items/inputFile';
 import {bookFormatOptions} from '../../../constants'
 import {prepareCreatableObject} from "../../prepareArray";
 import SelectCreatable from "../../../../shared/components/SelectCreatable";
@@ -16,6 +17,7 @@ const BookItemsCard = (props) => {
     const booksFormatOptions = getFormattedOptions(bookFormatOptions);
     const [onChangeLanguage] = bookITemCreationWarning(change);
     const [onChangePublisher] = bookITemCreationWarning(change);
+    const [itemIndex, setItemIndex] = useState([]);
 
     const onAddSubFields = () => {
         setItems([...items, { id: 1 }]);
@@ -26,6 +28,14 @@ const BookItemsCard = (props) => {
         return fields.remove(index);
     };
 
+    const onChangeBookFormate = (index, option) => {
+        if (option.value === 3) {
+            setItemIndex([...itemIndex, index]);
+        } else if (itemIndex.includes(index)) {
+            setItemIndex(itemIndex.filter(item => item !== index));
+        }
+    }
+
     const renderFields = () => {
         return fields.map((item, index) => (
             <tr key={index}>
@@ -35,12 +45,22 @@ const BookItemsCard = (props) => {
                 </td>
                 <td className="book-items-card__format">
                     <Field name={`${item}.format`} required options={prepareCreatableObject(booksFormatOptions)}
-                           placeholder="books.items.select.format.placeholder" groupText="wpforms"
-                           component={SelectCreatable} isMini={true} menuPlacement="top"/>
+                        placeholder="books.items.select.format.placeholder" groupText="wpforms"
+                        onChange={(option) => onChangeBookFormate(index, option)}component={SelectCreatable}
+                        isMini={true} menuPlacement="top"/>
+                </td>
+                <td className="p-3">
+                    {
+                        itemIndex.includes(index) ?
+                            <Field name={`${item}.file`} type="file" component={InputFile} /> : null
+                    }
                 </td>
                 <td>
-                    <Field name={`${item}.price`} min="1" type="number" placeholder="books.items.input.price.label"
-                           groupText={mapCurrencyCode(currency)} component={CustomInput}/>
+                    {
+                        !itemIndex.includes(index) ?
+                                <Field name={`${item}.price`} min="1" type="number" placeholder="books.items.input.price.label"
+                                    groupText={mapCurrencyCode(currency)} component={CustomInput}/> : null
+                    }
                 </td>
                 <td className="book-items-card__language">
                     <Field name={`${item}.language`} required options={bookLanguages}
@@ -71,6 +91,7 @@ const BookItemsCard = (props) => {
                 <tr>
                     <th className="book-items-card__item-header">{getFormattedMessage('books.items.input.edition.label')}</th>
                     <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.format.label')}</th>
+                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.file.label')}</th>
                     <th>{getFormattedMessage('books.items.input.price.label')}</th>
                     <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.language.label')}</th>
                     <th>{getFormattedMessage('books.items.select.publisher.label')}</th>

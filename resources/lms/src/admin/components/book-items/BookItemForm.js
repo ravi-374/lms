@@ -14,6 +14,7 @@ import {mapCurrencyCode} from "../../../shared/sharedMethod";
 import {prepareBookLanguage} from "../../shared/prepareArray";
 import {fetchPublishers} from "../../store/actions/publisherAction";
 import {fetchBookLanguages} from "../../store/actions/bookLanguageAction";
+import InputFile from './inputFile';
 
 const BookItemForm = (props) => {
     const {
@@ -24,6 +25,7 @@ const BookItemForm = (props) => {
     const inputRef = createRef();
     const bookItemsStatusOptions = getFormattedOptions(bookItemStatusOptions);
     const booksFormatOptions = getFormattedOptions(bookFormatOptions);
+    const [formateOptions, setFormatOptions] = useState(null);
 
     useEffect(() => {
         fetchBookLanguages();
@@ -43,7 +45,7 @@ const BookItemForm = (props) => {
     };
 
     const onSave = (formValues) => {
-        const { book_code, edition, format, language, publisher, location, price, status } = formValues;
+        const { book_code, edition, format, language, publisher, location, price, status, file } = formValues;
         onSaveBookItems({
             book_code,
             edition,
@@ -52,9 +54,14 @@ const BookItemForm = (props) => {
             publisher_id: publisher ? publisher.id : null,
             status: status.id,
             location,
-            price
+            price,
+            file
         });
     };
+
+    const onChangeFormat = (options) => {
+        setFormatOptions(options);
+    }
 
     return (
         <Row className="animated fadeIn book-form m-3">
@@ -69,16 +76,26 @@ const BookItemForm = (props) => {
             </Col>
             <Col xs={6}>
                 <Field name="format" label="books.items.select.format.label" required options={booksFormatOptions}
-                       placeholder="books.items.select.format.placeholder" groupText="wpforms" component={Select}/>
+                       placeholder="books.items.select.format.placeholder" groupText="wpforms" component={Select} onChange={(options) => onChangeFormat(options)}/>
             </Col>
+            {
+                formateOptions && formateOptions.id === 3 ?
+                <Col xs={6}>
+                    <Field name="file" type="file" component={InputFile} />
+                </Col> :
+                null
+            }
             <Col xs={6}>
                 <Field name="location" label="books.items.input.location.label" groupText="map-pin"
                        component={InputGroup}/>
             </Col>
-            <Col xs={6}>
-                <Field name="price" min="1" type="number" label="books.items.input.price.label"
-                       groupText={mapCurrencyCode(currency)} component={InputGroup}/>
-            </Col>
+            {formateOptions && formateOptions.id !== 3 ?
+                <Col xs={6}>
+                    <Field name="price" min="1" type="number" label="books.items.input.price.label"
+                        groupText={mapCurrencyCode(currency)} component={InputGroup}/>
+                </Col> :
+                null
+            }
             <Col xs={6}>
                 <Field name="language" label="books.items.select.language.label" required options={bookLanguages}
                        placeholder="books.items.select.language.placeholder" groupText="language" component={Select}

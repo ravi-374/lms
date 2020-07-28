@@ -32,6 +32,7 @@ const TableHeader = (props) => {
     return (
         <tr className="table-header">
             {renderStaticColumn()}
+            {console.log("headers",headers)}
             {headers.map(header =>
                 (
                     <th key={header.id} onClick={() => sort(header.id)} className="table-header">
