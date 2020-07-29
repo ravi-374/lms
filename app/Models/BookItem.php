@@ -206,8 +206,8 @@ class BookItem extends Model
     public function getEBookUrlAttribute()
     {
         if ($this->format == BookItem::FORMAT_E_BOOK) {
-            return (Auth::user() instanceof User) ? url('api/b1/book-items/'.$this->id.'/download') :
-                url('api/m1/book-items/'.$this->id.'/download');
+            return (Auth::user() instanceof User) ? url('b1/book-items/'.$this->id.'/download') :
+                url('m1/book-items/'.$this->id.'/download');
         }
 
         return null;

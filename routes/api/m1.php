@@ -32,10 +32,6 @@ Route::group(['middleware' => ['auth:sanctum', 'member.auth']], function () {
 
     // get e-books
     Route::get('e-books', 'BookItemAPIController@getEBooks')->name('e-books');
-    
-    // download e-book
-    Route::get('book-items/{book_item}/download',
-        'BookItemAPIController@downloadEBook')->name('member.download-e-book');
 });
 Route::post('logout', 'MemberAuthController@logout');
 
