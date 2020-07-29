@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth:sanctum', 'member.auth']], function () {
     Route::get('my-settings', 'MemberSettingAPIController@index');
     Route::post('update-settings', 'MemberSettingAPIController@update');
 
+    // get e-books
+    Route::get('e-books', 'BookItemAPIController@getEBooks')->name('e-books');
 });
 
 Route::post('register-member', 'MemberAuthController@register')->name('register-member');

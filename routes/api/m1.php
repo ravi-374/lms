@@ -29,9 +29,6 @@ Route::group(['middleware' => ['auth:sanctum', 'member.auth']], function () {
     Route::get('countries', 'CountryAPIController@index')->name('countries.index');
     // Change Password
     Route::put('change-password', 'MemberAPIController@changePassword');
-
-    // get e-books
-    Route::get('e-books', 'BookItemAPIController@getEBooks')->name('e-books');
 });
 Route::post('logout', 'MemberAuthController@logout');
 
