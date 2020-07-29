@@ -4,6 +4,7 @@ const Books = lazy(() => import('./components/book-search/BookSearch'));
 const MemberProfile = lazy(() => import('./components/member-profile/MemberProfile'));
 const BookHistory = lazy(() => import('./components/book-history/BookHistory'));
 const BookRequests = lazy(() => import('./components/book-requests/BookRequests'));
+const Ebooks = lazy(() => import('./components/E-books/Ebooks'));
 
 export default [
     {
@@ -29,5 +30,11 @@ export default [
         exact: true,
         name: 'BookRequests',
         component: BookRequests
+    },
+    {
+        path: '/app/e-books',
+        exact: true,
+        name: 'E-Books',
+        component: Ebooks
     },
 ];

@@ -39,6 +39,10 @@ export const bookActionType = {
     RESET_SEARCH_BOOKS: 'RESET_SEARCH_BOOKS',
 };
 
+export const eBookActionType = {
+    FETCH_E_BOOKS: 'FETCH_E_BOOKS',
+}
+
 export const authorActionType = {
     FETCH_AUTHORS: 'FETCH_AUTHORS',
 };
