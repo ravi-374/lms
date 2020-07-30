@@ -14,6 +14,7 @@
     "authors.success.edit.message": "作者更新成功。",
     "authors.success.delete.message": "作者已成功删除。",
     "books.title": "图书",
+    "books.filter.e-book.label": "电子书",
     "books.input.new-btn.label": "新书",
     "books.input.import-btn.label": "导入书",
     "books.import-file-btn.label": "按文件导入书",

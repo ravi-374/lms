@@ -14,6 +14,7 @@
     "authors.success.edit.message": "لا مؤلفين بعد ...",
     "authors.success.delete.message": "لا مؤلفين بعد ...",
     "books.title": "كتب",
+    "books.filter.e-book.label": "كتب الكترونية",
     "books.input.new-btn.label": "كتاب جديد",
     "books.input.import-btn.label": "استيراد كتاب",
     "books.import-file-btn.label": "استيراد كتاب بالملف",

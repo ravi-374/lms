@@ -15,6 +15,7 @@
     "authors.success.delete.message": "Autor excluído com sucesso.",
     "books.title": "Livros",
     "books.input.new-btn.label": "Livro Novo",
+    "books.filter.e-book.label": "E-Livros",
     "books.input.import-btn.label": "Importar Livro",
     "books.import-file-btn.label": "Importar livro por arquivo",
     "books.export-btn.label": "Exportação",

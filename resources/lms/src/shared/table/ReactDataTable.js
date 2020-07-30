@@ -76,9 +76,10 @@ const ReactTable = (props) => {
             skip: searchText !== '' ? 0 : (page - 1) * perPage,
             direction: direction,
             search: isShowFilterField && filterText !== intl.formatMessage({ id: FilterOption.ALL }) &&
-            searchText === '' ? filterText.toLowerCase() : '' ||
+            searchText === '' ? filterText === 1 ? 1 : filterText.toLowerCase() : '' ||
             isShowFilterField && searchText !== '' ? searchText.toLowerCase() : ''
-            || !isShowFilterField ? searchText.toLowerCase() : ''
+            || !isShowFilterField ? searchText.toLowerCase() : '',
+            is_ebooks: filterText ? filterText : '',
         };
         onChange(filters);
     };

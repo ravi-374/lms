@@ -15,6 +15,7 @@
     "authors.success.delete.message": "Yazar başarıyla silindi.",
     "books.title": "Kitabın",
     "books.input.new-btn.label": "Yeni Kitap",
+    "books.filter.e-book.label": "E-Kitaplar",
     "books.input.import-btn.label": "Kitabı İçe Aktar",
     "books.import-file-btn.label": "Kitabı Dosyaya Aktar",
     "books.export-btn.label": "ihracat",

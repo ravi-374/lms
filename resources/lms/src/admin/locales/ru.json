@@ -15,6 +15,7 @@
     "authors.success.delete.message": "Автор успешно удален.",
     "books.title": "Книги",
     "books.input.new-btn.label": "Новая Книга",
+    "books.filter.e-book.label": "Электронные книги",
     "books.input.import-btn.label": "Импорт Книги",
     "books.import-file-btn.label": "Импорт книги по файлу",
     "books.export-btn.label": "экспорт",
