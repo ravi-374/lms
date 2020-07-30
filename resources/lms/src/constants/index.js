@@ -99,6 +99,7 @@ export const apiBaseURL = {
     AUTHOR: 'authors',
     BOOK_LANGUAGE: 'book-languages',
     BOOK_REQUEST: 'book-requests',
+    E_BOOK: 'e-books',
     BOOK: 'books',
     BOOK_DETAILS: 'get-book-details',
     BOOK_LIMIT: 'books',

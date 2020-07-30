@@ -10,6 +10,7 @@ import membershipPlanReducer from './membershipPlanReducer';
 import countryReducer from './countryReducer';
 import bookHistoryReducer from './bookHistoryReducer';
 import bookReducer from './bookReducer';
+import ebookReducer from './ebookReducer';
 import bookSearchReducer from './bookSearchReducer';
 import authorReducer from './authorReducer';
 import localStorageReducer from '../../../store/reducers/localStorageReducer';
@@ -36,6 +37,7 @@ export default combineReducers({
     countries: countryReducer,
     bookHistory: bookHistoryReducer,
     books: bookReducer,
+    ebooks: ebookReducer,
     totalBooks: totalBookReducer,
     searchBooks: bookSearchReducer,
     authors: authorReducer,

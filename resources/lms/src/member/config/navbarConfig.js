@@ -18,5 +18,10 @@ export default {
             url: '/app/book-requests',
             icon: 'fas fa-book',
         },
+        {
+            name: "E-Books",
+            url: '/app/e-books',
+            icon: 'fas fa-book',
+        },
     ]
 };
