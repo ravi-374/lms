@@ -333,7 +333,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                 }
 
                 if ($this->checkBookItemIsEBOOK($bookItem) && !empty($bookItem['file'])) {
-                    $item->file_name = ImageTrait::makeAttachment($bookItem['file'], BookItem::DOCUMENT_PATH);
                     $item->file_name = ImageTrait::makeAttachment(
                         $bookItem['file'],
                         BookItem::DOCUMENT_PATH,
