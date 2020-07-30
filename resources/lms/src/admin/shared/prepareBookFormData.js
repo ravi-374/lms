@@ -27,6 +27,7 @@ export default (formValues) => {
             formData.append(`items[${index}][language_id]`, item.language ? item.language.value.toString() : '');
             formData.append(`items[${index}][publisher_id]`, item.publisher ? item.publisher.value.toString() : '');
             formData.append(`items[${index}][price]`, item.price ? item.price.toString() : '');
+            formData.append(`items[${index}][file]`, item.file ? item.file[0] : '');
         });
     }
     return formData;

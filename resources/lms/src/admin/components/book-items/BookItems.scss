@@ -16,3 +16,17 @@
         }
     }
 }
+
+.input-file {
+    width: 105px;
+    border: solid 2px #00C6FF;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+
+    &__input-type {
+        display: none;
+    }
+}
