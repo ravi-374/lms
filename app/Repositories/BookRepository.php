@@ -96,11 +96,14 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         if (isset($search['is_ebooks']) && $search['is_ebooks']) {
-            $query = $query->with(['authors', 'items' => function ($query) {
-                    $query->where('format', '=', BookItem::FORMAT_E_BOOK);
+            $query = $query->with([
+                'authors', 'items' => function ($query) {
+                    $query->where('format', BookItem::FORMAT_E_BOOK);
                     $query->with(['publisher', 'language']);
                 },
-            ]);
+            ])->whereHas('items', function (Builder $query) {
+                $query->where('format', BookItem::FORMAT_E_BOOK);
+            });
         } else {
             $query = $query->with(['authors', 'items.publisher', 'items.language']);
         }
