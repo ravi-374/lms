@@ -92,7 +92,8 @@ export const availableBookActionType = {
 
 export const bookFormatConstant = {
     FORMAT_HARDCOVER: 1,
-    FORMAT_PAPERBACK: 2
+    FORMAT_PAPERBACK: 2,
+    FORMAT_E_BOOK: 3
 };
 
 export const bookStatusConstant = {
@@ -102,7 +103,8 @@ export const bookStatusConstant = {
 
 export const bookFormatOptions = [
     { id: 1, name: 'books-items.filter.format.hardcover.label' },
-    { id: 2, name: 'books-items.filter.format.paperback.label' }
+    { id: 2, name: 'books-items.filter.format.paperback.label' },
+    { id: 3, name: 'books-items.filter.format.e-book.label' },
 ];
 
 const bookStatus = [
