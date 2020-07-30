@@ -14,6 +14,7 @@
     "authors.success.edit.message": "Author updated successfully.",
     "authors.success.delete.message": "Author deleted successfully.",
     "books.title": "Books",
+    "books.filter.e-book.label": "E-Books",
     "books.input.new-btn.label": "New Book",
     "books.input.import-btn.label": "Import Book",
     "books.import-file-btn.label": "Import Book by File",

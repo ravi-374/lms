@@ -15,6 +15,7 @@
     "authors.success.delete.message": "نویسنده با موفقیت حذف شد.",
     "books.title": "کتابها",
     "books.input.new-btn.label": "کتاب جدید",
+    "books.filter.e-book.label": "کتابهای الکترونیکی",
     "books.input.import-btn.label": "کتاب واردات",
     "books.import-file-btn.label": "وارد کردن کتاب توسط پرونده",
     "books.export-btn.label": "صادرات",

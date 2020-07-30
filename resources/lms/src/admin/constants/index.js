@@ -293,6 +293,10 @@ export const bookCirculationFilterOptions = [
     { id: 8, name: 'books-circulation.filter.archived.label', defaultValue: 'Archived' }
 ];
 
+export const bookFilterOptions = [
+    {id: 1, name: 'books.filter.e-book.label', defaultValue: 1}
+]
+
 export const importActionType = {
     FETCH_IMPORT_BOOK: 'FETCH_IMPORT_BOOK',
     CLEAR_IMPORT_BOOK: 'CLEAR_IMPORT_BOOK',
@@ -301,6 +305,7 @@ export const importActionType = {
 export const storageKey = {
     BOOK_CIRCULATION: 'book_circulation',
     MEMBERS: 'members',
+    BOOK: 'book',
 };
 
 export const languageOptions = [

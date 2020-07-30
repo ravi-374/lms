@@ -9,7 +9,7 @@ import DeleteBook from './DeleteBook';
 import HeaderTitle from '../../../shared/header-title/HeaderTitle';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import {Routes, icon} from "../../../constants";
-import {getFormattedMessage, prepareFullNames} from '../../../shared/sharedMethod';
+import {getFormattedMessage, prepareFullNames, getFormattedOptions} from '../../../shared/sharedMethod';
 import ReactDataTable from '../../../shared/table/ReactDataTable';
 import {fetchBooks, exportBook} from '../../store/actions/bookAction';
 import {toggleModal} from '../../../store/action/modalAction';
@@ -19,6 +19,7 @@ import ImportBook from './ImportBook';
 import {Dropdown} from 'react-bootstrap';
 import {importBookByFile} from '../../store/actions/fileAction';
 import {environment} from '../../../environment';
+import {bookFilterOptions, storageKey} from "../../constants";
 
 const Books = (props) => {
     const { books, history, isLoading, toggleModal, totalRecord, fetchBooks,
@@ -27,6 +28,7 @@ const Books = (props) => {
     const [importBook, setImportBook] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
     const [book, setBook] = useState(null);
+    const bookStatusFilter = getFormattedOptions(bookFilterOptions);
     const cardModalProps = {
         book,
         toggleModal,
@@ -175,8 +177,9 @@ const Books = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={books} columns={columns} loading={isLoading}
+                            <ReactDataTable items={books} columns={columns} loading={isLoading} isShowFilterField
                                             emptyStateMessageId="books.empty-state.title" totalRows={totalRecord}
+                                            filterKeyName={storageKey.BOOK} filterOptions={bookStatusFilter}
                                             emptyNotFoundStateMessageId="book.not-found.empty-state.title"
                                             onChange={onChange} icon={(icon.BOOK)}/>
                             <DeleteBook {...cardModalProps}/>
