@@ -7,6 +7,7 @@ import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import BookItemStatus from "../../../shared/book-item-status/BookItemStatus";
 import {getFormattedMessage, priceFormatter} from "../../../shared/sharedMethod";
+import {Tokens} from "../../../constants";
 import { bookFormatConstant } from "../../constants";
 
 export const BookItemTable = (props) => {
@@ -23,6 +24,11 @@ export const BookItemTable = (props) => {
         const statusProps = { status: bookItem.status, item: bookItem };
         return <BookItemStatus {...statusProps} item={bookItem}/>;
     };
+
+    const onClickOpenEBook = (e_book_url) => {
+        const api = e_book_url + "?token=" + localStorage.getItem(Tokens.ADMIN);
+        window.open(api, "_blank");
+    }
 
     const bookFormat = (bookFormat) => {
         let field = "books-items.filter.format.e-book.label";
@@ -47,7 +53,8 @@ export const BookItemTable = (props) => {
                     }
                     return (
                         <tr key={bookItem.id.toString()}>
-                            <td className="book-item__table-book-code">{bookItem.book_code}</td>
+                            <td className={bookItem.book_code ? "book-item__table-book-link-code" : "book-item__table-book-code"}
+                                onClick={() => onClickOpenEBook(bookItem.e_book_url)}>{bookItem.book_code}</td>
                             <td>{bookItem.edition}</td>
                             <td>{bookItem.language_name}</td>
                             <td>{bookFormat(bookItem.format)}</td>
