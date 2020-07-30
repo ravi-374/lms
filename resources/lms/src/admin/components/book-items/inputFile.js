@@ -1,8 +1,6 @@
-import React,{useState} from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import "./BookItems.scss";
-import {getFormattedMessage} from "../../../shared/sharedMethod";
-import {Label} from 'reactstrap';
+import { getFormattedMessage } from "../../../shared/sharedMethod";
 
 const InputFile = (props) => {
     const { type, input } = props;
@@ -16,13 +14,13 @@ const InputFile = (props) => {
 
     return (
         <div>
-        <label className="input-file">
-            <span className="text-primary">{getFormattedMessage('books.items.choose-file-btn.label')}</span>
-            <input className="input-file__input-type" type={type} onChange={onInputChange} accept=".pdf" />
-        </label>
-        <div className="text-primary">
-            {file ? file.name : getFormattedMessage('books.items.no-file-chosen-text')}
-        </div>
+            <label className="input-file">
+                <span className="text-primary">{ getFormattedMessage('books.items.choose-file-btn.label') }</span>
+                <input className="input-file__input-type" type={ type } onChange={ onInputChange } accept=".pdf"/>
+            </label>
+            <div className="text-primary">
+                { file ? file.name : getFormattedMessage('books.items.no-file-chosen-text') }
+            </div>
         </div>
     )
 }
