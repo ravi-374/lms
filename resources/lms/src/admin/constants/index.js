@@ -92,7 +92,8 @@ export const availableBookActionType = {
 
 export const bookFormatConstant = {
     FORMAT_HARDCOVER: 1,
-    FORMAT_PAPERBACK: 2
+    FORMAT_PAPERBACK: 2,
+    FORMAT_E_BOOK: 3
 };
 
 export const bookStatusConstant = {

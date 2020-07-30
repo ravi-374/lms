@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EBookMiddleware;
 use App\Http\Middleware\MemberAuth;
 use App\Http\Middleware\UserAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -69,6 +70,7 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'user.auth'          => UserAuth::class,
         'member.auth'        => MemberAuth::class,
+        'eBook'              => EBookMiddleware::class,
     ];
 
     /**

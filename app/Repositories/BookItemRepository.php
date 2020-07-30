@@ -61,6 +61,7 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
             });
         });
 
+
         return $query->get();
     }
 
@@ -87,6 +88,30 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
         $records = $this->sortByReturnDueDate($records);
 
         return $records;
+    }
+
+    /**
+     * @param  array  $search
+     * @param  null  $skip
+     * @param  null  $limit
+     *
+     *
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function searchEBooks($search = [], $skip = null, $limit = null)
+    {
+        $query = $this->allQuery($search, $skip, $limit)->with([
+            'book.authors',
+            'lastIssuedBook',
+            'publisher',
+            'language',
+        ]);
+        $query = $this->applyDynamicSearch($search, $query);
+        $query->eBook();
+
+        $query->orderByDesc('created_at');
+
+        return $query->get();
     }
 
     /**

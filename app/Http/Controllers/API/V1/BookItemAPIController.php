@@ -42,4 +42,26 @@ class BookItemAPIController extends AppBaseController
 
         return $this->sendResponse($records, 'BookItem retrieved successfully.');
     }
+
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     */
+    public function getEBooks(Request $request)
+    {
+        $input = $request->except(['limit', 'skip']);
+
+        $records = $this->bookItemRepo->searchEBooks(
+            $input,
+            $request->get('skip', null),
+            $request->get('limit', null)
+        );
+
+        $records = $records->map(function (BookItem $bookItem) {
+            return $bookItem->apiEBookResponse();
+        });
+
+        return $this->sendResponse($records, 'BookItem retrieved successfully.');
+    }
 }

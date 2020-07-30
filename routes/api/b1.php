@@ -59,15 +59,15 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
         Route::get('books-export', 'BookAPIController@exportBooks');
         Route::post('books-import', 'BookAPIController@importBooks');
 
-        // download e-book
-        Route::get('admin/book-items/{book_item}/download',
-            'BookItemAPIController@downloadEBook')->name('admin.download-e-book');
     });
     // Get book details from third-party api
     Route::get('get-book-details', 'BookAPIController@getBookDetails');
 
     // Book search
     Route::get('search-books', 'BookItemAPIController@searchBooks')->name('books.search-books');
+
+    // get e-books
+    Route::get('e-books', 'BookAPIController@getEBooks')->name('e-books');
 
     // Users
     Route::middleware('permission:manage_users')->group(function () {

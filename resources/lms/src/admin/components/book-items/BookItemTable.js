@@ -7,6 +7,7 @@ import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
 import BookItemStatus from "../../../shared/book-item-status/BookItemStatus";
 import {getFormattedMessage, priceFormatter} from "../../../shared/sharedMethod";
+import { bookFormatConstant } from "../../constants";
 
 export const BookItemTable = (props) => {
     const { bookItems, onClickModal, sortAction, sortObject, currency } = props;
@@ -14,6 +15,7 @@ export const BookItemTable = (props) => {
         { id: 'book_code', name: getFormattedMessage('books.items.input.book-code.label') },
         { id: 'edition', name: getFormattedMessage('books.items.input.edition.label') },
         { id: 'language_name', name: getFormattedMessage('books.items.select.language.label') },
+        { id: 'format', name: getFormattedMessage('books.items.select.format.label') },
         { id: 'price', name: getFormattedMessage('books.items.input.price.label') },
     ];
     const headerProps = { sortAction, sortObject, sortConfig, headers, isStatusField: true };
@@ -21,6 +23,18 @@ export const BookItemTable = (props) => {
         const statusProps = { status: bookItem.status, item: bookItem };
         return <BookItemStatus {...statusProps} item={bookItem}/>;
     };
+
+    const bookFormat = (bookFormat) => {
+        let field = "books-items.filter.format.e-book.label";
+        if (bookFormat === bookFormatConstant.FORMAT_HARDCOVER) {
+            field = "books-items.filter.format.hardcover.label";
+        } else if (bookFormat === bookFormatConstant.FORMAT_PAPERBACK) {
+            field = "books-items.filter.format.paperback.label"
+        }
+
+        return (getFormattedMessage(field));
+    }
+
     return (
         <Table hover bordered striped responsive size="md" className="book-item__table">
             <thead>
@@ -36,6 +50,7 @@ export const BookItemTable = (props) => {
                             <td className="book-item__table-book-code">{bookItem.book_code}</td>
                             <td>{bookItem.edition}</td>
                             <td>{bookItem.language_name}</td>
+                            <td>{bookFormat(bookItem.format)}</td>
                             <td className="book-item__table-price">{priceFormatter(bookItem.price, currency)}</td>
                             <td className="book-item__table-status">{renderBookItemStatus(bookItem)}</td>
                             <td className="text-center book-item__table-action">

@@ -198,4 +198,28 @@ class BookAPIController extends AppBaseController
 
         return $this->sendSuccess('Books imported successfully.');
     }
+
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     */
+    public function getEBooks(Request $request)
+    {
+        $input = $request->except(['skip', 'limit']);
+        $input['is_ebooks'] = true;
+        $books = $this->bookRepository->all(
+            $input,
+            $request->get('skip'),
+            $request->get('limit')
+        );
+
+        $input['withCount'] = 1;
+
+        return $this->sendResponse(
+            $books->toArray(),
+            'Books retrieved successfully.',
+            ['totalRecords' => $this->bookRepository->all($input)]
+        );
+    }
 }

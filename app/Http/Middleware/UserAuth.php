@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App;
-use App\Models\Role;
 use App\Traits\CommonMiddlewareFunctions;
 use App\User;
 use Auth;
@@ -36,7 +35,7 @@ class UserAuth
         /** @var User $user */
         $user = Auth::user();
 
-        if (! $user->hasRole(Role::ROLE_ADMIN) && ! $user->email_verified_at) {
+        if (! $user->email_verified_at) {
             throw new UnauthorizedException('Please verify your email.', 401);
         }
 

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\User;
+use Auth;
 use Carbon\Carbon;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\BookItem
@@ -56,6 +57,7 @@ use Illuminate\Support\Facades\Auth;
  * @property-read string $book_item_name
  * @property-read int $e_book_url
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem whereFileName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\BookItem eBook()
  */
 class BookItem extends Model
 {
@@ -78,7 +80,7 @@ class BookItem extends Model
     const FORMAT_E_BOOK = 3;
 
     public $table = 'book_items';
-    protected $appends = ['book_item_status','e_book_url'];
+    protected $appends = ['book_item_status', 'e_book_url'];
 
     public $fillable = [
         'book_id',
@@ -204,8 +206,8 @@ class BookItem extends Model
     public function getEBookUrlAttribute()
     {
         if ($this->format == BookItem::FORMAT_E_BOOK) {
-            return Auth::user()->hasRole(Role::ROLE_ADMIN) ? url('admin/book-items/'.$this->id.'/download') :
-                url('member/book-items/'.$this->id.'/download');
+            return (Auth::user() instanceof User) ? url('b1/book-items/'.$this->id.'/download') :
+                url('m1/book-items/'.$this->id.'/download');
         }
 
         return null;
@@ -230,5 +232,34 @@ class BookItem extends Model
         ];
 
         return $bookItem;
+    }
+
+    public function apiEBookResponse()
+    {
+        $bookItem = [
+            "id"            => $this->id,
+            "name"          => $this->book->name,
+            "status"        => $this->status,
+            "format"        => $this->format,
+            "language_name" => $this->language->language_name,
+            "authors"       => implode(',', $this->book->authors->pluck('full_name')->toArray()),
+            "isbn_no"       => $this->book->isbn,
+            "edition"       => $this->edition,
+            "book_code"     => $this->book_code,
+            "e_book_url"    => $this->e_book_url,
+        ];
+
+        return $bookItem;
+    }
+
+    /**
+     * @param  Builder  $query
+     *
+     *
+     * @return Builder
+     */
+    public function scopeEBook(Builder $query)
+    {
+        return $query->where('format', self::FORMAT_E_BOOK);
     }
 }

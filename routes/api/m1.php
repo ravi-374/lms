@@ -3,7 +3,7 @@
 /**
  * Member Auth Middleware
  */
-Route::group(['middleware' => 'member.auth'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'member.auth']], function () {
     // Book search
     Route::get('search-books', 'BookItemAPIController@searchBooks')->name('search-books.index');
     // get logged in member details
@@ -29,9 +29,6 @@ Route::group(['middleware' => 'member.auth'], function () {
     Route::get('countries', 'CountryAPIController@index')->name('countries.index');
     // Change Password
     Route::put('change-password', 'MemberAPIController@changePassword');
-    
-    // download e-book
-    Route::get('member/book-items/{book_item}/download', 'BookItemAPIController@downloadEBook')->name('member.download-e-book');
 });
 Route::post('logout', 'MemberAuthController@logout');
 

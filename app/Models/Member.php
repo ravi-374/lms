@@ -53,6 +53,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Member extends Authenticatable
 {
     use ImageTrait, HasApiTokens;
+
     const SUSPENDED = 0;
     const IS_ACTIVE = 1;
     const IMAGE_PATH = 'members';
