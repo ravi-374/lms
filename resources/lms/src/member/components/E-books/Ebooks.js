@@ -7,7 +7,8 @@ import ReactDataTable from "../../../shared/table/ReactDataTable";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
 import {fetchEBookRequests} from "../../store/actions/ebookAction";
-import {icon} from "../../../constants";
+import {icon, Tokens} from "../../../constants";
+import "./ebook.scss";
 
 const Ebooks = (props) => {
     const { ebooks, isLoading, fetchEBookRequests } = props;
@@ -15,6 +16,11 @@ const Ebooks = (props) => {
     const onChange = (filter) => {
         fetchEBookRequests(filter, true);
     };
+
+    const onClickBookDownload = (e_book_url) => {
+        const api = e_book_url + "?token=" + localStorage.getItem(Tokens.MEMBER);
+        window.open(api, "_blank");
+    }
 
     const columns = [
         {
@@ -28,7 +34,7 @@ const Ebooks = (props) => {
             name: getFormattedMessage('e-books.input.name.label'),
             selector: 'e_book_name',
             sortable: true,
-            cell: row => <span>{row.name}</span>,
+            cell: row => <span className="book-name" onClick={()=>onClickBookDownload(row.e_book_url)}>{row.name}</span>,
         },
         {
             name: getFormattedMessage('e-books.input.edition.label'),
