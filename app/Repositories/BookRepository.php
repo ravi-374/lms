@@ -89,12 +89,6 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         }
 
         $query = $this->allQuery($search, $skip, $limit);
-        $this->applyDynamicSearch($search, $query);
-
-        if (! empty($search['withCount'])) {
-            return $query->count();
-        }
-
         if (isset($search['is_ebooks']) && $search['is_ebooks']) {
             $query = $query->with([
                 'authors', 'items' => function ($query) {
@@ -107,6 +101,13 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         } else {
             $query = $query->with(['authors', 'items.publisher', 'items.language']);
         }
+        $this->applyDynamicSearch($search, $query);
+
+        if (! empty($search['withCount'])) {
+            return $query->count();
+        }
+
+       
         
         $bookRecords = $query->get();
 

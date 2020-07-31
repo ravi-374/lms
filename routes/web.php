@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['eBook']], function () {
 // download e-book
-    Route::get('m1/book-items/{book_item}/download',
+    Route::get('v1/book-items/{book_item}/download',
         'API\M1\BookItemAPIController@downloadEBook')->name('member.download-e-book');
 
 // download e-book
