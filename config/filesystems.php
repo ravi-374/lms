@@ -45,13 +45,20 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => public_path('uploads'),
-            'url' => env('APP_URL').DIRECTORY_SEPARATOR.'uploads',
+            'root'   => public_path('uploads'),
+            'url'    => env('APP_URL').DIRECTORY_SEPARATOR.'uploads',
         ],
 
         'public' => [
             'driver'     => 'local',
             'root'       => storage_path('app/public'),
+            'url'        => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'ebook' => [
+            'driver'     => 'local',
+            'root'       => storage_path('uploads'),
             'url'        => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

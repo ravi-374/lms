@@ -55,7 +55,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url'  => env('ASSET_URL', null),
-    'ebook_disk' => env('EBOOK_DISK', 'public'),
+    'ebook_disk' => env('EBOOK_DISK', 'ebook'),
 
     /*
     |--------------------------------------------------------------------------
