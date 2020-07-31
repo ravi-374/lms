@@ -411,7 +411,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
             $book->items()->save($item);
 
-            return $book;
+            return $this->findOrFail($book->id, ['items.publisher', 'items.language']);
         } catch (Exception $exception) {
             throw new UnprocessableEntityHttpException($exception->getMessage());
         }
