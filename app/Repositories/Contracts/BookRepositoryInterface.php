@@ -64,6 +64,14 @@ interface BookRepositoryInterface
     public function addBookItems($book, $items);
 
     /**
+     * @param  Book  $book
+     * @param  array  $item
+     *
+     * @return mixed
+     */
+    public function addItem($book, $item);
+
+    /**
      * @param  array  $input
      * @param  int  $id
      *

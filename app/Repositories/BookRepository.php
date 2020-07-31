@@ -367,6 +367,57 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     }
 
     /**
+     * @param  Book  $book
+     * @param  array  $item
+     *
+     * @return mixed
+     */
+    public function addItem($book, $item)
+    {
+        try {
+            if (! empty($bookItem['publisher_id']) && ! is_numeric($bookItem['publisher_id'])) {
+                $publisher = Publisher::create(['name' => $bookItem['publisher_id']]);
+                $bookItem['publisher_id'] = $publisher->id;
+            }
+
+            if (! empty($bookItem['id'])) {
+                $item = BookItem::findOrFail($bookItem['id']);
+            } else {
+                $item = new BookItem();
+                $item->book_code = isset($bookItem['book_code']) ? $bookItem['book_code'] : $this->generateUniqueBookCode();
+                $item->status = BookItem::STATUS_AVAILABLE;
+            }
+
+            if ($this->checkBookItemIsEBOOK($bookItem) && ! empty($bookItem['file'])) {
+                $item->file_name = ImageTrait::makeAttachment(
+                    $bookItem['file'],
+                    BookItem::DOCUMENT_PATH,
+                    config('app.ebook_disk')
+                );
+            }
+
+            $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
+            $item->format = isset($bookItem['format']) ? $bookItem['format'] : null;
+            $item->location = isset($bookItem['location']) ? $bookItem['location'] : '';
+            $item->price = isset($bookItem['price']) ? $bookItem['price'] : null;
+            $item->publisher_id = isset($bookItem['publisher_id']) ? $bookItem['publisher_id'] : null;
+            $item->language_id = isset($bookItem['language_id']) ? $bookItem['language_id'] : null;
+
+            if ($this->checkBookItemIsEBOOK($bookItem)) {
+                $item->status = BookItem::STATUS_AVAILABLE;
+            } else {
+                $item->status = isset($bookItem['status']) ? $bookItem['status'] : BookItem::STATUS_AVAILABLE;
+            }
+
+            $book->items()->save($item);
+
+            return $book;
+        } catch (Exception $exception) {
+            throw new UnprocessableEntityHttpException($exception->getMessage());
+        }
+    }
+
+    /**
      * @return string
      */
     public function generateUniqueBookCode()

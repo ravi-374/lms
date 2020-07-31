@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
         Route::post('books/{book}/remove-image', 'BookAPIController@removeImage');
 
         // add book items
-        Route::post('books/{book}/items', 'BookAPIController@addItems')->name('books.add-items');
+        Route::post('books/{book}/items', 'BookAPIController@addItem')->name('books.add-items');
         Route::delete('book-items/{book_item}', 'BookItemAPIController@destroy');
         // Get available books
         Route::get('books/{book}/available-books', 'BookItemAPIController@availableBooks')

@@ -151,6 +151,19 @@ class BookAPIController extends AppBaseController
 
     /**
      * @param  Book  $book
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     */
+    public function addItem(Book $book, Request $request)
+    {
+        $book = $this->bookRepository->addItem($book, $request->all());
+
+        return $this->sendResponse($book->toArray(), 'Book items added successfully.');
+    }
+
+    /**
+     * @param  Book  $book
      *
      * @return JsonResponse
      */
