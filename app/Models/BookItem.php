@@ -207,7 +207,7 @@ class BookItem extends Model
     {
         if ($this->format == BookItem::FORMAT_E_BOOK) {
             return (Auth::user() instanceof User) ? url('b1/book-items/'.$this->id.'/download') :
-                url('m1/book-items/'.$this->id.'/download');
+                url('v1/book-items/'.$this->id.'/download');
         }
 
         return null;
