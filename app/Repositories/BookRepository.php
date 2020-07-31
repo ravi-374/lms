@@ -368,11 +368,11 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
 
     /**
      * @param  Book  $book
-     * @param  array  $item
+     * @param  array  $bookItem
      *
      * @return mixed
      */
-    public function addItem($book, $item)
+    public function addItem($book, $bookItem)
     {
         try {
             if (! empty($bookItem['publisher_id']) && ! is_numeric($bookItem['publisher_id'])) {
