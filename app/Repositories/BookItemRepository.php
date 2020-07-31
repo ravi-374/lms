@@ -100,6 +100,14 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
      */
     public function searchEBooks($search = [], $skip = null, $limit = null)
     {
+        $search['order_by'] = (isset($search['order_by'])) ? $search['order_by'] : 'created_at';
+        $search['direction'] = (isset($search['direction'])) ? $search['direction'] : 'desc';
+
+        if (in_array($search['order_by'], ['e_book_name', 'language_name', 'authors', 'isbn'])) {
+            $orderBy = $search['order_by'];
+            unset($search['order_by']);
+        }
+
         $query = $this->allQuery($search, $skip, $limit)->with([
             'book.authors',
             'lastIssuedBook',
@@ -109,9 +117,32 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
         $query = $this->applyDynamicSearch($search, $query);
         $query->eBook();
 
-        $query->orderByDesc('created_at');
+        $bookRecords = $query->get();
 
-        return $query->get();
+        if (! empty($orderBy)) {
+            $sortDescending = ($search['direction'] == 'asc') ? false : true;
+            $orderString = '';
+
+            if ($orderBy == 'e_book_name') {
+                $orderString = 'book.name';
+            }
+
+            if ($orderBy == 'language_name') {
+                $orderString = 'language.language_name';
+            }
+
+            if ($orderBy == 'authors') {
+                $orderString = 'book.authors_name';
+            }
+
+            if ($orderBy == 'isbn') {
+                $orderString = 'book.isbn';
+            }
+
+            $bookRecords = $bookRecords->sortBy($orderString, SORT_REGULAR, $sortDescending);
+        }
+
+        return $bookRecords->values();
     }
 
     /**
