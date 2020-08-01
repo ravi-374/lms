@@ -18,7 +18,7 @@ const InputFile = (props) => {
                 <span className="text-primary">{ getFormattedMessage('books.items.choose-file-btn.label') }</span>
                 <input className="input-file__input-type" type={ type } onChange={ onInputChange } accept=".pdf"/>
             </label>
-            <div className="text-primary">
+            <div className="text-primary file-name">
                 { file ? file.name : getFormattedMessage('books.items.no-file-chosen-text') }
             </div>
         </div>

@@ -25,7 +25,7 @@
     "e-book.title": "Libros electrónicos",
     "e-book.empty-state.title": "Todavía no hay e-book ...",
     "e-books.not-found.empty-state.title": "No se ha encontrado ningún libro electrónico ...",
-    "e-books.input.isbn.label": "ISBM NO.",
+    "e-books.input.isbn.label": "ISBN NO.",
     "e-books.input.name.label": "Nombre del libro",
     "e-books.input.edition.label": "Edición",
     "e-books.input.language.label": "Idioma",
