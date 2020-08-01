@@ -9,8 +9,8 @@ export const setBookItems = (bookItems) => async (dispatch) => {
     dispatch({ type: bookItemActionType.SET_BOOKS_ITEMS, payload: bookItems });
 };
 
-export const addBookItem = (bookId, items, isEdit = false) => async (dispatch) => {
-    await apiConfig.post(`${apiBaseURL.BOOK}/${+bookId}/items`, { items })
+export const addBookItem = (items, bookId, isEdit = false) => async (dispatch) => {
+    await apiConfig.post(`${apiBaseURL.BOOK}/${+bookId}/items`, items)
         .then((response) => {
             dispatch({ type: bookItemActionType.ADD_BOOK_ITEM, payload: response.data.data.items });
             dispatch(addToast({
