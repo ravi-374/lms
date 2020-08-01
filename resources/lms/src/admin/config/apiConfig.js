@@ -7,5 +7,5 @@ const axiosApi = axios.create({
     baseURL: wampServer,
 });
 
-axiosInterceptor.setupInterceptors(axiosApi, false, true);
+axiosInterceptor.setupInterceptors(axiosApi);
 export default axiosApi;
