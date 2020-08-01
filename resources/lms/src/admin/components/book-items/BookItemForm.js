@@ -25,7 +25,7 @@ const BookItemForm = (props) => {
     const inputRef = createRef();
     const bookItemsStatusOptions = getFormattedOptions(bookItemStatusOptions);
     const booksFormatOptions = getFormattedOptions(bookFormatOptions);
-    const [formateOptions, setFormatOptions] = useState(null);
+    const [formateOptions, setFormatOptions] = useState(initialValues ? initialValues.format : null);
 
     useEffect(() => {
         fetchBookLanguages();
