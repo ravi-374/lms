@@ -53,11 +53,15 @@ export const BookItemTable = (props) => {
                     }
                     return (
                         <tr key={bookItem.id.toString()}>
-                            <td className={bookItem.book_code ? "book-item__table-book-link-code" : "book-item__table-book-code"}
-                                onClick={() => onClickOpenEBook(bookItem.e_book_url)}>{bookItem.book_code}</td>
+                            <td className={"book-item__table-book-code"}>{bookItem.book_code}</td>
                             <td>{bookItem.edition}</td>
                             <td>{bookItem.language_name}</td>
-                            <td>{bookFormat(bookItem.format)}</td>
+                            <td>
+                                { bookFormat(bookItem.format) }
+                                { bookFormatConstant.FORMAT_E_BOOK === bookItem.format ?
+                                    <i className="fa fa-download fa-md cursor-pointer text-info ml-2" onClick={ () => onClickOpenEBook(bookItem.e_book_url) }/>
+                                    : '' }
+                            </td>
                             <td className="book-item__table-price">{priceFormatter(bookItem.price, currency)}</td>
                             <td className="book-item__table-status">{renderBookItemStatus(bookItem)}</td>
                             <td className="text-center book-item__table-action">
