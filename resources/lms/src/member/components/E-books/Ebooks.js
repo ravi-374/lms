@@ -34,7 +34,10 @@ const Ebooks = (props) => {
             name: getFormattedMessage('e-books.input.name.label'),
             selector: 'e_book_name',
             sortable: true,
-            cell: row => <span className="book-name" onClick={()=>onClickBookDownload(row.e_book_url)}>{row.name}</span>,
+            cell: row => <span className="book-name">
+                            {row.name}
+                            <i className="fa fa-download fa-md cursor-pointer text-info ml-2" onClick={ () => onClickBookDownload(row.e_book_url) }/>
+                         </span>,
         },
         {
             name: getFormattedMessage('e-books.input.edition.label'),
