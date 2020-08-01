@@ -16,6 +16,8 @@ const FilterField = (props) => {
         if (option) {
             localStorage.setItem(filterKeyName, JSON.stringify(option));
             handleFilter(option.defaultValue ? option.defaultValue : option.name);
+        } else {
+            handleFilter();
         }
     };
 
