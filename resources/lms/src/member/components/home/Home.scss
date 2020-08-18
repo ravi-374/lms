@@ -146,6 +146,12 @@ landing style
     z-index: 4;
 }
 
+@media (max-width: 992px) {
+    .landing__text-block {
+        padding-top: 20vh;
+    }
+}
+
 .landing__text-block-title {
     font-size: 52px;
     font-weight: 700;
