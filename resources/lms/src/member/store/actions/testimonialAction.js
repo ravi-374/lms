@@ -10,7 +10,6 @@ export const fetchTestimonials = () => async (dispatch) => {
     let url = apiBaseURL.TESTIMONIAL;
     await apiConfig.get(url)
         .then((response) => {
-            console.log(response);
             dispatch({ type: testimonialActionType.FETCH_TESTIMONIALS, payload: response.data.data });
             dispatch(setLoading(false));
         })
