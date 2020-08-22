@@ -11,16 +11,18 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {getFormattedMessage, prepareFullNames} from '../../../shared/sharedMethod';
 import {fetchBooks} from '../../store/actions/bookAction';
 import {findBooks} from '../../store/actions/bookSearchAction';
+import {fetchSettings} from "../../store/actions/getLanguageAction";
 import {fetchAuthors} from '../../store/actions/authorAction';
 
 const BookSearch = (props) => {
-    const {isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors, location} = props;
+    const {isLoading, books, searchBooks, authors, fetchBooks, findBooks, fetchAuthors, location, fetchSettings} = props;
     const [isSearch, setSearch] = useState(false);
     const params = new URLSearchParams(location.search);
     const author = params.get('author');
     const book = params.get('book');
 
     useEffect(() => {
+        fetchSettings();
         fetchBooks();
         fetchAuthors();
     }, []);
@@ -91,4 +93,4 @@ const mapStateToProps = (state) => {
     const {books, searchBooks, authors, isLoading} = state;
     return {books, searchBooks, authors: prepareFullNames(authors), isLoading}
 };
-export default connect(mapStateToProps, {fetchBooks, fetchAuthors, findBooks})(BookSearch);
+export default connect(mapStateToProps, {fetchSettings, fetchBooks, fetchAuthors, findBooks})(BookSearch);
