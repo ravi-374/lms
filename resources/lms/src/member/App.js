@@ -4,13 +4,12 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {IntlProvider} from 'react-intl';
 import LocaleData from './locales';
-import {fetchSettings} from "./store/actions/getLanguageAction";
 import {settingsKey} from "./constants";
-import {appSettingsKey, LocalStorageKey, Routes} from "../constants";
+import {appSettingsKey, LocalStorageKey, Routes, Tokens} from "../constants";
 import {publicImagePath, publicImagePathURL} from "../appConstant";
 import ProgressBar from '../shared/progress-bar/ProgressBar';
 import Toasts from '../shared/toast/Toasts';
-import {addRTLSupport} from "../shared/sharedMethod";
+import {addRTLSupport, getLocalStorageDataByKey} from "../shared/sharedMethod";
 import {fetchAppSetting} from "../store/action/appSettingAction";
 import {getUserProfile} from "../store/action/localStorageAction";
 
@@ -22,7 +21,7 @@ const Home = lazy(() => import('./components/home/Home'));
 const Registration = lazy(() => import('./components/auth/registration/Registration'));
 
 const MemberApp = (props) => {
-    const { getUserProfile, fetchSettings, settings, fetchAppSetting, appSetting, member } = props;
+    const { getUserProfile, settings, fetchAppSetting, appSetting, member } = props;
     const messages = settings[settingsKey.LANGUAGE] ? LocaleData[settings[settingsKey.LANGUAGE].value]
         : LocaleData[settingsKey.DEFAULT_LOCALE];
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
@@ -32,7 +31,6 @@ const MemberApp = (props) => {
 
     useEffect(() => {
         fetchAppSetting();
-        fetchSettings();
         getUserProfile(LocalStorageKey.MEMBER);
     }, []);
 
@@ -61,7 +59,6 @@ MemberApp.propTypes = {
     member: PropTypes.object,
     appSetting: PropTypes.object,
     settings: PropTypes.object,
-    fetchSettings: PropTypes.func,
     getUserProfile: PropTypes.func,
     fetchAppSetting: PropTypes.func,
     sortAction: PropTypes.func,
@@ -74,4 +71,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { fetchSettings, getUserProfile, fetchAppSetting })(MemberApp);
+export default connect(mapStateToProps, { getUserProfile, fetchAppSetting })(MemberApp);
