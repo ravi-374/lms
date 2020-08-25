@@ -11,7 +11,6 @@
             align-items: baseline;
 
             &-label {
-                min-width: 117px;
                 position: relative;
                 top: 3px;
                 text-align: right;
@@ -21,24 +20,30 @@
         &__input-label {
             display: inline-block;
             vertical-align: middle;
-            text-align: right;
-            min-width: 114px;
 
             &--invalid {
                 margin-top: -77px;
+            }
+
+            @media (max-width: 700px) {
+                display: block;
             }
         }
 
         &__input-book {
             margin-left: 15px;
             display: inline-block;
-            width: 50%;
+            width: 30%;
+            text-align: left;
+
+            @media (max-width: 700px) {
+                width: 70%;
+            }
         }
 
         &__btn {
             display: flex;
             margin-top: 14px;
-            max-width: 430px;
             justify-content: center;
         }
     }
@@ -56,10 +61,6 @@
             width: 100px;
         }
     }
-}
-
-.flex-1 {
-    flex: 1;
 }
 
 .flex-2 {
