@@ -91,9 +91,21 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             unset($search['search']);
         }
 
+        $overdueFilter = false;
+        if (isset($search['search']) && $search['search'] == 'overdue') {
+            $overdueFilter = true;
+            unset($search['search']);
+        }
+
+        $reserveDueFilter = false;
+        if (isset($search['search']) && $search['search'] == 'reservedue') {
+            $reserveDueFilter = true;
+            unset($search['search']);
+        }
+
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
-        $query = $this->applyDynamicSearch($search, $query);
+        $query = $this->applyDynamicSearch($search, ($overdueFilter || $reserveDueFilter) ? IssuedBook::with(['bookItem.book','member']) : $query);
         if ($archived) {
             $query->onlyTrashed();
         }
@@ -101,6 +113,56 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $query->when(! empty($search['due_date']), function (Builder $query) use ($search) {
             $query->whereRaw('DATE(return_due_date) = ?', $search['due_date']);
         });
+
+        // reserve_due filter
+        $query->when(!empty($search['start_date']) && !empty($search['end_date']) && $reserveDueFilter,
+            function (Builder $query) use ($search) {
+                $query->whereDate('reserve_date', '>=', $search['start_date'])
+                    ->whereDate('reserve_date', '<=', $search['end_date']);
+            });
+
+        // overdue book filter
+        $query->when(!empty($search['start_date']) && !empty($search['end_date']) && $overdueFilter,
+            function (Builder $query) use ($search) {
+                $query->whereDate('return_due_date', '>=', $search['start_date'])
+                    ->whereDate('return_due_date', '<=', $search['end_date']);
+            });
+
+        // book issued filter
+        $issuedFilter = (isset($search['status']) && $search['status'] == IssuedBook::STATUS_ISSUED) ? true :false;
+        $query->when(!empty($search['start_date']) && !empty($search['end_date']) && $issuedFilter,
+            function (Builder $query) use ($search) {
+                $query->whereDate('issued_on', '>=', $search['start_date'])
+                    ->whereDate('issued_on', '<=', $search['end_date']);
+            });
+
+        // reserved book filter
+        $reservedFilter = (isset($search['status']) && $search['status'] == IssuedBook::STATUS_RESERVED) ? true :false;
+        $query->when(!empty($search['start_date']) && !empty($search['end_date']) && $reservedFilter,
+            function (Builder $query) use ($search) {
+                $query->whereDate('reserve_date', '>=', $search['start_date'])
+                    ->whereDate('reserve_date', '<=', $search['end_date']);
+            });
+
+        // archived book filter
+        $deletedFilter = (isset($search['status']) && $search['status'] == IssuedBook::STATUS_ARCHIVED) ? true :false;
+        $query->when(!empty($search['start_date']) && !empty($search['end_date']) && $deletedFilter,
+            function (Builder $query) use ($search) {
+                $query->whereDate('deleted_at', '>=', $search['start_date'])
+                    ->whereDate('deleted_at', '<=', $search['end_date']);
+            });
+
+        // book returned filter
+        $returnedFilter = (isset($search['status']) && $search['status'] == IssuedBook::STATUS_RETURNED) ? true :false;
+        $query->when(!empty($search['start_date']) && !empty($search['end_date']) && $returnedFilter,
+            function (Builder $query) use ($search) {
+                $query->whereDate('return_date', '>=', $search['start_date'])
+                    ->whereDate('return_date', '<=', $search['end_date']);
+            });
+
+        if (!isset($search['status']) && !empty($search['start_date']) && !empty($search['end_date'])) {
+            $query = $this->dateFilterQuery($query, $search);
+        }
 
         if (! empty($search['withCount'])) {
             return $query->count();
@@ -609,5 +671,41 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $overDueBooks = prepareCountFromDate($startDate, $endDate, $records);
 
         return [$records->count(), $overDueBooks];
+    }
+
+    /**
+     * @param Builder $query
+     * @param array $search
+     *
+     * @return mixed
+     */
+    public function dateFilterQuery($query, $search)
+    {
+        $startDate = $search['start_date'];
+        $endDate = $search['end_date'];
+
+        $query->where(function (Builder $query)use($startDate, $endDate){
+            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
+                $query->whereDate('reserve_date', '>=', $startDate)
+                    ->whereDate('reserve_date', '<=', $endDate);
+            });
+            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
+                $query->whereDate('return_date', '>=', $startDate)
+                    ->whereDate('return_date', '<=', $endDate);
+            });
+
+            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
+                $query->whereDate('issued_on', '>=', $startDate)
+                    ->whereDate('issued_on', '<=', $endDate);
+            });
+
+            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
+                $query->whereDate('deleted_at', '>=', $startDate)
+                    ->whereDate('deleted_at', '<=',$endDate);
+            });
+
+        });
+
+        return $query;
     }
 }

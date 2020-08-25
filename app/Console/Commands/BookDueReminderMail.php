@@ -46,7 +46,8 @@ class BookDueReminderMail extends Command
 
         $date = Carbon::now()->addDays(getSettingValueByKey(Setting::BOOK_DUE_REMINDER_DAYS))->toDateString();
         $issuedBook = IssuedBook::with('member')
-            ->whereDate('return_date', '=', $date)
+            ->whereDate('return_due_date', '=', $date)
+            ->where('status', '!=', IssuedBook::STATUS_RETURNED)
             ->get();
         
         if (count($issuedBook) > 0) {
