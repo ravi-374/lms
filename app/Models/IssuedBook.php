@@ -74,6 +74,16 @@ class IssuedBook extends Model
     const STATUS_DAMAGED = 7;
     const STATUS_ARCHIVED = 'archived';
 
+    const STATUS = [
+        1 => 'Reserved',
+        2 => 'Issued',
+        3 => 'Returned',
+        4 => 'Available',
+        5 => 'Un Reserved',
+        6 => 'Lost',
+        7 => 'Damaged',
+    ];
+
     const STATUS_IN_STRING = ['issued', 'reserved', 'returned', 'unreserved', 'lost', 'damage'];
 
     /**
