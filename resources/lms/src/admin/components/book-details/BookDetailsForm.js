@@ -50,7 +50,7 @@ const BookDetailsForm = (props) => {
     };
 
     const imagePickerOptions = {
-        image,
+        image: initialValues.image ? initialValues.image : image,
         buttonName: 'image-picker.dropdown.cover.label',
         isDefaultImage,
         onRemovePhoto,
