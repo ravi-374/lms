@@ -140,7 +140,8 @@ export const apiBaseURL = {
     MY_SETTINGS: 'my-settings',
     UPDATE_SETTINGS: 'update-settings',
     BOOKS_EXPORT: 'books-export',
-    BOOKS_IMPORT: 'books-import'
+    BOOKS_IMPORT: 'books-import',
+    EXPORT_BOOKS_CIRCULATION: 'export-books-circulation',
 };
 
 export const bookRequestConstants = {
