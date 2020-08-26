@@ -60,6 +60,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder|IssuedBook overDue()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook issued()
  * @property-read Collection|Author[] $authors
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\IssuedBook onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook reserveDue()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\IssuedBook whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\IssuedBook withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\IssuedBook withoutTrashed()
  */
 class IssuedBook extends Model
 {
@@ -325,6 +331,19 @@ class IssuedBook extends Model
 
         return $query->where('status', self::STATUS_ISSUED)
             ->whereRaw('DATE(return_due_date) < ?', [$now]);
+    }
+
+    /**
+     * @param  Builder  $query
+     *
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public function scopeReserveDue(Builder $query)
+    {
+        $today = Carbon::today()->toDateString();
+
+        return $query->whereRaw('DATE(reserve_date) <= ?', [$today])
+            ->where('status', self::STATUS_RESERVED);
     }
 
     /**

@@ -296,6 +296,15 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
     {
         $query->when(! empty($search['search']), function (Builder $query) use ($search) {
             $searchString = $search['search'];
+
+            if ($searchString == 'overdue') {
+                return $query->overDue();
+            }
+
+            if ($searchString == 'reservedue') {
+                return $query->reserveDue();
+            }
+
             $query->orWhereHas('bookItem', function (Builder $query) use ($searchString) {
                 filterByColumns($query, $searchString, ['book_code']);
             });
