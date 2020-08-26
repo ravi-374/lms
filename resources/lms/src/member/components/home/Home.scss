@@ -152,6 +152,12 @@ landing style
     }
 }
 
+@media (min-width: 993px) and (max-width: 1900px) {
+    .landing__text-block {
+        padding-top: 40vh;
+    }
+}
+
 .landing__text-block-title {
     font-size: 52px;
     font-weight: 700;
