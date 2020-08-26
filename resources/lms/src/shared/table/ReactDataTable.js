@@ -85,7 +85,7 @@ const ReactTable = (props) => {
             searchText === '' ? filterText === 1 || filterText === undefined ? '' : filterText.toLowerCase() : '' ||
             isShowFilterField && searchText !== '' ? searchText.toLowerCase() : ''
             || !isShowFilterField ? searchText.toLowerCase() : '',
-            is_ebooks: filterText === 1 ? filterText : '',
+            is_ebooks: filterText ? filterText : '',
             start_date: selectDate ? selectDate.start_date :null,
             end_date: selectDate ? selectDate.end_date :null
         };
