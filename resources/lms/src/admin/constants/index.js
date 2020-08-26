@@ -156,7 +156,8 @@ export const permissionActionType = {
 export const bookCirculationActionType = {
     FETCH_BOOKS_CIRCULATION: 'FETCH_BOOKS_CIRCULATION',
     FETCH_BOOK_CIRCULATION: 'FETCH_BOOK_CIRCULATION',
-    DELETE_BOOK_CIRCULATION: 'DELETE_BOOK_CIRCULATION'
+    DELETE_BOOK_CIRCULATION: 'DELETE_BOOK_CIRCULATION',
+    EXCEL_FILE_CIRCULATION: 'EXCEL_FILE_CIRCULATION',
 };
 
 export const bookCirculationStatusOptions = [
@@ -292,7 +293,9 @@ export const bookCirculationFilterOptions = [
     { id: 5, name: 'books-circulation.filter.unreserved.label', defaultValue: 'Unreserved' },
     { id: 6, name: 'books-circulation.filter.damaged.label', defaultValue: 'Damaged' },
     { id: 7, name: 'books-circulation.filter.lost.label', defaultValue: 'Lost' },
-    { id: 8, name: 'books-circulation.filter.archived.label', defaultValue: 'Archived' }
+    { id: 8, name: 'books-circulation.filter.archived.label', defaultValue: 'Archived' },
+    { id: 9, name: 'books-circulation.filter.overdue.label', defaultValue: 'Overdue' },
+    { id: 10, name: 'books-circulation.filter.Reservedue.label', defaultValue: 'Reservedue' }
 ];
 
 export const bookFilterOptions = [

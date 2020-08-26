@@ -8,6 +8,12 @@
         }
     }
 
+    &__card-body {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
     &__card {
 
         &-count {

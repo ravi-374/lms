@@ -17,6 +17,12 @@ export default (filters = Filters.OBJ) => {
         }
         url += 'search=' + filters.search;
     }
+    if (filters.start_date && filters.end_date) {
+        if (url !== '?') {
+            url += '&'
+        }
+        url = url + 'start_date=' + filters.start_date + '&end_date=' + filters.end_date;
+    }
     if (filters.is_ebooks) {
         if (url !== '?') {
             url += '&'

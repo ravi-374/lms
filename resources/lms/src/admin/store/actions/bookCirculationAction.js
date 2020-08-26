@@ -10,7 +10,7 @@ import _ from 'lodash';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {apiBaseURL} from "../../../constants";
 
-export const fetchBooksCirculation = (filter = {}) => async (dispatch) => {
+export const fetchBooksCirculation = (filter = {}, cb) => async (dispatch) => {
     dispatch(setLoading(true));
     let url = apiBaseURL.BOOK_HISTORY;
 
@@ -21,6 +21,7 @@ export const fetchBooksCirculation = (filter = {}) => async (dispatch) => {
         .then((response) => {
             dispatch({ type: bookCirculationActionType.FETCH_BOOKS_CIRCULATION, payload: response.data.data });
             dispatch(setTotalRecord(response.data.totalRecords));
+            cb({ status: response.data.success });
             dispatch(setLoading(false));
         })
         .catch(({ response }) => {
@@ -101,3 +102,19 @@ export const sendMail = (id, cb) => async (dispatch) => {
             cb({});
         });
 }
+
+export const excelFile = (cb, isLoading = true) => async (dispatch) => {
+    isLoading ? dispatch(setLoading(true)) : null;
+    let url = apiBaseURL.EXPORT_BOOKS_CIRCULATION;
+    await apiConfig.get(url)
+        .then((response) => {
+            dispatch({ type: bookCirculationActionType.EXCEL_FILE_CIRCULATION, payload: response.data.data });
+            dispatch(addToast({ text: response.data.message }));
+            isLoading ? dispatch(setLoading(false)) : null;
+            cb({ url: response.data.data })
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+            isLoading ? dispatch(setLoading(false)) : null;
+        });
+};

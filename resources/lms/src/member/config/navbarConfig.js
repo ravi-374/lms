@@ -19,7 +19,7 @@ export default {
             icon: 'fas fa-book',
         },
         {
-            name: "E-Books",
+            name: getFormattedMessage("e-book.title"),
             url: '/app/e-books',
             icon: 'fas fa-book',
         },

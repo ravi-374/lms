@@ -9,12 +9,13 @@ import EmptyComponent from "../empty-component/EmptyComponent";
 import {renderSortIcons} from "../../config/sortConfig";
 import {getFormattedMessage} from "../sharedMethod";
 import {useIntl} from 'react-intl';
+import DateRangePicker from "../../admin/components/books-circulation/DateRangePicker";
 
 const ReactTable = (props) => {
     const {
         defaultLimit = Filters.OBJ.limit, isShortEmptyState,
         items, onChange, columns, loading, paginationRowsPerPageOptions = [10, 15, 25, 50, 100], totalRows,
-        isShowFilterField, isShowSearchField = true, filterOptions = [], searchKey = '', filterKey = null,
+        isShowFilterField, isShowDateRangeField, isShowSearchField = true, filterOptions = [], searchKey = '', filterKey = null,
         emptyStateMessageId = '', filterKeyName = 'filterItem', emptyNotFoundStateMessageId = '', icon
     } = props;
     const intl = new useIntl();
@@ -23,6 +24,7 @@ const ReactTable = (props) => {
     const [direction, setDirection] = useState(Filters.OBJ.direction);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState(searchKey);
+    const [selectDate, setSelectDate] = useState();
     const [filterText, setFilterText] = useState(filterKey ? filterKey.defaultValue ? filterKey.defaultValue : filterKey.name : '');
 
     const tableColumns = useMemo(
@@ -40,7 +42,7 @@ const ReactTable = (props) => {
     useEffect(() => {
         onChangeDidMount(currentPage);
         renderRowPerPage();
-    }, [currentPage, perPage, orderBy, direction, searchText, filterText]);
+    }, [currentPage, perPage, orderBy, direction, searchText, filterText, selectDate]);
 
     const handlePageChange = (page) => {
         if (currentPage !== page) {
@@ -53,6 +55,10 @@ const ReactTable = (props) => {
     };
     const handleFilter = (filterText) => {
         setFilterText(filterText);
+    };
+
+    const onDateSelector = (date) => {
+        setSelectDate(date.params);
     };
 
     const customSort = (rows, field, direction) => {
@@ -73,13 +79,15 @@ const ReactTable = (props) => {
         const filters = {
             order_By: orderBy,
             limit: perPage,
-            skip: searchText !== '' ? 0 : (page - 1) * perPage,
+            skip: (page - 1) * perPage,
             direction: direction,
             search: isShowFilterField && filterText !== intl.formatMessage({ id: FilterOption.ALL }) &&
             searchText === '' ? filterText === 1 || filterText === undefined ? '' : filterText.toLowerCase() : '' ||
             isShowFilterField && searchText !== '' ? searchText.toLowerCase() : ''
             || !isShowFilterField ? searchText.toLowerCase() : '',
             is_ebooks: filterText ? filterText : '',
+            start_date: selectDate ? selectDate.start_date :null,
+            end_date: selectDate ? selectDate.end_date :null
         };
         onChange(filters);
     };
@@ -112,6 +120,9 @@ const ReactTable = (props) => {
                 {isShowFilterField ? <div className="search-filter-container__filter-input">
                     <FilterField options={filterOptions} filterKeyName={filterKeyName} filterKey={filterKey}
                                  handleFilter={handleFilter}/>
+                </div> : null}
+                {isShowDateRangeField ? <div className="search-filter-container__date-range-picker">
+                    <DateRangePicker onDateSelector={onDateSelector} selectDate={selectDate}/>
                 </div> : null}
                 {isShowSearchField && items.length !== 0 || searchText || loading  ?
                     <div className="search-filter-container__search-input">

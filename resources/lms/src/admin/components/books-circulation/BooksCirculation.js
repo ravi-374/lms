@@ -14,11 +14,12 @@ import BookStatus from "../../../shared/book-status/book-status";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {openModal} from "../../../shared/custom-hooks";
 import {toggleModal} from '../../../store/action/modalAction';
-import {fetchBooksCirculation} from '../../store/actions/bookCirculationAction';
+import {fetchBooksCirculation, excelFile} from '../../store/actions/bookCirculationAction';
 import MailSend from './MailSend';
+import {Dropdown} from 'react-bootstrap';
 
 const BooksCirculation = (props) => {
-    const { booksCirculation, fetchBooksCirculation, toggleModal, history, isLoading, totalRecord } = props;
+    const { booksCirculation, fetchBooksCirculation, toggleModal, history, isLoading, totalRecord, excelFile } = props;
     const [filterObject, setFilterObject] = useState(null);
     const [isCreate, isEdit, isDelete, bookCirculation, onOpenModal] = openModal();
     const cardModalProps = { bookCirculation, filterObject, isCreate, isEdit, isDelete, toggleModal };
@@ -26,7 +27,8 @@ const BooksCirculation = (props) => {
 
     const onChange = (filter) => {
         setFilterObject(filter);
-        fetchBooksCirculation(filter);
+        fetchBooksCirculation(filter, () => {
+        });
     };
 
     const onClickModal = (isEdit, bookCirculation = null, isDelete = false) => {
@@ -47,6 +49,14 @@ const BooksCirculation = (props) => {
             }
         }
         return bookCirculationStatusFilter[0];
+    };
+
+    const onClickExcelFile = () => {
+        excelFile((res) => {
+            if(res.url) {
+                window.open(res.url, "_self")
+            }
+        });
     };
 
     const columns = [
@@ -76,14 +86,14 @@ const BooksCirculation = (props) => {
             selector: 'issued_on',
             width: '160px',
             sortable: true,
-            cell: row => <span>{dateFormatter(row.issued_on)}</span>
+            cell: row => <span>{row.issued_on ? dateFormatter(row.issued_on) : 'N/A'}</span>
         },
         {
             name: getFormattedMessage('books-circulation.table.return-date.column'),
             selector: 'return_date',
             width: '160px',
             sortable: true,
-            cell: row => <span>{dateFormatter(row.return_date)} </span>
+            cell: row => <span>{row.return_date ? dateFormatter(row.return_date) : 'N/A'} </span>
         },
         {
             name: getFormattedMessage('react-data-table.status.column'),
@@ -121,16 +131,26 @@ const BooksCirculation = (props) => {
                 <HeaderTitle title="Books Circulation"/>
                 <h5 className="page-heading">{getFormattedMessage('books-circulation.title')}</h5>
                 <div className="d-flex justify-content-end">
-                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
-                        {getFormattedMessage('books-circulation.input.new-btn.label')}
-                    </Button>
+                    <Dropdown>
+                        <Dropdown.Toggle className="btn btn-primary ml-2" id="dropdown-basic" >
+                            {getFormattedMessage('react-data-table.action.column')}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => onClickModal(false)}>
+                                {getFormattedMessage('books-circulation.input.new-btn.label')}
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => onClickExcelFile()}>
+                                {getFormattedMessage('books-circulation.export-excel.label')}
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </Col>
             <Col sm={12}>
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={booksCirculation} isShowFilterField
+                            <ReactDataTable items={booksCirculation} isShowFilterField isShowDateRangeField
                                             emptyStateMessageId="books-circulation.empty-state.title"
                                             emptyNotFoundStateMessageId="books-circulation.not-found.empty-state.title"
                                             filterKeyName={storageKey.BOOK_CIRCULATION}
@@ -153,6 +173,7 @@ BooksCirculation.propTypes = {
     isLoading: PropTypes.bool,
     fetchBooksCirculation: PropTypes.func,
     toggleModal: PropTypes.func,
+    excelFile: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
@@ -160,4 +181,4 @@ const mapStateToProps = (state) => {
     return { booksCirculation, isLoading, totalRecord };
 };
 
-export default connect(mapStateToProps, { fetchBooksCirculation: fetchBooksCirculation, toggleModal })(BooksCirculation);
+export default connect(mapStateToProps, { fetchBooksCirculation: fetchBooksCirculation, toggleModal, excelFile })(BooksCirculation);
