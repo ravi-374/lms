@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\B1;
 
+use App\Exports\BookCirculationExport;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\API\UpdateIssuedBookRequest;
 use App\Models\BookItem;
@@ -11,6 +12,7 @@ use App\Repositories\Contracts\IssuedBookRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 /**
@@ -228,5 +230,29 @@ class IssuedBookAPIController extends AppBaseController
         $result = $this->issuedBookRepository->unReserveBook($bookItem, $input);
 
         return $this->sendResponse($result->apiObj(), 'Book un-reserved successfully.');
+    }
+
+    /**
+     * @param  Request  $request
+     *
+     * @return JsonResponse
+     */
+    public function exportBooks(Request $request)
+    {
+        $input = $request->except(['skip', 'limit']);
+        $issuedBooks = $this->issuedBookRepository->all(
+            $input,
+            $request->get('skip'),
+            $request->get('limit')
+        );
+        $issuedBooks = $issuedBooks->map(function (IssuedBook $issuedBook) {
+            return $issuedBook->apiObj();
+        });
+
+        $filename = 'export-book-circulations/Books-'.time().'.xlsx';
+        Excel::store(new BookCirculationExport($issuedBooks), $filename, config('filesystems.default'));
+        $path = asset('uploads/'.$filename);
+
+        return $this->sendResponse($path, 'Book details exported successfully.');
     }
 }

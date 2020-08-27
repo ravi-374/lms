@@ -14,17 +14,23 @@ import {prepareBarChart, prepareMonthlyBarChart, prepareCards} from "./prepareCh
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import {fetchDashBoardDetails} from "../../store/actions/dashBoardAction";
-import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
-import {chartLabels, chartLabelSelector} from "../../constants";
+import {dateFormatter, getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
+import {chartLabels, chartLabelSelector, storageKey} from "../../constants";
 import moment from "moment/moment";
-import {dateFormat} from "../../../constants";
+import {dateFormat, Filters, icon, Routes} from "../../../constants";
+import ReactDataTable from "../../../shared/table/ReactDataTable";
+import {environment} from '../../../environment';
+import {fetchBooksCirculation} from '../../store/actions/bookCirculationAction';
 
 const Dashboard = (props) => {
-    const { fetchDashBoardDetails, dashBoard, isLoading } = props;
+    const { fetchDashBoardDetails, dashBoard, isLoading, totalRecord, fetchBooksCirculation, booksCirculation } = props;
     const [typeOfData, setTypeOfData] = useState('general');
     const [selectedMinDate, setSelectedMinDate] = useState(moment().startOf('month').toDate());
     const [selectedMaxDate, setSelectedMaxDate] = useState(moment().endOf('month').toDate());
     const labels = getFormattedOptions(chartLabels).map((({ name }) => name));
+    const [searchText, setSearchValue] = useState('');
+    const [bookHistoryTableHeader, setBookHistoryTableHeader] = useState('');
+    const [bookCirculation, setBookCirculation] = useState(false);
 
     useEffect(() => {
         fetchDashBoardDetails();
@@ -75,11 +81,51 @@ const Dashboard = (props) => {
         selectedMinDate, setSelectedMinDate, selectedMaxDate, setSelectedMaxDate
     };
 
+    const onChange = (filter) => {
+        if (!filter.search) {
+            filter.search = searchText;
+        }
+        fetchBooksCirculation(filter, () => {
+            window.scrollTo({left: 0,top:document.body.scrollHeight, behavior: "smooth"});
+        });
+    };
+
+    const onClickFetchBooksCirculation = (searchValues) => {
+        if (searchValues.title === "Members") {
+            return (
+                window.location.href = environment.URL + '/#' + Routes.MEMBERS
+            )
+        } else if (searchValues.title === "Books") {
+            return (
+                window.location.href = environment.URL + '/#' + Routes.BOOKS
+            )
+        } else if (searchValues.count > 0) {
+            setBookHistoryTableHeader(searchValues.title);
+            setBookCirculation(true);
+            const filters = {
+                order_By: Filters.OBJ.order_By,
+                limit: Filters.OBJ.limit,
+                skip: 0,
+                direction: Filters.OBJ.direction,
+                search: searchValues.title === "Overdue Books" ? "overdue"
+                    : searchValues.title === "Reserved Books" ? "reserved"
+                        : searchValues.title === "Issued Books" ? "issued" : null
+            };
+            setSearchValue(filters.search);
+            fetchBooksCirculation(filters, (res) => {
+                if (res.status) {
+                    window.scrollTo({left: 0,top:document.body.scrollHeight, behavior: "smooth"});
+                }
+            });
+        }
+    };
+
     const renderCards = () => {
         return totalCard.map((card, index) => (
             <Col key={index} className="dashboard__card-wrapper col-12 col-sm-6 col-lg-3">
                 <Card className={`text-white ${card.color}`}>
-                    <CardBody>
+                    <CardBody onClick={() => onClickFetchBooksCirculation(card)}
+                        className={`${card.count > 0 ? "dashboard__card-body" : null}`}>
                         <div className="dashboard__card-count">{card.count}</div>
                         <div className="dashboard__card-icon">
                             <i className={card.icon}/>
@@ -90,6 +136,44 @@ const Dashboard = (props) => {
             </Col>
         ));
     };
+
+    const columns = [
+        {
+            name: getFormattedMessage('books-circulation.select.book.label'),
+            selector: 'name',
+            sortable: true,
+            wrap: true,
+            cell: row => row.name = row.book_item.book.name
+        },
+        {
+            name: getFormattedMessage('books-circulation.select.book-item.label'),
+            selector: 'book_code',
+            width: '140px',
+            sortable: true,
+            cell: row => row.book_code = row.book_item.book_code
+        },
+        {
+            name: getFormattedMessage('books-circulation.select.member.label'),
+            selector: 'member_name',
+            width: '140px',
+            sortable: true,
+            cell: row => <span>{row.member.first_name + ' ' + row.member.last_name}</span>
+        },
+        {
+            name: getFormattedMessage('books-circulation.table.issue-date.column'),
+            selector: 'issued_on',
+            width: '160px',
+            sortable: true,
+            cell: row => <span>{dateFormatter(row.issued_on)}</span>
+        },
+        {
+            name: getFormattedMessage('books-circulation.table.return-date.column'),
+            selector: 'return_due_date',
+            width: '160px',
+            sortable: true,
+            cell: row => <span>{dateFormatter(row.return_due_date)} </span>
+        },
+    ];
 
     return (
         <div className="animated fadeIn">
@@ -102,6 +186,29 @@ const Dashboard = (props) => {
                 {renderCards()}
             </Row>
             <Charts {...chartOptions}/>
+            {
+                bookCirculation ?
+                    <Row>
+                        <Col sm={12}>
+                            <h5 className="page-heading">{bookHistoryTableHeader}</h5>
+                        </Col>
+                        <Col sm={12}>
+                            <div className="sticky-table-container">
+                                <Card>
+                                    <CardBody>
+                                        <ReactDataTable items={booksCirculation}
+                                            emptyStateMessageId="books-circulation.empty-state.title"
+                                            emptyNotFoundStateMessageId="books-circulation.not-found.empty-state.title"
+                                            filterKeyName={storageKey.BOOK_CIRCULATION}
+                                            columns={columns} loading={isLoading} totalRows={totalRecord}
+                                            onChange={onChange} icon={(icon.BOOK_CIRCULATION)}/>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Col>
+                    </Row>
+                : null
+            }
         </div>
     );
 };
@@ -110,11 +217,14 @@ Dashboard.propTypes = {
     dashBoard: PropTypes.object,
     isLoading: PropTypes.bool,
     fetchDashBoardDetails: PropTypes.func,
+    booksCirculation: PropTypes.array,
+    totalRecord: PropTypes.number,
+    fetchBooksCirculation: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
-    const { dashBoard, isLoading } = state;
-    return { dashBoard, isLoading };
+    const { booksCirculation, dashBoard, isLoading, totalRecord } = state;
+    return {booksCirculation, dashBoard, isLoading, totalRecord };
 };
 
-export default connect(mapStateToProps, { fetchDashBoardDetails })(Dashboard);
+export default connect(mapStateToProps, { fetchBooksCirculation: fetchBooksCirculation, fetchDashBoardDetails })(Dashboard);

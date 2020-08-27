@@ -141,6 +141,8 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
         Route::get('books-history', 'IssuedBookAPIController@index')->name('books-history');
         Route::get('issued-books/{issued_book}', 'IssuedBookAPIController@show')->name('issued-book.show');
         Route::delete('books-history/{id}', 'IssuedBookAPIController@destroy');
+
+        Route::get('export-books-circulation', 'IssuedBookAPIController@exportBooks');
     });
 
     /** Get App Config */

@@ -62,10 +62,9 @@ const BookSearchForm = (props) => {
 
     return (
         <Row className="animated fadeIn flex-column">
-            <div className="d-flex">
-                <div className="flex-1"/>
-                <div className="flex-2">
-                    <Col xs={12} className="book-form__filter-by">
+            <div className="d-flex mb-3">
+                <div className="flex-2 text-center">
+                    <Col xs={12} className="book-form__filter-by text-center justify-content-center">
                         <span className="book-form__filter-by-label">{getFormattedMessage('books.search-by.label')}
                         </span>
                         <div className="ml-3">
@@ -79,10 +78,9 @@ const BookSearchForm = (props) => {
                     </Col>
                 </div>
             </div>
-            <div className="d-flex">
-                <div className="flex-1"/>
-                <div className="flex-2">
-                    <Col xs={12}>
+            <div className="d-flex justify-content-center">
+                <div className="flex-2 justify-content-center text-center">
+                    <Col xs={12} className="text-center">
                         <div className="book-form__input-label">
                            <span>
                                {isBookChecked ? getFormattedMessage('books.select.book.label') :

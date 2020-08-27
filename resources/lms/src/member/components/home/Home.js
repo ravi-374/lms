@@ -136,13 +136,25 @@ const Home = (props) => {
 
     // featured books slider options
     const bookSliderOption = {
-        items: 6,
         nav: true,
         rewind: true,
         autoplay: true,
         margin: 10,
         loop: true,
-        responsive: false
+        responsive:{
+        0:{
+            items:1
+        },
+        450:{
+            items:2
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:6
+        }
+    }
     };
 
     // featured books slider options
@@ -348,7 +360,7 @@ const Home = (props) => {
                                 <li><i className="icofont icofont-square"/></li>
                             </ul>
                         </div>
-                        <div className="col-12 col-md-3 ml-auto">
+                        <div className="col-12 col-md-4 ml-auto">
                             <h4>Contact Us</h4>
                             <table className="table borderless addr-dt">
                                 <tbody>
