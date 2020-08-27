@@ -14,20 +14,17 @@ class CommonAPIController extends AppBaseController
      */
     public function currencies()
     {
-        $collection = collect([
-            'INR' => 'Indian Rupee',
-            'USD' => 'United States',
-            'GBP' => 'United Kingdom',
-            'AED' => 'United Arab Emirates',
-            'CAD' => 'Canada',
-            'CNY' => 'China',
-            'RUB' => 'Russia',
-        ]);
+        $currencyPath = file_get_contents(storage_path()."/currencies/currencies.json");
+        $currenciesData = json_decode($currencyPath, true);
+        $currencies = [];
 
-        $currencies = $collection->map(function ($key, $value) {
-            return ['country' => $key, 'iso_code' => $value];
-        });
+        foreach ($currenciesData['currencies'] as $key => $currency) {
+            $currencies[$key] = [
+                'country'  => $currency['name'],
+                'iso_code' => $currency['code'],
+            ];
+        }
 
-        return $currencies->values();
+        return $currencies;
     }
 }
