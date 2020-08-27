@@ -54,7 +54,7 @@ class BookAPIController extends AppBaseController
         return $this->sendResponse(
             $books->toArray(),
             'Books retrieved successfully.',
-            ['totalRecords' => count($books)]
+            ['totalRecords' => $this->bookRepository->all($input)]
         );
     }
 
