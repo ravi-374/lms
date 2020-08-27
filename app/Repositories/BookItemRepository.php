@@ -61,7 +61,6 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
             });
         });
 
-
         return $query->get();
     }
 
@@ -116,6 +115,10 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
         ]);
         $query = $this->applyDynamicSearch($search, $query);
         $query->eBook();
+
+        if (! empty($search['withCount'])) {
+            return $query->count();
+        }
 
         $bookRecords = $query->get();
 
