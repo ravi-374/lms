@@ -91,21 +91,13 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
             unset($search['search']);
         }
 
-        $overdueFilter = false;
-        if (isset($search['search']) && $search['search'] == 'overdue') {
-            $overdueFilter = true;
-            unset($search['search']);
-        }
-
-        $reserveDueFilter = false;
-        if (isset($search['search']) && $search['search'] == 'reservedue') {
-            $reserveDueFilter = true;
-            unset($search['search']);
-        }
+        $overdueFilter = (isset($search['search']) && $search['search'] == 'overdue') ? true : false;
+        $reserveDueFilter = (isset($search['search']) && $search['search'] == 'reservedue') ? true : false;
 
         $with = ['issuer', 'returner', 'bookItem.book', 'member'];
         $query = $this->allQuery($search, $skip, $limit)->with($with);
-        $query = $this->applyDynamicSearch($search, ($overdueFilter || $reserveDueFilter) ? IssuedBook::with(['bookItem.book','member']) : $query);
+        $query = $this->applyDynamicSearch($search,
+            ($overdueFilter || $reserveDueFilter) ? IssuedBook::with(['bookItem.book', 'member']) : $query);
         if ($archived) {
             $query->onlyTrashed();
         }
@@ -196,6 +188,43 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
 
         return $bookRecords->values();
     }
+
+    /**
+     * @param  Builder  $query
+     * @param  array  $search
+     *
+     * @return mixed
+     */
+    public function dateFilterQuery($query, $search)
+    {
+        $startDate = $search['start_date'];
+        $endDate = $search['end_date'];
+
+        $query->where(function (Builder $query) use ($startDate, $endDate) {
+            $query->orWhere(function (Builder $query) use ($startDate, $endDate) {
+                $query->whereDate('reserve_date', '>=', $startDate)
+                    ->whereDate('reserve_date', '<=', $endDate);
+            });
+            $query->orWhere(function (Builder $query) use ($startDate, $endDate) {
+                $query->whereDate('return_date', '>=', $startDate)
+                    ->whereDate('return_date', '<=', $endDate);
+            });
+
+            $query->orWhere(function (Builder $query) use ($startDate, $endDate) {
+                $query->whereDate('issued_on', '>=', $startDate)
+                    ->whereDate('issued_on', '<=', $endDate);
+            });
+
+            $query->orWhere(function (Builder $query) use ($startDate, $endDate) {
+                $query->whereDate('deleted_at', '>=', $startDate)
+                    ->whereDate('deleted_at', '<=', $endDate);
+            });
+
+        });
+
+        return $query;
+    }
+
     /**
      * @param  array  $search
      * @param  int|null  $skip
@@ -680,41 +709,5 @@ class IssuedBookRepository extends BaseRepository implements IssuedBookRepositor
         $overDueBooks = prepareCountFromDate($startDate, $endDate, $records);
 
         return [$records->count(), $overDueBooks];
-    }
-
-    /**
-     * @param Builder $query
-     * @param array $search
-     *
-     * @return mixed
-     */
-    public function dateFilterQuery($query, $search)
-    {
-        $startDate = $search['start_date'];
-        $endDate = $search['end_date'];
-
-        $query->where(function (Builder $query)use($startDate, $endDate){
-            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
-                $query->whereDate('reserve_date', '>=', $startDate)
-                    ->whereDate('reserve_date', '<=', $endDate);
-            });
-            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
-                $query->whereDate('return_date', '>=', $startDate)
-                    ->whereDate('return_date', '<=', $endDate);
-            });
-
-            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
-                $query->whereDate('issued_on', '>=', $startDate)
-                    ->whereDate('issued_on', '<=', $endDate);
-            });
-
-            $query->orWhere(function (Builder $query)use($startDate, $endDate) {
-                $query->whereDate('deleted_at', '>=', $startDate)
-                    ->whereDate('deleted_at', '<=',$endDate);
-            });
-
-        });
-
-        return $query;
     }
 }
