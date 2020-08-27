@@ -62,6 +62,8 @@ class BookItemAPIController extends AppBaseController
             return $bookItem->apiEBookResponse();
         });
 
-        return $this->sendResponse($records, 'BookItem retrieved successfully.');
+        return $this->sendResponse($records, 'BookItem retrieved successfully.',
+            ['totalRecords' => $records->count()]
+        );
     }
 }
