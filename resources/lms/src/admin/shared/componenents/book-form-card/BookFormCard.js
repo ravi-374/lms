@@ -60,40 +60,40 @@ const BookFormCard = (props) => {
                 <hr className="book-form-card__hr"/>
                 <Row>
                     {isImportBook ?
-                        <Col xs={6}>
+                        <Col xs={12} sm={6}>
                             <Field name="isbn" label="books.input.isbn.label"
                                    placeholder="books.input.search-isbn.placeholder" required inputRef={inputRef}
                                    onBlur={(e) => onFocusChangeISBN(e)} groupText="id-card"
                                    onClick={() => onFocusChangeISBN} appendGroupText="search" isAppendIcon
                                    component={InputGroup}/>
                         </Col> :
-                        <Col xs={6}>
+                        <Col xs={12} sm={6}>
                             <Field name="isbn" label="books.input.isbn.label" required inputRef={inputRef}
                                    groupText="id-card" component={InputGroup}/>
                         </Col>
                     }
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="authors" label="authors.title" required isMulti={true}
                                onChange={(options) => onChangeAuthor(options, authors, 'new_authors')} options={authors}
                                placeholder="books.select.authors.placeholder" groupText="user-circle-o"
                                component={SelectCreatable}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="genres" label="genres.title" required isMulti={true}
                                onChange={(options) => onChangeGenres(options, genres, 'new_genres')} options={genres}
                                placeholder="books.select.genres.placeholder" groupText="list-alt"
                                component={SelectCreatable}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="name" label="books.input.name.label" required groupText="book"
                                component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="tags" label="tags.title" isMulti={true}
                                onChange={(options) => onChangeTags(options, tags, 'new_tags')} options={tags}
                                placeholder="books.select.tags.placeholder" groupText="tag" component={SelectCreatable}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="url" label="books.input.url.label" groupText="link" component={InputGroup}/>
                     </Col>
                 </Row>
