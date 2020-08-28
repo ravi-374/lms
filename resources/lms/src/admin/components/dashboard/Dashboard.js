@@ -164,14 +164,14 @@ const Dashboard = (props) => {
             selector: 'issued_on',
             width: '160px',
             sortable: true,
-            cell: row => <span>{dateFormatter(row.issued_on)}</span>
+            cell: row => <span>{ row.issued_on ? dateFormatter(row.issued_on) : 'N/A' }</span>
         },
         {
             name: getFormattedMessage('books-circulation.table.return-date.column'),
             selector: 'return_due_date',
             width: '160px',
             sortable: true,
-            cell: row => <span>{dateFormatter(row.return_due_date)} </span>
+            cell: row => <span>{ row.return_due_date ? dateFormatter(row.return_due_date) : 'N/A'} </span>
         },
     ];
 

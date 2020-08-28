@@ -16,17 +16,17 @@ const TableHeader = (props) => {
 
     const renderActionColumn = () => {
         if (isAction) {
-            return <th className="table-header__action">{getFormattedMessage('react-data-table.action.column')}</th>;
+            return <th className="table-header__action table-header__responsive">{getFormattedMessage('react-data-table.action.column')}</th>;
         }
     };
     const renderStaticColumn = () => {
         if (staticField) {
-            return <th>{staticField}</th>;
+            return <th className="table-header__responsive">{staticField}</th>;
         }
     };
     const renderStatusColumn = () => {
         if (isStatusField) {
-            return <th className="table-header__status">{getFormattedMessage('react-data-table.status.column')}</th>;
+            return <th className="table-header__status table-header__responsive">{getFormattedMessage('react-data-table.status.column')}</th>;
         }
     };
     return (
