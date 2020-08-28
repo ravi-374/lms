@@ -33,6 +33,7 @@ const Authors = (props) => {
             selector: 'first_name',
             sortable: true,
             cell: row => <span>{row.first_name} {row.last_name}</span>,
+            minWidth: '400px'
         },
         {
             name: getFormattedMessage('react-data-table.action.column'),
