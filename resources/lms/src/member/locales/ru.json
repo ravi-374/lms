@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "Книга успешно зарезервирована.",
     "books-items.filter.format.hardcover.label":"Твердый Переплет",
     "books-items.filter.format.paperback.label":"Книга В мягкой обложке",
+    "books-items.filter.format.e-book.label": "Электронная книга",
     "book-history.title": "История книги",
     "book-history.table.book-code.column": "Код Книги",
     "book-history.table.issue-date.column": "Дата ыпуска",

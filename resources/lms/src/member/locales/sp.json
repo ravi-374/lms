@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "Reserva sin reservas con éxito.",
     "books-items.filter.format.hardcover.label":"De Tapa Dura",
     "books-items.filter.format.paperback.label":"Libro De Bolsillo",
+    "books-items.filter.format.e-book.label": "Libro electronico",
     "book-history.title": "Historia Del Libro",
     "book-history.table.book-code.column": "Código De Libro",
     "book-history.table.issue-date.column": "Fecha De Asunto",

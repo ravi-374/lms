@@ -104,7 +104,7 @@ export const bookStatusConstant = {
 export const bookFormatOptions = [
     { id: 1, name: 'books-items.filter.format.hardcover.label' },
     { id: 2, name: 'books-items.filter.format.paperback.label' },
-    { id: 3, name: 'e-book.title' },
+    { id: 3, name: 'books-items.filter.format.e-book.label' },
 ];
 
 const bookStatus = [

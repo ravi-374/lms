@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "Prenota senza prenotazione.",
     "books-items.filter.format.hardcover.label":"Rilegato",
     "books-items.filter.format.paperback.label":"Paperback",
+    "books-items.filter.format.e-book.label": "E-Book",
     "book-history.title": "Storia Del Libro",
     "book-history.table.book-code.column": "Codice Del Libro",
     "book-history.table.issue-date.column": "Data Di Rilascio",

@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "Réservez sans réservation avec succès.",
     "books-items.filter.format.hardcover.label": "Relié",
     "books-items.filter.format.paperback.label": "Broché",
+    "books-items.filter.format.e-book.label": "Livre électronique",
     "book-history.title": "Histoire du livre",
     "book-history.table.book-code.column": "Code de livre",
     "book-history.table.issue-date.column": "Date d'émission",
