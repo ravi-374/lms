@@ -17,7 +17,7 @@ import {bookRequestConstants} from "../../../constants";
 import {icon} from "../../../constants";
 
 const BookRequests = (props) => {
-    const { bookRequests, toggleModal, totalRecord, isLoading, fetchBookRequests } = props;
+    const { bookRequests, toggleModal, totalRecordMember, isLoading, fetchBookRequests } = props;
     const [isCreate, isEdit, isDelete, bookRequest, onOpenModal] = openModal();
     const cardModalProps = { bookRequest, isCreate, isEdit, isDelete, toggleModal };
     const bookFormats = getFormattedOptions(bookFormatOptions);
@@ -109,7 +109,7 @@ const BookRequests = (props) => {
                             <ReactDataTable items={bookRequests} columns={columns} loading={isLoading}
                                             emptyStateMessageId="book-request.empty-state.title"
                                             emptyNotFoundStateMessageId="books-request.not-found.empty-state.title"
-                                            totalRows={totalRecord} onChange={onChange} icon={(icon.BOOK)}/>
+                                            totalRows={totalRecordMember} onChange={onChange} icon={(icon.BOOK)}/>
                             <BookRequestModal {...cardModalProps}/>
                         </CardBody>
                     </Card>
@@ -121,15 +121,15 @@ const BookRequests = (props) => {
 
 BookRequests.propTypes = {
     bookRequests: PropTypes.array,
-    totalRecord: PropTypes.number,
+    totalRecordMember: PropTypes.number,
     isLoading: PropTypes.bool,
     fetchBookRequests: PropTypes.func,
     toggleModal: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
-    const { bookRequests, isLoading, totalRecord } = state;
-    return { bookRequests, isLoading, totalRecord };
+    const { bookRequests, isLoading, totalRecordMember } = state;
+    return { bookRequests, isLoading, totalRecordMember };
 };
 
 export default connect(mapStateToProps, { fetchBookRequests, toggleModal })(BookRequests);

@@ -4,7 +4,7 @@ import {setLoading} from '../../../store/action/progressBarAction';
 import {addToast} from '../../../store/action/toastAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import requestParam from "../../../shared/requestParam";
-import {setTotalRecord} from "../../../admin/store/actions/totalRecordAction";
+import {setTotalRecord} from "./totalRecordAction";
 import _ from 'lodash';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {apiBaseURL} from "../../../constants";

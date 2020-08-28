@@ -3,7 +3,7 @@ import apiConfig from '../../config/apiConfig';
 import {addToast} from '../../../store/action/toastAction';
 import {setLoading} from '../../../store/action/progressBarAction';
 import {toggleModal} from "../../../store/action/modalAction";
-import {setTotalRecord} from "../../../admin/store/actions/totalRecordAction";
+import {setTotalRecord} from "./totalRecordAction";
 import requestParam from "../../../shared/requestParam";
 import {apiBaseURL} from "../../../constants";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
