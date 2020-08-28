@@ -18,6 +18,7 @@ export const fetchEBookRequests = (filter = {}, isLoading = false) => async (dis
     await apiConfig.get(url)
         .then((response) => {
             dispatch({ type: eBookActionType.FETCH_E_BOOKS, payload: response.data.data });
+            dispatch(setTotalRecord(response.data.totalRecords));
             isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({ response }) => {
