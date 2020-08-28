@@ -60,12 +60,13 @@ class BookItemAPIController extends AppBaseController
             $request->get('limit', null)
         );
 
+        $input['withCount'] = 1;
         $records = $records->map(function (BookItem $bookItem) {
             return $bookItem->apiEBookResponse();
         });
 
         return $this->sendResponse($records, 'BookItem retrieved successfully.',
-            ['totalRecords' => $records->count()]
+            ['totalRecords' => $this->bookItemRepo->searchEBooks($input)]
         );
     }
 }
