@@ -1,6 +1,7 @@
 .table-header {
     th {
         cursor: pointer;
+        min-width: 200px;
     }
 
     &__status, &__action {

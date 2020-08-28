@@ -10,6 +10,10 @@
         background: gray;
         cursor: pointer;
 
+        @media (max-width: 576px) {
+            width: 185px;
+        }
+
         .btn-secondary:focus {
             box-shadow: none !important;
             outline: none !important;
@@ -36,6 +40,7 @@
         border-radius: 10px;
         object-fit: cover;
         text-align: center;
+        width: 100%;
     }
 
     &__favicon-preview {
