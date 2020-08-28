@@ -43,11 +43,11 @@ const TestimonialForm = (props) => {
         <Row className="animated fadeIn testimonial-form m-3">
             <Col xs={8} className="primary-detail">
                 <Row>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="name" label="testimonials.input.name.label" required inputRef={inputRef}
                                groupText="user-circle-o" component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="occupation" label="testimonials.input.occupation.label" required
                                groupText="user-circle-o" component={InputGroup}/>
                     </Col>

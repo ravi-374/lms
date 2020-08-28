@@ -221,12 +221,12 @@ const BookCirculationForm = props => {
 
         return (
             <Row>
-                <Col xs={6}>
+                <Col xs={12} sm={6}>
                     <Field name="penalty_collected"
                            label={getFormattedMessage('books-circulation.checkbox.pay-amount.label')}
                            component={CheckBox}/>
                 </Col>
-                <Col xs={6}>
+                <Col xs={12} sm={6}>
                     {hasPenaltyCollected ?
                         <Field name='collected_penalty'
                                label="books-circulation.input.amount.label" min="0"
@@ -269,7 +269,7 @@ const BookCirculationForm = props => {
 
     return (
         <Row className="animated fadeIn m-3">
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Row>
                     <Col xs={12}>
                         <Field name="book" label="books-circulation.select.book.label" required options={books}
@@ -291,18 +291,18 @@ const BookCirculationForm = props => {
                     </Col>
                 </Row>
             </Col>
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Field name="note" rows="10" label="books-circulation.input.note.label" component={TextArea}/>
             </Col>
             <Col xs={12}>
                 <Row>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="status" label="books-circulation.select.status.label" required
                                options={renderBookStatusOption()}
                                placeholder="books-circulation.select.status.placeholder" onChange={onSelectBookStatus}
                                groupText="info-circle" component={Select} disabled={isDisabledStatus}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         {renderDatePicker(status)}
                     </Col>
                 </Row>
