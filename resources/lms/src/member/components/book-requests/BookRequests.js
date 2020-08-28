@@ -96,7 +96,7 @@ const BookRequests = (props) => {
                 <HeaderTitle title="Books Request"/>
                 <h5 className="page-heading">{getFormattedMessage('book-request.title')}</h5>
                 <ProgressBar/>
-                <div className="d-flex justify-content-end">
+                <div className="float-right">
                     <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
                         {getFormattedMessage('book-request.input.new-btn.label')}
                     </Button>

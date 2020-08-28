@@ -60,8 +60,8 @@ const BookLanguages = (props) => {
                 <HeaderTitle title="Book Languages"/>
                 <ProgressBar/>
                 <h5 className="page-heading">{getFormattedMessage('book-languages.title')}</h5>
-                <div className="d-flex justify-content-end">
-                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                <div className="float-right">
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary">
                         {getFormattedMessage('book-languages.input.new-btn.label')}
                     </Button>
                 </div>
