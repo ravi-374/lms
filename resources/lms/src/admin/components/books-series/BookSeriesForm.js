@@ -14,6 +14,7 @@ import EmptyComponent from '../../../shared/empty-component/EmptyComponent';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {fetchBooks} from '../../store/actions/bookAction';
 import {toggleModal} from "../../../store/action/modalAction";
+import './BooksSeries.scss';
 
 const getItems = seriesItems =>
     seriesItems.map((item, key) => ({
@@ -150,8 +151,8 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
             <Table responsive size="md">
                 <thead>
                 <tr>
-                    <th>{getFormattedMessage('books-series.items.input.sequence.label')}</th>
-                    <th className="book-form__item-header">{getFormattedMessage('books-series.items.select.book-name.label')}</th>
+                    <th className="header-responsive">{getFormattedMessage('books-series.items.input.sequence.label')}</th>
+                    <th className="book-form__item-header header-responsive">{getFormattedMessage('books-series.items.select.book-name.label')}</th>
                     <th className="text-center">{getFormattedMessage('react-data-table.action.column')}</th>
                 </tr>
                 </thead>

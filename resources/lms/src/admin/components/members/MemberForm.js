@@ -80,20 +80,20 @@ const MemberForm = (props) => {
                 </div>
                 <hr style={{ marginTop: '0px' }}/>
                 <Row>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="first_name" label="profile.input.first-name.label" required inputRef={inputRef}
                                groupText="user-circle-o" component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="last_name" label="profile.input.last-name.label" required groupText="user"
                                component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="email" label="profile.input.email.label" required groupText="envelope"
                                autoComplete={initialValues ? 'off' : 'new-email'} component={InputGroup}/>
                     </Col>
                     {initialValues.isCreate ?
-                        <Col xs={6}>
+                        <Col xs={12} sm={6}>
                             <Field name="password" label="profile.input.password.label" required
                                 autoComplete={initialValues ? 'off' : 'new-password'} type={isPassword ? "password" : "text"}
                                 groupText="lock" component={InputGroup} appendGroupText={isPassword ? "eye-slash" : "eye"}
@@ -101,19 +101,19 @@ const MemberForm = (props) => {
                         </Col>
                     : null}
                     {initialValues.isCreate ?
-                        <Col xs={6}>
+                        <Col xs={12} sm={6}>
                             <Field name="confirm_password" label="profile.input.confirm-password.label" required
                                 autoComplete={initialValues ? 'off' : 'new-password'} type={isConfirmPassword ? "password" : "text"}
                                 groupText="lock" component={InputGroup} appendGroupText={isConfirmPassword ? "eye-slash" : "eye"}
                                 isAppendIcon onClick={() => onClickShowConfirmPassword()}/>
                         </Col>
                     :null}
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="phone" type="number" label="profile.input.phone.label"
                                onChange={(e) => enableDisableUserInput(e, maxDigits.PHONE_NUMBER)} groupText="phone"
                                component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="membership_plan" label="members.select.plan.label" required
                                options={membershipPlans} placeholder="members.select.plan.placeholder" groupText="tasks"
                                component={Select} isSearchable={true} isMini={true}/>
@@ -132,27 +132,27 @@ const MemberForm = (props) => {
                 <h5>{getFormattedMessage('profile.additional-details')}</h5>
                 <hr/>
                 <Row>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="address_1" label="profile.input.address1.label" groupText="address-book"
                                component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="address_2" label="profile.input.address2.label" groupText="address-book-o"
                                component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="city" label="profile.input.city.label" groupText="circle" component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="state" label="profile.input.state.label" groupText="square"
                                component={InputGroup}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="country" label="profile.select.country.label" options={countries}
                                placeholder="profile.select.country.placeholder" groupText="flag" component={Select}
                                isSearchable={true} isMini={true}/>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} sm={6}>
                         <Field name="zip" label="profile.input.zip.label" groupText="map-pin" component={InputGroup}/>
                     </Col>
                 </Row>

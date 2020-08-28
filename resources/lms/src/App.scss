@@ -146,6 +146,10 @@ input[type="date"] {
 .sticky-table-container {
     .card {
         padding: 1.25rem;
+
+        @media (max-width: 499px) {
+            padding: 0.25rem;
+        }
     }
 
     .card-body {
@@ -189,7 +193,7 @@ input[type="date"] {
     }
 
     .table-responsive {
-        overflow: inherit;
+        overflow: auto;
     }
 }
 
@@ -328,7 +332,7 @@ html[dir="rtl"] {
     }
 }
 
-@media (max-width: 580px) {
+@media (min-width: 350px) and (max-width: 580px) {
     .app-header .navbar-brand {
         width: auto !important;
     }
