@@ -31,12 +31,14 @@ const TestimonialTable = (props) => {
         {
             name: getFormattedMessage('react-data-table.name.column'),
             selector: 'name',
-            sortable: true
+            sortable: true,
+            minWidth: '200px'
         },
         {
             name: getFormattedMessage('react-data-table.occupation.column'),
             selector: 'occupation',
             sortable: true,
+            minWidth: '200px'
         },
         {
             name: getFormattedMessage('react-data-table.action.column'),
