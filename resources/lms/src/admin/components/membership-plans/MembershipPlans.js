@@ -42,8 +42,8 @@ const MembershipPlans = (props) => {
                 <ProgressBar/>
                 <HeaderTitle title="Membership Plans"/>
                 <h5 className="page-heading">{getFormattedMessage('membership-plans.title')}</h5>
-                <div className="d-flex justify-content-end">
-                    <Button onClick={() => onClickModal(false)} size="md" color="primary ml-2">
+                <div className="float-right">
+                    <Button onClick={() => onClickModal(false)} size="md" color="primary">
                         {getFormattedMessage('membership-plans.input.new-btn.label')}
                     </Button>
                 </div>
