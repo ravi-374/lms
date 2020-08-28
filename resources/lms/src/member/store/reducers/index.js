@@ -19,7 +19,7 @@ import settingReducer from './settingReducer';
 import authReducer from './authReducer';
 import bookRequestReducer from './bookRequestReducer';
 import totalBookReducer from "./totalBookReducer";
-import totalRecordReduce from "../../../admin/store/reducers/totalRecordReduce";
+import totalRecordReduce from "./totalRecordReduce";
 import homeSettingReducer from "./homeSettingReducer";
 import testimonialReducer from "./testimonialReducer";
 import changePasswordModalReducer from "../../../store/reducers/changePasswordModalReducer";
@@ -46,7 +46,7 @@ export default combineReducers({
     settings: settingReducer,
     auth: authReducer,
     bookRequests: bookRequestReducer,
-    totalRecords: totalRecordReduce,
+    totalRecordMember: totalRecordReduce,
     homeSettings: homeSettingReducer,
     testimonials: testimonialReducer,
     isChangePasswordModelToggle: changePasswordModalReducer,

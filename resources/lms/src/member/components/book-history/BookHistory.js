@@ -12,7 +12,7 @@ import {fetchBooksHistory} from '../../store/actions/bookHistoryAction';
 
 const BookHistory = props => {
     const [history, setHistory] = useState(null);
-    const { bookHistory, fetchBooksHistory, isLoading, toggleModal, totalRecord } = props;
+    const { bookHistory, fetchBooksHistory, isLoading, toggleModal, totalRecordMember } = props;
 
     const cardModalProps = {
         bookHistory: history,
@@ -32,7 +32,7 @@ const BookHistory = props => {
         bookHistory,
         onOpenModal,
         onChangeFilter,
-        totalRecord,
+        totalRecordMember,
         isLoading
     };
 
@@ -60,18 +60,18 @@ const BookHistory = props => {
 BookHistory.propTypes = {
     history: PropTypes.object,
     bookHistory: PropTypes.array,
-    totalRecord: PropTypes.number,
+    totalRecordMember: PropTypes.number,
     isLoading: PropTypes.bool,
     fetchBooksHistory: PropTypes.func,
     toggleModal: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
-    const { bookHistory, isLoading, totalRecord } = state;
+    const { bookHistory, isLoading, totalRecordMember } = state;
     return {
         bookHistory,
         isLoading,
-        totalRecord
+        totalRecordMember
     }
 };
 

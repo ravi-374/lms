@@ -11,7 +11,7 @@ import {icon, Tokens} from "../../../constants";
 import "./ebook.scss";
 
 const Ebooks = (props) => {
-    const { ebooks, isLoading, fetchEBookRequests, totalRecord } = props;
+    const { ebooks, isLoading, fetchEBookRequests, totalRecordMember } = props;
 
     const onChange = (filter) => {
         fetchEBookRequests(filter, true);
@@ -71,7 +71,7 @@ const Ebooks = (props) => {
                 <div className="sticky-table-container">
                     <Card>
                         <CardBody>
-                            <ReactDataTable items={ebooks} columns={columns} loading={isLoading} totalRows={totalRecord}
+                            <ReactDataTable items={ebooks} columns={columns} loading={isLoading} totalRows={totalRecordMember}
                                             emptyStateMessageId="e-book.empty-state.title"
                                             emptyNotFoundStateMessageId="e-books.not-found.empty-state.title"
                                             onChange={onChange} icon={(icon.BOOK)}/>
@@ -87,12 +87,12 @@ Ebooks.propTypes = {
     ebooks: PropTypes.array,
     isLoading: PropTypes.bool,
     fetchEBookRequests: PropTypes.func,
-    totalRecord: PropTypes.number,
+    totalRecordMember: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
-    const { ebooks, isLoading, totalRecord } = state;
-    return { ebooks, isLoading, totalRecord };
+    const { ebooks, isLoading, totalRecordMember } = state;
+    return { ebooks, isLoading, totalRecordMember };
 };
 
 export default connect(mapStateToProps, { fetchEBookRequests })(Ebooks);
