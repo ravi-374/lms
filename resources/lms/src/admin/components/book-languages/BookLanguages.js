@@ -34,12 +34,14 @@ const BookLanguages = (props) => {
             selector: 'language_code',
             sortable: true,
             cell: row => <span>{row.language_code}</span>,
+            minWidth: '150px'
         },
         {
             name: getFormattedMessage('react-data-table.name.column'),
             selector: 'language_name',
             sortable: true,
             cell: row => <span>{row.language_name}</span>,
+            minWidth: '250px'
         },
         {
             name: getFormattedMessage('react-data-table.action.column'),
