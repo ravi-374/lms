@@ -70,7 +70,7 @@ const renderPermissionsItems = ({ fields, meta: { error, submitFailed }, permiss
         <Row>
             {fields.map((item, index) => {
                     return (
-                        <Col xs={6} key={index}>
+                        <Col xs={12} sm={6} key={index}>
                             <Field name={`${item}.isChecked`} checked={permissions[index].selected}
                                    label={permissions[index].name} onChange={() => handleChanged(index)}
                                    component={CheckBox}/>

@@ -7,6 +7,10 @@
         color: $red;
     }
 
+    &__header-responsive {
+        min-width: 200px;
+    }
+
     &__format, &__language, &__publisher {
         width: 20%;
     }

@@ -32,6 +32,7 @@ const Publishers = (props) => {
             name: getFormattedMessage('react-data-table.name.column'),
             selector: 'name',
             sortable: true,
+            minWidth: '400px'
         },
         {
             name: getFormattedMessage('react-data-table.action.column'),
