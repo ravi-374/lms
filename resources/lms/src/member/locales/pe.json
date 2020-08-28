@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "کتاب را با موفقیت انجام دهید.",
     "books-items.filter.format.hardcover.label":"گالینگور",
     "books-items.filter.format.paperback.label":"شومیز",
+    "books-items.filter.format.e-book.label": "کتاب الکترونیکی",
     "book-history.title": "تاریخ کتاب",
     "book-history.table.book-code.column": "کد کتاب",
     "book-history.table.issue-date.column": "تاریخ انتشار",

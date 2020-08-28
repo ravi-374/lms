@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "取消预订成功。",
     "books-items.filter.format.hardcover.label":"精装",
     "books-items.filter.format.paperback.label":"平装",
+    "books-items.filter.format.e-book.label": "电子书",
     "book-history.title": "书籍历史",
     "book-history.table.book-code.column": "书籍代码",
     "book-history.table.issue-date.column": "发行日期",

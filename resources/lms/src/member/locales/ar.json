@@ -49,6 +49,7 @@
     "books.success.unreserve.message": "حجز unreserve بنجاح.",
     "books-items.filter.format.hardcover.label": "غلاف",
     "books-items.filter.format.paperback.label": "كتاب ورقي الغلاف",
+    "books-items.filter.format.e-book.label": "الكتاب الاليكتروني",
     "book-history.title": "كتاب التاريخ",
     "book-history.table.book-code.column": "كود الكتاب",
     "book-history.table.issue-date.column": "تاريخ الاصدار",

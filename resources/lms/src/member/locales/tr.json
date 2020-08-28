@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "Kitap başarılı bir şekilde unreserve.",
     "books-items.filter.format.hardcover.label": "Ciltli",
     "books-items.filter.format.paperback.label": "Karton Kapaklı Kitap",
+    "books-items.filter.format.e-book.label": "E-Kitap",
     "book-history.title": "Kitap Tarihi",
     "book-history.table.book-code.column": "Kitap Kodu",
     "book-history.table.issue-date.column": "Veriliş Tarihi",

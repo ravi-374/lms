@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "Book unreserve successfully.",
     "books-items.filter.format.hardcover.label": "Hardcover",
     "books-items.filter.format.paperback.label": "Paperback",
+    "books-items.filter.format.e-book.label": "E-Book",
     "book-history.title": "Book History",
     "book-history.table.book-code.column": "Book Code",
     "book-history.table.issue-date.column": "Issue Date",

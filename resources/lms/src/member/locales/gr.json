@@ -50,6 +50,7 @@
     "books.success.unreserve.message": "Buchung erfolgreich rückgängig machen.",
     "books-items.filter.format.hardcover.label":"Gebundene Ausgabe",
     "books-items.filter.format.paperback.label":"Taschenbuch",
+    "books-items.filter.format.e-book.label": "E-Book",
     "book-history.title": "Buchgeschichte",
     "book-history.table.book-code.column": "Buchcode",
     "book-history.table.issue-date.column": "Ausgabedatum",
