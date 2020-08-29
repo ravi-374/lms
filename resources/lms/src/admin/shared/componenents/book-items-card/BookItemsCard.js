@@ -47,7 +47,7 @@ const BookItemsCard = (props) => {
                     <Field name={`${item}.format`} required options={prepareCreatableObject(booksFormatOptions)}
                         placeholder="books.items.select.format.placeholder" groupText="wpforms"
                         onChange={(option) => onChangeBookFormate(index, option)}component={SelectCreatable}
-                        isMini={true}/>
+                        isMini={true} menuPlacement="top"/>
                 </td>
                 <td className="p-3">
                     {
@@ -65,13 +65,13 @@ const BookItemsCard = (props) => {
                 <td className="book-items-card__language">
                     <Field name={`${item}.language`} required options={bookLanguages}
                            placeholder="books.items.select.language.placeholder" groupText="language"
-                           component={SelectCreatable}
+                           component={SelectCreatable} menuPlacement="top"
                            onChange={(option) => onChangeLanguage(option, bookLanguages, 'new_language', item)}/>
                 </td>
                 <td className="book-items-card__publisher">
                     <Field name={`${item}.publisher`} options={publishers}
                            placeholder="books.items.select.publisher.placeholder" groupText="user-circle-o"
-                           component={SelectCreatable}
+                           component={SelectCreatable} menuPlacement="top"
                            onChange={(option) => onChangePublisher(option, publishers, 'new_publisher', item)}/>
                 </td>
                 <td className="text-center">
@@ -89,13 +89,13 @@ const BookItemsCard = (props) => {
             <Table responsive size="md" className="table-multi-item-responsive">
                 <thead>
                 <tr>
-                    <th className="book-items-card__item-header book-items-card__header-responsive">{getFormattedMessage('books.items.input.edition.label')}</th>
-                    <th className="book-items-card__item-header book-items-card__header-responsive">{getFormattedMessage('books.items.select.format.label')}</th>
-                    <th className="book-items-card__item-header book-items-card__header-responsive">{getFormattedMessage('books.items.select.file.label')}</th>
-                    <th className="book-items-card__header-responsive">{getFormattedMessage('books.items.input.price.label')}</th>
-                    <th className="book-items-card__item-header book-items-card__header-responsive">{getFormattedMessage('books.items.select.language.label')}</th>
-                    <th className="book-items-card__header-responsive">{getFormattedMessage('books.items.select.publisher.label')}</th>
-                    <th className="text-center book-items-card__header-responsive">{getFormattedMessage('react-data-table.action.column')}</th>
+                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.input.edition.label')}</th>
+                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.format.label')}</th>
+                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.file.label')}</th>
+                    <th>{getFormattedMessage('books.items.input.price.label')}</th>
+                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.language.label')}</th>
+                    <th>{getFormattedMessage('books.items.select.publisher.label')}</th>
+                    <th className="text-center">{getFormattedMessage('react-data-table.action.column')}</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -193,7 +193,7 @@ input[type="date"] {
     }
 
     .table-responsive {
-        overflow: auto;
+        overflow: inherit;
         margin-bottom: 1%;
     }
 }
