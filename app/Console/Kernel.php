@@ -33,6 +33,12 @@ class Kernel extends ConsoleKernel
             ->daily();
         $schedule->command('lms:book-due-reminder')
             ->daily();
+        $schedule->command('lms:book-due-reminder')
+            ->daily();
+        $schedule->command('lms:book-due-mail-before-one-week')
+            ->daily();
+        $schedule->command('lms:send-book-due-mail')
+            ->daily();
     }
 
     /**

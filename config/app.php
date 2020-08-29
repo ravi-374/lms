@@ -54,8 +54,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url'  => env('ASSET_URL', null),
-    'ebook_disk' => env('EBOOK_DISK', 'ebook'),
+    'asset_url'   => env('ASSET_URL', null),
+    'ebook_disk'  => env('EBOOK_DISK', 'ebook'),
+    'admin_email' => env('ADMIN_EMAIL', 'admin@lms.com'),
 
     /*
     |--------------------------------------------------------------------------

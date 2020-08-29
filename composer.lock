@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.150.2",
+            "version": "3.151.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "1aef7e270f15347df82279f05d85f551f85c8b87"
+                "reference": "7191394eb44edee26db739207c432e408cd6a26f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1aef7e270f15347df82279f05d85f551f85c8b87",
-                "reference": "1aef7e270f15347df82279f05d85f551f85c8b87",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7191394eb44edee26db739207c432e408cd6a26f",
+                "reference": "7191394eb44edee26db739207c432e408cd6a26f",
                 "shasum": ""
             },
             "require": {
@@ -89,7 +89,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-08-20T18:12:35+00:00"
+            "time": "2020-08-28T18:11:11+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -216,16 +216,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.2.7",
+            "version": "1.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "95c63ab2117a72f48f5a55da9740a3273d45b7fd"
+                "reference": "8a7ecad675253e4654ea05505233285377405215"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/95c63ab2117a72f48f5a55da9740a3273d45b7fd",
-                "reference": "95c63ab2117a72f48f5a55da9740a3273d45b7fd",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/8a7ecad675253e4654ea05505233285377405215",
+                "reference": "8a7ecad675253e4654ea05505233285377405215",
                 "shasum": ""
             },
             "require": {
@@ -268,7 +268,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2020-04-08T08:27:21+00:00"
+            "time": "2020-08-23T12:54:47+00:00"
         },
         {
             "name": "composer/composer",
@@ -1300,12 +1300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/InfyOmLabs/laravel-generator.git",
-                "reference": "1b2d45a0a8ff002a6b4e3e6583dfa7a70e0784b6"
+                "reference": "b9d0a066c3f4f5e1c3f9da88e5a48cd721636e8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/InfyOmLabs/laravel-generator/zipball/1b2d45a0a8ff002a6b4e3e6583dfa7a70e0784b6",
-                "reference": "1b2d45a0a8ff002a6b4e3e6583dfa7a70e0784b6",
+                "url": "https://api.github.com/repos/InfyOmLabs/laravel-generator/zipball/b9d0a066c3f4f5e1c3f9da88e5a48cd721636e8e",
+                "reference": "b9d0a066c3f4f5e1c3f9da88e5a48cd721636e8e",
                 "shasum": ""
             },
             "require": {
@@ -1357,7 +1357,7 @@
                 "test",
                 "view"
             ],
-            "time": "2020-08-07T07:56:53+00:00"
+            "time": "2020-08-29T06:30:17+00:00"
         },
         {
             "name": "intervention/image",
@@ -1641,16 +1641,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.18.35",
+            "version": "v6.18.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "baec6c2d7f433594cb858c35c2a2946df7ecac13"
+                "reference": "cd1ab410f7dda21de360dabd7fe25ffd2402d2bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/baec6c2d7f433594cb858c35c2a2946df7ecac13",
-                "reference": "baec6c2d7f433594cb858c35c2a2946df7ecac13",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/cd1ab410f7dda21de360dabd7fe25ffd2402d2bc",
+                "reference": "cd1ab410f7dda21de360dabd7fe25ffd2402d2bc",
                 "shasum": ""
             },
             "require": {
@@ -1748,6 +1748,7 @@
                 "moontoast/math": "Required to use ordered UUIDs (^1.1).",
                 "nyholm/psr7": "Required to use PSR-7 bridging features (^1.2).",
                 "pda/pheanstalk": "Required to use the beanstalk queue driver (^4.0).",
+                "predis/predis": "Required to use the predis connector (^1.1.2).",
                 "psr/http-message": "Required to allow Storage::put to accept a StreamInterface (^1.0).",
                 "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0).",
                 "symfony/cache": "Required to PSR-6 cache bridge (^4.3.4).",
@@ -1785,38 +1786,38 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-08-07T15:06:09+00:00"
+            "time": "2020-08-27T14:18:50+00:00"
         },
         {
             "name": "laravel/sanctum",
-            "version": "v2.4.2",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "cf07490b92e07ee6206f712d4502e8a2a41f5049"
+                "reference": "ab84ea1bda5a1c65bf00dac0fdc07b3d59ad58a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/cf07490b92e07ee6206f712d4502e8a2a41f5049",
-                "reference": "cf07490b92e07ee6206f712d4502e8a2a41f5049",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/ab84ea1bda5a1c65bf00dac0fdc07b3d59ad58a9",
+                "reference": "ab84ea1bda5a1c65bf00dac0fdc07b3d59ad58a9",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/contracts": "^6.9|^7.0",
-                "illuminate/database": "^6.9|^7.0",
-                "illuminate/support": "^6.9|^7.0",
+                "illuminate/contracts": "^6.9|^7.0|^8.0",
+                "illuminate/database": "^6.9|^7.0|^8.0",
+                "illuminate/support": "^6.9|^7.0|^8.0",
                 "php": "^7.2"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^4.0|^5.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
                 "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -1845,7 +1846,7 @@
                 "laravel",
                 "sanctum"
             ],
-            "time": "2020-06-16T19:14:01+00:00"
+            "time": "2020-08-25T18:01:25+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2104,16 +2105,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "63cd8c14708b9544d3f61d3c15b747fda1c95c6e"
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/63cd8c14708b9544d3f61d3c15b747fda1c95c6e",
-                "reference": "63cd8c14708b9544d3f61d3c15b747fda1c95c6e",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9be3b16c877d477357c015cec057548cf9b2a14a",
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a",
                 "shasum": ""
             },
             "require": {
@@ -2185,20 +2186,20 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-08-18T10:57:55+00:00"
+            "time": "2020-08-23T07:39:11+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "1.0.26",
+            "version": "1.0.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "580838fd732838c0d2e8751c403e5a415363da79"
+                "reference": "af7384a12f7cd7d08183390d930c9d0ec629c990"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/580838fd732838c0d2e8751c403e5a415363da79",
-                "reference": "580838fd732838c0d2e8751c403e5a415363da79",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/af7384a12f7cd7d08183390d930c9d0ec629c990",
+                "reference": "af7384a12f7cd7d08183390d930c9d0ec629c990",
                 "shasum": ""
             },
             "require": {
@@ -2232,7 +2233,7 @@
                 }
             ],
             "description": "Flysystem adapter for the AWS S3 SDK v3.x",
-            "time": "2020-08-18T10:54:07+00:00"
+            "time": "2020-08-22T08:43:01+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -2403,28 +2404,28 @@
         },
         {
             "name": "markbaker/complex",
-            "version": "1.4.8",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarkBaker/PHPComplex.git",
-                "reference": "8eaa40cceec7bf0518187530b2e63871be661b72"
+                "reference": "c3131244e29c08d44fefb49e0dd35021e9e39dd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPComplex/zipball/8eaa40cceec7bf0518187530b2e63871be661b72",
-                "reference": "8eaa40cceec7bf0518187530b2e63871be661b72",
+                "url": "https://api.github.com/repos/MarkBaker/PHPComplex/zipball/c3131244e29c08d44fefb49e0dd35021e9e39dd2",
+                "reference": "c3131244e29c08d44fefb49e0dd35021e9e39dd2",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6.0|^7.0.0"
+                "php": "^5.6.0|^7.0"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
                 "phpcompatibility/php-compatibility": "^9.0",
                 "phpdocumentor/phpdocumentor": "2.*",
-                "phploc/phploc": "2.*",
+                "phploc/phploc": "^4.0|^5.0|^6.0|^7.0",
                 "phpmd/phpmd": "2.*",
-                "phpunit/phpunit": "^4.8.35|^5.4.0",
+                "phpunit/phpunit": "^4.8.35|^5.0|^6.0|^7.0",
                 "sebastian/phpcpd": "2.*",
                 "squizlabs/php_codesniffer": "^3.4.0"
             },
@@ -2494,20 +2495,20 @@
                 "complex",
                 "mathematics"
             ],
-            "time": "2020-03-11T20:15:49+00:00"
+            "time": "2020-08-26T19:47:57+00:00"
         },
         {
             "name": "markbaker/matrix",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarkBaker/PHPMatrix.git",
-                "reference": "5348c5a67e3b75cd209d70103f916a93b1f1ed21"
+                "reference": "182d44c3b2e3b063468f7481ae3ef71c69dc1409"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/5348c5a67e3b75cd209d70103f916a93b1f1ed21",
-                "reference": "5348c5a67e3b75cd209d70103f916a93b1f1ed21",
+                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/182d44c3b2e3b063468f7481ae3ef71c69dc1409",
+                "reference": "182d44c3b2e3b063468f7481ae3ef71c69dc1409",
                 "shasum": ""
             },
             "require": {
@@ -2518,7 +2519,7 @@
                 "phpcompatibility/php-compatibility": "dev-master",
                 "phploc/phploc": "^4",
                 "phpmd/phpmd": "dev-master",
-                "phpunit/phpunit": "^5.7",
+                "phpunit/phpunit": "^5.7|^6.0|7.0",
                 "sebastian/phpcpd": "^3.0",
                 "squizlabs/php_codesniffer": "^3.0@dev"
             },
@@ -2563,7 +2564,7 @@
                 "matrix",
                 "vector"
             ],
-            "time": "2019-10-06T11:29:25+00:00"
+            "time": "2020-08-28T19:41:55+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2814,16 +2815,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.38.0",
+            "version": "2.39.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "d8f6a6a91d1eb9304527b040500f61923e97674b"
+                "reference": "0a41ea7f7fedacf307b7a339800e10356a042918"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d8f6a6a91d1eb9304527b040500f61923e97674b",
-                "reference": "d8f6a6a91d1eb9304527b040500f61923e97674b",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/0a41ea7f7fedacf307b7a339800e10356a042918",
+                "reference": "0a41ea7f7fedacf307b7a339800e10356a042918",
                 "shasum": ""
             },
             "require": {
@@ -2889,7 +2890,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-08-04T19:12:46+00:00"
+            "time": "2020-08-24T12:35:58+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3792,16 +3793,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "3d5eb71705adfa34bd34b993400622932b2f62fd"
+                "reference": "590cfec960b77fd55e39b7d9246659e95dd6d337"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/3d5eb71705adfa34bd34b993400622932b2f62fd",
-                "reference": "3d5eb71705adfa34bd34b993400622932b2f62fd",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/590cfec960b77fd55e39b7d9246659e95dd6d337",
+                "reference": "590cfec960b77fd55e39b7d9246659e95dd6d337",
                 "shasum": ""
             },
             "require": {
@@ -3837,7 +3838,7 @@
                 "parser",
                 "validator"
             ],
-            "time": "2020-08-13T09:07:59+00:00"
+            "time": "2020-08-25T06:56:57+00:00"
         },
         {
             "name": "seld/phar-utils",
@@ -6897,6 +6898,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
