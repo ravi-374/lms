@@ -11,7 +11,7 @@ import {editBook} from '../../store/actions/bookAction';
 
 const EditBookDetails = (props) => {
     const { book, editBook, modalConfig, } = props;
-    const { id, is_featured, isbn, name, price, url, description, image } = book;
+    const { id, is_featured, isbn, name, price, url, description, image, image_path } = book;
 
     const onSaveBook = (formValues) => {
         editBook(id, prepareFormData(formValues));
@@ -29,6 +29,7 @@ const EditBookDetails = (props) => {
         url,
         description,
         image,
+        image_path,
         file_name: !!image
     };
 
