@@ -253,6 +253,6 @@ class IssuedBookAPIController extends AppBaseController
         Excel::store(new BookCirculationExport($issuedBooks), $filename, config('filesystems.default'));
         $path = asset('uploads/'.$filename);
 
-        return $this->sendResponse($path, 'Book details exported successfully.');
+        return $this->sendResponse($path, 'Book circulation exported successfully');
     }
 }
