@@ -31,35 +31,35 @@ const BookHistoryTable = (props) => {
             selector: 'issued_on',
             name: getFormattedMessage('book-history.table.issue-date.column'),
             width: '160px',
-            cell: row => renderDate(row.issued_on)
+            cell: row => <span>{ row.issued_on ? renderDate(row.issued_on) : 'N/A' }</span>
         },
         {
             sortable: true,
             selector: 'issue_due_date ',
             name: getFormattedMessage('book-history.table.issue-due-date.column'),
             width: '180px',
-            cell: row => renderDate(row.issue_due_date)
+            cell: row => <span>{ row.issue_due_date ? renderDate(row.issue_due_date) : 'N/A'}</span>
         },
         {
             sortable: true,
             selector: 'reserved_on',
             name: getFormattedMessage('book-history.table.reserve-date.column'),
             width: '180px',
-            cell: row => renderDate(row.reserve_date)
+            cell: row => <span>{ row.reserve_date ? renderDate(row.reserve_date) : 'N/A' }</span>
         },
         {
             sortable: true,
             selector: 'return_due_date',
             name: getFormattedMessage('book-history.table.return-due-date.column'),
             width: '180px',
-            cell: row => renderDate(row.return_due_date)
+            cell: row => <span>{ row.return_due_date ? renderDate(row.return_due_date) : 'N/A' }</span>
         },
         {
             sortable: true,
             selector: 'return_date',
             name: getFormattedMessage('book-history.table.return-date.column'),
             width: '150px',
-            cell: row => renderDate(row.return_date)
+            cell: row => <span>{ row.return_date ? renderDate(row.return_date) : 'N/A' }</span>
         },
         {
             sortable: true,
