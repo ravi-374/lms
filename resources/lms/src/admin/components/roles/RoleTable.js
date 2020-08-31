@@ -14,24 +14,26 @@ export const RoleTable = (props) => {
     const headerProps = { sortAction, sortObject, sortConfig, headers };
 
     return (
-        <Table hover bordered striped responsive size="md">
-            <thead>
-            <TableHeader{...headerProps}/>
-            </thead>
-            <tbody>
-            {roles.map((role) =>
-                (
-                    <tr key={role.id.toString()}>
-                        <td>{role.display_name}</td>
-                        <td>{role.name}</td>
-                        <td className="text-center">
-                            <ModalAction onOpenModal={onClickModal} item={role}/>
-                        </td>
-                    </tr>
-                )
-            )}
-            </tbody>
-        </Table>
+        <div className="overflow-auto">
+            <Table hover bordered striped responsive size="md">
+                <thead>
+                    <TableHeader{...headerProps}/>
+                </thead>
+                <tbody>
+                {roles.map((role) =>
+                    (
+                        <tr key={role.id.toString()}>
+                            <td>{role.display_name}</td>
+                            <td>{role.name}</td>
+                            <td className="text-center">
+                                <ModalAction onOpenModal={onClickModal} item={role}/>
+                            </td>
+                        </tr>
+                    )
+                )}
+                </tbody>
+            </Table>
+        </div>
     );
 };
 
