@@ -13,8 +13,6 @@
     "authors.success.create.message": "Autor salvo com sucesso.",
     "authors.success.edit.message": "Autor atualizado com sucesso.",
     "authors.success.delete.message": "Autor excluído com sucesso.",
-    "dashboard.empty-state.title": "Nenhum livro adicionado ainda ...",
-    "dashboard.not-found.empty-state.title" : "Nenhum livro encontrado ...",
     "books.title": "Livros",
     "books.input.new-btn.label": "Livro Novo",
     "books.filter.e-book.label": "E-Livros",

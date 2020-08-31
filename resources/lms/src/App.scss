@@ -365,9 +365,3 @@ html[dir="rtl"] {
         color: $black;
     }
 }
-
-.card-body {
-    @media (max-width: 340px) {
-        padding: 0.25rem;
-    }
-}

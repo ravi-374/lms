@@ -13,8 +13,6 @@
     "authors.success.create.message": "作者保存成功。",
     "authors.success.edit.message": "作者更新成功。",
     "authors.success.delete.message": "作者已成功删除。",
-    "dashboard.empty-state.title": "尚未添加书籍...",
-    "dashboard.not-found.empty-state.title" : "找不到书...",
     "books.title": "图书",
     "books.filter.e-book.label": "电子书",
     "books.input.new-btn.label": "新书",

@@ -13,8 +13,6 @@
     "authors.success.create.message": "Автор успешно сохранен.",
     "authors.success.edit.message": "Автор успешно обновлен.",
     "authors.success.delete.message": "Автор успешно удален.",
-    "dashboard.empty-state.title": "Книги еще не добавлены ...",
-    "dashboard.not-found.empty-state.title" : "Книги не найдены ...",
     "books.title": "Книги",
     "books.input.new-btn.label": "Новая Книга",
     "books.filter.e-book.label": "Электронные книги",
