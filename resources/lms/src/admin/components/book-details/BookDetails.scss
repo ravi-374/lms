@@ -44,13 +44,6 @@ html[dir="rtl"] {
         max-width: 1000px;
     }
 
-    @media (max-width: 1139px) {
-        width: 100%;
-        margin: auto;
-        display: flex;
-        justify-content: center;
-    }
-
     &__item-container {
         margin-left: 50px;
         @media (max-width: 1139px) {
