@@ -13,6 +13,8 @@
     "authors.success.create.message": "لا مؤلفين بعد ...",
     "authors.success.edit.message": "لا مؤلفين بعد ...",
     "authors.success.delete.message": "لا مؤلفين بعد ...",
+    "dashboard.empty-state.title": "لم تتم إضافة كتب حتى الآن ...",
+    "dashboard.not-found.empty-state.title" : "لم يتم العثور على كتاب ...",
     "books.title": "كتب",
     "books.filter.e-book.label": "كتب الكترونية",
     "books.input.new-btn.label": "كتاب جديد",
