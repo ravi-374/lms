@@ -42,7 +42,7 @@ const MemberLogin = (props) => {
             <HeaderTitle title="Login"/>
             <Container>
                 <Row className="justify-content-center">
-                    <Col md="4">
+                    <Col md="6" lg="6" xl="4">
                         <Card className="p-3">
                             <CardBody>
                                 <Form onSubmit={handleSubmit(onLogin)}>

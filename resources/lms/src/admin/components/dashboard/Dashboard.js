@@ -197,8 +197,8 @@ const Dashboard = (props) => {
                                 <Card>
                                     <CardBody>
                                         <ReactDataTable items={booksCirculation}
-                                            emptyStateMessageId="books-circulation.empty-state.title"
-                                            emptyNotFoundStateMessageId="books-circulation.not-found.empty-state.title"
+                                            emptyStateMessageId="dashboard.empty-state.title"
+                                            emptyNotFoundStateMessageId="dashboard.not-found.empty-state.title"
                                             filterKeyName={storageKey.BOOK_CIRCULATION}
                                             columns={columns} loading={isLoading} totalRows={totalRecord}
                                             onChange={onChange} icon={(icon.BOOK_CIRCULATION)}/>

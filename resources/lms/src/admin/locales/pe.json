@@ -13,6 +13,8 @@
     "authors.success.create.message": "نویسنده با موفقیت ذخیره شد.",
     "authors.success.edit.message": "نویسنده با موفقیت به روز شد.",
     "authors.success.delete.message": "نویسنده با موفقیت حذف شد.",
+    "dashboard.empty-state.title": "هنوز کتابی اضافه نشده است ...",
+    "dashboard.not-found.empty-state.title" : "هیچ کتابی یافت نشد ...",
     "books.title": "کتابها",
     "books.input.new-btn.label": "کتاب جدید",
     "books.filter.e-book.label": "کتابهای الکترونیکی",
