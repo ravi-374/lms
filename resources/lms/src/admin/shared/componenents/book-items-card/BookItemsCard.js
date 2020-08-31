@@ -85,7 +85,7 @@ const BookItemsCard = (props) => {
     };
 
     return (
-        <div className="book-items-card overflow-auto">
+        <div className="book-items-card">
             <Table responsive size="md" className="table-multi-item-responsive">
                 <thead>
                 <tr>
