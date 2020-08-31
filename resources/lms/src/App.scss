@@ -366,6 +366,12 @@ html[dir="rtl"] {
     }
 }
 
+.card-body {
+    @media (max-width: 340px) {
+        padding: 0.25rem;
+    }
+}
+
 .input-group {
     flex-wrap: unset;
 }

@@ -13,6 +13,8 @@
     "authors.success.create.message": "Yazar başarıyla kaydedildi.",
     "authors.success.edit.message": "Yazar başarıyla güncellendi.",
     "authors.success.delete.message": "Yazar başarıyla silindi.",
+    "dashboard.empty-state.title": "Henüz kitap eklenmedi ...",
+    "dashboard.not-found.empty-state.title" : "Kitap bulunamadı ...",
     "books.title": "Kitabın",
     "books.input.new-btn.label": "Yeni Kitap",
     "books.filter.e-book.label": "E-Kitaplar",
