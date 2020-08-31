@@ -22,7 +22,7 @@ const ReactDatePicker = (props) => {
         <>
             <FormGroup>
                 {label ? <Label className={labelClass}>{label}</Label> : null}
-                <InputGroup>
+                <InputGroup className="date-picker-input">
                     <InputGroupAddon addonType={addOnType}>
                         <InputGroupText><i className={`fa fa-${groupText}`}/>
                         </InputGroupText>

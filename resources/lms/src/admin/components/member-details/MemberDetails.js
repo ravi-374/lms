@@ -54,9 +54,9 @@ const MemberDetail = props => {
             <ProgressBar/>
             <HeaderTitle title="Member Details"/>
             <Row>
-                <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">{member.first_name + ' ' + member.last_name}</h5>
-                    <div className="d-flex">
+                <Col sm={12} className="mb-2 d-block d-sm-flex justify-content-between">
+                    <h5 className="page-heading w-100">{member.first_name + ' ' + member.last_name}</h5>
+                    <div className="d-block d-sm-flex">
                         <Button className="mr-2" color="primary" onClick={() => onClickModal(+match.params.id)}>
                             {getFormattedMessage('members.edit-member-details.title')}
                         </Button>
