@@ -27,26 +27,28 @@ export const MembershipPlanTable = (props) => {
         }
     };
     return (
-        <Table hover bordered striped responsive size="md">
-            <thead>
-            <TableHeader{...headerProps}/>
-            </thead>
-            <tbody>
-            {membershipPlans.map((membershipPlan) => {
-                    return (
-                        <tr key={membershipPlan.id.toString()}>
-                            <td>{membershipPlan.name}</td>
-                            <td>{renderMemberShipPlanFrequency(membershipPlan)}</td>
-                            <td className="text-right">{priceFormatter(membershipPlan.price, currency)}</td>
-                            <td className="text-center">
-                                <ModalAction onOpenModal={onClickModal} item={membershipPlan}/>
-                            </td>
-                        </tr>
-                    )
-                }
-            )}
-            </tbody>
-        </Table>
+        <div className="overflow-auto">
+            <Table hover bordered striped responsive size="md">
+                <thead>
+                    <TableHeader{...headerProps}/>
+                </thead>
+                <tbody>
+                    {membershipPlans.map((membershipPlan) => {
+                        return (
+                            <tr key={membershipPlan.id.toString()}>
+                                <td>{membershipPlan.name}</td>
+                                <td>{renderMemberShipPlanFrequency(membershipPlan)}</td>
+                                <td className="text-right">{priceFormatter(membershipPlan.price, currency)}</td>
+                                <td className="text-center">
+                                    <ModalAction onOpenModal={onClickModal} item={membershipPlan}/>
+                                </td>
+                            </tr>
+                        )
+                    }
+                )}
+                </tbody>
+            </Table>
+        </div>
     );
 };
 

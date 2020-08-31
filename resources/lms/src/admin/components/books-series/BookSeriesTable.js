@@ -16,25 +16,27 @@ export const BookSeriesTable = (props) => {
         history.push(`/app/admin/books-series/${bookId}/edit`);
     };
     return (
-        <Table hover bordered striped responsive size="md">
-            <thead>
-            <TableHeader{...headerProps}/>
-            </thead>
-            <tbody>
-            {booksSeries.map((bookSeries) => {
-                    return (
-                        <tr key={bookSeries.id.toString()}>
-                            <td>{bookSeries.title}</td>
-                            <td className="text-center">
-                                <ModalAction onOpenModal={onOpenModal} item={bookSeries} isEditMode={true}
-                                             goToEditItem={goToEditSeriesBook}/>
-                            </td>
-                        </tr>
-                    )
-                }
-            )}
-            </tbody>
-        </Table>
+        <div className="overflow-auto">
+            <Table hover bordered striped responsive size="md">
+                <thead>
+                    <TableHeader{...headerProps}/>
+                </thead>
+                <tbody>
+                {booksSeries.map((bookSeries) => {
+                        return (
+                            <tr key={bookSeries.id.toString()}>
+                                <td>{bookSeries.title}</td>
+                                <td className="text-center">
+                                    <ModalAction onOpenModal={onOpenModal} item={bookSeries} isEditMode={true}
+                                                 goToEditItem={goToEditSeriesBook}/>
+                                </td>
+                            </tr>
+                        )
+                    }
+                )}
+                </tbody>
+            </Table>
+        </div>
     );
 };
 
