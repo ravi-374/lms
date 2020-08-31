@@ -11,6 +11,7 @@ use App\Repositories\Contracts\RoleRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 /**
@@ -114,7 +115,9 @@ class RoleAPIController extends AppBaseController
      */
     public function destroy(Role $role)
     {
-        if (! $role->users->isEmpty()) {
+        $roleUser = DB::table('model_has_roles')->where('role_id', $role->id)->count();
+//        if (! $role->users->isEmpty()) {
+        if ($roleUser) {
             return $this->sendError(
                 'Role is assigned to one or more users.',
                 HttpResponse::HTTP_UNPROCESSABLE_ENTITY
