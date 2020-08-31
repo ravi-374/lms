@@ -53,9 +53,9 @@ const BookDetail = props => {
             <ProgressBar/>
             <HeaderTitle title="Book-Details"/>
             <Row>
-                <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">{book.name}</h5>
-                    <div className="d-flex">
+                <Col sm={12} className="mb-2 d-block d-sm-flex justify-content-between">
+                    <h5 className="page-heading w-100">{book.name}</h5>
+                    <div className="d-block d-sm-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
                             {getFormattedMessage('books.edit-book-details.title')}
                         </Button>

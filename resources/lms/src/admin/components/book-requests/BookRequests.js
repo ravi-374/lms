@@ -41,6 +41,7 @@ const BookRequests = (props) => {
             selector: 'isbn',
             sortable: true,
             cell: row => <span>{row.isbn}</span>,
+            minWidth: '200px'
         },
         {
             name: getFormattedMessage('books.table.book.column'),

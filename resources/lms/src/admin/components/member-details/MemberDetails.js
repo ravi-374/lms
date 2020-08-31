@@ -10,6 +10,7 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {openModal} from "../../../shared/custom-hooks";
 import {fetchMember} from '../../store/actions/memberAction';
 import {toggleModal} from '../../../store/action/modalAction';
+import {Routes} from "../../../constants";
 import UserDetailsCard from "../../shared/componenents/user-details-card/UserDetailsCard";
 
 const MemberDetail = props => {
@@ -24,8 +25,8 @@ const MemberDetail = props => {
         return <ProgressBar/>;
     }
 
-    const onClickModal = (isEdit, bookHistory = null, isDelete = false) => {
-        onOpenModal(isEdit, bookHistory, isDelete);
+    const onClickModal = (id, bookHistory = null, isDelete = false) => {
+        history.push(`${Routes.MEMBERS + id}/edit`);
         toggleModal();
     };
 
@@ -56,7 +57,7 @@ const MemberDetail = props => {
                 <Col sm={12} className="mb-2 d-flex justify-content-between">
                     <h5 className="page-heading">{member.first_name + ' ' + member.last_name}</h5>
                     <div className="d-flex">
-                        <Button className="mr-2" color="primary" onClick={() => onClickModal(false)}>
+                        <Button className="mr-2" color="primary" onClick={() => onClickModal(+match.params.id)}>
                             {getFormattedMessage('members.edit-member-details.title')}
                         </Button>
                         <Button onClick={() => goBack()}>{getFormattedMessage('global.input.back-btn.label')}</Button>
