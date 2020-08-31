@@ -50,11 +50,11 @@ const BookCirculationDetail = props => {
         <div className="animated fadeIn">
             <HeaderTitle title="Book Circulation Details"/>
             <Row>
-                <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">
+                <Col sm={12} className="mb-2 d-block d-sm-flex justify-content-between">
+                    <h5 className="page-heading w-100">
                         {getFormattedMessage('books-circulation.edit-book-circulation-details.title')}
                     </h5>
-                    <div className="d-flex">
+                    <div className="d-block d-sm-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
                             {getFormattedMessage('books-circulation.modal.edit.title')}
                         </Button>

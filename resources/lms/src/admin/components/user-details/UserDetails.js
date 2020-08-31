@@ -34,9 +34,9 @@ const UserDetails = props => {
         <div className="animated fadeIn">
             <HeaderTitle title="User Details"/>
             <Row>
-                <Col sm={12} className="mb-2 d-flex justify-content-between">
-                    <h5 className="page-heading">{user.first_name + ' ' + user.last_name}</h5>
-                    <div className="d-flex">
+                <Col sm={12} className="mb-2 d-block d-sm-flex justify-content-between">
+                    <h5 className="page-heading w-100">{user.first_name + ' ' + user.last_name}</h5>
+                    <div className="d-block d-sm-flex">
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
                             {getFormattedMessage('users.edit-user-details.title')}
                         </Button>
