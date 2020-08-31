@@ -42,6 +42,7 @@ export const BookItemTable = (props) => {
     }
 
     return (
+        <div className="overflow-auto">
         <Table hover bordered striped responsive size="md" className="book-item__table">
             <thead>
             <TableHeader{...headerProps}/>
@@ -73,6 +74,7 @@ export const BookItemTable = (props) => {
             )}
             </tbody>
         </Table>
+    </div>
     );
 };
 
