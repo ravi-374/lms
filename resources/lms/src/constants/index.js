@@ -19,7 +19,9 @@ export const countryCode = {
     AED: 'AED',
     CAD: 'CAD',
     CNY: 'CNY',
-    RUB: 'RUB'
+    RUB: 'RUB',
+    EUR: 'EUR',
+    AUD: 'AUD',
 };
 
 export const Routes = {
