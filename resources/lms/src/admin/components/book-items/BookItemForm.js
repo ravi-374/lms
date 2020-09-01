@@ -66,7 +66,7 @@ const BookItemForm = (props) => {
     return (
         <Row className="animated fadeIn book-form m-3">
             <Col xs={6}>
-                <Field name="book_code" label="books.items.input.book-code.label" min="1" inputRef={inputRef}
+                <Field name="book_code" label="books.items.input.book-code.label" min="1" inputRef={inputRef} required
                        onChange={(e) => enableDisableUserInput(e, maxDigits.BOOK_CODE)} type="number"
                        groupText="file-text" component={InputGroup}/>
             </Col>
