@@ -58,6 +58,10 @@ export const mapCurrencyCode = (isoCode) => {
             return 'usd';
         case countryCode.RUB:
             return 'rub';
+        case countryCode.EUR:
+            return 'euro';
+        case countryCode.AUD:
+            return 'usd';
         default:
             return 'inr';
     }
