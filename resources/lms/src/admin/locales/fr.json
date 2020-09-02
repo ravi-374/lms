@@ -112,6 +112,7 @@
     "books-circulation.modal.edit.title": "Editer la circulation du livre",
     "books-circulation.modal.delete.title": "Supprimer la circulation du livre",
     "books-circulation.edit-book-circulation-details.title": "Modifier les détails de la circulation du livre",
+    "book-circulation-details.title": "Détails de la diffusion du livre",
     "books-circulation.filter.all.label": "Tout",
     "books-circulation.filter.issued.label": "Publié",
     "books-circulation.filter.returned.label": "Revenu",

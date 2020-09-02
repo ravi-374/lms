@@ -112,6 +112,7 @@
     "books-circulation.modal.edit.title": "Kitap Dolaşımını Düzenle",
     "books-circulation.modal.delete.title": "Kitap Dolaşımını Sil",
     "books-circulation.edit-book-circulation-details.title": "Kitap Dolaşımını Düzenle",
+    "book-circulation-details.title": "Kitap Dolaşım Ayrıntıları",
     "books-circulation.filter.all.label": "Herşey",
     "books-circulation.filter.issued.label": "Veriliş",
     "books-circulation.filter.returned.label": "İade",

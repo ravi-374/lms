@@ -112,6 +112,7 @@
     "books-circulation.modal.edit.title": "Изменить Тираж Книги",
     "books-circulation.modal.delete.title": "Удалить Тираж Книги",
     "books-circulation.edit-book-circulation-details.title": "Изменить Тираж Книги",
+    "book-circulation-details.title": "Подробности тиража книги",
     "books-circulation.filter.all.label": "Все",
     "books-circulation.filter.issued.label": "Выпущен",
     "books-circulation.filter.returned.label": "Возвращенный",

@@ -112,6 +112,7 @@
     "books-circulation.modal.edit.title": "Editar Circulación Del Libro",
     "books-circulation.modal.delete.title": "Eliminar Circulación Del Libro",
     "books-circulation.edit-book-circulation-details.title": "Editar Detalles De Circulación Del Libro",
+    "book-circulation-details.title": "Detalles de circulación del libro",
     "books-circulation.filter.all.label": "Todas",
     "books-circulation.filter.issued.label": "Emitido",
     "books-circulation.filter.returned.label": "Devuelto",
