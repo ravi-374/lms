@@ -311,7 +311,7 @@
     "membership-plans.success.create.message": "برنامه عضویت با موفقیت ذخیره شد.",
     "membership-plans.success.edit.message": "برنامه عضویت با موفقیت به روز شد.",
     "membership-plans.success.delete.message": "برنامه عضویت با موفقیت حذف شد.",
-    "modal.delete.message": " آیا مطمئنید که میخواهید حذف کنید",
+    "modal.delete.message": " آیا مطمئن هستید که می خواهید حذف کنید",
     "publishers.title": "ناشران",
     "publishers.input.new-btn.label": "ناشر جدید",
     "publishers.modal.edit.title": "ویرایش ناشر",

@@ -311,7 +311,7 @@
     "membership-plans.success.create.message": "تم حفظ خطة العضوية بنجاح.",
     "membership-plans.success.edit.message": "تم تحديث خطة العضوية بنجاح.",
     "membership-plans.success.delete.message": "تم حذف خطة العضوية بنجاح.",
-    "modal.delete.message": " هل أنت متأكد أنك تريد حذف",
+    "modal.delete.message": "هل أنت متأكد من أنك تريد الحذف",
     "publishers.title": "الناشرون",
     "publishers.input.new-btn.label": "الناشر الجديد",
     "publishers.modal.edit.title": "تحرير الناشر",

@@ -150,7 +150,7 @@
     "registration.submit.title": "ثبت نام",
     "registration.success.message": "شما با موفقیت ثبت نام کرده اید ، لطفاً ایمیل و ورود خود را تأیید کنید",
     "registration.register.link.title": "عضویت جدید",
-    "modal.delete.message": " آیا مطمئنید که میخواهید حذف کنید",
+    "modal.delete.message": " آیا مطمئن هستید که می خواهید حذف کنید",
     "change-password.title": "تغییر رمز عبور",
     "change-password.old_password.input.validate.msg": "گذرواژه فعلی باید مورد نیاز باشد.",
     "change-password.password.input.validate.msg": "رمز عبور لازم است",

@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "Üyelik planı başarıyla kaydedildi.",
     "membership-plans.success.edit.message": "Üyelik planı başarıyla güncellendi.",
     "membership-plans.success.delete.message": "Üyelik planı başarıyla silindi.",
-    "modal.delete.message": "Silmek istediğine emin misin ",
+    "modal.delete.message": "Silmek istediğinizden emin misiniz ",
     "publishers.title": "Yayıncılar",
     "publishers.input.new-btn.label": "Yeni Yayıncı",
     "publishers.modal.edit.title": "Yayıncıyı Düzenle",

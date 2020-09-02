@@ -150,7 +150,7 @@
     "registration.submit.title": "registo",
     "registration.success.message": "Você se registrou com sucesso, verifique seu e-mail e login",
     "registration.register.link.title": "Nova associação",
-    "modal.delete.message": "Tem certeza de que deseja excluir ",
+    "modal.delete.message": "Tem certeza que deseja deletar ",
     "change-password.title": "Mudar senha",
     "change-password.old_password.input.validate.msg": "A senha atual deve ser necessária.",
     "change-password.password.input.validate.msg": "A senha deve ser obrigatória.",

@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "Der Mitgliedschaftsplan wurde erfolgreich gespeichert.",
     "membership-plans.success.edit.message": "Der Mitgliedschaftsplan wurde erfolgreich aktualisiert.",
     "membership-plans.success.delete.message": "Mitgliedschaftsplan erfolgreich gelöscht.",
-    "modal.delete.message": "Sind Sie sicher, dass Sie Löschen möchten ",
+    "modal.delete.message": "Möchten Sie wirklich löschen ",
     "publishers.title": "Verlag",
     "publishers.input.new-btn.label": "Neuer Verlag",
     "publishers.modal.edit.title": "Publisher Bearbeiten",

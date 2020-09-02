@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "会员计划已成功保存。",
     "membership-plans.success.edit.message": "会员计划已成功更新。",
     "membership-plans.success.delete.message": "会员计划已成功删除。",
-    "modal.delete.message": "你确定你要删除 ",
+    "modal.delete.message": "您确定要删除吗 ",
     "publishers.title": "出版商",
     "publishers.input.new-btn.label": "新出版商",
     "publishers.modal.edit.title": "编辑发布者",

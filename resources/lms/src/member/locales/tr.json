@@ -149,7 +149,7 @@
     "registration.submit.title": "Kayıt olmak",
     "registration.success.message": "Başarıyla kaydoldunuz, lütfen e-postanızı ve giriş bilgilerinizi doğrulayın",
     "registration.register.link.title": "Yeni üyelik",
-    "modal.delete.message": "Silmek istediğine emin misin ",
+    "modal.delete.message": "Silmek istediğinizden emin misiniz ",
     "change-password.title": "Şifre değiştir",
     "change-password.old_password.input.validate.msg": "Mevcut Parola gerekli olmalıdır.",
     "change-password.password.input.validate.msg": "Parola gerekli olmalıdır.",

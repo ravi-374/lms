@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "Membership plan saved successfully.",
     "membership-plans.success.edit.message": "Membership plan updated successfully.",
     "membership-plans.success.delete.message": "Membership plan deleted successfully.",
-    "modal.delete.message": "Are you sure you want to delete ",
+    "modal.delete.message": "Are you sure want to delete ",
     "publishers.title": "Publishers",
     "publishers.input.new-btn.label": "New Publisher",
     "publishers.modal.edit.title": "Edit Publisher",

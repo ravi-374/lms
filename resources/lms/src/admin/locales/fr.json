@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "Plan d'adhésion enregistré avec succès.",
     "membership-plans.success.edit.message": "Plan d'adhésion mis à jour avec succès.",
     "membership-plans.success.delete.message": "Plan d'adhésion supprimé avec succès.",
-    "modal.delete.message": "Etes-vous sûr que vous voulez supprimer ",
+    "modal.delete.message": "Voulez-vous vraiment supprimer ",
     "publishers.title": "Editeurs",
     "publishers.input.new-btn.label": "Nouvel editeurs",
     "publishers.modal.edit.title": "Editer un editeur",
