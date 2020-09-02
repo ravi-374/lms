@@ -65,38 +65,38 @@ const BookItemForm = (props) => {
 
     return (
         <Row className="animated fadeIn book-form m-3">
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Field name="book_code" label="books.items.input.book-code.label" min="1" inputRef={inputRef} required
                        onChange={(e) => enableDisableUserInput(e, maxDigits.BOOK_CODE)} type="number"
                        groupText="file-text" component={InputGroup}/>
             </Col>
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Field name="edition" label="books.items.input.edition.label" required groupText="file-text"
                        component={InputGroup}/>
             </Col>
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Field name="format" label="books.items.select.format.label" required options={booksFormatOptions}
                        placeholder="books.items.select.format.placeholder" groupText="wpforms" component={Select} onChange={(options) => onChangeFormat(options)}/>
             </Col>
             {
                 formateOptions && formateOptions.id === 3 ?
-                <Col xs={6}>
+                <Col xs={12} sm={6}>
                     <Field name="file" type="file" component={InputFile} />
                 </Col> :
                 null
             }
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Field name="location" label="books.items.input.location.label" groupText="map-pin"
                        component={InputGroup}/>
             </Col>
             {formateOptions && formateOptions.id !== 3 ?
-                <Col xs={6}>
+                <Col xs={12} sm={6}>
                     <Field name="price" min="1" type="number" label="books.items.input.price.label"
                         groupText={mapCurrencyCode(currency)} component={InputGroup}/>
                 </Col> :
                 null
             }
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Field name="language" label="books.items.select.language.label" required options={bookLanguages}
                        placeholder="books.items.select.language.placeholder" groupText="language" component={Select}
                        isSearchable={true}/>
@@ -106,13 +106,13 @@ const BookItemForm = (props) => {
                        placeholder="books.items.select.publisher.placeholder" groupText="user-circle-o"
                        component={Select} isSearchable={true}/>
             </Col>
-            <Col xs={6}>
+            <Col xs={12} sm={6}>
                 <Field name="status" label="books.items.select.status.label"
                        disabled={!initialValues || isDisabledStatus} options={bookItemsStatusOptions}
                        placeholder="books.items.select.status.placeholder" groupText="user-circle-o" component={Select}
                        isSearchable={true}/>
             </Col>
-            <Col xs={12}>
+            <Col xs={12} sm={6}>
                 <SaveAction onSave={handleSubmit(onSave)} {...props}/>
             </Col>
         </Row>
