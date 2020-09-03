@@ -153,7 +153,7 @@ const MemberForm = (props) => {
                                isSearchable={true} isMini={true}/>
                     </Col>
                     <Col xs={12} sm={6}>
-                        <Field name="zip" label="profile.input.zip.label" groupText="map-pin" component={InputGroup}/>
+                        <Field type="number" name="zip" label="profile.input.zip.label" groupText="map-pin" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
