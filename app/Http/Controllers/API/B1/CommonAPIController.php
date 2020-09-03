@@ -22,6 +22,7 @@ class CommonAPIController extends AppBaseController
             $currencies[$key] = [
                 'country'  => $currency['name'],
                 'iso_code' => $currency['code'],
+                'symbol'   => $currency['symbol'],
             ];
         }
 
