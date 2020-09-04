@@ -29,12 +29,13 @@ export const fetchGenres = (filter = {}, isLoading = false) => async (dispatch) 
         });
 };
 
-export const addGenre = (genre) => async (dispatch) => {
+export const addGenre = (genre ,filterObj) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.GENRE, genre)
         .then((response) => {
             dispatch({ type: genreActionType.ADD_GENRE, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('genres.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchGenres(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

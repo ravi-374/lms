@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import Modal from '../../../shared/components/Modal';
 import {addGenre} from '../../store/actions/genreAction';
 import GenreForm from './GenreForm';
+import {Filters} from "../../../constants";
 
 const CreateGenre = (props) => {
     const { addGenre, toggleModal } = props;
 
     const onSaveGenre = (formValues) => {
-        addGenre(formValues);
+        addGenre(formValues, Filters.OBJ);
     };
 
     const prepareFormOption = {
