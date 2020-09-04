@@ -27,12 +27,13 @@ export const fetchBookLanguages = (filter = {}, isLoading = false) => async (dis
         });
 };
 
-export const addBookLanguage = (language) => async (dispatch) => {
+export const addBookLanguage = (language, filterObj) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.BOOK_LANGUAGE, language)
         .then((response) => {
             dispatch({ type: bookLanguageActionType.ADD_BOOK_LANGUAGE, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('book-languages.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchBookLanguages(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
