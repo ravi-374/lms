@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import PublisherForm from './PublisherForm';
 import Modal from '../../../shared/components/Modal';
 import {addPublisher} from '../../store/actions/publisherAction';
+import {Filters} from "../../../constants";
 
 const CreatePublisher = (props) => {
     const { addPublisher, toggleModal } = props;
 
     const onSavePublisher = (formValues) => {
-        addPublisher(formValues);
+        addPublisher(formValues, Filters.OBJ);
     };
     const prepareFormOption = {
         onSavePublisher,
