@@ -112,6 +112,7 @@
     "books-circulation.modal.edit.title": "Buchauflage Bearbeiten",
     "books-circulation.modal.delete.title": "Buchauflage Löschen",
     "books-circulation.edit-book-circulation-details.title": "Buchumlaufdetails Bearbeiten",
+    "book-circulation-details.title": "Details zur Buchauflage",
     "books-circulation.filter.all.label": "Alle",
     "books-circulation.filter.issued.label": "Problematisch",
     "books-circulation.filter.returned.label": "Ist Zurückgekommen",

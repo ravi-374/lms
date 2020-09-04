@@ -112,6 +112,7 @@
     "books-circulation.export-excel.label": "تصدير Excel",
     "books-circulation.export-pdf.label": "تصدير ملف PDF",
     "books-circulation.edit-book-circulation-details.title": "تحرير تفاصيل تداول الكتاب",
+    "book-circulation-details.title": "تفاصيل تداول الكتاب",
     "books-circulation.filter.all.label": "الكل",
     "books-circulation.filter.issued.label": "نشر",
     "books-circulation.filter.returned.label": "عاد",

@@ -112,6 +112,7 @@
     "books-circulation.modal.edit.title": "编辑书籍发行",
     "books-circulation.modal.delete.title": "删除图书发行",
     "books-circulation.edit-book-circulation-details.title": "编辑图书发行详细信息",
+    "book-circulation-details.title": "图书发行详细信息",
     "books-circulation.filter.all.label": "所有",
     "books-circulation.filter.issued.label": "发行",
     "books-circulation.filter.returned.label": "回来",

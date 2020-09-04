@@ -111,6 +111,7 @@
     "books-circulation.modal.edit.title": "گردش کتاب را ویرایش کنید",
     "books-circulation.modal.delete.title": "گردش کتاب را حذف کنید",
     "books-circulation.edit-book-circulation-details.title": "جزئیات گردش کتاب را ویرایش کنید",
+    "book-circulation-details.title": "جزئیات تیراژ کتاب",
     "books-circulation.filter.all.label": "همه",
     "books-circulation.filter.issued.label": "صادر شده",
     "books-circulation.filter.returned.label": "بازگشت",
