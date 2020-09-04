@@ -29,12 +29,13 @@ export const fetchPublishers = (filter = {}, isLoading = false) => async (dispat
         });
 };
 
-export const addPublisher = (Publisher) => async (dispatch) => {
+export const addPublisher = (Publisher, filterObj) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.PUBLISHER, Publisher)
         .then((response) => {
             dispatch({ type: publisherActionType.ADD_PUBLISHER, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('publishers.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchPublishers(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

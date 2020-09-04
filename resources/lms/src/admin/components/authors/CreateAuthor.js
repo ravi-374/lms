@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import AuthorForm from './AuthorForm';
 import Modal from '../../../shared/components/Modal';
 import {addAuthor} from '../../store/actions/authorAction';
+import {Filters} from "../../../constants";
 
 const CreateAuthor = (props) => {
     const { addAuthor, toggleModal } = props;
 
     const onSaveAuthor = (formValues) => {
-        addAuthor(formValues);
+        addAuthor(formValues, Filters.OBJ);
     };
 
     const prepareFormOption = {

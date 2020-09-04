@@ -27,12 +27,13 @@ export const fetchAuthors = (filter = {}, isLoading = false) => async (dispatch)
         });
 };
 
-export const addAuthor = (author) => async (dispatch) => {
+export const addAuthor = (author, filterObj = {}) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.AUTHOR, author)
         .then((response) => {
             dispatch({ type: authorActionType.ADD_AUTHOR, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('authors.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchAuthors(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
