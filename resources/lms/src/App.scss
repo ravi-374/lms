@@ -364,6 +364,11 @@ html[dir="rtl"] {
     .Toastify__toast--default {
         color: $black;
     }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        min-width: unset;
+    }
 }
 
 .card-body {
