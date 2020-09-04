@@ -41,12 +41,13 @@ export const fetchTestimonial = (testimonialId) => async (dispatch) => {
         });
 };
 
-export const addTestimonial = (testimonial) => async (dispatch) => {
+export const addTestimonial = (testimonial, filterObj) => async (dispatch) => {
     await apiConfigWthFormData.post(apiBaseURL.TESTIMONIAL, testimonial)
         .then((response) => {
             dispatch({ type: testimonialActionType.ADD_TESTIMONIAL, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('testimonials.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchTestimonials(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

@@ -21,8 +21,8 @@ export const fetchBooksCirculation = (filter = {}, cb) => async (dispatch) => {
         .then((response) => {
             dispatch({ type: bookCirculationActionType.FETCH_BOOKS_CIRCULATION, payload: response.data.data });
             dispatch(setTotalRecord(response.data.totalRecords));
-            cb({ status: response.data.success });
             dispatch(setLoading(false));
+            cb({ status: response.data.success });
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
