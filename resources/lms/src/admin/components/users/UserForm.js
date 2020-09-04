@@ -157,7 +157,7 @@ const UserForm = (props) => {
                                isSearchable={true}/>
                     </Col>
                     <Col xs={12} sm={6}>
-                        <Field name="zip" label="profile.input.zip.label" groupText="map-pin" component={InputGroup}/>
+                        <Field name="zip" type="number" label="profile.input.zip.label" groupText="map-pin" component={InputGroup}/>
                     </Col>
                 </Row>
             </Col>
