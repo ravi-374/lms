@@ -113,7 +113,7 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
             'publisher',
             'language',
         ]);
-        $query = $this->applyDynamicSearch($search, $query);
+        $query = $this->applyDynamicSearchEBook($search, $query);
         $query->eBook();
 
         if (! empty($search['withCount'])) {
@@ -251,5 +251,24 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
         $records = $available->merge($notAvailable);
 
         return $records;
+    }
+
+    /**
+     * @param $search
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function applyDynamicSearchEBook($search, $query)
+    {
+        $query->when(! empty($search['search']), function (Builder $query) use ($search) {
+            $searchString = $search['search'];
+
+            $query->orWhereHas('book', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['name']);
+            });
+        });
+
+        return $query;
     }
 }
