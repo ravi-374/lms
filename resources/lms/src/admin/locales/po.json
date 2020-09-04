@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "Plano de associação salvo com sucesso.",
     "membership-plans.success.edit.message": "Plano de associação atualizado com sucesso.",
     "membership-plans.success.delete.message": "Plano de associação excluído com sucesso.",
-    "modal.delete.message": "Tem certeza de que deseja excluir ",
+    "modal.delete.message": "Tem certeza que deseja deletar ",
     "publishers.title": "Editoras",
     "publishers.input.new-btn.label": "Novo Editor",
     "publishers.modal.edit.title": "Editar Editor",

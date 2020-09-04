@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "Plan de membresía guardado con éxito.",
     "membership-plans.success.edit.message": "Plan de membresía actualizado con éxito.",
     "membership-plans.success.delete.message": "Plan de membresía eliminado con éxito.",
-    "modal.delete.message": "Estas seguro que quieres borrarlo ",
+    "modal.delete.message": "¿Estás segura de que quieres eliminar ",
     "publishers.title": "Editoras",
     "publishers.input.new-btn.label": "Nuevo Editor",
     "publishers.modal.edit.title": "Editar Editor",

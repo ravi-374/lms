@@ -149,7 +149,7 @@
     "registration.submit.title": "Registrare",
     "registration.success.message": "Ti sei registrato correttamente, per favore verifica la tua email e accedi",
     "registration.register.link.title": "Nuova iscrizione",
-    "modal.delete.message": "Sei sicuro di voler eliminare?",
+    "modal.delete.message": "Sei sicuro di voler eliminare ",
     "change-password.title": "Cambia la password",
     "change-password.old_password.input.validate.msg": "La password corrente deve essere richiesta.",
     "change-password.password.input.validate.msg": "Password obbligatoria.",

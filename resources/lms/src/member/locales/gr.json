@@ -151,7 +151,7 @@
     "registration.submit.title": "Registrieren",
     "registration.success.message": "Sie haben sich erfolgreich registriert, überprüfen Sie bitte Ihre E-Mail-Adresse und melden Sie sich an",
     "registration.register.link.title": "Neue Mitgliedschaft",
-    "modal.delete.message": "Sind Sie sicher, dass Sie Löschen möchten ",
+    "modal.delete.message": "Möchten Sie wirklich löschen ",
     "change-password.title": "Passwort ändern",
     "change-password.old_password.input.validate.msg": "Das aktuelle Passwort muss angegeben werden.",
     "change-password.password.input.validate.msg": "Passwort muss erforderlich sein.",

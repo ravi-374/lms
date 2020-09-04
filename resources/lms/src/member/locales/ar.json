@@ -149,7 +149,7 @@
     "registration.submit.title": "تسجيل",
     "registration.success.message":"لقد قمت بالتسجيل بنجاح ، يرجى التحقق من بريدك الإلكتروني وتسجيل الدخول",
     "registration.register.link.title": "عضوية جديدة",
-    "modal.delete.message": " هل أنت متأكد أنك تريد حذف",
+    "modal.delete.message": "هل أنت متأكد من أنك تريد الحذف",
     "change-password.title": "تغيير كلمة السر",
     "change-password.old_password.input.validate.msg": "يجب أن تكون كلمة المرور الحالية مطلوبة.",
     "change-password.password.input.validate.msg": "يجب أن تكون كلمة المرور مطلوبة.",

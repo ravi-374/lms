@@ -150,7 +150,7 @@
     "registration.submit.title": "寄存器",
     "registration.success.message": "您已成功注册，请验证您的电子邮件并登录",
     "registration.register.link.title": "新会员",
-    "modal.delete.message": "你确定你要删除 ",
+    "modal.delete.message": "您确定要删除吗 ",
     "change-password.title": "更改密码",
     "change-password.old_password.input.validate.msg": "必须输入当前密码。",
     "change-password.password.input.validate.msg": "必须输入密码。",

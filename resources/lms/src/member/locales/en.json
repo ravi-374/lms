@@ -150,7 +150,7 @@
     "registration.submit.title": "Register",
     "registration.success.message": "You have registered successfully, please verify your email and login.",
     "registration.register.link.title": "New Membership",
-    "modal.delete.message": "Are you sure you want to delete",
+    "modal.delete.message": "Are you sure want to delete ",
     "change-password.title": "Change Password",
     "change-password.old_password.input.validate.msg": "The Current Password must be required.",
     "change-password.password.input.validate.msg": "Password must be required.",

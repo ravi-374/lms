@@ -312,7 +312,7 @@
     "membership-plans.success.create.message": "Piano di abbonamento salvato correttamente.",
     "membership-plans.success.edit.message": "Piano di abbonamento aggiornato correttamente.",
     "membership-plans.success.delete.message": "Piano di abbonamento eliminato correttamente.",
-    "modal.delete.message": "Sei sicuro di voler eliminare?",
+    "modal.delete.message": "Sei sicuro di voler eliminare ",
     "publishers.title": "Editrici",
     "publishers.input.new-btn.label": "Nuovi Editori",
     "publishers.modal.edit.title": "Modifica Editori",
