@@ -376,3 +376,11 @@ html[dir="rtl"] {
         padding: 0.25rem;
     }
 }
+
+.react-select {
+    &__input {
+        [class*="-menu"] {
+            z-index: 1 !important;
+        }
+    }
+}
