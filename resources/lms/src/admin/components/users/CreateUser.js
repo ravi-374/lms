@@ -5,12 +5,13 @@ import UserForm from './UserForm';
 import prepareFormData from '../../shared/prepareUserFormData';
 import Modal from '../../../shared/components/Modal';
 import {addUser} from '../../store/actions/userAction';
+import {Filters} from "../../../constants";
 
 const CreateUser = (props) => {
     const { addUser, toggleModal } = props;
 
     const onSaveUser = (formValues) => {
-        addUser(prepareFormData(formValues));
+        addUser(prepareFormData(formValues), Filters.OBJ);
     };
 
     const prepareFormOption = {
