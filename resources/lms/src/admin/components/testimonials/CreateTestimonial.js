@@ -5,12 +5,13 @@ import Modal from '../../../shared/components/Modal';
 import TestimonialForm from "./TestimonialForm";
 import prepareTestimonialFormData from "./prepareTestimonialFormData";
 import {addTestimonial} from "../../store/actions/testimonialAction";
+import {Filters} from "../../../constants";
 
 const CreateTestimonial = (props) => {
     const { addTestimonial, toggleModal } = props;
 
     const onSaveTestimonial = (formValues) => {
-        addTestimonial(prepareTestimonialFormData(formValues));
+        addTestimonial(prepareTestimonialFormData(formValues), Filters.OBJ);
     };
 
     const prepareFormOption = {
