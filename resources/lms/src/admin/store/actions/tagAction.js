@@ -28,12 +28,13 @@ export const fetchTags = (filter = {}, isLoading = false) => async (dispatch) =>
         });
 };
 
-export const addTag = (tag) => async (dispatch) => {
+export const addTag = (tag, filterObj) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.TAG, tag)
         .then((response) => {
             dispatch({ type: tagActionType.ADD_TAG, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('tags.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchTags(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
