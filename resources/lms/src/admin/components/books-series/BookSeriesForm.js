@@ -107,7 +107,7 @@ const BookSeriesForm = props => {
     };
 
     return (
-        <Row className="animated fadeIn m-3">
+        <Row className="animated fadeIn m-none m-sm-3">
             <Col xs={12}>
                 <Field name="title" label="books-series.input.title.label" required inputRef={inputRef}
                        groupText="television" component={InputGroup}/>

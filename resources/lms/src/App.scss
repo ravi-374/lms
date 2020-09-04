@@ -146,10 +146,6 @@ input[type="date"] {
 .sticky-table-container {
     .card {
         padding: 1.25rem;
-
-        @media (max-width: 499px) {
-            padding: 0.25rem;
-        }
     }
 
     .card-body {

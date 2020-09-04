@@ -45,7 +45,7 @@ const BookFormCard = (props) => {
     };
 
     return (
-        <Row className="animated fadeIn book-form-card m-3">
+        <Row className="animated fadeIn book-form-card m-none m-sm-3">
             <Col xs={8} className="book-form-card__primary-details">
                 <div className="d-flex justify-content-between">
                     <h5>{getFormattedMessage('books.form.primary-details')}</h5>
