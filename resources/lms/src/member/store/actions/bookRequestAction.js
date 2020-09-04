@@ -27,12 +27,13 @@ export const fetchBookRequests = (filter = {}, isLoading = false) => async (disp
         });
 };
 
-export const addBookRequest = (bookRequest) => async (dispatch) => {
+export const addBookRequest = (bookRequest, filterObj) => async (dispatch) => {
     await apiConfig.post(apiBaseURL.BOOK_REQUEST, bookRequest)
         .then((response) => {
             dispatch({ type: bookRequestActionType.ADD_ADMIN_BOOK_REQUEST, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('book-request.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchBookRequests(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

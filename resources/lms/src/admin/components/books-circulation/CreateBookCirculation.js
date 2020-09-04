@@ -8,11 +8,12 @@ import {toastType} from "../../constants";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {addToast} from "../../../store/action/toastAction";
 import {clearAvailableBookLimit} from "../../store/actions/availableBookLimitAction";
+import {Filters} from "../../../constants";
 
 const CreateBookCirculation = (props) => {
     const {
         toggleModal, className, title, bookLimit,
-        books, onSelectBook, bookId, members, filterObject, addBookCirculation,
+        books, onSelectBook, bookId, members, addBookCirculation,
         addToast,clearAvailableBookLimit
     } = props;
     const [isDisableSubmit, setDisableSubmit] = useState(false);
@@ -44,7 +45,7 @@ const CreateBookCirculation = (props) => {
     };
 
     const onSaveBookCirculation = (formValues) => {
-        addBookCirculation(formValues, filterObject);
+        addBookCirculation(formValues, Filters.OBJ);
         clearAvailableBookLimit();
     };
 
@@ -64,7 +65,6 @@ const CreateBookCirculation = (props) => {
 CreateBookCirculation.propTypes = {
     bookLimit: PropTypes.object,
     bookCirculation: PropTypes.object,
-    filterObject: PropTypes.object,
     title: PropTypes.object,
     books: PropTypes.array,
     members: PropTypes.array,
