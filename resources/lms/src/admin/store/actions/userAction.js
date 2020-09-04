@@ -43,12 +43,13 @@ export const fetchUser = (userId) => async (dispatch) => {
         });
 };
 
-export const addUser = (user) => async (dispatch) => {
+export const addUser = (user, filterObj) => async (dispatch) => {
     await apiConfigWthFormData.post(apiBaseURL.USER, user)
         .then((response) => {
             dispatch({ type: userActionType.ADD_USER, payload: response.data.data });
             dispatch(addToast({ text: getFormattedMessage('users.success.create.message') }));
             dispatch(toggleModal());
+            dispatch(fetchUsers(filterObj));
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
