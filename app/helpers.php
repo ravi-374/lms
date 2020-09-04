@@ -123,9 +123,29 @@ function getRandomColor($opacity = 1, $colorType = 'bright', $colorFormat = 'rgb
     ));
 }
 
+/**
+ *
+ * @return mixed
+ */
 function getLogoURL()
 {
     $setting = Setting::where('key', Setting::LIBRARY_LOGO)->first();
 
     return $setting->logo_url;
+}
+
+/**
+ *
+ * @return mixed
+ */
+function getCurrencySymbol()
+{
+    $currencyPath = file_get_contents(storage_path()."/currencies/currencies.json");
+    $currenciesData = json_decode($currencyPath, true)['currencies'];
+    $currencySymbol = Setting::where('key', '=', 'currency')->value('value');
+
+    $currencySymbol = collect($currenciesData)->where('code',
+        strtoupper($currencySymbol))->pluck('symbol')->first();
+
+    return $currencySymbol;
 }

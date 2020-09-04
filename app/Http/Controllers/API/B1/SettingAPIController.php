@@ -48,6 +48,10 @@ class SettingAPIController extends AppBaseController
                 $record->append('logo_url');
             }
 
+            if ($record->key == 'currency') {
+                $record->append('currency_symbol');
+            }
+
             return $record;
         });
 

@@ -98,4 +98,14 @@ class Setting extends Model
             return $this->imageUrl(Setting::LOGO_PATH.DIRECTORY_SEPARATOR.$this->value);
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getCurrencySymbolAttribute()
+    {
+        if (! empty($this->value)) {
+            return getCurrencySymbol();
+        }
+    }
 }
