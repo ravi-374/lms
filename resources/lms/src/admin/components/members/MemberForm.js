@@ -66,7 +66,7 @@ const MemberForm = (props) => {
     };
 
     return (
-        <Row className="animated fadeIn member-form m-3">
+        <Row className="animated fadeIn member-form m-none m-sm-3">
             <Col xs={8} className="primary-detail">
                 <div className="d-flex justify-content-between">
                     <h5>{getFormattedMessage('profile.primary-details')}</h5>
