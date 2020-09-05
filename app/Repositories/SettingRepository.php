@@ -52,7 +52,13 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
 
         $settings = [];
         foreach ($input as $data) {
-            $settings[] = Setting::create($data);
+            $setting = Setting::create($data);
+
+            if ($setting->key == 'currency') {
+                $setting->append('currency_symbol');
+            }
+
+            $settings[] = $setting;
         }
 
         return $settings;
