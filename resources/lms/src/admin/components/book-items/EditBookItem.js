@@ -10,7 +10,7 @@ import {getFormattedOptions} from "../../../shared/sharedMethod";
 
 const EditBookItem = (props) => {
     const {
-        bookLanguages, publishers, bookItems, bookItem,
+        bookLanguages, publishers, bookItems, bookItem, currency,
         toggleModal, addBookItem, bookId
     } = props;
     const { id, book_code, edition, format, location, price, language, publisher, status } = bookItem;
@@ -39,6 +39,7 @@ const EditBookItem = (props) => {
 
     const prepareFormOption = {
         onSaveBookItems,
+        currency,
         onCancel: toggleModal,
         bookLanguages, publishers,
         initialValues: changeAbleFields

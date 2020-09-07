@@ -114,19 +114,21 @@ const prepareCurrencies = (currencies) => {
     let currenciesArray = [];
     currencies.forEach(cur => currenciesArray.push({
         id: cur.iso_code,
-        name: cur.country
+        name: cur.country,
+        symbol: cur.symbol
     }));
     return currenciesArray;
 };
 
 const prepareSelectedSetting = (settings, filterKey) => {
     const setting = settings.filter(setting => setting.key === filterKey)
-        .map(({ value, display_name }) => ({
+        .map(({ value, display_name, currency_symbol }) => ({
             id: value,
-            name: display_name
+            name: display_name,
+            symbol: currency_symbol
         }));
     if (setting.length > 0) {
-        return { id: setting[0].id, name: setting[0].name };
+        return { id: setting[0].id, name: setting[0].name, symbol: setting[0].symbol };
     }
 };
 

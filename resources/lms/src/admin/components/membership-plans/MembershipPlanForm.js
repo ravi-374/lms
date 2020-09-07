@@ -8,7 +8,7 @@ import InputGroup from '../../../shared/components/InputGroup';
 import SaveAction from '../../../shared/action-buttons/SaveAction';
 import TextArea from '../../../shared/components/TextArea';
 import Select from "../../../shared/components/Select";
-import {getFormattedOptions, mapCurrencyCode} from "../../../shared/sharedMethod";
+import {getFormattedOptions} from "../../../shared/sharedMethod";
 
 const MembershipPlanForm = props => {
     const { onSaveMembershipPlan, handleSubmit,currency } = props;
@@ -32,7 +32,7 @@ const MembershipPlanForm = props => {
             </Col>
             <Col xs={12}>
                 <Field name="price" label="membership-plans.input.price.label" type="number" min="0" required
-                       groupText={mapCurrencyCode(currency)} component={InputGroup}/>
+                       groupText={currency} component={InputGroup} isDefaultCurrency={true}/>
             </Col>
             <Col xs={12}>
                 <Field name="frequency" label="membership-plans.select.frequency.label" required

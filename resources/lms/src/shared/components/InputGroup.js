@@ -16,7 +16,7 @@ const ReactInputGroup = (props) => {
     const {
         input, label, type = "text", min, max, required, readOnly, autoComplete = "off", onClick,
         inputRef, groupText, addOnType = 'prepend', placeholder, meta: { touched, error },
-        isAppendIcon, appendGroupText, className
+        isAppendIcon, appendGroupText, className, isDefaultCurrency = false
     } = props;
     const intl = new useIntl();
     const labelText = type !== 'hidden' ? intl.formatMessage({ id: label ? label : placeholder }) : label;
@@ -32,7 +32,7 @@ const ReactInputGroup = (props) => {
                 {type !== 'hidden' ?
                     <InputGroupAddon addonType={addOnType}>
                         <InputGroupText>
-                            <i className={`fa fa-${groupText}`}/>
+                            {isDefaultCurrency ? groupText : <i className={`fa fa-${groupText}`}/>}
                         </InputGroupText>
                     </InputGroupAddon>
                     : null

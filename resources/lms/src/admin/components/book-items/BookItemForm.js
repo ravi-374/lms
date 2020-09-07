@@ -10,7 +10,6 @@ import InputGroup from '../../../shared/components/InputGroup';
 import Select from "../../../shared/components/Select";
 import {enableDisableUserInput, getFormattedOptions} from "../../../shared/sharedMethod";
 import {bookItemStatusOptions, bookFormatOptions, bookItemStatusConstants, maxDigits} from "../../constants";
-import {mapCurrencyCode} from "../../../shared/sharedMethod";
 import {prepareBookLanguage} from "../../shared/prepareArray";
 import {fetchPublishers} from "../../store/actions/publisherAction";
 import {fetchBookLanguages} from "../../store/actions/bookLanguageAction";
@@ -92,7 +91,7 @@ const BookItemForm = (props) => {
             {formateOptions && formateOptions.id !== 3 ?
                 <Col xs={12} sm={6}>
                     <Field name="price" min="1" type="number" label="books.items.input.price.label"
-                        groupText={mapCurrencyCode(currency)} component={InputGroup}/>
+                        groupText={currency} isDefaultCurrency={true} component={InputGroup}/>
                 </Col> :
                 null
             }

@@ -21,7 +21,7 @@ const SettingsForm = (props) => {
         currencies, initialValues, change, onChangeAppLogo, toggleModal,
         onSaveSettings, handleSubmit, onChangeAppFavicon
     } = props;
-    const [groupText, setGroupText] = useState(mapCurrencyCode(initialValues.currency ? initialValues.currency.id : null));
+    const [groupText, setGroupText] = useState(initialValues.currency ? initialValues.currency.symbol : null);
     const settingRef = createRef();
     const [logoRef, setLogoRef] = useState(null);
     const [faviconRef, setFaviconRef] = useState(null);
@@ -42,7 +42,7 @@ const SettingsForm = (props) => {
     }, []);
 
     const onSelectCurrency = (option) => {
-        if (option) setGroupText(mapCurrencyCode(option.id))
+        if (option) setGroupText(option.symbol)
     };
 
     const prepareFormData = (key, value, display_name) => {
@@ -181,7 +181,7 @@ const SettingsForm = (props) => {
                     </Col>
                     <Col xs={6}>
                         <Field name='currency' label="settings.select.currency.label" required groupText={groupText}
-                               options={currencies} onChange={onSelectCurrency}
+                               options={currencies} onChange={onSelectCurrency} isDefaultCurrency={true}
                                placeholder="settings.select.currency.placeholder" component={Select}
                                isSearchable={true}/>
                     </Col>
@@ -208,7 +208,7 @@ const SettingsForm = (props) => {
                     </Col>
                     <Col xs={6}>
                         <Field name='penalty_per_day' type="number" label="settings.input.penalty.label" min="0"
-                                required groupText={groupText} component={InputGroup}/>
+                            isDefaultCurrency={true} required groupText={groupText} component={InputGroup}/>
                     </Col>
                     <Col xs={6}>
                         <Field name='language' label="settings.select.language.label" required groupText="language"

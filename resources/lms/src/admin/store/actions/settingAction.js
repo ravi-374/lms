@@ -14,11 +14,12 @@ export const fetchSettings = (isLoading = false) => async (dispatch) => {
         .then((response) => {
             dispatch({ type: settingsActionsType.FETCH_SETTINGS, payload: response.data.data });
             const currencies = response.data.data.filter(setting => setting.key === settingsKey.CURRENCY)
-                .map(({ value, display_name }) => ({
+                .map(({ value, display_name, currency_symbol }) => ({
                     id: value,
                     name: display_name,
+                    symbol: currency_symbol
                 }));
-            dispatch(getOrSetCurrency(currencies[0].id));
+            dispatch(getOrSetCurrency(currencies[0].symbol));
             isLoading ? dispatch(setLoading(false)) : null;
         })
         .catch(({ response }) => {
@@ -42,11 +43,12 @@ export const postSettings = (settings) => async (dispatch) => {
         .then((response) => {
             dispatch({ type: settingsActionsType.POST_SETTINGS, payload: response.data.data });
             const currencies = response.data.data.filter(setting => setting.key === settingsKey.CURRENCY)
-                .map(({value, display_name}) => ({
+                .map(({value, display_name, currency_symbol}) => ({
                     id: value,
                     name: display_name,
+                    symbol: currency_symbol
                 }));
-            dispatch(getOrSetCurrency(currencies[0].id));
+            dispatch(getOrSetCurrency(currencies[0].symbol));
             dispatch(editAppSetting(prepareAppSetting(response.data.data)));
             dispatch(addToast({ text: getFormattedMessage('settings.success.create.message') }));
         })

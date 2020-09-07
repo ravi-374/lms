@@ -42,31 +42,6 @@ export const prepareFullNames = (members) => {
     return memberArray;
 };
 
-export const mapCurrencyCode = (isoCode) => {
-    switch (isoCode) {
-        case countryCode.AED:
-            return 'shekel';
-        case countryCode.CAD:
-            return 'try';
-        case  countryCode.CNY:
-            return 'cny';
-        case  countryCode.GBP:
-            return 'gbp';
-        case countryCode.INR:
-            return 'inr';
-        case countryCode.USD:
-            return 'usd';
-        case countryCode.RUB:
-            return 'rub';
-        case countryCode.EUR:
-            return 'euro';
-        case countryCode.AUD:
-            return 'usd';
-        default:
-            return 'inr';
-    }
-};
-
 export const enableDisableUserInput = (event, digit) => {
     if (event.target.value.length > digit) {
         event.preventDefault();
