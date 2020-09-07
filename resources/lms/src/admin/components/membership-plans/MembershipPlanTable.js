@@ -5,7 +5,7 @@ import {sortConfig} from '../../../config/sortConfig';
 import {membershipPlanFrequency, membershipPlanFrequencyOptions} from '../../constants';
 import TableHeader from '../../../shared/table-header/Tableheader';
 import ModalAction from '../../../shared/action-buttons/ModalAction';
-import {getFormattedMessage, getFormattedOptions, priceFormatter} from "../../../shared/sharedMethod";
+import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
 
 export const MembershipPlanTable = (props) => {
     const { membershipPlans, onClickModal, sortAction, sortObject, currency } = props;
@@ -38,7 +38,7 @@ export const MembershipPlanTable = (props) => {
                             <tr key={membershipPlan.id.toString()}>
                                 <td>{membershipPlan.name}</td>
                                 <td>{renderMemberShipPlanFrequency(membershipPlan)}</td>
-                                <td className="text-right">{priceFormatter(membershipPlan.price, currency)}</td>
+                                <td className="text-right">{currency}{membershipPlan.price}</td>
                                 <td className="text-center">
                                     <ModalAction onOpenModal={onClickModal} item={membershipPlan}/>
                                 </td>

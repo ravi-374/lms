@@ -16,7 +16,7 @@ import './Component.scss';
 
 const CustomInput = (props) => {
     const {
-        input, label, type, min, max, required, groupText, isCustom,
+        input, label, type, min, max, required, groupText, isCustom, isDefaultCurrency = false,
         addOnType = 'prepend', placeholder, readOnly, meta: { touched, error }
     } = props;
     const intl = new useIntl();
@@ -36,7 +36,7 @@ const CustomInput = (props) => {
                         <InputGroup>
                             <InputGroupAddon addonType={addOnType}>
                                 <InputGroupText>
-                                    <i className={`fa fa-${groupText}`}/>
+                                { isDefaultCurrency ? groupText : <i className={`fa fa-${groupText}`}/>}
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input type={type} {...input} min={min} max={max} className={className}

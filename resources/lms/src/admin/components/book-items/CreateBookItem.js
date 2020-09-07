@@ -10,7 +10,7 @@ import {fetchPublishers} from '../../store/actions/publisherAction';
 import {fetchBookLanguages} from '../../store/actions/bookLanguageAction';
 
 const CreateBookItem = (props) => {
-    const { bookItems, toggleModal, addBookItem, bookId } = props;
+    const { bookItems, toggleModal, addBookItem, bookId, currency } = props;
 
     const onSaveBookItems = (formValues) => {
         addBookItem(prepareFormData(formValues), bookId);
@@ -19,6 +19,7 @@ const CreateBookItem = (props) => {
     const prepareFormOption = {
         onSaveBookItems,
         onCancel: toggleModal,
+        currency
     };
 
     return <Modal {...props} content={<BookItemForm{...prepareFormOption}/>}/>

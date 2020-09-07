@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import ProgressBar from "../../../shared/progress-bar/ProgressBar";
 import ReactDataTable from "../../../shared/table/ReactDataTable";
-import {getFormattedMessage, dateFormatter, priceFormatter} from "../../../shared/sharedMethod";
+import {getFormattedMessage, dateFormatter} from "../../../shared/sharedMethod";
 import {fetchPenalties} from '../../store/actions/penaltyAction';
 import {toggleModal} from '../../../store/action/modalAction';
 import {icon} from "../../../constants";
@@ -50,14 +50,14 @@ const Penalties = (props) => {
             selector: 'actual_penalty',
             width: '230px',
             sortable: true,
-            cell: row => <span>{priceFormatter(row.actual_penalty, currency)}</span>,
+            cell: row => <span>{currency}{row.actual_penalty}</span>,
         },
         {
             name: getFormattedMessage('react-data-table.collected_penalty.column'),
             selector: 'collected_penalty',
             width: '230px',
             sortable: true,
-            cell: row => <span>{priceFormatter(row.collected_penalty, currency)}</span>,
+            cell: row => <span>{currency}{row.collected_penalty}</span>,
         }
     ];
 

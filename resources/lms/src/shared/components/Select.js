@@ -16,7 +16,7 @@ const ReactSelect = (props) => {
     const {
         input, placeholder, required, label, groupText, isSearchable = false,
         innerRef, defaultValue = {}, disabled, menuPlacement = "auto", isCustom,
-        meta: { touched, error }, options, isMulti = false
+        meta: { touched, error }, options, isMulti = false, isDefaultCurrency = false,
     } = props;
     const intl = new useIntl();
     const labelText = label ? intl.formatMessage({ id: label }) : null;
@@ -32,7 +32,7 @@ const ReactSelect = (props) => {
             <InputGroup>
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                        <i className={`fa fa-${groupText}`}/>
+                        {isDefaultCurrency ? groupText : <i className={`fa fa-${groupText}`}/>}
                     </InputGroupText>
                 </InputGroupAddon>
                 <Select

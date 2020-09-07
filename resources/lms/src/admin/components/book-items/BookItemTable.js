@@ -63,7 +63,7 @@ export const BookItemTable = (props) => {
                                     <i className="fa fa-download fa-md cursor-pointer text-info ml-2" onClick={ () => onClickOpenEBook(bookItem.e_book_url) }/>
                                     : '' }
                             </td>
-                            <td className="book-item__table-price">{priceFormatter(bookItem.price, currency)}</td>
+                            <td className="book-item__table-price">{currency}{bookItem.price === null ? '0.00' : bookItem.price}</td>
                             <td className="book-item__table-status">{renderBookItemStatus(bookItem)}</td>
                             <td className="text-center book-item__table-action">
                                 <ModalAction onOpenModal={onClickModal} item={bookItem}/>

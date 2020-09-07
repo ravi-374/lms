@@ -59,7 +59,7 @@ const BookItemsCard = (props) => {
                     {
                         !itemIndex.includes(index) ?
                                 <Field name={`${item}.price`} min="1" type="number" placeholder="books.items.input.price.label"
-                                    groupText={mapCurrencyCode(currency)} component={CustomInput}/> : null
+                                    groupText={currency} isDefaultCurrency={true}  component={CustomInput}/> : null
                     }
                 </td>
                 <td className="book-items-card__language">
