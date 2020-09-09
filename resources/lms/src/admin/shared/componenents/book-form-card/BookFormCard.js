@@ -27,7 +27,7 @@ const BookFormCard = (props) => {
 
     useEffect(() => {
         inputRef.current.focus();
-        initialize ? initialize({ items: [{}] }) : null;
+        initialize ? initialize({ items: [] }) : null;
     }, []);
 
     const onFocusChangeISBN = (event) => {
