@@ -17,7 +17,7 @@ import Modal from '../../../../shared/components/Modal';
 import { bookFormatConstant } from "../../../constants";
 
 const BookItemsCard = (props) => {
-    const { fields, meta: { error, submitFailed }, toggleModal } = props;
+    const { fields, meta: { error, submitFailed }, toggleModal, currency } = props;
     const [items, setItems] = useState([]);
     const [addItems, setAddItems] = useState([]);
     const booksFormatOptions = getFormattedOptions(bookFormatOptions);
@@ -34,7 +34,8 @@ const BookItemsCard = (props) => {
     const cardModalProps = {
         onSaveBookItems,
         onCancel: toggleModal,
-        newBookItem: true
+        newBookItem: true,
+        currency
     };
 
     const onAddSubFields = () => {
