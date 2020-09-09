@@ -1,6 +1,7 @@
 export default (formValues) => {
-    const { book_code, edition, file, format, language_id, location, price, publisher_id, status, items } = formValues;
+    const { book_code, edition, file, format, language_id, location, price, publisher_id, status, items, id } = formValues;
     const formData = new FormData();
+    formData.append('id', id ? id : '');
     formData.append('book_code', book_code);
     formData.append('edition', edition);
     formData.append('file', file ? file[0] : '');
