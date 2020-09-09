@@ -31,6 +31,9 @@ html[dir="rtl"] {
             margin-top: 25px;
             margin-left: 20px;
         }
+        @media (max-width: 350px) {
+            margin-left: 0;
+        }
     }
 
     &__item {
@@ -58,6 +61,10 @@ html[dir="rtl"] {
         @media (max-width: 1139px) {
             margin: auto;
         }
+
+        @media (max-width: 350px) {
+            width: 100%;
+        }
     }
 
     &__image-holder {
@@ -66,6 +73,10 @@ html[dir="rtl"] {
         border-radius: 10px;
         background: gray;
         object-fit: cover;
+
+        @media (max-width: 350px) {
+            width: 100%;
+        }
     }
 
     &__avatar {
@@ -75,6 +86,10 @@ html[dir="rtl"] {
         display: flex;
         justify-content: center;
         align-items: center;
+
+        @media (max-width: 350px) {
+            width: 100%;
+        }
 
         &-text {
             height: auto;
