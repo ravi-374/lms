@@ -18,7 +18,7 @@ import InputFile from './inputFile';
 const BookItemForm = (props) => {
     const {
         bookLanguages, publishers, onSaveBookItems, initialValues, currency, fetchBookLanguages,
-        fetchPublishers, handleSubmit
+        fetchPublishers, handleSubmit, newBookItem = false
     } = props;
     const [isDisabledStatus, setDisabledStatus] = useState(false);
     const inputRef = createRef();
@@ -45,17 +45,32 @@ const BookItemForm = (props) => {
 
     const onSave = (formValues) => {
         const { book_code, edition, format, language, publisher, location, price, status, file } = formValues;
-        onSaveBookItems({
-            book_code,
-            edition,
-            format: format.id,
-            language_id: language.id,
-            publisher_id: publisher ? publisher.id : null,
-            status: status.id,
-            location,
-            price,
-            file
-        });
+
+        {
+            newBookItem ? onSaveBookItems({
+                book_code,
+                edition,
+                format,
+                language,
+                publisher,
+                status,
+                location,
+                price,
+                file
+            })
+        :
+            onSaveBookItems({
+                book_code,
+                edition,
+                format: format.id,
+                language_id: language.id,
+                publisher_id: publisher ? publisher.id : null,
+                status: status.id,
+                location,
+                price,
+                file
+            })
+        }
     };
 
     const onChangeFormat = (options) => {
@@ -111,7 +126,7 @@ const BookItemForm = (props) => {
                        placeholder="books.items.select.status.placeholder" groupText="user-circle-o" component={Select}
                        isSearchable={true}/>
             </Col>
-            <Col xs={12} sm={6}>
+            <Col xs={12}>
                 <SaveAction onSave={handleSubmit(onSave)} {...props}/>
             </Col>
         </Row>

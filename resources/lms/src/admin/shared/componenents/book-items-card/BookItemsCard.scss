@@ -15,4 +15,14 @@
         margin-top: 10px;
     }
 
+    &__responsive {
+        min-width: 150px;
+    }
+
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 700px;
+    }
 }

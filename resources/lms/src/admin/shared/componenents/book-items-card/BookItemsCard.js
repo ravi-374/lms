@@ -10,23 +10,48 @@ import {prepareCreatableObject} from "../../prepareArray";
 import SelectCreatable from "../../../../shared/components/SelectCreatable";
 import {getFormattedMessage, getFormattedOptions, mapCurrencyCode} from "../../../../shared/sharedMethod";
 import {bookITemCreationWarning, bookCreationWarning} from "../../../../shared/custom-hooks";
+import {connect} from "react-redux";
+import {toggleModal} from '../../../../store/action/modalAction';
+import BookItemForm from '../../../../admin/components/book-items/BookItemForm';
+import Modal from '../../../../shared/components/Modal';
+import { bookFormatConstant } from "../../../constants";
 
 const BookItemsCard = (props) => {
-    const { fields, meta: { error, submitFailed }, bookLanguages, publishers, currency, change } = props;
-    const [items, setItems] = useState([{}]);
+    const { fields, meta: { error, submitFailed }, toggleModal } = props;
+    const [items, setItems] = useState([]);
+    const [addItems, setAddItems] = useState([]);
     const booksFormatOptions = getFormattedOptions(bookFormatOptions);
-    const [onChangeLanguage] = bookITemCreationWarning(change);
-    const [onChangePublisher] = bookITemCreationWarning(change);
     const [itemIndex, setItemIndex] = useState([]);
+    const [bookItems, setbookItems] = useState(false);
+
+    const onSaveBookItems = (formValues) => {
+        setAddItems([...addItems, formValues]);
+        toggleModal();
+        setbookItems(false);
+        fields.push(formValues);
+    }
+
+    const cardModalProps = {
+        onSaveBookItems,
+        onCancel: toggleModal,
+        newBookItem: true
+    };
 
     const onAddSubFields = () => {
-        setItems([...items, { id: 1 }]);
-        return fields.push({});
+        setbookItems(true);
+        toggleModal();
     };
 
     const onRemoveSubFields = (index) => {
-        return fields.remove(index);
+        const tempArray = [...addItems];
+        tempArray.splice(index, 1);
+        setAddItems(tempArray);
     };
+
+    const prepareModalOption = {
+        title: getFormattedMessage('books.items.input.new-btn.label'),
+        toggleModal,
+    }
 
     const onChangeBookFormate = (index, option) => {
         if (option.value === 3) {
@@ -37,42 +62,22 @@ const BookItemsCard = (props) => {
     }
 
     const renderFields = () => {
-        return fields.map((item, index) => (
+        return addItems && addItems.map((item, index) => (
             <tr key={index}>
                 <td>
-                    <Field name={`${item}.edition`} type="text" placeholder="books.items.input.edition.label"
-                           groupText="file-text" component={CustomInput}/>
+                    {item.edition}
                 </td>
                 <td className="book-items-card__format">
-                    <Field name={`${item}.format`} required options={prepareCreatableObject(booksFormatOptions)}
-                        placeholder="books.items.select.format.placeholder" groupText="wpforms"
-                        onChange={(option) => onChangeBookFormate(index, option)}component={SelectCreatable}
-                        isMini={true} menuPlacement="top"/>
-                </td>
-                <td className="p-3">
-                    {
-                        itemIndex.includes(index) ?
-                            <Field name={`${item}.file`} type="file" component={InputFile} /> : null
-                    }
-                </td>
-                <td>
-                    {
-                        !itemIndex.includes(index) ?
-                                <Field name={`${item}.price`} min="1" type="number" placeholder="books.items.input.price.label"
-                                    groupText={currency} isDefaultCurrency={true}  component={CustomInput}/> : null
-                    }
+                    { item.format.name}
                 </td>
                 <td className="book-items-card__language">
-                    <Field name={`${item}.language`} required options={bookLanguages}
-                           placeholder="books.items.select.language.placeholder" groupText="language"
-                           component={SelectCreatable} menuPlacement="top"
-                           onChange={(option) => onChangeLanguage(option, bookLanguages, 'new_language', item)}/>
+                    {item.price ? item.price : '0.00'}
                 </td>
                 <td className="book-items-card__publisher">
-                    <Field name={`${item}.publisher`} options={publishers}
-                           placeholder="books.items.select.publisher.placeholder" groupText="user-circle-o"
-                           component={SelectCreatable} menuPlacement="top"
-                           onChange={(option) => onChangePublisher(option, publishers, 'new_publisher', item)}/>
+                    {item.language.name}
+                </td>
+                <td className="book-items-card__publisher">
+                    {item.publisher.name}
                 </td>
                 <td className="text-center">
                     <Button size="sm" color="danger" className="book-items-card__action-btn"
@@ -85,16 +90,15 @@ const BookItemsCard = (props) => {
     };
 
     return (
-        <div className="book-items-card">
+        <div className="book-items-card overflow-auto">
             <Table responsive size="md" className="table-multi-item-responsive">
                 <thead>
                 <tr>
-                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.input.edition.label')}</th>
-                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.format.label')}</th>
-                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.file.label')}</th>
-                    <th>{getFormattedMessage('books.items.input.price.label')}</th>
-                    <th className="book-items-card__item-header">{getFormattedMessage('books.items.select.language.label')}</th>
-                    <th>{getFormattedMessage('books.items.select.publisher.label')}</th>
+                    <th className="book-items-card__item-header book-items-card__responsive">{getFormattedMessage('books.items.input.edition.label')}</th>
+                    <th className="book-items-card__item-header book-items-card__responsive">{getFormattedMessage('books.items.select.format.label')}</th>
+                    <th className="book-items-card__responsive">{getFormattedMessage('books.items.input.price.label')}</th>
+                    <th className="book-items-card__item-header book-items-card__responsive">{getFormattedMessage('books.items.select.language.label')}</th>
+                    <th className="book-items-card__responsive">{getFormattedMessage('books.items.select.publisher.label')}</th>
                     <th className="text-center">{getFormattedMessage('react-data-table.action.column')}</th>
                 </tr>
                 </thead>
@@ -105,6 +109,7 @@ const BookItemsCard = (props) => {
             <button type="button" className="btn btn-outline-primary" onClick={() => onAddSubFields()}>
                 {getFormattedMessage('books.items.input.add-item-btn.label')}
             </button>
+            {bookItems ? <Modal {...prepareModalOption} content={<BookItemForm {...cardModalProps}/>}/> : null}
             {submitFailed && error && <div className="text-danger mt-3">{error}</div>}
         </div>
     );
@@ -114,7 +119,8 @@ BookItemsCard.propTypes = {
     fields: PropTypes.object,
     publishers: PropTypes.array,
     bookLanguages: PropTypes.array,
-    currency: PropTypes.string
+    currency: PropTypes.string,
+    toggleModal: PropTypes.func,
 };
 
-export default BookItemsCard;
+export default connect(null, { toggleModal })(BookItemsCard);
