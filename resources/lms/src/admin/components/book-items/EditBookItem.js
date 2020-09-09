@@ -7,6 +7,7 @@ import {bookFormatOptions, bookItemStatusOptions} from '../../constants';
 import Modal from '../../../shared/components/Modal';
 import {addBookItem} from '../../store/actions/bookItemAction';
 import {getFormattedOptions} from "../../../shared/sharedMethod";
+import prepareFormData from '../../shared/prepareBookItemData';
 
 const EditBookItem = (props) => {
     const {
@@ -27,14 +28,7 @@ const EditBookItem = (props) => {
 
     const onSaveBookItems = (formValues) => {
         formValues.id = id;
-        const bookItemArray = _.map(bookItems, o => _.omit(o, ['status_name']));
-        const index = bookItemArray.findIndex(bookItem => bookItem.id === id);
-        bookItemArray.splice(index, 1, formValues);
-        const book_code = formValues.book_code;
-        if (book_code && book_code === bookItem.book_code) {
-            delete formValues.book_code;
-        }
-        addBookItem(bookId, bookItemArray, true);
+        addBookItem(prepareFormData(formValues), bookId, true);
     };
 
     const prepareFormOption = {
