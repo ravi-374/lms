@@ -284,6 +284,7 @@
     "members.select.plan.label": "خطة العضوية",
     "members.select.plan.placeholder": "اختر خطة العضوية",
     "members.select.plan.validate.label": "يجب أن تكون خطة عضوية المستخدم مطلوبة.",
+    "members.is-email-verified.label": "هل تم التحقق من البريد الإلكتروني",
     "members.empty-state.title": "لم تتم إضافة عضو بعد ...",
     "member.not-found.empty-state.title": "لم يتم العثور على عضو ...",
     "members.success.create.message": "لم تتم إضافة سجل عضو بعد ...",

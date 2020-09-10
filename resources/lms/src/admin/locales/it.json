@@ -283,6 +283,7 @@
     "members.modal.delete.title": "Elimina Membro",
     "members.edit-member-details.title": "Modifica Dettagli Membro",
     "members.select.plan.label": "Piano Di Abbonamento",
+    "members.is-email-verified.label": "Email verificata",
     "members.select.plan.placeholder": "Seleziona Piano Di Abbonamento",
     "members.select.plan.validate.label": "È necessario un piano di abbonamento utente.",
     "member.not-found.empty-state.title": "Nessun membro trovato ...",

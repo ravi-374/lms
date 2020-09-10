@@ -283,6 +283,7 @@
     "members.modal.delete.title": "Mitglied Löschen",
     "members.edit-member-details.title": "Mitgliedsdaten Bearbeiten",
     "members.select.plan.label": "Mitgliedschaftsplan",
+    "members.is-email-verified.label": "Wird die E-Mail überprüft?",
     "members.select.plan.placeholder": "Wählen Sie Mitgliedschaftsplan",
     "members.select.plan.validate.label": "Ein Benutzer-Mitgliedschaftsplan muss erforderlich sein.",
     "member.not-found.empty-state.title": "Kein Mitglied gefunden ...",

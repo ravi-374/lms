@@ -91,3 +91,13 @@ export const activeInactiveMember = (memberId, isActive) => async (dispatch) => 
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
         });
 };
+
+export const meberSendMail = (id) => async (dispatch) => {
+    await apiConfig.post(apiBaseURL.MEMBER + '/' + id + '/re-activation')
+        .then((response) => {
+            dispatch(addToast({ text: response.data.message}));
+        })
+        .catch(({ response }) => {
+            dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));
+        });
+}

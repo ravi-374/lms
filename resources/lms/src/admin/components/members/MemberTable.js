@@ -2,6 +2,7 @@ import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {Button, Spinner} from 'reactstrap';
 import './Members.scss';
 import {publicImagePathURL} from '../../../appConstant';
 import {Routes, icon} from "../../../constants";
@@ -11,10 +12,16 @@ import ToggleSwitch from '../../../shared/components/ToggleSwitch';
 import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {getFormattedMessage, getFormattedOptions} from "../../../shared/sharedMethod";
 import {getAvatarName} from "../../../shared/sharedMethod";
+import {meberSendMail} from '../../store/actions/memberAction';
 
 const MemberTable = (props) => {
-    const { members, membershipPlans, onClickModal, setActiveInactive, history, isLoading, totalRecord, onChangeData } = props;
+    const { members, membershipPlans, onClickModal, setActiveInactive, history, isLoading, totalRecord, onChangeData, meberSendMail } = props;
     const membershipPlansOptions = getFormattedOptions(membershipPlans);
+
+    const onClickSendMail = (id) => {
+        meberSendMail(id);
+    }
+
     const columns = [
         {
             name: getFormattedMessage('profile.title'),
@@ -70,6 +77,19 @@ const MemberTable = (props) => {
                 </div>
         },
         {
+            name: getFormattedMessage('members.is-email-verified.label'),
+            selector: 'status',
+            width: '130px',
+            center: true,
+            cell: row =>
+                row.email_verified_at === null ?
+                    <Button color="primary" size="sm" onClick={() => onClickSendMail(row.id)}>
+                        <i className="fa fa-envelope fa-sm text-white"/>
+                    </Button>
+                    :
+                    <i className="fa fa-check-square-o text-success"/>
+        },
+        {
             name: getFormattedMessage('react-data-table.action.column'),
             selector: 'id',
             center: true,
@@ -121,4 +141,4 @@ MemberTable.propTypes = {
 };
 
 const memberForm = reduxForm({ form: 'memberForm' })(MemberTable);
-export default connect(null)(memberForm);
+export default connect(null, { meberSendMail })(memberForm);
