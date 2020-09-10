@@ -283,6 +283,7 @@
     "members.modal.delete.title": "Üye Sil",
     "members.edit-member-details.title": "Üye Bilgilerini Düzenle",
     "members.select.plan.label": "Üyelik Planı",
+    "members.is-email-verified.label": "E-posta Doğrulandı",
     "members.select.plan.placeholder": "Üyelik Planı Seç",
     "members.select.plan.validate.label": "Kullanıcı üyelik planı gerekli olmalıdır.",
     "member.not-found.empty-state.title": "Üye bulunamadı ...",

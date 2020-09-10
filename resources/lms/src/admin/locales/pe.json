@@ -282,6 +282,7 @@
     "members.modal.delete.title": "عضو را حذف کنید",
     "members.edit-member-details.title": "جزئیات عضو را ویرایش کنید",
     "members.select.plan.label": "برنامه عضویت",
+    "members.is-email-verified.label": "آیا ایمیل تأیید شده است",
     "members.select.plan.placeholder": "برنامه عضویت را انتخاب کنید",
     "members.select.plan.validate.label": "برنامه عضویت کاربر لازم است.",
     "member.not-found.empty-state.title": "هیچ عضوی یافت نشد ...",

@@ -283,6 +283,7 @@
     "members.modal.delete.title": "Supprimer un membre",
     "members.edit-member-details.title": "Modifier les détails du membre",
     "members.select.plan.label": "Plan D'adhésion",
+    "members.is-email-verified.label": "L'email est-il vérifié",
     "members.select.plan.placeholder": "Sélectionnez le plan d'adhésion",
     "members.select.plan.validate.label": "Un plan d'adhésion d'utilisateur doit être requis.",
     "member.not-found.empty-state.title": "Aucun membre trouvé ...",

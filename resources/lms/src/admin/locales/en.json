@@ -283,6 +283,7 @@
     "members.modal.delete.title": "Delete Member",
     "members.edit-member-details.title": "Edit Member Details",
     "members.select.plan.label": "Membership Plan",
+    "members.is-email-verified.label": "Is Email Verified",
     "members.select.plan.placeholder": "Select Membership Plan",
     "members.select.plan.validate.label": "User membership plan must be required.",
     "member.not-found.empty-state.title": "No member found...",

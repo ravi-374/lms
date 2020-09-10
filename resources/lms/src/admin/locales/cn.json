@@ -285,6 +285,7 @@
     "members.select.plan.label": "会员计划",
     "members.select.plan.placeholder": "选择会员计划",
     "members.select.plan.validate.label": "必须要求用户会员计划。",
+    "members.is-email-verified.label": "经过电子邮件验证",
     "member.not-found.empty-state.title": "找不到会员...",
     "members.empty-state.title": "尚未添加成员...",
     "members.success.create.message": "成员成功保存。",

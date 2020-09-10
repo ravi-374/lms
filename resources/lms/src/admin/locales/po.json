@@ -283,6 +283,7 @@
     "members.modal.delete.title": "Excluir Membro",
     "members.edit-member-details.title": "Editar Detalhes Do Membro",
     "members.select.plan.label": "Plano De Associação",
+    "members.is-email-verified.label": "O email foi verificado",
     "members.select.plan.placeholder": "Selecionar Plano De Associação",
     "members.select.plan.validate.label": "O plano de associação do usuário deve ser necessário.",
     "member.not-found.empty-state.title": "Nenhum membro encontrado ...",

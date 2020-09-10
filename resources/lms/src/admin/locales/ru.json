@@ -283,6 +283,7 @@
     "members.modal.delete.title": "Удалить Член",
     "members.edit-member-details.title": "Изменить Данные Член",
     "members.select.plan.label": "План Членства",
+    "members.is-email-verified.label": "Электронная почта проверена",
     "members.select.plan.placeholder": "Выберите План Членства",
     "members.select.plan.validate.label": "План участника должен быть обязательным.",
     "member.not-found.empty-state.title": "Член не найден ...",
