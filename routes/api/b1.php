@@ -98,6 +98,9 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
     Route::post('members/{member}/remove-image', 'MemberAPIController@removeImage')
         ->name('members.remove-image');
 
+    //send re-activation mail
+    Route::get('members/{member}/re-activation', 'MemberAPIController@sendReActivationMail');
+
     Route::middleware('permission:manage_book_series')->group(function () {
         // book series routes
         Route::resource('book-series', 'BookSeriesAPIController');

@@ -13,7 +13,11 @@ use App\Repositories\Contracts\MemberRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use URL;
 
 /**
  * Class MemberController
@@ -183,5 +187,36 @@ class MemberAPIController extends AppBaseController
         $isAllow = $this->memberRepository->isAllowToReserveOrIssueBook($member->id, $status);
 
         return $this->sendResponse($isAllow, 'Books count retrieved successfully.');
+    }
+
+    /**
+     * @param  Member  $member
+     *
+     * @throws Exception
+     *
+     * @return JsonResponse
+     */
+    public function sendReActivationMail(Member $member)
+    {
+        $name = $member->first_name.' '.$member->last_name;
+        $key = $member->id.'|'.$member->activation_code;
+        $code = Crypt::encrypt($key);
+
+        $data['link'] = URL::to('/api/v1/activate-member?token='.$code);
+        $data['username'] = $name;
+        $data['logo_url'] = getLogoURL();
+
+        try {
+            Mail::send('emails.account_re_activation', ['data' => $data],
+                function (Message $message) use ($member) {
+                    $message->subject('Activate your account');
+                    $message->to($member->email);
+                });
+
+        } catch (Exception $e) {
+            throw new Exception('Unable to send confirmation mail : '.$e->getMessage());
+        }
+
+        return $this->sendSuccess('Re-activation email send successfully.');
     }
 }
