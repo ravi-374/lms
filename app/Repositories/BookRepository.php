@@ -528,7 +528,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             $data = $data['ISBN:'.$isbn];
 
             $bookDetails['name'] = $data['title'];
-            $bookDetails['published_on'] = Carbon::parse($data['publish_date'])->toDateTimeString();
+            $bookDetails['published_on'] = (isset($data['publish_date'])) ? Carbon::parse($data['publish_date'])->toDateTimeString() : null;
             $bookDetails['description'] = (isset($data['notes'])) ? $data['notes'] : null;
             $bookDetails['isbn'] = $isbn;
             $bookDetails['is_featured'] = false;
