@@ -32,11 +32,11 @@ const MemberRegistration = (props) => {
                                     <h1>{getFormattedMessage('registration.title')}</h1>
                                     <p className="text-muted">{getFormattedMessage('registration.note')}</p>
                                     <Field name="first_name" type="text"  placeholder="registration.input.first-name.label" required
-                                           groupText="icon-list" component={CustomInputGroup}/>
-                                    <Field name="last_name" type="text" placeholder="registration.input.last-name.label" required
-                                           groupText="icon-list" component={CustomInputGroup}/>
-                                    <Field name="email" type="email" placeholder="registration.input.email.label"
                                            groupText="icon-user" component={CustomInputGroup}/>
+                                    <Field name="last_name" type="text" placeholder="registration.input.last-name.label" required
+                                           groupText="icon-user" component={CustomInputGroup}/>
+                                    <Field name="email" type="email" placeholder="registration.input.email.label"
+                                           groupText="icon-envelope" component={CustomInputGroup}/>
                                     <Field name="password" type="password"
                                            placeholder="registration.input.password.label"
                                            groupText="icon-lock" component={CustomInputGroup}/>
