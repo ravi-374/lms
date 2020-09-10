@@ -49,7 +49,7 @@ const MemberLogin = (props) => {
                                     <h1>{getFormattedMessage('login.title')}</h1>
                                     <p className="text-muted">{getFormattedMessage('login.note')}</p>
                                     <Field name="email" type="email" placeholder="profile.input.email.label"
-                                           groupText="icon-user" component={CustomInputGroup}/>
+                                           groupText="icon-envelope" component={CustomInputGroup}/>
                                     <Field name="password" type="password" placeholder="profile.input.password.label"
                                            groupText="icon-lock" component={CustomInputGroup}/>
                                     <div>

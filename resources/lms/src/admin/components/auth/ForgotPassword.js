@@ -33,7 +33,7 @@ const ForgotPassword = (props) => {
                                         <h1>{getFormattedMessage('forgot-password.title')}</h1>
                                         <p className="text-muted">{getFormattedMessage('forgot-password.note')}</p>
                                         <Field name="email" type="email" placeholder="profile.input.email.label"
-                                               groupText="icon-user" component={CustomInputGroup}/>
+                                               groupText="icon-envelope" component={CustomInputGroup}/>
                                         <Row>
                                             <Col className="mt-2 d-flex justify-content-end">
                                                 <Button color="primary" disabled={invalid} className="px-4">
