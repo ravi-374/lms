@@ -13,6 +13,8 @@ use Exception;
 use Hash;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Mail;
+use URL;
 
 /**
  * Class MemberController
