@@ -25,10 +25,14 @@ const MemberDetail = props => {
         return <ProgressBar/>;
     }
 
-    const onClickModal = (id, bookHistory = null, isDelete = false) => {
-        history.push(`${Routes.MEMBERS + id}/edit`);
+    const onClickModal = (isEdit, bookHistory = null, isDelete = false) => {
+        onOpenModal(isEdit, bookHistory, isDelete);
         toggleModal();
     };
+
+    const onClickEditMember = (id) => {
+        history.push(`${Routes.MEMBERS + id}/edit`);
+    }
 
     const goBack = () => {
         history.goBack();
@@ -57,7 +61,7 @@ const MemberDetail = props => {
                 <Col sm={12} className="mb-2 d-block d-sm-flex justify-content-between">
                     <h5 className="page-heading w-100">{member.first_name + ' ' + member.last_name}</h5>
                     <div className="d-block d-sm-flex">
-                        <Button className="mr-2" color="primary" onClick={() => onClickModal(+match.params.id)}>
+                        <Button className="mr-2" color="primary" onClick={() => onClickEditMember(+match.params.id)}>
                             {getFormattedMessage('members.edit-member-details.title')}
                         </Button>
                         <Button onClick={() => goBack()}>{getFormattedMessage('global.input.back-btn.label')}</Button>

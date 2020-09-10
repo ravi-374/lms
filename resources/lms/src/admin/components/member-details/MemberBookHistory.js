@@ -17,6 +17,7 @@ const MemberBookHistory = (props) => {
         {
             name: getFormattedMessage('books.table.book.column'),
             selector: 'name',
+            minWidth: '150px',
             sortable: true,
             wrap: true,
             cell: row => row.name = row.book_item.book.name
