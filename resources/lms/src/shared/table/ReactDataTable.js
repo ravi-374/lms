@@ -48,12 +48,20 @@ const ReactTable = (props) => {
         if (currentPage !== page) {
             setCurrentPage(page);
         }
+
+        const pagination = document.getElementById('pagination-first-page');
+        if (page === 1 && pagination !== null) {
+            pagination.click();
+        }
     };
 
     const handleSearch = (searchText) => {
+        handlePageChange(1);
         setSearchText(searchText);
     };
+
     const handleFilter = (filterText) => {
+        handlePageChange(1);
         setFilterText(filterText);
     };
 
