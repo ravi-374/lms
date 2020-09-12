@@ -147,7 +147,7 @@ const renderBookSeriesItems = ({fields, meta: {error, submitFailed}, onDragEnd, 
         )
     }
     return (
-        <div>
+        <div className="overflow-auto">
             <Table responsive size="md">
                 <thead>
                 <tr>
