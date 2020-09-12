@@ -78,7 +78,7 @@ const BookItemsCard = (props) => {
                     {item.language.name}
                 </td>
                 <td className="book-items-card__publisher">
-                    {item.publisher.name}
+                    {item.publisher ? item.publisher.name : 'N/A' }
                 </td>
                 <td className="text-center">
                     <Button size="sm" color="danger" className="book-items-card__action-btn"

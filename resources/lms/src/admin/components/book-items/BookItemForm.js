@@ -135,7 +135,7 @@ const BookItemForm = (props) => {
 
 BookItemForm.propTypes = {
     initialValues: PropTypes.object,
-    currency: PropTypes.object,
+    currency: PropTypes.string,
     bookLanguages: PropTypes.array,
     publishers: PropTypes.array,
     fetchPublishers: PropTypes.func,
