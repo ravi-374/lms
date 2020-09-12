@@ -5,6 +5,7 @@ import DeleteAction from '../../../shared/action-buttons/DeleteAction';
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import Modal from '../../../shared/components/Modal';
 import {deleteBook} from '../../store/actions/bookAction';
+import {Filters} from "../../../constants";
 
 const DeleteBook = (props) => {
     const { book, deleteBook, toggleModal } = props;
@@ -13,7 +14,7 @@ const DeleteBook = (props) => {
     const title = getFormattedMessage('books.modal.delete.title');
 
     const onDeleteBook = () => {
-        deleteBook(props.book.id);
+        deleteBook(props.book.id, Filters.OBJ);
     };
 
     return <Modal {...props} actions={<DeleteAction onDelete={onDeleteBook} onCancel={toggleModal}/>} content={content}
