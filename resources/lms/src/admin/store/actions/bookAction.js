@@ -75,9 +75,10 @@ export const editBook = (bookId, book, history = null) => async (dispatch) => {
         });
 };
 
-export const deleteBook = (bookId) => async (dispatch) => {
+export const deleteBook = (bookId, filterObj = {}) => async (dispatch) => {
     await apiConfig.delete(apiBaseURL.BOOK + '/' + bookId)
         .then(() => {
+            dispatch(fetchBooks(filterObj));
             dispatch({ type: bookActionType.DELETE_BOOK, payload: bookId });
             dispatch(addToast({ text: getFormattedMessage('books.success.delete.message') }));
             dispatch(toggleModal());

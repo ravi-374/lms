@@ -79,9 +79,10 @@ export const editBookCirculationStatus = (book, filterObj = {}) => async (dispat
         });
 };
 
-export const deleteBookCirculation = (bookId) => async (dispatch) => {
+export const deleteBookCirculation = (bookId, filterObj = {}) => async (dispatch) => {
     await apiConfig.delete(apiBaseURL.BOOK_HISTORY + '/' + bookId)
         .then((response) => {
+            dispatch(fetchBooksCirculation(filterObj));
             dispatch({ type: bookCirculationActionType.DELETE_BOOK_CIRCULATION, payload: bookId });
             dispatch(addToast({ text: response.data.message }));
             dispatch(toggleModal());
