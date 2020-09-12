@@ -4,6 +4,7 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {IntlProvider} from 'react-intl';
 import LocaleData from './locales';
+import {fetchSettings} from './store/actions/settingAction';
 import {settingsKey} from "./constants";
 import {appSettingsKey, LocalStorageKey, Routes, Tokens} from "../constants";
 import {publicImagePath, publicImagePathURL} from "../appConstant";
@@ -21,7 +22,7 @@ const Home = lazy(() => import('./components/home/Home'));
 const Registration = lazy(() => import('./components/auth/registration/Registration'));
 
 const MemberApp = (props) => {
-    const { getUserProfile, settings, fetchAppSetting, appSetting, member } = props;
+    const { getUserProfile, settings, fetchAppSetting, appSetting, member, fetchSettings } = props;
     const messages = settings[settingsKey.LANGUAGE] ? LocaleData[settings[settingsKey.LANGUAGE].value]
         : LocaleData[settingsKey.DEFAULT_LOCALE];
     const appName = appSetting[appSettingsKey.LIBRARY_NAME] ? appSetting[appSettingsKey.LIBRARY_NAME].value : null;
@@ -32,6 +33,10 @@ const MemberApp = (props) => {
     useEffect(() => {
         fetchAppSetting();
         getUserProfile(LocalStorageKey.MEMBER);
+
+        if (localStorage.getItem(Tokens.MEMBER)) {
+            fetchSettings();
+        }
     }, []);
 
     return (
@@ -62,6 +67,7 @@ MemberApp.propTypes = {
     getUserProfile: PropTypes.func,
     fetchAppSetting: PropTypes.func,
     sortAction: PropTypes.func,
+    fetchSettings: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
@@ -71,4 +77,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { getUserProfile, fetchAppSetting })(MemberApp);
+export default connect(mapStateToProps, { fetchSettings, getUserProfile, fetchAppSetting })(MemberApp);
