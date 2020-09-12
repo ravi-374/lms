@@ -59,7 +59,7 @@ const BookDetail = props => {
                         <Button className="mr-2" color="primary" onClick={() => onOpenModal()}>
                             {getFormattedMessage('books.edit-book-details.title')}
                         </Button>
-                        <Button onClick={() => goBack()}>{getFormattedMessage('global.input.back-btn.label')}</Button>
+                        <Button className="float-right" onClick={() => goBack()}>{getFormattedMessage('global.input.back-btn.label')}</Button>
                     </div>
                 </Col>
                 <Col sm={12}>
