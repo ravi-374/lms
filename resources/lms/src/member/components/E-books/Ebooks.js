@@ -63,7 +63,7 @@ const Ebooks = (props) => {
     return (
         <Row className="animated fadeIn">
             <Col sm={12} className="mb-2">
-                <HeaderTitle title="Books Request"/>
+                <HeaderTitle title="E-Book"/>
                 <h5 className="page-heading">{getFormattedMessage('e-book.title')}</h5>
                 <ProgressBar/>
             </Col>
