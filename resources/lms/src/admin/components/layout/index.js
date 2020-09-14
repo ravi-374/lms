@@ -70,7 +70,7 @@ const renderAppHeader = (props, appName, appLogo, user) => {
         localStorage.removeItem('user');
         localStorage.removeItem(Tokens.ADMIN);
         localStorage.setItem(loggedConstant.IS_USER_LOGOUT, 'true');
-        props.history.push(Routes.MEMBER_HOME);
+        props.history.push(Routes.ADMIN_LOGIN);
     };
     return (
         <AppHeader fixed>
