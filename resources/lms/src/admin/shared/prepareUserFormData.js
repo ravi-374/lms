@@ -8,8 +8,12 @@ export default (formValues) => {
     formData.append('first_name', first_name);
     formData.append('last_name', last_name ? last_name : '');
     formData.append('email', email);
-    formData.append('password', password);
-    formData.append('confirm_password', confirm_password);
+    if (password) {
+        formData.append('password', password);
+    }
+    if (confirm_password) {
+        formData.append('confirm_password', confirm_password);
+    }
     formData.append('phone', phone ? phone : '');
     formData.append('address_1', address_1 ? address_1 : '');
     formData.append('address_2', address_2 ? address_2 : '');
