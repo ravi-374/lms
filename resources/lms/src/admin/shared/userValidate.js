@@ -11,7 +11,7 @@ export default formValues => {
     if (!formValues.email) {
         errors.email = getFormattedMessage('profile.input.email-required.validate.label');
     }
-    const emailExpression = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    const emailExpression = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,})$/;
     if (formValues.email && !emailExpression.test(formValues.email)) {
         errors.email = getFormattedMessage('profile.input.email-invalid.validate.label');
     }
