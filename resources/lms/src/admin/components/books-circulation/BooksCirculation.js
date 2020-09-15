@@ -51,8 +51,10 @@ const BooksCirculation = (props) => {
         return bookCirculationStatusFilter[0];
     };
 
-    const onClickExcelFile = () => {
-        excelFile((res) => {
+    const onClickExcelFile = (filterObject) => {
+        filterObject.limit = '';
+        filterObject.skip = '';
+        excelFile(filterObject, (res) => {
             if(res.url) {
                 window.open(res.url, "_self")
             }
@@ -139,7 +141,7 @@ const BooksCirculation = (props) => {
                             <Dropdown.Item onClick={() => onClickModal(false)}>
                                 {getFormattedMessage('books-circulation.input.new-btn.label')}
                             </Dropdown.Item>
-                            <Dropdown.Item onClick={() => onClickExcelFile()}>
+                            <Dropdown.Item onClick={() => onClickExcelFile(filterObject)}>
                                 {getFormattedMessage('books-circulation.export-excel.label')}
                             </Dropdown.Item>
                         </Dropdown.Menu>
