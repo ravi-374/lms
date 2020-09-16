@@ -46,6 +46,7 @@ class Genre extends Model
     public $fillable = [
         'name',
         'description',
+        'show_on_landing_page',
     ];
 
     /**
@@ -54,9 +55,10 @@ class Genre extends Model
      * @var array
      */
     protected $casts = [
-        'id'          => 'integer',
-        'name'        => 'string',
-        'description' => 'string',
+        'id'                   => 'integer',
+        'name'                 => 'string',
+        'description'          => 'string',
+        'show_on_landing_page' => 'boolean',
     ];
 
     /**
