@@ -200,6 +200,10 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
     Route::put('change-password', 'UserAPIController@changePassword');
 
     Route::post('book-history/{issued_book_id}/send-book-due-mail', 'PenaltyAPIController@sendBookDueMail');
+
+    Route::resource('about-us-cards', 'AboutUsCardAPIController');
+    Route::post('about-us-cards/{about_us_card}/update-status', 'AboutUsCardAPIController@updateStatus')
+        ->name('about-us-cards.update-status');
 });
 
 Route::get('activate-user', 'AuthAPIController@verifyAccount')->name('activate-user');
