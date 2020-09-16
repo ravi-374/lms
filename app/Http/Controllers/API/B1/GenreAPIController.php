@@ -115,4 +115,17 @@ class GenreAPIController extends AppBaseController
 
         return $this->sendResponse($genre, 'Genre deleted successfully.');
     }
+
+    /**
+     * @param  Genre  $genre
+     *
+     * @return JsonResponse
+     */
+    public function updateGenresFlag(Genre $genre)
+    {
+        $genre->show_on_landing_page = ($genre->show_on_landing_page) ? 0 : 1;
+        $genre->save();
+
+        return $this->sendResponse($genre->toArray(), 'Genre updated successfully.');
+    }
 }
