@@ -237,4 +237,17 @@ class BookAPIController extends AppBaseController
             ['totalRecords' => $this->bookRepository->all($input)]
         );
     }
+
+    /**
+     * @param  Book  $book
+     *
+     * @return JsonResponse
+     */
+    public function updateBookFlag(Book $book)
+    {
+        $book->show_on_landing_page = ($book->show_on_landing_page) ? 0 : 1;
+        $book->save();
+
+        return $this->sendResponse($book->toArray(), 'Book updated successfully.');
+    }
 }

@@ -30,6 +30,8 @@ use Illuminate\Support\Carbon;
  * @property int $is_default
  * @property-read int|null $books_count
  * @method static Builder|Genre whereIsDefault($value)
+ * @property bool $show_on_landing_page
+ * @method static Builder|Genre whereShowOnLandingPage($value)
  */
 class Genre extends Model
 {

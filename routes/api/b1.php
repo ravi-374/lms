@@ -7,6 +7,8 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
     // Genre Routes
     Route::middleware('permission:manage_genres')->group(function () {
         Route::resource('genres', 'GenreAPIController');
+        Route::post('genres/{genre}/update-genres-flag', 'GenreAPIController@updateGenresFlag')
+            ->name('genres.update-genres-flag');
     });
 
     // Author Routes
@@ -43,6 +45,8 @@ Route::group(['middleware' => ['auth:sanctum', 'user.auth']], function () {
         Route::resource('books', 'BookAPIController');
         Route::post('books/{book}', 'BookAPIController@update');
         Route::post('books/{book}/remove-image', 'BookAPIController@removeImage');
+        Route::post('books/{book}/update-books-flag', 'BookAPIController@updateBookFlag')
+            ->name('books.update-books-flag');
 
         // add book items
         Route::post('books/{book}/items', 'BookAPIController@addItem')->name('books.add-items');
