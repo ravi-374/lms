@@ -68,6 +68,7 @@ class Book extends Model
         'isbn',
         'url',
         'is_featured',
+        'show_on_landing_page',
     ];
 
     /**
@@ -76,14 +77,16 @@ class Book extends Model
      * @var array
      */
     protected $casts = [
-        'id'           => 'integer',
-        'name'         => 'string',
-        'description'  => 'string',
-        'image'        => 'binary',
-        'published_on' => 'datetime',
-        'isbn'         => 'string',
-        'url'          => 'string',
-        'is_featured'  => 'boolean',
+        'id'                   => 'integer',
+        'name'                 => 'string',
+        'description'          => 'string',
+        'image'                => 'binary',
+        'published_on'         => 'datetime',
+        'isbn'                 => 'string',
+        'url'                  => 'string',
+        'is_featured'          => 'boolean',
+        'show_on_landing_page' => 'boolean',
+
     ];
 
     /**
