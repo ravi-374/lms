@@ -57,4 +57,15 @@ class BookAPIController extends AppBaseController
 
         return $this->sendResponse($count, 'Books count retrieved successfully.');
     }
+
+    /**
+     *
+     * @return JsonResponse
+     */
+    public function getAllPopularBook()
+    {
+        $geneses = Book::where('show_on_landing_page', 1)->get();
+
+        return $this->sendResponse($geneses, 'Books retrieved successfully.');
+    }
 }

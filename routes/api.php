@@ -53,3 +53,9 @@ Route::get('homepage-settings', 'HomepageSettingAPIController@index');
 
 /** Get all testimonials */
 Route::get('testimonials', 'TestimonialAPIController@index');
+
+//get All Genres
+Route::get('genres', 'GenreAPIController@getAllGenres');
+
+//get All popular-book
+Route::get('popular-books', 'BookAPIController@getAllPopularBook');
