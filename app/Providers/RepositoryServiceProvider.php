@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\AboutUsCardRepository;
 use App\Repositories\AccountRepository;
 use App\Repositories\AuthorRepository;
 use App\Repositories\AuthRepository;
@@ -10,6 +11,7 @@ use App\Repositories\BookLanguageRepository;
 use App\Repositories\BookRepository;
 use App\Repositories\BookRequestRepository;
 use App\Repositories\BookSeriesRepository;
+use App\Repositories\Contracts\AboutUsCardRepositoryInterface;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\AuthorRepositoryInterface;
 use App\Repositories\Contracts\AuthRepositoryInterface;
@@ -86,6 +88,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TestimonialRepositoryInterface::class, TestimonialRepository::class);
         $this->app->bind(MemberSettingRepositoryInterface::class, MemberSettingRepository::class);
         $this->app->bind(PenaltyRepositoryInterface::class, PenaltyRepository::class);
+        $this->app->bind(AboutUsCardRepositoryInterface::class, AboutUsCardRepository::class);
     }
 
     /**
