@@ -71,7 +71,6 @@ class BookAPIController extends AppBaseController
     public function store(CreateBookRequest $request)
     {
         $input = $request->all();
-        $input['show_on_landing_page'] = isset($input['show_on_landing_page']) ? 1 : 0;
 
         $book = $this->bookRepository->store($input);
 
@@ -106,7 +105,6 @@ class BookAPIController extends AppBaseController
     public function update(Book $book, UpdateBookRequest $request)
     {
         $input = $request->all();
-        $input['show_on_landing_page'] = isset($input['show_on_landing_page']) ? 1 : 0;
 
         $book = $this->bookRepository->update($input, $book->id);
 
