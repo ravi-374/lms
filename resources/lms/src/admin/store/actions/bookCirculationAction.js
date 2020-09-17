@@ -104,9 +104,13 @@ export const sendMail = (id, cb) => async (dispatch) => {
         });
 }
 
-export const excelFile = (cb, isLoading = true) => async (dispatch) => {
+export const excelFile = (filter = {}, cb, isLoading = true) => async (dispatch) => {
     isLoading ? dispatch(setLoading(true)) : null;
     let url = apiBaseURL.EXPORT_BOOKS_CIRCULATION;
+
+    if (!_.isEmpty(filter) && (filter.limit || filter.order_By || filter.search)) {
+        url += requestParam(filter);
+    }
     await apiConfig.get(url)
         .then((response) => {
             dispatch({ type: bookCirculationActionType.EXCEL_FILE_CIRCULATION, payload: response.data.data });
