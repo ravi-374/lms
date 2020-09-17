@@ -15,7 +15,7 @@ const EditGenre = (props) => {
     const prepareFormOption = {
         onSaveGenre,
         onCancel: toggleModal,
-        initialValues: { name: genre.name, description: genre.description }
+        initialValues: { name: genre.name, description: genre.description, is_featured: genre.show_on_landing_page }
     };
 
     return <Modal {...props} content={<GenreForm {...prepareFormOption} />}/>
