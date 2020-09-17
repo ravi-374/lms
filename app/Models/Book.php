@@ -45,13 +45,11 @@ use phpDocumentor\Reflection\Types\Nullable;
  * @property-read string $image_path
  * @property-read string $authors_name
  * @property-read Collection|Author[] $authors
- * @property bool $show_on_landing_page
  * @property-read int|null $authors_count
  * @property-read int|null $genres_count
  * @property-read string $genres_name
  * @property-read int|null $items_count
  * @property-read int|null $tags_count
- * @method static Builder|Book whereShowOnLandingPage($value)
  */
 class Book extends Model
 {
@@ -75,7 +73,6 @@ class Book extends Model
         'isbn',
         'url',
         'is_featured',
-        'show_on_landing_page',
     ];
 
     /**
@@ -92,7 +89,6 @@ class Book extends Model
         'isbn'                 => 'string',
         'url'                  => 'string',
         'is_featured'          => 'boolean',
-        'show_on_landing_page' => 'boolean',
 
     ];
 
