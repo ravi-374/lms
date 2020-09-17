@@ -99,7 +99,7 @@ class AboutUsCardAPIController extends AppBaseController
         $aboutUsCard = AboutUsCard::findOrFail($id);
         $aboutUsCard->delete();
 
-        return $this->sendSuccess('About us card deleted successfully.');
+        return $this->sendResponse($aboutUsCard, 'About us card deleted successfully.');
     }
 
     /**
