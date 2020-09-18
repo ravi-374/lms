@@ -23,7 +23,8 @@ export const fetchBooks = () => async (dispatch) => {
 export const fetchFeaturedBooks = () => async (dispatch) => {
     await axios.get(environment.URL + '/api/' + apiBaseURL.BOOK + '?is_featured=1')
         .then((response) => {
-            dispatch({ type: bookActionType.FETCH_FEATURED_BOOKS, payload: response.data.data });
+            dispatch({ type: bookActionType.FETCH_FEATURED_BOOKS, payload: response.data.data.books });
+            dispatch({ type: bookActionType.FETCH_FEATURED_GENRES, payload: response.data.data.genres });
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

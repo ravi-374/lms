@@ -24,13 +24,12 @@ import _ from "lodash";
 import {fetchTestimonials} from "../../store/actions/testimonialAction";
 import {getAvatarName} from "../../../shared/sharedMethod";
 
-const genres = ['Business', 'Science', 'Sports', 'Politics'];
-
 const Home = (props) => {
     let myRef = useRef();
     const {
         appSetting,
         books,
+        genres,
         searchBooks,
         totalRecords,
         totalBooks,
@@ -192,6 +191,27 @@ const Home = (props) => {
      * Render a Genres
      * @returns {*}
      */
+    const colorCode = (id) => {
+        const color =[
+            '#5dd8d3',
+            '#9364D4',
+            '#EE539B',
+            '#FDDD6E',
+        ]
+        id = id % 4;
+        return color[id];
+    }
+
+    const getRandomColor = () => {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+
+        return color;
+    }
+
     const renderGenres = () => {
         return (
             <section className="category section-spacing--top section-spacing--bottom">
@@ -203,16 +223,17 @@ const Home = (props) => {
                     <div className="row">
                         {
                             genres.map((genre, index) => {
+                                let colorCode = getRandomColor();
                                 return (
-                                    <div className="col-12 col-sm-6 col-lg-3 category__box-col" key={index}>
-                                        <div className="category__box">
-                                            <div className="category__box-icon-wrapper position-relative">
+                                    <div className={`col-12 col-sm-6 col-lg-3`} key={index}>
+                                        <div style={{borderColor: colorCode}} className="category__box">
+                                            <div style={{backgroundColor: colorCode}} className="category__box-icon-wrapper position-relative">
                                                 <div className="category__box-icon position-absolute">
                                                     <i className="fa fa-book"/>
                                                 </div>
                                             </div>
                                             <hr/>
-                                            <div className="text-center category__box-title">{genre}</div>
+                                            <div className="text-center category__box-title">{genre.name}</div>
                                         </div>
                                     </div>
                                 );
@@ -580,12 +601,13 @@ Home.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings, testimonials } = state;
+    const { appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings, testimonials, genres } = state;
     const settingsArray = Object.values(homeSettings);
     const settingsArr = _.mapKeys(settingsArray, 'key');
     return {
         appSetting,
         books,
+        genres,
         searchBooks,
         totalRecords,
         totalBooks,
