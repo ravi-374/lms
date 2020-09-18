@@ -58,7 +58,7 @@
     "book-history.table.reserve-date.column": "Reservedatum",
     "book-history.table.return-due-date.column": "Fälligkeitsdatum Der Rücksendung",
     "book-history.table.return-date.column": "Rückflugdatum",
-    "book-history.input.unreserve-btn.label": "Reservierung Rückgängig Machen",
+    "book-history.input.unreserve-btn.label": "Vorbehaltlos",
     "book-history.modal.title": "Ein Buch Aus Dem Vorrat Nehmen",
     "book-history.filter.available.label": "Verfügbar",
     "book-history.filter.issued.label": "Problematisch",

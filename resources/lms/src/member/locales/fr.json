@@ -60,7 +60,7 @@
     "book-history.table.return-date.column": "Date de retour",
     "book-history.table.status.column": "Statut",
     "book-history.table.action.column": "Action",
-    "book-history.input.unreserve-btn.label": "Réservée",
+    "book-history.input.unreserve-btn.label": "Sans réserve",
     "book-history.modal.title": "Annuler un livre",
     "book-history.filter.available.label": "Disponible",
     "book-history.filter.issued.label": "Publié",
