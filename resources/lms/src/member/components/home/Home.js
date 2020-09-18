@@ -187,21 +187,6 @@ const Home = (props) => {
         );
     };
 
-    /**
-     * Render a Genres
-     * @returns {*}
-     */
-    const colorCode = (id) => {
-        const color =[
-            '#5dd8d3',
-            '#9364D4',
-            '#EE539B',
-            '#FDDD6E',
-        ]
-        id = id % 4;
-        return color[id];
-    }
-
     const getRandomColor = () => {
         const letters = '0123456789ABCDEF';
         let color = '#';
