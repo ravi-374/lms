@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\AppBaseController;
+use App\Models\AboutUsCard;
 use App\Models\Book;
 use App\Models\Genre;
 use App\Models\HomepageSetting;
@@ -50,6 +51,7 @@ class BookAPIController extends AppBaseController
         $data['homePageSetting'] = HomepageSetting::whereIn('key', [
             'hero_image_title', 'hero_image_description', 'about_us_text', 'genres_text', 'popular_books_text',
         ])->get();
+        $data['aboutUsCard '] = AboutUsCard::whereIsActive(true)->get();
 
         return $this->sendResponse(
             $data,
