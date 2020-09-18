@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Book;
 use App\Models\Genre;
+use App\Models\HomepageSetting;
 use App\Repositories\Contracts\BookRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -46,6 +47,9 @@ class BookAPIController extends AppBaseController
 
         $data['books'] = $books;
         $data['genres'] = Genre::where('show_on_landing_page', 1)->get();
+        $data['homePageSetting'] = HomepageSetting::whereIn('key', [
+            'hero_image_title', 'hero_image_description', 'about_us_text', 'genres_text', 'popular_books_text',
+        ])->get();
 
         return $this->sendResponse(
             $data,
