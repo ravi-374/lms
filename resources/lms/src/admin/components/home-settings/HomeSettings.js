@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Card, CardBody, Col, Row} from 'reactstrap';
+import {Tab, Tabs} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import _ from "lodash";
 import HomeSettingsForm from "./HomeSettingsForm";
@@ -9,6 +10,7 @@ import HeaderTitle from "../../../shared/header-title/HeaderTitle";
 import {getFormattedMessage} from "../../../shared/sharedMethod";
 import {homeSettingsKey} from "../../../constants";
 import {fetchHomeSettings, postHomeSettings} from "../../store/actions/settingAction";
+import Cards from "../cards/Card";
 
 const HomeSettings = (props) => {
     const {fetchHomeSettings, postHomeSettings, homeSettings} = props;
@@ -44,13 +46,26 @@ const HomeSettings = (props) => {
                     <h5 className="page-heading">{getFormattedMessage('home-settings.title')}</h5>
                 </Col>
                 <Col sm={12}>
-                    <div className="sticky-table-container">
-                        <Card>
-                            <CardBody>
-                                <HomeSettingsForm {...prepareFormOption}/>
-                            </CardBody>
-                        </Card>
-                    </div>
+                    <Tabs defaultActiveKey="home-setting" id="uncontrolled-tab-example">
+                        <Tab eventKey="home-setting" title={getFormattedMessage('settings.title')}>
+                            <div className="sticky-table-container">
+                                <Card>
+                                    <CardBody>
+                                        <HomeSettingsForm {...prepareFormOption}/>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Tab>
+                        <Tab eventKey="card" title={getFormattedMessage('about-us-card.title')}>
+                            <div className="sticky-table-container">
+                                <Card className="p-0">
+                                    <CardBody>
+                                        <Cards />
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </Tab>
+                    </Tabs>
                 </Col>
             </Row>
         </div>

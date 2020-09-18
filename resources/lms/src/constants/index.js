@@ -114,6 +114,7 @@ export const apiBaseURL = {
     COUNTRY: 'countries',
     DASHBOARD_DETAILS: 'dashboard-details',
     GENRE: 'genres',
+    ABOUT_US_CARD: 'about-us-cards',
     PENALTY: 'penalties',
     ISSUED_BOOK: 'issued-books',
     ADMIN_FORGOT_PASSWORD: 'send-reset-password-link',

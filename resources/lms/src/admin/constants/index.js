@@ -14,6 +14,14 @@ export const genreActionType = {
     DELETE_GENRE: 'DELETE_GENRE',
 };
 
+export const cardActionType = {
+    FETCH_CARDS: 'FETCH_CARDS',
+    FETCH_CARD: 'FETCH_CARD',
+    ADD_CARD: 'ADD_CARD',
+    EDIT_CARD: 'EDIT_CARD',
+    DELETE_CARD: 'DELETE_CARD',
+}
+
 export const fileActionType = {
     ADD_FILE: 'ADD_FILE',
 }
@@ -210,7 +218,7 @@ export const Permissions = {
     MANAGE_GENRES: 'manage_genres',
     MANAGE_PENALTIES: 'manage_penalties',
     MANAGE_USERS: 'manage_users',
-    MANANGE_BOOK_REQUEST:'manage_book_requests'
+    MANANGE_BOOK_REQUEST: 'manage_book_requests'
 };
 
 export const memberBookHistoryActionType = {
@@ -299,7 +307,7 @@ export const bookCirculationFilterOptions = [
 ];
 
 export const bookFilterOptions = [
-    {id: 1, name: 'books.filter.e-book.label', defaultValue: 1}
+    { id: 1, name: 'books.filter.e-book.label', defaultValue: 1 }
 ]
 
 export const importActionType = {

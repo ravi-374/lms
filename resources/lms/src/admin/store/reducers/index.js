@@ -41,11 +41,13 @@ import testimonialReducer from "./testimonialReducer";
 import returnDueDateReducer from "./penaltiesModalReducer";
 import importBookModalReducer from "./importBookModalReducer";
 import fileReducer from "./fileReducer";
+import cardReducer from "./cardReducer";
 import exportBook from "./exportBook";
 import changePasswordModalReducer from "../../../store/reducers/changePasswordModalReducer";
 
 export default combineReducers({
     genres: genreReducer,
+    cards: cardReducer,
     penalties: penaltyReducer,
     tags: tagReducer,
     authors: authorReducer,
