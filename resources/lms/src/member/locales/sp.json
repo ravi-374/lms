@@ -58,7 +58,7 @@
     "book-history.table.reserve-date.column": "Fecha De Reserva",
     "book-history.table.return-due-date.column": "Fecha De Vencimiento De Devolución",
     "book-history.table.return-date.column": "Fecha De Regreso",
-    "book-history.input.unreserve-btn.label": "Sinceridad",
+    "book-history.input.unreserve-btn.label": "Sin reservar",
     "book-history.modal.title": "Sin reservar un libro",
     "book-history.filter.available.label": "Disponible",
     "book-history.filter.issued.label": "Emitido",
