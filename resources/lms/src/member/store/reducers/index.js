@@ -19,6 +19,7 @@ import settingReducer from './settingReducer';
 import authReducer from './authReducer';
 import bookRequestReducer from './bookRequestReducer';
 import genreReducer from './genreReducer';
+import cardReducer from './cardReducer';
 import totalBookReducer from "./totalBookReducer";
 import totalRecordReduce from "./totalRecordReduce";
 import homeSettingReducer from "./homeSettingReducer";
@@ -39,6 +40,7 @@ export default combineReducers({
     bookHistory: bookHistoryReducer,
     books: bookReducer,
     genres: genreReducer,
+    aboutUsCard: cardReducer,
     ebooks: ebookReducer,
     totalBooks: totalBookReducer,
     searchBooks: bookSearchReducer,

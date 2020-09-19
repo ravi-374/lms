@@ -25,6 +25,7 @@ export const fetchFeaturedBooks = () => async (dispatch) => {
         .then((response) => {
             dispatch({ type: bookActionType.FETCH_FEATURED_BOOKS, payload: response.data.data.books });
             dispatch({ type: bookActionType.FETCH_FEATURED_GENRES, payload: response.data.data.genres });
+            dispatch({ type: bookActionType.FETCH_FEATURED_CARDS, payload: response.data.data.aboutUsCard });
         })
         .catch(({ response }) => {
             dispatch(addToast({ text: response.data.message, type: toastType.ERROR }));

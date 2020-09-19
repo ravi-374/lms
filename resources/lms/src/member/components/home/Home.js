@@ -30,6 +30,7 @@ const Home = (props) => {
         appSetting,
         books,
         genres,
+        aboutUsCard,
         searchBooks,
         totalRecords,
         totalBooks,
@@ -201,10 +202,10 @@ const Home = (props) => {
         return (
             <section className="category section-spacing--top section-spacing--bottom">
                 <div className="container">
-                    <h3 className="text-center">Our Genres</h3>
+                    <h3 className="text-center">{homeSettings.genres_text ? homeSettings.genres_text.display_name : null }</h3>
                     <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros
-                        elementum nulla sodales ullamcorper. </p>
+                        {homeSettings.genres_text ? homeSettings.genres_text.value : '' }
+                    </p>
                     <div className="row">
                         {
                             genres.map((genre, index) => {
@@ -242,10 +243,10 @@ const Home = (props) => {
             <section className="popular-book section-spacing--top section-spacing--bottom position-relative">
                 <div className="popular-book__bg"/>
                 <div className="container-fluid popular-book__container">
-                    <h3 className="text-center">Popular Books</h3>
+                    <h3 className="text-center">{homeSettings.popular_books_text ? homeSettings.popular_books_text.display_name : ''}</h3>
                     <p className="section-header-row-spacing text-center w-75 ml-auto mr-auto">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae est Sed non eros
-                        elementum nulla sodales ullamcorper. </p>
+                        {homeSettings.popular_books_text ? homeSettings.popular_books_text.value : ''}
+                    </p>
                     <div className="popular-book__book-item-slider-wrapper">
                         {renderFeaturedBooks()}
                     </div>
@@ -452,25 +453,23 @@ const Home = (props) => {
      * @returns {*}
      */
     const renderAboutUs = () => {
-        const features = ['Member Card', 'High Quality Books', 'Free All Books', 'Up To Date Books', 'High QualityBooks', 'Free All Books'];
         return (
             <section className="about-us section-spacing--top section-spacing--bottom">
                 <div className="container">
-                    <h3 className="text-center">About Us</h3>
+                    <h3 className="text-center">{homeSettings.about_us_text ? homeSettings.about_us_text.display_name : ''}</h3>
                     <p className="text-center text-description w-75 mx-auto section-header-row-spacing">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam
-                        vitae est Sed non eros elementum nulla sodales ullamcorper. </p>
+                        {homeSettings.about_us_text ? homeSettings.about_us_text.value : ''}
+                     </p>
                     <div className="row">
                         {
-                            features.map((item, i) => {
+                            aboutUsCard && aboutUsCard.map((card, i) => {
+                                let colorCode = getRandomColor();
                                 return (
                                     <div className="col-12 col-sm-6 col-lg-4 about-us__box-col" key={i}>
                                         <div className="about-us__box mb-4">
-                                            <i className="fa fa-book"/>
-                                            <h4 className="mt-4">{item}</h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nullam
-                                                ultricies eros pellentesque </p>
+                                            <i style={{color: colorCode}} className="fa fa-book"/>
+                                            <h4 className="mt-4">{card.title}</h4>
+                                            <p>{card.description}</p>
                                         </div>
                                     </div>
                                 )
@@ -551,10 +550,11 @@ const Home = (props) => {
                     <div className="container">
                         <div className="landing__text-block">
                             <h1 className="landing__text-block-title">
-                                More Than {totalBooks} Book Over Here </h1>
+                                {homeSettings.hero_image_title ? homeSettings.hero_image_title.value : ''}
+                            </h1>
                             <p className="landing__text-block-desc text-description--landing">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida, quam vitae
-                                est Sed non eros elementum nulla sodales ullamcorper. </p>
+                                {homeSettings.hero_image_description ? homeSettings.hero_image_description.value : ''}
+                             </p>
                             <div className="landing-search-box mt-5">
                                 <HomeTab {...tabOptions}/>
                             </div>
@@ -586,13 +586,14 @@ Home.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings, testimonials, genres } = state;
+    const { appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings, testimonials, genres, aboutUsCard } = state;
     const settingsArray = Object.values(homeSettings);
     const settingsArr = _.mapKeys(settingsArray, 'key');
     return {
         appSetting,
         books,
         genres,
+        aboutUsCard,
         searchBooks,
         totalRecords,
         totalBooks,
