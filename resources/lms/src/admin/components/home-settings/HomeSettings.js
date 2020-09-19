@@ -33,6 +33,11 @@ const HomeSettings = (props) => {
             contact_phone: homeSettings[homeSettingsKey.CONTACT_PHONE] ? homeSettings[homeSettingsKey.CONTACT_PHONE].value : null,
             company_description: homeSettings[homeSettingsKey.COMPANY_DESCRIPTION] ? homeSettings[homeSettingsKey.COMPANY_DESCRIPTION].value : null,
             website: homeSettings[homeSettingsKey.WEBSITE] ? homeSettings[homeSettingsKey.WEBSITE].value : null,
+            hero_image_title: homeSettings[homeSettingsKey.HERO_IMAGE_TITLE] ? homeSettings[homeSettingsKey.HERO_IMAGE_TITLE].value : null,
+            hero_image_description: homeSettings[homeSettingsKey.HERO_IMAGE_DESCRIPTION] ? homeSettings[homeSettingsKey.HERO_IMAGE_DESCRIPTION].value : null,
+            about_us_text: homeSettings[homeSettingsKey.ABOUT_US_TEXT] ? homeSettings[homeSettingsKey.ABOUT_US_TEXT].value : null,
+            genres_text: homeSettings[homeSettingsKey.GENRES_TEXT] ? homeSettings[homeSettingsKey.GENRES_TEXT].value : null,
+            popular_books_text: homeSettings[homeSettingsKey.POPULAR_BOOKS_TEXT] ? homeSettings[homeSettingsKey.POPULAR_BOOKS_TEXT].value : null,
         },
         onSaveHomeSettings
     };

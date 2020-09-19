@@ -27,7 +27,8 @@ const HomeSettingsForm = (props) => {
     };
 
     const onSave = (formValues) => {
-        const {facebook, github, linkedin, twitter, contact_email, contact_phone, company_description, website} = formValues;
+        const {facebook, github, linkedin, twitter, contact_email, contact_phone, company_description, website,
+            hero_image_title, hero_image_description, about_us_text, genres_text, popular_books_text} = formValues;
         const homeSettings = [
             prepareFormData(homeSettingsKey.FACEBOOK, facebook, homeSettingsDisplayName.FACEBOOK),
             prepareFormData(homeSettingsKey.GITHUB, github, homeSettingsDisplayName.GITHUB),
@@ -37,6 +38,11 @@ const HomeSettingsForm = (props) => {
             prepareFormData(homeSettingsKey.CONTACT_PHONE, contact_phone, homeSettingsDisplayName.CONTACT_PHONE),
             prepareFormData(homeSettingsKey.COMPANY_DESCRIPTION, company_description, homeSettingsDisplayName.COMPANY_DESCRIPTION),
             prepareFormData(homeSettingsKey.WEBSITE, website, homeSettingsDisplayName.WEBSITE),
+            prepareFormData(homeSettingsKey.HERO_IMAGE_TITLE, hero_image_title, homeSettingsDisplayName.HERO_IMAGE_TITLE),
+            prepareFormData(homeSettingsKey.HERO_IMAGE_DESCRIPTION, hero_image_description, homeSettingsDisplayName.HERO_IMAGE_DESCRIPTION),
+            prepareFormData(homeSettingsKey.ABOUT_US_TEXT, about_us_text, homeSettingsDisplayName.ABOUT_US_TEXT),
+            prepareFormData(homeSettingsKey.GENRES_TEXT, genres_text, homeSettingsDisplayName.GENRES_TEXT),
+            prepareFormData(homeSettingsKey.POPULAR_BOOKS_TEXT, popular_books_text, homeSettingsDisplayName.POPULAR_BOOKS_TEXT),
         ];
         onSaveHomeSettings(homeSettings);
     };
@@ -72,8 +78,28 @@ const HomeSettingsForm = (props) => {
                        component={InputGroup}/>
             </Col>
             <Col xs={12} sm={6}>
+                <Field name='hero_image_description' type="textarea" label="home-settings.input.hero_image_description.label"
+                       required groupText="list" component={InputGroup}/>
+            </Col>
+            <Col xs={12} sm={6}>
                 <Field name='website' type="text" label="home-settings.input.website.label"
                        required groupText="globe" component={InputGroup}/>
+            </Col>
+            <Col xs={12} sm={6}>
+                <Field name='hero_image_title' type="text" label="home-settings.input.hero_image_title.label"
+                    required groupText="list" component={InputGroup}/>
+            </Col>
+            <Col xs={12} sm={6}>
+                <Field name='genres_text' type="text" label="home-settings.input.genres_text.label"
+                       required  groupText="tag" component={InputGroup}/>
+            </Col>
+            <Col xs={12} sm={6}>
+                <Field name='about_us_text' type="text" label="home-settings.input.about_us_text.label"
+                    required groupText="pencil" component={InputGroup}/>
+            </Col>
+            <Col xs={12} sm={6}>
+                <Field name='popular_books_text' type="text" label="home-settings.input.popular_book_text.label"
+                    required groupText="book" component={InputGroup}/>
             </Col>
             <Col xs={12}>
                 <SaveAction onSave={handleSubmit(onSave)} isHideCancel {...props}/>
