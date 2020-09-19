@@ -51,7 +51,7 @@ class BookAPIController extends AppBaseController
         $data['homePageSetting'] = HomepageSetting::whereIn('key', [
             'hero_image_title', 'hero_image_description', 'about_us_text', 'genres_text', 'popular_books_text',
         ])->get();
-        $data['aboutUsCard '] = AboutUsCard::whereIsActive(true)->get();
+        $data['aboutUsCard'] = AboutUsCard::whereIsActive(true)->get();
 
         return $this->sendResponse(
             $data,
