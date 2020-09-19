@@ -23,5 +23,23 @@ export default formValues => {
     if (!formValues.company_description) {
         errors.company_description = getFormattedMessage('home-settings.input.company_description.validate.label');
     }
+    if (!formValues.website) {
+        errors.website = getFormattedMessage('home-settings.input.website.validate.label');
+    }
+    if (!formValues.hero_image_title) {
+        errors.hero_image_title = getFormattedMessage('home-settings.input.hero_image_title.validate.label');
+    }
+    if (!formValues.hero_image_description) {
+        errors.hero_image_description = getFormattedMessage('home-settings.input.hero_image_description.validate.label');
+    }
+    if (!formValues.about_us_text) {
+        errors.about_us_text = getFormattedMessage('home-settings.input.about_us_text.validate.label');
+    }
+    if (!formValues.genres_text) {
+        errors.genres_text = getFormattedMessage('home-settings.input.genres_text.validate.label');
+    }
+    if (!formValues.popular_books_text) {
+        errors.popular_books_text = getFormattedMessage('home-settings.input.popular_books_text.validate.label');
+    }
     return errors;
 };

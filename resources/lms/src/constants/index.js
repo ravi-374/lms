@@ -173,7 +173,12 @@ export const homeSettingsKey = {
     CONTACT_EMAIl: 'contact_email',
     CONTACT_PHONE: 'contact_phone',
     COMPANY_DESCRIPTION: 'company_description',
-    WEBSITE:'website',
+    WEBSITE: 'website',
+    HERO_IMAGE_TITLE: 'hero_image_title',
+    HERO_IMAGE_DESCRIPTION: 'hero_image_description',
+    ABOUT_US_TEXT: 'about_us_text',
+    GENRES_TEXT: 'genres_text',
+    POPULAR_BOOKS_TEXT: 'popular_books_text'
 };
 
 export const homeSettingsDisplayName = {
@@ -185,6 +190,11 @@ export const homeSettingsDisplayName = {
     CONTACT_PHONE: 'Contact Phone',
     COMPANY_DESCRIPTION: 'Company Description',
     WEBSITE:'Website',
+    HERO_IMAGE_TITLE: 'Hero Image Title',
+    HERO_IMAGE_DESCRIPTION: 'Hero Image Description',
+    ABOUT_US_TEXT: 'About us Text',
+    GENRES_TEXT: 'Genres Text',
+    POPULAR_BOOKS_TEXT: 'Popular Books Text'
 };
 
 export const icon = {

@@ -98,6 +98,7 @@ export const fetchHomeSettings = (isLoading = false) => async (dispatch) => {
 };
 
 export const postHomeSettings = (homeSettings) => async (dispatch) => {
+    console.log("homeSettings",homeSettings);
     await apiConfig.put(apiBaseURL.HOME_SETTING, homeSettings)
         .then((response) => {
             dispatch({type: homeSettingsActionsType.PUT_HOME_SETTINGS, payload: response.data.data});
