@@ -200,7 +200,7 @@ const Home = (props) => {
 
     const renderGenres = () => {
         return (
-            <section className="category section-spacing--top section-spacing--bottom">
+            <section className={ `${ genres.length === 0 ? 'section-spacing--no-item' : 'section-spacing--top section-spacing--bottom' } category`}>
                 <div className="container">
                     <h3 className="text-center">{homeSettings.genres_text ? homeSettings.genres_text.display_name : null }</h3>
                     <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">
@@ -454,7 +454,7 @@ const Home = (props) => {
      */
     const renderAboutUs = () => {
         return (
-            <section className="about-us section-spacing--top section-spacing--bottom">
+            <section className={ `${ aboutUsCard.length === 0 ? 'section-spacing--no-item' : 'section-spacing--top section-spacing--bottom' } about-us`}>
                 <div className="container">
                     <h3 className="text-center">{homeSettings.about_us_text ? homeSettings.about_us_text.display_name : ''}</h3>
                     <p className="text-center text-description w-75 mx-auto section-header-row-spacing">
