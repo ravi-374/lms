@@ -142,6 +142,7 @@ class SettingAPIController extends AppBaseController
     public function uploadLogo(UploadLogoRequest $request)
     {
         $setting = $this->settingRepo->uploadLogo($request->file('logo'));
+        $setting->append('logo_url');
 
         return $this->sendResponse($setting, 'Logo updated successfully.');
     }
@@ -154,6 +155,7 @@ class SettingAPIController extends AppBaseController
     public function uploadFaviconIcon(UploadFaviconIconRequest $request)
     {
         $setting = $this->settingRepo->uploadFaviconIcon($request->file('favicon'));
+        $setting->append('logo_url');
 
         return $this->sendResponse($setting, 'Favicon updated successfully.');
     }
