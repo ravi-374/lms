@@ -203,7 +203,7 @@ const Home = (props) => {
             <section className={ `${ genres.length === 0 ? 'section-spacing--no-item' : 'section-spacing--top section-spacing--bottom' } category`}>
                 <div className="container">
                     <h3 className="text-center">{homeSettings.genres_text ? homeSettings.genres_text.display_name : null }</h3>
-                    <p className="text-center text-description text-description--white-section w-75 mx-auto section-header-row-spacing">
+                    <p className={ `${genres.length === 0 ? 'm-0' : 'section-header-row-spacing'} text-center text-description--white-section text-description section-width mx-auto`}>
                         {homeSettings.genres_text ? homeSettings.genres_text.value : '' }
                     </p>
                     <div className="row">
@@ -457,7 +457,7 @@ const Home = (props) => {
             <section className={ `${ aboutUsCard.length === 0 ? 'section-spacing--no-item' : 'section-spacing--top section-spacing--bottom' } about-us`}>
                 <div className="container">
                     <h3 className="text-center">{homeSettings.about_us_text ? homeSettings.about_us_text.display_name : ''}</h3>
-                    <p className="text-center text-description w-75 mx-auto section-header-row-spacing">
+                    <p className={ `${aboutUsCard.length === 0 ? 'm-0' : 'section-header-row-spacing'} text-center text-description section-width mx-auto`}>
                         {homeSettings.about_us_text ? homeSettings.about_us_text.value : ''}
                      </p>
                     <div className="row">
