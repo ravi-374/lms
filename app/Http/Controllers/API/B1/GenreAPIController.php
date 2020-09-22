@@ -91,8 +91,6 @@ class GenreAPIController extends AppBaseController
     public function update(Genre $genre, UpdateGenreRequest $request)
     {
         $input = $request->all();
-        $input['show_on_landing_page'] = isset($input['show_on_landing_page']) ? 1 : 0;
-
         $genre = $this->genreRepository->update($input, $genre->id);
 
         return $this->sendResponse($genre->toArray(), 'Genre updated successfully.');
