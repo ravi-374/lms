@@ -36,11 +36,21 @@ const ReactSelect = (props) => {
                     </InputGroupText>
                 </InputGroupAddon>
                 <Select
-                    {...input} className={inputClass} placeholder={placeholderText} value={input.value}
-                    onChange={(value) => input.onChange(value)} isDisabled={disabled} isClearable
-                    onBlur={() => input.onBlur(input.value)} options={options} getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id} defaultValue={defaultValue} isSearchable={isSearchable}
-                    menuPlacement={menuPlacement} ref={innerRef} isMulti={isMulti}/>
+                    {...input}
+                    className={inputClass}
+                    placeholder={placeholderText}
+                    value={input.value}
+                    isDisabled={disabled}
+                    onChange={ (value) => input.onChange(value) }
+                    onBlur={ (value) => input.onBlur() }
+                    options={options}
+                    getOptionLabel={(option) => option.name}
+                    getOptionValue={(option) => option.id}
+                    defaultValue={defaultValue}
+                    isSearchable={isSearchable}
+                    menuPlacement={menuPlacement}
+                    ref={innerRef}
+                    isMulti={isMulti}/>
             </InputGroup>
             {touched && ((error && <FormFeedback className="d-block">{error}</FormFeedback>))}
         </FormGroup>
