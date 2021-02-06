@@ -25,7 +25,7 @@ const ChangePasswordForm = props => {
     };
 
     const onClickShowConfirmPassword = () => {
-        setConfirmPassword(!isConfirmPassword);
+        setIsConfirmPassword(!isConfirmPassword);
     };
 
     return (

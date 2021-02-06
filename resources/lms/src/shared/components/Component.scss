@@ -232,3 +232,11 @@ html[dir="rtl"] {
         flex-wrap: unset;
     }
 }
+
+.switch-label .switch-slider::before {
+    z-index: unset;
+}
+
+.switch-label .switch-slider::after {
+    z-index: unset;
+}
