@@ -50,6 +50,7 @@ const ReactSelect = (props) => {
                     isSearchable={isSearchable}
                     menuPlacement={menuPlacement}
                     ref={innerRef}
+                    isClearable
                     isMulti={isMulti}/>
             </InputGroup>
             {touched && ((error && <FormFeedback className="d-block">{error}</FormFeedback>))}
