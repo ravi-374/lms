@@ -91,6 +91,7 @@
     "books.input.authors.validate.label": "Автор книги должен быть обязательным.",
     "books.input.genres.validate.label": "Книжный жанр (ы) должен быть обязательным.",
     "books.items.input.book-code.validate.label": "Код пункта книги должен быть длиной 8 цифр.",
+    "books.items.input.book-code.required.validate.label": "Необходимо указать код позиции книги.",
     "books.items.input.edition.validate.label": "Издание книги должно быть обязательным.",
     "books.items.select.format.validate.label": "формат пункта книги должен быть обязательным.",
     "books.items.select.language.validate.label": "Язык пункта книги должен быть обязательным.",

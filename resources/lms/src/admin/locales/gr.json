@@ -91,6 +91,7 @@
     "books.input.authors.validate.label": "Buchautor (en) müssen erforderlich sein.",
     "books.input.genres.validate.label": "Buchgenres müssen erforderlich sein.",
     "books.items.input.book-code.validate.label": "Der Buchartikelcode muss 8-stellig sein.",
+    "books.items.input.book-code.required.validate.label": "Der Buchungsartikelcode muss erforderlich sein.",
     "books.items.input.edition.validate.label": "Buchartikelausgabe muss erforderlich sein.",
     "books.items.select.format.validate.label": "Das Buchartikelformat muss erforderlich sein.",
     "books.items.select.language.validate.label": "Die Sprache der Buchposition muss angegeben werden.",

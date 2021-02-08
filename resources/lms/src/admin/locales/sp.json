@@ -91,6 +91,7 @@
     "books.input.authors.validate.label": "Los autores del libro deben ser requeridos.",
     "books.input.genres.validate.label": "Los géneros de libros deben ser obligatorios.",
     "books.items.input.book-code.validate.label": "El código del artículo del libro debe tener 8 dígitos.",
+    "books.items.input.book-code.required.validate.label": "Se debe solicitar el código del artículo del libro.",
     "books.items.input.edition.validate.label": "Se debe requerir la edición del artículo del libro.",
     "books.items.select.format.validate.label": "Se debe requerir el formato del artículo del libro.",
     "books.items.select.language.validate.label": "Se debe requerir el idioma del elemento del libro.",

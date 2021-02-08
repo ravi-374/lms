@@ -92,6 +92,7 @@
     "books.input.genres.validate.label": "ژانر (های) کتاب مورد نیاز است.",
     "books.items.input.book-code.validate.label": "کد مورد کتاب باید به طول 8 رقم باشد.",
     "books.items.input.edition.validate.label": "نسخه مورد کتاب باید مورد نیاز باشد.",
+    "books.items.input.book-code.required.validate.label": "کد مورد کتاب باید الزامی باشد.",
     "books.items.select.format.validate.label": "قالب مورد کتاب مورد نیاز است.",
     "books.items.select.language.validate.label": "زبان مورد نیاز کتاب مورد نیاز است.",
     "books.items.input.price.validate.label": "قیمت کالای کتاب مورد نیاز است.",
