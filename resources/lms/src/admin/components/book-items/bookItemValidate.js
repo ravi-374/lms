@@ -12,6 +12,9 @@ export default formValues => {
     if (!formValues.format) {
         errors.format = getFormattedMessage('books.items.select.format.validate.label');
     }
+    if (formValues.format && formValues.format.name === 'E-Book' && !formValues.hasOwnProperty('file')) {
+        errors.format = getFormattedMessage('books.items.select.format-file.validate.label');
+    }
     if (!formValues.language) {
         errors.language = getFormattedMessage('books.items.select.language.validate.label');
     }

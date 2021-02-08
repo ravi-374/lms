@@ -93,6 +93,7 @@
     "books.input.genres.validate.label": "Os gêneros de livros devem ser obrigatórios.",
     "books.items.input.book-code.validate.label": "O código do item do livro deve ter 8 dígitos.",
     "books.items.input.edition.validate.label": "A edição do item do livro deve ser necessária.",
+    "books.items.select.format-file.validate.label": "O arquivo do item do livro deve ser obrigatório.",
     "books.items.select.format.validate.label": "O formato do item do livro deve ser obrigatório.",
     "books.items.select.language.validate.label": "O Língua do item do livro deve ser obrigatório.",
     "books.items.input.price.validate.label": "O preço do item do livro deve ser exigido.",

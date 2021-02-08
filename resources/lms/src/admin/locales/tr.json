@@ -93,6 +93,7 @@
     "books.items.input.book-code.validate.label": "Kitap ürün kodu 8 rakam uzunluğunda olmalıdır.",
     "books.items.input.edition.validate.label": "Kitap kalemi basımı gerekli olmalı.",
     "books.items.select.format.validate.label": "Kitap öğesi formatı gerekli olmalıdır.",
+    "books.items.select.format-file.validate.label": "Kitap öğesi dosyası gerekli olmalıdır.",
     "books.items.select.language.validate.label": "Kitap öğesi dili zorunlu olmalıdır.",
     "books.items.input.price.validate.label": "Kitap kalemi fiyatı gerekli olmalıdır.",
     "book.not-found.empty-state.title": "Kitap bulunamadı ...",

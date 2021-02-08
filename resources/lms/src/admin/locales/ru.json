@@ -93,6 +93,7 @@
     "books.items.input.book-code.validate.label": "Код пункта книги должен быть длиной 8 цифр.",
     "books.items.input.edition.validate.label": "Издание книги должно быть обязательным.",
     "books.items.select.format.validate.label": "формат пункта книги должен быть обязательным.",
+    "books.items.select.format-file.validate.label": "Требуется файл предмета книги.",
     "books.items.select.language.validate.label": "Язык пункта книги должен быть обязательным.",
     "books.items.input.price.validate.label": "Необходимо указать цену за книгу.",
     "book.not-found.empty-state.title": "Книга не найдена ...",
