@@ -108,7 +108,7 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
         }
 
         $query = $this->allQuery($search, $skip, $limit)->with([
-            'book.authors',
+            'book',
             'lastIssuedBook',
             'publisher',
             'language',
@@ -266,6 +266,15 @@ class BookItemRepository extends BaseRepository implements BookItemRepositoryInt
 
             $query->orWhereHas('book', function (Builder $query) use ($searchString) {
                 filterByColumns($query, $searchString, ['name']);
+            });
+            $query->orWhereHas('book', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['isbn']);
+            });
+            $query->orWhereHas('language', function (Builder $query) use ($searchString) {
+                filterByColumns($query, $searchString, ['language_name']);
+            });
+            $query->orWhereHas('book.authors',function (Builder $query) use ($searchString){
+               filterByColumns($query,$searchString,['first_name','last_name']); 
             });
         });
 
