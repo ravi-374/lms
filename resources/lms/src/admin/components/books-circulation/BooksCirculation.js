@@ -84,6 +84,13 @@ const BooksCirculation = (props) => {
             cell: row => <span>{row.member.first_name + ' ' + row.member.last_name}</span>
         },
         {
+            name: getFormattedMessage('profile.input.phone.label'),
+            selector: 'phone',
+            width: '140px',
+            sortable: true,
+            cell: row => <span>{row.member.phone ? row.member.phone : 'N/A'}</span>
+        },
+        {
             name: getFormattedMessage('books-circulation.table.issue-date.column'),
             selector: 'issued_on',
             width: '160px',
