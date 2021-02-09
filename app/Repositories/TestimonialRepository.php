@@ -81,7 +81,11 @@ class TestimonialRepository extends BaseRepository implements TestimonialReposit
                 $testimonial->deleteTestimonialImage();
                 $input['image'] = ImageTrait::makeImage($input['image'], Testimonial::IMAGE_PATH);
             }
-
+            
+            if (! empty($input['remove_image'])) {
+                $testimonial->deleteTestimonialImage();
+            }
+            
             $testimonial->update($input);
 
             return $testimonial->fresh();

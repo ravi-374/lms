@@ -395,7 +395,8 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
                     config('app.ebook_disk')
                 );
             }
-
+            
+            $item->book_code = isset($bookItem['book_code']) ? $bookItem['book_code'] : $this->generateUniqueBookCode();
             $item->edition = isset($bookItem['edition']) ? $bookItem['edition'] : '';
             $item->format = isset($bookItem['format']) ? $bookItem['format'] : null;
             $item->location = isset($bookItem['location']) ? $bookItem['location'] : '';
@@ -408,7 +409,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             } else {
                 $item->status = isset($bookItem['status']) ? $bookItem['status'] : BookItem::STATUS_AVAILABLE;
             }
-
+            
             $book->items()->save($item);
 
             return $this->findOrFail($book->id, ['items.publisher', 'items.language']);
