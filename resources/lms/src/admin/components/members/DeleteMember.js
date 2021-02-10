@@ -13,7 +13,7 @@ const DeleteMember = (props) => {
     }
     const fullName = member.first_name + ' ' + member.last_name;
     const content = member ?
-        <>{getFormattedMessage('members.delete.message')}&nbsp;"{`${fullName}`}" ?</> : null;
+        <>{getFormattedMessage('modal.delete.message')}&nbsp;"{`${fullName}`}" ?</> : null;
     const title = getFormattedMessage('members.modal.delete.title');
 
     const onDeleteMember = () => {
