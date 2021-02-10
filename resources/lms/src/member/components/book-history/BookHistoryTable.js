@@ -9,7 +9,7 @@ import ReactDataTable from "../../../shared/table/ReactDataTable";
 import {icon} from "../../../constants";
 
 const BookHistoryTable = (props) => {
-    const { bookHistory, onOpenModal, onChangeFilter, totalRecord, isLoading } = props;
+    const { bookHistory, onOpenModal, onChangeFilter, totalRecordMember, isLoading } = props;
 
     const columns = [
         {
@@ -106,14 +106,14 @@ const BookHistoryTable = (props) => {
     return (
         <ReactDataTable items={bookHistory} columns={columns} emptyStateMessageId="books-history.empty-state.title"
                         emptyNotFoundStateMessageId="books-history.not-found.empty-state.title"
-                        loading={isLoading} totalRows={totalRecord} onChange={onChangeFilter}
+                        loading={isLoading} totalRows={totalRecordMember} onChange={onChangeFilter}
                         icon={(icon.BOOK_CIRCULATION)}/>
     );
 };
 
 BookHistoryTable.propTypes = {
     bookHistory: PropTypes.array,
-    totalRecord: PropTypes.number,
+    totalRecordMember: PropTypes.number,
     isLoading: PropTypes.bool,
     onOpenModal: PropTypes.func,
     onChangeFilter: PropTypes.func,
