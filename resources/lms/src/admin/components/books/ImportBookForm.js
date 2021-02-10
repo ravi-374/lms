@@ -42,7 +42,7 @@ const ImportBookForm = (props) => {
                     </span>
                 </Col>
                 <Col xs={12}>
-                    <Button className="float-right" size="md" color="primary ml-2" onClick={onSave}>
+                    <Button className="float-right" size="md" color="primary ml-2" disabled={!file} onClick={()=>onSave()}>
                         {getFormattedMessage('global.input.submit-btn.label')}
                     </Button>
                 </Col>

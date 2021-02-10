@@ -94,6 +94,7 @@
     "books.items.input.edition.validate.label": "نسخه مورد کتاب باید مورد نیاز باشد.",
     "books.items.input.book-code.required.validate.label": "کد مورد کتاب باید الزامی باشد.",
     "books.items.select.format.validate.label": "قالب مورد کتاب مورد نیاز است.",
+    "books.items.select.format-file.validate.label": "پرونده مورد کتاب باید مورد نیاز باشد.",
     "books.items.select.language.validate.label": "زبان مورد نیاز کتاب مورد نیاز است.",
     "books.items.input.price.validate.label": "قیمت کالای کتاب مورد نیاز است.",
     "book.not-found.empty-state.title": "هیچ کتابی یافت نشد ...",

@@ -94,6 +94,7 @@
     "books.items.input.book-code.required.validate.label": "Book item code must be required.",
     "books.items.input.edition.validate.label": "Book item edition must be required.",
     "books.items.select.format.validate.label": "Book item format must be required.",
+    "books.items.select.format-file.validate.label": "Book item file must be required.",
     "books.items.select.language.validate.label": "Book item language must be required.",
     "books.items.input.price.validate.label": "Book item price must be required.",
     "book.not-found.empty-state.title": "No book found...",
