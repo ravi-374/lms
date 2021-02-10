@@ -17,6 +17,10 @@ export default formValues => {
     if (!formValues.contact_email) {
         errors.contact_email = getFormattedMessage('home-settings.input.contact_email.validate.label');
     }
+    const emailExpression = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,})$/;
+    if (formValues.contact_email && !emailExpression.test(formValues.contact_email)) {
+        errors.contact_email = getFormattedMessage('profile.input.email-invalid.validate.label');
+    }
     if (!formValues.contact_phone) {
         errors.contact_phone = getFormattedMessage('home-settings.input.contact_phone.validate.label');
     }

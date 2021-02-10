@@ -35,7 +35,7 @@ export const fetchFeaturedBooks = () => async (dispatch) => {
 export const fetchBooksByNameOrAuthors = (param) => async (dispatch) => {
     await axios.get(environment.URL + '/api/' + apiBaseURL.BOOK + param)
         .then((response) => {
-            dispatch({ type: bookActionType.SEARCH_BOOKS, payload: response.data.data });
+            dispatch({ type: bookActionType.SEARCH_BOOKS, payload: response.data.data.books });
             if (response.data.totalRecords === 0) {
                 dispatch(addToast({ text: 'Sorry!! Books not found.' }));
             }

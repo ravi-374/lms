@@ -37,6 +37,9 @@ const BookFormCard = (props) => {
     };
 
     const onSave = (formValues) => {
+        if (isImportBook) {
+            formValues['items'] = formValues['items'].slice(1);
+        }
         onSaveBook(formValues);
     };
 

@@ -228,7 +228,7 @@ const BookCirculationForm = props => {
                 </Col>
                 <Col xs={12} sm={6}>
                     {hasPenaltyCollected ?
-                        <Field name='collected_penalty'
+                        <Field name='collected_penalty' type="number"
                                label="books-circulation.input.amount.label" min="0"
                                groupText="rupee" component={InputGroup}/> : ''
                     }

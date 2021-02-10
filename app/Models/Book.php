@@ -63,7 +63,7 @@ class Book extends Model
 
     public $table = 'books';
 
-    protected $appends = ['image_path'];
+    protected $appends = ['image_path','authors_name'];
 
     public $fillable = [
         'name',

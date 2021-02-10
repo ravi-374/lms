@@ -32,7 +32,7 @@ const Home = (props) => {
         genres,
         aboutUsCard,
         searchBooks,
-        totalRecords,
+        totalRecordMember,
         totalBooks,
         resetSearchBooks,
         fetchTotalBooks,
@@ -105,7 +105,7 @@ const Home = (props) => {
      * @returns {string|*}
      */
     const renderPagination = () => {
-        if (!totalRecords || totalRecords < 5) {
+        if (!totalRecordMember || totalRecordMember < 5) {
             return '';
         }
 
@@ -118,7 +118,7 @@ const Home = (props) => {
                             </Button>
                         </li>
                         <li className="page-item">
-                            <Button disabled={totalRecords <= page * 4 + 4} className="page-link"
+                            <Button disabled={totalRecordMember <= page * 4 + 4} className="page-link"
                                     onClick={(e) => onNext(e)}>Next
                             </Button>
                         </li>
@@ -577,7 +577,7 @@ Home.propTypes = {
     appSetting: PropTypes.object,
     books: PropTypes.array,
     searchBooks: PropTypes.array,
-    totalRecords: PropTypes.number,
+    totalRecordMember: PropTypes.number,
     totalBooks: PropTypes.number,
     fetchFeaturedBooks: PropTypes.func,
     toggleModal: PropTypes.func,
@@ -586,7 +586,7 @@ Home.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { appSetting, books, searchBooks, totalRecords, totalBooks, isLoading, homeSettings, testimonials, genres, aboutUsCard } = state;
+    const { appSetting, books, searchBooks, totalRecordMember, totalBooks, isLoading, homeSettings, testimonials, genres, aboutUsCard } = state;
     const settingsArray = Object.values(homeSettings);
     const settingsArr = _.mapKeys(settingsArray, 'key');
     return {
@@ -595,7 +595,7 @@ const mapStateToProps = (state) => {
         genres,
         aboutUsCard,
         searchBooks,
-        totalRecords,
+        totalRecordMember,
         totalBooks,
         isLoading,
         homeSettings: settingsArr,
