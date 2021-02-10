@@ -3,6 +3,9 @@ import {getFormattedMessage} from "../../../shared/sharedMethod";
 export default formValues => {
     const errors = {};
     const bookCodeExpression = /^\d{8}$/;
+    if (!formValues.book_code) {
+        errors.book_code = getFormattedMessage('books.items.input.book-code.required.validate.label');
+    }
     if (formValues.book_code && !bookCodeExpression.test(formValues.book_code)) {
         errors.book_code = getFormattedMessage('books.items.input.book-code.validate.label');
     }
