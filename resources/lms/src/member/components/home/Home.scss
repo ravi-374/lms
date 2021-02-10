@@ -432,9 +432,16 @@ about us style
     box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.01);
 }
 
-.about-us__box p {
-    overflow: hidden;
-    text-overflow: ellipsis;
+.about-us__box {
+    h4 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .about-us__box .fa {
