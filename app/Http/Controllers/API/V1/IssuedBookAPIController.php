@@ -47,7 +47,7 @@ class IssuedBookAPIController extends AppBaseController
         return $this->sendResponse(
             $records,
             'Books history retrieved successfully.',
-            ['totalRecords' => $this->issuedBookRepository->all($input)->count()]
+            ['totalRecords' => $this->issuedBookRepository->all($input)]
         );
     }
 
