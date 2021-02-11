@@ -46,7 +46,7 @@ export const fetchBookCirculation = (bookCirculationId) => async (dispatch) => {
 export const addBookCirculation = (book, filterObj = {}) => async (dispatch) => {
     await apiConfig.post(`${apiBaseURL.BOOK}/${book.book_item_id}/${getApiRouteForBookCirculation(book.status)}`, book)
         .then(() => {
-            dispatch(fetchBooksCirculation(filterObj));
+            dispatch(fetchBooksCirculation(filterObj,() => {}));
             dispatch(addToast({ text: getFormattedMessage(getBookCirculationSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
@@ -58,7 +58,7 @@ export const addBookCirculation = (book, filterObj = {}) => async (dispatch) => 
 export const editBookCirculation = (book, filterObj = {}) => async (dispatch) => {
     await apiConfig.post(`${apiBaseURL.BOOK}/${book.book_item_id}/${getApiRouteForBookCirculation(book.status)}`, book)
         .then(() => {
-            dispatch(fetchBooksCirculation(filterObj));
+            dispatch(fetchBooksCirculation(filterObj,() => {}));
             dispatch(addToast({ text: getFormattedMessage(getBookCirculationSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
@@ -70,7 +70,7 @@ export const editBookCirculation = (book, filterObj = {}) => async (dispatch) =>
 export const editBookCirculationStatus = (book, filterObj = {}) => async (dispatch) => {
     await apiConfig.put(`${apiBaseURL.BOOK}/${book.book_item_id}/update-issued-book-status`, { status: book.status })
         .then(() => {
-            dispatch(fetchBooksCirculation(filterObj));
+            dispatch(fetchBooksCirculation(filterObj,() => {}));
             dispatch(addToast({ text: getFormattedMessage(getBookCirculationSuccessMessage(book.status)) }));
             dispatch(toggleModal());
         })
@@ -82,7 +82,7 @@ export const editBookCirculationStatus = (book, filterObj = {}) => async (dispat
 export const deleteBookCirculation = (bookId, filterObj = {}) => async (dispatch) => {
     await apiConfig.delete(apiBaseURL.BOOK_HISTORY + '/' + bookId)
         .then((response) => {
-            dispatch(fetchBooksCirculation(filterObj));
+            dispatch(fetchBooksCirculation(filterObj,() => {}));
             dispatch({ type: bookCirculationActionType.DELETE_BOOK_CIRCULATION, payload: bookId });
             dispatch(addToast({ text: response.data.message }));
             dispatch(toggleModal());

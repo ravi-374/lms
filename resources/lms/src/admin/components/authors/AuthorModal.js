@@ -16,7 +16,7 @@ export const AuthorModal = (props) => {
         NewComponent: CreateAuthor,
         EditComponent: EditAuthor,
         DeleteComponent: DeleteAuthor,
-        deleteKey: author ? author.first_name + ' ' + author.last_name : null,
+        deleteKey: author ? author.last_name ? author.first_name + ' ' + author.last_name : author.first_name : null,
         editConfig,
         delConfig,
         props
