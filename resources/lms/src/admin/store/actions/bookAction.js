@@ -94,6 +94,7 @@ export const exportBook = (cb, isLoading = true) => async (dispatch) => {
     await apiConfig.get(url)
         .then((response) => {
             dispatch({ type: bookActionType.EXPORT_BOOK, payload: response.data.data });
+            dispatch(addToast({ text: response.data.message }));
             isLoading ? dispatch(setLoading(false)) : null;
             cb({ url: response.data.data })
         })
