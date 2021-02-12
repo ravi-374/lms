@@ -114,9 +114,9 @@ const DateRangePicker = (props) => {
 
     return (
         <div>
-            <span id="Popover1" >
+            <div id="Popover1" >
                 <Field name="date_selector" component={CustomInput} isCustom groupText="calendar-check-o" readOnly/>
-            </span>
+            </div>
 
             <Popover trigger={!childPopoverOpen ? 'legacy' : ' '} placement="bottom" isOpen={popoverOpen}
                      target="Popover1" toggle={toggle}>
