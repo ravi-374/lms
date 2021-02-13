@@ -26,3 +26,7 @@ Route::group(['middleware' => ['eBook']], function () {
         'API\B1\BookItemAPIController@downloadEBook')
         ->name('admin.download-e-book');
 });
+
+Route::get('/upgrade-to-v3-5-0', function () {
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RemovePenaltiesSeeder']);
+});

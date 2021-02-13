@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3308
--- Generation Time: Sep 22, 2020 at 11:57 AM
--- Server version: 8.0.18
--- PHP Version: 7.3.12
+-- Host: localhost:8889
+-- Generation Time: Feb 13, 2021 at 11:29 AM
+-- Server version: 5.7.30
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lms`
+-- Database: `infy-lms`
 --
 
 -- --------------------------------------------------------
@@ -28,15 +26,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `about_us_cards`
 --
 
-DROP TABLE IF EXISTS `about_us_cards`;
-CREATE TABLE IF NOT EXISTS `about_us_cards` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `about_us_cards` (
+  `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -45,9 +41,8 @@ CREATE TABLE IF NOT EXISTS `about_us_cards` (
 -- Table structure for table `addresses`
 --
 
-DROP TABLE IF EXISTS `addresses`;
-CREATE TABLE IF NOT EXISTS `addresses` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `addresses` (
+  `id` int(10) UNSIGNED NOT NULL,
   `owner_id` int(11) NOT NULL,
   `owner_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address_1` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -57,9 +52,7 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   `zip` int(11) NOT NULL,
   `country_id` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `addresses_country_id_foreign` (`country_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -68,32 +61,30 @@ CREATE TABLE IF NOT EXISTS `addresses` (
 -- Table structure for table `authors`
 --
 
-DROP TABLE IF EXISTS `authors`;
-CREATE TABLE IF NOT EXISTS `authors` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `authors` (
+  `id` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `authors`
 --
 
 INSERT INTO `authors` (`id`, `first_name`, `last_name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Ernest', 'Hemingway', 'Ernest Miller Hemingway was an American journalist, novelist, short-story writer, and sportsman.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(2, 'Stephen', 'King', 'Stephen Edwin King is an American author of horror, supernatural fiction, suspense, science fiction, and fantasy novels.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(3, 'J. K.', 'Rowling', 'Joanne Rowling CH, OBE, FRSL, FRCPE, FRSE, better known by her pen names J. K. Rowling and Robert Galbraith, is a British novelist, screenwriter, producer, and philanthropist.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(4, 'Jeff', 'Goins', 'Jeff Goins is an American author, blogger, and speaker. He is the founder of Tribe Writers, an online community for writers.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(5, 'Arundhati', 'Roy', 'Suzanna Arundhati Roy is an Indian author best known for her novel The God of Small Things, which won the Man Booker Prize for Fiction in 1997 and became the biggest-selling book by a non-expatriate Indian author.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(6, 'Chetan', 'Bhagat', 'Chetan Bhagat is a screenwriter, television personality and motivational speaker, known for his Indian-English novels about young urban middle class Indians.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(7, 'Durjoy', 'Datta', 'Durjoy Datta is an Indian screenwriter and entrepreneur known for his novels about the romantic life of young Indians.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(8, 'Hua', 'Yu', 'Yu Hua is a Chinese author, born April 3, 1960 in Hangzhou, Zhejiang province. Shortly after his debut as a fiction writer in 1983, Yu Hua was regarded as a promising avant-garde or post-New Wave writer.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(9, 'Yukio', 'Mishima', 'Yukio Mishima is the pen name of Kimitake Hiraoka, a Japanese author, poet, playwright, actor, model, film director, nationalist, and founder of the Tatenokai.', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(10, 'Danielle', 'Steel', 'Danielle Fernandes Dominique Schuelein-Steel is an American writer, best known for her romance novels.', '2020-09-22 06:26:32', '2020-09-22 06:26:32');
+(1, 'Ernest', 'Hemingway', 'Ernest Miller Hemingway was an American journalist, novelist, short-story writer, and sportsman.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'Stephen', 'King', 'Stephen Edwin King is an American author of horror, supernatural fiction, suspense, science fiction, and fantasy novels.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(3, 'J. K.', 'Rowling', 'Joanne Rowling CH, OBE, FRSL, FRCPE, FRSE, better known by her pen names J. K. Rowling and Robert Galbraith, is a British novelist, screenwriter, producer, and philanthropist.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(4, 'Jeff', 'Goins', 'Jeff Goins is an American author, blogger, and speaker. He is the founder of Tribe Writers, an online community for writers.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(5, 'Arundhati', 'Roy', 'Suzanna Arundhati Roy is an Indian author best known for her novel The God of Small Things, which won the Man Booker Prize for Fiction in 1997 and became the biggest-selling book by a non-expatriate Indian author.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(6, 'Chetan', 'Bhagat', 'Chetan Bhagat is a screenwriter, television personality and motivational speaker, known for his Indian-English novels about young urban middle class Indians.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(7, 'Durjoy', 'Datta', 'Durjoy Datta is an Indian screenwriter and entrepreneur known for his novels about the romantic life of young Indians.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(8, 'Hua', 'Yu', 'Yu Hua is a Chinese author, born April 3, 1960 in Hangzhou, Zhejiang province. Shortly after his debut as a fiction writer in 1983, Yu Hua was regarded as a promising avant-garde or post-New Wave writer.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(9, 'Yukio', 'Mishima', 'Yukio Mishima is the pen name of Kimitake Hiraoka, a Japanese author, poet, playwright, actor, model, film director, nationalist, and founder of the Tatenokai.', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(10, 'Danielle', 'Steel', 'Danielle Fernandes Dominique Schuelein-Steel is an American writer, best known for her romance novels.', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -101,9 +92,8 @@ INSERT INTO `authors` (`id`, `first_name`, `last_name`, `description`, `created_
 -- Table structure for table `books`
 --
 
-DROP TABLE IF EXISTS `books`;
-CREATE TABLE IF NOT EXISTS `books` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `books` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -112,8 +102,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_featured` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -122,16 +111,12 @@ CREATE TABLE IF NOT EXISTS `books` (
 -- Table structure for table `book_authors`
 --
 
-DROP TABLE IF EXISTS `book_authors`;
-CREATE TABLE IF NOT EXISTS `book_authors` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book_authors` (
+  `id` int(10) UNSIGNED NOT NULL,
   `book_id` int(10) UNSIGNED NOT NULL,
   `author_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `book_authors_book_id_foreign` (`book_id`),
-  KEY `book_authors_author_id_foreign` (`author_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -140,14 +125,10 @@ CREATE TABLE IF NOT EXISTS `book_authors` (
 -- Table structure for table `book_genres`
 --
 
-DROP TABLE IF EXISTS `book_genres`;
-CREATE TABLE IF NOT EXISTS `book_genres` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book_genres` (
+  `id` int(10) UNSIGNED NOT NULL,
   `book_id` int(10) UNSIGNED NOT NULL,
-  `genre_id` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `book_genres_book_id_foreign` (`book_id`),
-  KEY `book_genres_genre_id_foreign` (`genre_id`)
+  `genre_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -156,9 +137,8 @@ CREATE TABLE IF NOT EXISTS `book_genres` (
 -- Table structure for table `book_items`
 --
 
-DROP TABLE IF EXISTS `book_items`;
-CREATE TABLE IF NOT EXISTS `book_items` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book_items` (
+  `id` int(10) UNSIGNED NOT NULL,
   `book_id` int(10) UNSIGNED NOT NULL,
   `book_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `edition` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -170,11 +150,7 @@ CREATE TABLE IF NOT EXISTS `book_items` (
   `language_id` int(10) UNSIGNED NOT NULL,
   `file_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `book_items_book_code_unique` (`book_code`),
-  KEY `book_items_publisher_id_foreign` (`publisher_id`),
-  KEY `book_items_language_id_foreign` (`language_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -183,40 +159,37 @@ CREATE TABLE IF NOT EXISTS `book_items` (
 -- Table structure for table `book_languages`
 --
 
-DROP TABLE IF EXISTS `book_languages`;
-CREATE TABLE IF NOT EXISTS `book_languages` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book_languages` (
+  `id` int(10) UNSIGNED NOT NULL,
   `language_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `language_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `book_languages_language_name_unique` (`language_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `book_languages`
 --
 
 INSERT INTO `book_languages` (`id`, `language_name`, `language_code`, `created_at`, `updated_at`) VALUES
-(1, 'English', 'EN', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(2, 'Gujarati', 'GJ', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(3, 'Marathi', 'MR', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(4, 'Urdu', 'UR', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(5, 'Spanish', 'ES', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(6, 'Portuguese', 'PT', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(7, 'French', 'FR', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(8, 'German', 'DE', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(9, 'Chinese', 'ZH', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(10, 'Italian', 'IT', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(11, 'Norwegian', 'NO', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(12, 'Russian', 'RU', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(13, 'Dutch', 'NL', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(14, 'Swedish', 'SV', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(15, 'Arabic', 'AR', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(16, 'Greek', 'EL', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(17, 'Japanese', 'JA', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(18, 'Korean', 'KO', '2020-09-22 06:26:31', '2020-09-22 06:26:31');
+(1, 'English', 'EN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'Gujarati', 'GJ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(3, 'Marathi', 'MR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(4, 'Urdu', 'UR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(5, 'Spanish', 'ES', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(6, 'Portuguese', 'PT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(7, 'French', 'FR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(8, 'German', 'DE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(9, 'Chinese', 'ZH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(10, 'Italian', 'IT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(11, 'Norwegian', 'NO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(12, 'Russian', 'RU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(13, 'Dutch', 'NL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(14, 'Swedish', 'SV', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(15, 'Arabic', 'AR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(16, 'Greek', 'EL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(17, 'Japanese', 'JA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(18, 'Korean', 'KO', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -224,9 +197,8 @@ INSERT INTO `book_languages` (`id`, `language_name`, `language_code`, `created_a
 -- Table structure for table `book_requests`
 --
 
-DROP TABLE IF EXISTS `book_requests`;
-CREATE TABLE IF NOT EXISTS `book_requests` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book_requests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `member_id` int(10) UNSIGNED NOT NULL,
   `book_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `isbn` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -234,8 +206,7 @@ CREATE TABLE IF NOT EXISTS `book_requests` (
   `format` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -244,14 +215,11 @@ CREATE TABLE IF NOT EXISTS `book_requests` (
 -- Table structure for table `book_series`
 --
 
-DROP TABLE IF EXISTS `book_series`;
-CREATE TABLE IF NOT EXISTS `book_series` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book_series` (
+  `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `book_series_title_unique` (`title`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -260,14 +228,10 @@ CREATE TABLE IF NOT EXISTS `book_series` (
 -- Table structure for table `book_tags`
 --
 
-DROP TABLE IF EXISTS `book_tags`;
-CREATE TABLE IF NOT EXISTS `book_tags` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `book_tags` (
+  `id` int(10) UNSIGNED NOT NULL,
   `book_id` int(10) UNSIGNED NOT NULL,
-  `tag_id` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `book_tags_book_id_foreign` (`book_id`),
-  KEY `book_tags_tag_id_foreign` (`tag_id`)
+  `tag_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -276,269 +240,265 @@ CREATE TABLE IF NOT EXISTS `book_tags` (
 -- Table structure for table `countries`
 --
 
-DROP TABLE IF EXISTS `countries`;
-CREATE TABLE IF NOT EXISTS `countries` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `countries` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `countries_name_unique` (`name`),
-  UNIQUE KEY `countries_code_unique` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `countries`
 --
 
 INSERT INTO `countries` (`id`, `name`, `code`, `created_at`, `updated_at`) VALUES
-(1, 'Afghanistan', 'AF', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(2, 'Albania', 'AL', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(3, 'Algeria', 'DZ', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(4, 'American Samoa', 'AS', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(5, 'Andorra', 'AD', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(6, 'Angola', 'AO', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(7, 'Anguilla', 'AI', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(8, 'Antarctica', 'AQ', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(9, 'Antigua and Barbuda', 'AG', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(10, 'Argentina', 'AR', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(11, 'Armenia', 'AM', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(12, 'Aruba', 'AW', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(13, 'Australia', 'AU', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(14, 'Austria', 'AT', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(15, 'Azerbaijan', 'AZ', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(16, 'Bahamas', 'BS', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(17, 'Bahrain', 'BH', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(18, 'Bangladesh', 'BD', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(19, 'Barbados', 'BB', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(20, 'Belarus', 'BY', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(21, 'Belgium', 'BE', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(22, 'Belize', 'BZ', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(23, 'Benin', 'BJ', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(24, 'Bermuda', 'BM', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(25, 'Bhutan', 'BT', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(26, 'Bolivia (Plurinational State of)', 'BO', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(27, 'Bonaire, Sint Eustatius and Saba', 'BQ', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(28, 'Bosnia and Herzegovina', 'BA', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(29, 'Botswana', 'BW', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(30, 'Bouvet Island', 'BV', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(31, 'Brazil', 'BR', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(32, 'British Indian Ocean Territory', 'IO', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(33, 'United States Minor Outlying Islands', 'UM', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(34, 'Virgin Islands (British)', 'VG', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(35, 'Virgin Islands (U.S.)', 'VI', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(36, 'Brunei Darussalam', 'BN', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(37, 'Bulgaria', 'BG', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(38, 'Burkina Faso', 'BF', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(39, 'Burundi', 'BI', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(40, 'Cambodia', 'KH', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(41, 'Cameroon', 'CM', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(42, 'Canada', 'CA', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(43, 'Cabo Verde', 'CV', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(44, 'Cayman Islands', 'KY', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(45, 'Central African Republic', 'CF', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(46, 'Chad', 'TD', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(47, 'Chile', 'CL', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(48, 'China', 'CN', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(49, 'Christmas Island', 'CX', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(50, 'Cocos (Keeling) Islands', 'CC', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(51, 'Colombia', 'CO', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(52, 'Comoros', 'KM', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(53, 'Congo', 'CG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(54, 'Congo (Democratic Republic of the)', 'CD', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(55, 'Cook Islands', 'CK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(56, 'Costa Rica', 'CR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(57, 'Croatia', 'HR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(58, 'Cuba', 'CU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(59, 'Curaçao', 'CW', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(60, 'Cyprus', 'CY', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(61, 'Czech Republic', 'CZ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(62, 'Denmark', 'DK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(63, 'Djibouti', 'DJ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(64, 'Dominica', 'DM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(65, 'Dominican Republic', 'DO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(66, 'Ecuador', 'EC', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(67, 'Egypt', 'EG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(68, 'El Salvador', 'SV', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(69, 'Equatorial Guinea', 'GQ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(70, 'Eritrea', 'ER', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(71, 'Estonia', 'EE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(72, 'Ethiopia', 'ET', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(73, 'Falkland Islands (Malvinas)', 'FK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(74, 'Faroe Islands', 'FO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(75, 'Fiji', 'FJ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(76, 'Finland', 'FI', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(77, 'France', 'FR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(78, 'French Guiana', 'GF', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(79, 'French Polynesia', 'PF', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(80, 'French Southern Territories', 'TF', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(81, 'Gabon', 'GA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(82, 'Gambia', 'GM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(83, 'Georgia', 'GE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(84, 'Germany', 'DE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(85, 'Ghana', 'GH', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(86, 'Gibraltar', 'GI', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(87, 'Greece', 'GR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(88, 'Greenland', 'GL', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(89, 'Grenada', 'GD', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(90, 'Guadeloupe', 'GP', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(91, 'Guam', 'GU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(92, 'Guatemala', 'GT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(93, 'Guernsey', 'GG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(94, 'Guinea', 'GN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(95, 'Guinea-Bissau', 'GW', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(96, 'Guyana', 'GY', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(97, 'Haiti', 'HT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(98, 'Heard Island and McDonald Islands', 'HM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(99, 'Holy See', 'VA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(100, 'Honduras', 'HN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(101, 'Hong Kong', 'HK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(102, 'Hungary', 'HU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(103, 'Iceland', 'IS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(104, 'India', 'IN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(105, 'Indonesia', 'ID', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(106, 'Iran (Islamic Republic of)', 'IR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(107, 'Iraq', 'IQ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(108, 'Ireland', 'IE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(109, 'Isle of Man', 'IM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(110, 'Israel', 'IL', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(111, 'Italy', 'IT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(112, 'Jamaica', 'JM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(113, 'Japan', 'JP', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(114, 'Jersey', 'JE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(115, 'Jordan', 'JO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(116, 'Kazakhstan', 'KZ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(117, 'Kenya', 'KE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(118, 'Kiribati', 'KI', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(119, 'Kuwait', 'KW', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(120, 'Kyrgyzstan', 'KG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(121, 'Lao People\'s Democratic Republic', 'LA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(122, 'Latvia', 'LV', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(123, 'Lebanon', 'LB', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(124, 'Lesotho', 'LS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(125, 'Liberia', 'LR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(126, 'Libya', 'LY', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(127, 'Liechtenstein', 'LI', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(128, 'Lithuania', 'LT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(129, 'Luxembourg', 'LU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(130, 'Macao', 'MO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(131, 'Macedonia (the former Yugoslav Republic of)', 'MK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(132, 'Madagascar', 'MG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(133, 'Malawi', 'MW', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(134, 'Malaysia', 'MY', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(135, 'Maldives', 'MV', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(136, 'Mali', 'ML', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(137, 'Malta', 'MT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(138, 'Marshall Islands', 'MH', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(139, 'Martinique', 'MQ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(140, 'Mauritania', 'MR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(141, 'Mauritius', 'MU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(142, 'Mayotte', 'YT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(143, 'Mexico', 'MX', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(144, 'Micronesia (Federated States of)', 'FM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(145, 'Moldova (Republic of)', 'MD', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(146, 'Monaco', 'MC', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(147, 'Mongolia', 'MN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(148, 'Montenegro', 'ME', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(149, 'Montserrat', 'MS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(150, 'Morocco', 'MA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(151, 'Mozambique', 'MZ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(152, 'Myanmar', 'MM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(153, 'Namibia', 'NA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(154, 'Nauru', 'NR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(155, 'Nepal', 'NP', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(156, 'Netherlands', 'NL', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(157, 'New Caledonia', 'NC', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(158, 'New Zealand', 'NZ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(159, 'Nicaragua', 'NI', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(160, 'Niger', 'NE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(161, 'Nigeria', 'NG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(162, 'Niue', 'NU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(163, 'Norfolk Island', 'NF', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(164, 'Korea (Democratic People\'s Republic of)', 'KP', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(165, 'Northern Mariana Islands', 'MP', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(166, 'Norway', 'NO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(167, 'Oman', 'OM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(168, 'Pakistan', 'PK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(169, 'Palau', 'PW', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(170, 'Palestine, State of', 'PS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(171, 'Panama', 'PA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(172, 'Papua New Guinea', 'PG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(173, 'Paraguay', 'PY', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(174, 'Peru', 'PE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(175, 'Philippines', 'PH', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(176, 'Pitcairn', 'PN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(177, 'Poland', 'PL', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(178, 'Portugal', 'PT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(179, 'Puerto Rico', 'PR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(180, 'Qatar', 'QA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(181, 'Republic of Kosovo', 'XK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(182, 'Romania', 'RO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(183, 'Russian Federation', 'RU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(184, 'Rwanda', 'RW', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(185, 'Saint Helena, Ascension and Tristan da Cunha', 'SH', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(186, 'Saint Kitts and Nevis', 'KN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(187, 'Saint Lucia', 'LC', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(188, 'Saint Martin (French part)', 'MF', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(189, 'Saint Pierre and Miquelon', 'PM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(190, 'Saint Vincent and the Grenadines', 'VC', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(191, 'Samoa', 'WS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(192, 'San Marino', 'SM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(193, 'Sao Tome and Principe', 'ST', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(194, 'Saudi Arabia', 'SA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(195, 'Senegal', 'SN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(196, 'Serbia', 'RS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(197, 'Seychelles', 'SC', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(198, 'Sierra Leone', 'SL', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(199, 'Singapore', 'SG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(200, 'Sint Maarten (Dutch part)', 'SX', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(201, 'Slovakia', 'SK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(202, 'Slovenia', 'SI', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(203, 'Solomon Islands', 'SB', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(204, 'Somalia', 'SO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(205, 'South Africa', 'ZA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(206, 'South Georgia and the South Sandwich Islands', 'GS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(207, 'Korea (Republic of)', 'KR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(208, 'South Sudan', 'SS', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(209, 'Spain', 'ES', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(210, 'Sri Lanka', 'LK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(211, 'Sudan', 'SD', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(212, 'Suriname', 'SR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(213, 'Svalbard and Jan Mayen', 'SJ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(214, 'Swaziland', 'SZ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(215, 'Sweden', 'SE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(216, 'Switzerland', 'CH', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(217, 'Syrian Arab Republic', 'SY', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(218, 'Taiwan', 'TW', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(219, 'Tajikistan', 'TJ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(220, 'Tanzania, United Republic of', 'TZ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(221, 'Thailand', 'TH', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(222, 'Timor-Leste', 'TL', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(223, 'Togo', 'TG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(224, 'Tokelau', 'TK', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(225, 'Tonga', 'TO', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(226, 'Trinidad and Tobago', 'TT', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(227, 'Tunisia', 'TN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(228, 'Turkey', 'TR', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(229, 'Turkmenistan', 'TM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(230, 'Turks and Caicos Islands', 'TC', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(231, 'Tuvalu', 'TV', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(232, 'Uganda', 'UG', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(233, 'Ukraine', 'UA', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(234, 'United Arab Emirates', 'AE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(235, 'United Kingdom of Great Britain and Northern Ireland', 'GB', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(236, 'United States of America', 'US', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(237, 'Uruguay', 'UY', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(238, 'Uzbekistan', 'UZ', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(239, 'Vanuatu', 'VU', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(240, 'Venezuela (Bolivarian Republic of)', 'VE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(241, 'Viet Nam', 'VN', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(242, 'Wallis and Futuna', 'WF', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(243, 'Western Sahara', 'EH', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(244, 'Yemen', 'YE', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(245, 'Zambia', 'ZM', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(246, 'Zimbabwe', 'ZW', '2020-09-22 06:26:32', '2020-09-22 06:26:32');
+(1, 'Afghanistan', 'AF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'Albania', 'AL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(3, 'Algeria', 'DZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(4, 'American Samoa', 'AS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(5, 'Andorra', 'AD', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(6, 'Angola', 'AO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(7, 'Anguilla', 'AI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(8, 'Antarctica', 'AQ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(9, 'Antigua and Barbuda', 'AG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(10, 'Argentina', 'AR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(11, 'Armenia', 'AM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(12, 'Aruba', 'AW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(13, 'Australia', 'AU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(14, 'Austria', 'AT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(15, 'Azerbaijan', 'AZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(16, 'Bahamas', 'BS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(17, 'Bahrain', 'BH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(18, 'Bangladesh', 'BD', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(19, 'Barbados', 'BB', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(20, 'Belarus', 'BY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(21, 'Belgium', 'BE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(22, 'Belize', 'BZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(23, 'Benin', 'BJ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(24, 'Bermuda', 'BM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(25, 'Bhutan', 'BT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(26, 'Bolivia (Plurinational State of)', 'BO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(27, 'Bonaire, Sint Eustatius and Saba', 'BQ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(28, 'Bosnia and Herzegovina', 'BA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(29, 'Botswana', 'BW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(30, 'Bouvet Island', 'BV', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(31, 'Brazil', 'BR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(32, 'British Indian Ocean Territory', 'IO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(33, 'United States Minor Outlying Islands', 'UM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(34, 'Virgin Islands (British)', 'VG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(35, 'Virgin Islands (U.S.)', 'VI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(36, 'Brunei Darussalam', 'BN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(37, 'Bulgaria', 'BG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(38, 'Burkina Faso', 'BF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(39, 'Burundi', 'BI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(40, 'Cambodia', 'KH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(41, 'Cameroon', 'CM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(42, 'Canada', 'CA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(43, 'Cabo Verde', 'CV', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(44, 'Cayman Islands', 'KY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(45, 'Central African Republic', 'CF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(46, 'Chad', 'TD', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(47, 'Chile', 'CL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(48, 'China', 'CN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(49, 'Christmas Island', 'CX', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(50, 'Cocos (Keeling) Islands', 'CC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(51, 'Colombia', 'CO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(52, 'Comoros', 'KM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(53, 'Congo', 'CG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(54, 'Congo (Democratic Republic of the)', 'CD', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(55, 'Cook Islands', 'CK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(56, 'Costa Rica', 'CR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(57, 'Croatia', 'HR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(58, 'Cuba', 'CU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(59, 'Curaçao', 'CW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(60, 'Cyprus', 'CY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(61, 'Czech Republic', 'CZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(62, 'Denmark', 'DK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(63, 'Djibouti', 'DJ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(64, 'Dominica', 'DM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(65, 'Dominican Republic', 'DO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(66, 'Ecuador', 'EC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(67, 'Egypt', 'EG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(68, 'El Salvador', 'SV', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(69, 'Equatorial Guinea', 'GQ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(70, 'Eritrea', 'ER', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(71, 'Estonia', 'EE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(72, 'Ethiopia', 'ET', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(73, 'Falkland Islands (Malvinas)', 'FK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(74, 'Faroe Islands', 'FO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(75, 'Fiji', 'FJ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(76, 'Finland', 'FI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(77, 'France', 'FR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(78, 'French Guiana', 'GF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(79, 'French Polynesia', 'PF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(80, 'French Southern Territories', 'TF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(81, 'Gabon', 'GA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(82, 'Gambia', 'GM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(83, 'Georgia', 'GE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(84, 'Germany', 'DE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(85, 'Ghana', 'GH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(86, 'Gibraltar', 'GI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(87, 'Greece', 'GR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(88, 'Greenland', 'GL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(89, 'Grenada', 'GD', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(90, 'Guadeloupe', 'GP', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(91, 'Guam', 'GU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(92, 'Guatemala', 'GT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(93, 'Guernsey', 'GG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(94, 'Guinea', 'GN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(95, 'Guinea-Bissau', 'GW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(96, 'Guyana', 'GY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(97, 'Haiti', 'HT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(98, 'Heard Island and McDonald Islands', 'HM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(99, 'Holy See', 'VA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(100, 'Honduras', 'HN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(101, 'Hong Kong', 'HK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(102, 'Hungary', 'HU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(103, 'Iceland', 'IS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(104, 'India', 'IN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(105, 'Indonesia', 'ID', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(106, 'Iran (Islamic Republic of)', 'IR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(107, 'Iraq', 'IQ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(108, 'Ireland', 'IE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(109, 'Isle of Man', 'IM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(110, 'Israel', 'IL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(111, 'Italy', 'IT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(112, 'Jamaica', 'JM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(113, 'Japan', 'JP', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(114, 'Jersey', 'JE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(115, 'Jordan', 'JO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(116, 'Kazakhstan', 'KZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(117, 'Kenya', 'KE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(118, 'Kiribati', 'KI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(119, 'Kuwait', 'KW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(120, 'Kyrgyzstan', 'KG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(121, 'Lao People\'s Democratic Republic', 'LA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(122, 'Latvia', 'LV', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(123, 'Lebanon', 'LB', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(124, 'Lesotho', 'LS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(125, 'Liberia', 'LR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(126, 'Libya', 'LY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(127, 'Liechtenstein', 'LI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(128, 'Lithuania', 'LT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(129, 'Luxembourg', 'LU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(130, 'Macao', 'MO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(131, 'Macedonia (the former Yugoslav Republic of)', 'MK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(132, 'Madagascar', 'MG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(133, 'Malawi', 'MW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(134, 'Malaysia', 'MY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(135, 'Maldives', 'MV', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(136, 'Mali', 'ML', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(137, 'Malta', 'MT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(138, 'Marshall Islands', 'MH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(139, 'Martinique', 'MQ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(140, 'Mauritania', 'MR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(141, 'Mauritius', 'MU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(142, 'Mayotte', 'YT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(143, 'Mexico', 'MX', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(144, 'Micronesia (Federated States of)', 'FM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(145, 'Moldova (Republic of)', 'MD', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(146, 'Monaco', 'MC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(147, 'Mongolia', 'MN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(148, 'Montenegro', 'ME', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(149, 'Montserrat', 'MS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(150, 'Morocco', 'MA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(151, 'Mozambique', 'MZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(152, 'Myanmar', 'MM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(153, 'Namibia', 'NA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(154, 'Nauru', 'NR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(155, 'Nepal', 'NP', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(156, 'Netherlands', 'NL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(157, 'New Caledonia', 'NC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(158, 'New Zealand', 'NZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(159, 'Nicaragua', 'NI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(160, 'Niger', 'NE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(161, 'Nigeria', 'NG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(162, 'Niue', 'NU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(163, 'Norfolk Island', 'NF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(164, 'Korea (Democratic People\'s Republic of)', 'KP', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(165, 'Northern Mariana Islands', 'MP', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(166, 'Norway', 'NO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(167, 'Oman', 'OM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(168, 'Pakistan', 'PK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(169, 'Palau', 'PW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(170, 'Palestine, State of', 'PS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(171, 'Panama', 'PA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(172, 'Papua New Guinea', 'PG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(173, 'Paraguay', 'PY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(174, 'Peru', 'PE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(175, 'Philippines', 'PH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(176, 'Pitcairn', 'PN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(177, 'Poland', 'PL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(178, 'Portugal', 'PT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(179, 'Puerto Rico', 'PR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(180, 'Qatar', 'QA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(181, 'Republic of Kosovo', 'XK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(182, 'Romania', 'RO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(183, 'Russian Federation', 'RU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(184, 'Rwanda', 'RW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(185, 'Saint Helena, Ascension and Tristan da Cunha', 'SH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(186, 'Saint Kitts and Nevis', 'KN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(187, 'Saint Lucia', 'LC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(188, 'Saint Martin (French part)', 'MF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(189, 'Saint Pierre and Miquelon', 'PM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(190, 'Saint Vincent and the Grenadines', 'VC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(191, 'Samoa', 'WS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(192, 'San Marino', 'SM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(193, 'Sao Tome and Principe', 'ST', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(194, 'Saudi Arabia', 'SA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(195, 'Senegal', 'SN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(196, 'Serbia', 'RS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(197, 'Seychelles', 'SC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(198, 'Sierra Leone', 'SL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(199, 'Singapore', 'SG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(200, 'Sint Maarten (Dutch part)', 'SX', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(201, 'Slovakia', 'SK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(202, 'Slovenia', 'SI', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(203, 'Solomon Islands', 'SB', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(204, 'Somalia', 'SO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(205, 'South Africa', 'ZA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(206, 'South Georgia and the South Sandwich Islands', 'GS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(207, 'Korea (Republic of)', 'KR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(208, 'South Sudan', 'SS', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(209, 'Spain', 'ES', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(210, 'Sri Lanka', 'LK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(211, 'Sudan', 'SD', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(212, 'Suriname', 'SR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(213, 'Svalbard and Jan Mayen', 'SJ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(214, 'Swaziland', 'SZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(215, 'Sweden', 'SE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(216, 'Switzerland', 'CH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(217, 'Syrian Arab Republic', 'SY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(218, 'Taiwan', 'TW', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(219, 'Tajikistan', 'TJ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(220, 'Tanzania, United Republic of', 'TZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(221, 'Thailand', 'TH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(222, 'Timor-Leste', 'TL', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(223, 'Togo', 'TG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(224, 'Tokelau', 'TK', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(225, 'Tonga', 'TO', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(226, 'Trinidad and Tobago', 'TT', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(227, 'Tunisia', 'TN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(228, 'Turkey', 'TR', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(229, 'Turkmenistan', 'TM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(230, 'Turks and Caicos Islands', 'TC', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(231, 'Tuvalu', 'TV', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(232, 'Uganda', 'UG', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(233, 'Ukraine', 'UA', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(234, 'United Arab Emirates', 'AE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(235, 'United Kingdom of Great Britain and Northern Ireland', 'GB', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(236, 'United States of America', 'US', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(237, 'Uruguay', 'UY', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(238, 'Uzbekistan', 'UZ', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(239, 'Vanuatu', 'VU', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(240, 'Venezuela (Bolivarian Republic of)', 'VE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(241, 'Viet Nam', 'VN', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(242, 'Wallis and Futuna', 'WF', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(243, 'Western Sahara', 'EH', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(244, 'Yemen', 'YE', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(245, 'Zambia', 'ZM', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(246, 'Zimbabwe', 'ZW', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -546,51 +506,49 @@ INSERT INTO `countries` (`id`, `name`, `code`, `created_at`, `updated_at`) VALUE
 -- Table structure for table `genres`
 --
 
-DROP TABLE IF EXISTS `genres`;
-CREATE TABLE IF NOT EXISTS `genres` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `genres` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `show_on_landing_page` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `show_on_landing_page` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `genres`
 --
 
 INSERT INTO `genres` (`id`, `name`, `description`, `created_at`, `updated_at`, `show_on_landing_page`) VALUES
-(1, 'Art', 'Books that showcase particular types of art.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(2, 'Biography', 'A biography (from the Greek words bios meaning \"life\", and graphos meaning \"write\") is a non-fictional account of a person\'s life. Biographies are written by an author who is not the subject/focus of the book. ', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(3, 'Business', 'A business (also known as enterprise or firm) is an organization engaged in the trade of goods, services, or both to consumers.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(4, 'Comics', 'A comic book or comicbook, also called comic magazine or simply comic, is a publication that consists of comic art in the form of sequential juxtaposed panels that represent individual scenes.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(5, 'Contemporary', 'Contemporary fiction creates imaginary characters and situations that depict our world\r\nand society. It focuses on themes of growing up and confronting personal and social problems. ', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(6, 'Crime', 'Crime fiction is the literary genre that fictionalises crimes, their detection, criminals and their motives.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(7, 'Fantasy', 'Fantasy is a genre that uses magic and other supernatural forms as a primary element of plot, theme, and/or setting. Fantasy is generally distinguished from science fiction and horror by the expectation that it steers clear of technological and macabre themes, respectively, though there is a great deal of overlap between the three (collectively known as speculative fiction or science fiction/fantasy).', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(8, 'Fiction', 'Fiction is the telling of stories which are not real. More specifically, fiction is an imaginative form of narrative, one of the four basic rhetorical modes.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(9, 'Novels', '', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(10, 'History', 'History (from Greek ἱστορία - historia, meaning \"inquiry, knowledge acquired by investigation\") is the discovery, collection, organization, and presentation of information about past events. History can also mean the period of time after writing was invented.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(11, 'Horror', 'Horror fiction is fiction in any medium intended to scare, unsettle, or horrify the audience. Historically, the cause of the \"horror\" experience has often been the intrusion of a supernatural element into everyday human experience.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(12, 'Humor and Comedy', '', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(13, 'Music', 'Books about music history, music genres and musicians.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(14, 'Mystery', 'The mystery genre is a type of fiction in which a detective, or other professional, solves a crime or series of crimes. It can take the form of a novel or short story.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(15, 'Nonfiction', 'Nonfiction is an account or representation of a subject which is presented as fact. This presentation may be accurate or not; that is, it can give either a true or a false account of the subject in question. ', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(16, 'Philosophy', 'Philosophy is the study of general problems concerning matters such as existence, knowledge, truth, beauty, justice, validity, mind, and language. ', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(17, 'Poetry', 'Poetry is a form of literary art in which language is used for its aesthetic and evocative qualities in addition to, or in lieu of, its apparent meaning.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(18, 'Psychology', 'Books that involve psychology; the study of mental processes and human behavior.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(19, 'Religion', 'Religion is a cultural system that establishes symbols that relate humanity to spirituality and moral values. Many religions have narratives, symbols, traditions and sacred histories that are intended to give meaning to life or to explain the origin of life or the universe.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(20, 'Romance', 'According to the Romance Writers of America, \"Two basic elements comprise every romance novel: a central love story and an emotionally-satisfying and optimistic ending.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(21, 'Science', 'Science (from the Latin scientia, meaning “knowledge”) is the effort to discover, and increase human understanding of how the physical world works.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(22, 'Self Help', 'Self-help, or self-improvement, is a self-guided improvement[1]—economically, intellectually, or emotionally—often with a substantial psychological basis.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(23, 'Suspense', 'Suspense is the element of both fiction and some nonfiction that makes the reader uncertain about the outcome.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(24, 'Spirituality', 'Spirituality may refer to almost any kind of meaningful activity, personal growth, or blissful experience.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(25, 'Sports', 'Sports : engagement in physical activity intended to create a benefit to the participant. Ranging from Amateur to Professional, from incompetent to proficient, for all levels of ability, all nations, all creeds, all genders. As James Joyce said \"I am, a stride at a time\"', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(26, 'Thriller', 'Thrillers are characterized by fast pacing, frequent action, and resourceful heroes who must thwart the plans of more-powerful and better-equipped villains.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(27, 'Travel', 'Travel is the movement of people or objects (such as airplanes, boats, trains and other conveyances) between relatively distant geographical locations.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(28, 'Economics', 'Economics is a social science concerned with the factors that determine the production, distribution, and consumption of goods and services.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0),
-(29, 'Politics', 'Politics (from Greek πολιτικός, \"of, for, or relating to citizens\"), is a process by which groups of people make collective decisions.', '2020-09-22 06:26:31', '2020-09-22 06:26:31', 0);
+(1, 'Art', 'Books that showcase particular types of art.', '2021-02-13 05:59:13', '2021-02-13 05:59:13', 0),
+(2, 'Biography', 'A biography (from the Greek words bios meaning \"life\", and graphos meaning \"write\") is a non-fictional account of a person\'s life. Biographies are written by an author who is not the subject/focus of the book. ', '2021-02-13 05:59:13', '2021-02-13 05:59:13', 0),
+(3, 'Business', 'A business (also known as enterprise or firm) is an organization engaged in the trade of goods, services, or both to consumers.', '2021-02-13 05:59:13', '2021-02-13 05:59:13', 0),
+(4, 'Comics', 'A comic book or comicbook, also called comic magazine or simply comic, is a publication that consists of comic art in the form of sequential juxtaposed panels that represent individual scenes.', '2021-02-13 05:59:13', '2021-02-13 05:59:13', 0),
+(5, 'Contemporary', 'Contemporary fiction creates imaginary characters and situations that depict our world\nand society. It focuses on themes of growing up and confronting personal and social problems. ', '2021-02-13 05:59:13', '2021-02-13 05:59:13', 0),
+(6, 'Crime', 'Crime fiction is the literary genre that fictionalises crimes, their detection, criminals and their motives.', '2021-02-13 05:59:13', '2021-02-13 05:59:13', 0),
+(7, 'Fantasy', 'Fantasy is a genre that uses magic and other supernatural forms as a primary element of plot, theme, and/or setting. Fantasy is generally distinguished from science fiction and horror by the expectation that it steers clear of technological and macabre themes, respectively, though there is a great deal of overlap between the three (collectively known as speculative fiction or science fiction/fantasy).', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(8, 'Fiction', 'Fiction is the telling of stories which are not real. More specifically, fiction is an imaginative form of narrative, one of the four basic rhetorical modes.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(9, 'Novels', '', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(10, 'History', 'History (from Greek ἱστορία - historia, meaning \"inquiry, knowledge acquired by investigation\") is the discovery, collection, organization, and presentation of information about past events. History can also mean the period of time after writing was invented.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(11, 'Horror', 'Horror fiction is fiction in any medium intended to scare, unsettle, or horrify the audience. Historically, the cause of the \"horror\" experience has often been the intrusion of a supernatural element into everyday human experience.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(12, 'Humor and Comedy', '', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(13, 'Music', 'Books about music history, music genres and musicians.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(14, 'Mystery', 'The mystery genre is a type of fiction in which a detective, or other professional, solves a crime or series of crimes. It can take the form of a novel or short story.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(15, 'Nonfiction', 'Nonfiction is an account or representation of a subject which is presented as fact. This presentation may be accurate or not; that is, it can give either a true or a false account of the subject in question. ', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(16, 'Philosophy', 'Philosophy is the study of general problems concerning matters such as existence, knowledge, truth, beauty, justice, validity, mind, and language. ', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(17, 'Poetry', 'Poetry is a form of literary art in which language is used for its aesthetic and evocative qualities in addition to, or in lieu of, its apparent meaning.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(18, 'Psychology', 'Books that involve psychology; the study of mental processes and human behavior.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(19, 'Religion', 'Religion is a cultural system that establishes symbols that relate humanity to spirituality and moral values. Many religions have narratives, symbols, traditions and sacred histories that are intended to give meaning to life or to explain the origin of life or the universe.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(20, 'Romance', 'According to the Romance Writers of America, \"Two basic elements comprise every romance novel: a central love story and an emotionally-satisfying and optimistic ending.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(21, 'Science', 'Science (from the Latin scientia, meaning “knowledge”) is the effort to discover, and increase human understanding of how the physical world works.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(22, 'Self Help', 'Self-help, or self-improvement, is a self-guided improvement[1]—economically, intellectually, or emotionally—often with a substantial psychological basis.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(23, 'Suspense', 'Suspense is the element of both fiction and some nonfiction that makes the reader uncertain about the outcome.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(24, 'Spirituality', 'Spirituality may refer to almost any kind of meaningful activity, personal growth, or blissful experience.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(25, 'Sports', 'Sports : engagement in physical activity intended to create a benefit to the participant. Ranging from Amateur to Professional, from incompetent to proficient, for all levels of ability, all nations, all creeds, all genders. As James Joyce said \"I am, a stride at a time\"', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(26, 'Thriller', 'Thrillers are characterized by fast pacing, frequent action, and resourceful heroes who must thwart the plans of more-powerful and better-equipped villains.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(27, 'Travel', 'Travel is the movement of people or objects (such as airplanes, boats, trains and other conveyances) between relatively distant geographical locations.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(28, 'Economics', 'Economics is a social science concerned with the factors that determine the production, distribution, and consumption of goods and services.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0),
+(29, 'Politics', 'Politics (from Greek πολιτικός, \"of, for, or relating to citizens\"), is a process by which groups of people make collective decisions.', '2021-02-13 05:59:14', '2021-02-13 05:59:14', 0);
 
 -- --------------------------------------------------------
 
@@ -598,35 +556,33 @@ INSERT INTO `genres` (`id`, `name`, `description`, `created_at`, `updated_at`, `
 -- Table structure for table `homepage_settings`
 --
 
-DROP TABLE IF EXISTS `homepage_settings`;
-CREATE TABLE IF NOT EXISTS `homepage_settings` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `homepage_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `homepage_settings`
 --
 
 INSERT INTO `homepage_settings` (`id`, `key`, `value`, `display_name`, `created_at`, `updated_at`) VALUES
-(1, 'facebook', 'https://www.facebook.com/infyom', 'Facebook link', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(2, 'github', 'https://github.com/InfyOmLabs', 'Github link', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(3, 'linkedin', 'https://in.linkedin.com/company/infyom-technologies', 'Linkedin link', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(4, 'twitter', 'infyom', 'Twitter link', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(5, 'contact_email', 'contact@infyom.in', 'Contact Email', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(6, 'contact_phone', '7096336561', 'Contact Phone', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(7, 'website', 'http://www.infyom.com', 'Website', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(8, 'company_description', 'Leading Laravel Development Company Of India.', 'Company Description', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(9, 'hero_image_title', 'Hero image title 1', 'Hero Image Title', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(10, 'hero_image_description', 'This is Hero image Description.', 'Hero Image Description', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(11, 'about_us_text', 'An About Us page helps your company make a good first impression, and is critical for building customer trust and loyalty.', 'About us Text', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(12, 'genres_text', 'Art', 'Genres Text', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(13, 'popular_books_text', 'Innovation ', 'Popular Books Text', '2020-09-22 06:26:33', '2020-09-22 06:26:33');
+(1, 'facebook', 'https://www.facebook.com/infyom', 'Facebook link', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'github', 'https://github.com/InfyOmLabs', 'Github link', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(3, 'linkedin', 'https://in.linkedin.com/company/infyom-technologies', 'Linkedin link', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(4, 'twitter', 'infyom', 'Twitter link', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(5, 'contact_email', 'contact@infyom.in', 'Contact Email', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(6, 'contact_phone', '7096336561', 'Contact Phone', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(7, 'website', 'http://www.infyom.com', 'Website', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(8, 'company_description', 'Leading Laravel Development Company Of India.', 'Company Description', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(9, 'hero_image_title', 'Hero image title 1', 'Hero Image Title', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(10, 'hero_image_description', 'This is Hero image Description.', 'Hero Image Description', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(11, 'about_us_text', 'An About Us page helps your company make a good first impression, and is critical for building customer trust and loyalty.', 'About us Text', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(12, 'genres_text', 'Art', 'Genres Text', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(13, 'popular_books_text', 'Innovation ', 'Popular Books Text', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -634,9 +590,8 @@ INSERT INTO `homepage_settings` (`id`, `key`, `value`, `display_name`, `created_
 -- Table structure for table `issued_books`
 --
 
-DROP TABLE IF EXISTS `issued_books`;
-CREATE TABLE IF NOT EXISTS `issued_books` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `issued_books` (
+  `id` int(10) UNSIGNED NOT NULL,
   `book_item_id` int(10) UNSIGNED NOT NULL,
   `member_id` int(10) UNSIGNED NOT NULL,
   `reserve_date` datetime DEFAULT NULL,
@@ -649,12 +604,7 @@ CREATE TABLE IF NOT EXISTS `issued_books` (
   `returner_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `issued_books_book_item_id_foreign` (`book_item_id`),
-  KEY `issued_books_member_id_foreign` (`member_id`),
-  KEY `issued_books_issuer_id_foreign` (`issuer_id`),
-  KEY `issued_books_returner_id_foreign` (`returner_id`)
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -663,9 +613,8 @@ CREATE TABLE IF NOT EXISTS `issued_books` (
 -- Table structure for table `members`
 --
 
-DROP TABLE IF EXISTS `members`;
-CREATE TABLE IF NOT EXISTS `members` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `members` (
+  `id` int(10) UNSIGNED NOT NULL,
   `member_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -678,18 +627,15 @@ CREATE TABLE IF NOT EXISTS `members` (
   `activation_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `email_verified_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `members_member_id_unique` (`member_id`),
-  UNIQUE KEY `members_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `email_verified_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `members`
 --
 
 INSERT INTO `members` (`id`, `member_id`, `first_name`, `last_name`, `email`, `password`, `membership_plan_id`, `phone`, `image`, `is_active`, `activation_code`, `created_at`, `updated_at`, `email_verified_at`) VALUES
-(1, '5f69e6710adcd', 'LMS', 'Member', 'member@lms.com', '$2y$10$n5fDCZoYe3aV6Ktx1d5NAuqtvveKDn7y94.gvH7bHakQ8kCgUT.he', 1, NULL, NULL, 1, NULL, '2020-09-22 06:26:33', '2020-09-22 06:26:33', '2020-09-22 11:56:33');
+(1, '6027b80a3744d', 'LMS', 'Member', 'member@lms.com', '$2y$10$3SYHoHBG0POHWXLi7uuQFOo2IOibNkrRlD6pl/22reuNAaeteNcpK', 1, NULL, NULL, 1, NULL, '2021-02-13 05:59:14', '2021-02-13 05:59:14', '2021-02-13 11:29:14');
 
 -- --------------------------------------------------------
 
@@ -697,9 +643,8 @@ INSERT INTO `members` (`id`, `member_id`, `first_name`, `last_name`, `email`, `p
 -- Table structure for table `membership_plans`
 --
 
-DROP TABLE IF EXISTS `membership_plans`;
-CREATE TABLE IF NOT EXISTS `membership_plans` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `membership_plans` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` double(8,2) NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -707,17 +652,16 @@ CREATE TABLE IF NOT EXISTS `membership_plans` (
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `stripe_plan_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `membership_plans`
 --
 
 INSERT INTO `membership_plans` (`id`, `name`, `price`, `description`, `frequency`, `slug`, `stripe_plan_id`, `created_at`, `updated_at`) VALUES
-(1, 'Silver', 300.00, 'Borrow 2 books at a time.', 1, 'silver', NULL, '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(2, 'Golden', 400.00, 'Borrow 4 books at a time.', 1, 'golden', NULL, '2020-09-22 06:26:32', '2020-09-22 06:26:32');
+(1, 'Silver', 300.00, 'Borrow 2 books at a time.', 1, 'silver', NULL, '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'Golden', 400.00, 'Borrow 4 books at a time.', 1, 'golden', NULL, '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -725,23 +669,21 @@ INSERT INTO `membership_plans` (`id`, `name`, `price`, `description`, `frequency
 -- Table structure for table `member_settings`
 --
 
-DROP TABLE IF EXISTS `member_settings`;
-CREATE TABLE IF NOT EXISTS `member_settings` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `member_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `default_value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `member_settings`
 --
 
 INSERT INTO `member_settings` (`id`, `key`, `default_value`, `display_name`, `created_at`, `updated_at`) VALUES
-(1, 'current_language', 'en', 'Current Language', '2020-09-22 06:26:33', '2020-09-22 06:26:33');
+(1, 'current_language', 'en', 'Current Language', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -749,17 +691,13 @@ INSERT INTO `member_settings` (`id`, `key`, `default_value`, `display_name`, `cr
 -- Table structure for table `member_settings_values`
 --
 
-DROP TABLE IF EXISTS `member_settings_values`;
-CREATE TABLE IF NOT EXISTS `member_settings_values` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `member_settings_values` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `member_id` int(10) UNSIGNED NOT NULL,
   `setting_id` bigint(20) UNSIGNED NOT NULL,
   `value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `member_settings_values_member_id_foreign` (`member_id`),
-  KEY `member_settings_values_setting_id_foreign` (`setting_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -768,13 +706,11 @@ CREATE TABLE IF NOT EXISTS `member_settings_values` (
 -- Table structure for table `migrations`
 --
 
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE IF NOT EXISTS `migrations` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -815,7 +751,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (32, '2020_03_03_092343_add_deleted_at_column_into_issued_books_table', 1),
 (33, '2020_07_10_061355_create_add_filename_to_book_items_table', 1),
 (34, '2020_09_16_043210_add_show_on_landing_page_to_genres_table', 1),
-(35, '2020_09_16_063553_create_about_us_cards_table', 1);
+(35, '2020_09_16_063553_create_about_us_cards_table', 1),
+(36, '2021_02_13_061139_remove_penalties_where_book_item_id_and_collected_by_null', 1);
 
 -- --------------------------------------------------------
 
@@ -823,13 +760,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `model_has_permissions`
 --
 
-DROP TABLE IF EXISTS `model_has_permissions`;
-CREATE TABLE IF NOT EXISTS `model_has_permissions` (
+CREATE TABLE `model_has_permissions` (
   `permission_id` int(10) UNSIGNED NOT NULL,
   `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL,
-  PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
-  KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`)
+  `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -838,13 +772,10 @@ CREATE TABLE IF NOT EXISTS `model_has_permissions` (
 -- Table structure for table `model_has_roles`
 --
 
-DROP TABLE IF EXISTS `model_has_roles`;
-CREATE TABLE IF NOT EXISTS `model_has_roles` (
+CREATE TABLE `model_has_roles` (
   `role_id` int(10) UNSIGNED NOT NULL,
   `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL,
-  PRIMARY KEY (`role_id`,`model_id`,`model_type`),
-  KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`)
+  `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -860,12 +791,10 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 -- Table structure for table `password_resets`
 --
 
-DROP TABLE IF EXISTS `password_resets`;
-CREATE TABLE IF NOT EXISTS `password_resets` (
+CREATE TABLE `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  KEY `password_resets_email_index` (`email`)
+  `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -874,9 +803,8 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 -- Table structure for table `penalties`
 --
 
-DROP TABLE IF EXISTS `penalties`;
-CREATE TABLE IF NOT EXISTS `penalties` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `penalties` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `member_id` int(10) UNSIGNED DEFAULT NULL,
   `book_item_id` int(10) UNSIGNED DEFAULT NULL,
   `issued_book_id` int(10) UNSIGNED DEFAULT NULL,
@@ -886,12 +814,7 @@ CREATE TABLE IF NOT EXISTS `penalties` (
   `collected_at` datetime NOT NULL,
   `collected_by` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `penalties_member_id_foreign` (`member_id`),
-  KEY `penalties_book_item_id_foreign` (`book_item_id`),
-  KEY `penalties_collected_by_foreign` (`collected_by`),
-  KEY `penalties_issued_book_id_foreign` (`issued_book_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -900,40 +823,37 @@ CREATE TABLE IF NOT EXISTS `penalties` (
 -- Table structure for table `permissions`
 --
 
-DROP TABLE IF EXISTS `permissions`;
-CREATE TABLE IF NOT EXISTS `permissions` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `permissions` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `permissions_name_unique` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `display_name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'manage_books', 'web', 'Can Manage Books', 'Create/Update/Delete Books, Book Series, Book Languages, Authors, Publishers, Tags', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(2, 'issue_books', 'web', 'Can Manage Issue Books', 'Can Manage Issue Books', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(3, 'manage_members', 'web', 'Can Manage Members', 'Create/Update/Delete Members', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(4, 'manage_finance', 'web', 'Can Manage Finance', 'Manage Membership Plans, Payments', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(5, 'manage_settings', 'web', 'Can Manage Settings', 'Manage Settings', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(6, 'manage_roles', 'web', 'Can Manage Roles', 'Manage Roles', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(7, 'manage_authors', 'web', 'Can Manage Authors', 'Manage Authors', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(8, 'manage_publishers', 'web', 'Can Manage Publishers', 'Manage Publishers', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(9, 'manage_book_series', 'web', 'Can Manage Book Series', 'Manage Book Series', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(10, 'manage_users', 'web', 'Can Manage Users', 'Manage Users', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(11, 'manage_book_languages', 'web', 'Can Manage Book Languages', 'Manage Book Languages', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(12, 'manage_plans', 'web', 'Can Manage Plans', 'Manage Plans', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(13, 'manage_tags', 'web', 'Can Manage Tags', 'Manage Tags', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(14, 'manage_genres', 'web', 'Can Manage Genres', 'Manage Genres', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(15, 'manage_book_requests', 'web', 'Can Manage Book Requests', 'Manage Book Requests', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(16, 'manage_penalties', 'web', 'Can Manage Penalties', 'Manage Penalties', '2020-09-22 06:26:31', '2020-09-22 06:26:31');
+(1, 'manage_books', 'web', 'Can Manage Books', 'Create/Update/Delete Books, Book Series, Book Languages, Authors, Publishers, Tags', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(2, 'issue_books', 'web', 'Can Manage Issue Books', 'Can Manage Issue Books', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(3, 'manage_members', 'web', 'Can Manage Members', 'Create/Update/Delete Members', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(4, 'manage_finance', 'web', 'Can Manage Finance', 'Manage Membership Plans, Payments', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(5, 'manage_settings', 'web', 'Can Manage Settings', 'Manage Settings', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(6, 'manage_roles', 'web', 'Can Manage Roles', 'Manage Roles', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(7, 'manage_authors', 'web', 'Can Manage Authors', 'Manage Authors', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(8, 'manage_publishers', 'web', 'Can Manage Publishers', 'Manage Publishers', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(9, 'manage_book_series', 'web', 'Can Manage Book Series', 'Manage Book Series', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(10, 'manage_users', 'web', 'Can Manage Users', 'Manage Users', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(11, 'manage_book_languages', 'web', 'Can Manage Book Languages', 'Manage Book Languages', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(12, 'manage_plans', 'web', 'Can Manage Plans', 'Manage Plans', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(13, 'manage_tags', 'web', 'Can Manage Tags', 'Manage Tags', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(14, 'manage_genres', 'web', 'Can Manage Genres', 'Manage Genres', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(15, 'manage_book_requests', 'web', 'Can Manage Book Requests', 'Manage Book Requests', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(16, 'manage_penalties', 'web', 'Can Manage Penalties', 'Manage Penalties', '2021-02-13 05:59:13', '2021-02-13 05:59:13');
 
 -- --------------------------------------------------------
 
@@ -941,9 +861,8 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `display_name`, `descript
 -- Table structure for table `personal_access_tokens`
 --
 
-DROP TABLE IF EXISTS `personal_access_tokens`;
-CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `tokenable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -951,10 +870,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -963,32 +879,30 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 -- Table structure for table `publishers`
 --
 
-DROP TABLE IF EXISTS `publishers`;
-CREATE TABLE IF NOT EXISTS `publishers` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `publishers` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `publishers`
 --
 
 INSERT INTO `publishers` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Penguin Random House', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(2, 'McGraw-Hill Education', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(3, 'HarperCollins', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(4, 'Egmont Books', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(5, 'Shueisha', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(6, 'Kodansha', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(7, 'Pearson Education', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(8, 'Egmont Group', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(9, 'Klett', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(10, 'Jaico Publishing House', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(11, 'Westland Publications', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(12, 'Hachette Livre', '2020-09-22 06:26:32', '2020-09-22 06:26:32');
+(1, 'Penguin Random House', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'McGraw-Hill Education', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(3, 'HarperCollins', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(4, 'Egmont Books', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(5, 'Shueisha', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(6, 'Kodansha', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(7, 'Pearson Education', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(8, 'Egmont Group', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(9, 'Klett', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(10, 'Jaico Publishing House', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(11, 'Westland Publications', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(12, 'Hachette Livre', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -996,26 +910,23 @@ INSERT INTO `publishers` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE IF NOT EXISTS `roles` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `roles` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `roles_name_unique` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `display_name`, `description`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Library Admin', 'Library Admin', 'web', '2020-09-22 06:26:31', '2020-09-22 06:26:31'),
-(2, 'librarian', 'Librarian', 'Librarian', 'web', '2020-09-22 06:26:31', '2020-09-22 06:26:31');
+(1, 'admin', 'Library Admin', 'Library Admin', 'web', '2021-02-13 05:59:13', '2021-02-13 05:59:13'),
+(2, 'librarian', 'Librarian', 'Librarian', 'web', '2021-02-13 05:59:13', '2021-02-13 05:59:13');
 
 -- --------------------------------------------------------
 
@@ -1023,12 +934,9 @@ INSERT INTO `roles` (`id`, `name`, `display_name`, `description`, `guard_name`, 
 -- Table structure for table `role_has_permissions`
 --
 
-DROP TABLE IF EXISTS `role_has_permissions`;
-CREATE TABLE IF NOT EXISTS `role_has_permissions` (
+CREATE TABLE `role_has_permissions` (
   `permission_id` int(10) UNSIGNED NOT NULL,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`permission_id`,`role_id`),
-  KEY `role_has_permissions_role_id_foreign` (`role_id`)
+  `role_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1072,17 +980,13 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 -- Table structure for table `series_books`
 --
 
-DROP TABLE IF EXISTS `series_books`;
-CREATE TABLE IF NOT EXISTS `series_books` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `series_books` (
+  `id` int(10) UNSIGNED NOT NULL,
   `series_id` int(10) UNSIGNED NOT NULL,
   `book_id` int(10) UNSIGNED NOT NULL,
   `sequence` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `series_books_series_id_foreign` (`series_id`),
-  KEY `series_books_book_id_foreign` (`book_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1091,33 +995,31 @@ CREATE TABLE IF NOT EXISTS `series_books` (
 -- Table structure for table `settings`
 --
 
-DROP TABLE IF EXISTS `settings`;
-CREATE TABLE IF NOT EXISTS `settings` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `settings` (
+  `id` int(10) UNSIGNED NOT NULL,
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`id`, `key`, `value`, `display_name`, `created_at`, `updated_at`) VALUES
-(1, 'currency', 'INR', 'Indian Rupee', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(2, 'return_due_days', '15', 'Return Due Days', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(3, 'reserve_due_days', '5', 'Reserve Due Days', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(4, 'library_name', 'My Library', 'My Library', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(5, 'library_logo', 'logo-blue-black.png', 'Library Logo', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(6, 'language', 'en', 'English', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(7, 'favicon_icon', 'favicon.ico', 'Icon', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(8, 'reserve_books_limit', '5', 'Maximum reserve books limit', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(9, 'issue_books_limit', '5', 'Maximum issue books limit', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(10, 'penalty_per_day', '10', 'Penalty amount per day', '2020-09-22 06:26:33', '2020-09-22 06:26:33'),
-(11, 'book_due_reminder_before_days', '2', 'Book Due Reminder Before Days', '2020-09-22 06:26:33', '2020-09-22 06:26:33');
+(1, 'currency', 'INR', 'Indian Rupee', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'return_due_days', '15', 'Return Due Days', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(3, 'reserve_due_days', '5', 'Reserve Due Days', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(4, 'library_name', 'My Library', 'My Library', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(5, 'library_logo', 'logo-blue-black.png', 'Library Logo', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(6, 'language', 'en', 'English', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(7, 'favicon_icon', 'favicon.ico', 'Icon', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(8, 'reserve_books_limit', '5', 'Maximum reserve books limit', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(9, 'issue_books_limit', '5', 'Maximum issue books limit', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(10, 'penalty_per_day', '10', 'Penalty amount per day', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(11, 'book_due_reminder_before_days', '2', 'Book Due Reminder Before Days', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -1125,33 +1027,31 @@ INSERT INTO `settings` (`id`, `key`, `value`, `display_name`, `created_at`, `upd
 -- Table structure for table `tags`
 --
 
-DROP TABLE IF EXISTS `tags`;
-CREATE TABLE IF NOT EXISTS `tags` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tags` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tags`
 --
 
 INSERT INTO `tags` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Family', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(2, 'Animal', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(3, 'Fiction', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(4, 'Science', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(5, 'History', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(6, 'Biopic', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(7, 'Art', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(8, 'Horror', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(9, 'Comedy', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(10, 'Nature', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(11, 'Popular', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(12, 'Sports', '2020-09-22 06:26:32', '2020-09-22 06:26:32'),
-(13, 'Entertainment', '2020-09-22 06:26:32', '2020-09-22 06:26:32');
+(1, 'Family', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(2, 'Animal', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(3, 'Fiction', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(4, 'Science', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(5, 'History', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(6, 'Biopic', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(7, 'Art', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(8, 'Horror', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(9, 'Comedy', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(10, 'Nature', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(11, 'Popular', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(12, 'Sports', '2021-02-13 05:59:14', '2021-02-13 05:59:14'),
+(13, 'Entertainment', '2021-02-13 05:59:14', '2021-02-13 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -1159,16 +1059,14 @@ INSERT INTO `tags` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `testimonials`
 --
 
-DROP TABLE IF EXISTS `testimonials`;
-CREATE TABLE IF NOT EXISTS `testimonials` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `testimonials` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `occupation` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1177,9 +1075,8 @@ CREATE TABLE IF NOT EXISTS `testimonials` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1190,17 +1087,443 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `email_verified_at`, `password`, `phone`, `image`, `is_active`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'LMS', 'Admin', 'admin@lms.com', '2020-09-22 06:26:31', '$2y$10$Ee8HpNrTGgySTnywyDxZHuQRrdfU.UJ6OteWRX1KiwIuijdQDAVjm', NULL, NULL, 1, NULL, '2020-09-22 06:26:31', '2020-09-22 06:26:31');
+(1, 'LMS', 'Admin', 'admin@lms.com', '2021-02-13 05:59:14', '$2y$10$0iyW.y29u1ZF2an8CkVGKuxA/69JSHroSNN0ZE5NYhJ9Y/g3CW/H.', NULL, NULL, 1, NULL, '2021-02-13 05:59:14', '2021-02-13 05:59:14');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `about_us_cards`
+--
+ALTER TABLE `about_us_cards`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `addresses_country_id_foreign` (`country_id`);
+
+--
+-- Indexes for table `authors`
+--
+ALTER TABLE `authors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `books`
+--
+ALTER TABLE `books`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `book_authors`
+--
+ALTER TABLE `book_authors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `book_authors_book_id_foreign` (`book_id`),
+  ADD KEY `book_authors_author_id_foreign` (`author_id`);
+
+--
+-- Indexes for table `book_genres`
+--
+ALTER TABLE `book_genres`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `book_genres_book_id_foreign` (`book_id`),
+  ADD KEY `book_genres_genre_id_foreign` (`genre_id`);
+
+--
+-- Indexes for table `book_items`
+--
+ALTER TABLE `book_items`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `book_items_book_code_unique` (`book_code`),
+  ADD KEY `book_items_publisher_id_foreign` (`publisher_id`),
+  ADD KEY `book_items_language_id_foreign` (`language_id`);
+
+--
+-- Indexes for table `book_languages`
+--
+ALTER TABLE `book_languages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `book_languages_language_name_unique` (`language_name`);
+
+--
+-- Indexes for table `book_requests`
+--
+ALTER TABLE `book_requests`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `book_series`
+--
+ALTER TABLE `book_series`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `book_series_title_unique` (`title`);
+
+--
+-- Indexes for table `book_tags`
+--
+ALTER TABLE `book_tags`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `book_tags_book_id_foreign` (`book_id`),
+  ADD KEY `book_tags_tag_id_foreign` (`tag_id`);
+
+--
+-- Indexes for table `countries`
+--
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `countries_name_unique` (`name`),
+  ADD UNIQUE KEY `countries_code_unique` (`code`);
+
+--
+-- Indexes for table `genres`
+--
+ALTER TABLE `genres`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `homepage_settings`
+--
+ALTER TABLE `homepage_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `issued_books`
+--
+ALTER TABLE `issued_books`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `issued_books_book_item_id_foreign` (`book_item_id`),
+  ADD KEY `issued_books_member_id_foreign` (`member_id`),
+  ADD KEY `issued_books_issuer_id_foreign` (`issuer_id`),
+  ADD KEY `issued_books_returner_id_foreign` (`returner_id`);
+
+--
+-- Indexes for table `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `members_member_id_unique` (`member_id`),
+  ADD UNIQUE KEY `members_email_unique` (`email`);
+
+--
+-- Indexes for table `membership_plans`
+--
+ALTER TABLE `membership_plans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `member_settings`
+--
+ALTER TABLE `member_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `member_settings_values`
+--
+ALTER TABLE `member_settings_values`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `member_settings_values_member_id_foreign` (`member_id`),
+  ADD KEY `member_settings_values_setting_id_foreign` (`setting_id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `penalties`
+--
+ALTER TABLE `penalties`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `penalties_member_id_foreign` (`member_id`),
+  ADD KEY `penalties_issued_book_id_foreign` (`issued_book_id`),
+  ADD KEY `penalties_book_item_id_foreign` (`book_item_id`),
+  ADD KEY `penalties_collected_by_foreign` (`collected_by`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permissions_name_unique` (`name`);
+
+--
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `publishers`
+--
+ALTER TABLE `publishers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_unique` (`name`);
+
+--
+-- Indexes for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
+
+--
+-- Indexes for table `series_books`
+--
+ALTER TABLE `series_books`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `series_books_series_id_foreign` (`series_id`),
+  ADD KEY `series_books_book_id_foreign` (`book_id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tags`
+--
+ALTER TABLE `tags`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `about_us_cards`
+--
+ALTER TABLE `about_us_cards`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `authors`
+--
+ALTER TABLE `authors`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `books`
+--
+ALTER TABLE `books`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `book_authors`
+--
+ALTER TABLE `book_authors`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `book_genres`
+--
+ALTER TABLE `book_genres`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `book_items`
+--
+ALTER TABLE `book_items`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `book_languages`
+--
+ALTER TABLE `book_languages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `book_requests`
+--
+ALTER TABLE `book_requests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `book_series`
+--
+ALTER TABLE `book_series`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `book_tags`
+--
+ALTER TABLE `book_tags`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
+
+--
+-- AUTO_INCREMENT for table `genres`
+--
+ALTER TABLE `genres`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `homepage_settings`
+--
+ALTER TABLE `homepage_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `issued_books`
+--
+ALTER TABLE `issued_books`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `members`
+--
+ALTER TABLE `members`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `membership_plans`
+--
+ALTER TABLE `membership_plans`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `member_settings`
+--
+ALTER TABLE `member_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `member_settings_values`
+--
+ALTER TABLE `member_settings_values`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `penalties`
+--
+ALTER TABLE `penalties`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `publishers`
+--
+ALTER TABLE `publishers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `series_books`
+--
+ALTER TABLE `series_books`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `tags`
+--
+ALTER TABLE `tags`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -1272,8 +1595,8 @@ ALTER TABLE `model_has_roles`
 -- Constraints for table `penalties`
 --
 ALTER TABLE `penalties`
-  ADD CONSTRAINT `penalties_book_item_id_foreign` FOREIGN KEY (`book_item_id`) REFERENCES `book_items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `penalties_collected_by_foreign` FOREIGN KEY (`collected_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `penalties_book_item_id_foreign` FOREIGN KEY (`book_item_id`) REFERENCES `book_items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penalties_collected_by_foreign` FOREIGN KEY (`collected_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `penalties_issued_book_id_foreign` FOREIGN KEY (`issued_book_id`) REFERENCES `issued_books` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `penalties_member_id_foreign` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -1290,7 +1613,6 @@ ALTER TABLE `role_has_permissions`
 ALTER TABLE `series_books`
   ADD CONSTRAINT `series_books_book_id_foreign` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `series_books_series_id_foreign` FOREIGN KEY (`series_id`) REFERENCES `book_series` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
