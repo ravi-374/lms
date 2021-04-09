@@ -90,12 +90,12 @@ const Dashboard = (props) => {
         });
     };
 
-    const onClickFetchBooksCirculation = (searchValues) => {
-        if (searchValues.title === "Members") {
+    const onClickFetchBooksCirculation = (searchValues, index) => {
+        if (index === 1) {
             return (
                 window.location.href = environment.URL + '/#' + Routes.MEMBERS
             )
-        } else if (searchValues.title === "Books") {
+        } else if (index === 0) {
             return (
                 window.location.href = environment.URL + '/#' + Routes.BOOKS
             )
@@ -107,9 +107,9 @@ const Dashboard = (props) => {
                 limit: Filters.OBJ.limit,
                 skip: 0,
                 direction: Filters.OBJ.direction,
-                search: searchValues.title === "Overdue Books" ? "overdue"
-                    : searchValues.title === "Reserved Books" ? "reserved"
-                        : searchValues.title === "Issued Books" ? "issued" : null
+                search: index === 4 ? "overdue"
+                    : index === 3 ? "reserved"
+                        : index === 2 ? "issued" : null
             };
             setSearchValue(filters.search);
             fetchBooksCirculation(filters, (res) => {
@@ -124,8 +124,8 @@ const Dashboard = (props) => {
         return totalCard.map((card, index) => (
             <Col key={index} className="dashboard__card-wrapper col-12 col-sm-6 col-lg-3">
                 <Card className={`text-white ${card.color}`}>
-                    <CardBody onClick={() => onClickFetchBooksCirculation(card)}
-                        className={`${card.count > 0 ? "dashboard__card-body" : null}`}>
+                    <CardBody onClick={() => onClickFetchBooksCirculation(card, index)}
+                              className={`${card.count > 0 ? "dashboard__card-body" : null}`}>
                         <div className="dashboard__card-count">{card.count}</div>
                         <div className="dashboard__card-icon">
                             <i className={card.icon}/>
