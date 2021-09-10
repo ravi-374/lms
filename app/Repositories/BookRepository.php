@@ -383,6 +383,12 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
             if (! empty($bookItem['id'])) {
                 $item = BookItem::findOrFail($bookItem['id']);
             } else {
+                if(isset($bookItem['book_code'])){
+                    $bookItemExists = BookItem::whereBookCode($bookItem['book_code'])->exists();
+                    if($bookItemExists){
+                        throw new UnprocessableEntityHttpException('book code already exists');
+                    }
+                }
                 $item = new BookItem();
                 $item->book_code = isset($bookItem['book_code']) ? $bookItem['book_code'] : $this->generateUniqueBookCode();
                 $item->status = BookItem::STATUS_AVAILABLE;
