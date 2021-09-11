@@ -146,7 +146,7 @@ class PenaltyRepository extends BaseRepository implements PenaltyRepositoryInter
     {
         try {
             /** @var IssuedBook $issuedBook */
-            $issuedBook = IssuedBook::with('member')->findOrFail($issuedBookId);
+            $issuedBook = IssuedBook::withTrashed()->with('member')->findOrFail($issuedBookId);
 
             $returnDate = Carbon::now();
 
